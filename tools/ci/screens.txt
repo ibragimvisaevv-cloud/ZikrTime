@@ -1,1 +1,17 @@
 onboarding
+home
+knowledge
+quiz
+focus
+more
+language
+city
+prayer_settings
+alarm
+qibla
+tasbih
+about
+apps
+block_limit
+block_prayer
+alarm_ring

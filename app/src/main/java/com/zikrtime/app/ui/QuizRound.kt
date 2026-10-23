@@ -1,9 +1,13 @@
 package com.zikrtime.app.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.expandVertically
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,13 +15,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -29,54 +34,65 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
+import com.zikrtime.app.R
 import com.zikrtime.app.data.Store
-import com.zikrtime.app.quiz.Question
+import com.zikrtime.app.quiz.QuestionBank
+import com.zikrtime.app.quiz.QuizBank
 import com.zikrtime.app.quiz.hasArabic
 import com.zikrtime.app.ui.theme.ArabicStyle
 
 /**
  * Раунд викторины: нужно набрать [target] правильных ответов.
- * После неверного ответа показываем правильный и пояснение — и идём дальше.
+ * После каждого ответа показываем справку по теме вопроса.
  */
 @Composable
 fun QuizRound(
-    questions: List<Question>,
+    bank: QuizBank,
+    category: String?,
     onFinished: () -> Unit,
     modifier: Modifier = Modifier,
     target: Int = Store.CORRECT_ANSWERS_PER_ROUND,
+    finishText: String = stringResource(R.string.quiz_finish),
 ) {
-    val order = remember(questions) { questions.shuffled() }
+    val order = remember(bank, category) { QuestionBank.roundOrder(bank, category, Store.recentQuestions) }
     var index by remember { mutableIntStateOf(0) }
     var correct by remember { mutableIntStateOf(0) }
     var selected by remember { mutableStateOf<Int?>(null) }
     val question = remember(order, index) { order[index % order.size].shuffled() }
+    val scheme = MaterialTheme.colorScheme
 
     Column(modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        // Прогресс: точки правильных ответов
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            repeat(target) { i ->
+                Box(
+                    Modifier
+                        .padding(end = 6.dp)
+                        .size(width = 28.dp, height = 8.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(if (i < correct) scheme.primary else scheme.surfaceVariant),
+                )
+            }
+            Spacer(Modifier.weight(1f))
             Text(
-                "Правильных ответов: $correct из $target",
+                stringResource(R.string.quiz_progress, correct, target),
                 style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            LinearProgressIndicator(
-                progress = { correct / target.toFloat() },
-                modifier = Modifier.fillMaxWidth().height(8.dp),
-                strokeCap = androidx.compose.ui.graphics.StrokeCap.Round,
+                color = scheme.onSurfaceVariant,
             )
         }
 
-        Surface(
-            shape = RoundedCornerShape(50),
-            color = MaterialTheme.colorScheme.secondaryContainer,
-        ) {
+        Surface(shape = RoundedCornerShape(50), color = scheme.secondaryContainer) {
             Text(
-                question.category,
+                bank.categoryName(question.category),
                 style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSecondaryContainer,
+                color = scheme.onSecondaryContainer,
                 modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
             )
         }
@@ -84,18 +100,21 @@ fun QuizRound(
         Text(question.text, style = MaterialTheme.typography.titleLarge)
 
         question.arabic?.let {
-            Text(
-                it,
-                style = ArabicStyle.copy(textDirection = TextDirection.Rtl),
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.fillMaxWidth(),
-            )
+            Surface(shape = RoundedCornerShape(20.dp), color = scheme.primaryContainer.copy(alpha = 0.55f), modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    it,
+                    style = ArabicStyle.copy(textDirection = TextDirection.Rtl),
+                    textAlign = TextAlign.Center,
+                    color = scheme.onPrimaryContainer,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                )
+            }
         }
 
         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
             question.options.forEachIndexed { i, option ->
-                OptionRow(
+                OptionCard(
+                    letter = ('A' + i).toString(),
                     text = option,
                     state = when {
                         selected == null -> OptionState.Idle
@@ -107,7 +126,7 @@ fun QuizRound(
                         if (selected == null) {
                             selected = i
                             val ok = i == question.answerIndex
-                            Store.recordAnswer(ok)
+                            Store.recordAnswer(question.id, question.category, ok)
                             if (ok) correct++
                         }
                     },
@@ -115,24 +134,12 @@ fun QuizRound(
             }
         }
 
-        AnimatedVisibility(visible = selected != null) {
+        AnimatedVisibility(visible = selected != null, enter = fadeIn() + expandVertically()) {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 val ok = selected == question.answerIndex
-                Surface(
-                    shape = RoundedCornerShape(16.dp),
-                    color = if (ok) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceContainerHigh,
-                ) {
-                    Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                        Text(
-                            if (ok) "Верно, машаАллах!" else "Правильный ответ: ${question.correctOption}",
-                            style = MaterialTheme.typography.titleSmall,
-                        )
-                        if (question.explanation.isNotBlank()) {
-                            Text(question.explanation, style = MaterialTheme.typography.bodyMedium)
-                        }
-                    }
-                }
-                Button(
+                InfoCard(ok = ok, correctAnswer = question.correctOption, info = question.info)
+                PrimaryButton(
+                    if (correct >= target) finishText else stringResource(R.string.quiz_next),
                     onClick = {
                         if (correct >= target) {
                             onFinished()
@@ -141,20 +148,59 @@ fun QuizRound(
                             selected = null
                         }
                     },
-                    modifier = Modifier.fillMaxWidth().height(52.dp),
-                ) {
-                    Text(if (correct >= target) "Завершить" else "Следующий вопрос")
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun InfoCard(ok: Boolean, correctAnswer: String, info: String) {
+    val scheme = MaterialTheme.colorScheme
+    Surface(
+        shape = RoundedCornerShape(20.dp),
+        color = if (ok) scheme.primaryContainer else scheme.surfaceContainerHigh,
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                if (ok) {
+                    Icon(painterResource(R.drawable.ic_check), contentDescription = null, tint = scheme.primary, modifier = Modifier.size(22.dp))
+                } else {
+                    Icon(Icons.Default.Close, contentDescription = null, tint = scheme.error, modifier = Modifier.size(22.dp))
+                }
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    if (ok) stringResource(R.string.quiz_correct) else stringResource(R.string.quiz_wrong),
+                    style = MaterialTheme.typography.titleMedium,
+                )
+            }
+            if (!ok) {
+                Text(
+                    stringResource(R.string.quiz_correct_answer, correctAnswer),
+                    style = if (correctAnswer.hasArabic()) ArabicStyle.copy(textDirection = TextDirection.Content) else MaterialTheme.typography.bodyLarge,
+                )
+            }
+            if (info.isNotBlank()) {
+                HorizontalDivider(color = scheme.outlineVariant)
+                Row(verticalAlignment = Alignment.Top) {
+                    Icon(Icons.Default.Info, contentDescription = null, tint = scheme.primary, modifier = Modifier.size(20.dp))
+                    Spacer(Modifier.width(10.dp))
+                    Column {
+                        Text(stringResource(R.string.quiz_info_title), style = MaterialTheme.typography.labelLarge, color = scheme.primary)
+                        Spacer(Modifier.height(2.dp))
+                        Text(info, style = MaterialTheme.typography.bodyMedium)
+                    }
                 }
             }
         }
-        Spacer(Modifier.height(8.dp))
     }
 }
 
 private enum class OptionState { Idle, Correct, Wrong, Dimmed }
 
 @Composable
-private fun OptionRow(text: String, state: OptionState, onClick: () -> Unit) {
+private fun OptionCard(letter: String, text: String, state: OptionState, onClick: () -> Unit) {
     val scheme = MaterialTheme.colorScheme
     val (container, border) = when (state) {
         OptionState.Idle -> scheme.surfaceContainerLowest to scheme.outlineVariant
@@ -164,17 +210,42 @@ private fun OptionRow(text: String, state: OptionState, onClick: () -> Unit) {
     }
     val arabic = text.hasArabic()
     Surface(
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(18.dp),
         color = container,
-        border = BorderStroke(1.dp, border),
+        border = BorderStroke(if (state == OptionState.Idle) 1.dp else 1.5.dp, border),
         modifier = Modifier
             .fillMaxWidth()
+            .clip(RoundedCornerShape(18.dp))
             .clickable(enabled = state == OptionState.Idle, onClick = onClick),
     ) {
         Row(
-            Modifier.padding(horizontal = 16.dp, vertical = if (arabic) 10.dp else 16.dp),
+            Modifier.padding(horizontal = 14.dp, vertical = if (arabic) 8.dp else 14.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
+            Box(
+                Modifier
+                    .size(30.dp)
+                    .clip(CircleShape)
+                    .background(
+                        when (state) {
+                            OptionState.Correct -> scheme.primary
+                            OptionState.Wrong -> scheme.error
+                            else -> scheme.surfaceContainerHigh
+                        },
+                    ),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    letter,
+                    style = MaterialTheme.typography.labelLarge,
+                    color = when (state) {
+                        OptionState.Correct -> scheme.onPrimary
+                        OptionState.Wrong -> scheme.onError
+                        else -> scheme.onSurfaceVariant
+                    },
+                )
+            }
+            Spacer(Modifier.width(14.dp))
             Text(
                 text,
                 style = if (arabic) ArabicStyle.copy(textDirection = TextDirection.Rtl) else MaterialTheme.typography.bodyLarge,
@@ -182,11 +253,6 @@ private fun OptionRow(text: String, state: OptionState, onClick: () -> Unit) {
                 color = if (state == OptionState.Dimmed) scheme.onSurfaceVariant.copy(alpha = 0.6f) else scheme.onSurface,
                 modifier = Modifier.weight(1f),
             )
-            when (state) {
-                OptionState.Correct -> Icon(Icons.Default.Check, contentDescription = "Верно", tint = scheme.primary, modifier = Modifier.size(22.dp))
-                OptionState.Wrong -> Icon(Icons.Default.Close, contentDescription = "Неверно", tint = scheme.error, modifier = Modifier.size(22.dp))
-                else -> Unit
-            }
         }
     }
 }

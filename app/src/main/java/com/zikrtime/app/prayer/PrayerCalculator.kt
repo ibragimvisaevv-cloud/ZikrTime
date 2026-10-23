@@ -16,14 +16,14 @@ import kotlin.math.roundToLong
 import kotlin.math.sin
 import kotlin.math.tan
 
-/** Пять обязательных намазов и восход (восход — не намаз, но нужен для расписания). */
-enum class Prayer(val title: String, val isPrayer: Boolean) {
-    FAJR("Фаджр", true),
-    SUNRISE("Восход", false),
-    DHUHR("Зухр", true),
-    ASR("Аср", true),
-    MAGHRIB("Магриб", true),
-    ISHA("Иша", true);
+/** Пять обязательных намазов и восход (восход — не намаз, но нужен для расписания). Названия — в ресурсах. */
+enum class Prayer(val isPrayer: Boolean) {
+    FAJR(true),
+    SUNRISE(false),
+    DHUHR(true),
+    ASR(true),
+    MAGHRIB(true),
+    ISHA(true);
 
     companion object {
         val obligatory = entries.filter { it.isPrayer }
@@ -35,26 +35,25 @@ enum class Prayer(val title: String, val isPrayer: Boolean) {
  * Если ishaMinutes задан, иша наступает через это количество минут после магриба.
  */
 enum class CalcMethod(
-    val title: String,
     val fajrAngle: Double,
     val ishaAngle: Double?,
     val ishaMinutes: Int? = null,
     /** Номер метода в API aladhan.com. */
     val aladhanId: Int,
 ) {
-    RUSSIA("Духовное управление мусульман России (ДУМ РФ)", 16.0, 15.0, aladhanId = 14),
-    MWL("Всемирная исламская лига", 18.0, 17.0, aladhanId = 3),
-    TURKEY("Управление по делам религии Турции (Диянет)", 18.0, 17.0, aladhanId = 13),
-    MAKKAH("Умм аль-Кура, Мекка", 18.5, null, ishaMinutes = 90, aladhanId = 4),
-    EGYPT("Египетское управление геодезии", 19.5, 17.5, aladhanId = 5),
-    KARACHI("Университет исламских наук, Карачи", 18.0, 18.0, aladhanId = 1),
-    ISNA("Исламское общество Северной Америки (ISNA)", 15.0, 15.0, aladhanId = 2),
+    RUSSIA(16.0, 15.0, aladhanId = 14),
+    MWL(18.0, 17.0, aladhanId = 3),
+    TURKEY(18.0, 17.0, aladhanId = 13),
+    MAKKAH(18.5, null, ishaMinutes = 90, aladhanId = 4),
+    EGYPT(19.5, 17.5, aladhanId = 5),
+    KARACHI(18.0, 18.0, aladhanId = 1),
+    ISNA(15.0, 15.0, aladhanId = 2),
 }
 
 /** Мазхаб для аср-намаза: длина тени равна предмету (1) или вдвое больше (2, ханафитский). */
-enum class AsrMadhab(val title: String, val shadowFactor: Double) {
-    STANDARD("Шафиитский, маликитский, ханбалитский", 1.0),
-    HANAFI("Ханафитский", 2.0),
+enum class AsrMadhab(val shadowFactor: Double) {
+    STANDARD(1.0), // шафиитский, маликитский, ханбалитский
+    HANAFI(2.0),
 }
 
 data class PrayerTimes(

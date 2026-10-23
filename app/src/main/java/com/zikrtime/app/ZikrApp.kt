@@ -8,6 +8,6 @@ class ZikrApp : Application() {
     override fun onCreate() {
         super.onCreate()
         Store.init(this)
-        PrayerAlarms.createChannel(this)
+        PrayerAlarms.createChannels(this)
     }
 }

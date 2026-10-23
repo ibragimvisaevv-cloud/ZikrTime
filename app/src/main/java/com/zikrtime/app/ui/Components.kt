@@ -1,36 +1,346 @@
 package com.zikrtime.app.ui
 
+import android.content.Context
+import android.content.res.Resources
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Slider
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.zikrtime.app.R
+import com.zikrtime.app.i18n.Lang
+import com.zikrtime.app.prayer.AsrMadhab
+import com.zikrtime.app.prayer.CalcMethod
+import com.zikrtime.app.prayer.Prayer
+import com.zikrtime.app.ui.theme.LocalDarkTheme
 import java.time.LocalDate
+import java.time.ZonedDateTime
 import java.time.chrono.HijrahDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoField
-import java.util.Locale
 import kotlin.math.cos
 import kotlin.math.sin
 
 /** Счётчик возвращений в приложение: экраны перечитывают разрешения, когда пользователь вернулся из настроек. */
 object AppEvents {
     var resumeCount by mutableIntStateOf(0)
+}
+
+// ---------------- Каркас экранов ----------------
+
+/** Экран второго уровня: заголовок с кнопкой «назад» и прокручиваемое содержимое. */
+@Composable
+fun ScreenScaffold(
+    title: String,
+    onBack: () -> Unit,
+    actions: @Composable RowScope.() -> Unit = {},
+    scrollable: Boolean = true,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .windowInsetsPadding(WindowInsets.statusBars),
+    ) {
+        Row(
+            Modifier.fillMaxWidth().padding(start = 4.dp, end = 8.dp, top = 4.dp, bottom = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            IconButton(onClick = onBack) {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.action_back))
+            }
+            Text(
+                title,
+                style = MaterialTheme.typography.titleLarge,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.weight(1f),
+            )
+            actions()
+        }
+        val body = Modifier
+            .fillMaxWidth()
+            .weight(1f)
+            .let { if (scrollable) it.verticalScroll(rememberScrollState()) else it }
+            .padding(horizontal = 20.dp)
+        Column(body, verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            Spacer(Modifier.height(4.dp))
+            content()
+            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
+        }
+    }
+}
+
+/** Содержимое вкладки: заголовок крупно и прокрутка. */
+@Composable
+fun TabColumn(title: String? = null, subtitle: String? = null, content: @Composable ColumnScope.() -> Unit) {
+    Column(
+        Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 20.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        Spacer(Modifier.height(8.dp))
+        if (title != null) {
+            Column {
+                Text(title, style = MaterialTheme.typography.headlineMedium)
+                if (subtitle != null) {
+                    Text(subtitle, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+        }
+        content()
+        Spacer(Modifier.height(24.dp))
+    }
+}
+
+// ---------------- Карточки и строки ----------------
+
+@Composable
+fun ZCard(
+    modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null,
+    color: Color = MaterialTheme.colorScheme.surfaceContainerLow,
+    padding: PaddingValues = PaddingValues(20.dp),
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    val border = if (LocalDarkTheme.current || color != MaterialTheme.colorScheme.surfaceContainerLow) null
+    else BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+    val shape = RoundedCornerShape(24.dp)
+    if (onClick != null) {
+        Surface(onClick = onClick, modifier = modifier.fillMaxWidth(), shape = shape, color = color, border = border) {
+            Column(Modifier.padding(padding), content = content)
+        }
+    } else {
+        Surface(modifier = modifier.fillMaxWidth(), shape = shape, color = color, border = border) {
+            Column(Modifier.padding(padding), content = content)
+        }
+    }
+}
+
+@Composable
+fun SectionLabel(text: String, modifier: Modifier = Modifier) {
+    Text(
+        text,
+        style = MaterialTheme.typography.labelLarge,
+        color = MaterialTheme.colorScheme.primary,
+        modifier = modifier.padding(start = 4.dp, top = 4.dp),
+    )
+}
+
+@Composable
+fun IconBadge(
+    painter: Painter,
+    modifier: Modifier = Modifier,
+    tint: Color = MaterialTheme.colorScheme.primary,
+    container: Color = MaterialTheme.colorScheme.primaryContainer,
+    size: Dp = 40.dp,
+) {
+    Box(
+        modifier.size(size).clip(RoundedCornerShape(size * 0.32f)).background(container),
+        contentAlignment = Alignment.Center,
+    ) {
+        Icon(painter, contentDescription = null, tint = tint, modifier = Modifier.size(size * 0.55f))
+    }
+}
+
+/** Строка настройки: значок, заголовок, пояснение и стрелка (или свой элемент справа). */
+@Composable
+fun SettingRow(
+    title: String,
+    subtitle: String? = null,
+    icon: Painter? = null,
+    onClick: (() -> Unit)? = null,
+    trailing: (@Composable () -> Unit)? = null,
+) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(16.dp))
+            .let { if (onClick != null) it.clickable(onClick = onClick) else it }
+            .padding(vertical = 10.dp, horizontal = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        if (icon != null) {
+            IconBadge(icon)
+            Spacer(Modifier.width(14.dp))
+        }
+        Column(Modifier.weight(1f)) {
+            Text(title, style = MaterialTheme.typography.bodyLarge)
+            if (subtitle != null) {
+                Text(subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        }
+        if (trailing != null) {
+            Spacer(Modifier.width(8.dp))
+            trailing()
+        } else if (onClick != null) {
+            Icon(
+                Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+    }
+}
+
+@Composable
+fun SwitchRow(
+    title: String,
+    checked: Boolean,
+    onChange: (Boolean) -> Unit,
+    subtitle: String? = null,
+    icon: Painter? = null,
+    enabled: Boolean = true,
+) {
+    SettingRow(
+        title = title,
+        subtitle = subtitle,
+        icon = icon,
+        onClick = if (enabled) ({ onChange(!checked) }) else null,
+        trailing = { Switch(checked = checked, onCheckedChange = if (enabled) onChange else null, enabled = enabled) },
+    )
+}
+
+/** Ползунок со значением справа от заголовка. */
+@Composable
+fun SliderRow(
+    title: String,
+    valueText: String,
+    value: Int,
+    range: IntRange,
+    step: Int,
+    onChange: (Int) -> Unit,
+) {
+    Column {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(title, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
+            Text(valueText, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+        }
+        Slider(
+            value = value.toFloat(),
+            onValueChange = { onChange(((it / step).toInt() * step + if (it % step >= step / 2f) step else 0).coerceIn(range)) },
+            valueRange = range.first.toFloat()..range.last.toFloat(),
+            steps = ((range.last - range.first) / step - 1).coerceAtLeast(0),
+        )
+    }
+}
+
+@Composable
+fun PrimaryButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true) {
+    Button(
+        onClick = onClick,
+        enabled = enabled,
+        shape = RoundedCornerShape(16.dp),
+        modifier = modifier.fillMaxWidth().height(54.dp),
+    ) { Text(text, style = MaterialTheme.typography.titleSmall) }
+}
+
+@Composable
+fun TonalButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true) {
+    FilledTonalButton(
+        onClick = onClick,
+        enabled = enabled,
+        shape = RoundedCornerShape(16.dp),
+        modifier = modifier.fillMaxWidth().height(50.dp),
+    ) { Text(text, style = MaterialTheme.typography.titleSmall) }
+}
+
+@Composable
+fun GhostButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, color: Color = MaterialTheme.colorScheme.primary) {
+    OutlinedButton(
+        onClick = onClick,
+        shape = RoundedCornerShape(16.dp),
+        colors = ButtonDefaults.outlinedButtonColors(contentColor = color),
+        border = BorderStroke(1.dp, color.copy(alpha = 0.5f)),
+        modifier = modifier.fillMaxWidth().height(50.dp),
+    ) { Text(text, style = MaterialTheme.typography.titleSmall) }
+}
+
+/** Кольцевой индикатор прогресса. */
+@Composable
+fun ProgressRing(
+    progress: Float,
+    modifier: Modifier = Modifier,
+    color: Color = MaterialTheme.colorScheme.primary,
+    track: Color = MaterialTheme.colorScheme.surfaceVariant,
+    stroke: Dp = 10.dp,
+    content: @Composable () -> Unit = {},
+) {
+    Box(modifier, contentAlignment = Alignment.Center) {
+        Canvas(Modifier.fillMaxSize()) {
+            val w = stroke.toPx()
+            val inset = w / 2
+            val arcSize = androidx.compose.ui.geometry.Size(size.width - w, size.height - w)
+            drawArc(track, 0f, 360f, false, topLeft = Offset(inset, inset), size = arcSize, style = Stroke(w))
+            drawArc(
+                color, -90f, 360f * progress.coerceIn(0f, 1f), false,
+                topLeft = Offset(inset, inset), size = arcSize, style = Stroke(w, cap = StrokeCap.Round),
+            )
+        }
+        content()
+    }
 }
 
 /** Фоновый узор из восьмиконечных звёзд (руб эль-хизб). */
@@ -55,7 +365,6 @@ fun StarPattern(modifier: Modifier = Modifier, color: Color, cell: Float = 64f) 
 }
 
 private fun star(c: Offset, r: Float): Path {
-    // Два квадрата, повёрнутые на 45° относительно друг друга.
     val path = Path()
     for (square in 0..1) {
         for (i in 0..3) {
@@ -69,74 +378,136 @@ private fun star(c: Offset, r: Float): Path {
     return path
 }
 
+/** Круглая отметка «сделано». */
 @Composable
-fun SectionCard(
-    modifier: Modifier = Modifier,
-    title: String? = null,
-    content: @Composable ColumnScope.() -> Unit,
-) {
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+fun CheckCircle(checked: Boolean, enabled: Boolean, onToggle: () -> Unit, contentDescription: String) {
+    val scheme = MaterialTheme.colorScheme
+    Box(
+        Modifier
+            .size(48.dp)
+            .clip(CircleShape)
+            .clickable(enabled = enabled, onClick = onToggle),
+        contentAlignment = Alignment.Center,
     ) {
-        Column(Modifier.padding(20.dp)) {
-            if (title != null) {
-                Text(
-                    title,
-                    style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.padding(bottom = 12.dp),
-                )
+        Box(
+            Modifier
+                .size(26.dp)
+                .clip(CircleShape)
+                .background(if (checked) scheme.primary else Color.Transparent),
+            contentAlignment = Alignment.Center,
+        ) {
+            if (checked) {
+                Icon(painterResource(R.drawable.ic_check), contentDescription, tint = scheme.onPrimary, modifier = Modifier.size(16.dp))
+            } else {
+                Canvas(Modifier.fillMaxSize()) {
+                    drawCircle(
+                        color = scheme.outline.copy(alpha = if (enabled) 0.9f else 0.3f),
+                        radius = size.minDimension / 2 - 1.dp.toPx(),
+                        style = Stroke(1.8.dp.toPx()),
+                    )
+                }
             }
-            content()
         }
     }
 }
 
-// ---------------- Тексты и даты ----------------
+// ---------------- Подписи ----------------
 
-private val ru = Locale("ru")
+@Composable
+fun prayerName(p: Prayer): String = stringResource(
+    when (p) {
+        Prayer.FAJR -> R.string.prayer_fajr
+        Prayer.SUNRISE -> R.string.prayer_sunrise
+        Prayer.DHUHR -> R.string.prayer_dhuhr
+        Prayer.ASR -> R.string.prayer_asr
+        Prayer.MAGHRIB -> R.string.prayer_maghrib
+        Prayer.ISHA -> R.string.prayer_isha
+    },
+)
 
-/** 1 день, 2 дня, 5 дней. */
-fun plural(n: Int, one: String, few: String, many: String): String {
-    val mod10 = n % 10
-    val mod100 = n % 100
-    val word = when {
-        mod10 == 1 && mod100 != 11 -> one
-        mod10 in 2..4 && mod100 !in 12..14 -> few
-        else -> many
-    }
-    return "$n $word"
+fun prayerName(resources: Resources, p: Prayer): String = resources.getString(
+    when (p) {
+        Prayer.FAJR -> R.string.prayer_fajr
+        Prayer.SUNRISE -> R.string.prayer_sunrise
+        Prayer.DHUHR -> R.string.prayer_dhuhr
+        Prayer.ASR -> R.string.prayer_asr
+        Prayer.MAGHRIB -> R.string.prayer_maghrib
+        Prayer.ISHA -> R.string.prayer_isha
+    },
+)
+
+@DrawableRes
+fun prayerIconRes(p: Prayer): Int = when (p) {
+    Prayer.FAJR -> R.drawable.ic_prayer_fajr
+    Prayer.SUNRISE -> R.drawable.ic_prayer_sunrise
+    Prayer.DHUHR -> R.drawable.ic_prayer_dhuhr
+    Prayer.ASR -> R.drawable.ic_prayer_asr
+    Prayer.MAGHRIB -> R.drawable.ic_prayer_maghrib
+    Prayer.ISHA -> R.drawable.ic_prayer_isha
 }
 
-fun days(n: Int) = plural(n, "день", "дня", "дней")
+@Composable
+fun methodName(m: CalcMethod): String = stringResource(
+    when (m) {
+        CalcMethod.RUSSIA -> R.string.method_russia
+        CalcMethod.MWL -> R.string.method_mwl
+        CalcMethod.TURKEY -> R.string.method_turkey
+        CalcMethod.MAKKAH -> R.string.method_makkah
+        CalcMethod.EGYPT -> R.string.method_egypt
+        CalcMethod.KARACHI -> R.string.method_karachi
+        CalcMethod.ISNA -> R.string.method_isna
+    },
+)
 
-/** 75 → «1 ч 15 мин». */
-fun formatMinutes(totalMinutes: Long): String {
+@Composable
+fun madhabName(m: AsrMadhab): String = stringResource(
+    when (m) {
+        AsrMadhab.STANDARD -> R.string.madhab_standard
+        AsrMadhab.HANAFI -> R.string.madhab_hanafi
+    },
+)
+
+/** «1 ч 15 мин», «45 мин», «2 ч». */
+fun durationText(resources: Resources, totalMinutes: Long): String {
     val h = totalMinutes / 60
     val m = totalMinutes % 60
     return when {
-        h == 0L -> "$m мин"
-        m == 0L -> "$h ч"
-        else -> "$h ч $m мин"
+        h == 0L -> resources.getString(R.string.duration_m, m.toInt())
+        m == 0L -> resources.getString(R.string.duration_h, h.toInt())
+        else -> resources.getString(R.string.duration_h_m, h.toInt(), m.toInt())
     }
 }
 
-fun gregorianDate(date: LocalDate): String =
-    date.format(DateTimeFormatter.ofPattern("EEEE, d MMMM", ru))
+@Composable
+fun durationText(totalMinutes: Long): String = durationText(LocalContext.current.resources, totalMinutes)
 
-private val hijriMonths = listOf(
-    "Мухаррам", "Сафар", "Раби аль-авваль", "Раби ас-сани", "Джумада аль-уля", "Джумада ас-сания",
-    "Раджаб", "Шаабан", "Рамадан", "Шавваль", "Зуль-каада", "Зуль-хиджа",
-)
+@Composable
+fun daysText(n: Int): String = pluralStringResource(R.plurals.days, n, n)
+
+/** Формат времени по настройкам телефона (24 или 12 часов). */
+fun clockFormatter(context: Context): DateTimeFormatter =
+    if (android.text.format.DateFormat.is24HourFormat(context)) DateTimeFormatter.ofPattern("HH:mm", Lang.locale(context))
+    else DateTimeFormatter.ofPattern("h:mm a", Lang.locale(context))
+
+@Composable
+fun clock(time: ZonedDateTime): String {
+    val context = LocalContext.current
+    return time.format(clockFormatter(context))
+}
+
+@Composable
+fun gregorianDate(date: LocalDate): String {
+    val locale = Lang.locale(LocalContext.current)
+    return date.format(DateTimeFormatter.ofPattern("EEEE, d MMMM", locale)).replaceFirstChar { it.uppercase(locale) }
+}
 
 /** Дата по хиджре (календарь Умм аль-Кура; местное начало месяца может отличаться на день). */
-fun hijriDate(date: LocalDate): String = runCatching {
-    val h = HijrahDate.from(date)
-    val day = h.get(ChronoField.DAY_OF_MONTH)
-    val month = hijriMonths[h.get(ChronoField.MONTH_OF_YEAR) - 1]
-    val year = h.get(ChronoField.YEAR)
-    "$day $month $year"
-}.getOrDefault("")
-
-val clock: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+@Composable
+fun hijriDate(date: LocalDate): String {
+    val months = stringArrayResource(R.array.hijri_months)
+    val parts = runCatching {
+        val h = HijrahDate.from(date)
+        Triple(h.get(ChronoField.DAY_OF_MONTH), months[h.get(ChronoField.MONTH_OF_YEAR) - 1], h.get(ChronoField.YEAR))
+    }.getOrNull() ?: return ""
+    return stringResource(R.string.hijri_date_format, parts.first, parts.second, parts.third)
+}

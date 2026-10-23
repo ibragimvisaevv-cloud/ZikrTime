@@ -1,6 +1,7 @@
 package com.zikrtime.app.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,13 +10,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -32,43 +32,58 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.zikrtime.app.R
+import com.zikrtime.app.alarm.FajrAlarm
+import com.zikrtime.app.data.Cities
 import com.zikrtime.app.data.Store
 import com.zikrtime.app.data.Streaks
 import com.zikrtime.app.prayer.OnlineTimes
 import com.zikrtime.app.prayer.Prayer
 import com.zikrtime.app.prayer.PrayerSchedule
+import com.zikrtime.app.prayer.Qibla
 import com.zikrtime.app.screentime.ScreenTime
 import com.zikrtime.app.ui.theme.Cream
 import com.zikrtime.app.ui.theme.Emerald
 import com.zikrtime.app.ui.theme.EmeraldDeep
 import com.zikrtime.app.ui.theme.Gold
+import com.zikrtime.app.ui.theme.Tabular
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import java.time.Duration
 import java.time.ZonedDateTime
+import kotlin.math.roundToInt
 
 @Composable
-fun HomeScreen(onOpenQuiz: () -> Unit, onOpenControl: () -> Unit) {
+fun HomeScreen() {
+    val nav = LocalNav.current
     val context = LocalContext.current
     var now by remember { mutableStateOf(ZonedDateTime.now()) }
     LaunchedEffect(Unit) {
         while (true) {
-            delay(20_000)
+            delay(15_000)
             now = ZonedDateTime.now()
         }
     }
     val today = now.toLocalDate()
-    // Пересчитываем при смене дня, города или метода расчёта.
-    // Пересчитываем при смене дня, города, метода, поправок или после загрузки из интернета.
     val adjustments = Prayer.entries.map { Store.adjustment(it) }
     val times = remember(today, Store.location, Store.method, Store.madhab, Store.onlineTimes, OnlineTimes.version, adjustments) {
         PrayerSchedule.forDate(today)
     }
     val next = remember(now, times) { PrayerSchedule.next(now) }
+    val previousStart = remember(now, times) { PrayerSchedule.recentStarts(now).map { it.time }.filter { !it.isAfter(now.toInstant()) }.maxOrNull() }
+    val current = remember(now, times) {
+        Prayer.obligatory.lastOrNull { !times[it].isAfter(now) }?.takeIf { p ->
+            // Утренний намаз заканчивается с восходом.
+            !(p == Prayer.FAJR && !times[Prayer.SUNRISE].isAfter(now))
+        }
+    }
 
     var usedMillis by remember { mutableStateOf<Long?>(null) }
     val resume = AppEvents.resumeCount
@@ -76,162 +91,261 @@ fun HomeScreen(onOpenQuiz: () -> Unit, onOpenControl: () -> Unit) {
         usedMillis = withContext(Dispatchers.IO) { ScreenTime.usedTodayMillis(context) }
     }
 
-    Column(
-        Modifier
-            .verticalScroll(rememberScrollState())
-            .padding(horizontal = 20.dp, vertical = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        Column {
-            Text("Ассаляму алейкум", style = MaterialTheme.typography.headlineSmall)
-            Text(
-                "${gregorianDate(today).replaceFirstChar { it.uppercase() }} · ${hijriDate(today)}",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+    TabColumn {
+        // Шапка: приветствие, даты и город
+        Row(verticalAlignment = Alignment.Top) {
+            Column(Modifier.weight(1f)) {
+                Text(stringResource(R.string.greeting), style = MaterialTheme.typography.headlineSmall)
+                Text(
+                    gregorianDate(today) + " · " + hijriDate(today),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
+        Surface(
+            onClick = { nav.open(Screen.CITY) },
+            shape = RoundedCornerShape(50),
+            color = MaterialTheme.colorScheme.surfaceContainerHigh,
+        ) {
+            Row(Modifier.padding(start = 10.dp, end = 14.dp, top = 6.dp, bottom = 6.dp), verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Default.LocationOn, contentDescription = null, modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
+                Spacer(Modifier.width(6.dp))
+                Text(
+                    Cities.displayName(context, Store.location),
+                    style = MaterialTheme.typography.labelLarge,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
         }
 
-        NextPrayerHero(prayer = next.first, at = next.second, now = now, city = Store.location.name)
+        NextPrayerHero(next.first, next.second, previousStart?.let { java.time.Instant.from(it) }, now)
 
-        SectionCard(title = "Намазы сегодня") {
+        // Намазы на сегодня
+        ZCard(padding = androidx.compose.foundation.layout.PaddingValues(horizontal = 12.dp, vertical = 12.dp)) {
+            Text(
+                stringResource(R.string.home_today),
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(start = 8.dp, top = 4.dp, bottom = 8.dp),
+            )
             val prayed = Store.prayedOn(today)
             Prayer.entries.forEach { p ->
-                val time = times[p]
-                val started = !time.isAfter(now)
-                val isNext = p == next.first && next.second.toLocalDate() == today
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(if (isNext) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceContainerLow)
-                        .padding(horizontal = 12.dp, vertical = if (p.isPrayer) 2.dp else 12.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text(
-                        p.title,
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = if (isNext) FontWeight.SemiBold else FontWeight.Normal,
-                        color = if (p.isPrayer) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.weight(1f),
-                    )
-                    Text(
-                        time.format(clock),
-                        style = MaterialTheme.typography.titleMedium,
-                        color = if (p.isPrayer) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                    if (p.isPrayer) {
-                        Checkbox(
-                            checked = p in prayed,
-                            enabled = started,
-                            onCheckedChange = { Store.setPrayed(today, p, it) },
-                        )
-                    } else {
-                        Spacer(Modifier.width(48.dp))
-                    }
-                }
+                PrayerRow(
+                    prayer = p,
+                    time = clock(times[p]),
+                    isCurrent = p == current,
+                    started = !times[p].isAfter(now),
+                    done = p in prayed,
+                    onToggle = { Store.setPrayed(today, p, p !in prayed) },
+                )
             }
             Text(
-                (if (PrayerSchedule.isOnline(today)) "Время: aladhan.com, " else "Время: расчёт на телефоне, ") +
-                    Store.method.title + ". Отмечайте совершённые намазы — так растёт серия.",
+                stringResource(
+                    if (PrayerSchedule.isOnline(today)) R.string.home_source_online else R.string.home_source_local,
+                    methodName(Store.method),
+                ),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(top = 8.dp),
+                modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 8.dp, bottom = 4.dp),
             )
         }
 
-        ScreenTimeCard(usedMillis = usedMillis, onOpenQuiz = onOpenQuiz, onOpenControl = onOpenControl)
+        // Быстрые действия
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            val qibla = Qibla.bearing(Store.location.latitude, Store.location.longitude).roundToInt()
+            ActionTile(
+                icon = R.drawable.ic_qibla,
+                title = stringResource(R.string.qibla_title),
+                value = "$qibla°",
+                modifier = Modifier.weight(1f),
+                onClick = { nav.open(Screen.QIBLA) },
+            )
+            ActionTile(
+                icon = R.drawable.ic_tasbih,
+                title = stringResource(R.string.tasbih_title),
+                value = Store.tasbihToday(today).toString(),
+                modifier = Modifier.weight(1f),
+                onClick = { nav.open(Screen.TASBIH) },
+            )
+            val alarmAt = if (Store.alarmEnabled) FajrAlarm.nextTrigger(now) else null
+            ActionTile(
+                icon = R.drawable.ic_alarm,
+                title = stringResource(R.string.alarm_short),
+                value = alarmAt?.let { clock(it) } ?: stringResource(R.string.state_off),
+                modifier = Modifier.weight(1f),
+                onClick = { nav.open(Screen.ALARM) },
+            )
+        }
+
+        FocusSummary(usedMillis = usedMillis, onOpen = { nav.tab = Tab.FOCUS }, onQuiz = { nav.startQuiz(null) })
 
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             StreakCard(
-                title = "Серия знаний",
+                title = stringResource(R.string.streak_knowledge),
                 value = Streaks.current(Store.quizDays, today),
-                hint = "дней с раундом викторины",
+                hint = stringResource(R.string.streak_knowledge_hint),
                 modifier = Modifier.weight(1f),
             )
             StreakCard(
-                title = "Серия намазов",
+                title = stringResource(R.string.streak_prayers),
                 value = Streaks.current(Store.prayerDays, today),
-                hint = "дней со всеми пятью намазами",
+                hint = stringResource(R.string.streak_prayers_hint),
                 modifier = Modifier.weight(1f),
             )
         }
-        Spacer(Modifier.height(8.dp))
     }
 }
 
 @Composable
-private fun NextPrayerHero(prayer: Prayer, at: ZonedDateTime, now: ZonedDateTime, city: String) {
-    val left = Duration.between(now, at).toMinutes().coerceAtLeast(0)
+private fun NextPrayerHero(prayer: Prayer, at: ZonedDateTime, previous: java.time.Instant?, now: ZonedDateTime) {
+    val left = Duration.between(now, at).toMinutes().coerceAtLeast(0) + 1
+    val progress = previous?.let {
+        val total = Duration.between(it, at.toInstant()).toSeconds().toFloat()
+        val passed = Duration.between(it, now.toInstant()).toSeconds().toFloat()
+        if (total > 0) (passed / total).coerceIn(0f, 1f) else null
+    }
     Box(
         Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(28.dp))
             .background(Brush.linearGradient(listOf(Emerald, EmeraldDeep))),
     ) {
-        StarPattern(Modifier.matchParentSize(), color = Gold.copy(alpha = 0.13f))
+        StarPattern(Modifier.matchParentSize(), color = Gold.copy(alpha = 0.12f))
         Column(Modifier.padding(24.dp)) {
-            Text("Следующий намаз", style = MaterialTheme.typography.labelLarge, color = Cream.copy(alpha = 0.8f))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) {
+                    Text(stringResource(R.string.home_next_prayer), style = MaterialTheme.typography.labelLarge, color = Cream.copy(alpha = 0.8f))
+                    Spacer(Modifier.height(4.dp))
+                    Text(prayerName(prayer), fontSize = 34.sp, fontWeight = FontWeight.SemiBold, color = Cream, maxLines = 1)
+                }
+                Icon(painterResource(prayerIconRes(prayer)), contentDescription = null, tint = Gold, modifier = Modifier.size(44.dp))
+            }
+            Spacer(Modifier.height(6.dp))
             Row(verticalAlignment = Alignment.Bottom) {
-                Text(prayer.title, fontSize = 34.sp, fontWeight = FontWeight.SemiBold, color = Cream)
+                Text(clock(at), fontSize = 40.sp, fontWeight = FontWeight.Light, color = Gold, style = Tabular)
                 Spacer(Modifier.width(12.dp))
                 Text(
-                    at.format(clock),
-                    fontSize = 34.sp,
-                    fontWeight = FontWeight.Light,
-                    color = Gold,
+                    stringResource(R.string.home_in_time, durationText(left)),
+                    style = MaterialTheme.typography.titleMedium,
+                    color = Cream,
+                    modifier = Modifier.padding(bottom = 8.dp),
                 )
             }
-            Spacer(Modifier.height(4.dp))
-            Text("через ${formatMinutes(left + 1)}", style = MaterialTheme.typography.titleMedium, color = Cream)
-            Spacer(Modifier.height(12.dp))
-            Text(city, style = MaterialTheme.typography.bodySmall, color = Cream.copy(alpha = 0.7f))
+            if (progress != null) {
+                Spacer(Modifier.height(14.dp))
+                LinearProgressIndicator(
+                    progress = { progress },
+                    modifier = Modifier.fillMaxWidth().height(6.dp),
+                    color = Gold,
+                    trackColor = Cream.copy(alpha = 0.18f),
+                    strokeCap = StrokeCap.Round,
+                    drawStopIndicator = {},
+                )
+            }
         }
     }
 }
 
 @Composable
-private fun ScreenTimeCard(usedMillis: Long?, onOpenQuiz: () -> Unit, onOpenControl: () -> Unit) {
-    SectionCard(title = "Соцсети сегодня") {
-        if (!Store.blockingEnabled || usedMillis == null) {
+private fun PrayerRow(prayer: Prayer, time: String, isCurrent: Boolean, started: Boolean, done: Boolean, onToggle: () -> Unit) {
+    val scheme = MaterialTheme.colorScheme
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(16.dp))
+            .background(if (isCurrent) scheme.primaryContainer else androidx.compose.ui.graphics.Color.Transparent)
+            .padding(start = 8.dp, end = 0.dp, top = 2.dp, bottom = 2.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        IconBadge(
+            painterResource(prayerIconRes(prayer)),
+            tint = if (prayer.isPrayer) scheme.primary else scheme.onSurfaceVariant,
+            container = if (isCurrent) scheme.surfaceContainerLowest else scheme.surfaceContainer,
+            size = 38.dp,
+        )
+        Spacer(Modifier.width(14.dp))
+        Column(Modifier.weight(1f)) {
             Text(
-                "Контроль времени пока не настроен. Задайте дневной лимит, и соцсети будут закрываться, когда он закончится.",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            Spacer(Modifier.height(12.dp))
-            Button(onClick = onOpenControl) { Text("Настроить") }
-            return@SectionCard
-        }
-        val usedMin = usedMillis / 60_000
-        val allowed = Store.allowedMinutes()
-        Row(verticalAlignment = Alignment.Bottom) {
-            Text(formatMinutes(usedMin), style = MaterialTheme.typography.headlineMedium)
-            Text(
-                "  из ${formatMinutes(allowed.toLong())}",
+                prayerName(prayer),
                 style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(bottom = 4.dp),
+                fontWeight = if (isCurrent) FontWeight.SemiBold else FontWeight.Normal,
+                color = if (prayer.isPrayer) scheme.onSurface else scheme.onSurfaceVariant,
             )
+            if (isCurrent) {
+                Text(stringResource(R.string.home_now), style = MaterialTheme.typography.labelSmall, color = scheme.primary)
+            }
         }
-        Spacer(Modifier.height(8.dp))
-        LinearProgressIndicator(
-            progress = { (usedMin.toFloat() / allowed.coerceAtLeast(1)).coerceIn(0f, 1f) },
-            modifier = Modifier.fillMaxWidth().height(10.dp),
-            strokeCap = StrokeCap.Round,
-            color = if (usedMin >= allowed) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
-        )
-        val bonus = Store.bonusMinutes()
-        Spacer(Modifier.height(8.dp))
         Text(
-            "Лимит ${formatMinutes(Store.dailyLimitMinutes.toLong())}" +
-                if (bonus > 0) " + заработано ${formatMinutes(bonus.toLong())}" else "",
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            time,
+            style = MaterialTheme.typography.titleMedium.merge(Tabular),
+            color = if (prayer.isPrayer) scheme.onSurface else scheme.onSurfaceVariant,
         )
-        if (bonus < Store.MAX_BONUS_MINUTES_PER_DAY) {
-            Spacer(Modifier.height(12.dp))
-            FilledTonalButton(onClick = onOpenQuiz) {
-                Text("Ответить на вопросы: +${Store.BONUS_MINUTES_PER_ROUND} мин")
+        if (prayer.isPrayer) {
+            CheckCircle(checked = done, enabled = started, onToggle = onToggle, contentDescription = stringResource(R.string.home_mark_prayed))
+        } else {
+            Spacer(Modifier.width(48.dp))
+        }
+    }
+}
+
+@Composable
+private fun ActionTile(icon: Int, title: String, value: String, modifier: Modifier, onClick: () -> Unit) {
+    ZCard(modifier = modifier, onClick = onClick, padding = androidx.compose.foundation.layout.PaddingValues(14.dp)) {
+        IconBadge(painterResource(icon), size = 36.dp)
+        Spacer(Modifier.height(10.dp))
+        Text(title, style = MaterialTheme.typography.labelLarge, maxLines = 1, overflow = TextOverflow.Ellipsis)
+        Text(
+            value,
+            style = MaterialTheme.typography.titleMedium.merge(Tabular),
+            color = MaterialTheme.colorScheme.primary,
+            maxLines = 1,
+        )
+    }
+}
+
+@Composable
+private fun FocusSummary(usedMillis: Long?, onOpen: () -> Unit, onQuiz: () -> Unit) {
+    if (!Store.blockingEnabled || usedMillis == null) {
+        ZCard(onClick = onOpen) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                IconBadge(painterResource(R.drawable.ic_nav_focus), container = MaterialTheme.colorScheme.secondaryContainer, tint = MaterialTheme.colorScheme.secondary)
+                Spacer(Modifier.width(14.dp))
+                Column(Modifier.weight(1f)) {
+                    Text(stringResource(R.string.focus_cta_title), style = MaterialTheme.typography.titleMedium)
+                    Text(stringResource(R.string.focus_cta_text), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+        }
+        return
+    }
+    val usedMin = usedMillis / 60_000
+    val allowed = Store.allowedMinutes()
+    ZCard(onClick = onOpen) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            ProgressRing(
+                progress = usedMin.toFloat() / allowed.coerceAtLeast(1),
+                modifier = Modifier.size(64.dp),
+                stroke = 7.dp,
+                color = if (usedMin >= allowed) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
+            ) {
+                Text("${(usedMin * 100 / allowed.coerceAtLeast(1)).coerceAtMost(999)}%", style = MaterialTheme.typography.labelMedium)
+            }
+            Spacer(Modifier.width(16.dp))
+            Column(Modifier.weight(1f)) {
+                Text(stringResource(R.string.focus_today), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(
+                    stringResource(R.string.focus_used_of, durationText(usedMin), durationText(allowed.toLong())),
+                    style = MaterialTheme.typography.titleMedium,
+                )
+                if (Store.bonusMinutes() < Store.MAX_BONUS_MINUTES_PER_DAY) {
+                    Text(
+                        stringResource(R.string.focus_earn_more, Store.BONUS_MINUTES_PER_ROUND),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.clickable(onClick = onQuiz).padding(top = 2.dp),
+                    )
+                }
             }
         }
     }
@@ -239,23 +353,9 @@ private fun ScreenTimeCard(usedMillis: Long?, onOpenQuiz: () -> Unit, onOpenCont
 
 @Composable
 private fun StreakCard(title: String, value: Int, hint: String, modifier: Modifier = Modifier) {
-    Surface(
-        modifier = modifier,
-        shape = RoundedCornerShape(24.dp),
-        color = MaterialTheme.colorScheme.secondaryContainer,
-    ) {
-        Column(Modifier.padding(16.dp)) {
-            Text(title, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondaryContainer)
-            Text(
-                days(value),
-                style = MaterialTheme.typography.headlineSmall,
-                color = MaterialTheme.colorScheme.onSecondaryContainer,
-            )
-            Text(
-                hint,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.75f),
-            )
-        }
+    ZCard(modifier = modifier, color = MaterialTheme.colorScheme.secondaryContainer, padding = androidx.compose.foundation.layout.PaddingValues(16.dp)) {
+        Text(title, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondaryContainer)
+        Text(daysText(value), style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.onSecondaryContainer)
+        Text(hint, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.75f))
     }
 }

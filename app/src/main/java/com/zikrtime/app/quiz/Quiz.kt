@@ -1,16 +1,19 @@
 package com.zikrtime.app.quiz
 
 import android.content.Context
-import org.json.JSONArray
+import com.zikrtime.app.i18n.Lang
+import org.json.JSONObject
 import kotlin.random.Random
 
 data class Question(
+    val id: String,
     val category: String,
     val text: String,
     val arabic: String?,
     val options: List<String>,
     val answerIndex: Int,
-    val explanation: String,
+    /** Короткая справка по теме — показывается после ответа. */
+    val info: String,
 ) {
     val correctOption: String get() = options[answerIndex]
 
@@ -21,34 +24,57 @@ data class Question(
     }
 }
 
-/** Вопросы лежат в assets/questions.json — их можно дополнять без изменения кода. */
+class QuizBank(val categories: List<Pair<String, String>>, val questions: List<Question>) {
+    fun categoryName(id: String): String = categories.firstOrNull { it.first == id }?.second ?: id
+}
+
+/**
+ * Вопросы лежат в assets/quiz/<язык>.json (общие с приложением для iPhone).
+ * Их можно дополнять без изменения кода — см. tools/quiz.
+ */
 object QuestionBank {
 
-    @Volatile
-    private var cached: List<Question>? = null
+    private val cache = HashMap<String, QuizBank>()
 
-    fun all(context: Context): List<Question> {
-        cached?.let { return it }
-        val json = context.assets.open("questions.json").bufferedReader(Charsets.UTF_8).use { it.readText() }
-        val parsed = parse(json)
-        cached = parsed
-        return parsed
+    @Synchronized
+    fun load(context: Context): QuizBank {
+        val lang = Lang.content(context)
+        cache[lang]?.let { return it }
+        val assets = context.assets
+        val name = listOf(lang, "en", "ru").first { runCatching { assets.open("quiz/$it.json").close() }.isSuccess }
+        val json = assets.open("quiz/$name.json").bufferedReader(Charsets.UTF_8).use { it.readText() }
+        return parse(json).also { cache[lang] = it }
     }
 
-    fun parse(json: String): List<Question> {
-        val array = JSONArray(json)
-        return (0 until array.length()).map { i ->
-            val o = array.getJSONObject(i)
+    fun parse(json: String): QuizBank {
+        val root = JSONObject(json)
+        val cats = root.getJSONArray("categories").let { a ->
+            (0 until a.length()).map { a.getJSONObject(it).let { c -> c.getString("id") to c.getString("name") } }
+        }
+        val qs = root.getJSONArray("questions")
+        val questions = (0 until qs.length()).map { i ->
+            val o = qs.getJSONObject(i)
             val opts = o.getJSONArray("options")
             Question(
-                category = o.getString("category"),
-                text = o.getString("question"),
+                id = o.getString("id"),
+                category = o.getString("cat"),
+                text = o.getString("q"),
                 arabic = o.optString("arabic").takeIf { it.isNotBlank() },
                 options = (0 until opts.length()).map { opts.getString(it) },
-                answerIndex = o.getInt("answer"),
-                explanation = o.optString("explanation"),
+                answerIndex = o.optInt("answer", 0),
+                info = o.optString("info"),
             )
         }
+        return QuizBank(cats, questions)
+    }
+
+    /** Порядок вопросов для раунда: сначала те, что давно не встречались. */
+    fun roundOrder(bank: QuizBank, category: String?, recent: List<String>, random: Random = Random.Default): List<Question> {
+        val pool = bank.questions.filter { category == null || it.category == category }.ifEmpty { bank.questions }
+        val recentSet = recent.toSet()
+        val fresh = pool.filter { it.id !in recentSet }.shuffled(random)
+        val seen = pool.filter { it.id in recentSet }.shuffled(random)
+        return fresh + seen
     }
 }
 

@@ -7,16 +7,22 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.media.AudioAttributes
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.zikrtime.app.MainActivity
 import com.zikrtime.app.R
+import com.zikrtime.app.alarm.FajrAlarm
+import com.zikrtime.app.data.Cities
 import com.zikrtime.app.data.Store
+import com.zikrtime.app.i18n.Lang
+import com.zikrtime.app.screentime.GuardService
+import com.zikrtime.app.ui.clockFormatter
+import com.zikrtime.app.ui.prayerName
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
 
 /**
  * Уведомления о наступлении времени намаза.
@@ -25,17 +31,35 @@ import java.time.format.DateTimeFormatter
 object PrayerAlarms {
 
     const val CHANNEL_ID = "prayer_times"
+    const val CHANNEL_ADHAN_ID = "prayer_adhan"
     private const val REQUEST_CODE = 1001
     private const val EXTRA_PRAYER = "prayer"
     private const val EXTRA_TIME = "time"
 
-    fun createChannel(context: Context) {
-        val channel = NotificationChannel(
-            CHANNEL_ID,
-            context.getString(R.string.channel_prayer),
-            NotificationManager.IMPORTANCE_HIGH,
-        ).apply { description = context.getString(R.string.channel_prayer_desc) }
-        context.getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
+    fun createChannels(context: Context) {
+        val res = Lang.wrap(context).resources
+        val nm = context.getSystemService(NotificationManager::class.java)
+        nm.createNotificationChannel(
+            NotificationChannel(CHANNEL_ID, res.getString(R.string.channel_prayer), NotificationManager.IMPORTANCE_HIGH)
+                .apply { description = res.getString(R.string.channel_prayer_desc) },
+        )
+        // Отдельный канал со звуком азана (звук канала нельзя поменять после создания).
+        AdhanSound.uri(context)?.let { uri ->
+            nm.createNotificationChannel(
+                NotificationChannel(CHANNEL_ADHAN_ID, res.getString(R.string.channel_prayer_adhan), NotificationManager.IMPORTANCE_HIGH).apply {
+                    description = res.getString(R.string.channel_prayer_desc)
+                    setSound(
+                        uri,
+                        AudioAttributes.Builder()
+                            .setUsage(AudioAttributes.USAGE_NOTIFICATION_EVENT)
+                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                            .build(),
+                    )
+                },
+            )
+        }
+        FajrAlarm.createChannel(context)
+        GuardService.createChannel(context)
     }
 
     fun canScheduleExact(context: Context): Boolean =
@@ -87,6 +111,8 @@ object PrayerAlarms {
     private fun showNotification(context: Context, prayer: Prayer, time: ZonedDateTime) {
         val nm = NotificationManagerCompat.from(context)
         if (!nm.areNotificationsEnabled()) return
+        val local = Lang.wrap(context)
+        val res = local.resources
 
         val open = PendingIntent.getActivity(
             context,
@@ -94,16 +120,21 @@ object PrayerAlarms {
             Intent(context, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP),
             PendingIntent.FLAG_IMMUTABLE,
         )
-        val clock = time.format(DateTimeFormatter.ofPattern("HH:mm"))
-        val lockLine = if (Store.blockingEnabled && Store.prayerLockEnabled) {
-            " Соцсети закрыты на ${Store.prayerLockMinutes} мин."
-        } else {
-            ""
+        val clock = time.format(clockFormatter(local))
+        val place = Cities.displayName(local, Store.location)
+        val text = buildString {
+            append(res.getString(R.string.notify_prayer_text, clock, place))
+            if (Store.blockingEnabled && Store.prayerLockEnabled) {
+                append(' ')
+                append(res.getString(R.string.notify_prayer_lock, Store.prayerLockMinutes))
+            }
         }
-        val notification = NotificationCompat.Builder(context, CHANNEL_ID)
+        val channel = if (Store.notificationAdhan && AdhanSound.available(context)) CHANNEL_ADHAN_ID else CHANNEL_ID
+        val notification = NotificationCompat.Builder(context, channel)
             .setSmallIcon(R.drawable.ic_notification)
-            .setContentTitle("Время намаза: ${prayer.title}")
-            .setContentText("$clock · ${Store.location.name}.$lockLine")
+            .setContentTitle(res.getString(R.string.notify_prayer_title, prayerName(res, prayer)))
+            .setContentText(text)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(text))
             .setCategory(NotificationCompat.CATEGORY_REMINDER)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(open)
@@ -124,11 +155,12 @@ class PrayerAlarmReceiver : BroadcastReceiver() {
     }
 }
 
+/** После перезагрузки, обновления приложения или смены времени — всё переставляем заново. */
 class BootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         Store.init(context)
         PrayerAlarms.scheduleNext(context)
-        // После перезагрузки снова запускаем запасной режим блокировки, если он нужен.
-        com.zikrtime.app.screentime.GuardService.sync(context)
+        FajrAlarm.schedule(context)
+        GuardService.sync(context)
     }
 }

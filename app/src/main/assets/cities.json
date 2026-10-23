@@ -1,0 +1,1099 @@
+{
+ "groups": [
+  {
+   "id": "russia",
+   "names": {
+    "ru": "Россия",
+    "en": "Russia",
+    "uz": "Rossiya",
+    "tg": "Русия",
+    "kk": "Ресей",
+    "ky": "Россия",
+    "az": "Rusiya",
+    "tr": "Rusya"
+   }
+  },
+  {
+   "id": "uzbekistan",
+   "names": {
+    "ru": "Узбекистан",
+    "en": "Uzbekistan",
+    "uz": "Oʻzbekiston",
+    "tg": "Ӯзбекистон",
+    "kk": "Өзбекстан",
+    "ky": "Өзбекстан",
+    "az": "Özbəkistan",
+    "tr": "Özbekistan"
+   }
+  },
+  {
+   "id": "tajikistan",
+   "names": {
+    "ru": "Таджикистан",
+    "en": "Tajikistan",
+    "uz": "Tojikiston",
+    "tg": "Тоҷикистон",
+    "kk": "Тәжікстан",
+    "ky": "Тажикстан",
+    "az": "Tacikistan",
+    "tr": "Tacikistan"
+   }
+  },
+  {
+   "id": "kazakhstan",
+   "names": {
+    "ru": "Казахстан",
+    "en": "Kazakhstan",
+    "uz": "Qozogʻiston",
+    "tg": "Қазоқистон",
+    "kk": "Қазақстан",
+    "ky": "Казакстан",
+    "az": "Qazaxıstan",
+    "tr": "Kazakistan"
+   }
+  },
+  {
+   "id": "kyrgyzstan",
+   "names": {
+    "ru": "Кыргызстан",
+    "en": "Kyrgyzstan",
+    "uz": "Qirgʻiziston",
+    "tg": "Қирғизистон",
+    "kk": "Қырғызстан",
+    "ky": "Кыргызстан",
+    "az": "Qırğızıstan",
+    "tr": "Kırgızistan"
+   }
+  },
+  {
+   "id": "azerbaijan",
+   "names": {
+    "ru": "Азербайджан",
+    "en": "Azerbaijan",
+    "uz": "Ozarbayjon",
+    "tg": "Озарбойҷон",
+    "kk": "Әзербайжан",
+    "ky": "Азербайжан",
+    "az": "Azərbaycan",
+    "tr": "Azerbaycan"
+   }
+  },
+  {
+   "id": "turkey",
+   "names": {
+    "ru": "Турция",
+    "en": "Türkiye",
+    "uz": "Turkiya",
+    "tg": "Туркия",
+    "kk": "Түркия",
+    "ky": "Түркия",
+    "az": "Türkiyə",
+    "tr": "Türkiye"
+   }
+  },
+  {
+   "id": "arabia",
+   "names": {
+    "ru": "Саудовская Аравия",
+    "en": "Saudi Arabia",
+    "uz": "Saudiya Arabistoni",
+    "tg": "Арабистони Саудӣ",
+    "kk": "Сауд Арабиясы",
+    "ky": "Сауд Арабиясы",
+    "az": "Səudiyyə Ərəbistanı",
+    "tr": "Suudi Arabistan"
+   }
+  },
+  {
+   "id": "world",
+   "names": {
+    "ru": "Другие города",
+    "en": "Other cities",
+    "uz": "Boshqa shaharlar",
+    "tg": "Шаҳрҳои дигар",
+    "kk": "Басқа қалалар",
+    "ky": "Башка шаарлар",
+    "az": "Digər şəhərlər",
+    "tr": "Diğer şehirler"
+   }
+  }
+ ],
+ "cities": [
+  {
+   "id": "moscow",
+   "group": "russia",
+   "lat": 55.7558,
+   "lon": 37.6173,
+   "names": {
+    "ru": "Москва",
+    "en": "Moscow",
+    "uz": "Moskva",
+    "tg": "Маскав",
+    "kk": "Мәскеу",
+    "ky": "Москва",
+    "az": "Moskva",
+    "tr": "Moskova"
+   }
+  },
+  {
+   "id": "saint_petersburg",
+   "group": "russia",
+   "lat": 59.9343,
+   "lon": 30.3351,
+   "names": {
+    "ru": "Санкт-Петербург",
+    "en": "Saint Petersburg",
+    "uz": "Sankt-Peterburg",
+    "tg": "Санкт-Петербург",
+    "kk": "Санкт-Петербург",
+    "ky": "Санкт-Петербург",
+    "az": "Sankt-Peterburq",
+    "tr": "Sankt-Peterburg"
+   }
+  },
+  {
+   "id": "grozny",
+   "group": "russia",
+   "lat": 43.3178,
+   "lon": 45.6949,
+   "names": {
+    "ru": "Грозный",
+    "en": "Grozny",
+    "uz": "Grozniy",
+    "tg": "Грозний",
+    "kk": "Грозный",
+    "ky": "Грозный",
+    "az": "Qroznı",
+    "tr": "Grozni"
+   }
+  },
+  {
+   "id": "gudermes",
+   "group": "russia",
+   "lat": 43.3519,
+   "lon": 46.1003,
+   "names": {
+    "ru": "Гудермес",
+    "en": "Gudermes",
+    "uz": "Gudermes",
+    "tg": "Гудермес",
+    "kk": "Гудермес",
+    "ky": "Гудермес",
+    "az": "Qudermes",
+    "tr": "Gudermes"
+   }
+  },
+  {
+   "id": "makhachkala",
+   "group": "russia",
+   "lat": 42.9849,
+   "lon": 47.5047,
+   "names": {
+    "ru": "Махачкала",
+    "en": "Makhachkala",
+    "uz": "Mahachqala",
+    "tg": "Махачқалъа",
+    "kk": "Махачкала",
+    "ky": "Махачкала",
+    "az": "Mahaçqala",
+    "tr": "Mahaçkale"
+   }
+  },
+  {
+   "id": "khasavyurt",
+   "group": "russia",
+   "lat": 43.25,
+   "lon": 46.5833,
+   "names": {
+    "ru": "Хасавюрт",
+    "en": "Khasavyurt",
+    "uz": "Xasavyurt",
+    "tg": "Хасавюрт",
+    "kk": "Хасавюрт",
+    "ky": "Хасавюрт",
+    "az": "Xasavyurt",
+    "tr": "Hasavyurt"
+   }
+  },
+  {
+   "id": "derbent",
+   "group": "russia",
+   "lat": 42.0678,
+   "lon": 48.2899,
+   "names": {
+    "ru": "Дербент",
+    "en": "Derbent",
+    "uz": "Darband",
+    "tg": "Дарбанд",
+    "kk": "Дербент",
+    "ky": "Дербент",
+    "az": "Dərbənd",
+    "tr": "Derbent"
+   }
+  },
+  {
+   "id": "nazran",
+   "group": "russia",
+   "lat": 43.2167,
+   "lon": 44.7667,
+   "names": {
+    "ru": "Назрань",
+    "en": "Nazran",
+    "uz": "Nazran",
+    "tg": "Назран",
+    "kk": "Назрань",
+    "ky": "Назрань",
+    "az": "Nazran",
+    "tr": "Nazran"
+   }
+  },
+  {
+   "id": "nalchik",
+   "group": "russia",
+   "lat": 43.4853,
+   "lon": 43.6071,
+   "names": {
+    "ru": "Нальчик",
+    "en": "Nalchik",
+    "uz": "Nalchik",
+    "tg": "Налчик",
+    "kk": "Нальчик",
+    "ky": "Нальчик",
+    "az": "Nalçik",
+    "tr": "Nalçik"
+   }
+  },
+  {
+   "id": "vladikavkaz",
+   "group": "russia",
+   "lat": 43.0367,
+   "lon": 44.6678,
+   "names": {
+    "ru": "Владикавказ",
+    "en": "Vladikavkaz",
+    "uz": "Vladikavkaz",
+    "tg": "Владикавказ",
+    "kk": "Владикавказ",
+    "ky": "Владикавказ",
+    "az": "Vladiqafqaz",
+    "tr": "Vladikavkaz"
+   }
+  },
+  {
+   "id": "cherkessk",
+   "group": "russia",
+   "lat": 44.2269,
+   "lon": 42.0578,
+   "names": {
+    "ru": "Черкесск",
+    "en": "Cherkessk",
+    "uz": "Cherkessk",
+    "tg": "Черкесск",
+    "kk": "Черкесск",
+    "ky": "Черкесск",
+    "az": "Çerkessk",
+    "tr": "Çerkessk"
+   }
+  },
+  {
+   "id": "maykop",
+   "group": "russia",
+   "lat": 44.6098,
+   "lon": 40.1006,
+   "names": {
+    "ru": "Майкоп",
+    "en": "Maykop",
+    "uz": "Maykop",
+    "tg": "Майкоп",
+    "kk": "Майкоп",
+    "ky": "Майкоп",
+    "az": "Maykop",
+    "tr": "Maykop"
+   }
+  },
+  {
+   "id": "kazan",
+   "group": "russia",
+   "lat": 55.7963,
+   "lon": 49.1088,
+   "names": {
+    "ru": "Казань",
+    "en": "Kazan",
+    "uz": "Qozon",
+    "tg": "Қазон",
+    "kk": "Қазан",
+    "ky": "Казань",
+    "az": "Kazan",
+    "tr": "Kazan"
+   }
+  },
+  {
+   "id": "ufa",
+   "group": "russia",
+   "lat": 54.7388,
+   "lon": 55.9721,
+   "names": {
+    "ru": "Уфа",
+    "en": "Ufa",
+    "uz": "Ufa",
+    "tg": "Уфа",
+    "kk": "Уфа",
+    "ky": "Уфа",
+    "az": "Ufa",
+    "tr": "Ufa"
+   }
+  },
+  {
+   "id": "astrakhan",
+   "group": "russia",
+   "lat": 46.3497,
+   "lon": 48.0408,
+   "names": {
+    "ru": "Астрахань",
+    "en": "Astrakhan",
+    "uz": "Astraxan",
+    "tg": "Астрахан",
+    "kk": "Астрахан",
+    "ky": "Астрахань",
+    "az": "Həştərxan",
+    "tr": "Astrahan"
+   }
+  },
+  {
+   "id": "nizhny_novgorod",
+   "group": "russia",
+   "lat": 56.2965,
+   "lon": 43.9361,
+   "names": {
+    "ru": "Нижний Новгород",
+    "en": "Nizhny Novgorod",
+    "uz": "Nijniy Novgorod",
+    "tg": "Нижний Новгород",
+    "kk": "Нижний Новгород",
+    "ky": "Нижний Новгород",
+    "az": "Nijni Novqorod",
+    "tr": "Nijniy Novgorod"
+   }
+  },
+  {
+   "id": "samara",
+   "group": "russia",
+   "lat": 53.1959,
+   "lon": 50.1002,
+   "names": {
+    "ru": "Самара",
+    "en": "Samara",
+    "uz": "Samara",
+    "tg": "Самара",
+    "kk": "Самара",
+    "ky": "Самара",
+    "az": "Samara",
+    "tr": "Samara"
+   }
+  },
+  {
+   "id": "yekaterinburg",
+   "group": "russia",
+   "lat": 56.8389,
+   "lon": 60.6057,
+   "names": {
+    "ru": "Екатеринбург",
+    "en": "Yekaterinburg",
+    "uz": "Yekaterinburg",
+    "tg": "Екатеринбург",
+    "kk": "Екатеринбург",
+    "ky": "Екатеринбург",
+    "az": "Yekaterinburq",
+    "tr": "Yekaterinburg"
+   }
+  },
+  {
+   "id": "novosibirsk",
+   "group": "russia",
+   "lat": 55.0084,
+   "lon": 82.9357,
+   "names": {
+    "ru": "Новосибирск",
+    "en": "Novosibirsk",
+    "uz": "Novosibirsk",
+    "tg": "Новосибирск",
+    "kk": "Новосібір",
+    "ky": "Новосибирск",
+    "az": "Novosibirsk",
+    "tr": "Novosibirsk"
+   }
+  },
+  {
+   "id": "tashkent",
+   "group": "uzbekistan",
+   "lat": 41.2995,
+   "lon": 69.2401,
+   "names": {
+    "ru": "Ташкент",
+    "en": "Tashkent",
+    "uz": "Toshkent",
+    "tg": "Тошкент",
+    "kk": "Ташкент",
+    "ky": "Ташкент",
+    "az": "Daşkənd",
+    "tr": "Taşkent"
+   }
+  },
+  {
+   "id": "samarkand",
+   "group": "uzbekistan",
+   "lat": 39.6542,
+   "lon": 66.9597,
+   "names": {
+    "ru": "Самарканд",
+    "en": "Samarkand",
+    "uz": "Samarqand",
+    "tg": "Самарқанд",
+    "kk": "Самарқанд",
+    "ky": "Самарканд",
+    "az": "Səmərqənd",
+    "tr": "Semerkant"
+   }
+  },
+  {
+   "id": "bukhara",
+   "group": "uzbekistan",
+   "lat": 39.7681,
+   "lon": 64.4556,
+   "names": {
+    "ru": "Бухара",
+    "en": "Bukhara",
+    "uz": "Buxoro",
+    "tg": "Бухоро",
+    "kk": "Бұхара",
+    "ky": "Бухара",
+    "az": "Buxara",
+    "tr": "Buhara"
+   }
+  },
+  {
+   "id": "namangan",
+   "group": "uzbekistan",
+   "lat": 40.9983,
+   "lon": 71.6726,
+   "names": {
+    "ru": "Наманган",
+    "en": "Namangan",
+    "uz": "Namangan",
+    "tg": "Намангон",
+    "kk": "Наманган",
+    "ky": "Наманган",
+    "az": "Namanqan",
+    "tr": "Nemengen"
+   }
+  },
+  {
+   "id": "andijan",
+   "group": "uzbekistan",
+   "lat": 40.7821,
+   "lon": 72.3442,
+   "names": {
+    "ru": "Андижан",
+    "en": "Andijan",
+    "uz": "Andijon",
+    "tg": "Андиҷон",
+    "kk": "Әндіжан",
+    "ky": "Анжиян",
+    "az": "Əndican",
+    "tr": "Andican"
+   }
+  },
+  {
+   "id": "fergana",
+   "group": "uzbekistan",
+   "lat": 40.3864,
+   "lon": 71.7864,
+   "names": {
+    "ru": "Фергана",
+    "en": "Fergana",
+    "uz": "Fargʻona",
+    "tg": "Фарғона",
+    "kk": "Ферғана",
+    "ky": "Фергана",
+    "az": "Fərqanə",
+    "tr": "Fergana"
+   }
+  },
+  {
+   "id": "nukus",
+   "group": "uzbekistan",
+   "lat": 42.46,
+   "lon": 59.61,
+   "names": {
+    "ru": "Нукус",
+    "en": "Nukus",
+    "uz": "Nukus",
+    "tg": "Нукус",
+    "kk": "Нөкіс",
+    "ky": "Нукус",
+    "az": "Nukus",
+    "tr": "Nukus"
+   }
+  },
+  {
+   "id": "qarshi",
+   "group": "uzbekistan",
+   "lat": 38.8606,
+   "lon": 65.7891,
+   "names": {
+    "ru": "Карши",
+    "en": "Qarshi",
+    "uz": "Qarshi",
+    "tg": "Қаршӣ",
+    "kk": "Қарші",
+    "ky": "Карши",
+    "az": "Qarşı",
+    "tr": "Karşı"
+   }
+  },
+  {
+   "id": "urgench",
+   "group": "uzbekistan",
+   "lat": 41.55,
+   "lon": 60.6333,
+   "names": {
+    "ru": "Ургенч",
+    "en": "Urgench",
+    "uz": "Urganch",
+    "tg": "Урганҷ",
+    "kk": "Үргеніш",
+    "ky": "Ургенч",
+    "az": "Urgenç",
+    "tr": "Ürgenç"
+   }
+  },
+  {
+   "id": "dushanbe",
+   "group": "tajikistan",
+   "lat": 38.5598,
+   "lon": 68.787,
+   "names": {
+    "ru": "Душанбе",
+    "en": "Dushanbe",
+    "uz": "Dushanbe",
+    "tg": "Душанбе",
+    "kk": "Душанбе",
+    "ky": "Душанбе",
+    "az": "Düşənbə",
+    "tr": "Duşanbe"
+   }
+  },
+  {
+   "id": "khujand",
+   "group": "tajikistan",
+   "lat": 40.2826,
+   "lon": 69.622,
+   "names": {
+    "ru": "Худжанд",
+    "en": "Khujand",
+    "uz": "Xoʻjand",
+    "tg": "Хуҷанд",
+    "kk": "Хұжанд",
+    "ky": "Хужанд",
+    "az": "Xocənd",
+    "tr": "Hucend"
+   }
+  },
+  {
+   "id": "kulob",
+   "group": "tajikistan",
+   "lat": 37.9146,
+   "lon": 69.7845,
+   "names": {
+    "ru": "Куляб",
+    "en": "Kulob",
+    "uz": "Kulob",
+    "tg": "Кӯлоб",
+    "kk": "Күлаб",
+    "ky": "Куляб",
+    "az": "Kulyab",
+    "tr": "Külab"
+   }
+  },
+  {
+   "id": "bokhtar",
+   "group": "tajikistan",
+   "lat": 37.8364,
+   "lon": 68.7803,
+   "names": {
+    "ru": "Бохтар",
+    "en": "Bokhtar",
+    "uz": "Bohtar",
+    "tg": "Бохтар",
+    "kk": "Бохтар",
+    "ky": "Бохтар",
+    "az": "Boxtar",
+    "tr": "Bohtar"
+   }
+  },
+  {
+   "id": "istaravshan",
+   "group": "tajikistan",
+   "lat": 39.9108,
+   "lon": 69.0064,
+   "names": {
+    "ru": "Истаравшан",
+    "en": "Istaravshan",
+    "uz": "Istaravshan",
+    "tg": "Истаравшан",
+    "kk": "Истаравшан",
+    "ky": "Истаравшан",
+    "az": "İstaravşan",
+    "tr": "İstaravşan"
+   }
+  },
+  {
+   "id": "khorog",
+   "group": "tajikistan",
+   "lat": 37.4897,
+   "lon": 71.5531,
+   "names": {
+    "ru": "Хорог",
+    "en": "Khorog",
+    "uz": "Xorugʻ",
+    "tg": "Хоруғ",
+    "kk": "Хорог",
+    "ky": "Хорог",
+    "az": "Xoroq",
+    "tr": "Horog"
+   }
+  },
+  {
+   "id": "almaty",
+   "group": "kazakhstan",
+   "lat": 43.222,
+   "lon": 76.8512,
+   "names": {
+    "ru": "Алматы",
+    "en": "Almaty",
+    "uz": "Olmaota",
+    "tg": "Алмаато",
+    "kk": "Алматы",
+    "ky": "Алматы",
+    "az": "Almatı",
+    "tr": "Almatı"
+   }
+  },
+  {
+   "id": "astana",
+   "group": "kazakhstan",
+   "lat": 51.1694,
+   "lon": 71.4491,
+   "names": {
+    "ru": "Астана",
+    "en": "Astana",
+    "uz": "Ostona",
+    "tg": "Остона",
+    "kk": "Астана",
+    "ky": "Астана",
+    "az": "Astana",
+    "tr": "Astana"
+   }
+  },
+  {
+   "id": "shymkent",
+   "group": "kazakhstan",
+   "lat": 42.3417,
+   "lon": 69.5901,
+   "names": {
+    "ru": "Шымкент",
+    "en": "Shymkent",
+    "uz": "Chimkent",
+    "tg": "Чимкент",
+    "kk": "Шымкент",
+    "ky": "Шымкент",
+    "az": "Çimkənd",
+    "tr": "Çimkent"
+   }
+  },
+  {
+   "id": "aktobe",
+   "group": "kazakhstan",
+   "lat": 50.2839,
+   "lon": 57.167,
+   "names": {
+    "ru": "Актобе",
+    "en": "Aktobe",
+    "uz": "Aqtoʻbe",
+    "tg": "Ақтӯбе",
+    "kk": "Ақтөбе",
+    "ky": "Актөбө",
+    "az": "Aktöbe",
+    "tr": "Aktöbe"
+   }
+  },
+  {
+   "id": "karaganda",
+   "group": "kazakhstan",
+   "lat": 49.8047,
+   "lon": 73.1094,
+   "names": {
+    "ru": "Караганда",
+    "en": "Karaganda",
+    "uz": "Qaragʻandi",
+    "tg": "Қарағанда",
+    "kk": "Қарағанды",
+    "ky": "Караганды",
+    "az": "Qaraqanda",
+    "tr": "Karaganda"
+   }
+  },
+  {
+   "id": "taraz",
+   "group": "kazakhstan",
+   "lat": 42.9,
+   "lon": 71.3667,
+   "names": {
+    "ru": "Тараз",
+    "en": "Taraz",
+    "uz": "Taroz",
+    "tg": "Тароз",
+    "kk": "Тараз",
+    "ky": "Тараз",
+    "az": "Taraz",
+    "tr": "Taraz"
+   }
+  },
+  {
+   "id": "turkistan",
+   "group": "kazakhstan",
+   "lat": 43.2973,
+   "lon": 68.2518,
+   "names": {
+    "ru": "Туркестан",
+    "en": "Turkistan",
+    "uz": "Turkiston",
+    "tg": "Туркистон",
+    "kk": "Түркістан",
+    "ky": "Түркстан",
+    "az": "Türküstan",
+    "tr": "Türkistan"
+   }
+  },
+  {
+   "id": "atyrau",
+   "group": "kazakhstan",
+   "lat": 47.1167,
+   "lon": 51.8833,
+   "names": {
+    "ru": "Атырау",
+    "en": "Atyrau",
+    "uz": "Atirau",
+    "tg": "Атирав",
+    "kk": "Атырау",
+    "ky": "Атырау",
+    "az": "Atırau",
+    "tr": "Atırav"
+   }
+  },
+  {
+   "id": "bishkek",
+   "group": "kyrgyzstan",
+   "lat": 42.8746,
+   "lon": 74.5698,
+   "names": {
+    "ru": "Бишкек",
+    "en": "Bishkek",
+    "uz": "Bishkek",
+    "tg": "Бишкек",
+    "kk": "Бішкек",
+    "ky": "Бишкек",
+    "az": "Bişkek",
+    "tr": "Bişkek"
+   }
+  },
+  {
+   "id": "osh",
+   "group": "kyrgyzstan",
+   "lat": 40.5283,
+   "lon": 72.7985,
+   "names": {
+    "ru": "Ош",
+    "en": "Osh",
+    "uz": "Oʻsh",
+    "tg": "Ӯш",
+    "kk": "Ош",
+    "ky": "Ош",
+    "az": "Oş",
+    "tr": "Oş"
+   }
+  },
+  {
+   "id": "jalal_abad",
+   "group": "kyrgyzstan",
+   "lat": 40.9333,
+   "lon": 73.0,
+   "names": {
+    "ru": "Джалал-Абад",
+    "en": "Jalal-Abad",
+    "uz": "Jalolobod",
+    "tg": "Ҷалолобод",
+    "kk": "Жалалабад",
+    "ky": "Жалал-Абад",
+    "az": "Calal-Abad",
+    "tr": "Celalabad"
+   }
+  },
+  {
+   "id": "karakol",
+   "group": "kyrgyzstan",
+   "lat": 42.4907,
+   "lon": 78.3936,
+   "names": {
+    "ru": "Каракол",
+    "en": "Karakol",
+    "uz": "Qoraqoʻl",
+    "tg": "Қарақӯл",
+    "kk": "Қарақол",
+    "ky": "Каракол",
+    "az": "Qaraqol",
+    "tr": "Karakol"
+   }
+  },
+  {
+   "id": "baku",
+   "group": "azerbaijan",
+   "lat": 40.4093,
+   "lon": 49.8671,
+   "names": {
+    "ru": "Баку",
+    "en": "Baku",
+    "uz": "Boku",
+    "tg": "Боку",
+    "kk": "Баку",
+    "ky": "Баку",
+    "az": "Bakı",
+    "tr": "Bakü"
+   }
+  },
+  {
+   "id": "ganja",
+   "group": "azerbaijan",
+   "lat": 40.6828,
+   "lon": 46.3606,
+   "names": {
+    "ru": "Гянджа",
+    "en": "Ganja",
+    "uz": "Ganja",
+    "tg": "Ганҷа",
+    "kk": "Гәнжә",
+    "ky": "Гянджа",
+    "az": "Gəncə",
+    "tr": "Gence"
+   }
+  },
+  {
+   "id": "sumgait",
+   "group": "azerbaijan",
+   "lat": 40.5897,
+   "lon": 49.6686,
+   "names": {
+    "ru": "Сумгаит",
+    "en": "Sumgait",
+    "uz": "Sumqayit",
+    "tg": "Сумқаит",
+    "kk": "Сумгайыт",
+    "ky": "Сумгаит",
+    "az": "Sumqayıt",
+    "tr": "Sumgayıt"
+   }
+  },
+  {
+   "id": "istanbul",
+   "group": "turkey",
+   "lat": 41.0082,
+   "lon": 28.9784,
+   "names": {
+    "ru": "Стамбул",
+    "en": "Istanbul",
+    "uz": "Istanbul",
+    "tg": "Истанбул",
+    "kk": "Стамбұл",
+    "ky": "Стамбул",
+    "az": "İstanbul",
+    "tr": "İstanbul"
+   }
+  },
+  {
+   "id": "ankara",
+   "group": "turkey",
+   "lat": 39.9334,
+   "lon": 32.8597,
+   "names": {
+    "ru": "Анкара",
+    "en": "Ankara",
+    "uz": "Anqara",
+    "tg": "Анқара",
+    "kk": "Анкара",
+    "ky": "Анкара",
+    "az": "Ankara",
+    "tr": "Ankara"
+   }
+  },
+  {
+   "id": "bursa",
+   "group": "turkey",
+   "lat": 40.1885,
+   "lon": 29.061,
+   "names": {
+    "ru": "Бурса",
+    "en": "Bursa",
+    "uz": "Bursa",
+    "tg": "Бурса",
+    "kk": "Бурса",
+    "ky": "Бурса",
+    "az": "Bursa",
+    "tr": "Bursa"
+   }
+  },
+  {
+   "id": "mecca",
+   "group": "arabia",
+   "lat": 21.3891,
+   "lon": 39.8579,
+   "names": {
+    "ru": "Мекка",
+    "en": "Mecca",
+    "uz": "Makka",
+    "tg": "Макка",
+    "kk": "Мекке",
+    "ky": "Мекке",
+    "az": "Məkkə",
+    "tr": "Mekke"
+   }
+  },
+  {
+   "id": "medina",
+   "group": "arabia",
+   "lat": 24.5247,
+   "lon": 39.5692,
+   "names": {
+    "ru": "Медина",
+    "en": "Medina",
+    "uz": "Madina",
+    "tg": "Мадина",
+    "kk": "Медине",
+    "ky": "Медина",
+    "az": "Mədinə",
+    "tr": "Medine"
+   }
+  },
+  {
+   "id": "cairo",
+   "group": "world",
+   "lat": 30.0444,
+   "lon": 31.2357,
+   "names": {
+    "ru": "Каир",
+    "en": "Cairo",
+    "uz": "Qohira",
+    "tg": "Қоҳира",
+    "kk": "Каир",
+    "ky": "Каир",
+    "az": "Qahirə",
+    "tr": "Kahire"
+   }
+  },
+  {
+   "id": "dubai",
+   "group": "world",
+   "lat": 25.2048,
+   "lon": 55.2708,
+   "names": {
+    "ru": "Дубай",
+    "en": "Dubai",
+    "uz": "Dubay",
+    "tg": "Дубай",
+    "kk": "Дубай",
+    "ky": "Дубай",
+    "az": "Dubay",
+    "tr": "Dubai"
+   }
+  },
+  {
+   "id": "london",
+   "group": "world",
+   "lat": 51.5074,
+   "lon": -0.1278,
+   "names": {
+    "ru": "Лондон",
+    "en": "London",
+    "uz": "London",
+    "tg": "Лондон",
+    "kk": "Лондон",
+    "ky": "Лондон",
+    "az": "London",
+    "tr": "Londra"
+   }
+  },
+  {
+   "id": "berlin",
+   "group": "world",
+   "lat": 52.52,
+   "lon": 13.405,
+   "names": {
+    "ru": "Берлин",
+    "en": "Berlin",
+    "uz": "Berlin",
+    "tg": "Берлин",
+    "kk": "Берлин",
+    "ky": "Берлин",
+    "az": "Berlin",
+    "tr": "Berlin"
+   }
+  },
+  {
+   "id": "amsterdam",
+   "group": "world",
+   "lat": 52.3676,
+   "lon": 4.9041,
+   "names": {
+    "ru": "Амстердам",
+    "en": "Amsterdam",
+    "uz": "Amsterdam",
+    "tg": "Амстердам",
+    "kk": "Амстердам",
+    "ky": "Амстердам",
+    "az": "Amsterdam",
+    "tr": "Amsterdam"
+   }
+  },
+  {
+   "id": "paris",
+   "group": "world",
+   "lat": 48.8566,
+   "lon": 2.3522,
+   "names": {
+    "ru": "Париж",
+    "en": "Paris",
+    "uz": "Parij",
+    "tg": "Париж",
+    "kk": "Париж",
+    "ky": "Париж",
+    "az": "Paris",
+    "tr": "Paris"
+   }
+  },
+  {
+   "id": "new_york",
+   "group": "world",
+   "lat": 40.7128,
+   "lon": -74.006,
+   "names": {
+    "ru": "Нью-Йорк",
+    "en": "New York",
+    "uz": "Nyu-York",
+    "tg": "Ню-Йорк",
+    "kk": "Нью-Йорк",
+    "ky": "Нью-Йорк",
+    "az": "Nyu-York",
+    "tr": "New York"
+   }
+  }
+ ]
+}

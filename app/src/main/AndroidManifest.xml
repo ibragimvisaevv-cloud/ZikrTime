@@ -4,14 +4,21 @@
 
     <!-- Загрузка времени намаза с aladhan.com -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Запасной режим блокировки: фоновая служба и показ экрана поверх соцсетей -->
+    <!-- Уведомления о времени намаза и будильник -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Будильник на фаджр: точное время, показ поверх экрана блокировки, звук и вибрация -->
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission
+        android:name="android.permission.SCHEDULE_EXACT_ALARM"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- Фоновые службы: будильник (звук) и запасной режим блокировки -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <!-- Уведомления о времени намаза -->
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <!-- Точные будильники для азана (пользователь может разрешить в настройках) -->
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <!-- Восстановление будильников после перезагрузки -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!-- Определение города для расчёта времени намаза -->
@@ -35,18 +42,39 @@
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
+        android:localeConfig="@xml/locales_config"
         android:supportsRtl="true"
         android:theme="@style/Theme.ZikrTime">
 
         <activity
             android:name=".MainActivity"
             android:exported="true"
+            android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Будильник на фаджр: показывается поверх экрана блокировки -->
+        <activity
+            android:name=".alarm.AlarmActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            android:taskAffinity="com.zikrtime.app.alarm" />
+
+        <service
+            android:name=".alarm.AlarmService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
+
+        <receiver
+            android:name=".alarm.AlarmReceiver"
+            android:exported="false" />
 
         <!-- Экран, который появляется поверх соцсетей, когда лимит исчерпан или идёт время намаза -->
         <activity
@@ -76,7 +104,7 @@
             android:foregroundServiceType="specialUse">
             <property
                 android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
-                android:value="Ограничение времени в соцсетях, которое пользователь сам включил: проверка лимита и показ напоминания." />
+                android:value="User-enabled social media time limit: checks the daily limit and shows a reminder." />
         </service>
 
         <receiver

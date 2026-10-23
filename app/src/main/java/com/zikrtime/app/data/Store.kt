@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateMapOf
 import com.zikrtime.app.prayer.AsrMadhab
 import com.zikrtime.app.prayer.CalcMethod
 import com.zikrtime.app.prayer.Prayer
+import java.time.DayOfWeek
 import java.time.LocalDate
 
 /**
@@ -29,7 +30,7 @@ object Store {
         cache.putAll(prefs.all)
     }
 
-    // ---------------- Общие настройки ----------------
+    // ---------------- Общие ----------------
 
     var onboarded: Boolean
         get() = bool(K_ONBOARDED, false)
@@ -37,12 +38,15 @@ object Store {
 
     val location: City
         get() = City(
-            name = str(K_CITY, City.DEFAULT.name),
-            latitude = float(K_LAT, City.DEFAULT.latitude.toFloat()).toDouble(),
-            longitude = float(K_LON, City.DEFAULT.longitude.toFloat()).toDouble(),
+            id = (cache[K_CITY_ID] as? String)?.takeIf { it.isNotEmpty() }
+                ?: if (cache[K_LAT] == null) Cities.DEFAULT.id else null,
+            name = str(K_CITY, Cities.DEFAULT.name),
+            latitude = float(K_LAT, Cities.DEFAULT.latitude.toFloat()).toDouble(),
+            longitude = float(K_LON, Cities.DEFAULT.longitude.toFloat()).toDouble(),
         )
 
     fun setLocation(city: City) {
+        put(K_CITY_ID, city.id ?: "")
         put(K_CITY, city.name)
         put(K_LAT, city.latitude.toFloat())
         put(K_LON, city.longitude.toFloat())
@@ -55,10 +59,6 @@ object Store {
     var madhab: AsrMadhab
         get() = runCatching { AsrMadhab.valueOf(str(K_MADHAB, AsrMadhab.STANDARD.name)) }.getOrDefault(AsrMadhab.STANDARD)
         set(v) = put(K_MADHAB, v.name)
-
-    var prayerNotifications: Boolean
-        get() = bool(K_NOTIFY, true)
-        set(v) = put(K_NOTIFY, v)
 
     /** Брать время намаза из интернета (aladhan.com), если есть связь. */
     var onlineTimes: Boolean
@@ -75,21 +75,59 @@ object Store {
 
     fun setAdjustment(prayer: Prayer, minutes: Int) = put(K_ADJ + prayer.name, minutes.coerceIn(-30, 30))
 
-    fun getRaw(key: String): String? = cache[key] as? String
+    // ---------------- Уведомления о намазе ----------------
 
-    fun putRaw(key: String, value: String) = put(key, value)
+    var prayerNotifications: Boolean
+        get() = bool(K_NOTIFY, true)
+        set(v) = put(K_NOTIFY, v)
 
-    /** Удаляет сохранённые ключи с этим префиксом, кроме перечисленных. */
-    fun removeRawExcept(prefix: String, keep: Set<String>) {
-        val editor = prefs.edit()
-        for (key in cache.keys.toList()) {
-            if (key.startsWith(prefix) && key !in keep) {
-                editor.remove(key)
-                cache.remove(key)
-            }
-        }
-        editor.apply()
-    }
+    /** Проигрывать азан вместе с уведомлением о намазе. */
+    var notificationAdhan: Boolean
+        get() = bool(K_NOTIFY_ADHAN, false)
+        set(v) = put(K_NOTIFY_ADHAN, v)
+
+    // ---------------- Будильник на фаджр ----------------
+
+    var alarmEnabled: Boolean
+        get() = bool(K_ALARM_ON, false)
+        set(v) = put(K_ALARM_ON, v)
+
+    /** За сколько минут до фаджра будить (0 — ровно во время фаджра). */
+    var alarmOffsetMinutes: Int
+        get() = int(K_ALARM_OFFSET, 30)
+        set(v) = put(K_ALARM_OFFSET, v.coerceIn(0, 120))
+
+    var alarmDays: Set<DayOfWeek>
+        get() = (cache[K_ALARM_DAYS] as? Set<*>)?.mapNotNull { (it as? String)?.toIntOrNull()?.let(DayOfWeek::of) }?.toSet()
+            ?: DayOfWeek.values().toSet()
+        set(v) = put(K_ALARM_DAYS, v.map { it.value.toString() }.toSet())
+
+    /** "adhan" — встроенный азан, "system" — мелодия будильника телефона. */
+    var alarmSound: String
+        get() = str(K_ALARM_SOUND, "adhan")
+        set(v) = put(K_ALARM_SOUND, v)
+
+    var alarmMaxVolume: Boolean
+        get() = bool(K_ALARM_MAXVOL, true)
+        set(v) = put(K_ALARM_MAXVOL, v)
+
+    var alarmVibrate: Boolean
+        get() = bool(K_ALARM_VIBRATE, true)
+        set(v) = put(K_ALARM_VIBRATE, v)
+
+    /** Выключать будильник только правильным ответом на вопрос — чтобы точно проснуться. */
+    var alarmWakeCheck: Boolean
+        get() = bool(K_ALARM_WAKECHECK, false)
+        set(v) = put(K_ALARM_WAKECHECK, v)
+
+    var alarmSnoozeAllowed: Boolean
+        get() = bool(K_ALARM_SNOOZE, false)
+        set(v) = put(K_ALARM_SNOOZE, v)
+
+    /** Время отложенного сигнала (мс) или 0. */
+    var alarmSnoozeAt: Long
+        get() = long(K_ALARM_SNOOZE_AT, 0L)
+        set(v) = put(K_ALARM_SNOOZE_AT, v)
 
     // ---------------- Контроль соцсетей ----------------
 
@@ -163,22 +201,69 @@ object Store {
     val totalCorrect: Int get() = int(K_TOTAL_CORRECT, 0)
     val totalAnswered: Int get() = int(K_TOTAL_ANSWERED, 0)
 
-    fun recordAnswer(correct: Boolean) {
+    fun categoryCorrect(category: String): Int = int(K_CAT_CORRECT + category, 0)
+
+    /** Недавно заданные вопросы — чтобы не повторяться. */
+    val recentQuestions: List<String>
+        get() = str(K_RECENT_Q, "").split(',').filter { it.isNotEmpty() }
+
+    fun recordAnswer(questionId: String, category: String, correct: Boolean) {
         put(K_TOTAL_ANSWERED, totalAnswered + 1)
-        if (correct) put(K_TOTAL_CORRECT, totalCorrect + 1)
+        if (correct) {
+            put(K_TOTAL_CORRECT, totalCorrect + 1)
+            put(K_CAT_CORRECT + category, categoryCorrect(category) + 1)
+        }
+        put(K_RECENT_Q, (listOf(questionId) + recentQuestions.filter { it != questionId }).take(60).joinToString(","))
     }
 
     fun recordRoundCompleted(date: LocalDate = LocalDate.now()) {
         put(K_QUIZ_DAYS, Streaks.trim(quizDays + date).map { it.toString() }.toSet())
     }
 
-    // ---------------- Внутреннее ----------------
+    // ---------------- Тасбих ----------------
+
+    var tasbihCount: Int
+        get() = int(K_TASBIH_COUNT, 0)
+        set(v) = put(K_TASBIH_COUNT, v)
+
+    var tasbihTarget: Int
+        get() = int(K_TASBIH_TARGET, 33)
+        set(v) = put(K_TASBIH_TARGET, v)
+
+    var tasbihPhrase: Int
+        get() = int(K_TASBIH_PHRASE, 0)
+        set(v) = put(K_TASBIH_PHRASE, v)
+
+    fun tasbihToday(date: LocalDate = LocalDate.now()): Int = int(K_TASBIH_DAY + date, 0)
+
+    fun addTasbih(date: LocalDate = LocalDate.now()) {
+        tasbihCount += 1
+        put(K_TASBIH_DAY + date, tasbihToday(date) + 1)
+    }
+
+    // ---------------- Служебное ----------------
+
+    fun getRaw(key: String): String? = cache[key] as? String
+
+    fun putRaw(key: String, value: String) = put(key, value)
+
+    /** Удаляет сохранённые ключи с этим префиксом, кроме перечисленных. */
+    fun removeRawExcept(prefix: String, keep: Set<String>) {
+        val editor = prefs.edit()
+        for (key in cache.keys.toList()) {
+            if (key.startsWith(prefix) && key !in keep) {
+                editor.remove(key)
+                cache.remove(key)
+            }
+        }
+        editor.apply()
+    }
 
     private fun cleanupOldDailyKeys() {
         val cutoff = LocalDate.now().minusDays(7)
         val editor = prefs.edit()
         for (key in prefs.all.keys) {
-            val prefix = listOf(K_BONUS, K_PRAYED, K_LOCK_OFF).firstOrNull { key.startsWith(it) } ?: continue
+            val prefix = listOf(K_BONUS, K_PRAYED, K_LOCK_OFF, K_TASBIH_DAY).firstOrNull { key.startsWith(it) } ?: continue
             val date = runCatching { LocalDate.parse(key.removePrefix(prefix)) }.getOrNull() ?: continue
             if (date.isBefore(cutoff)) editor.remove(key)
         }
@@ -214,15 +299,26 @@ object Store {
     }
 
     private const val K_ONBOARDED = "onboarded"
+    private const val K_CITY_ID = "city_id"
     private const val K_CITY = "city"
     private const val K_LAT = "lat"
     private const val K_LON = "lon"
     private const val K_METHOD = "method"
     private const val K_MADHAB = "madhab"
     private const val K_NOTIFY = "notify"
+    private const val K_NOTIFY_ADHAN = "notify_adhan"
     private const val K_ONLINE = "online_times"
     private const val K_ONLINE_AT = "online_updated_at"
     private const val K_ADJ = "adj_"
+    private const val K_ALARM_ON = "alarm_on"
+    private const val K_ALARM_OFFSET = "alarm_offset"
+    private const val K_ALARM_DAYS = "alarm_days"
+    private const val K_ALARM_SOUND = "alarm_sound"
+    private const val K_ALARM_MAXVOL = "alarm_max_volume"
+    private const val K_ALARM_VIBRATE = "alarm_vibrate"
+    private const val K_ALARM_WAKECHECK = "alarm_wake_check"
+    private const val K_ALARM_SNOOZE = "alarm_snooze"
+    private const val K_ALARM_SNOOZE_AT = "alarm_snooze_at"
     private const val K_BLOCKING = "blocking"
     private const val K_LIMIT = "limit"
     private const val K_PACKAGES = "packages"
@@ -236,4 +332,10 @@ object Store {
     private const val K_QUIZ_DAYS = "quiz_days"
     private const val K_TOTAL_CORRECT = "total_correct"
     private const val K_TOTAL_ANSWERED = "total_answered"
+    private const val K_CAT_CORRECT = "cat_correct_"
+    private const val K_RECENT_Q = "recent_questions"
+    private const val K_TASBIH_COUNT = "tasbih_count"
+    private const val K_TASBIH_TARGET = "tasbih_target"
+    private const val K_TASBIH_PHRASE = "tasbih_phrase"
+    private const val K_TASBIH_DAY = "tasbih_day_"
 }

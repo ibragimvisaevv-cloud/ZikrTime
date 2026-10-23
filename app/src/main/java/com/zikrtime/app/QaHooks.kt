@@ -1,0 +1,71 @@
+package com.zikrtime.app
+
+import android.app.Activity
+import android.content.Intent
+import com.zikrtime.app.alarm.AlarmActivity
+import com.zikrtime.app.data.Cities
+import com.zikrtime.app.data.Store
+import com.zikrtime.app.i18n.Lang
+import com.zikrtime.app.prayer.Prayer
+import com.zikrtime.app.screentime.BlockActivity
+import com.zikrtime.app.screentime.BlockReason
+import com.zikrtime.app.ui.Nav
+import com.zikrtime.app.ui.Screen
+import com.zikrtime.app.ui.Tab
+import java.time.Instant
+import java.time.LocalDate
+
+/**
+ * Только для отладочной сборки: автоматическая проверка в CI открывает экраны через параметры запуска
+ * (qa_lang, qa_demo, qa_screen) и снимает скриншоты. В release-сборке этот код не выполняется.
+ */
+object QaHooks {
+
+    /** Возвращает true, если экран будет пересоздан (смена языка) и дальше идти не нужно. */
+    fun handle(activity: Activity, intent: Intent?, nav: Nav): Boolean {
+        intent ?: return false
+        val lang = intent.getStringExtra("qa_lang")
+        if (lang != null && lang != Lang.saved(activity)) {
+            Lang.set(activity, lang)
+            return true
+        }
+        val screen = intent.getStringExtra("qa_screen") ?: return false
+        if (intent.getBooleanExtra("qa_demo", false)) seed(activity)
+        when (screen) {
+            "onboarding" -> Store.onboarded = false
+            "home" -> nav.tab = Tab.PRAYER
+            "knowledge" -> nav.tab = Tab.KNOWLEDGE
+            "focus" -> nav.tab = Tab.FOCUS
+            "more" -> nav.tab = Tab.MORE
+            "language" -> nav.open(Screen.LANGUAGE)
+            "city" -> nav.open(Screen.CITY)
+            "prayer_settings" -> nav.open(Screen.PRAYER_SETTINGS)
+            "alarm" -> nav.open(Screen.ALARM)
+            "qibla" -> nav.open(Screen.QIBLA)
+            "tasbih" -> nav.open(Screen.TASBIH)
+            "about" -> nav.open(Screen.ABOUT)
+            "apps" -> nav.open(Screen.APPS)
+            "quiz" -> nav.startQuiz(null)
+            "block_limit" -> activity.startActivity(BlockActivity.intent(activity, BlockReason.LimitReached(42, 40)))
+            "block_prayer" -> activity.startActivity(
+                BlockActivity.intent(activity, BlockReason.PrayerTime(Prayer.DHUHR, LocalDate.now(), Instant.now().plusSeconds(12 * 60))),
+            )
+            "alarm_ring" -> activity.startActivity(AlarmActivity.intent(activity, test = true).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        }
+        return false
+    }
+
+    private fun seed(activity: Activity) {
+        if (!Store.onboarded) {
+            val moscow = Cities.load(activity).second.first { it.id == "moscow" }
+            Store.setLocation(moscow.toCity(Lang.content(activity)))
+        }
+        Store.onboarded = true
+        Store.blockingEnabled = true
+        Store.appsInitialized = true
+        Store.blockedPackages = setOf("com.android.chrome", "com.google.android.youtube")
+        Store.alarmEnabled = true
+        Store.setPrayed(LocalDate.now(), Prayer.FAJR, true)
+        if (Store.tasbihCount == 0) repeat(21) { Store.addTasbih() }
+    }
+}

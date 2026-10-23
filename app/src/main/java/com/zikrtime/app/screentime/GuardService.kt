@@ -91,10 +91,11 @@ class GuardService : Service() {
             Intent(this, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
             PendingIntent.FLAG_IMMUTABLE,
         )
+        val res = com.zikrtime.app.i18n.Lang.wrap(this).resources
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
-            .setContentTitle("Зикр-тайм следит за лимитом")
-            .setContentText("Лимит соцсетей: ${Store.dailyLimitMinutes} мин в день")
+            .setContentTitle(res.getString(R.string.guard_title))
+            .setContentText(res.getString(R.string.guard_text, Store.dailyLimitMinutes))
             .setOngoing(true)
             .setSilent(true)
             .setPriority(NotificationCompat.PRIORITY_MIN)
@@ -142,8 +143,9 @@ class GuardService : Service() {
         }
 
         fun createChannel(context: Context) {
-            val channel = NotificationChannel(CHANNEL_ID, "Контроль соцсетей", NotificationManager.IMPORTANCE_MIN)
-                .apply { description = "Постоянное уведомление, пока работает ограничение соцсетей" }
+            val res = com.zikrtime.app.i18n.Lang.wrap(context).resources
+            val channel = NotificationChannel(CHANNEL_ID, res.getString(R.string.channel_guard), NotificationManager.IMPORTANCE_MIN)
+                .apply { description = res.getString(R.string.channel_guard_desc) }
             context.getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
         }
     }

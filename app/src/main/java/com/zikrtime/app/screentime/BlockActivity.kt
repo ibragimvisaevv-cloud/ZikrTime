@@ -19,14 +19,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,35 +40,48 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.zikrtime.app.R
 import com.zikrtime.app.data.Store
+import com.zikrtime.app.i18n.Lang
 import com.zikrtime.app.prayer.Prayer
 import com.zikrtime.app.quiz.QuestionBank
+import com.zikrtime.app.ui.GhostButton
 import com.zikrtime.app.ui.QuizRound
 import com.zikrtime.app.ui.StarPattern
-import com.zikrtime.app.ui.formatMinutes
+import com.zikrtime.app.ui.clock
+import com.zikrtime.app.ui.durationText
+import com.zikrtime.app.ui.prayerIconRes
+import com.zikrtime.app.ui.prayerName
 import com.zikrtime.app.ui.theme.Cream
 import com.zikrtime.app.ui.theme.Emerald
 import com.zikrtime.app.ui.theme.EmeraldDeep
 import com.zikrtime.app.ui.theme.Gold
+import com.zikrtime.app.ui.theme.Tabular
 import com.zikrtime.app.ui.theme.ZikrTheme
 import kotlinx.coroutines.delay
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 /** Экран поверх соцсети: лимит исчерпан или наступило время намаза. */
 class BlockActivity : ComponentActivity() {
 
     private var reason by mutableStateOf<BlockReason>(BlockReason.None)
 
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(Lang.wrap(newBase))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Store.init(this)
         // Фон тёмно-зелёный, поэтому значки строки состояния всегда светлые.
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.dark(android.graphics.Color.TRANSPARENT),
@@ -86,9 +100,7 @@ class BlockActivity : ComponentActivity() {
     }
 
     private fun closeToHome() {
-        startActivity(
-            Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-        )
+        startActivity(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         finish()
     }
 
@@ -151,11 +163,7 @@ private fun BlockScreen(reason: BlockReason, onClose: () -> Unit, onBackToApp: (
     val context = LocalContext.current
     var mode by remember(reason) { mutableStateOf<BlockMode>(BlockMode.Info) }
 
-    Box(
-        Modifier
-            .fillMaxSize()
-            .background(Brush.verticalGradient(listOf(Emerald, EmeraldDeep))),
-    ) {
+    Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Emerald, EmeraldDeep)))) {
         StarPattern(Modifier.fillMaxSize(), color = Gold.copy(alpha = 0.09f), cell = 72f)
         Column(
             Modifier
@@ -167,10 +175,11 @@ private fun BlockScreen(reason: BlockReason, onClose: () -> Unit, onBackToApp: (
         ) {
             when (val m = mode) {
                 BlockMode.Quiz -> {
-                    Text("Ответьте на вопросы", style = MaterialTheme.typography.headlineSmall, color = Cream)
+                    Text(stringResource(R.string.block_quiz_title), style = MaterialTheme.typography.headlineSmall, color = Cream)
                     Surface(shape = RoundedCornerShape(28.dp), color = MaterialTheme.colorScheme.surface) {
                         QuizRound(
-                            questions = remember { QuestionBank.all(context) },
+                            bank = remember { QuestionBank.load(context) },
+                            category = null,
                             onFinished = {
                                 val added = Store.addBonus()
                                 Store.recordRoundCompleted()
@@ -179,19 +188,19 @@ private fun BlockScreen(reason: BlockReason, onClose: () -> Unit, onBackToApp: (
                             modifier = Modifier.padding(20.dp),
                         )
                     }
-                    SecondaryButton("Закрыть", onClose)
+                    GhostButton(stringResource(R.string.action_close), onClick = onClose, color = Cream)
                 }
 
                 is BlockMode.Earned -> {
                     Spacer(Modifier.height(48.dp))
-                    Title("МашаАллах!")
+                    Title(stringResource(R.string.quiz_mashallah))
                     Body(
-                        if (m.minutes > 0) "Добавлено ${m.minutes} мин. Можете вернуться в приложение."
-                        else "Раунд пройден, но бонус на сегодня уже набран полностью.",
+                        if (m.minutes > 0) stringResource(R.string.block_earned, m.minutes)
+                        else stringResource(R.string.quiz_result_no_bonus),
                     )
                     Spacer(Modifier.height(24.dp))
                     // Время добавлено — можно сразу вернуться туда, где пользователь был.
-                    PrimaryButton("Готово", if (m.minutes > 0) onBackToApp else onClose)
+                    GoldButton(stringResource(R.string.action_done), if (m.minutes > 0) onBackToApp else onClose)
                 }
 
                 BlockMode.Info -> when (reason) {
@@ -199,8 +208,8 @@ private fun BlockScreen(reason: BlockReason, onClose: () -> Unit, onBackToApp: (
                     is BlockReason.PrayerTime -> PrayerInfo(reason, onClose = onClose)
                     BlockReason.None -> {
                         Spacer(Modifier.height(48.dp))
-                        Title("Зикр-тайм")
-                        PrimaryButton("Закрыть", onClose)
+                        Title(stringResource(R.string.app_name))
+                        GoldButton(stringResource(R.string.action_close), onClose)
                     }
                 }
             }
@@ -211,24 +220,17 @@ private fun BlockScreen(reason: BlockReason, onClose: () -> Unit, onBackToApp: (
 @Composable
 private fun LimitInfo(reason: BlockReason.LimitReached, onQuiz: () -> Unit, onClose: () -> Unit) {
     Spacer(Modifier.height(48.dp))
-    Title("Лимит на сегодня исчерпан")
-    Body("Сегодня в соцсетях: ${formatMinutes(reason.usedMinutes.toLong())}. Лимит — ${formatMinutes(reason.allowedMinutes.toLong())}.")
-    Text(
-        "Сначала зикр, потом скролл",
-        style = MaterialTheme.typography.titleMedium,
-        fontStyle = FontStyle.Italic,
-        color = Gold,
-    )
+    Icon(painterResource(R.drawable.ic_nav_focus), contentDescription = null, tint = Gold, modifier = Modifier.size(48.dp))
+    Title(stringResource(R.string.block_limit_title))
+    Body(stringResource(R.string.block_limit_text, durationText(reason.usedMinutes.toLong()), durationText(reason.allowedMinutes.toLong())))
+    Text(stringResource(R.string.slogan), style = MaterialTheme.typography.titleMedium, fontStyle = FontStyle.Italic, color = Gold)
     Spacer(Modifier.height(24.dp))
     if (Store.bonusMinutes() < Store.MAX_BONUS_MINUTES_PER_DAY) {
-        PrimaryButton(
-            "Ответить на ${Store.CORRECT_ANSWERS_PER_ROUND} вопроса: +${Store.BONUS_MINUTES_PER_ROUND} мин",
-            onQuiz,
-        )
+        GoldButton(stringResource(R.string.block_quiz_button, Store.CORRECT_ANSWERS_PER_ROUND, Store.BONUS_MINUTES_PER_ROUND), onQuiz)
     } else {
-        Body("Бонус на сегодня уже набран полностью (${Store.MAX_BONUS_MINUTES_PER_DAY} мин). Завтра лимит начнётся заново.")
+        Body(stringResource(R.string.block_bonus_used, Store.MAX_BONUS_MINUTES_PER_DAY))
     }
-    SecondaryButton("Закрыть", onClose)
+    GhostButton(stringResource(R.string.action_close), onClick = onClose, color = Cream)
 }
 
 @Composable
@@ -241,32 +243,33 @@ private fun PrayerInfo(reason: BlockReason.PrayerTime, onClose: () -> Unit) {
         }
     }
     val left = Duration.between(now, reason.endsAt)
-    val opensAt = reason.endsAt.atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("HH:mm"))
 
     Spacer(Modifier.height(48.dp))
-    Text("Наступило время намаза", style = MaterialTheme.typography.titleMedium, color = Gold)
-    Text(reason.prayer.title, fontSize = 48.sp, color = Cream, style = MaterialTheme.typography.displaySmall)
+    Icon(painterResource(prayerIconRes(reason.prayer)), contentDescription = null, tint = Gold, modifier = Modifier.size(48.dp))
+    Text(stringResource(R.string.block_prayer_label), style = MaterialTheme.typography.titleMedium, color = Gold)
+    Text(prayerName(reason.prayer), fontSize = 48.sp, color = Cream, style = MaterialTheme.typography.displaySmall)
     if (left.isNegative || left.isZero) {
-        Body("Доступ к соцсетям снова открыт.")
+        Body(stringResource(R.string.block_prayer_open))
         Spacer(Modifier.height(24.dp))
-        PrimaryButton("Закрыть", onClose)
+        GoldButton(stringResource(R.string.action_close), onClose)
         return
     }
-    Body("Соцсети откроются в $opensAt. Самое время встать на намаз.")
+    Body(stringResource(R.string.block_prayer_text, clock(reason.endsAt.atZone(ZoneId.systemDefault()))))
     Text(
-        String.format("%d:%02d", left.toMinutes(), left.seconds % 60),
-        fontSize = 40.sp,
+        String.format(Lang.locale(LocalContext.current), "%d:%02d", left.toMinutes(), left.seconds % 60),
+        fontSize = 44.sp,
         color = Cream.copy(alpha = 0.85f),
         textAlign = TextAlign.Center,
+        style = Tabular,
         modifier = Modifier.fillMaxWidth(),
     )
     Spacer(Modifier.height(24.dp))
-    PrimaryButton("Я совершил намаз") {
+    GoldButton(stringResource(R.string.block_prayed)) {
         Store.setPrayed(reason.date, reason.prayer, true)
         Store.dismissLock(reason.date, reason.prayer)
         onClose()
     }
-    SecondaryButton("Закрыть", onClose)
+    GhostButton(stringResource(R.string.action_close), onClick = onClose, color = Cream)
 }
 
 @Composable
@@ -280,19 +283,11 @@ private fun Body(text: String) {
 }
 
 @Composable
-private fun PrimaryButton(text: String, onClick: () -> Unit) {
+private fun GoldButton(text: String, onClick: () -> Unit) {
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(containerColor = Gold, contentColor = Color(0xFF2B1E00)),
+        shape = RoundedCornerShape(18.dp),
         modifier = Modifier.fillMaxWidth().height(56.dp),
     ) { Text(text, textAlign = TextAlign.Center) }
-}
-
-@Composable
-private fun SecondaryButton(text: String, onClick: () -> Unit) {
-    OutlinedButton(
-        onClick = onClick,
-        colors = ButtonDefaults.outlinedButtonColors(contentColor = Cream),
-        modifier = Modifier.fillMaxWidth().height(52.dp),
-    ) { Text(text) }
 }
