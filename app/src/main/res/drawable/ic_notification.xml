@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M10.20,3.00 a1.80,1.80 0 1,0 3.60,0 a1.80,1.80 0 1,0 -3.60,0 Z M15.25,4.21 a1.25,1.25 0 1,0 2.50,0 a1.25,1.25 0 1,0 -2.50,0 Z M18.54,7.50 a1.25,1.25 0 1,0 2.50,0 a1.25,1.25 0 1,0 -2.50,0 Z M19.75,12.00 a1.25,1.25 0 1,0 2.50,0 a1.25,1.25 0 1,0 -2.50,0 Z M18.54,16.50 a1.25,1.25 0 1,0 2.50,0 a1.25,1.25 0 1,0 -2.50,0 Z M15.25,19.79 a1.25,1.25 0 1,0 2.50,0 a1.25,1.25 0 1,0 -2.50,0 Z M10.75,21.00 a1.25,1.25 0 1,0 2.50,0 a1.25,1.25 0 1,0 -2.50,0 Z M6.25,19.79 a1.25,1.25 0 1,0 2.50,0 a1.25,1.25 0 1,0 -2.50,0 Z M2.96,16.50 a1.25,1.25 0 1,0 2.50,0 a1.25,1.25 0 1,0 -2.50,0 Z M1.75,12.00 a1.25,1.25 0 1,0 2.50,0 a1.25,1.25 0 1,0 -2.50,0 Z M2.96,7.50 a1.25,1.25 0 1,0 2.50,0 a1.25,1.25 0 1,0 -2.50,0 Z M6.25,4.21 a1.25,1.25 0 1,0 2.50,0 a1.25,1.25 0 1,0 -2.50,0 Z" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.6"
+        android:strokeLineCap="round"
+        android:pathData="M12.00,12.00 L12.00,6.00 M12.00,12.00 L15.46,10.00" />
+</vector>

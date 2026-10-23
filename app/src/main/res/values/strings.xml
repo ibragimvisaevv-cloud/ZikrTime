@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Зикр-тайм</string>
+    <string name="accessibility_description">Зикр-тайм следит только за тем, какое приложение сейчас открыто. Если вы открыли соцсеть из своего списка, а дневной лимит исчерпан или идёт время намаза, приложение покажет экран с напоминанием. Текст на экране, пароли и сообщения не читаются и никуда не передаются.</string>
+    <string name="channel_prayer">Время намаза</string>
+    <string name="channel_prayer_desc">Напоминания о наступлении времени намаза</string>
+</resources>
