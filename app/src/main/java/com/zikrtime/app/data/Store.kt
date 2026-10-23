@@ -49,7 +49,7 @@ object Store {
     }
 
     var method: CalcMethod
-        get() = runCatching { CalcMethod.valueOf(str(K_METHOD, CalcMethod.MWL.name)) }.getOrDefault(CalcMethod.MWL)
+        get() = runCatching { CalcMethod.valueOf(str(K_METHOD, CalcMethod.RUSSIA.name)) }.getOrDefault(CalcMethod.RUSSIA)
         set(v) = put(K_METHOD, v.name)
 
     var madhab: AsrMadhab
@@ -59,6 +59,37 @@ object Store {
     var prayerNotifications: Boolean
         get() = bool(K_NOTIFY, true)
         set(v) = put(K_NOTIFY, v)
+
+    /** Брать время намаза из интернета (aladhan.com), если есть связь. */
+    var onlineTimes: Boolean
+        get() = bool(K_ONLINE, true)
+        set(v) = put(K_ONLINE, v)
+
+    /** Когда в последний раз удалось загрузить время из интернета (мс), 0 — ни разу. */
+    var onlineUpdatedAt: Long
+        get() = long(K_ONLINE_AT, 0L)
+        set(v) = put(K_ONLINE_AT, v)
+
+    /** Ручная поправка в минутах для каждого времени (−30…+30), чтобы совпасть с расписанием мечети. */
+    fun adjustment(prayer: Prayer): Int = int(K_ADJ + prayer.name, 0)
+
+    fun setAdjustment(prayer: Prayer, minutes: Int) = put(K_ADJ + prayer.name, minutes.coerceIn(-30, 30))
+
+    fun getRaw(key: String): String? = cache[key] as? String
+
+    fun putRaw(key: String, value: String) = put(key, value)
+
+    /** Удаляет сохранённые ключи с этим префиксом, кроме перечисленных. */
+    fun removeRawExcept(prefix: String, keep: Set<String>) {
+        val editor = prefs.edit()
+        for (key in cache.keys.toList()) {
+            if (key.startsWith(prefix) && key !in keep) {
+                editor.remove(key)
+                cache.remove(key)
+            }
+        }
+        editor.apply()
+    }
 
     // ---------------- Контроль соцсетей ----------------
 
@@ -160,6 +191,7 @@ object Store {
     private fun bool(key: String, def: Boolean) = cache[key] as? Boolean ?: def
     private fun int(key: String, def: Int) = cache[key] as? Int ?: def
     private fun float(key: String, def: Float) = cache[key] as? Float ?: def
+    private fun long(key: String, def: Long) = cache[key] as? Long ?: def
     private fun str(key: String, def: String) = cache[key] as? String ?: def
 
     @Suppress("UNCHECKED_CAST")
@@ -172,6 +204,7 @@ object Store {
             is Boolean -> editor.putBoolean(key, value)
             is Int -> editor.putInt(key, value)
             is Float -> editor.putFloat(key, value)
+            is Long -> editor.putLong(key, value)
             is String -> editor.putString(key, value)
             is Set<*> -> editor.putStringSet(key, HashSet(value as Set<String>))
             else -> error("Неподдерживаемый тип для $key")
@@ -187,6 +220,9 @@ object Store {
     private const val K_METHOD = "method"
     private const val K_MADHAB = "madhab"
     private const val K_NOTIFY = "notify"
+    private const val K_ONLINE = "online_times"
+    private const val K_ONLINE_AT = "online_updated_at"
+    private const val K_ADJ = "adj_"
     private const val K_BLOCKING = "blocking"
     private const val K_LIMIT = "limit"
     private const val K_PACKAGES = "packages"

@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Загрузка времени намаза с aladhan.com -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Запасной режим блокировки: фоновая служба и показ экрана поверх соцсетей -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!-- Уведомления о времени намаза -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- Точные будильники для азана (пользователь может разрешить в настройках) -->
@@ -61,6 +67,16 @@
             <meta-data
                 android:name="android.accessibilityservice"
                 android:resource="@xml/accessibility_config" />
+        </service>
+
+        <!-- Запасной режим: следит за лимитом без службы специальных возможностей -->
+        <service
+            android:name=".screentime.GuardService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Ограничение времени в соцсетях, которое пользователь сам включил: проверка лимита и показ напоминания." />
         </service>
 
         <receiver

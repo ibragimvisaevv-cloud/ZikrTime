@@ -35,6 +35,18 @@ object UsageMath {
         return total
     }
 
+    /** Приложения, окно которых открыто прямо сейчас: пакет → когда окно стало активным. */
+    fun openPackages(events: List<UsageEventLite>): Map<String, Long> {
+        val open = LinkedHashMap<String, UsageEventLite>() // ключ окна -> событие открытия
+        for (e in events) {
+            val key = e.packageName + "/" + e.className
+            if (e.resumed) open[key] = e else open.remove(key)
+        }
+        val result = HashMap<String, Long>()
+        for (e in open.values) result[e.packageName] = maxOf(result[e.packageName] ?: 0L, e.timestamp)
+        return result
+    }
+
     private fun overlap(start: Long, end: Long, from: Long, to: Long): Long {
         val s = maxOf(start, from)
         val e = minOf(end, to)

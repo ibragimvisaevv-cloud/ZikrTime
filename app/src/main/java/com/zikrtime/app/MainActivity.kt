@@ -25,6 +25,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -32,7 +33,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import com.zikrtime.app.data.Store
+import com.zikrtime.app.prayer.OnlineTimes
 import com.zikrtime.app.prayer.PrayerAlarms
+import com.zikrtime.app.screentime.GuardService
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import com.zikrtime.app.ui.AppEvents
 import com.zikrtime.app.ui.ControlScreen
 import com.zikrtime.app.ui.HomeScreen
@@ -59,7 +64,14 @@ class MainActivity : ComponentActivity() {
         super.onResume()
         // Экраны перепроверят разрешения — пользователь мог вернуться из системных настроек.
         AppEvents.resumeCount++
-        if (Store.onboarded) PrayerAlarms.scheduleNext(this)
+        if (Store.onboarded) {
+            PrayerAlarms.scheduleNext(this)
+            GuardService.sync(this)
+            lifecycleScope.launch {
+                // Время из интернета: если загрузилось новое — переставляем будильник азана.
+                if (OnlineTimes.refresh()) PrayerAlarms.scheduleNext(this@MainActivity)
+            }
+        }
     }
 }
 
@@ -75,6 +87,7 @@ private val tabs = listOf(
 @Composable
 private fun AppRoot() {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     val notificationPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {}
 
     if (!Store.onboarded) {
@@ -82,6 +95,7 @@ private fun AppRoot() {
             Store.setLocation(city)
             Store.onboarded = true
             PrayerAlarms.scheduleNext(context)
+            scope.launch { if (OnlineTimes.refresh()) PrayerAlarms.scheduleNext(context) }
             if (Build.VERSION.SDK_INT >= 33) {
                 notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
             }

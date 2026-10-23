@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -32,20 +33,39 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.app.NotificationManagerCompat
 import com.zikrtime.app.data.Store
 import com.zikrtime.app.prayer.AsrMadhab
 import com.zikrtime.app.prayer.CalcMethod
+import com.zikrtime.app.prayer.OnlineTimes
+import com.zikrtime.app.prayer.Prayer
 import com.zikrtime.app.prayer.PrayerAlarms
+import com.zikrtime.app.prayer.PrayerSchedule
+import kotlinx.coroutines.launch
 
 @Composable
 fun SettingsScreen() {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    var refreshing by remember { mutableStateOf(false) }
+
+    /** После смены города, метода или мазхаба — загрузить новое время и переставить будильник. */
+    fun reload(force: Boolean = false) {
+        PrayerAlarms.scheduleNext(context)
+        scope.launch {
+            refreshing = true
+            OnlineTimes.refresh(force)
+            refreshing = false
+            PrayerAlarms.scheduleNext(context)
+        }
+    }
     val resume = AppEvents.resumeCount
     var pickingCity by remember { mutableStateOf(false) }
 
@@ -61,7 +81,7 @@ fun SettingsScreen() {
             modifier = Modifier.fillMaxSize(),
             onPicked = {
                 Store.setLocation(it)
-                PrayerAlarms.scheduleNext(context)
+                reload()
                 pickingCity = false
             },
             header = {
@@ -95,7 +115,7 @@ fun SettingsScreen() {
             CalcMethod.entries.forEach { m ->
                 RadioLine(m.title, selected = Store.method == m) {
                     Store.method = m
-                    PrayerAlarms.scheduleNext(context)
+                    reload()
                 }
             }
             Text(
@@ -106,11 +126,63 @@ fun SettingsScreen() {
             )
         }
 
+        SectionCard(title = "Источник времени") {
+            SwitchRow(
+                title = "Брать время из интернета",
+                subtitle = "Сервис aladhan.com, тот же метод расчёта. Без связи — расчёт на телефоне.",
+                checked = Store.onlineTimes,
+                onChange = {
+                    Store.onlineTimes = it
+                    reload()
+                },
+            )
+            if (Store.onlineTimes) {
+                Spacer(Modifier.height(8.dp))
+                val updated = Store.onlineUpdatedAt
+                val online = remember(OnlineTimes.version, Store.location, Store.method, Store.madhab) { PrayerSchedule.isOnline() }
+                Text(
+                    when {
+                        refreshing -> "Загружаем…"
+                        online && updated > 0 -> "Загружено " + java.time.Instant.ofEpochMilli(updated)
+                            .atZone(java.time.ZoneId.systemDefault())
+                            .format(java.time.format.DateTimeFormatter.ofPattern("d MMMM, HH:mm", java.util.Locale("ru")))
+                        else -> "Пока не удалось загрузить — показываем расчёт на телефоне."
+                    },
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                TextButton(onClick = { reload(force = true) }, enabled = !refreshing) { Text("Обновить сейчас") }
+            }
+        }
+
+        SectionCard(title = "Поправки, мин") {
+            Text(
+                "Если в вашей мечети время отличается, сдвиньте его здесь.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(bottom = 8.dp),
+            )
+            Prayer.entries.forEach { p ->
+                val adj = Store.adjustment(p)
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(p.title, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
+                    IconButton(onClick = { Store.setAdjustment(p, adj - 1); PrayerAlarms.scheduleNext(context) }) { Text("−", style = MaterialTheme.typography.titleLarge) }
+                    Text(
+                        if (adj > 0) "+$adj" else "$adj",
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.width(40.dp),
+                        textAlign = TextAlign.Center,
+                    )
+                    IconButton(onClick = { Store.setAdjustment(p, adj + 1); PrayerAlarms.scheduleNext(context) }) { Text("+", style = MaterialTheme.typography.titleLarge) }
+                }
+            }
+        }
+
         SectionCard(title = "Время аср-намаза") {
             AsrMadhab.entries.forEach { m ->
                 RadioLine(m.title, selected = Store.madhab == m) {
                     Store.madhab = m
-                    PrayerAlarms.scheduleNext(context)
+                    reload()
                 }
             }
         }
@@ -156,7 +228,7 @@ fun SettingsScreen() {
         }
 
         SectionCard(title = "О приложении") {
-            Text("Зикр-тайм 0.1 — первая версия", style = MaterialTheme.typography.bodyLarge)
+            Text("Зикр-тайм 0.2", style = MaterialTheme.typography.bodyLarge)
             Spacer(Modifier.height(4.dp))
             Text(
                 "Время намаза рассчитывается прямо на телефоне, без интернета. Все данные хранятся только на этом устройстве.",

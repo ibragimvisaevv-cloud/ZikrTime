@@ -54,6 +54,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import com.zikrtime.app.data.Store
 import com.zikrtime.app.screentime.AppInfo
+import com.zikrtime.app.screentime.GuardService
 import com.zikrtime.app.screentime.ScreenTime
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -65,6 +66,10 @@ fun ControlScreen() {
     val resume = AppEvents.resumeCount
     val hasUsage = remember(resume) { ScreenTime.hasUsageAccess(context) }
     val hasService = remember(resume) { ScreenTime.isAccessibilityEnabled(context) }
+    val hasOverlay = remember(resume) { GuardService.canDrawOverlays(context) }
+    // Блокировать умеем двумя способами: через службу специальных возможностей
+    // или (если телефон её не даёт включить) через показ поверх других приложений.
+    val canBlock = hasService || hasOverlay
 
     var apps by remember { mutableStateOf<List<AppInfo>?>(null) }
     LaunchedEffect(Unit) {
@@ -101,10 +106,28 @@ fun ControlScreen() {
                 granted = hasUsage,
                 onGrant = { ScreenTime.openUsageAccessSettings(context) },
             )
+            Spacer(Modifier.height(16.dp))
+            Text(
+                "Чтобы закрывать соцсеть, нужен один из двух способов:",
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.primary,
+            )
+            Spacer(Modifier.height(8.dp))
+            PermissionRow(
+                title = "Способ 1. Показ поверх других приложений",
+                text = "Проще всего включить. Телефон не считает его опасным. В шторке будет висеть тихое уведомление.",
+                granted = hasOverlay,
+                onGrant = {
+                    context.startActivity(
+                        Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:${context.packageName}"))
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                    )
+                },
+            )
             Spacer(Modifier.height(12.dp))
             PermissionRow(
-                title = "Служба «Зикр-тайм»",
-                text = "Чтобы закрывать соцсеть, когда лимит исчерпан или наступило время намаза.",
+                title = "Способ 2. Служба «Зикр-тайм»",
+                text = "Срабатывает мгновенно, но на многих телефонах заблокирована для приложений не из Google Play.",
                 granted = hasService,
                 onGrant = { showDisclosure = true },
             )
@@ -114,11 +137,14 @@ fun ControlScreen() {
             SwitchRow(
                 title = "Ограничивать соцсети",
                 checked = Store.blockingEnabled,
-                onChange = { Store.blockingEnabled = it },
+                onChange = {
+                    Store.blockingEnabled = it
+                    GuardService.sync(context)
+                },
             )
-            if (Store.blockingEnabled && !(hasUsage && hasService)) {
+            if (Store.blockingEnabled && !(hasUsage && canBlock)) {
                 Text(
-                    "Выдайте оба разрешения выше, иначе ограничение не сработает.",
+                    "Выдайте доступ к истории использования и включите один из двух способов выше, иначе ограничение не сработает.",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.error,
                     modifier = Modifier.padding(top = 8.dp),

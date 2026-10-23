@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zikrtime.app.data.Store
 import com.zikrtime.app.data.Streaks
+import com.zikrtime.app.prayer.OnlineTimes
 import com.zikrtime.app.prayer.Prayer
 import com.zikrtime.app.prayer.PrayerSchedule
 import com.zikrtime.app.screentime.ScreenTime
@@ -62,7 +63,11 @@ fun HomeScreen(onOpenQuiz: () -> Unit, onOpenControl: () -> Unit) {
     }
     val today = now.toLocalDate()
     // Пересчитываем при смене дня, города или метода расчёта.
-    val times = remember(today, Store.location, Store.method, Store.madhab) { PrayerSchedule.forDate(today) }
+    // Пересчитываем при смене дня, города, метода, поправок или после загрузки из интернета.
+    val adjustments = Prayer.entries.map { Store.adjustment(it) }
+    val times = remember(today, Store.location, Store.method, Store.madhab, Store.onlineTimes, OnlineTimes.version, adjustments) {
+        PrayerSchedule.forDate(today)
+    }
     val next = remember(now, times) { PrayerSchedule.next(now) }
 
     var usedMillis by remember { mutableStateOf<Long?>(null) }
@@ -126,7 +131,8 @@ fun HomeScreen(onOpenQuiz: () -> Unit, onOpenControl: () -> Unit) {
                 }
             }
             Text(
-                "Отмечайте совершённые намазы — так растёт серия.",
+                (if (PrayerSchedule.isOnline(today)) "Время: aladhan.com, " else "Время: расчёт на телефоне, ") +
+                    Store.method.title + ". Отмечайте совершённые намазы — так растёт серия.",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(top = 8.dp),

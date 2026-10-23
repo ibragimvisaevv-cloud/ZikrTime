@@ -128,5 +128,7 @@ class BootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         Store.init(context)
         PrayerAlarms.scheduleNext(context)
+        // После перезагрузки снова запускаем запасной режим блокировки, если он нужен.
+        com.zikrtime.app.screentime.GuardService.sync(context)
     }
 }

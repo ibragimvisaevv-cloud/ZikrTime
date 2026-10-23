@@ -101,11 +101,14 @@ object ScreenTime {
 
     // ---------------- Учёт времени ----------------
 
-    /** Сколько миллисекунд выбранные приложения были открыты сегодня. null — нет доступа к статистике. */
-    fun usedTodayMillis(context: Context, now: Long = System.currentTimeMillis()): Long? {
+    /** Снимок за сегодня: сколько выбранные приложения были на экране и какие из них открыты сейчас. */
+    class Snapshot(val usedMillis: Long, val openPackages: Map<String, Long>)
+
+    /** null — нет доступа к статистике использования. */
+    fun snapshot(context: Context, now: Long = System.currentTimeMillis()): Snapshot? {
         if (!hasUsageAccess(context)) return null
         val packages = Store.blockedPackages
-        if (packages.isEmpty()) return 0L
+        if (packages.isEmpty()) return Snapshot(0L, emptyMap())
 
         val zone = ZoneId.systemDefault()
         val startOfDay = LocalDate.now(zone).atStartOfDay(zone).toInstant().toEpochMilli()
@@ -113,7 +116,7 @@ object ScreenTime {
         val queryFrom = startOfDay - 3 * 60 * 60 * 1000L
 
         val usm = context.getSystemService(UsageStatsManager::class.java)
-        val events = usm.queryEvents(queryFrom, now) ?: return 0L
+        val events = usm.queryEvents(queryFrom, now) ?: return Snapshot(0L, emptyMap())
         val list = ArrayList<UsageEventLite>()
         val e = UsageEvents.Event()
         while (events.hasNextEvent()) {
@@ -125,12 +128,20 @@ object ScreenTime {
                 EVENT_PAUSED -> list.add(UsageEventLite(pkg, e.className ?: "", false, e.timeStamp))
             }
         }
-        return UsageMath.foregroundMillis(list, startOfDay, now)
+        return Snapshot(UsageMath.foregroundMillis(list, startOfDay, now), UsageMath.openPackages(list))
     }
+
+    /** Сколько миллисекунд выбранные приложения были открыты сегодня. null — нет доступа к статистике. */
+    fun usedTodayMillis(context: Context, now: Long = System.currentTimeMillis()): Long? =
+        snapshot(context, now)?.usedMillis
 
     // ---------------- Решение ----------------
 
-    fun evaluate(context: Context, now: ZonedDateTime = ZonedDateTime.now()): BlockReason {
+    fun evaluate(
+        context: Context,
+        now: ZonedDateTime = ZonedDateTime.now(),
+        usedMillis: Long? = usedTodayMillis(context, now.toInstant().toEpochMilli()),
+    ): BlockReason {
         if (!Store.blockingEnabled) return BlockReason.None
         // Блокировка на намаз снимается, если намаз отмечен как совершённый.
         val starts = PrayerSchedule.recentStarts(now).filter {
@@ -141,7 +152,7 @@ object ScreenTime {
             prayerStarts = starts,
             prayerLockEnabled = Store.prayerLockEnabled,
             prayerLockMinutes = Store.prayerLockMinutes,
-            usedMillis = usedTodayMillis(context, now.toInstant().toEpochMilli()),
+            usedMillis = usedMillis,
             allowedMinutes = Store.allowedMinutes(now.toLocalDate()),
         )
     }

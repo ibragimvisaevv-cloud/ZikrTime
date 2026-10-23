@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -73,11 +74,22 @@ class BlockActivity : ComponentActivity() {
             navigationBarStyle = SystemBarStyle.dark(android.graphics.Color.TRANSPARENT),
         )
         reason = parse(intent)
+        // «Назад» тоже уводит на рабочий стол, а не обратно в соцсеть.
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() = closeToHome()
+        })
         setContent {
             ZikrTheme {
-                BlockScreen(reason = reason, onClose = { finish() })
+                BlockScreen(reason = reason, onClose = { closeToHome() }, onBackToApp = { finish() })
             }
         }
+    }
+
+    private fun closeToHome() {
+        startActivity(
+            Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+        )
+        finish()
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -135,7 +147,7 @@ private sealed class BlockMode {
 }
 
 @Composable
-private fun BlockScreen(reason: BlockReason, onClose: () -> Unit) {
+private fun BlockScreen(reason: BlockReason, onClose: () -> Unit, onBackToApp: () -> Unit) {
     val context = LocalContext.current
     var mode by remember(reason) { mutableStateOf<BlockMode>(BlockMode.Info) }
 
@@ -178,7 +190,8 @@ private fun BlockScreen(reason: BlockReason, onClose: () -> Unit) {
                         else "Раунд пройден, но бонус на сегодня уже набран полностью.",
                     )
                     Spacer(Modifier.height(24.dp))
-                    PrimaryButton("Готово", onClose)
+                    // Время добавлено — можно сразу вернуться туда, где пользователь был.
+                    PrimaryButton("Готово", if (m.minutes > 0) onBackToApp else onClose)
                 }
 
                 BlockMode.Info -> when (reason) {

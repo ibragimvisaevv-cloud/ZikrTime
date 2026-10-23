@@ -9,9 +9,35 @@ import java.time.ZonedDateTime
 /** Время намаза для выбранного города и метода расчёта. */
 object PrayerSchedule {
 
+    /**
+     * Время на дату: из интернета, если данные загружены, иначе расчёт на телефоне.
+     * К результату добавляются ручные поправки пользователя.
+     */
     fun forDate(date: LocalDate, zone: ZoneId = ZoneId.systemDefault()): PrayerTimes {
+        val base = OnlineTimes.day(date)?.let { fromOnline(date, it, zone) } ?: calculated(date, zone)
+        val adjusted = base.times.mapValues { (p, t) -> t.plusMinutes(Store.adjustment(p).toLong()) }
+        return PrayerTimes(date, adjusted)
+    }
+
+    /** Источник данных для подписи на экране. */
+    fun isOnline(date: LocalDate = LocalDate.now()): Boolean = OnlineTimes.day(date) != null
+
+    private fun calculated(date: LocalDate, zone: ZoneId): PrayerTimes {
         val loc = Store.location
         return PrayerCalculator.calculate(date, loc.latitude, loc.longitude, Store.method, Store.madhab, zone)
+    }
+
+    private fun fromOnline(date: LocalDate, day: OnlineTimes.Day, zone: ZoneId): PrayerTimes {
+        var previous: ZonedDateTime? = null
+        val times = LinkedHashMap<Prayer, ZonedDateTime>()
+        for (p in Prayer.entries) {
+            var t = date.atTime(day.times.getValue(p)).atZone(day.zone)
+            // Летом на севере иша бывает после полуночи — значит, это уже следующие сутки.
+            if (previous != null && !t.isAfter(previous)) t = t.plusDays(1)
+            previous = t
+            times[p] = t.withZoneSameInstant(zone)
+        }
+        return PrayerTimes(date, times)
     }
 
     fun today(): PrayerTimes = forDate(LocalDate.now())
