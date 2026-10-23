@@ -4,6 +4,9 @@ on:
   push:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,3 +29,15 @@ jobs:
         with:
           name: ZikrTime-apk
           path: app/build/outputs/apk/debug/*.apk
+
+      # Каждая сборка из main публикуется во вкладке Releases — APK можно скачать прямо на телефон.
+      - name: Опубликовать APK в Releases
+        if: github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cp app/build/outputs/apk/debug/app-debug.apk "ZikrTime-${{ github.run_number }}.apk"
+          gh release create "build-${{ github.run_number }}" "ZikrTime-${{ github.run_number }}.apk" \
+            --title "Зикр-тайм, сборка ${{ github.run_number }}" \
+            --notes "Установочный файл для Android. Скачайте ZikrTime-${{ github.run_number }}.apk на телефон и откройте его." \
+            --latest
