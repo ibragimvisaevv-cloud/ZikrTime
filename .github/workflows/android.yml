@@ -34,6 +34,7 @@ jobs:
         run: |
           mkdir -p ci-out
           python3 tools/ci/probe_adhan.py ci-out/adhan_candidates.json
+          python3 tools/ci/fetch_adhan.py ci-out/adhan
 
       - name: Тесты и сборка
         run: |
