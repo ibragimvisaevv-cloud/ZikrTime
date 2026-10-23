@@ -12,20 +12,33 @@ android {
         applicationId = "com.zikrtime.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 2
-        versionName = "0.2.0"
+        versionCode = 3
+        versionName = "0.3.0"
+    }
+
+    signingConfigs {
+        // Постоянный ключ: с ним новые версии устанавливаются поверх старых.
+        // Для Google Play позже создадим отдельный ключ загрузки и будем хранить его вне репозитория.
+        create("zikr") {
+            storeFile = rootProject.file("keystore/zikrtime.jks")
+            storePassword = "zikrtime-dev-key"
+            keyAlias = "zikrtime"
+            keyPassword = "zikrtime-dev-key"
+        }
     }
 
     buildTypes {
+        debug {
+            signingConfig = signingConfigs.getByName("zikr")
+        }
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            // Пока подписываем release отладочным ключом, чтобы APK можно было сразу установить.
-            // Перед публикацией в Google Play нужно создать собственный ключ подписи.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("zikr")
         }
     }
 
@@ -40,6 +53,11 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
+    }
+
+    testOptions {
+        unitTests.isReturnDefaultValues = true
     }
 }
 
@@ -54,8 +72,12 @@ dependencies {
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.foundation:foundation")
+    implementation("androidx.compose.animation:animation")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material-icons-core")
 
     debugImplementation("androidx.compose.ui:ui-tooling")
+
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.json:json:20240303")
 }
