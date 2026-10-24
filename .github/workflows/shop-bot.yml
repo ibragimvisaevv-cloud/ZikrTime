@@ -132,7 +132,7 @@ jobs:
           OWNER_USERNAME: ${{ secrets.SHOP_OWNER_USERNAME }}
         run: |
           cd shop-bot
-          URL=$(npx --yes vercel@39.3.0 deploy --prod --yes --token "$VERCEL_TOKEN" \
+          URL=$(npx --yes vercel@latest deploy --prod --yes --token "$VERCEL_TOKEN" \
             -e BOT_TOKEN="$BOT_TOKEN" -e BUCKET="$BUCKET" -e S3_KEY_ID="$S3_KEY_ID" -e S3_SECRET="$S3_SECRET" \
             -e OWNER_USERNAME="${OWNER_USERNAME#@}" 2> ../diag/vercel.txt) || { tail -20 ../diag/vercel.txt; exit 1; }
           cd ..
