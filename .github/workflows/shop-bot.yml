@@ -69,15 +69,19 @@ jobs:
           except Exception as e:
               print("не JSON:", type(e).__name__, str(e)[:120])
           PY
-          python3 -c "import json,sys;k=json.load(open(sys.argv[1],encoding='utf-8-sig'));json.dump(k,open(sys.argv[1],'w'))" "$RUNNER_TEMP/key.json" || true
-          f="$YC_FOLDER_ID"; echo "folder id: длина ${#f}, начало ${f:0:3}" >> diag/key-check.txt
+          # Ключ, скопированный с телефона, бывает с настоящими переносами строк внутри — чиним (strict=False)
+          python3 -c "import json,sys;k=json.loads(open(sys.argv[1],encoding='utf-8-sig').read(),strict=False);json.dump(k,open(sys.argv[1],'w'));print('ключ исправлен и прочитан')" "$RUNNER_TEMP/key.json" >> diag/key-check.txt 2>&1 || true
+          # В ID каталога могли вставить ссылку целиком — берём то, что после /folders/
+          FOLDER=$(python3 -c "import re,sys;t=sys.argv[1].strip();m=re.search(r'folders/([a-z0-9]+)',t);print(m.group(1) if m else re.sub(r'[^a-z0-9]','',t))" "$YC_FOLDER_ID")
+          echo "FOLDER=$FOLDER" >> "$GITHUB_ENV"
+          echo "folder id: длина ${#FOLDER}, начало ${FOLDER:0:3}" >> diag/key-check.txt
           curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash -s -- -i "$HOME/yc" -n > diag/install.txt 2>&1
           echo "$HOME/yc/bin" >> "$GITHUB_PATH"
           YC="$HOME/yc/bin/yc"
           $YC config profile create ci > diag/yc.txt 2>&1
           $YC config set service-account-key "$RUNNER_TEMP/key.json" >> diag/yc.txt 2>&1
-          $YC config set folder-id "$(echo "$YC_FOLDER_ID" | tr -d ' \r\n')" >> diag/yc.txt 2>&1
-          $YC resource-manager folder get "$(echo "$YC_FOLDER_ID" | tr -d ' \r\n')" --format json 2>&1 | python3 -c "import sys,json
+          $YC config set folder-id "$FOLDER" >> diag/yc.txt 2>&1
+          $YC resource-manager folder get "$FOLDER" --format json 2>&1 | python3 -c "import sys,json
           t=sys.stdin.read()
           try: print('каталог найден:', json.loads(t).get('name'))
           except Exception: print('ошибка доступа к каталогу:', t[:400])" >> diag/yc.txt
@@ -99,7 +103,7 @@ jobs:
             yc iam service-account create --name "$RUNTIME_SA"
           fi
           SA_ID=$(yc iam service-account get --name "$RUNTIME_SA" --format json | jq -r .id)
-          yc resource-manager folder add-access-binding --id "$YC_FOLDER_ID" --role storage.editor \
+          yc resource-manager folder add-access-binding --id "$FOLDER" --role storage.editor \
             --subject "serviceAccount:$SA_ID" > /dev/null 2>&1 || true
           echo "SA_ID=$SA_ID" >> "$GITHUB_ENV"
 
