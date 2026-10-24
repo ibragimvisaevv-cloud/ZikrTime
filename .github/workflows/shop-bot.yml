@@ -109,30 +109,14 @@ jobs:
       - name: Облачная функция
         if: steps.keys.outputs.ready == 'true'
         env:
-          SHOP_BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
+          BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
           OWNER_USERNAME: ${{ secrets.SHOP_OWNER_USERNAME }}
         run: |
-          exec 2>> diag/function.txt
-          echo "yc $(yc version 2>&1)" >> diag/function.txt
-          yc config get endpoint >> diag/function.txt 2>&1 || true
-          echo "--- list" >> diag/function.txt
-          yc serverless function list >> diag/function.txt 2>&1 || true
-          echo "--- get" >> diag/function.txt
-          if ! yc serverless function get --name "$FUNCTION" >> diag/function.txt 2>&1; then
-            echo "--- create" >> diag/function.txt
-            yc serverless function create --name "$FUNCTION" >> diag/function.txt
-          fi
-          echo "--- public" >> diag/function.txt
-          yc serverless function allow-unauthenticated-invoke --name "$FUNCTION" >> diag/function.txt
-          echo "--- version" >> diag/function.txt
-          mkdir -p "$RUNNER_TEMP/src" && cp shop-bot/index.py "$RUNNER_TEMP/src/"
-          yc serverless function version create \
-            --function-name "$FUNCTION" --runtime python312 --entrypoint index.handler \
-            --memory 256m --execution-timeout 60s --source-path "$RUNNER_TEMP/src" \
-            --service-account-id "$SA_ID" \
-            --environment "BOT_TOKEN=$SHOP_BOT_TOKEN,BUCKET=$BUCKET,OWNER_USERNAME=${OWNER_USERNAME#@}" > /dev/null
-          FID=$(yc serverless function get --name "$FUNCTION" --format json | jq -r .id)
-          echo "FUNCTION_URL=https://functions.yandexcloud.net/$FID" >> "$GITHUB_ENV"
+          # yc serverless в этом облаке не находит адрес сервиса — разворачиваем через REST API
+          export IAM_TOKEN=$(yc iam create-token)
+          export SA_ID FOLDER FUNCTION BUCKET
+          URL=$(python3 shop-bot/deploy_function.py 2> diag/function.txt) || { cat diag/function.txt; exit 1; }
+          echo "FUNCTION_URL=$URL" >> "$GITHUB_ENV"
 
       - name: Подключение к Telegram
         if: steps.keys.outputs.ready == 'true'
