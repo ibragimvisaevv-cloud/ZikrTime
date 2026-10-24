@@ -29,7 +29,33 @@ jobs:
       - name: Проверка переводов
         run: python3 tools/ci/check_strings.py
 
+      - name: Ключ подписи
+        env:
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -z "$RELEASE_KEY_PASSWORD" ]; then
+            echo "::warning::Нет секрета RELEASE_KEY_PASSWORD — сборка подписана отладочным ключом и не будет опубликована"
+            exit 0
+          fi
+          if [ -f keystore/release.jks.enc ]; then
+            openssl enc -d -aes-256-cbc -pbkdf2 -iter 300000 -in keystore/release.jks.enc -out keystore/release.jks -pass env:RELEASE_KEY_PASSWORD
+          else
+            # Первый запуск: создаём новый ключ, шифруем паролем из секрета и сохраняем в репозиторий.
+            keytool -genkeypair -v -keystore keystore/release.jks -alias zikrtime -keyalg RSA -keysize 4096 -validity 36500 \
+              -storepass:env RELEASE_KEY_PASSWORD -keypass:env RELEASE_KEY_PASSWORD -dname "CN=ZikrTime, O=ZikrTime, C=RU"
+            openssl enc -aes-256-cbc -salt -pbkdf2 -iter 300000 -in keystore/release.jks -out keystore/release.jks.enc -pass env:RELEASE_KEY_PASSWORD
+            git config user.name ci && git config user.email ci@users.noreply.github.com
+            git add keystore/release.jks.enc
+            git commit -m "Зашифрованный ключ подписи [skip ci]"
+            git pull --rebase origin ${{ github.ref_name }} && git push origin HEAD:${{ github.ref_name }}
+          fi
+          keytool -list -keystore keystore/release.jks -storepass:env RELEASE_KEY_PASSWORD | grep -i "SHA-256" || true
+          mkdir -p ci-out && echo yes > ci-out/signed.txt
+
       - name: Тесты и сборка
+        env:
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
         run: |
           chmod +x gradlew
           set -o pipefail
@@ -115,7 +141,10 @@ jobs:
 
   release:
     # Публикуем APK только когда в сообщении коммита есть [release]
-    if: contains(github.event.head_commit.message, '[release]') || github.event_name == 'workflow_dispatch'
+    if: >-
+      !cancelled() && needs.build.result == 'success' &&
+      (needs.emulator.result == 'success' || needs.emulator.result == 'skipped') &&
+      (contains(github.event.head_commit.message, '[release]') || github.event_name == 'workflow_dispatch')
     needs: [build, emulator]
     runs-on: ubuntu-latest
     steps:
@@ -130,6 +159,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          # Публикуем только сборку, подписанную постоянным ключом выпуска
+          [ -f build-out/ci-out/signed.txt ] || { echo "::error::Нет секрета RELEASE_KEY_PASSWORD — APK не опубликован"; exit 1; }
           VERSION=$(cat build-out/ci-out/version.txt 2>/dev/null || echo "build")
           NAME="ZikrTime-${VERSION}-${{ github.run_number }}.apk"
           cp build-out/app/build/outputs/apk/release/app-release.apk "$NAME"

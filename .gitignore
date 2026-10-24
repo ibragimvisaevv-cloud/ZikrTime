@@ -8,3 +8,4 @@ local.properties
 captures/
 .kotlin/
 __pycache__/
+keystore/*.jks

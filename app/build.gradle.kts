@@ -20,19 +20,22 @@ android {
     }
 
     signingConfigs {
-        // Постоянный ключ: с ним новые версии устанавливаются поверх старых.
-        // Для Google Play позже создадим отдельный ключ загрузки и будем хранить его вне репозитория.
-        create("zikr") {
-            storeFile = rootProject.file("keystore/zikrtime.jks")
-            storePassword = "zikrtime-dev-key"
-            keyAlias = "zikrtime"
-            keyPassword = "zikrtime-dev-key"
+        // Ключ выпуска хранится в репозитории только в зашифрованном виде (keystore/release.jks.enc).
+        // GitHub расшифровывает его паролем из секрета RELEASE_KEY_PASSWORD перед сборкой.
+        val releaseKey = rootProject.file("keystore/release.jks")
+        val releasePass = System.getenv("RELEASE_KEY_PASSWORD").orEmpty()
+        if (releaseKey.exists() && releasePass.isNotEmpty()) {
+            create("zikr") {
+                storeFile = releaseKey
+                storePassword = releasePass
+                keyAlias = "zikrtime"
+                keyPassword = releasePass
+            }
         }
     }
 
     buildTypes {
         debug {
-            signingConfig = signingConfigs.getByName("zikr")
             // + x86_64 для эмулятора в автоматической проверке
             ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86_64") }
         }
@@ -45,7 +48,8 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("zikr")
+            // Без ключа выпуска (сборка на своём компьютере) подписываем отладочным ключом.
+            signingConfig = signingConfigs.findByName("zikr") ?: signingConfigs.getByName("debug")
         }
     }
 
