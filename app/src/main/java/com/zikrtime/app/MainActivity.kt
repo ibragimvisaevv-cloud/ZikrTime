@@ -30,9 +30,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -89,13 +92,31 @@ class MainActivity : ComponentActivity() {
         if (BuildConfig.DEBUG && QaHooks.handle(this, intent, nav)) return
         handleOpen(intent)
         enableEdgeToEdge()
+        val showSplash = savedInstanceState == null && intent?.hasExtra("qa_screen") != true
         setContent {
             ZikrTheme {
-                Box(Modifier.fillMaxSize()) {
-                    // Переливающийся фон под всеми экранами
-                    com.zikrtime.app.ui.AuroraBackground()
-                    CompositionLocalProvider(LocalNav provides nav) {
-                        AppRoot()
+                val tilt = com.zikrtime.app.ui.rememberTilt()
+                var splash by androidx.compose.runtime.saveable.rememberSaveable { androidx.compose.runtime.mutableStateOf(showSplash) }
+                LaunchedEffect(Unit) {
+                    kotlinx.coroutines.delay(1_150)
+                    splash = false
+                }
+                CompositionLocalProvider(com.zikrtime.app.ui.LocalTilt provides tilt) {
+                    Box(Modifier.fillMaxSize()) {
+                        // Переливающийся фон под всеми экранами
+                        com.zikrtime.app.ui.AuroraBackground()
+                        CompositionLocalProvider(LocalNav provides nav) {
+                            if (BuildConfig.DEBUG && QaHooks.widgetPreview) com.zikrtime.app.ui.WidgetPreview() else AppRoot()
+                        }
+                        // Заставка: полумесяц со звездой
+                        androidx.compose.animation.AnimatedVisibility(
+                            visible = splash,
+                            enter = fadeIn(androidx.compose.animation.core.tween(0)),
+                            exit = fadeOut(androidx.compose.animation.core.tween(380)) +
+                                androidx.compose.animation.scaleOut(targetScale = 1.08f),
+                        ) {
+                            com.zikrtime.app.ui.CrescentSplash()
+                        }
                     }
                 }
             }
@@ -221,8 +242,32 @@ private fun Tabs() {
                 .padding(horizontal = 12.dp, vertical = 10.dp),
         ) { (_, icon, label), selected ->
             val color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+            // Выбранная иконка «подпрыгивает» и покачивается
+            val bounce = remember { androidx.compose.animation.core.Animatable(1f) }
+            val wiggle = remember { androidx.compose.animation.core.Animatable(0f) }
+            LaunchedEffect(selected) {
+                if (selected) {
+                    launch {
+                        bounce.snapTo(0.7f)
+                        bounce.animateTo(1f, androidx.compose.animation.core.spring(dampingRatio = 0.32f, stiffness = 420f))
+                    }
+                    wiggle.snapTo(-14f)
+                    wiggle.animateTo(0f, androidx.compose.animation.core.spring(dampingRatio = 0.25f, stiffness = 300f))
+                }
+            }
+            val lift by androidx.compose.animation.core.animateFloatAsState(if (selected) -2f else 0f, label = "lift")
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Icon(painterResource(icon), contentDescription = null, tint = color, modifier = Modifier.size(24.dp))
+                Icon(
+                    painterResource(icon),
+                    contentDescription = null,
+                    tint = color,
+                    modifier = Modifier.size(24.dp).graphicsLayer {
+                        scaleX = bounce.value
+                        scaleY = bounce.value
+                        rotationZ = wiggle.value
+                        translationY = lift * density
+                    },
+                )
                 Text(
                     stringResource(label),
                     style = MaterialTheme.typography.labelSmall,

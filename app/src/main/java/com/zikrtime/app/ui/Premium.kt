@@ -55,9 +55,9 @@ import kotlin.math.sin
 
 // Премиальный стиль: «стекло» поверх мягко переливающегося фона, блик на кнопках, плавные нажатия.
 
-private val EmeraldBright = Color(0xFF1A7D63)
-private val GoldLight = Color(0xFFFFE7A8)
-private val GoldDark = Color(0xFFC9962F)
+internal val EmeraldBright = Color(0xFF1A7D63)
+internal val GoldLight = Color(0xFFFFE7A8)
+internal val GoldDark = Color(0xFFC9962F)
 
 /** Фон всего приложения: медленно плывущие пятна изумрудного и золотого света + едва заметный узор. */
 @Composable
@@ -76,7 +76,7 @@ fun AuroraBackground(modifier: Modifier = Modifier) {
         listOf(Emerald.copy(alpha = 0.13f), Gold.copy(alpha = 0.20f), Color(0xFF2E8C7A).copy(alpha = 0.10f))
     }
     Box(modifier.fillMaxSize().background(base)) {
-        Canvas(Modifier.fillMaxSize()) {
+        Canvas(Modifier.fillMaxSize().parallax(14.dp, overscan = true)) {
             val w = size.width
             val h = size.height
             val r = maxOf(w, h) * 0.55f
@@ -89,7 +89,7 @@ fun AuroraBackground(modifier: Modifier = Modifier) {
                 drawCircle(Brush.radialGradient(listOf(blobs[i], Color.Transparent), center = c, radius = r), radius = r, center = c)
             }
         }
-        StarPattern(Modifier.fillMaxSize(), color = (if (dark) Gold else Emerald).copy(alpha = if (dark) 0.035f else 0.045f), cell = 88f)
+        StarPattern(Modifier.fillMaxSize().parallax((-10).dp, overscan = true), color = (if (dark) Gold else Emerald).copy(alpha = if (dark) 0.035f else 0.045f), cell = 88f)
     }
 }
 
@@ -189,7 +189,7 @@ fun GlassHero(modifier: Modifier = Modifier, content: @Composable BoxScope.() ->
                 center = Offset(size.width * 0.85f, 0f),
             )
         }
-        StarPattern(Modifier.matchParentSize(), color = Gold.copy(alpha = 0.11f))
+        StarPattern(Modifier.matchParentSize().parallax(10.dp, overscan = true), color = Gold.copy(alpha = 0.11f))
         Box(Modifier.matchParentSize().sheen(alpha = 0.10f, periodMs = 6_000))
         content()
     }

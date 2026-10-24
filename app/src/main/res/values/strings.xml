@@ -352,6 +352,7 @@
     <string name="perm_xiaomi_title">Xiaomi: pop-ups and autostart</string>
     <string name="perm_xiaomi_text">Enable «Display pop-up windows while running in the background» and «Autostart» — otherwise the phone won\'t let the block screen appear.</string>
     <string name="focus_test_title">Check that blocking works</string>
+    <string name="quiz_streak">%1$d in a row</string>
     <string name="focus_test_text">For one minute social apps will close as at prayer time. Press the button and open any app from your list.</string>
     <string name="focus_test_running">Check is on for 1 minute — open a social app now. If it doesn\'t close, check the permissions above.</string>
     <string name="focus_test_button">Check (1 minute)</string>

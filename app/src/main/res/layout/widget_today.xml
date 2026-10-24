@@ -6,6 +6,14 @@
     android:background="@drawable/widget_bg">
 
     <ImageView
+        android:id="@+id/w_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:importantForAccessibility="no"
+        android:scaleType="fitXY" />
+
+    <ImageView
+        android:id="@+id/w_star"
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:layout_gravity="end|top"
@@ -263,5 +271,15 @@
                 android:textStyle="bold" />
         </LinearLayout>
         </LinearLayout>
+
+        <!-- Линия дня: где сейчас солнце относительно намазов -->
+        <ImageView
+            android:id="@+id/w_line"
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            android:layout_marginTop="2dp"
+            android:importantForAccessibility="no"
+            android:scaleType="fitXY" />
+
     </LinearLayout>
 </FrameLayout>

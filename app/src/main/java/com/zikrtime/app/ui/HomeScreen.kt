@@ -68,12 +68,6 @@ fun HomeScreen() {
     val nav = LocalNav.current
     val context = LocalContext.current
     var now by remember { mutableStateOf(ZonedDateTime.now()) }
-    LaunchedEffect(Unit) {
-        while (true) {
-            delay(15_000)
-            now = ZonedDateTime.now()
-        }
-    }
     val today = now.toLocalDate()
     val adjustments = Prayer.entries.map { Store.adjustment(it) }
     val times = remember(today, Store.location, Store.method, Store.madhab, Store.onlineTimes, OnlineTimes.version, adjustments) {
@@ -85,6 +79,16 @@ fun HomeScreen() {
         Prayer.obligatory.lastOrNull { !times[it].isAfter(now) }?.takeIf { p ->
             // Утренний намаз заканчивается с восходом.
             !(p == Prayer.FAJR && !times[Prayer.SUNRISE].isAfter(now))
+        }
+    }
+
+    val nextAt by androidx.compose.runtime.rememberUpdatedState(next.second)
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(1_000)
+            val n = ZonedDateTime.now()
+            // Раз в 15 секунд или сразу, как только наступил намаз.
+            if (Duration.between(now, n).seconds >= 15 || (now.isBefore(nextAt) && !n.isBefore(nextAt))) now = n
         }
     }
 
@@ -123,7 +127,7 @@ fun HomeScreen() {
             }
         }
 
-        NextPrayerHero(next.first, next.second, previousStart?.let { java.time.Instant.from(it) }, now)
+        SkyHero(next.first, next.second, previousStart?.let { java.time.Instant.from(it) }, times)
 
         // Намазы на сегодня
         ZCard(padding = androidx.compose.foundation.layout.PaddingValues(horizontal = 12.dp, vertical = 12.dp)) {
@@ -201,56 +205,6 @@ fun HomeScreen() {
                 hint = stringResource(R.string.streak_prayers_hint),
                 modifier = Modifier.weight(1f),
             )
-        }
-    }
-}
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-private fun NextPrayerHero(prayer: Prayer, at: ZonedDateTime, previous: java.time.Instant?, now: ZonedDateTime) {
-    val left = Duration.between(now, at).toMinutes().coerceAtLeast(0) + 1
-    val progress = previous?.let {
-        val total = Duration.between(it, at.toInstant()).toSeconds().toFloat()
-        val passed = Duration.between(it, now.toInstant()).toSeconds().toFloat()
-        if (total > 0) (passed / total).coerceIn(0f, 1f) else null
-    }
-    GlassHero {
-        Column(Modifier.padding(24.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Column(Modifier.weight(1f)) {
-                    Text(stringResource(R.string.home_next_prayer), style = MaterialTheme.typography.labelLarge, color = Cream.copy(alpha = 0.8f))
-                    Spacer(Modifier.height(4.dp))
-                    Text(prayerName(prayer), fontSize = 34.sp, fontWeight = FontWeight.SemiBold, color = Cream, maxLines = 1)
-                }
-                Icon(painterResource(prayerIconRes(prayer)), contentDescription = null, tint = Gold, modifier = Modifier.size(44.dp))
-            }
-            Spacer(Modifier.height(6.dp))
-            // Время и «через …» в одну строку, а на узком экране — друг под другом.
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalArrangement = Arrangement.spacedBy(2.dp),
-            ) {
-                BigClock(at, fontSize = 40.sp, color = Gold, modifier = Modifier.align(Alignment.Bottom))
-                Text(
-                    stringResource(R.string.home_in_time, durationText(left)),
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Cream,
-                    maxLines = 1,
-                    softWrap = false,
-                    modifier = Modifier.align(Alignment.Bottom).padding(bottom = 8.dp),
-                )
-            }
-            if (progress != null) {
-                Spacer(Modifier.height(14.dp))
-                LinearProgressIndicator(
-                    progress = { progress },
-                    modifier = Modifier.fillMaxWidth().height(6.dp),
-                    color = Gold,
-                    trackColor = Cream.copy(alpha = 0.18f),
-                    strokeCap = StrokeCap.Round,
-                    drawStopIndicator = {},
-                )
-            }
         }
     }
 }

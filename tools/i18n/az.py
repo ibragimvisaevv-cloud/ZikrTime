@@ -371,6 +371,7 @@ STRINGS = {
     "perm_xiaomi_title": "Xiaomi: açılan pəncərələr və avtostart",
     "perm_xiaomi_text": "«Arxa planda işləyərkən açılan pəncərələri göstər» və «Avtostart»ı aktiv edin — əks halda telefon bloklama ekranını göstərməyə icazə verməz.",
     "focus_test_title": "Bloklamanı yoxla",
+    "quiz_streak": "ardıcıl %1$d",
     "focus_test_text": "Bir dəqiqə ərzində sosial şəbəkələr namaz vaxtındakı kimi bağlanacaq. Düyməni basın və siyahıdakı istənilən tətbiqi açın.",
     "focus_test_running": "Yoxlama 1 dəqiqə davam edir — sosial şəbəkəni açın. Bağlanmasa, yuxarıdakı icazələri yoxlayın.",
     "focus_test_button": "Yoxla (1 dəqiqə)",

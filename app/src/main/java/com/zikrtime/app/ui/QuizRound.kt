@@ -27,6 +27,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -36,11 +37,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.zikrtime.app.R
 import com.zikrtime.app.data.Store
 import com.zikrtime.app.quiz.QuestionBank
@@ -67,6 +70,8 @@ fun QuizRound(
     var index by remember { mutableIntStateOf(0) }
     var correct by remember { mutableIntStateOf(0) }
     var selected by remember { mutableStateOf<Int?>(null) }
+    var streak by remember { mutableIntStateOf(0) }
+    val view = androidx.compose.ui.platform.LocalView.current
     val question = remember(order, index) { order[index % order.size].shuffled() }
     val scheme = MaterialTheme.colorScheme
 
@@ -90,13 +95,17 @@ fun QuizRound(
             )
         }
 
-        Surface(shape = RoundedCornerShape(50), color = scheme.secondaryContainer) {
-            Text(
-                bank.categoryName(question.category),
-                style = MaterialTheme.typography.labelMedium,
-                color = scheme.onSecondaryContainer,
-                modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-            )
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Surface(shape = RoundedCornerShape(50), color = scheme.secondaryContainer) {
+                Text(
+                    bank.categoryName(question.category),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = scheme.onSecondaryContainer,
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                )
+            }
+            Spacer(Modifier.weight(1f))
+            StreakFlame(streak)
         }
 
         Text(question.text, style = MaterialTheme.typography.titleLarge)
@@ -116,6 +125,7 @@ fun QuizRound(
         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
             question.options.forEachIndexed { i, option ->
                 OptionCard(
+                    celebrate = selected == i && i == question.answerIndex,
                     letter = ('A' + i).toString(),
                     text = option,
                     state = when {
@@ -129,7 +139,14 @@ fun QuizRound(
                             selected = i
                             val ok = i == question.answerIndex
                             Store.recordAnswer(question.id, question.category, ok)
-                            if (ok) correct++
+                            if (ok) {
+                                correct++
+                                streak++
+                                view.performHapticFeedback(android.view.HapticFeedbackConstants.CONFIRM)
+                            } else {
+                                streak = 0
+                                view.performHapticFeedback(android.view.HapticFeedbackConstants.REJECT)
+                            }
                         }
                     },
                 )
@@ -202,7 +219,33 @@ private fun InfoCard(ok: Boolean, correctAnswer: String, info: String) {
 private enum class OptionState { Idle, Correct, Wrong, Dimmed }
 
 @Composable
-private fun OptionCard(letter: String, text: String, state: OptionState, onClick: () -> Unit) {
+private fun OptionCard(letter: String, text: String, state: OptionState, onClick: () -> Unit, celebrate: Boolean = false) {
+    val scheme = MaterialTheme.colorScheme
+    // Верный ответ «подпрыгивает» и рассыпает искры, неверный — покачивается.
+    val bump = remember { androidx.compose.animation.core.Animatable(1f) }
+    LaunchedEffect(celebrate) {
+        if (celebrate) {
+            bump.animateTo(1.045f, androidx.compose.animation.core.tween(120))
+            bump.animateTo(1f, androidx.compose.animation.core.spring(dampingRatio = 0.35f, stiffness = 500f))
+        }
+    }
+    Box(
+        Modifier
+            .shake(state == OptionState.Wrong)
+            .graphicsLayer {
+                scaleX = bump.value
+                scaleY = bump.value
+            },
+    ) {
+        OptionSurface(letter, text, state, onClick)
+        if (celebrate) {
+            SparkleBurst(key = text, modifier = Modifier.matchParentSize(), count = 22, spread = 120.dp)
+        }
+    }
+}
+
+@Composable
+private fun OptionSurface(letter: String, text: String, state: OptionState, onClick: () -> Unit) {
     val scheme = MaterialTheme.colorScheme
     val (container, border) = when (state) {
         OptionState.Idle -> scheme.surfaceContainerLowest to scheme.outlineVariant
@@ -254,6 +297,47 @@ private fun OptionCard(letter: String, text: String, state: OptionState, onClick
                 textAlign = if (arabic) TextAlign.Center else TextAlign.Start,
                 color = if (state == OptionState.Dimmed) scheme.onSurfaceVariant.copy(alpha = 0.6f) else scheme.onSurface,
                 modifier = Modifier.weight(1f),
+            )
+        }
+    }
+}
+
+/** Серия верных ответов подряд: огонёк растёт с каждым ответом. */
+@Composable
+private fun StreakFlame(streak: Int) {
+    androidx.compose.animation.AnimatedVisibility(
+        visible = streak >= 2,
+        enter = fadeIn() + androidx.compose.animation.scaleIn(initialScale = 0.4f),
+        exit = androidx.compose.animation.fadeOut() + androidx.compose.animation.scaleOut(targetScale = 0.6f),
+    ) {
+        val grow = remember { androidx.compose.animation.core.Animatable(1f) }
+        LaunchedEffect(streak) {
+            grow.snapTo(1.35f)
+            grow.animateTo(1f, androidx.compose.animation.core.spring(dampingRatio = 0.4f, stiffness = 380f))
+        }
+        val flicker by androidx.compose.animation.core.rememberInfiniteTransition(label = "flame").animateFloat(
+            -6f, 6f,
+            androidx.compose.animation.core.infiniteRepeatable(androidx.compose.animation.core.tween(380), androidx.compose.animation.core.RepeatMode.Reverse),
+            label = "flame-r",
+        )
+        Row(
+            Modifier
+                .graphicsLayer {
+                    scaleX = grow.value
+                    scaleY = grow.value
+                }
+                .clip(RoundedCornerShape(50))
+                .background(androidx.compose.ui.graphics.Brush.horizontalGradient(listOf(Color(0xFFFF8A3D), Color(0xFFE2B659))))
+                .padding(horizontal = 12.dp, vertical = 5.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text("🔥", fontSize = (14 + minOf(streak, 8)).sp, modifier = Modifier.graphicsLayer { rotationZ = flicker })
+            Spacer(Modifier.width(4.dp))
+            Text(
+                stringResource(R.string.quiz_streak, streak),
+                style = MaterialTheme.typography.labelLarge,
+                color = Color(0xFF2B1400),
+                fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
             )
         }
     }

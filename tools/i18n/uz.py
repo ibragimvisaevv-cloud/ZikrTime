@@ -371,6 +371,7 @@ STRINGS = {
     "perm_xiaomi_title": "Xiaomi: qalqib chiquvchi oynalar va avtoishga tushirish",
     "perm_xiaomi_text": "«Fonda ishlayotganda qalqib chiquvchi oynalarni koʻrsatish» va «Avtoishga tushirish»ni yoqing — aks holda telefon bloklash ekranini koʻrsatishga ruxsat bermaydi.",
     "focus_test_title": "Bloklashni tekshirish",
+    "quiz_streak": "ketma-ket %1$d",
     "focus_test_text": "Bir daqiqa davomida ijtimoiy tarmoqlar namoz vaqtidagidek yopiladi. Tugmani bosing va roʻyxatdagi istalgan ilovani oching.",
     "focus_test_running": "Tekshiruv 1 daqiqa davom etadi — ijtimoiy tarmoqni oching. Yopilmasa, yuqoridagi ruxsatlarni tekshiring.",
     "focus_test_button": "Tekshirish (1 daqiqa)",

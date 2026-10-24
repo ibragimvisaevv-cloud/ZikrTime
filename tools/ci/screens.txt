@@ -22,3 +22,4 @@ apps
 block_limit
 block_prayer
 alarm_ring
+widgets

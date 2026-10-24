@@ -371,6 +371,7 @@ STRINGS = {
     "perm_xiaomi_title": "Xiaomi: açılır pencereler ve otomatik başlatma",
     "perm_xiaomi_text": "«Arka planda çalışırken açılır pencereleri göster» ve «Otomatik başlatma»yı açın — aksi halde telefon engelleme ekranını göstermez.",
     "focus_test_title": "Engellemeyi test et",
+    "quiz_streak": "üst üste %1$d",
     "focus_test_text": "Bir dakika boyunca sosyal ağlar namaz vaktindeki gibi kapanacak. Düğmeye basın ve listenizdeki herhangi bir uygulamayı açın.",
     "focus_test_running": "Test 1 dakika sürüyor — bir sosyal ağ açın. Kapanmazsa yukarıdaki izinleri kontrol edin.",
     "focus_test_button": "Test et (1 dakika)",

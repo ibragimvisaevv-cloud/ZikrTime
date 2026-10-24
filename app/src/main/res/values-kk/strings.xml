@@ -352,6 +352,7 @@
     <string name="perm_xiaomi_title">Xiaomi: қалқымалы терезелер және автоіске қосу</string>
     <string name="perm_xiaomi_text">«Фонда жұмыс істегенде қалқымалы терезелерді көрсету» және «Автоіске қосу» параметрлерін қосыңыз — әйтпесе телефон бұғаттау экранын көрсетпейді.</string>
     <string name="focus_test_title">Бұғаттауды тексеру</string>
+    <string name="quiz_streak">қатарынан %1$d</string>
     <string name="focus_test_text">Бір минут бойы әлеуметтік желілер намаз уақытындағыдай жабылады. Батырманы басып, тізімдегі кез келген қосымшаны ашыңыз.</string>
     <string name="focus_test_running">Тексеру 1 минут жүреді — әлеуметтік желіні ашыңыз. Жабылмаса, жоғарыдағы рұқсаттарды тексеріңіз.</string>
     <string name="focus_test_button">Тексеру (1 минут)</string>

@@ -22,6 +22,9 @@ import java.time.LocalDate
 object QaHooks {
 
     /** Возвращает true, если экран будет пересоздан (смена языка) и дальше идти не нужно. */
+    /** Показать виджеты рабочего стола вместо приложения (для снимков на эмуляторе). */
+    var widgetPreview = false
+
     fun handle(activity: Activity, intent: Intent?, nav: Nav): Boolean {
         intent ?: return false
         val lang = intent.getStringExtra("qa_lang")
@@ -59,6 +62,7 @@ object QaHooks {
                 nav.startQuiz(null)
             }
             "shop" -> nav.tab = Tab.SHOP
+            "widgets" -> widgetPreview = true
             "places" -> nav.open(Screen.PLACES)
             "shop_seller" -> {
                 nav.tab = Tab.SHOP

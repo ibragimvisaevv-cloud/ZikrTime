@@ -49,10 +49,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
@@ -97,11 +101,8 @@ private fun rememberHeading(lat: Double, lon: Double): Pair<Float?, Boolean> {
                 SensorManager.getOrientation(rot, orientation)
                 val azimuth = ((Math.toDegrees(orientation[0].toDouble()) + declination + 360.0) % 360.0).toFloat()
                 val old = heading
-                heading = if (old == null) azimuth else {
-                    // Сглаживание с учётом перехода 359° → 0°
-                    val delta = ((azimuth - old + 540f) % 360f) - 180f
-                    (old + delta * 0.15f + 360f) % 360f
-                }
+                // Угол «без скачков»: после 359° идёт 360°, 361°… — так стрелка поворачивается плавно.
+                heading = if (old == null) azimuth else old + norm180(azimuth - old) * 0.15f
             }
 
             override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
@@ -122,7 +123,13 @@ fun QiblaScreen() {
     val qibla = remember(loc) { Qibla.bearing(loc.latitude, loc.longitude).toFloat() }
     val distance = remember(loc) { Qibla.distanceKm(loc.latitude, loc.longitude) }
     val (heading, lowAccuracy) = rememberHeading(loc.latitude, loc.longitude)
-    val relative = heading?.let { ((qibla - it + 540f) % 360f) - 180f }
+    val relative = heading?.let { norm180(qibla - it) }
+    // Пружинка поверх датчика: циферблат догоняет телефон мягко, без дрожи.
+    val shownHeading by androidx.compose.animation.core.animateFloatAsState(
+        heading ?: 0f,
+        androidx.compose.animation.core.spring(dampingRatio = 0.85f, stiffness = 90f),
+        label = "heading",
+    )
     val aligned = relative != null && abs(relative) < 5f
     var wasAligned by remember { mutableStateOf(false) }
     LaunchedEffect(aligned) {
@@ -132,7 +139,7 @@ fun QiblaScreen() {
 
     ScreenScaffold(title = stringResource(R.string.qibla_title), onBack = { nav.back() }) {
         Box(Modifier.fillMaxWidth().aspectRatio(1f).padding(8.dp), contentAlignment = Alignment.Center) {
-            Compass(heading = heading ?: 0f, qibla = qibla, aligned = aligned)
+            Compass(heading = shownHeading, qibla = qibla, aligned = aligned)
         }
         Text(
             when {
@@ -175,11 +182,33 @@ private fun Compass(heading: Float, qibla: Float, aligned: Boolean) {
         stringResource(R.string.compass_n), stringResource(R.string.compass_e),
         stringResource(R.string.compass_s), stringResource(R.string.compass_w),
     )
+    val glowOn by androidx.compose.animation.core.animateFloatAsState(if (aligned) 1f else 0f, androidx.compose.animation.core.tween(450), label = "qibla-glow")
+    val pulse by androidx.compose.animation.core.rememberInfiniteTransition(label = "qibla").animateFloat(
+        0f, 1f,
+        androidx.compose.animation.core.infiniteRepeatable(androidx.compose.animation.core.tween(1100), androidx.compose.animation.core.RepeatMode.Reverse),
+        label = "qibla-pulse",
+    )
     BoxWithConstraints(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         val radius = with(LocalDensity.current) { (minOf(maxWidth, maxHeight) / 2).toPx() }
         Canvas(Modifier.fillMaxSize()) {
             val r = size.minDimension / 2
-            drawCircle(scheme.surfaceContainerLow, radius = r)
+            if (glowOn > 0f) {
+                // Золотое сияние вокруг компаса, когда телефон смотрит на Каабу
+                val g = r * (1.08f + 0.05f * pulse)
+                drawCircle(
+                    Brush.radialGradient(
+                        0.78f to Color.Transparent,
+                        0.9f to Gold.copy(alpha = 0.55f * glowOn),
+                        1f to Color.Transparent,
+                        center = center, radius = g,
+                    ),
+                    radius = g,
+                )
+            }
+            drawCircle(
+                Brush.radialGradient(listOf(scheme.surfaceContainerLowest, scheme.surfaceContainerLow, scheme.surfaceContainer), center, r),
+                radius = r,
+            )
             drawCircle(ring, radius = r - 2.dp.toPx(), style = Stroke(3.dp.toPx()))
             // Циферблат поворачивается вместе с телефоном: север указывает на север.
             rotate(-heading) {
@@ -240,6 +269,11 @@ private fun Compass(heading: Float, qibla: Float, aligned: Boolean) {
         Box(
             Modifier
                 .offset { polar(qibla - heading, radius * 0.5f) }
+                .graphicsLayer {
+                    val sc = 1f + glowOn * (0.12f + 0.08f * pulse)
+                    scaleX = sc
+                    scaleY = sc
+                }
                 .size(42.dp)
                 .clip(CircleShape)
                 .background(Brush.linearGradient(listOf(Emerald, EmeraldDeep)))
@@ -250,6 +284,9 @@ private fun Compass(heading: Float, qibla: Float, aligned: Boolean) {
         }
     }
 }
+
+/** Угол в диапазоне −180…180°. */
+private fun norm180(x: Float): Float = ((x % 360f + 540f) % 360f) - 180f
 
 /** Смещение от центра на distance пикселей в направлении angle (0° — вверх, по часовой стрелке). */
 private fun polar(angle: Float, distance: Float): IntOffset {
@@ -322,30 +359,112 @@ fun TasbihScreen() {
                 textAlign = TextAlign.Center,
             )
         }
-        // Большая кнопка-счётчик
-        Box(
-            Modifier
-                .fillMaxWidth()
-                .aspectRatio(1f)
-                .padding(20.dp)
-                .clip(CircleShape)
-                .background(Brush.radialGradient(listOf(Emerald, EmeraldDeep)))
-                .clickable {
-                    Store.addTasbih()
-                    val reached = target > 0 && Store.tasbihCount % target == 0
-                    view.performHapticFeedback(if (reached) HapticFeedbackConstants.LONG_PRESS else HapticFeedbackConstants.KEYBOARD_TAP)
-                },
-            contentAlignment = Alignment.Center,
-        ) {
-            ProgressRing(
-                progress = progress,
-                modifier = Modifier.fillMaxSize().padding(14.dp),
-                color = Gold,
-                track = Cream.copy(alpha = 0.15f),
-                stroke = 8.dp,
+        // Чётки: 33 бусины по кругу. Нажатие или движение пальцем вниз «перекидывает» бусину.
+        val context = LocalContext.current
+        var burst by remember { mutableIntStateOf(0) }
+        val count33 = count % 33
+        val lit = if (count > 0 && count33 == 0) 33 else count33
+        val turn by androidx.compose.animation.core.animateFloatAsState(
+            -count * (360f / 33f),
+            androidx.compose.animation.core.spring(dampingRatio = 0.62f, stiffness = 260f),
+            label = "beads",
+        )
+        val pop = remember { androidx.compose.animation.core.Animatable(0f) }
+        LaunchedEffect(count) {
+            if (count > 0) {
+                pop.snapTo(1f)
+                pop.animateTo(0f, androidx.compose.animation.core.spring(dampingRatio = 0.4f, stiffness = 300f))
+            }
+        }
+        val press = remember { MutableInteractionSource() }
+        fun addOne() {
+            Store.addTasbih()
+            val c = Store.tasbihCount
+            when {
+                target > 0 && c % target == 0 -> {
+                    Haptics.done(context)
+                    burst++
+                }
+                c % 33 == 0 -> {
+                    Haptics.lap(context)
+                    burst++
+                }
+                else -> Haptics.tick(context)
+            }
+        }
+        Box(Modifier.fillMaxWidth().aspectRatio(1f), contentAlignment = Alignment.Center) {
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .padding(14.dp)
+                    .pressScale(press, 0.97f)
+                    .clip(CircleShape)
+                    .background(Brush.radialGradient(listOf(EmeraldBright, Emerald, EmeraldDeep)))
+                    .border(1.5.dp, Brush.linearGradient(listOf(GoldLight.copy(alpha = 0.8f), Gold.copy(alpha = 0.2f), GoldLight.copy(alpha = 0.6f))), CircleShape)
+                    .pointerInput(target) {
+                        var dragged = 0f
+                        detectVerticalDragGestures(
+                            onDragStart = { dragged = 0f },
+                            onVerticalDrag = { change, dy ->
+                                change.consume()
+                                dragged += dy
+                                if (dragged > 46.dp.toPx()) {
+                                    dragged = 0f
+                                    addOne()
+                                }
+                            },
+                        )
+                    }
+                    .clickable(interactionSource = press, indication = null) { addOne() },
+                contentAlignment = Alignment.Center,
             ) {
+                StarPattern(Modifier.fillMaxSize().parallax(8.dp, overscan = true), color = Gold.copy(alpha = 0.08f))
+                Canvas(Modifier.fillMaxSize().padding(10.dp)) {
+                    val ringR = size.minDimension / 2 - 16.dp.toPx()
+                    val beadR = (ringR * sin(Math.PI / 33).toFloat() * 0.86f)
+                    drawCircle(Cream.copy(alpha = 0.18f), ringR, center, style = Stroke(1.2.dp.toPx()))
+                    for (k in 0 until 33) {
+                        val d = ((count - k) % 33 + 33) % 33
+                        val on = d < lit
+                        val angle = Math.toRadians((k * 360.0 / 33) + turn - 90)
+                        val c = Offset(center.x + ringR * cos(angle).toFloat(), center.y + ringR * sin(angle).toFloat())
+                        val scale = if (d == 0 && count > 0) 1f + 0.55f * pop.value else 1f
+                        val r = beadR * scale
+                        if (on) {
+                            drawCircle(Gold.copy(alpha = 0.25f), r * 1.5f, c)
+                            drawCircle(Brush.radialGradient(BeadGold, Offset(c.x - r * 0.35f, c.y - r * 0.35f), r * 1.4f), r, c)
+                        } else {
+                            drawCircle(Brush.radialGradient(BeadIdle, Offset(c.x - r * 0.35f, c.y - r * 0.35f), r * 1.4f), r, c)
+                            drawCircle(Cream.copy(alpha = 0.22f), r, c, style = Stroke(0.8.dp.toPx()))
+                        }
+                    }
+                    // Прогресс до цели — тонкая золотая дуга внутри
+                    if (target > 0) {
+                        val inner = ringR - beadR * 2.6f
+                        drawArc(
+                            Cream.copy(alpha = 0.12f), 0f, 360f, false,
+                            Offset(center.x - inner, center.y - inner), androidx.compose.ui.geometry.Size(inner * 2, inner * 2),
+                            style = Stroke(3.dp.toPx()),
+                        )
+                        drawArc(
+                            Gold, -90f, 360f * progress, false,
+                            Offset(center.x - inner, center.y - inner), androidx.compose.ui.geometry.Size(inner * 2, inner * 2),
+                            style = Stroke(3.dp.toPx(), cap = StrokeCap.Round),
+                        )
+                    }
+                }
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text((if (target > 0) count % target else count).toString(), fontSize = 72.sp, color = Cream, style = Tabular)
+                    Text(
+                        (if (target > 0) count % target else count).toString(),
+                        fontSize = 68.sp,
+                        color = Cream,
+                        style = Tabular,
+                        modifier = Modifier.graphicsLayer {
+                            val sc = 1f + 0.08f * pop.value
+                            scaleX = sc
+                            scaleY = sc
+                        },
+                    )
                     if (target > 0) {
                         Text(stringResource(R.string.tasbih_of, target), style = MaterialTheme.typography.titleMedium, color = Cream.copy(alpha = 0.8f))
                     }
@@ -354,6 +473,7 @@ fun TasbihScreen() {
                     }
                 }
             }
+            RingBurst(burst, Modifier.fillMaxSize())
         }
         Text(stringResource(R.string.tasbih_tap_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
         ZCard {
