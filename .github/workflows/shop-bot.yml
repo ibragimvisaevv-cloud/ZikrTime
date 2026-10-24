@@ -53,7 +53,7 @@ jobs:
         if: steps.keys.outputs.ready == 'true'
         env:
           YC_SA_KEY: ${{ secrets.YC_SA_KEY }}
-          YC_FOLDER_ID: ${{ secrets.YC_FOLDER_ID }}
+          RAW_FOLDER: ${{ secrets.YC_FOLDER_ID }}  # не YC_FOLDER_ID: эту переменную yc читает сам
         run: |
           mkdir -p diag
           # Проверка ключа без вывода секретов: только имена полей и длины
@@ -72,7 +72,7 @@ jobs:
           # Ключ, скопированный с телефона, бывает с настоящими переносами строк внутри — чиним (strict=False)
           python3 -c "import json,sys;k=json.loads(open(sys.argv[1],encoding='utf-8-sig').read(),strict=False);json.dump(k,open(sys.argv[1],'w'));print('ключ исправлен и прочитан')" "$RUNNER_TEMP/key.json" >> diag/key-check.txt 2>&1 || true
           # В ID каталога могли вставить ссылку целиком — берём то, что после /folders/
-          FOLDER=$(python3 -c "import re,sys;t=sys.argv[1].strip();m=re.search(r'folders/([a-z0-9]+)',t);print(m.group(1) if m else re.sub(r'[^a-z0-9]','',t))" "$YC_FOLDER_ID")
+          FOLDER=$(python3 -c "import re,sys;t=sys.argv[1].strip();m=re.search(r'folders/([a-z0-9]+)',t);print(m.group(1) if m else re.sub(r'[^a-z0-9]','',t))" "$RAW_FOLDER")
           echo "FOLDER=$FOLDER" >> "$GITHUB_ENV"
           echo "folder id: длина ${#FOLDER}, начало ${FOLDER:0:3}" >> diag/key-check.txt
           curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash -s -- -i "$HOME/yc" -n > diag/install.txt 2>&1
@@ -96,8 +96,6 @@ jobs:
 
       - name: Сервисный аккаунт функции
         if: steps.keys.outputs.ready == 'true'
-        env:
-          YC_FOLDER_ID: ${{ secrets.YC_FOLDER_ID }}
         run: |
           if ! yc iam service-account get --name "$RUNTIME_SA" > /dev/null 2>&1; then
             yc iam service-account create --name "$RUNTIME_SA" > diag/sa.txt 2>&1 || { cat diag/sa.txt; exit 1; }
