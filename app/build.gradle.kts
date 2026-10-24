@@ -33,8 +33,12 @@ android {
     buildTypes {
         debug {
             signingConfig = signingConfigs.getByName("zikr")
+            // + x86_64 для эмулятора в автоматической проверке
+            ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86_64") }
         }
         release {
+            // Карты Яндекса содержат нативные библиотеки: оставляем только процессоры реальных телефонов
+            ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(

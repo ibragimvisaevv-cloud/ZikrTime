@@ -36,6 +36,8 @@ progress "boot ok"
 shot() { sleep "${2:-4}"; adb exec-out screencap -p > "$OUT/screens/$1.png"; }
 
 # 1. Release-сборка: ставится и запускается без падений
+# Не показывать окна «приложение не отвечает» для фоновых процессов (лаунчер эмулятора) — они закрывают скриншоты
+adb shell settings put secure anr_show_background 0 || true
 adb install -r "$RELEASE_APK" > "$OUT/install-release.txt" 2>&1
 sleep 2
 adb logcat -b all -c
