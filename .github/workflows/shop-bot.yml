@@ -113,10 +113,18 @@ jobs:
           OWNER_USERNAME: ${{ secrets.SHOP_OWNER_USERNAME }}
         run: |
           exec 2>> diag/function.txt
-          if ! yc serverless function get --name "$FUNCTION" > /dev/null 2>&1; then
+          echo "yc $(yc version 2>&1)" >> diag/function.txt
+          yc config get endpoint >> diag/function.txt 2>&1 || true
+          echo "--- list" >> diag/function.txt
+          yc serverless function list >> diag/function.txt 2>&1 || true
+          echo "--- get" >> diag/function.txt
+          if ! yc serverless function get --name "$FUNCTION" >> diag/function.txt 2>&1; then
+            echo "--- create" >> diag/function.txt
             yc serverless function create --name "$FUNCTION" >> diag/function.txt
           fi
+          echo "--- public" >> diag/function.txt
           yc serverless function allow-unauthenticated-invoke --name "$FUNCTION" >> diag/function.txt
+          echo "--- version" >> diag/function.txt
           mkdir -p "$RUNNER_TEMP/src" && cp shop-bot/index.py "$RUNNER_TEMP/src/"
           yc serverless function version create \
             --function-name "$FUNCTION" --runtime python312 --entrypoint index.handler \
