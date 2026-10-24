@@ -67,7 +67,7 @@ def main():
     env = {"BOT_TOKEN": os.environ["BOT_TOKEN"], "BUCKET": os.environ["BUCKET"]}
     if os.environ.get("OWNER_USERNAME"):
         env["OWNER_USERNAME"] = os.environ["OWNER_USERNAME"].lstrip("@")
-    wait(call("POST", f"{API}/functions:createVersion", {
+    wait(call("POST", f"{API}/versions", {
         "functionId": fid,
         "runtime": "python312",
         "entrypoint": "index.handler",
