@@ -1,0 +1,8 @@
+Stopping: com.zikrtime.app
+Starting: Intent { cmp=com.zikrtime.app/.MainActivity (has extras) }
+Status: ok
+LaunchState: COLD
+Activity: com.zikrtime.app/.MainActivity
+TotalTime: 5117
+WaitTime: 5203
+Complete
