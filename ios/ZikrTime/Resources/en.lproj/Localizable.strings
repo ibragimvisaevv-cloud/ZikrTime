@@ -25,7 +25,7 @@
 "prayer_fajr" = "Fajr";
 "prayer_sunrise" = "Sunrise";
 "prayer_dhuhr" = "Dhuhr";
-"prayer_asr" = "Asr time";
+"prayer_asr" = "Asr";
 "prayer_maghrib" = "Maghrib";
 "prayer_isha" = "Isha";
 "home_today" = "Today's prayers";
@@ -122,6 +122,7 @@
 "method_angles" = "Fajr %1$@°, Isha %2$@°";
 "method_angles_minutes" = "Fajr %1$@°, Isha %2$ld min after Maghrib";
 "prayer_method_hint" = "If the times at your mosque differ, try another method or set corrections below.";
+"prayer_asr_section" = "Asr time";
 "prayer_source" = "Source";
 "prayer_source_online" = "Load times from the internet";
 "prayer_source_online_hint" = "aladhan.com with the same method. Without internet, the phone calculates.";

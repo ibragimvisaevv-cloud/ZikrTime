@@ -330,7 +330,7 @@ fun PrayerSettingsScreen() {
         }
         Text(stringResource(R.string.prayer_method_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
 
-        SectionLabel(stringResource(R.string.prayer_asr))
+        SectionLabel(stringResource(R.string.prayer_asr_section))
         ZCard(padding = PaddingValues(vertical = 6.dp, horizontal = 8.dp)) {
             AsrMadhab.entries.forEach { m ->
                 RadioLine(text = madhabName(m), selected = Store.madhab == m, onClick = {

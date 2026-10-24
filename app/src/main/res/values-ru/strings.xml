@@ -27,7 +27,7 @@
     <string name="prayer_fajr">Фаджр</string>
     <string name="prayer_sunrise">Восход</string>
     <string name="prayer_dhuhr">Зухр</string>
-    <string name="prayer_asr">Время аср-намаза</string>
+    <string name="prayer_asr">Аср</string>
     <string name="prayer_maghrib">Магриб</string>
     <string name="prayer_isha">Иша</string>
     <string name="home_today">Намазы сегодня</string>
@@ -124,6 +124,7 @@
     <string name="method_angles">Фаджр %1$s°, иша %2$s°</string>
     <string name="method_angles_minutes">Фаджр %1$s°, иша через %2$d мин после магриба</string>
     <string name="prayer_method_hint">Если время в вашей мечети отличается, попробуйте другой метод или задайте поправки ниже.</string>
+    <string name="prayer_asr_section">Время аср-намаза</string>
     <string name="prayer_source">Источник</string>
     <string name="prayer_source_online">Загружать время из интернета</string>
     <string name="prayer_source_online_hint">aladhan.com с тем же методом. Без интернета — расчёт на телефоне.</string>

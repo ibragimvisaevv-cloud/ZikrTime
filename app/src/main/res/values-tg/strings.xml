@@ -27,7 +27,7 @@
     <string name="prayer_fajr">Бомдод</string>
     <string name="prayer_sunrise">Тулӯи офтоб</string>
     <string name="prayer_dhuhr">Пешин</string>
-    <string name="prayer_asr">Вақти намози аср</string>
+    <string name="prayer_asr">Аср</string>
     <string name="prayer_maghrib">Шом</string>
     <string name="prayer_isha">Хуфтан</string>
     <string name="home_today">Намозҳои имрӯз</string>
@@ -124,6 +124,7 @@
     <string name="method_angles">Бомдод %1$s°, хуфтан %2$s°</string>
     <string name="method_angles_minutes">Бомдод %1$s°, хуфтан %2$d дақ пас аз шом</string>
     <string name="prayer_method_hint">Агар вақт дар масҷиди шумо фарқ кунад, усули дигарро санҷед ё дар поён ислоҳ ворид кунед.</string>
+    <string name="prayer_asr_section">Вақти намози аср</string>
     <string name="prayer_source">Манбаъ</string>
     <string name="prayer_source_online">Вақтро аз интернет гирифтан</string>
     <string name="prayer_source_online_hint">aladhan.com бо ҳамон усул. Бе интернет — ҳисоб дар телефон.</string>

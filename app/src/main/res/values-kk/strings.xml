@@ -27,7 +27,7 @@
     <string name="prayer_fajr">Таң</string>
     <string name="prayer_sunrise">Күн шығуы</string>
     <string name="prayer_dhuhr">Бесін</string>
-    <string name="prayer_asr">Екінті уақыты</string>
+    <string name="prayer_asr">Екінті</string>
     <string name="prayer_maghrib">Ақшам</string>
     <string name="prayer_isha">Құптан</string>
     <string name="home_today">Бүгінгі намаздар</string>
@@ -124,6 +124,7 @@
     <string name="method_angles">Таң %1$s°, құптан %2$s°</string>
     <string name="method_angles_minutes">Таң %1$s°, құптан ақшамнан %2$d мин кейін</string>
     <string name="prayer_method_hint">Егер мешітіңіздегі уақыт өзгеше болса, басқа әдісті көріңіз немесе төменде түзету енгізіңіз.</string>
+    <string name="prayer_asr_section">Екінті уақыты</string>
     <string name="prayer_source">Дереккөз</string>
     <string name="prayer_source_online">Уақытты интернеттен жүктеу</string>
     <string name="prayer_source_online_hint">aladhan.com, сол әдіспен. Интернет болмаса — телефонда есептеледі.</string>

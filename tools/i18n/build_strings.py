@@ -41,8 +41,19 @@ def android_escape(text):
 PH = re.compile(r"%(\d+\$)?[sdf]")
 
 
+def duplicate_keys(lang):
+    """Python молча перезаписывает повторный ключ в словаре — ищем такие ошибки явно."""
+    import ast
+    tree = ast.parse((pathlib.Path(__file__).parent / f"{lang}.py").read_text(encoding="utf-8"))
+    for node in tree.body:
+        if isinstance(node, ast.Assign) and getattr(node.targets[0], "id", "") == "STRINGS":
+            keys = [k.value for k in node.value.keys]
+            return sorted({k for k in keys if keys.count(k) > 1})
+    return []
+
+
 def check(lang, mod, base):
-    errors = []
+    errors = [f"{lang}: ключ {k} повторяется" for k in duplicate_keys(lang)]
     for key, text in base.STRINGS.items():
         if key not in mod.STRINGS:
             errors.append(f"{lang}: нет {key}")

@@ -64,6 +64,15 @@ enum QA {
     private static var screen: String? { UserDefaults.standard.string(forKey: "qa_screen") }
     static var active: Bool { screen != nil }
 
+    /// С какого шага открыть знакомство (для скриншотов).
+    static var onboardingStep: Int {
+        switch screen {
+        case "onboarding_welcome": return 1
+        case "onboarding_city": return 2
+        default: return 0
+        }
+    }
+
     static func prepare() {
         let d = UserDefaults.standard
         if let lang = d.string(forKey: "qa_lang"), Store.shared.language != lang {
@@ -76,8 +85,7 @@ enum QA {
     static func route(_ router: Router) {
         guard let s = screen else { return }
         switch s {
-        case "onboarding_welcome": router.onboardingStep = 1
-        case "onboarding_city": router.onboardingStep = 2
+        case "onboarding", "onboarding_welcome", "onboarding_city": break
         case "knowledge": router.tab = .knowledge
         case "quiz":
             router.tab = .knowledge

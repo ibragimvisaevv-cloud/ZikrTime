@@ -289,7 +289,7 @@ struct PrayerSettingsView: View {
             }
             Text(L("prayer_method_hint")).font(.caption).foregroundStyle(Brand.secondaryText)
 
-            SectionLabel(text: L("prayer_asr"))
+            SectionLabel(text: L("prayer_asr_section"))
             Card(padding: 8) {
                 ForEach(AsrMadhab.allCases, id: \.self) { m in
                     RadioLine(title: L(m.nameKey), selected: store.madhab == m) {

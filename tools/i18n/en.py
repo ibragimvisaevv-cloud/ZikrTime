@@ -141,7 +141,7 @@ STRINGS = {
     "method_angles": "Fajr %1$s°, Isha %2$s°",
     "method_angles_minutes": "Fajr %1$s°, Isha %2$d min after Maghrib",
     "prayer_method_hint": "If the times at your mosque differ, try another method or set corrections below.",
-    "prayer_asr": "Asr time",
+    "prayer_asr_section": "Asr time",
     "prayer_source": "Source",
     "prayer_source_online": "Load times from the internet",
     "prayer_source_online_hint": "aladhan.com with the same method. Without internet, the phone calculates.",

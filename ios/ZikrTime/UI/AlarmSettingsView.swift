@@ -35,7 +35,7 @@ struct AlarmSettingsView: View {
                     .tint(Brand.primary)
 
                     Text(L("alarm_days")).font(.body).padding(.top, 12)
-                    HStack(spacing: 6) {
+                    HStack(spacing: 2) {
                         ForEach(weekOrder(), id: \.self) { day in
                             let on = store.alarmDays.contains(day)
                             Button {
@@ -43,13 +43,14 @@ struct AlarmSettingsView: View {
                                 changed()
                             } label: {
                                 Text(L("weekdays_short_\(day - 1)"))
-                                    .font(.caption.weight(.semibold))
+                                    .font(.footnote.weight(.semibold))
                                     .lineLimit(1)
-                                    .minimumScaleFactor(0.7)
-                                    .frame(maxWidth: .infinity)
-                                    .aspectRatio(1, contentMode: .fit)
+                                    .minimumScaleFactor(0.6)
+                                    .padding(.horizontal, 3)
+                                    .frame(width: 40, height: 40)
                                     .foregroundStyle(on ? Color.white : Brand.secondaryText)
                                     .background(on ? Brand.primary : Brand.primarySoft, in: Circle())
+                                    .frame(maxWidth: .infinity)
                             }
                             .buttonStyle(.plain)
                         }

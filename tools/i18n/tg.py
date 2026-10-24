@@ -133,7 +133,7 @@ STRINGS = {
     "method_angles": "Бомдод %1$s°, хуфтан %2$s°",
     "method_angles_minutes": "Бомдод %1$s°, хуфтан %2$d дақ пас аз шом",
     "prayer_method_hint": "Агар вақт дар масҷиди шумо фарқ кунад, усули дигарро санҷед ё дар поён ислоҳ ворид кунед.",
-    "prayer_asr": "Вақти намози аср",
+    "prayer_asr_section": "Вақти намози аср",
     "prayer_source": "Манбаъ",
     "prayer_source_online": "Вақтро аз интернет гирифтан",
     "prayer_source_online_hint": "aladhan.com бо ҳамон усул. Бе интернет — ҳисоб дар телефон.",

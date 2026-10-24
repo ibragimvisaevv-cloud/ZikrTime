@@ -133,7 +133,7 @@ STRINGS = {
     "method_angles": "Bomdod %1$s°, xufton %2$s°",
     "method_angles_minutes": "Bomdod %1$s°, xufton shomdan %2$d daq keyin",
     "prayer_method_hint": "Agar masjidingizdagi vaqt farq qilsa, boshqa usulni sinab koʻring yoki quyida tuzatish kiriting.",
-    "prayer_asr": "Asr vaqti",
+    "prayer_asr_section": "Asr vaqti",
     "prayer_source": "Manba",
     "prayer_source_online": "Vaqtni internetdan yuklash",
     "prayer_source_online_hint": "aladhan.com, xuddi shu usul bilan. Internet boʻlmasa — telefonda hisoblanadi.",

@@ -27,7 +27,7 @@
     <string name="prayer_fajr">Sübh</string>
     <string name="prayer_sunrise">Günəş</string>
     <string name="prayer_dhuhr">Zöhr</string>
-    <string name="prayer_asr">Əsr vaxtı</string>
+    <string name="prayer_asr">Əsr</string>
     <string name="prayer_maghrib">Məğrib</string>
     <string name="prayer_isha">İşa</string>
     <string name="home_today">Bugünkü namazlar</string>
@@ -124,6 +124,7 @@
     <string name="method_angles">Sübh %1$s°, işa %2$s°</string>
     <string name="method_angles_minutes">Sübh %1$s°, işa məğribdən %2$d dəq sonra</string>
     <string name="prayer_method_hint">Məscidinizdəki vaxt fərqlənirsə, başqa üsulu yoxlayın və ya aşağıda düzəliş edin.</string>
+    <string name="prayer_asr_section">Əsr vaxtı</string>
     <string name="prayer_source">Mənbə</string>
     <string name="prayer_source_online">Vaxtları internetdən yüklə</string>
     <string name="prayer_source_online_hint">aladhan.com, eyni üsulla. İnternet olmadıqda — telefonda hesablanır.</string>

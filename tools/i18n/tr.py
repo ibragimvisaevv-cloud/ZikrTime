@@ -133,7 +133,7 @@ STRINGS = {
     "method_angles": "Sabah %1$s°, yatsı %2$s°",
     "method_angles_minutes": "Sabah %1$s°, yatsı akşamdan %2$d dk sonra",
     "prayer_method_hint": "Camiinizdeki vakitler farklıysa başka bir yöntem deneyin veya aşağıdan düzeltme yapın.",
-    "prayer_asr": "İkindi vakti",
+    "prayer_asr_section": "İkindi vakti",
     "prayer_source": "Kaynak",
     "prayer_source_online": "Vakitleri internetten yükle",
     "prayer_source_online_hint": "aladhan.com, aynı yöntemle. İnternet yoksa telefon hesaplar.",

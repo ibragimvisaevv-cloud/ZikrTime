@@ -61,7 +61,8 @@ func L(_ key: String) -> String { L10n.string(key) }
 
 /// Строка с подстановками: L("home_in_time", "3 ч")
 func L(_ key: String, _ args: CVarArg...) -> String {
-    String(format: L10n.string(key), locale: L10n.locale, arguments: args)
+    // Числа без разделителей разрядов («1448», «3822») — как в Android-версии.
+    String(format: L10n.string(key), locale: nil, arguments: args)
 }
 
 /// Множественное число: Lp("days", 5) → «5 дней».
@@ -80,7 +81,7 @@ func Lp(_ key: String, _ n: Int) -> String {
     default:
         category = n == 1 ? "one" : "other"
     }
-    return String(format: L10n.string("\(key)_\(category)"), locale: L10n.locale, n)
+    return String(format: L10n.string("\(key)_\(category)"), locale: nil, n)
 }
 
 /// Массив строк: La("hijri_months", 12).

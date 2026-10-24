@@ -25,7 +25,7 @@
 "prayer_fajr" = "Sübh";
 "prayer_sunrise" = "Günəş";
 "prayer_dhuhr" = "Zöhr";
-"prayer_asr" = "Əsr vaxtı";
+"prayer_asr" = "Əsr";
 "prayer_maghrib" = "Məğrib";
 "prayer_isha" = "İşa";
 "home_today" = "Bugünkü namazlar";
@@ -122,6 +122,7 @@
 "method_angles" = "Sübh %1$@°, işa %2$@°";
 "method_angles_minutes" = "Sübh %1$@°, işa məğribdən %2$ld dəq sonra";
 "prayer_method_hint" = "Məscidinizdəki vaxt fərqlənirsə, başqa üsulu yoxlayın və ya aşağıda düzəliş edin.";
+"prayer_asr_section" = "Əsr vaxtı";
 "prayer_source" = "Mənbə";
 "prayer_source_online" = "Vaxtları internetdən yüklə";
 "prayer_source_online_hint" = "aladhan.com, eyni üsulla. İnternet olmadıqda — telefonda hesablanır.";

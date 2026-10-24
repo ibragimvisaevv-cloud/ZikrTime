@@ -133,7 +133,7 @@ STRINGS = {
     "method_angles": "Багымдат %1$s°, куптан %2$s°",
     "method_angles_minutes": "Багымдат %1$s°, куптан шамдан %2$d мүн кийин",
     "prayer_method_hint": "Эгер мечитиңиздеги убакыт башкача болсо, башка ыкманы сынап көрүңүз же төмөндө оңдоо киргизиңиз.",
-    "prayer_asr": "Аср убактысы",
+    "prayer_asr_section": "Аср убактысы",
     "prayer_source": "Булак",
     "prayer_source_online": "Убакытты интернеттен жүктөө",
     "prayer_source_online_hint": "aladhan.com, ошол эле ыкма менен. Интернет жок болсо — телефондо эсептелет.",

@@ -25,7 +25,7 @@
 "prayer_fajr" = "Sabah";
 "prayer_sunrise" = "Güneş";
 "prayer_dhuhr" = "Öğle";
-"prayer_asr" = "İkindi vakti";
+"prayer_asr" = "İkindi";
 "prayer_maghrib" = "Akşam";
 "prayer_isha" = "Yatsı";
 "home_today" = "Bugünkü namazlar";
@@ -122,6 +122,7 @@
 "method_angles" = "Sabah %1$@°, yatsı %2$@°";
 "method_angles_minutes" = "Sabah %1$@°, yatsı akşamdan %2$ld dk sonra";
 "prayer_method_hint" = "Camiinizdeki vakitler farklıysa başka bir yöntem deneyin veya aşağıdan düzeltme yapın.";
+"prayer_asr_section" = "İkindi vakti";
 "prayer_source" = "Kaynak";
 "prayer_source_online" = "Vakitleri internetten yükle";
 "prayer_source_online_hint" = "aladhan.com, aynı yöntemle. İnternet yoksa telefon hesaplar.";

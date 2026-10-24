@@ -27,7 +27,7 @@
     <string name="prayer_fajr">Sabah</string>
     <string name="prayer_sunrise">Güneş</string>
     <string name="prayer_dhuhr">Öğle</string>
-    <string name="prayer_asr">İkindi vakti</string>
+    <string name="prayer_asr">İkindi</string>
     <string name="prayer_maghrib">Akşam</string>
     <string name="prayer_isha">Yatsı</string>
     <string name="home_today">Bugünkü namazlar</string>
@@ -124,6 +124,7 @@
     <string name="method_angles">Sabah %1$s°, yatsı %2$s°</string>
     <string name="method_angles_minutes">Sabah %1$s°, yatsı akşamdan %2$d dk sonra</string>
     <string name="prayer_method_hint">Camiinizdeki vakitler farklıysa başka bir yöntem deneyin veya aşağıdan düzeltme yapın.</string>
+    <string name="prayer_asr_section">İkindi vakti</string>
     <string name="prayer_source">Kaynak</string>
     <string name="prayer_source_online">Vakitleri internetten yükle</string>
     <string name="prayer_source_online_hint">aladhan.com, aynı yöntemle. İnternet yoksa telefon hesaplar.</string>

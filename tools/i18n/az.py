@@ -133,7 +133,7 @@ STRINGS = {
     "method_angles": "Sübh %1$s°, işa %2$s°",
     "method_angles_minutes": "Sübh %1$s°, işa məğribdən %2$d dəq sonra",
     "prayer_method_hint": "Məscidinizdəki vaxt fərqlənirsə, başqa üsulu yoxlayın və ya aşağıda düzəliş edin.",
-    "prayer_asr": "Əsr vaxtı",
+    "prayer_asr_section": "Əsr vaxtı",
     "prayer_source": "Mənbə",
     "prayer_source_online": "Vaxtları internetdən yüklə",
     "prayer_source_online_hint": "aladhan.com, eyni üsulla. İnternet olmadıqda — telefonda hesablanır.",

@@ -27,7 +27,7 @@
     <string name="prayer_fajr">Fajr</string>
     <string name="prayer_sunrise">Sunrise</string>
     <string name="prayer_dhuhr">Dhuhr</string>
-    <string name="prayer_asr">Asr time</string>
+    <string name="prayer_asr">Asr</string>
     <string name="prayer_maghrib">Maghrib</string>
     <string name="prayer_isha">Isha</string>
     <string name="home_today">Today\'s prayers</string>
@@ -124,6 +124,7 @@
     <string name="method_angles">Fajr %1$s°, Isha %2$s°</string>
     <string name="method_angles_minutes">Fajr %1$s°, Isha %2$d min after Maghrib</string>
     <string name="prayer_method_hint">If the times at your mosque differ, try another method or set corrections below.</string>
+    <string name="prayer_asr_section">Asr time</string>
     <string name="prayer_source">Source</string>
     <string name="prayer_source_online">Load times from the internet</string>
     <string name="prayer_source_online_hint">aladhan.com with the same method. Without internet, the phone calculates.</string>

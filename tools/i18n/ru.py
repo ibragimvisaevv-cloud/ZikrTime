@@ -133,7 +133,7 @@ STRINGS = {
     "method_angles": "Фаджр %1$s°, иша %2$s°",
     "method_angles_minutes": "Фаджр %1$s°, иша через %2$d мин после магриба",
     "prayer_method_hint": "Если время в вашей мечети отличается, попробуйте другой метод или задайте поправки ниже.",
-    "prayer_asr": "Время аср-намаза",
+    "prayer_asr_section": "Время аср-намаза",
     "prayer_source": "Источник",
     "prayer_source_online": "Загружать время из интернета",
     "prayer_source_online_hint": "aladhan.com с тем же методом. Без интернета — расчёт на телефоне.",

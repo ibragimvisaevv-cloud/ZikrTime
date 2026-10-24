@@ -17,7 +17,7 @@ final class Router: ObservableObject {
     @Published var knowledgePath: [Route] = []
     @Published var qiblaPath: [Route] = []
     @Published var morePath: [Route] = []
-    @Published var onboardingStep = 0
+    @Published var onboardingStep = QA.onboardingStep
 
     func open(_ route: Route, in tab: AppTab) {
         self.tab = tab
