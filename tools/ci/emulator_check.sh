@@ -56,12 +56,9 @@ adb shell settings put secure anr_show_background 0 || true
 adb install -r "$RELEASE_APK" > "$OUT/install-release.txt" 2>&1
 sleep 2
 adb logcat -b all -c
-timeout 60 adb shell am start -W -n $PKG/.MainActivity > /dev/null || progress "am start timeout"
-progress "release started"
-shot release-start 6
-progress "release shot"
-adb logcat -d -b crash > "$OUT/crash-release.txt"
-adb shell am force-stop $PKG
+# Release-APK содержит библиотеки только для ARM (настоящие телефоны), а эмулятор — x86:
+# запуск через трансляцию ARM роняет эмулятор на нативном коде Яндекс Карт. Поэтому только проверяем установку.
+grep -q Success "$OUT/install-release.txt" && progress "release install ok" || progress "release install FAILED"
 sleep 1
 adb uninstall $PKG > /dev/null
 
