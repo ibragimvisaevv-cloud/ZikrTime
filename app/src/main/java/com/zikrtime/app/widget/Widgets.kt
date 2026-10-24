@@ -163,7 +163,7 @@ object Widgets {
             views.setImageViewBitmap(
                 R.id.w_ring,
                 WidgetArt.ring(
-                    context, 54, progress,
+                    context, 48, progress,
                     intArrayOf(WidgetArt.GOLD_DARK, WidgetArt.GOLD_LIGHT, WidgetArt.GOLD),
                     prayerIconRes(prayer), WidgetArt.GOLD_LIGHT, glow = soon,
                 ),
