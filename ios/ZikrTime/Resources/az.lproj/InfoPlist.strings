@@ -1,0 +1,4 @@
+/* Сгенерировано tools/ios/build_strings.py */
+"CFBundleDisplayName" = "ZikrTime";
+"NSAlarmKitUsageDescription" = "ZikrTime sizi seçdiyiniz vaxtda azanla sübh namazına oyadır.";
+"NSLocationWhenInUseUsageDescription" = "Yeriniz yalnız namaz vaxtlarını və qiblə istiqamətini hesablamaq üçün lazımdır.";

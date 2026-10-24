@@ -1,0 +1,4 @@
+/* Сгенерировано tools/ios/build_strings.py */
+"CFBundleDisplayName" = "Зикр-тайм";
+"NSAlarmKitUsageDescription" = "Зикр-тайм сизди тандалган убакта азан менен багымдат намазына ойготот.";
+"NSLocationWhenInUseUsageDescription" = "Жайгашкан жер намаз убактысын жана кыбыла багытын эсептөө үчүн гана керек.";

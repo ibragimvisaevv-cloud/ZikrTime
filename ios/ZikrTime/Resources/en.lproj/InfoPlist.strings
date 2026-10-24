@@ -1,0 +1,4 @@
+/* Сгенерировано tools/ios/build_strings.py */
+"CFBundleDisplayName" = "ZikrTime";
+"NSAlarmKitUsageDescription" = "ZikrTime wakes you up for the Fajr prayer with the adhan at the time you choose.";
+"NSLocationWhenInUseUsageDescription" = "Your location is used only to calculate prayer times and the qibla direction.";

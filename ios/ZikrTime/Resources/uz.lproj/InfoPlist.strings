@@ -1,0 +1,4 @@
+/* Сгенерировано tools/ios/build_strings.py */
+"CFBundleDisplayName" = "ZikrTime";
+"NSAlarmKitUsageDescription" = "ZikrTime sizni tanlangan vaqtda azon bilan bomdod namoziga uygʻotadi.";
+"NSLocationWhenInUseUsageDescription" = "Joylashuv faqat namoz vaqtlari va qibla yoʻnalishini hisoblash uchun kerak.";

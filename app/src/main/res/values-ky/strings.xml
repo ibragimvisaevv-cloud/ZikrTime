@@ -199,10 +199,10 @@
     <string name="notify_prayer_title">%1$s намазынын убактысы</string>
     <string name="notify_prayer_text">%1$s · %2$s.</string>
     <string name="notify_prayer_lock">Социалдык тармактар %1$d мүнөткө токтотулду.</string>
-    <string name="qibla_title">Кыбла</string>
+    <string name="qibla_title">Кыбыла</string>
     <string name="qibla_subtitle">Кааба тарапты көрсөтөт</string>
     <string name="qibla_turn">Кааба өйдө жакта болгончо буруңуз</string>
-    <string name="qibla_aligned">Сиз кыблага карап турасыз</string>
+    <string name="qibla_aligned">Сиз кыбылага карап турасыз</string>
     <string name="qibla_no_sensor">Телефондо компас жок — төмөндөгү бурчка таяныңыз</string>
     <string name="qibla_bearing">Түндүктөн багыт</string>
     <string name="qibla_distance">Каабага чейин</string>
@@ -240,7 +240,7 @@
     <string name="onboarding_feature_alarm">Уктап калбаш үчүн багымдатка катуу ойготкуч</string>
     <string name="onboarding_feature_focus">Социалдык тармактарга күндүк лимит</string>
     <string name="onboarding_feature_quiz">Ислам жөнүндө жооптор үчүн кошумча мүнөттөр</string>
-    <string name="onboarding_feature_tools">Кыбла компасы жана теспе эсептегич</string>
+    <string name="onboarding_feature_tools">Кыбыла компасы жана теспе эсептегич</string>
     <string name="about_title">Колдонмо жөнүндө</string>
     <string name="about_version">Версия %1$s</string>
     <string name="about_privacy_title">Купуялык</string>

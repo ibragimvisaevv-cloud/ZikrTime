@@ -213,10 +213,10 @@ STRINGS = {
     "notify_prayer_text": "%1$s · %2$s.",
     "notify_prayer_lock": "Социалдык тармактар %1$d мүнөткө токтотулду.",
 
-    "qibla_title": "Кыбла",
+    "qibla_title": "Кыбыла",
     "qibla_subtitle": "Кааба тарапты көрсөтөт",
     "qibla_turn": "Кааба өйдө жакта болгончо буруңуз",
-    "qibla_aligned": "Сиз кыблага карап турасыз",
+    "qibla_aligned": "Сиз кыбылага карап турасыз",
     "qibla_no_sensor": "Телефондо компас жок — төмөндөгү бурчка таяныңыз",
     "qibla_bearing": "Түндүктөн багыт",
     "qibla_distance": "Каабага чейин",
@@ -256,7 +256,7 @@ STRINGS = {
     "onboarding_feature_alarm": "Уктап калбаш үчүн багымдатка катуу ойготкуч",
     "onboarding_feature_focus": "Социалдык тармактарга күндүк лимит",
     "onboarding_feature_quiz": "Ислам жөнүндө жооптор үчүн кошумча мүнөттөр",
-    "onboarding_feature_tools": "Кыбла компасы жана теспе эсептегич",
+    "onboarding_feature_tools": "Кыбыла компасы жана теспе эсептегич",
 
     "about_title": "Колдонмо жөнүндө",
     "about_version": "Версия %1$s",

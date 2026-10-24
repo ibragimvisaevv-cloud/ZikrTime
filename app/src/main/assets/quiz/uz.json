@@ -1,0 +1,1117 @@
+{
+ "lang": "uz",
+ "categories": [
+  {
+   "id": "quran",
+   "name": "Qurʼon"
+  },
+  {
+   "id": "prophets",
+   "name": "Paygʻambarlar"
+  },
+  {
+   "id": "seerah",
+   "name": "Siyrat"
+  },
+  {
+   "id": "fiqh",
+   "name": "Asoslar va fiqh"
+  },
+  {
+   "id": "arabic",
+   "name": "Arabcha soʻzlar"
+  },
+  {
+   "id": "ayah",
+   "name": "Oyatni davom ettiring"
+  }
+ ],
+ "questions": [
+  {
+   "id": "quran_suras",
+   "cat": "quran",
+   "q": "Qurʼonda nechta sura bor?",
+   "options": [
+    "114",
+    "99",
+    "120",
+    "112"
+   ],
+   "answer": 0,
+   "info": "Qurʼonda 114 ta sura va 6200 dan ortiq oyat bor. Suralar qachon va qayerda nozil boʻlganiga qarab Makkiy va Madaniy suralarga boʻlinadi."
+  },
+  {
+   "id": "quran_first_sura",
+   "cat": "quran",
+   "q": "Qurʼon qaysi sura bilan boshlanadi?",
+   "options": [
+    "Fotiha",
+    "Baqara",
+    "Ixlos",
+    "Nos"
+   ],
+   "answer": 0,
+   "info": "«Fotiha» — «Ochuvchi» degani. U namozning har bir rakatida oʻqiladi, shuning uchun «Ummul-Kitob» — «Kitobning onasi» deb ham ataladi."
+  },
+  {
+   "id": "quran_longest",
+   "cat": "quran",
+   "q": "Eng uzun sura qaysi?",
+   "options": [
+    "Baqara",
+    "Oli Imron",
+    "Niso",
+    "Yosin"
+   ],
+   "answer": 0,
+   "info": "«Baqara» («Sigir») surasida 286 oyat bor. Unda Oyatul-Kursiy hamda Qurʼondagi eng uzun oyat — qarzni yozib qoʻyish haqidagi oyat (2:282) bor."
+  },
+  {
+   "id": "quran_shortest",
+   "cat": "quran",
+   "q": "Eng qisqa sura qaysi?",
+   "options": [
+    "Kavsar",
+    "Fotiha",
+    "Yosin",
+    "Mulk"
+   ],
+   "answer": 0,
+   "info": "«Kavsar» surasi uchta qisqa oyatdan iborat. Kavsar — Paygʻambarimiz ﷺga berilgan jannatdagi daryoning nomi."
+  },
+  {
+   "id": "quran_month",
+   "cat": "quran",
+   "q": "Qurʼonning nozil boʻlishi qaysi oyda boshlangan?",
+   "options": [
+    "Ramazon",
+    "Shaʼbon",
+    "Muharram",
+    "Zulhijja"
+   ],
+   "answer": 0,
+   "info": "Bu haqda «Baqara» surasida (2:185) aytilgan. Vahiy Qadr kechasida boshlanib, taxminan 23 yil davom etgan."
+  },
+  {
+   "id": "quran_jibril",
+   "cat": "quran",
+   "q": "Paygʻambarimiz ﷺga vahiyni qaysi farishta keltirgan?",
+   "options": [
+    "Jabroil",
+    "Mikoil",
+    "Isrofil",
+    "Molik"
+   ],
+   "answer": 0,
+   "info": "Jabroil alayhissalom paygʻambarlarga vahiy yetkazgan. Qurʼonda u «Ruhul-Amin» — «Ishonchli Ruh» deb ham atalgan (26:193)."
+  },
+  {
+   "id": "quran_hira",
+   "cat": "quran",
+   "q": "Paygʻambarimiz ﷺga birinchi vahiy qayerda kelgan?",
+   "options": [
+    "Hiro gʻorida",
+    "Savr gʻorida",
+    "Arofat togʻida",
+    "Kaʼba yonida"
+   ],
+   "answer": 0,
+   "info": "Hiro gʻori Makka yaqinidagi Nur togʻida joylashgan. Paygʻambarimiz ﷺ paygʻambarlikdan oldin ham u yerga ibodat uchun chekinar edilar."
+  },
+  {
+   "id": "quran_iqra",
+   "cat": "quran",
+   "q": "Birinchi vahiy qaysi soʻz bilan boshlanadi?",
+   "options": [
+    "«Oʻqing!» (Iqraʼ)",
+    "«Ayting!» (Qul)",
+    "«Hamd» (Alhamdu)",
+    "«Qasamki…» (Va)"
+   ],
+   "answer": 0,
+   "info": "Birinchi nozil boʻlgan oyatlar «Alaq» surasining boshidir (96:1–5) — insonni yaratgan Robbining nomi bilan oʻqish haqida."
+  },
+  {
+   "id": "quran_kursi_sura",
+   "cat": "quran",
+   "q": "Oyatul-Kursiy qaysi surada?",
+   "options": [
+    "Baqara",
+    "Oli Imron",
+    "Yosin",
+    "Mulk"
+   ],
+   "answer": 0,
+   "info": "Oyatul-Kursiy — «Baqara» surasining 255-oyati. Unda Allohning buyukligi, ilmi hamda osmonlar va yer ustidan hokimiyati haqida soʻz boradi."
+  },
+  {
+   "id": "quran_greatest_ayah",
+   "cat": "quran",
+   "q": "Paygʻambarimiz ﷺ qaysi oyatni Qurʼondagi eng buyuk oyat deganlar?",
+   "options": [
+    "Oyatul-Kursiy",
+    "Fotihaning birinchi oyati",
+    "Baqaraning oxirgi oyati",
+    "Ixlosning birinchi oyati"
+   ],
+   "answer": 0,
+   "info": "Bu Imom Muslim rivoyat qilgan Ubay ibn Kaʼb hadisida kelgan. Oyatul-Kursiy farz namozlaridan keyin va uxlashdan oldin oʻqiladi."
+  },
+  {
+   "id": "quran_no_basmala",
+   "cat": "quran",
+   "q": "Qaysi sura «Bismillahir-Rohmanir-Rohiym» bilan boshlanmaydi?",
+   "options": [
+    "Tavba",
+    "Fotiha",
+    "Naml",
+    "Ixlos"
+   ],
+   "answer": 0,
+   "info": "Toʻqqizinchi sura — «Tavba» boshida basmala yoʻq yagona suradir. U «Baroat» («Oqlanish») deb ham ataladi."
+  },
+  {
+   "id": "quran_two_basmala",
+   "cat": "quran",
+   "q": "Qaysi surada basmala ikki marta keladi?",
+   "options": [
+    "Naml",
+    "Tavba",
+    "Baqara",
+    "Maryam"
+   ],
+   "answer": 0,
+   "info": "«Naml» surasida basmala boshida va 30-oyatda — Sulaymon alayhissalomning Saba malikasiga yozgan maktubida keladi. Shu bois Qurʼonda basmala 114 marta keladi."
+  },
+  {
+   "id": "quran_third",
+   "cat": "quran",
+   "q": "Paygʻambarimiz ﷺ qaysi surani Qurʼonning uchdan biriga teng deganlar?",
+   "options": [
+    "Ixlos",
+    "Fotiha",
+    "Yosin",
+    "Mulk"
+   ],
+   "answer": 0,
+   "info": "Bu Imom Buxoriy rivoyat qilgan hadisda kelgan. «Ixlos» («Samimiyat») surasi toʻliq Allohning yagonaligi — tavhidga bagʻishlangan."
+  },
+  {
+   "id": "quran_maryam",
+   "cat": "quran",
+   "q": "Qaysi sura ayol kishining nomi bilan atalgan?",
+   "options": [
+    "Maryam",
+    "Kavsar",
+    "Taloq",
+    "Ahzob"
+   ],
+   "answer": 0,
+   "info": "Iso alayhissalomning onalari Maryam — Qurʼonda nomi bilan zikr qilingan yagona ayol. 19-sura uning nomi bilan atalgan."
+  },
+  {
+   "id": "quran_fatiha_ayat",
+   "cat": "quran",
+   "q": "«Fotiha» surasida nechta oyat bor?",
+   "options": [
+    "7",
+    "5",
+    "6",
+    "8"
+   ],
+   "answer": 0,
+   "info": "«Fotiha» yetti oyatdan iborat. Qurʼonda u «takrorlanuvchi yetti oyat» deb atalgan (15:87), chunki har bir rakatda qayta oʻqiladi."
+  },
+  {
+   "id": "prophet_adam",
+   "cat": "prophets",
+   "q": "Birinchi inson va birinchi paygʻambar kim?",
+   "options": [
+    "Odam",
+    "Nuh",
+    "Idris",
+    "Ibrohim"
+   ],
+   "answer": 0,
+   "info": "Odam alayhissalom — Alloh yaratgan birinchi inson va birinchi paygʻambar. Barcha odamlar u kishi va ayollari Havvodan tarqalgan."
+  },
+  {
+   "id": "prophet_nuh",
+   "cat": "prophets",
+   "q": "Qaysi paygʻambar kema qurgan?",
+   "options": [
+    "Nuh",
+    "Muso",
+    "Ibrohim",
+    "Hud"
+   ],
+   "answer": 0,
+   "info": "Nuh alayhissalom qavmini koʻp yillar yagona Allohga ibodat qilishga chaqirgan. Allohning amri bilan kema qurib, moʻminlar bilan birga toʻfondan najot topgan."
+  },
+  {
+   "id": "prophet_kaaba",
+   "cat": "prophets",
+   "q": "Kaʼbani oʻgʻli Ismoil bilan birga kim qurgan?",
+   "options": [
+    "Ibrohim",
+    "Odam",
+    "Sulaymon",
+    "Muso"
+   ],
+   "answer": 0,
+   "info": "Bu «Baqara» surasida (2:127) zikr qilingan. Ibrohim va Ismoil alayhimassalom Kaʼbani qurib, Allohdan amallarini qabul qilishini soʻraganlar."
+  },
+  {
+   "id": "prophet_yunus",
+   "cat": "prophets",
+   "q": "Qaysi paygʻambarni katta baliq yutib yuborgan?",
+   "options": [
+    "Yunus",
+    "Yusuf",
+    "Ilyos",
+    "Lut"
+   ],
+   "answer": 0,
+   "info": "Yunus alayhissalom baliq qornida Allohning yagonaligini eʼtirof etib, oʻz xatosini tan olib duo qilgan. Uning duosi (21:87) qiyin paytlarda hozir ham oʻqiladi."
+  },
+  {
+   "id": "prophet_tawrat",
+   "cat": "prophets",
+   "q": "Tavrot qaysi paygʻambarga nozil qilingan?",
+   "options": [
+    "Muso",
+    "Iso",
+    "Dovud",
+    "Ibrohim"
+   ],
+   "answer": 0,
+   "info": "Tavrot — Muso alayhissalomga nozil qilingan kitob. Alloh nozil qilgan barcha kitoblarga iymon keltirish — iymon ruknlaridan biri."
+  },
+  {
+   "id": "prophet_zabur",
+   "cat": "prophets",
+   "q": "Zabur qaysi paygʻambarga nozil qilingan?",
+   "options": [
+    "Dovud",
+    "Sulaymon",
+    "Muso",
+    "Iso"
+   ],
+   "answer": 0,
+   "info": "Zabur Dovud alayhissalomga nozil qilingan. Dovud alayhissalom ham paygʻambar, ham podshoh boʻlgan, Alloh unga goʻzal ovoz bergan."
+  },
+  {
+   "id": "prophet_injil",
+   "cat": "prophets",
+   "q": "Injil qaysi paygʻambarga nozil qilingan?",
+   "options": [
+    "Iso",
+    "Muso",
+    "Yahyo",
+    "Zakariyo"
+   ],
+   "answer": 0,
+   "info": "Injil Maryamning oʻgʻli Iso alayhissalomga nozil qilingan. Musulmonlar Isoni Allohning rasuli deb biladilar va Alloh uni oʻz huzuriga koʻtarganiga ishonadilar."
+  },
+  {
+   "id": "prophet_suleyman",
+   "cat": "prophets",
+   "q": "Alloh qaysi paygʻambarga shamol va jinlarni boʻysundirgan?",
+   "options": [
+    "Sulaymon",
+    "Dovud",
+    "Muso",
+    "Zulkifl"
+   ],
+   "answer": 0,
+   "info": "Sulaymon alayhissalomga tengsiz podshohlik berilgan: shamol va jinlar unga boʻysungan, u qushlar va chumolilarning tilini tushungan."
+  },
+  {
+   "id": "prophet_ayyub",
+   "cat": "prophets",
+   "q": "Qaysi paygʻambar uzoq kasallikdagi sabri bilan mashhur?",
+   "options": [
+    "Ayyub",
+    "Yunus",
+    "Yaʼqub",
+    "Nuh"
+   ],
+   "answer": 0,
+   "info": "Ayyub alayhissalom sogʻligʻi, mol-mulki va farzandlaridan ayrilgan, ammo shikoyat qilmagan. Alloh unga shifo berib, neʼmatlarini qaytargan — uning sabri moʻminlar uchun namuna."
+  },
+  {
+   "id": "prophet_yaqub",
+   "cat": "prophets",
+   "q": "Yusuf alayhissalomning otasi kim edi?",
+   "options": [
+    "Yaʼqub",
+    "Ishoq",
+    "Ibrohim",
+    "Ismoil"
+   ],
+   "answer": 0,
+   "info": "Yusuf — Yaʼqub alayhissalomning oʻgʻli, Ishoqning nevarasi va Ibrohimning chevarasi. Yaʼqub alayhissalom Isroil nomi bilan ham tanilgan."
+  },
+  {
+   "id": "prophet_yusuf_well",
+   "cat": "prophets",
+   "q": "Qaysi paygʻambarni akalari quduqqa tashlagan?",
+   "options": [
+    "Yusuf",
+    "Yunus",
+    "Muso",
+    "Ismoil"
+   ],
+   "answer": 0,
+   "info": "Yusuf alayhissalom qissasi uning nomi bilan atalgan 12-surada hikoya qilinadi. Qurʼon uni qissalarning eng goʻzali deb ataydi (12:3)."
+  },
+  {
+   "id": "prophet_harun",
+   "cat": "prophets",
+   "q": "Muso alayhissalomning akasi, u ham paygʻambar boʻlgan kishi kim?",
+   "options": [
+    "Horun",
+    "Shuayb",
+    "Lut",
+    "Hud"
+   ],
+   "answer": 0,
+   "info": "Muso alayhissalom Allohdan akasi Horunni yordamchi qilib berishini soʻragan, chunki Horun fasohatliroq edi. Alloh uning duosini qabul qilgan (20:29–36)."
+  },
+  {
+   "id": "prophet_yahya",
+   "cat": "prophets",
+   "q": "Zakariyo alayhissalomning oʻgʻli, u ham paygʻambar boʻlgan kishi kim?",
+   "options": [
+    "Yahyo",
+    "Iso",
+    "Ishoq",
+    "Horun"
+   ],
+   "answer": 0,
+   "info": "Alloh Zakariyoga keksaligida, ayoli tugʻmas boʻlsa-da, Yahyoni ato etgan. Yahyodan oldin hech kim bu ism bilan atalmagan (19:7)."
+  },
+  {
+   "id": "prophet_count",
+   "cat": "prophets",
+   "q": "Qurʼonda nechta paygʻambarning nomi zikr qilingan?",
+   "options": [
+    "25",
+    "12",
+    "40",
+    "313"
+   ],
+   "answer": 0,
+   "info": "Odatda Qurʼonda 25 paygʻambarning nomi zikr qilingan deb hisoblanadi. Paygʻambarlar bundan ancha koʻp boʻlgan — Alloh ularning hammasi haqida xabar bermagan (40:78)."
+  },
+  {
+   "id": "prophet_last",
+   "cat": "prophets",
+   "q": "Oxirgi paygʻambar kim?",
+   "options": [
+    "Muhammad ﷺ",
+    "Iso",
+    "Muso",
+    "Yahyo"
+   ],
+   "answer": 0,
+   "info": "Qurʼon Muhammad ﷺni «paygʻambarlarning muhri» deb ataydi (33:40). Undan keyin paygʻambar kelmaydi, Qurʼon esa oxirgi kitobdir."
+  },
+  {
+   "id": "seerah_birthplace",
+   "cat": "seerah",
+   "q": "Paygʻambarimiz ﷺ qaysi shaharda tugʻilganlar?",
+   "options": [
+    "Makka",
+    "Madina",
+    "Toif",
+    "Quddus"
+   ],
+   "answer": 0,
+   "info": "Paygʻambarimiz ﷺ Makkada Fil yilida — taxminan milodiy 570 yilda tugʻilganlar. U zot Quraysh qabilasining Hoshim urugʻidan edilar."
+  },
+  {
+   "id": "seerah_mother",
+   "cat": "seerah",
+   "q": "Paygʻambarimiz ﷺning onalari kim edi?",
+   "options": [
+    "Omina",
+    "Halima",
+    "Xadicha",
+    "Fotima"
+   ],
+   "answer": 0,
+   "info": "Onalari — Omina binti Vahb. Paygʻambarimiz ﷺ taxminan olti yoshlarida u vafot etgan, otalari Abdulloh esa u zot tugʻilmasdan oldin vafot etgan edi."
+  },
+  {
+   "id": "seerah_nurse",
+   "cat": "seerah",
+   "q": "Paygʻambarimiz ﷺni emizgan enaga kim edi?",
+   "options": [
+    "Halima Saʼdiya",
+    "Omina",
+    "Xadicha",
+    "Fotima"
+   ],
+   "answer": 0,
+   "info": "Arablarda chaqaloqlarni choʻldagi emizuvchi enagalarga berish odati bor edi. Paygʻambarimiz ﷺ ilk bolaligini Baniy Saʼd qabilasidan boʻlgan Halima bilan oʻtkazganlar."
+  },
+  {
+   "id": "seerah_khadija",
+   "cat": "seerah",
+   "q": "Paygʻambarimiz ﷺning birinchi ayollari kim edi?",
+   "options": [
+    "Xadicha",
+    "Oisha",
+    "Hafsa",
+    "Savda"
+   ],
+   "answer": 0,
+   "info": "Xadicha roziyallohu anho u zotning paygʻambarligiga birinchi boʻlib iymon keltirgan va eng ogʻir yillarda yonida boʻlgan."
+  },
+  {
+   "id": "seerah_age40",
+   "cat": "seerah",
+   "q": "Vahiy boshlanganda Paygʻambarimiz ﷺ necha yoshda edilar?",
+   "options": [
+    "40",
+    "25",
+    "33",
+    "50"
+   ],
+   "answer": 0,
+   "info": "Vahiy Paygʻambarimiz ﷺ 40 yoshga toʻlganlarida boshlangan. Undan oldin ham makkaliklar u zotni «al-Amin» — «ishonchli» deb ataganlar."
+  },
+  {
+   "id": "seerah_mission_years",
+   "cat": "seerah",
+   "q": "Paygʻambarlik davri qancha davom etgan?",
+   "options": [
+    "Taxminan 23 yil",
+    "10 yil",
+    "30 yil",
+    "40 yil"
+   ],
+   "answer": 0,
+   "info": "Paygʻambarimiz ﷺ Makkada taxminan 13 yil va Madinada taxminan 10 yil Islomga daʼvat qilganlar. U zot hijriy 11 yilda 63 yoshda vafot etganlar."
+  },
+  {
+   "id": "seerah_hijra",
+   "cat": "seerah",
+   "q": "Musulmonlarning Makkadan Madinaga koʻchishi nima deb ataladi?",
+   "options": [
+    "Hijrat",
+    "Haj",
+    "Umra",
+    "Isro"
+   ],
+   "answer": 0,
+   "info": "Hijrat milodiy 622 yilda boʻlgan. Oʻsha paytda Yasrib deb atalgan Madinada birinchi musulmon jamiyati shakllangan."
+  },
+  {
+   "id": "seerah_calendar",
+   "cat": "seerah",
+   "q": "Islom taqvimi qaysi voqeadan boshlab hisoblanadi?",
+   "options": [
+    "Hijratdan",
+    "Paygʻambarimiz ﷺ tugʻilgan kundan",
+    "Birinchi vahiydan",
+    "Makka fathidan"
+   ],
+   "answer": 0,
+   "info": "Hijriy taqvim xalifa Umar davrida joriy qilingan. U oy taqvimi boʻlgani uchun quyosh taqvimiga nisbatan har yili taxminan 11 kunga siljiydi."
+  },
+  {
+   "id": "seerah_companion_hijra",
+   "cat": "seerah",
+   "q": "Hijratda Paygʻambarimiz ﷺga kim hamroh boʻlgan?",
+   "options": [
+    "Abu Bakr",
+    "Umar",
+    "Ali",
+    "Usmon"
+   ],
+   "answer": 0,
+   "info": "Abu Bakr roziyallohu anhu Paygʻambarimiz ﷺ bilan Savr gʻorida uch kun yashiringan. Bu Qurʼonda zikr qilingan (9:40)."
+  },
+  {
+   "id": "seerah_isra",
+   "cat": "seerah",
+   "q": "Paygʻambarimiz ﷺning Makkadan Quddusga tungi safari nima deb ataladi?",
+   "options": [
+    "Isro",
+    "Meʼroj",
+    "Hijrat",
+    "Tavof"
+   ],
+   "answer": 0,
+   "info": "Isro — Quddusga tungi safar, Meʼroj esa osmonlarga koʻtarilish. Aynan oʻshanda besh vaqt namoz farz qilingan."
+  },
+  {
+   "id": "seerah_badr",
+   "cat": "seerah",
+   "q": "Musulmonlarning birinchi yirik jangi qaysi?",
+   "options": [
+    "Badr",
+    "Uhud",
+    "Xandaq",
+    "Hunayn"
+   ],
+   "answer": 0,
+   "info": "Badr jangi hijriy 2 yil Ramazon oyida boʻlgan. Taxminan 313 musulmon oʻzidan uch barobar koʻp qoʻshinni yenggan."
+  },
+  {
+   "id": "seerah_muezzin",
+   "cat": "seerah",
+   "q": "Islomdagi birinchi muazzin kim?",
+   "options": [
+    "Bilol ibn Raboh",
+    "Abu Bakr",
+    "Zayd ibn Horisa",
+    "Salmon Forsiy"
+   ],
+   "answer": 0,
+   "info": "Bilol Makkada qul boʻlgan va iymoni uchun qiynalgan, toki Abu Bakr uni ozod qilgunga qadar. Paygʻambarimiz ﷺ uni goʻzal va baland ovozi uchun azon aytishga tanlaganlar."
+  },
+  {
+   "id": "seerah_grave",
+   "cat": "seerah",
+   "q": "Paygʻambarimiz ﷺ qayerda dafn etilganlar?",
+   "options": [
+    "Madinada",
+    "Makkada",
+    "Quddusda",
+    "Toifda"
+   ],
+   "answer": 0,
+   "info": "Paygʻambarimiz ﷺ Madinada, hozir Masjidi Nabaviy ichida joylashgan Oishaning hujrasida dafn etilganlar. Yonlarida Abu Bakr va Umar dafn qilingan."
+  },
+  {
+   "id": "seerah_first_caliph",
+   "cat": "seerah",
+   "q": "Birinchi roshid xalifa kim?",
+   "options": [
+    "Abu Bakr",
+    "Umar",
+    "Usmon",
+    "Ali"
+   ],
+   "answer": 0,
+   "info": "Paygʻambarimiz ﷺ vafotlaridan keyin Abu Bakr Siddiq birinchi xalifa boʻlgan. Toʻrt roshid xalifa: Abu Bakr, Umar, Usmon va Ali."
+  },
+  {
+   "id": "fiqh_pillars_islam",
+   "cat": "fiqh",
+   "q": "Islomning nechta rukni bor?",
+   "options": [
+    "5",
+    "6",
+    "4",
+    "7"
+   ],
+   "answer": 0,
+   "info": "Islomning besh rukni: shahodat, namoz, zakot, Ramazon roʻzasi va qurbi yetganlar uchun haj."
+  },
+  {
+   "id": "fiqh_pillars_iman",
+   "cat": "fiqh",
+   "q": "Iymonning nechta rukni bor?",
+   "options": [
+    "6",
+    "5",
+    "7",
+    "4"
+   ],
+   "answer": 0,
+   "info": "Allohga, farishtalariga, kitoblariga, paygʻambarlariga, oxirat kuniga va taqdirga iymon keltirish. Ular mashhur Jabroil hadisida sanab oʻtilgan."
+  },
+  {
+   "id": "fiqh_daily_prayers",
+   "cat": "fiqh",
+   "q": "Bir kunda nechta farz namoz bor?",
+   "options": [
+    "5",
+    "3",
+    "4",
+    "6"
+   ],
+   "answer": 0,
+   "info": "Bomdod, peshin, asr, shom va xufton. Besh vaqt namoz Meʼroj kechasida farz qilingan."
+  },
+  {
+   "id": "fiqh_fajr_rakats",
+   "cat": "fiqh",
+   "q": "Bomdod namozining farzi necha rakat?",
+   "options": [
+    "2",
+    "3",
+    "4",
+    "1"
+   ],
+   "answer": 0,
+   "info": "Bomdodning farzi ikki rakat. Undan oldin ikki rakat sunnat oʻqiladi — Paygʻambarimiz ﷺ uni deyarli hech qachon tark etmaganlar."
+  },
+  {
+   "id": "fiqh_maghrib_rakats",
+   "cat": "fiqh",
+   "q": "Shom namozining farzi necha rakat?",
+   "options": [
+    "3",
+    "2",
+    "4",
+    "5"
+   ],
+   "answer": 0,
+   "info": "Shom — uch rakatli yagona farz namoz. U quyosh botgandan keyin oʻqiladi."
+  },
+  {
+   "id": "fiqh_four_rakats",
+   "cat": "fiqh",
+   "q": "Peshin, asr va xufton (safarda boʻlmaganda) necha rakat?",
+   "options": [
+    "4",
+    "2",
+    "3",
+    "6"
+   ],
+   "answer": 0,
+   "info": "Peshin, asr va xuftonning har biri toʻrt rakat. Musofir ularni ikki rakatga qisqartirib oʻqishi mumkin."
+  },
+  {
+   "id": "fiqh_wudu",
+   "cat": "fiqh",
+   "q": "Namozdan oldingi kichik poklanish nima deb ataladi?",
+   "options": [
+    "Tahorat",
+    "Gʻusl",
+    "Tayammum",
+    "Istinjo"
+   ],
+   "answer": 0,
+   "info": "Tahoratda yuz, tirsaklargacha qoʻllar yuviladi, boshga mash tortiladi va oyoqlar toʻpiqlargacha yuviladi (5:6). Gʻusl — butun badanni yuvish."
+  },
+  {
+   "id": "fiqh_tayammum",
+   "cat": "fiqh",
+   "q": "Suv boʻlmaganda tahorat oʻrniga nima qilinadi?",
+   "options": [
+    "Tayammum",
+    "Gʻusl",
+    "Istigʻfor",
+    "Saharlik"
+   ],
+   "answer": 0,
+   "info": "Tayammum — suv boʻlmaganda yoki uni ishlatib boʻlmaganda pok tuproq bilan poklanish. U Qurʼonda zikr qilingan (4:43, 5:6)."
+  },
+  {
+   "id": "fiqh_adhan",
+   "cat": "fiqh",
+   "q": "Namozga chaqiriq nima deb ataladi?",
+   "options": [
+    "Azon",
+    "Iqomat",
+    "Takbir",
+    "Duo"
+   ],
+   "answer": 0,
+   "info": "Azon namozga chaqiradi, iqomat esa namoz boshlanishidan oldingi ikkinchi chaqiriq. Bomdod azonida «Namoz uyqudan yaxshiroq» soʻzlari qoʻshiladi."
+  },
+  {
+   "id": "fiqh_qibla",
+   "cat": "fiqh",
+   "q": "Musulmonlar namozda qaysi tomonga yuzlanadilar?",
+   "options": [
+    "Makkadagi Kaʼbaga",
+    "Masjidi Nabaviyga",
+    "Masjidi Aqsoga",
+    "Sharqqa"
+   ],
+   "answer": 0,
+   "info": "Kaʼba tomoni qibla deb ataladi. Uni ushbu ilovaning «Qibla» boʻlimida topishingiz mumkin."
+  },
+  {
+   "id": "fiqh_first_qibla",
+   "cat": "fiqh",
+   "q": "Musulmonlarning birinchi qiblasi qayer boʻlgan?",
+   "options": [
+    "Masjidi Aqso",
+    "Kaʼba",
+    "Quba masjidi",
+    "Arofat togʻi"
+   ],
+   "answer": 0,
+   "info": "Hijratdan keyin taxminan 16–17 oy musulmonlar Quddusdagi Masjidi Aqsoga qarab namoz oʻqiganlar. Keyin qibla Kaʼbaga oʻzgartirilgan (2:144)."
+  },
+  {
+   "id": "fiqh_zakat",
+   "cat": "fiqh",
+   "q": "Mol-mulkdan har yili beriladigan farz sadaqa nima deb ataladi?",
+   "options": [
+    "Zakot",
+    "Sadaqa",
+    "Vaqf",
+    "Fidya"
+   ],
+   "answer": 0,
+   "info": "Zakot — Islomning besh ruknidan biri. Odatda u nisobga yetgan va bir yil turgan jamgʻarmaning 2,5 foizini tashkil qiladi."
+  },
+  {
+   "id": "fiqh_zakat_fitr",
+   "cat": "fiqh",
+   "q": "Ramazon oxirida, hayit namozidan oldin qaysi sadaqa beriladi?",
+   "options": [
+    "Fitr sadaqasi",
+    "Mol zakoti",
+    "Vaqf",
+    "Fidya"
+   ],
+   "answer": 0,
+   "info": "Fitr sadaqasi oʻzi va oilasi uchun beriladi, toki kambagʻallar ham bayramni nishonlay olsinlar. U hayit namozidan oldin berilishi kerak."
+  },
+  {
+   "id": "fiqh_suhoor",
+   "cat": "fiqh",
+   "q": "Roʻza tutganda tong otishidan oldingi taom nima deb ataladi?",
+   "options": [
+    "Saharlik",
+    "Iftorlik",
+    "Valima",
+    "Aqiqa"
+   ],
+   "answer": 0,
+   "info": "Saharlik — tong otishidan oldingi taom, iftorlik — quyosh botgandan keyin ogʻiz ochish. Paygʻambarimiz ﷺ saharlikda baraka borligini aytganlar."
+  },
+  {
+   "id": "fiqh_jumuah",
+   "cat": "fiqh",
+   "q": "Juma namozi qaysi kuni oʻqiladi?",
+   "options": [
+    "Juma",
+    "Payshanba",
+    "Shanba",
+    "Dushanba"
+   ],
+   "answer": 0,
+   "info": "Juma namozi peshin oʻrniga oʻqiladi va undan oldin xutba qilinadi. Juma — musulmonlar uchun haftaning eng afzal kuni."
+  },
+  {
+   "id": "fiqh_tawaf",
+   "cat": "fiqh",
+   "q": "Kaʼba atrofidagi tavof necha aylanadan iborat?",
+   "options": [
+    "7",
+    "3",
+    "5",
+    "10"
+   ],
+   "answer": 0,
+   "info": "Tavof — Kaʼba atrofini soat miliga teskari yetti marta aylanish. U Hajarul-Asvad burchagidan boshlanadi."
+  },
+  {
+   "id": "fiqh_sai",
+   "cat": "fiqh",
+   "q": "Saʼy qaysi tepaliklar orasida qilinadi?",
+   "options": [
+    "Safo va Marva",
+    "Arofat va Muzdalifa",
+    "Uhud va Salʼ",
+    "Mino va Arofat"
+   ],
+   "answer": 0,
+   "info": "Saʼy kichik Ismoilga suv izlab, Safo va Marva tepaliklari orasida yetti marta yugurgan Hojarni eslatadi (2:158)."
+  },
+  {
+   "id": "fiqh_hajj_month",
+   "cat": "fiqh",
+   "q": "Haj qaysi oyda ado etiladi?",
+   "options": [
+    "Zulhijja",
+    "Ramazon",
+    "Shavvol",
+    "Muharram"
+   ],
+   "answer": 0,
+   "info": "Hajning asosiy amallari Zulhijjaning 8-kunidan 13-kunigacha bajariladi. Arafa kuni — Zulhijjaning 9-kuni."
+  },
+  {
+   "id": "fiqh_ramadan_number",
+   "cat": "fiqh",
+   "q": "Ramazon hijriy taqvimning nechanchi oyi?",
+   "options": [
+    "9-oyi",
+    "7-oyi",
+    "10-oyi",
+    "12-oyi"
+   ],
+   "answer": 0,
+   "info": "Ramazon — toʻqqizinchi oy, undan keyin Shavvol keladi. Hijriy taqvimda 12 qamariy oy bor."
+  },
+  {
+   "id": "fiqh_qadr",
+   "cat": "fiqh",
+   "q": "Qaysi kecha ming oydan yaxshiroq?",
+   "options": [
+    "Qadr kechasi",
+    "Isro kechasi",
+    "Hayit kechasi",
+    "Muharramning birinchi kechasi"
+   ],
+   "answer": 0,
+   "info": "Bu «Qadr» surasida (97:3) aytilgan. U Ramazonning oxirgi oʻn kechasida, ayniqsa toq kechalarda izlanadi."
+  },
+  {
+   "id": "fiqh_eid_fitr",
+   "cat": "fiqh",
+   "q": "Ramazon oxirida qaysi bayram nishonlanadi?",
+   "options": [
+    "Ramazon hayiti",
+    "Qurbon hayiti",
+    "Mavlud",
+    "Ashuro"
+   ],
+   "answer": 0,
+   "info": "Ramazon hayiti Shavvolning 1-kuni hayit namozi bilan nishonlanadi. Ikkinchi bayram — Qurbon hayiti Zulhijjaning 10-kuniga toʻgʻri keladi."
+  },
+  {
+   "id": "fiqh_zamzam",
+   "cat": "fiqh",
+   "q": "Kaʼba yonidagi buloq nima deb ataladi?",
+   "options": [
+    "Zamzam",
+    "Kavsar",
+    "Salsabil",
+    "Tasnim"
+   ],
+   "answer": 0,
+   "info": "Zamzam bulogʻi Hojar oʻgʻli Ismoilga suv izlaganida Allohning rahmati bilan paydo boʻlgan. U ming yillardan beri qurimaydi."
+  },
+  {
+   "id": "arabic_subhanallah",
+   "cat": "arabic",
+   "q": "«Subhanalloh» nimani anglatadi?",
+   "options": [
+    "Alloh pokdir",
+    "Hamd Allohgadir",
+    "Alloh buyukdir",
+    "Allohdan magʻfirat soʻrayman"
+   ],
+   "answer": 0,
+   "info": "Bu soʻzlar bilan biz Allohni ulugʻlaymiz va Uni har qanday nuqsondan pok deb bilamiz. Namozdan keyin uni 33 marta aytish odat boʻlgan."
+  },
+  {
+   "id": "arabic_alhamdulillah",
+   "cat": "arabic",
+   "q": "«Alhamdulilloh» nimani anglatadi?",
+   "options": [
+    "Hamd Allohgadir",
+    "Alloh pokdir",
+    "Alloh xohlasa",
+    "Alloh buyukdir"
+   ],
+   "answer": 0,
+   "info": "Musulmonlar har qanday holatda — xursandchilikda ham, qiyinchilikda ham bu soʻzlar bilan Allohga shukr qiladilar. «Fotiha» basmaladan keyin shu soʻzlar bilan boshlanadi."
+  },
+  {
+   "id": "arabic_allahuakbar",
+   "cat": "arabic",
+   "q": "«Allohu akbar» nimani anglatadi?",
+   "options": [
+    "Alloh buyukdir",
+    "Hamd Allohgadir",
+    "Allohdan oʻzga iloh yoʻq",
+    "Alloh pokdir"
+   ],
+   "answer": 0,
+   "info": "Har bir namoz shu soʻzlar — takbir bilan boshlanadi. Ular azonda va hayit kunlarida ham aytiladi."
+  },
+  {
+   "id": "arabic_inshaallah",
+   "cat": "arabic",
+   "q": "«Inshaalloh» nimani anglatadi?",
+   "options": [
+    "Alloh xohlasa",
+    "Alloh xohlagani boʻldi",
+    "Alloh baraka bersin",
+    "Allohning nomi bilan"
+   ],
+   "answer": 0,
+   "info": "Kelajak haqida gapirganda musulmonlar «Inshaalloh» deb qoʻshadilar (18:23–24). Biror narsadan zavqlanganda esa «Mashaalloh» — «Alloh xohlagani boʻldi» deyiladi."
+  },
+  {
+   "id": "arabic_astaghfirullah",
+   "cat": "arabic",
+   "q": "«Astagʻfirulloh» nimani anglatadi?",
+   "options": [
+    "Allohdan magʻfirat soʻrayman",
+    "Alloh buyukdir",
+    "Hamd Allohgadir",
+    "Allohga tavakkul qilaman"
+   ],
+   "answer": 0,
+   "info": "Bu istigʻfor — kechirim soʻrash. Paygʻambarimiz ﷺ kuniga yetmish martadan koʻproq Allohdan magʻfirat soʻraganlar."
+  },
+  {
+   "id": "arabic_sabr",
+   "cat": "arabic",
+   "q": "«Sabr» soʻzi nimani anglatadi?",
+   "options": [
+    "Chidam",
+    "Shukr",
+    "Niyat",
+    "Ilm"
+   ],
+   "answer": 0,
+   "info": "Sabr — ibodatda, gunohdan tiyilishda va sinovlarda chidamli va matonatli boʻlish. Qurʼonda Alloh sabr qiluvchilar bilan ekani aytilgan (2:153)."
+  },
+  {
+   "id": "arabic_shukr",
+   "cat": "arabic",
+   "q": "«Shukr» soʻzi nimani anglatadi?",
+   "options": [
+    "Minnatdorlik",
+    "Sabr",
+    "Qoʻrquv",
+    "Umid"
+   ],
+   "answer": 0,
+   "info": "Shukr — Allohga qalb, til va amal bilan minnatdorlik bildirish. Alloh shukr qiluvchilarga yanada koʻproq berishni vaʼda qilgan (14:7)."
+  },
+  {
+   "id": "arabic_niyyah",
+   "cat": "arabic",
+   "q": "«Niyat» soʻzi nimani anglatadi?",
+   "options": [
+    "Koʻngildagi maqsad",
+    "Namoz",
+    "Roʻza",
+    "Sadaqa"
+   ],
+   "answer": 0,
+   "info": "Buxoriy va Muslim rivoyat qilgan mashhur hadis amallar niyatlarga koʻra ekani bilan boshlanadi. Yaxshi niyat oddiy ishni ham ibodatga aylantiradi."
+  },
+  {
+   "id": "arabic_barakah",
+   "cat": "arabic",
+   "q": "«Baraka» soʻzi nimani anglatadi?",
+   "options": [
+    "Ilohiy fayz",
+    "Sabr",
+    "Tavba",
+    "Vaqt"
+   ],
+   "answer": 0,
+   "info": "Baraka — Alloh vaqtga, molga va amallarga joylagan fayz va foyda. Barakali oz narsa ham koʻp yaxshilik keltiradi."
+  },
+  {
+   "id": "arabic_islam",
+   "cat": "arabic",
+   "q": "«Islom» soʻzi nimani anglatadi?",
+   "options": [
+    "Allohga boʻysunish",
+    "Ilm",
+    "Sabr",
+    "Safar"
+   ],
+   "answer": 0,
+   "info": "Islom — yagona Allohga boʻysunish demakdir. Bu soʻz «salom» — tinchlik soʻzi bilan bir oʻzakdan."
+  },
+  {
+   "id": "ayah_ikhlas",
+   "cat": "ayah",
+   "q": "«Ixlos» surasi oyatini davom ettiring:",
+   "options": [
+    "اللَّهُ الصَّمَدُ",
+    "الرَّحْمَٰنِ الرَّحِيمِ",
+    "مَلِكِ النَّاسِ",
+    "مِن شَرِّ مَا خَلَقَ"
+   ],
+   "answer": 0,
+   "info": "«Ixlos» surasi, 1–2-oyatlar. As-Samad — hech kimga muhtoj boʻlmagan, hamma Unga muhtoj boʻlgan Zot.",
+   "arabic": "قُلْ هُوَ اللَّهُ أَحَدٌ"
+  },
+  {
+   "id": "ayah_fatiha_2",
+   "cat": "ayah",
+   "q": "«Fotiha» surasi oyatini davom ettiring:",
+   "options": [
+    "الرَّحْمَٰنِ الرَّحِيمِ",
+    "اللَّهُ الصَّمَدُ",
+    "مَلِكِ النَّاسِ",
+    "إِنَّ الْإِنسَانَ لَفِي خُسْرٍ"
+   ],
+   "answer": 0,
+   "info": "«Fotiha» surasi, 2–3-oyatlar. Ar-Rohman va Ar-Rohiym — Allohning rahmati haqida soʻzlovchi ismlari.",
+   "arabic": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ"
+  },
+  {
+   "id": "ayah_fatiha_5",
+   "cat": "ayah",
+   "q": "«Fotiha» surasi oyatini davom ettiring:",
+   "options": [
+    "وَإِيَّاكَ نَسْتَعِينُ",
+    "وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ",
+    "مِن شَرِّ مَا خَلَقَ",
+    "اللَّهُ الصَّمَدُ"
+   ],
+   "answer": 0,
+   "info": "«Fotiha» surasi, 5-oyat: biz faqat Allohga ibodat qilamiz va faqat Undan yordam soʻraymiz.",
+   "arabic": "إِيَّاكَ نَعْبُدُ"
+  },
+  {
+   "id": "ayah_asr",
+   "cat": "ayah",
+   "q": "«Asr» surasi oyatini davom ettiring:",
+   "options": [
+    "إِنَّ الْإِنسَانَ لَفِي خُسْرٍ",
+    "الرَّحْمَٰنِ الرَّحِيمِ",
+    "مَلِكِ النَّاسِ",
+    "اللَّهُ الصَّمَدُ"
+   ],
+   "answer": 0,
+   "info": "«Asr» surasi, 1–2-oyatlar. Imom Shofeiy aytganlar: agar odamlar faqat shu sura haqida tafakkur qilsalar, ularga kifoya qilardi.",
+   "arabic": "وَالْعَصْرِ"
+  },
+  {
+   "id": "ayah_falaq",
+   "cat": "ayah",
+   "q": "«Falaq» surasi oyatini davom ettiring:",
+   "options": [
+    "مِن شَرِّ مَا خَلَقَ",
+    "مَلِكِ النَّاسِ",
+    "اللَّهُ الصَّمَدُ",
+    "إِنَّ الْإِنسَانَ لَفِي خُسْرٍ"
+   ],
+   "answer": 0,
+   "info": "«Falaq» surasi, 1–2-oyatlar. «Nos» surasi bilan birga ular «Muavvizatayn» — Allohdan panoh soʻrash suralari deb ataladi.",
+   "arabic": "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ"
+  },
+  {
+   "id": "ayah_nas",
+   "cat": "ayah",
+   "q": "«Nos» surasi oyatini davom ettiring:",
+   "options": [
+    "مَلِكِ النَّاسِ",
+    "مِن شَرِّ مَا خَلَقَ",
+    "الرَّحْمَٰنِ الرَّحِيمِ",
+    "اللَّهُ الصَّمَدُ"
+   ],
+   "answer": 0,
+   "info": "«Nos» surasi, 1–2-oyatlar. Bu Qurʼonning oxirgi surasi; Paygʻambarimiz ﷺ uni «Ixlos» va «Falaq» bilan birga uxlashdan oldin oʻqiganlar.",
+   "arabic": "قُلْ أَعُوذُ بِرَبِّ النَّاسِ"
+  },
+  {
+   "id": "ayah_kawthar",
+   "cat": "ayah",
+   "q": "«Kavsar» surasi oyatini davom ettiring:",
+   "options": [
+    "فَصَلِّ لِرَبِّكَ وَانْحَرْ",
+    "إِنَّ الْإِنسَانَ لَفِي خُسْرٍ",
+    "مَلِكِ النَّاسِ",
+    "اللَّهُ الصَّمَدُ"
+   ],
+   "answer": 0,
+   "info": "«Kavsar» surasi, 1–2-oyatlar: berilgan neʼmatga shukr sifatida Robbingiz uchun namoz oʻqing va qurbonlik qiling.",
+   "arabic": "إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ"
+  }
+ ]
+}

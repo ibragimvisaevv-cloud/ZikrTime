@@ -1,0 +1,1117 @@
+{
+ "lang": "az",
+ "categories": [
+  {
+   "id": "quran",
+   "name": "Quran"
+  },
+  {
+   "id": "prophets",
+   "name": "Peyğəmbərlər"
+  },
+  {
+   "id": "seerah",
+   "name": "Siyər"
+  },
+  {
+   "id": "fiqh",
+   "name": "Əsaslar və fiqh"
+  },
+  {
+   "id": "arabic",
+   "name": "Ərəb sözləri"
+  },
+  {
+   "id": "ayah",
+   "name": "Ayəni davam etdirin"
+  }
+ ],
+ "questions": [
+  {
+   "id": "quran_suras",
+   "cat": "quran",
+   "q": "Quranda neçə surə var?",
+   "options": [
+    "114",
+    "99",
+    "120",
+    "112"
+   ],
+   "answer": 0,
+   "info": "Quranda 114 surə və 6200-dən çox ayə var. Surələr nə vaxt və harada nazil olduğuna görə Məkki və Mədəni surələrə bölünür."
+  },
+  {
+   "id": "quran_first_sura",
+   "cat": "quran",
+   "q": "Quran hansı surə ilə başlayır?",
+   "options": [
+    "Fatihə",
+    "Bəqərə",
+    "İxlas",
+    "Nas"
+   ],
+   "answer": 0,
+   "info": "«Fatihə» — «Açan» deməkdir. O, namazın hər rükətində oxunur, buna görə də «Ümmül-Kitab» — «Kitabın anası» da adlanır."
+  },
+  {
+   "id": "quran_longest",
+   "cat": "quran",
+   "q": "Ən uzun surə hansıdır?",
+   "options": [
+    "Bəqərə",
+    "Ali-İmran",
+    "Nisa",
+    "Yasin"
+   ],
+   "answer": 0,
+   "info": "«Bəqərə» («İnək») surəsində 286 ayə var. Burada Ayətul-Kürsi və Quranın ən uzun ayəsi — borcun yazılması haqqında ayə (2:282) var."
+  },
+  {
+   "id": "quran_shortest",
+   "cat": "quran",
+   "q": "Ən qısa surə hansıdır?",
+   "options": [
+    "Kövsər",
+    "Fatihə",
+    "Yasin",
+    "Mülk"
+   ],
+   "answer": 0,
+   "info": "«Kövsər» surəsi üç qısa ayədən ibarətdir. Kövsər — Peyğəmbərə ﷺ bəxş edilmiş Cənnətdəki çayın adıdır."
+  },
+  {
+   "id": "quran_month",
+   "cat": "quran",
+   "q": "Quranın nazil olması hansı ayda başlayıb?",
+   "options": [
+    "Ramazan",
+    "Şaban",
+    "Məhərrəm",
+    "Zilhiccə"
+   ],
+   "answer": 0,
+   "info": "Bu barədə «Bəqərə» surəsində (2:185) deyilir. Vəhy Qədr gecəsində başlayıb və təxminən 23 il davam edib."
+  },
+  {
+   "id": "quran_jibril",
+   "cat": "quran",
+   "q": "Peyğəmbərə ﷺ vəhyi hansı mələk gətirirdi?",
+   "options": [
+    "Cəbrayıl",
+    "Mikayıl",
+    "İsrafil",
+    "Malik"
+   ],
+   "answer": 0,
+   "info": "Cəbrayıl (ə) peyğəmbərlərə vəhy çatdırırdı. Quranda o, «Ruhul-Əmin» — «Etibarlı Ruh» da adlandırılır (26:193)."
+  },
+  {
+   "id": "quran_hira",
+   "cat": "quran",
+   "q": "Peyğəmbərə ﷺ ilk vəhy harada gəlib?",
+   "options": [
+    "Hira mağarasında",
+    "Sövr mağarasında",
+    "Ərəfat dağında",
+    "Kəbənin yanında"
+   ],
+   "answer": 0,
+   "info": "Hira mağarası Məkkə yaxınlığındakı Nur dağındadır. Peyğəmbər ﷺ peyğəmbərlikdən əvvəl də ibadət üçün oraya çəkilərdi."
+  },
+  {
+   "id": "quran_iqra",
+   "cat": "quran",
+   "q": "İlk vəhy hansı sözlə başlayır?",
+   "options": [
+    "«Oxu!» (İqra)",
+    "«De!» (Qul)",
+    "«Həmd» (Əlhəmdu)",
+    "«And olsun…» (Və)"
+   ],
+   "answer": 0,
+   "info": "İlk nazil olan ayələr «Ələq» surəsinin əvvəlidir (96:1–5) — insanı yaradan Rəbbin adı ilə oxumaq haqqında."
+  },
+  {
+   "id": "quran_kursi_sura",
+   "cat": "quran",
+   "q": "Ayətul-Kürsi hansı surədədir?",
+   "options": [
+    "Bəqərə",
+    "Ali-İmran",
+    "Yasin",
+    "Mülk"
+   ],
+   "answer": 0,
+   "info": "Ayətul-Kürsi «Bəqərə» surəsinin 255-ci ayəsidir. Orada Allahın əzəmətindən, elmindən, göylər və yer üzərində hökmranlığından bəhs olunur."
+  },
+  {
+   "id": "quran_greatest_ayah",
+   "cat": "quran",
+   "q": "Peyğəmbər ﷺ hansı ayəni Quranın ən böyük ayəsi adlandırıb?",
+   "options": [
+    "Ayətul-Kürsi",
+    "«Fatihə»nin ilk ayəsi",
+    "«Bəqərə»nin son ayəsi",
+    "«İxlas»ın ilk ayəsi"
+   ],
+   "answer": 0,
+   "info": "Bu, İmam Müslimin rəvayət etdiyi Übeyy ibn Kəbin hədisində gəlir. Ayətul-Kürsi fərz namazlardan sonra və yatmazdan əvvəl oxunur."
+  },
+  {
+   "id": "quran_no_basmala",
+   "cat": "quran",
+   "q": "Hansı surə «Bismillahir-Rəhmanir-Rəhim» ilə başlamır?",
+   "options": [
+    "Tövbə",
+    "Fatihə",
+    "Nəml",
+    "İxlas"
+   ],
+   "answer": 0,
+   "info": "Doqquzuncu surə — «Tövbə» əvvəlində bəsmələ olmayan yeganə surədir. Ona «Bəraət» («Uzaqlaşma») da deyilir."
+  },
+  {
+   "id": "quran_two_basmala",
+   "cat": "quran",
+   "q": "Hansı surədə bəsmələ iki dəfə gəlir?",
+   "options": [
+    "Nəml",
+    "Tövbə",
+    "Bəqərə",
+    "Məryəm"
+   ],
+   "answer": 0,
+   "info": "«Nəml» surəsində bəsmələ əvvəldə və 30-cu ayədə — Süleyman peyğəmbərin Səba məlikəsinə məktubunda gəlir. Buna görə Quranda cəmi 114 bəsmələ var."
+  },
+  {
+   "id": "quran_third",
+   "cat": "quran",
+   "q": "Peyğəmbər ﷺ hansı surəni Quranın üçdə birinə bərabər tutub?",
+   "options": [
+    "İxlas",
+    "Fatihə",
+    "Yasin",
+    "Mülk"
+   ],
+   "answer": 0,
+   "info": "Bu, İmam Buxarinin rəvayət etdiyi hədisdə gəlir. «İxlas» surəsi tamamilə Allahın təkliyinə — tövhidə həsr olunub."
+  },
+  {
+   "id": "quran_maryam",
+   "cat": "quran",
+   "q": "Hansı surə qadın adı ilə adlanır?",
+   "options": [
+    "Məryəm",
+    "Kövsər",
+    "Talaq",
+    "Əhzab"
+   ],
+   "answer": 0,
+   "info": "İsa peyğəmbərin anası Məryəm Quranda adı çəkilən yeganə qadındır. 19-cu surə onun adını daşıyır."
+  },
+  {
+   "id": "quran_fatiha_ayat",
+   "cat": "quran",
+   "q": "«Fatihə» surəsində neçə ayə var?",
+   "options": [
+    "7",
+    "5",
+    "6",
+    "8"
+   ],
+   "answer": 0,
+   "info": "«Fatihə» yeddi ayədən ibarətdir. Quran onu «təkrarlanan yeddi ayə» adlandırır (15:87), çünki hər rükətdə təkrar oxunur."
+  },
+  {
+   "id": "prophet_adam",
+   "cat": "prophets",
+   "q": "İlk insan və ilk peyğəmbər kimdir?",
+   "options": [
+    "Adəm",
+    "Nuh",
+    "İdris",
+    "İbrahim"
+   ],
+   "answer": 0,
+   "info": "Adəm (ə) Allahın yaratdığı ilk insan və ilk peyğəmbərdir. Bütün insanlar ondan və həyat yoldaşı Həvvadan törəyib."
+  },
+  {
+   "id": "prophet_nuh",
+   "cat": "prophets",
+   "q": "Hansı peyğəmbər gəmi düzəldib?",
+   "options": [
+    "Nuh",
+    "Musa",
+    "İbrahim",
+    "Hud"
+   ],
+   "answer": 0,
+   "info": "Nuh (ə) uzun illər qövmünü tək Allaha ibadətə çağırıb. Allahın əmri ilə gəmi düzəldərək möminlərlə birlikdə tufandan xilas olub."
+  },
+  {
+   "id": "prophet_kaaba",
+   "cat": "prophets",
+   "q": "Kəbəni oğlu İsmayıl ilə birlikdə kim tikib?",
+   "options": [
+    "İbrahim",
+    "Adəm",
+    "Süleyman",
+    "Musa"
+   ],
+   "answer": 0,
+   "info": "Bu, «Bəqərə» surəsində (2:127) deyilir. İbrahim və İsmayıl (ə) Kəbənin bünövrəsini ucaldaraq Allahdan əməllərini qəbul etməsini diləyiblər."
+  },
+  {
+   "id": "prophet_yunus",
+   "cat": "prophets",
+   "q": "Hansı peyğəmbəri böyük balıq udub?",
+   "options": [
+    "Yunus",
+    "Yusif",
+    "İlyas",
+    "Lut"
+   ],
+   "answer": 0,
+   "info": "Yunus (ə) balığın qarnında Allahın təkliyini etiraf edib, öz xətasını boynuna alaraq dua edib. Onun duası (21:87) çətin anlarda bu gün də oxunur."
+  },
+  {
+   "id": "prophet_tawrat",
+   "cat": "prophets",
+   "q": "Tövrat hansı peyğəmbərə nazil olub?",
+   "options": [
+    "Musa",
+    "İsa",
+    "Davud",
+    "İbrahim"
+   ],
+   "answer": 0,
+   "info": "Tövrat Musa (ə) peyğəmbərə nazil olan kitabdır. Allahın nazil etdiyi bütün kitablara iman imanın əsaslarındandır."
+  },
+  {
+   "id": "prophet_zabur",
+   "cat": "prophets",
+   "q": "Zəbur hansı peyğəmbərə nazil olub?",
+   "options": [
+    "Davud",
+    "Süleyman",
+    "Musa",
+    "İsa"
+   ],
+   "answer": 0,
+   "info": "Zəbur Davud (ə) peyğəmbərə nazil olub. Davud həm peyğəmbər, həm də hökmdar olub, Allah ona gözəl səs bəxş edib."
+  },
+  {
+   "id": "prophet_injil",
+   "cat": "prophets",
+   "q": "İncil hansı peyğəmbərə nazil olub?",
+   "options": [
+    "İsa",
+    "Musa",
+    "Yəhya",
+    "Zəkəriyyə"
+   ],
+   "answer": 0,
+   "info": "İncil Məryəm oğlu İsa (ə) peyğəmbərə nazil olub. Müsəlmanlar İsanı Allahın elçisi bilir və Allahın onu Öz dərgahına qaldırdığına inanırlar."
+  },
+  {
+   "id": "prophet_suleyman",
+   "cat": "prophets",
+   "q": "Allah küləyi və cinləri hansı peyğəmbərə tabe edib?",
+   "options": [
+    "Süleyman",
+    "Davud",
+    "Musa",
+    "Zülkifl"
+   ],
+   "answer": 0,
+   "info": "Süleyman (ə) peyğəmbərə bənzərsiz hakimiyyət verilib: külək və cinlər ona tabe olub, o, quşların və qarışqaların dilini anlayıb."
+  },
+  {
+   "id": "prophet_ayyub",
+   "cat": "prophets",
+   "q": "Hansı peyğəmbər uzun xəstəlikdəki səbri ilə tanınır?",
+   "options": [
+    "Əyyub",
+    "Yunus",
+    "Yaqub",
+    "Nuh"
+   ],
+   "answer": 0,
+   "info": "Əyyub (ə) sağlamlığını, var-dövlətini və övladlarını itirib, amma şikayət etməyib. Allah ona şəfa verib, nemətlərini qaytarıb — onun səbri möminlər üçün nümunədir."
+  },
+  {
+   "id": "prophet_yaqub",
+   "cat": "prophets",
+   "q": "Yusif peyğəmbərin atası kim olub?",
+   "options": [
+    "Yaqub",
+    "İshaq",
+    "İbrahim",
+    "İsmayıl"
+   ],
+   "answer": 0,
+   "info": "Yusif Yaqub peyğəmbərin oğlu, İshaqın nəvəsi və İbrahimin nəticəsidir. Yaqub İsrail adı ilə də tanınır."
+  },
+  {
+   "id": "prophet_yusuf_well",
+   "cat": "prophets",
+   "q": "Hansı peyğəmbəri qardaşları quyuya atıb?",
+   "options": [
+    "Yusif",
+    "Yunus",
+    "Musa",
+    "İsmayıl"
+   ],
+   "answer": 0,
+   "info": "Yusif peyğəmbərin hekayəsi onun adını daşıyan 12-ci surədə danışılır. Quran onu hekayələrin ən gözəli adlandırır (12:3)."
+  },
+  {
+   "id": "prophet_harun",
+   "cat": "prophets",
+   "q": "Musa peyğəmbərin qardaşı, özü də peyğəmbər olan kimdir?",
+   "options": [
+    "Harun",
+    "Şüeyb",
+    "Lut",
+    "Hud"
+   ],
+   "answer": 0,
+   "info": "Musa Allahdan qardaşı Harunu ona köməkçi etməsini diləyib, çünki Harun daha fəsahətli idi. Allah onun duasını qəbul edib (20:29–36)."
+  },
+  {
+   "id": "prophet_yahya",
+   "cat": "prophets",
+   "q": "Zəkəriyyə peyğəmbərin oğlu, özü də peyğəmbər olan kimdir?",
+   "options": [
+    "Yəhya",
+    "İsa",
+    "İshaq",
+    "Harun"
+   ],
+   "answer": 0,
+   "info": "Allah Zəkəriyyəyə qocalığında, həyat yoldaşı sonsuz olsa da, Yəhyanı bəxş edib. Yəhyadan əvvəl heç kim bu adla çağırılmayıb (19:7)."
+  },
+  {
+   "id": "prophet_count",
+   "cat": "prophets",
+   "q": "Quranda neçə peyğəmbərin adı çəkilir?",
+   "options": [
+    "25",
+    "12",
+    "40",
+    "313"
+   ],
+   "answer": 0,
+   "info": "Adətən Quranda 25 peyğəmbərin adının çəkildiyi qəbul edilir. Peyğəmbərlər daha çox olub — Allah onların hamısı barədə xəbər verməyib (40:78)."
+  },
+  {
+   "id": "prophet_last",
+   "cat": "prophets",
+   "q": "Sonuncu peyğəmbər kimdir?",
+   "options": [
+    "Məhəmməd ﷺ",
+    "İsa",
+    "Musa",
+    "Yəhya"
+   ],
+   "answer": 0,
+   "info": "Quran Məhəmmədi ﷺ «peyğəmbərlərin möhürü» adlandırır (33:40). Ondan sonra peyğəmbər gəlməyəcək, Quran isə son kitabdır."
+  },
+  {
+   "id": "seerah_birthplace",
+   "cat": "seerah",
+   "q": "Peyğəmbər ﷺ hansı şəhərdə doğulub?",
+   "options": [
+    "Məkkə",
+    "Mədinə",
+    "Taif",
+    "Qüds"
+   ],
+   "answer": 0,
+   "info": "Peyğəmbər ﷺ Məkkədə, Fil ilində — təxminən 570-ci ildə doğulub. O, Qüreyş qəbiləsinin Haşim nəslindən idi."
+  },
+  {
+   "id": "seerah_mother",
+   "cat": "seerah",
+   "q": "Peyğəmbərin ﷺ anasının adı nə idi?",
+   "options": [
+    "Əminə",
+    "Həlimə",
+    "Xədicə",
+    "Fatimə"
+   ],
+   "answer": 0,
+   "info": "Anası Əminə binti Vəhb idi. Peyğəmbər ﷺ təxminən altı yaşında olanda o vəfat edib; atası Abdullah isə o doğulmamışdan əvvəl dünyasını dəyişmişdi."
+  },
+  {
+   "id": "seerah_nurse",
+   "cat": "seerah",
+   "q": "Peyğəmbəri ﷺ əmizdirən süd anasının adı nə idi?",
+   "options": [
+    "Həlimə Sədiyyə",
+    "Əminə",
+    "Xədicə",
+    "Fatimə"
+   ],
+   "answer": 0,
+   "info": "Ərəblərdə körpələri səhradakı süd analarına vermək adəti var idi. Peyğəmbər ﷺ erkən uşaqlığını Bəni Səd qəbiləsindən olan Həlimənin yanında keçirib."
+  },
+  {
+   "id": "seerah_khadija",
+   "cat": "seerah",
+   "q": "Peyğəmbərin ﷺ ilk həyat yoldaşı kim idi?",
+   "options": [
+    "Xədicə",
+    "Aişə",
+    "Həfsə",
+    "Sövdə"
+   ],
+   "answer": 0,
+   "info": "Xədicə (r.a.) onun peyğəmbərliyinə ilk iman gətirən olub və ən çətin illərdə ona dayaq olub."
+  },
+  {
+   "id": "seerah_age40",
+   "cat": "seerah",
+   "q": "Vəhy başlayanda Peyğəmbər ﷺ neçə yaşında idi?",
+   "options": [
+    "40",
+    "25",
+    "33",
+    "50"
+   ],
+   "answer": 0,
+   "info": "Vəhy Peyğəmbər ﷺ 40 yaşında olanda başlayıb. Bundan əvvəl də məkkəlilər onu «əl-Əmin» — «etibarlı» adlandırırdılar."
+  },
+  {
+   "id": "seerah_mission_years",
+   "cat": "seerah",
+   "q": "Peyğəmbərlik missiyası nə qədər davam edib?",
+   "options": [
+    "Təxminən 23 il",
+    "10 il",
+    "30 il",
+    "40 il"
+   ],
+   "answer": 0,
+   "info": "Peyğəmbər ﷺ Məkkədə təxminən 13 il, Mədinədə təxminən 10 il İslama dəvət edib. O, hicrətin 11-ci ilində 63 yaşında vəfat edib."
+  },
+  {
+   "id": "seerah_hijra",
+   "cat": "seerah",
+   "q": "Müsəlmanların Məkkədən Mədinəyə köçü necə adlanır?",
+   "options": [
+    "Hicrət",
+    "Həcc",
+    "Ümrə",
+    "İsra"
+   ],
+   "answer": 0,
+   "info": "Hicrət 622-ci ildə baş verib. O vaxt Yəsrib adlanan Mədinədə ilk müsəlman icması formalaşıb."
+  },
+  {
+   "id": "seerah_calendar",
+   "cat": "seerah",
+   "q": "İslam təqvimi hansı hadisədən hesablanır?",
+   "options": [
+    "Hicrətdən",
+    "Peyğəmbərin ﷺ doğulmasından",
+    "İlk vəhydən",
+    "Məkkənin fəthindən"
+   ],
+   "answer": 0,
+   "info": "Hicri təqvim xəlifə Ömərin dövründə tətbiq edilib. O, qəməri təqvimdir, buna görə də şəmsi təqvimə nisbətən hər il təxminən 11 gün sürüşür."
+  },
+  {
+   "id": "seerah_companion_hijra",
+   "cat": "seerah",
+   "q": "Hicrət zamanı Peyğəmbərin ﷺ yol yoldaşı kim olub?",
+   "options": [
+    "Əbu Bəkr",
+    "Ömər",
+    "Əli",
+    "Osman"
+   ],
+   "answer": 0,
+   "info": "Əbu Bəkr (r.a.) Peyğəmbərlə ﷺ birlikdə Sövr mağarasında üç gün gizlənib. Bu, Quranda qeyd olunur (9:40)."
+  },
+  {
+   "id": "seerah_isra",
+   "cat": "seerah",
+   "q": "Peyğəmbərin ﷺ Məkkədən Qüdsə gecə səfəri necə adlanır?",
+   "options": [
+    "İsra",
+    "Merac",
+    "Hicrət",
+    "Təvaf"
+   ],
+   "answer": 0,
+   "info": "İsra — Qüdsə gecə səfəri, Merac isə göylərə yüksəlişdir. Məhz o zaman beş vaxt namaz fərz edilib."
+  },
+  {
+   "id": "seerah_badr",
+   "cat": "seerah",
+   "q": "Müsəlmanların ilk böyük döyüşü hansıdır?",
+   "options": [
+    "Bədr",
+    "Ühud",
+    "Xəndək",
+    "Hüneyn"
+   ],
+   "answer": 0,
+   "info": "Bədr döyüşü hicrətin 2-ci ilində, Ramazan ayında baş verib. Təxminən 313 müsəlman özündən üç dəfə çox olan ordunu məğlub edib."
+  },
+  {
+   "id": "seerah_muezzin",
+   "cat": "seerah",
+   "q": "İslamda ilk müəzzin kim olub?",
+   "options": [
+    "Bilal ibn Rəbah",
+    "Əbu Bəkr",
+    "Zeyd ibn Harisə",
+    "Salman Farsi"
+   ],
+   "answer": 0,
+   "info": "Bilal Məkkədə kölə idi və imanına görə işgəncə görürdü, sonra Əbu Bəkr onu azad etdi. Peyğəmbər ﷺ onu gözəl və gur səsinə görə azan oxumağa seçib."
+  },
+  {
+   "id": "seerah_grave",
+   "cat": "seerah",
+   "q": "Peyğəmbər ﷺ harada dəfn olunub?",
+   "options": [
+    "Mədinədə",
+    "Məkkədə",
+    "Qüdsdə",
+    "Taifdə"
+   ],
+   "answer": 0,
+   "info": "Peyğəmbər ﷺ Mədinədə, indi Peyğəmbər məscidinin içində olan Aişənin otağında dəfn olunub. Onun yanında Əbu Bəkr və Ömər dəfn edilib."
+  },
+  {
+   "id": "seerah_first_caliph",
+   "cat": "seerah",
+   "q": "İlk raşid xəlifə kim olub?",
+   "options": [
+    "Əbu Bəkr",
+    "Ömər",
+    "Osman",
+    "Əli"
+   ],
+   "answer": 0,
+   "info": "Peyğəmbər ﷺ vəfat etdikdən sonra Əbu Bəkr Siddiq ilk xəlifə olub. Dörd raşid xəlifə: Əbu Bəkr, Ömər, Osman və Əli."
+  },
+  {
+   "id": "fiqh_pillars_islam",
+   "cat": "fiqh",
+   "q": "İslamın neçə şərti (sütunu) var?",
+   "options": [
+    "5",
+    "6",
+    "4",
+    "7"
+   ],
+   "answer": 0,
+   "info": "İslamın beş şərti: şəhadət, namaz, zəkat, Ramazan orucu və imkanı olanlar üçün həcc."
+  },
+  {
+   "id": "fiqh_pillars_iman",
+   "cat": "fiqh",
+   "q": "İmanın neçə əsası var?",
+   "options": [
+    "6",
+    "5",
+    "7",
+    "4"
+   ],
+   "answer": 0,
+   "info": "Allaha, mələklərinə, kitablarına, peyğəmbərlərinə, Axirət gününə və qədərə iman. Onlar məşhur Cəbrayıl hədisində sadalanır."
+  },
+  {
+   "id": "fiqh_daily_prayers",
+   "cat": "fiqh",
+   "q": "Gündə neçə fərz namaz var?",
+   "options": [
+    "5",
+    "3",
+    "4",
+    "6"
+   ],
+   "answer": 0,
+   "info": "Sübh, zöhr, əsr, məğrib və işa. Beş vaxt namaz Merac gecəsi fərz edilib."
+  },
+  {
+   "id": "fiqh_fajr_rakats",
+   "cat": "fiqh",
+   "q": "Sübh namazının fərzi neçə rükətdir?",
+   "options": [
+    "2",
+    "3",
+    "4",
+    "1"
+   ],
+   "answer": 0,
+   "info": "Sübh namazının fərzi iki rükətdir. Ondan əvvəl iki rükət sünnət qılınır — Peyğəmbər ﷺ onu demək olar ki, heç vaxt tərk etməyib."
+  },
+  {
+   "id": "fiqh_maghrib_rakats",
+   "cat": "fiqh",
+   "q": "Məğrib namazının fərzi neçə rükətdir?",
+   "options": [
+    "3",
+    "2",
+    "4",
+    "5"
+   ],
+   "answer": 0,
+   "info": "Məğrib üç rükətli yeganə fərz namazdır. O, gün batandan sonra qılınır."
+  },
+  {
+   "id": "fiqh_four_rakats",
+   "cat": "fiqh",
+   "q": "Zöhr, əsr və işa (səfərdə olmayanda) neçə rükətdir?",
+   "options": [
+    "4",
+    "2",
+    "3",
+    "6"
+   ],
+   "answer": 0,
+   "info": "Zöhr, əsr və işanın hər biri dörd rükətdir. Müsafir onları iki rükətə qədər qısalda bilər."
+  },
+  {
+   "id": "fiqh_wudu",
+   "cat": "fiqh",
+   "q": "Namazdan əvvəlki kiçik təmizlənmə necə adlanır?",
+   "options": [
+    "Dəstəmaz",
+    "Qüsl",
+    "Təyəmmüm",
+    "İstinca"
+   ],
+   "answer": 0,
+   "info": "Dəstəmazda üz, dirsəklərə qədər qollar yuyulur, başa məsh çəkilir və ayaqlar topuqlara qədər yuyulur (5:6). Qüsl bütün bədənin yuyulmasıdır."
+  },
+  {
+   "id": "fiqh_tayammum",
+   "cat": "fiqh",
+   "q": "Su olmayanda dəstəmazın əvəzinə nə edilir?",
+   "options": [
+    "Təyəmmüm",
+    "Qüsl",
+    "İstiğfar",
+    "Sahur"
+   ],
+   "answer": 0,
+   "info": "Təyəmmüm su olmadıqda və ya ondan istifadə mümkün olmadıqda təmiz torpaqla təmizlənmədir. O, Quranda xatırlanır (4:43, 5:6)."
+  },
+  {
+   "id": "fiqh_adhan",
+   "cat": "fiqh",
+   "q": "Namaza çağırış necə adlanır?",
+   "options": [
+    "Azan",
+    "İqamə",
+    "Təkbir",
+    "Dua"
+   ],
+   "answer": 0,
+   "info": "Azan namaza çağırır, iqamə isə namaz başlamazdan dərhal əvvəlki ikinci çağırışdır. Sübh azanına «Namaz yuxudan xeyirlidir» sözləri əlavə olunur."
+  },
+  {
+   "id": "fiqh_qibla",
+   "cat": "fiqh",
+   "q": "Müsəlmanlar namazda hansı tərəfə üz tuturlar?",
+   "options": [
+    "Məkkədəki Kəbəyə",
+    "Peyğəmbər məscidinə",
+    "Əl-Əqsa məscidinə",
+    "Şərqə"
+   ],
+   "answer": 0,
+   "info": "Kəbənin istiqaməti qiblə adlanır. Onu bu tətbiqin «Qiblə» bölməsində tapa bilərsiniz."
+  },
+  {
+   "id": "fiqh_first_qibla",
+   "cat": "fiqh",
+   "q": "Müsəlmanların ilk qibləsi harada olub?",
+   "options": [
+    "Əl-Əqsa məscidi",
+    "Kəbə",
+    "Quba məscidi",
+    "Ərəfat dağı"
+   ],
+   "answer": 0,
+   "info": "Hicrətdən sonra təxminən 16–17 ay müsəlmanlar Qüdsdəki Əl-Əqsaya tərəf namaz qılıblar. Sonra qiblə Kəbəyə dəyişdirilib (2:144)."
+  },
+  {
+   "id": "fiqh_zakat",
+   "cat": "fiqh",
+   "q": "Var-dövlətdən hər il verilən fərz sədəqə necə adlanır?",
+   "options": [
+    "Zəkat",
+    "Sədəqə",
+    "Vəqf",
+    "Fidyə"
+   ],
+   "answer": 0,
+   "info": "Zəkat İslamın beş şərtindən biridir. Adətən o, nisaba çatmış və bir il saxlanılmış yığımın 2,5 faizi qədərdir."
+  },
+  {
+   "id": "fiqh_zakat_fitr",
+   "cat": "fiqh",
+   "q": "Ramazanın sonunda, bayram namazından əvvəl hansı sədəqə verilir?",
+   "options": [
+    "Fitrə",
+    "Mal zəkatı",
+    "Vəqf",
+    "Fidyə"
+   ],
+   "answer": 0,
+   "info": "Fitrə özü və ailəsi üçün verilir ki, kasıblar da bayramı qeyd edə bilsinlər. O, bayram namazından əvvəl verilməlidir."
+  },
+  {
+   "id": "fiqh_suhoor",
+   "cat": "fiqh",
+   "q": "Oruc zamanı dan yeri sökülməzdən əvvəlki yemək necə adlanır?",
+   "options": [
+    "Sahur",
+    "İftar",
+    "Vəlimə",
+    "Əqiqə"
+   ],
+   "answer": 0,
+   "info": "Sahur — dan yeri sökülməzdən əvvəlki yeməkdir, iftar isə gün batandan sonra orucu açmaqdır. Peyğəmbər ﷺ sahurda bərəkət olduğunu buyurub."
+  },
+  {
+   "id": "fiqh_jumuah",
+   "cat": "fiqh",
+   "q": "Cümə namazı həftənin hansı günü qılınır?",
+   "options": [
+    "Cümə",
+    "Cümə axşamı",
+    "Şənbə",
+    "Bazar ertəsi"
+   ],
+   "answer": 0,
+   "info": "Cümə namazı zöhrün yerinə qılınır və ondan əvvəl xütbə oxunur. Cümə müsəlmanlar üçün həftənin ən fəzilətli günüdür."
+  },
+  {
+   "id": "fiqh_tawaf",
+   "cat": "fiqh",
+   "q": "Kəbə ətrafında təvaf neçə dövrədən ibarətdir?",
+   "options": [
+    "7",
+    "3",
+    "5",
+    "10"
+   ],
+   "answer": 0,
+   "info": "Təvaf Kəbənin ətrafında saat əqrəbinin əksinə yeddi dəfə dolanmaqdır. O, Həcərül-Əsvəd (Qara daş) olan küncdən başlayır."
+  },
+  {
+   "id": "fiqh_sai",
+   "cat": "fiqh",
+   "q": "Səy hansı təpələr arasında edilir?",
+   "options": [
+    "Səfa və Mərvə",
+    "Ərəfat və Müzdəlifə",
+    "Ühud və Səl",
+    "Mina və Ərəfat"
+   ],
+   "answer": 0,
+   "info": "Səy balaca İsmayıla su axtararaq Səfa və Mərvə təpələri arasında yeddi dəfə qaçan Hacəri xatırladır (2:158)."
+  },
+  {
+   "id": "fiqh_hajj_month",
+   "cat": "fiqh",
+   "q": "Həcc hansı ayda yerinə yetirilir?",
+   "options": [
+    "Zilhiccə",
+    "Ramazan",
+    "Şəvval",
+    "Məhərrəm"
+   ],
+   "answer": 0,
+   "info": "Həccin əsas mərasimləri Zilhiccənin 8-dən 13-dək yerinə yetirilir. Ərəfə günü Zilhiccənin 9-dur."
+  },
+  {
+   "id": "fiqh_ramadan_number",
+   "cat": "fiqh",
+   "q": "Ramazan hicri təqvimin neçənci ayıdır?",
+   "options": [
+    "9-cu",
+    "7-ci",
+    "10-cu",
+    "12-ci"
+   ],
+   "answer": 0,
+   "info": "Ramazan doqquzuncu aydır, ondan sonra Şəvval gəlir. Hicri təqvimdə 12 qəməri ay var."
+  },
+  {
+   "id": "fiqh_qadr",
+   "cat": "fiqh",
+   "q": "Hansı gecə min aydan xeyirlidir?",
+   "options": [
+    "Qədr gecəsi",
+    "İsra gecəsi",
+    "Bayram gecəsi",
+    "Məhərrəmin ilk gecəsi"
+   ],
+   "answer": 0,
+   "info": "Bu, «Qədr» surəsində (97:3) deyilir. Onu Ramazanın son on gecəsində, xüsusən tək gecələrdə axtarırlar."
+  },
+  {
+   "id": "fiqh_eid_fitr",
+   "cat": "fiqh",
+   "q": "Ramazanın sonunda hansı bayram qeyd olunur?",
+   "options": [
+    "Ramazan bayramı",
+    "Qurban bayramı",
+    "Mövlud",
+    "Aşura"
+   ],
+   "answer": 0,
+   "info": "Ramazan bayramı Şəvvalın 1-də bayram namazı ilə qeyd olunur. İkinci bayram — Qurban bayramı Zilhiccənin 10-na düşür."
+  },
+  {
+   "id": "fiqh_zamzam",
+   "cat": "fiqh",
+   "q": "Kəbənin yanındakı bulaq necə adlanır?",
+   "options": [
+    "Zəmzəm",
+    "Kövsər",
+    "Səlsəbil",
+    "Təsnim"
+   ],
+   "answer": 0,
+   "info": "Zəmzəm bulağı Hacər oğlu İsmayıla su axtararkən Allahın mərhəməti ilə yaranıb. O, minillərdir quruyub tükənmir."
+  },
+  {
+   "id": "arabic_subhanallah",
+   "cat": "arabic",
+   "q": "«Sübhanallah» nə deməkdir?",
+   "options": [
+    "Allah pakdır",
+    "Həmd Allaha məxsusdur",
+    "Allah böyükdür",
+    "Allahdan bağışlanma diləyirəm"
+   ],
+   "answer": 0,
+   "info": "Bu sözlərlə biz Allahı tərifləyir və Onu hər cür nöqsandan pak bilirik. Namazdan sonra onu 33 dəfə demək adətdir."
+  },
+  {
+   "id": "arabic_alhamdulillah",
+   "cat": "arabic",
+   "q": "«Əlhəmdulillah» nə deməkdir?",
+   "options": [
+    "Həmd Allaha məxsusdur",
+    "Allah pakdır",
+    "Allah istəsə",
+    "Allah böyükdür"
+   ],
+   "answer": 0,
+   "info": "Müsəlmanlar istənilən vəziyyətdə — sevincdə də, çətinlikdə də — bu sözlərlə Allaha şükür edirlər. «Fatihə» bəsmələdən sonra bu sözlərlə başlayır."
+  },
+  {
+   "id": "arabic_allahuakbar",
+   "cat": "arabic",
+   "q": "«Allahu əkbər» nə deməkdir?",
+   "options": [
+    "Allah böyükdür",
+    "Həmd Allaha məxsusdur",
+    "Allahdan başqa ilah yoxdur",
+    "Allah pakdır"
+   ],
+   "answer": 0,
+   "info": "Hər namaz bu sözlərlə — təkbirlə başlayır. Onlar azanda və bayram günlərində də deyilir."
+  },
+  {
+   "id": "arabic_inshaallah",
+   "cat": "arabic",
+   "q": "«İnşallah» nə deməkdir?",
+   "options": [
+    "Allah istəsə",
+    "Allah nə istədisə, o oldu",
+    "Allah bərəkət versin",
+    "Allahın adı ilə"
+   ],
+   "answer": 0,
+   "info": "Gələcək barədə danışarkən müsəlmanlar «İnşallah» əlavə edirlər (18:23–24). Nəyəsə heyran qalanda isə «Maşallah» — «Allah nə istədisə, o oldu» deyirlər."
+  },
+  {
+   "id": "arabic_astaghfirullah",
+   "cat": "arabic",
+   "q": "«Əstəğfirullah» nə deməkdir?",
+   "options": [
+    "Allahdan bağışlanma diləyirəm",
+    "Allah böyükdür",
+    "Həmd Allaha məxsusdur",
+    "Allaha təvəkkül edirəm"
+   ],
+   "answer": 0,
+   "info": "Bu, istiğfardır — bağışlanma diləmək. Peyğəmbər ﷺ gündə yetmiş dəfədən çox Allahdan bağışlanma diləyərdi."
+  },
+  {
+   "id": "arabic_sabr",
+   "cat": "arabic",
+   "q": "«Səbr» sözü nə deməkdir?",
+   "options": [
+    "Dözüm",
+    "Şükür",
+    "Niyyət",
+    "Elm"
+   ],
+   "answer": 0,
+   "info": "Səbr ibadətdə, günahdan çəkinməkdə və sınaqlarda dözümlü və möhkəm olmaqdır. Quranda Allahın səbr edənlərlə olduğu bildirilir (2:153)."
+  },
+  {
+   "id": "arabic_shukr",
+   "cat": "arabic",
+   "q": "«Şükür» sözü nə deməkdir?",
+   "options": [
+    "Minnətdarlıq",
+    "Səbr",
+    "Qorxu",
+    "Ümid"
+   ],
+   "answer": 0,
+   "info": "Şükür Allaha qəlblə, dillə və əməllə minnətdarlıqdır. Allah şükür edənlərə daha artıq verəcəyini vəd edib (14:7)."
+  },
+  {
+   "id": "arabic_niyyah",
+   "cat": "arabic",
+   "q": "«Niyyət» sözü nə deməkdir?",
+   "options": [
+    "Qəlbdəki məqsəd",
+    "Namaz",
+    "Oruc",
+    "Sədəqə"
+   ],
+   "answer": 0,
+   "info": "Buxari və Müslimin rəvayət etdiyi məşhur hədis əməllərin niyyətlərə görə olduğunu bildirməklə başlayır. Xoş niyyət adi işi ibadətə çevirir."
+  },
+  {
+   "id": "arabic_barakah",
+   "cat": "arabic",
+   "q": "«Bərəkət» sözü nə deməkdir?",
+   "options": [
+    "Allahın verdiyi bolluq və xeyir",
+    "Səbr",
+    "Tövbə",
+    "Vaxt"
+   ],
+   "answer": 0,
+   "info": "Bərəkət Allahın vaxta, mala və əməllərə qoyduğu xeyir və fayda deməkdir. Bərəkətli az şey də çox xeyir gətirir."
+  },
+  {
+   "id": "arabic_islam",
+   "cat": "arabic",
+   "q": "«İslam» sözü nə deməkdir?",
+   "options": [
+    "Allaha təslim olmaq",
+    "Elm",
+    "Səbr",
+    "Səfər"
+   ],
+   "answer": 0,
+   "info": "İslam tək Allaha təslim olmaq deməkdir. Bu söz «salam» — sülh sözü ilə eyni kökdəndir."
+  },
+  {
+   "id": "ayah_ikhlas",
+   "cat": "ayah",
+   "q": "«İxlas» surəsinin ayəsini davam etdirin:",
+   "options": [
+    "اللَّهُ الصَّمَدُ",
+    "الرَّحْمَٰنِ الرَّحِيمِ",
+    "مَلِكِ النَّاسِ",
+    "مِن شَرِّ مَا خَلَقَ"
+   ],
+   "answer": 0,
+   "info": "«İxlas» surəsi, 1–2-ci ayələr. Əs-Saməd heç kimə möhtac olmayan, hamının Ona möhtac olduğu Zatdır.",
+   "arabic": "قُلْ هُوَ اللَّهُ أَحَدٌ"
+  },
+  {
+   "id": "ayah_fatiha_2",
+   "cat": "ayah",
+   "q": "«Fatihə» surəsinin ayəsini davam etdirin:",
+   "options": [
+    "الرَّحْمَٰنِ الرَّحِيمِ",
+    "اللَّهُ الصَّمَدُ",
+    "مَلِكِ النَّاسِ",
+    "إِنَّ الْإِنسَانَ لَفِي خُسْرٍ"
+   ],
+   "answer": 0,
+   "info": "«Fatihə» surəsi, 2–3-cü ayələr. Ər-Rəhman və Ər-Rəhim Allahın rəhmətindən xəbər verən adlarıdır.",
+   "arabic": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ"
+  },
+  {
+   "id": "ayah_fatiha_5",
+   "cat": "ayah",
+   "q": "«Fatihə» surəsinin ayəsini davam etdirin:",
+   "options": [
+    "وَإِيَّاكَ نَسْتَعِينُ",
+    "وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ",
+    "مِن شَرِّ مَا خَلَقَ",
+    "اللَّهُ الصَّمَدُ"
+   ],
+   "answer": 0,
+   "info": "«Fatihə» surəsi, 5-ci ayə: biz yalnız Allaha ibadət edir və yalnız Ondan kömək diləyirik.",
+   "arabic": "إِيَّاكَ نَعْبُدُ"
+  },
+  {
+   "id": "ayah_asr",
+   "cat": "ayah",
+   "q": "«Əsr» surəsinin ayəsini davam etdirin:",
+   "options": [
+    "إِنَّ الْإِنسَانَ لَفِي خُسْرٍ",
+    "الرَّحْمَٰنِ الرَّحِيمِ",
+    "مَلِكِ النَّاسِ",
+    "اللَّهُ الصَّمَدُ"
+   ],
+   "answer": 0,
+   "info": "«Əsr» surəsi, 1–2-ci ayələr. İmam Şafii deyib: insanlar yalnız bu surə üzərində düşünsəydilər, bu onlara kifayət edərdi.",
+   "arabic": "وَالْعَصْرِ"
+  },
+  {
+   "id": "ayah_falaq",
+   "cat": "ayah",
+   "q": "«Fələq» surəsinin ayəsini davam etdirin:",
+   "options": [
+    "مِن شَرِّ مَا خَلَقَ",
+    "مَلِكِ النَّاسِ",
+    "اللَّهُ الصَّمَدُ",
+    "إِنَّ الْإِنسَانَ لَفِي خُسْرٍ"
+   ],
+   "answer": 0,
+   "info": "«Fələq» surəsi, 1–2-ci ayələr. «Nas» surəsi ilə birlikdə onlara «Müəvvizəteyn» — Allaha sığınma surələri deyilir.",
+   "arabic": "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ"
+  },
+  {
+   "id": "ayah_nas",
+   "cat": "ayah",
+   "q": "«Nas» surəsinin ayəsini davam etdirin:",
+   "options": [
+    "مَلِكِ النَّاسِ",
+    "مِن شَرِّ مَا خَلَقَ",
+    "الرَّحْمَٰنِ الرَّحِيمِ",
+    "اللَّهُ الصَّمَدُ"
+   ],
+   "answer": 0,
+   "info": "«Nas» surəsi, 1–2-ci ayələr. Bu, Quranın son surəsidir; Peyğəmbər ﷺ onu «İxlas» və «Fələq» ilə birlikdə yatmazdan əvvəl oxuyardı.",
+   "arabic": "قُلْ أَعُوذُ بِرَبِّ النَّاسِ"
+  },
+  {
+   "id": "ayah_kawthar",
+   "cat": "ayah",
+   "q": "«Kövsər» surəsinin ayəsini davam etdirin:",
+   "options": [
+    "فَصَلِّ لِرَبِّكَ وَانْحَرْ",
+    "إِنَّ الْإِنسَانَ لَفِي خُسْرٍ",
+    "مَلِكِ النَّاسِ",
+    "اللَّهُ الصَّمَدُ"
+   ],
+   "answer": 0,
+   "info": "«Kövsər» surəsi, 1–2-ci ayələr: verilən nemətə şükür olaraq Rəbbin üçün namaz qıl və qurban kəs.",
+   "arabic": "إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ"
+  }
+ ]
+}

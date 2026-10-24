@@ -1,0 +1,119 @@
+name: iOS
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "ios/**"
+      - "tools/ios/**"
+      - "tools/i18n/**"
+      - "app/src/main/assets/**"
+      - "shared/**"
+      - ".github/workflows/ios.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ios-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Быстрая и дешёвая проверка логики на Linux (без Mac)
+  logic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Строки iPhone-версии актуальны
+        run: |
+          python3 tools/ios/build_strings.py
+          git diff --stat --exit-code ios/ZikrTime/Resources || (echo "Запустите python3 tools/ios/build_strings.py и закоммитьте результат" && exit 1)
+
+      - name: Логика (расчёт намаза, кибла, вопросы)
+        run: |
+          if command -v swiftc >/dev/null; then
+            swiftc --version
+            bash ios/Tests/linux_check.sh
+          else
+            echo "Swift на этом сервере не установлен — пропускаем"
+          fi
+
+  build:
+    needs: logic
+    runs-on: macos-26
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Xcode
+        run: |
+          ls -d /Applications/Xcode*.app
+          XC=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          if [ -n "$XC" ]; then sudo xcode-select -s "$XC"; fi
+          xcodebuild -version
+          mkdir -p ci-out
+          xcodebuild -version > ci-out/xcode.txt
+
+      - name: Проект (XcodeGen)
+        run: |
+          brew install xcodegen
+          cd ios && xcodegen generate
+
+      - name: Сборка для симулятора
+        run: |
+          set +e
+          xcodebuild -project ios/ZikrTime.xcodeproj -scheme ZikrTime -configuration Debug \
+            -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath ios/build CODE_SIGNING_ALLOWED=NO build > ci-out/build.log 2>&1
+          status=$?
+          grep -E "error:|warning:" ci-out/build.log | sort -u > ci-out/build-issues.txt
+          head -100 ci-out/build-issues.txt
+          tail -5 ci-out/build.log
+          exit $status
+
+      - name: Скриншоты в симуляторе
+        run: bash ios/ci/screens.sh
+
+      - name: IPA без подписи (для установки через Sideloadly/AltStore)
+        if: contains(github.event.head_commit.message, '[release-ios]') || github.event_name == 'workflow_dispatch'
+        run: |
+          set +e
+          xcodebuild -project ios/ZikrTime.xcodeproj -scheme ZikrTime -configuration Release \
+            -sdk iphoneos -destination 'generic/platform=iOS' -derivedDataPath ios/build-device \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" build > ci-out/build-device.log 2>&1
+          status=$?
+          tail -5 ci-out/build-device.log
+          [ $status -eq 0 ] || exit $status
+          mkdir -p ipa/Payload
+          cp -R ios/build-device/Build/Products/Release-iphoneos/ZikrTime.app ipa/Payload/
+          (cd ipa && zip -qry ../ZikrTime-unsigned.ipa Payload)
+          ls -la ZikrTime-unsigned.ipa
+
+      - name: Сохранить результаты в ветку ci-artifacts-ios
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p out && cp -r ci-out/. out/ 2>/dev/null || true
+          echo "run ${{ github.run_number }} commit ${{ github.sha }}" > out/RUN.txt
+          cd out
+          git init -q && git checkout -q -b ci-artifacts-ios
+          git add -A
+          git -c user.name=ci -c user.email=ci@users.noreply.github.com commit -qm "iOS CI ${{ github.run_number }}"
+          git push -qf "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" ci-artifacts-ios
+
+      - name: Опубликовать IPA
+        if: contains(github.event.head_commit.message, '[release-ios]')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION=$(sed -n 's/.*MARKETING_VERSION: "\(.*\)".*/\1/p' ios/project.yml)
+          NAME="ZikrTime-iOS-${VERSION}-${{ github.run_number }}-unsigned.ipa"
+          cp ZikrTime-unsigned.ipa "$NAME"
+          gh release create "ios-v${VERSION}-${{ github.run_number }}" "$NAME" \
+            --repo "${{ github.repository }}" \
+            --title "Зикр-тайм для iPhone ${VERSION} (тестовая сборка ${{ github.run_number }})" \
+            --notes "Тестовая сборка без подписи. Установка: Sideloadly или AltStore с вашим Apple ID (переподписывать раз в 7 дней), либо TestFlight после регистрации в Apple Developer Program." \
+            --prerelease --latest=false

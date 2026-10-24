@@ -52,6 +52,8 @@ jobs:
             ci-out/
 
   emulator:
+    # Для мелких правок (тексты, документация) проверку на эмуляторе можно пропустить: [no-emu] в сообщении коммита
+    if: ${{ !contains(github.event.head_commit.message, '[no-emu]') }}
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 50
@@ -71,13 +73,17 @@ jobs:
 
       - name: Эмулятор, установка и скриншоты
         uses: reactivecircus/android-emulator-runner@v2
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CI_REPO: ${{ github.repository }}
+          CI_RUN: ${{ github.run_number }}
+          CI_SHA: ${{ github.sha }}
         with:
           api-level: 34
           target: google_apis
           arch: x86_64
-          profile: pixel_5
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -skin 720x1520
           script: bash tools/ci/emulator_check.sh build-out
 
       - name: Сохранить результаты в ветку ci-artifacts
