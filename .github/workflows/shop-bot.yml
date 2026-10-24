@@ -158,6 +158,9 @@ jobs:
           # Пробный вызов функции без секрета — должен вернуть 403 (значит функция доступна)
           curl -s -o /dev/null -w "function http: %{http_code}\n" -X POST "$FUNCTION_URL" -d '{}' >> diag/webhookinfo.txt || true
           curl -s "https://storage.yandexcloud.net/$BUCKET/catalog.json" -o /dev/null -w "catalog http: %{http_code}\n" >> diag/webhookinfo.txt || true
+          SECRET=$(python3 -c "import hashlib,os;print(hashlib.sha256((os.environ['SHOP_BOT_TOKEN']+':webhook').encode()).hexdigest()[:32])")
+          echo "probe:" >> diag/webhookinfo.txt
+          curl -s -m 60 -X POST "$FUNCTION_URL" -H "X-Telegram-Bot-Api-Secret-Token: $SECRET" -d '{"probe": true}' >> diag/webhookinfo.txt || echo "probe timeout" >> diag/webhookinfo.txt
 
       - name: Диагностика (без секретов)
         if: always() && steps.keys.outputs.ready == 'true'

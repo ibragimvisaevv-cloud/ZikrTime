@@ -1038,6 +1038,26 @@ class Bot:
 # --------------------------------------------------------------------------------------------
 
 
+def probe(token):
+    """Самопроверка (вызывает только развёртывание): доступны ли Telegram и хранилище из облака."""
+    result = {}
+    for name, url in [("telegram", "https://api.telegram.org/"), ("storage", f"{STORAGE_HOST}/{BUCKET}/catalog.json")]:
+        t = time.time()
+        try:
+            urllib.request.urlopen(url, timeout=8).close()
+            result[name] = f"ok {time.time() - t:.1f}s"
+        except urllib.error.HTTPError as e:
+            result[name] = f"http {e.code} {time.time() - t:.1f}s"
+        except Exception as e:
+            result[name] = f"fail {type(e).__name__} {time.time() - t:.1f}s"
+    try:
+        ObjectStorage(token).put("diag/probe.txt", b"ok", "text/plain")
+        result["storage_write"] = "ok"
+    except Exception as e:
+        result["storage_write"] = f"fail {type(e).__name__} {str(e)[:80]}"
+    return result
+
+
 def handler(event, context):
     headers = {k.lower(): v for k, v in (event.get("headers") or {}).items()}
     if headers.get("x-telegram-bot-api-secret-token") != webhook_secret():
@@ -1047,6 +1067,8 @@ def handler(event, context):
         body = base64.b64decode(body).decode()
     update = json.loads(body)
     token = (getattr(context, "token", None) or {}).get("access_token", "")
+    if update.get("probe"):
+        return {"statusCode": 200, "body": json.dumps(probe(token), ensure_ascii=False)}
     tg = Telegram(BOT_TOKEN)
     bot = Bot(ObjectStorage(token), tg)
     try:
