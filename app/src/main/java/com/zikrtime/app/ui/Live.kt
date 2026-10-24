@@ -115,7 +115,9 @@ fun rememberTilt(): State<Offset> {
     val tilt = remember { mutableStateOf(Offset.Zero) }
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     DisposableEffect(lifecycle) {
-        if (!LiveFlags.tilt) return@DisposableEffect onDispose { }
+        // Если в телефоне выключены анимации («убрать движение» для удобства) — фон не двигаем.
+        val motion = android.provider.Settings.Global.getFloat(context.contentResolver, android.provider.Settings.Global.ANIMATOR_DURATION_SCALE, 1f)
+        if (!LiveFlags.tilt || motion == 0f) return@DisposableEffect onDispose { }
         val sm = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         val sensor = sm.getDefaultSensor(Sensor.TYPE_GRAVITY) ?: sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         var bx = Float.NaN
@@ -137,14 +139,14 @@ fun rememberTilt(): State<Offset> {
                 vy += ((gy - by) * 2.4f - vy) * 0.18f
                 val next = Offset(vx.coerceIn(-1f, 1f), vy.coerceIn(-1f, 1f))
                 // Перерисовываем только при заметном наклоне — бережём батарею.
-                if (abs(next.x - tilt.value.x) > 0.004f || abs(next.y - tilt.value.y) > 0.004f) tilt.value = next
+                if (abs(next.x - tilt.value.x) > 0.01f || abs(next.y - tilt.value.y) > 0.01f) tilt.value = next
             }
 
             override fun onAccuracyChanged(s: Sensor?, accuracy: Int) = Unit
         }
         val observer = LifecycleEventObserver { _, event ->
             when (event) {
-                Lifecycle.Event.ON_RESUME -> sensor?.let { sm.registerListener(listener, it, SensorManager.SENSOR_DELAY_GAME) }
+                Lifecycle.Event.ON_RESUME -> sensor?.let { sm.registerListener(listener, it, SensorManager.SENSOR_DELAY_UI) }
                 Lifecycle.Event.ON_PAUSE -> sm.unregisterListener(listener)
                 else -> Unit
             }
