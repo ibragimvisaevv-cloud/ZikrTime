@@ -112,16 +112,17 @@ jobs:
           SHOP_BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
           OWNER_USERNAME: ${{ secrets.SHOP_OWNER_USERNAME }}
         run: |
+          exec 2>> diag/function.txt
           if ! yc serverless function get --name "$FUNCTION" > /dev/null 2>&1; then
-            yc serverless function create --name "$FUNCTION"
+            yc serverless function create --name "$FUNCTION" >> diag/function.txt
           fi
-          yc serverless function allow-unauthenticated-invoke --name "$FUNCTION" > /dev/null
+          yc serverless function allow-unauthenticated-invoke --name "$FUNCTION" >> diag/function.txt
           mkdir -p "$RUNNER_TEMP/src" && cp shop-bot/index.py "$RUNNER_TEMP/src/"
           yc serverless function version create \
             --function-name "$FUNCTION" --runtime python312 --entrypoint index.handler \
             --memory 256m --execution-timeout 60s --source-path "$RUNNER_TEMP/src" \
             --service-account-id "$SA_ID" \
-            --environment "BOT_TOKEN=$SHOP_BOT_TOKEN,BUCKET=$BUCKET,OWNER_USERNAME=${OWNER_USERNAME#@}" > /dev/null 2> diag/function.txt
+            --environment "BOT_TOKEN=$SHOP_BOT_TOKEN,BUCKET=$BUCKET,OWNER_USERNAME=${OWNER_USERNAME#@}" > /dev/null
           FID=$(yc serverless function get --name "$FUNCTION" --format json | jq -r .id)
           echo "FUNCTION_URL=https://functions.yandexcloud.net/$FID" >> "$GITHUB_ENV"
 
