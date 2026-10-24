@@ -26,7 +26,7 @@ final class ShopStore: ObservableObject {
 
     func refresh(force: Bool = false) async {
         let last = UserDefaults.standard.object(forKey: atKey) as? Date ?? .distantPast
-        if !force && Date().timeIntervalSince(last) < 6 * 3600 { return }
+        if !force && Date().timeIntervalSince(last) < 30 * 60 { return }
         if QA.active { return }
         var request = URLRequest(url: remote)
         request.timeoutInterval = 15

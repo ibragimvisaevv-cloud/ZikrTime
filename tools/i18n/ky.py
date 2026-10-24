@@ -327,7 +327,7 @@ STRINGS = {
     "shop_empty": "Эч нерсе табылган жок",
     "shop_partner": "Өнөктөш",
     "shop_become_seller": "Сатуучу болуу",
-    "shop_become_seller_text": "Адал товар же кызмат сатасызбы? Бизге жазыңыз — дүкөнүңүздү тиркемеге кошобуз.",
+    "shop_become_seller_text": "Адал товар же кызмат сатасызбы? Компанияңызды Telegram-ботубуз аркылуу кошуңуз — текшерүүдөн кийин ал бул жерде пайда болот.",
     "shop_contact_telegram": "Telegram'га жазуу",
     "shop_whatsapp": "WhatsApp",
     "shop_call": "Чалуу",
@@ -337,6 +337,8 @@ STRINGS = {
     "shop_seller_products": "Сатуучунун товарлары",
     "shop_price_on_request": "Баасы суроо боюнча",
     "shop_contacts_soon": "Байланыштар жакында пайда болот",
+    "shop_add_company": "Компанияңызды кошуңуз",
+    "shop_add_company_hint": "Telegram-ботубуз аркылуу: сүрөт, товарлар жана баалар — бир нече мүнөттө",
 }
 
 PLURALS = {

@@ -308,7 +308,7 @@
     <string name="shop_empty">Чизе ёфт нашуд</string>
     <string name="shop_partner">Шарик</string>
     <string name="shop_become_seller">Фурӯшанда шудан</string>
-    <string name="shop_become_seller_text">Моли ҳалол ё хизмат мефурӯшед? Ба мо нависед — мағозаи шуморо ба барнома илова мекунем.</string>
+    <string name="shop_become_seller_text">Моли ҳалол ё хизмат мефурӯшед? Ширкати худро тавассути боти Telegram-и мо илова кунед — баъди санҷиш он дар ин ҷо пайдо мешавад.</string>
     <string name="shop_contact_telegram">Навиштан дар Telegram</string>
     <string name="shop_whatsapp">WhatsApp</string>
     <string name="shop_call">Занг задан</string>
@@ -318,6 +318,8 @@
     <string name="shop_seller_products">Молҳои фурӯшанда</string>
     <string name="shop_price_on_request">Нарх бо дархост</string>
     <string name="shop_contacts_soon">Тамосҳо ба наздикӣ пайдо мешаванд</string>
+    <string name="shop_add_company">Ширкати худро илова кунед</string>
+    <string name="shop_add_company_hint">Тавассути боти Telegram-и мо: акс, мол ва нарх — дар чанд дақиқа</string>
     <plurals name="days">
         <item quantity="one">%d рӯз</item>
         <item quantity="other">%d рӯз</item>

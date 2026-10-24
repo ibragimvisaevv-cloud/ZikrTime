@@ -1,0 +1,124 @@
+# Бот-кабинет продавцов магазина: проверка и развёртывание в Yandex Cloud (облачная функция + Object Storage).
+# Нужны секреты репозитория: YC_SA_KEY (авторизованный ключ сервисного аккаунта, JSON), YC_FOLDER_ID, SHOP_BOT_TOKEN,
+# и по желанию SHOP_OWNER_USERNAME — Telegram-имя владельца (станет владельцем при первом сообщении боту).
+name: Shop bot
+
+on:
+  push:
+    branches: [main]
+    paths: ["shop-bot/**", ".github/workflows/shop-bot.yml"]
+  workflow_dispatch:
+
+concurrency:
+  group: shop-bot
+  cancel-in-progress: false
+
+env:
+  BUCKET: zikrtime-shop
+  FUNCTION: shop-bot
+  RUNTIME_SA: shop-bot-runtime
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Проверка бота
+        run: python3 shop-bot/test_bot.py
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Есть ли ключи
+        id: keys
+        env:
+          YC_SA_KEY: ${{ secrets.YC_SA_KEY }}
+          YC_FOLDER_ID: ${{ secrets.YC_FOLDER_ID }}
+          SHOP_BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
+        run: |
+          if [ -z "$YC_SA_KEY" ] || [ -z "$YC_FOLDER_ID" ] || [ -z "$SHOP_BOT_TOKEN" ]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "### Бот не развёрнут: добавьте секреты YC_SA_KEY, YC_FOLDER_ID, SHOP_BOT_TOKEN" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Yandex Cloud CLI
+        if: steps.keys.outputs.ready == 'true'
+        env:
+          YC_SA_KEY: ${{ secrets.YC_SA_KEY }}
+          YC_FOLDER_ID: ${{ secrets.YC_FOLDER_ID }}
+        run: |
+          curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash -s -- -i "$HOME/yc" -n
+          echo "$HOME/yc/bin" >> "$GITHUB_PATH"
+          printf '%s' "$YC_SA_KEY" > "$RUNNER_TEMP/key.json"
+          "$HOME/yc/bin/yc" config profile create ci
+          "$HOME/yc/bin/yc" config set service-account-key "$RUNNER_TEMP/key.json"
+          "$HOME/yc/bin/yc" config set folder-id "$YC_FOLDER_ID"
+
+      - name: Хранилище (фото и каталог)
+        if: steps.keys.outputs.ready == 'true'
+        run: |
+          if ! yc storage bucket get --name "$BUCKET" > /dev/null 2>&1; then
+            yc storage bucket create --name "$BUCKET" --default-storage-class standard --public-read
+          fi
+          yc storage bucket update --name "$BUCKET" --public-read > /dev/null
+
+      - name: Сервисный аккаунт функции
+        if: steps.keys.outputs.ready == 'true'
+        env:
+          YC_FOLDER_ID: ${{ secrets.YC_FOLDER_ID }}
+        run: |
+          if ! yc iam service-account get --name "$RUNTIME_SA" > /dev/null 2>&1; then
+            yc iam service-account create --name "$RUNTIME_SA"
+          fi
+          SA_ID=$(yc iam service-account get --name "$RUNTIME_SA" --format json | jq -r .id)
+          yc resource-manager folder add-access-binding --id "$YC_FOLDER_ID" --role storage.editor \
+            --subject "serviceAccount:$SA_ID" > /dev/null 2>&1 || true
+          echo "SA_ID=$SA_ID" >> "$GITHUB_ENV"
+
+      - name: Облачная функция
+        if: steps.keys.outputs.ready == 'true'
+        env:
+          SHOP_BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
+          OWNER_USERNAME: ${{ secrets.SHOP_OWNER_USERNAME }}
+        run: |
+          if ! yc serverless function get --name "$FUNCTION" > /dev/null 2>&1; then
+            yc serverless function create --name "$FUNCTION"
+          fi
+          yc serverless function allow-unauthenticated-invoke --name "$FUNCTION" > /dev/null
+          mkdir -p "$RUNNER_TEMP/src" && cp shop-bot/index.py "$RUNNER_TEMP/src/"
+          yc serverless function version create \
+            --function-name "$FUNCTION" --runtime python312 --entrypoint index.handler \
+            --memory 256m --execution-timeout 60s --source-path "$RUNNER_TEMP/src" \
+            --service-account-id "$SA_ID" \
+            --environment "BOT_TOKEN=$SHOP_BOT_TOKEN,BUCKET=$BUCKET,OWNER_USERNAME=${OWNER_USERNAME#@}" > /dev/null
+          FID=$(yc serverless function get --name "$FUNCTION" --format json | jq -r .id)
+          echo "FUNCTION_URL=https://functions.yandexcloud.net/$FID" >> "$GITHUB_ENV"
+
+      - name: Подключение к Telegram
+        if: steps.keys.outputs.ready == 'true'
+        env:
+          SHOP_BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
+        run: |
+          SECRET=$(python3 -c "import hashlib,os;print(hashlib.sha256((os.environ['SHOP_BOT_TOKEN']+':webhook').encode()).hexdigest()[:32])")
+          API="https://api.telegram.org/bot$SHOP_BOT_TOKEN"
+          curl -sf "$API/setWebhook" -H 'Content-Type: application/json' -d "{\"url\":\"$FUNCTION_URL\",\"secret_token\":\"$SECRET\",\"max_connections\":1,\"allowed_updates\":[\"message\",\"callback_query\"]}" > /dev/null
+          curl -sf "$API/setMyCommands" -H 'Content-Type: application/json' \
+            -d '{"commands":[{"command":"menu","description":"Главное меню"},{"command":"help","description":"Как это работает"},{"command":"cancel","description":"Отменить шаг"}]}' > /dev/null
+          curl -sf "$API/setMyDescription" -H 'Content-Type: application/json' \
+            -d '{"description":"Кабинет продавца магазина в приложении «Зикр-тайм»: добавьте свою компанию, товары, цены и фото — после проверки их увидят пользователи приложения."}' > /dev/null
+          curl -sf "$API/setMyShortDescription" -H 'Content-Type: application/json' \
+            -d '{"short_description":"Добавьте свою компанию в магазин приложения «Зикр-тайм»"}' > /dev/null
+          BOT=$(curl -sf "$API/getMe" | jq -r .result.username)
+          CODE=$(python3 -c "import hashlib,os;print(hashlib.sha256((os.environ['SHOP_BOT_TOKEN']+':owner').encode()).hexdigest()[:8])")
+          {
+            echo "### ✅ Бот @$BOT работает"
+            echo ""
+            echo "Чтобы стать владельцем магазина, напишите боту: \`/owner $CODE\`"
+            echo ""
+            echo "Каталог для приложения: https://storage.yandexcloud.net/$BUCKET/catalog.json"
+          } >> "$GITHUB_STEP_SUMMARY"

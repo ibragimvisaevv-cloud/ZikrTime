@@ -343,7 +343,7 @@ STRINGS = {
     "shop_empty": "Nothing found",
     "shop_partner": "Partner",
     "shop_become_seller": "Become a seller",
-    "shop_become_seller_text": "Do you sell halal goods or services? Message us and we will add your shop to the app.",
+    "shop_become_seller_text": "Do you sell halal goods or services? Add your company through our Telegram bot — after a check it will appear here.",
     "shop_contact_telegram": "Message on Telegram",
     "shop_whatsapp": "WhatsApp",
     "shop_call": "Call",
@@ -353,6 +353,8 @@ STRINGS = {
     "shop_seller_products": "Seller's goods",
     "shop_price_on_request": "Price on request",
     "shop_contacts_soon": "Contacts will appear soon",
+    "shop_add_company": "Add your company",
+    "shop_add_company_hint": "In our Telegram bot: photos, goods and prices — in a couple of minutes",
 }
 
 PLURALS = {

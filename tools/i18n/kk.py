@@ -327,7 +327,7 @@ STRINGS = {
     "shop_empty": "Ештеңе табылмады",
     "shop_partner": "Серіктес",
     "shop_become_seller": "Сатушы болу",
-    "shop_become_seller_text": "Халал тауар не қызмет сатасыз ба? Бізге жазыңыз — дүкеніңізді қосымшаға қосамыз.",
+    "shop_become_seller_text": "Халал тауар не қызмет сатасыз ба? Компанияңызды Telegram-ботымыз арқылы қосыңыз — тексерістен кейін ол осында пайда болады.",
     "shop_contact_telegram": "Telegram-ға жазу",
     "shop_whatsapp": "WhatsApp",
     "shop_call": "Қоңырау шалу",
@@ -337,6 +337,8 @@ STRINGS = {
     "shop_seller_products": "Сатушының тауарлары",
     "shop_price_on_request": "Бағасы сұрау бойынша",
     "shop_contacts_soon": "Байланыс деректері жақында пайда болады",
+    "shop_add_company": "Компанияңызды қосыңыз",
+    "shop_add_company_hint": "Telegram-ботымыз арқылы: фото, тауарлар және бағалар — бірнеше минутта",
 }
 
 PLURALS = {

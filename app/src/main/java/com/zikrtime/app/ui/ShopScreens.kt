@@ -130,6 +130,21 @@ fun ShopScreen() {
             }
         }
 
+        // Кнопка для продавцов — на виду, сразу под категориями
+        if (catalog.sellerBot.isNotBlank() && query.isBlank()) {
+            ZCard(onClick = { openAddCompany(context, catalog) }, padding = PaddingValues(horizontal = 16.dp, vertical = 14.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    IconBadge(painterResource(R.drawable.ic_shop_store))
+                    Spacer(Modifier.width(14.dp))
+                    Column(Modifier.weight(1f)) {
+                        Text(stringResource(R.string.shop_add_company), style = MaterialTheme.typography.titleSmall)
+                        Text(stringResource(R.string.shop_add_company_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                    Icon(painterResource(R.drawable.ic_telegram), contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(22.dp))
+                }
+            }
+        }
+
         if (sellers.isNotEmpty() && query.isBlank()) {
             SectionLabel(stringResource(R.string.shop_sellers))
             Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -157,7 +172,10 @@ fun ShopScreen() {
                 Text(stringResource(R.string.shop_become_seller), style = MaterialTheme.typography.titleLarge, color = Cream)
                 Spacer(Modifier.height(6.dp))
                 Text(stringResource(R.string.shop_become_seller_text), style = MaterialTheme.typography.bodyMedium, color = Cream.copy(alpha = 0.85f))
-                if (catalog.contactTelegram.isNotBlank()) {
+                if (catalog.sellerBot.isNotBlank()) {
+                    Spacer(Modifier.height(16.dp))
+                    GoldButton(stringResource(R.string.shop_add_company), onClick = { openAddCompany(context, catalog) })
+                } else if (catalog.contactTelegram.isNotBlank()) {
                     Spacer(Modifier.height(16.dp))
                     GoldButton(stringResource(R.string.shop_contact_telegram), onClick = { openTelegram(context, catalog.contactTelegram) })
                 }
@@ -527,6 +545,9 @@ private fun open(context: Context, url: String) {
 }
 
 private fun openTelegram(context: Context, user: String) = open(context, "https://t.me/" + user.removePrefix("@"))
+
+/** Бот продавцов сразу на шаге «Добавить компанию». */
+private fun openAddCompany(context: Context, catalog: Shop.Catalog) = open(context, "https://t.me/" + catalog.sellerBot + "?start=add")
 
 private fun openMap(context: Context, seller: Shop.Seller) {
     val uri = if (seller.lat != null && seller.lon != null) {

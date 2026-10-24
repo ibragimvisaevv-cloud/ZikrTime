@@ -308,7 +308,7 @@
     <string name="shop_empty">Hech narsa topilmadi</string>
     <string name="shop_partner">Hamkor</string>
     <string name="shop_become_seller">Sotuvchi boʻlish</string>
-    <string name="shop_become_seller_text">Halol mahsulot yoki xizmat sotasizmi? Bizga yozing — doʻkoningizni ilovaga qoʻshamiz.</string>
+    <string name="shop_become_seller_text">Halol mahsulot yoki xizmat sotasizmi? Kompaniyangizni Telegram-botimiz orqali qoʻshing — tekshiruvdan soʻng u shu yerda paydo boʻladi.</string>
     <string name="shop_contact_telegram">Telegramda yozish</string>
     <string name="shop_whatsapp">WhatsApp</string>
     <string name="shop_call">Qoʻngʻiroq</string>
@@ -318,6 +318,8 @@
     <string name="shop_seller_products">Sotuvchi mahsulotlari</string>
     <string name="shop_price_on_request">Narxi soʻrov boʻyicha</string>
     <string name="shop_contacts_soon">Kontaktlar tez orada paydo boʻladi</string>
+    <string name="shop_add_company">Kompaniyangizni qoʻshing</string>
+    <string name="shop_add_company_hint">Telegram-botimiz orqali: rasmlar, mahsulotlar va narxlar — bir necha daqiqada</string>
     <plurals name="days">
         <item quantity="one">%d kun</item>
         <item quantity="other">%d kun</item>

@@ -327,7 +327,7 @@ STRINGS = {
     "shop_empty": "Чизе ёфт нашуд",
     "shop_partner": "Шарик",
     "shop_become_seller": "Фурӯшанда шудан",
-    "shop_become_seller_text": "Моли ҳалол ё хизмат мефурӯшед? Ба мо нависед — мағозаи шуморо ба барнома илова мекунем.",
+    "shop_become_seller_text": "Моли ҳалол ё хизмат мефурӯшед? Ширкати худро тавассути боти Telegram-и мо илова кунед — баъди санҷиш он дар ин ҷо пайдо мешавад.",
     "shop_contact_telegram": "Навиштан дар Telegram",
     "shop_whatsapp": "WhatsApp",
     "shop_call": "Занг задан",
@@ -337,6 +337,8 @@ STRINGS = {
     "shop_seller_products": "Молҳои фурӯшанда",
     "shop_price_on_request": "Нарх бо дархост",
     "shop_contacts_soon": "Тамосҳо ба наздикӣ пайдо мешаванд",
+    "shop_add_company": "Ширкати худро илова кунед",
+    "shop_add_company_hint": "Тавассути боти Telegram-и мо: акс, мол ва нарх — дар чанд дақиқа",
 }
 
 PLURALS = {

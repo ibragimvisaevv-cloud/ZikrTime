@@ -71,6 +71,23 @@ struct ShopView: View {
                 .padding(.horizontal, 2)
             }
 
+            if !c.sellerBot.isEmpty && q.isEmpty {
+                Button { openURL("https://t.me/\(c.sellerBot)?start=add") } label: {
+                    Card(padding: 14) {
+                        HStack(spacing: 14) {
+                            IconBadge(systemName: "storefront")
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(L("shop_add_company")).font(.subheadline.weight(.semibold)).foregroundStyle(.primary)
+                                Text(L("shop_add_company_hint")).font(.caption).foregroundStyle(Brand.secondaryText)
+                            }
+                            Spacer()
+                            Image(systemName: "paperplane.fill").foregroundStyle(Brand.primary)
+                        }
+                    }
+                }
+                .buttonStyle(PressScaleStyle(scale: 0.98))
+            }
+
             if !sellers.isEmpty && q.isEmpty {
                 SectionLabel(text: L("shop_sellers"))
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -95,7 +112,10 @@ struct ShopView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Text(L("shop_become_seller")).font(.title2.weight(.semibold)).foregroundStyle(Brand.cream)
                     Text(L("shop_become_seller_text")).font(.subheadline).foregroundStyle(Brand.cream.opacity(0.85))
-                    if !c.contactTelegram.isEmpty {
+                    if !c.sellerBot.isEmpty {
+                        GoldButton(title: L("shop_add_company")) { openURL("https://t.me/\(c.sellerBot)?start=add") }
+                            .padding(.top, 8)
+                    } else if !c.contactTelegram.isEmpty {
                         GoldButton(title: L("shop_contact_telegram")) { openURL("https://t.me/" + c.contactTelegram) }
                             .padding(.top, 8)
                     }

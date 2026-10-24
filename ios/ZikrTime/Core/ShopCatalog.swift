@@ -1,8 +1,8 @@
 import Foundation
 
-/// Каталог магазина — тот же JSON, что и в Android-версии (assets/shop/catalog.json и репозиторий ZikrTime-content).
+/// Каталог магазина — тот же JSON, что и в Android-версии (встроенный assets/shop/catalog.json; свежий собирает бот продавцов в Yandex Object Storage).
 struct ShopCatalog {
-    static let contentBase = "https://raw.githubusercontent.com/ibragimvisaevv-cloud/ZikrTime-content/main/shop/"
+    static let contentBase = "https://storage.yandexcloud.net/zikrtime-shop/"
 
     /// Текст на нескольких языках: {"ru": "...", "en": "..."}.
     struct Text {
@@ -52,6 +52,8 @@ struct ShopCatalog {
 
     let demo: Bool
     let contactTelegram: String
+    /// Telegram-бот, через который продавцы добавляют свои компании.
+    var sellerBot: String = ""
     let categories: [Category]
     let sellers: [Seller]
     let products: [Product]
@@ -115,6 +117,7 @@ struct ShopCatalog {
         return ShopCatalog(
             demo: (root["demo"] as? Bool) ?? false,
             contactTelegram: handle(string(root, "contact_telegram")),
+            sellerBot: handle(string(root, "seller_bot")),
             categories: categories, sellers: sellers, products: products
         )
     }

@@ -306,7 +306,7 @@
 "shop_empty" = "Heç nə tapılmadı";
 "shop_partner" = "Tərəfdaş";
 "shop_become_seller" = "Satıcı ol";
-"shop_become_seller_text" = "Halal mal və ya xidmət satırsınız? Bizə yazın — mağazanızı tətbiqə əlavə edək.";
+"shop_become_seller_text" = "Halal mal və ya xidmət satırsınız? Şirkətinizi Telegram-botumuz vasitəsilə əlavə edin — yoxlamadan sonra burada görünəcək.";
 "shop_contact_telegram" = "Telegram-da yaz";
 "shop_whatsapp" = "WhatsApp";
 "shop_call" = "Zəng et";
@@ -316,6 +316,8 @@
 "shop_seller_products" = "Satıcının malları";
 "shop_price_on_request" = "Qiymət sorğu ilə";
 "shop_contacts_soon" = "Əlaqə məlumatları tezliklə görünəcək";
+"shop_add_company" = "Şirkətinizi əlavə edin";
+"shop_add_company_hint" = "Telegram-botumuz vasitəsilə: şəkillər, mallar və qiymətlər — bir neçə dəqiqəyə";
 "alarm_ios_note" = "iOS 26 və daha yeni versiyalarda zəngli saat sistem zəngli saatı kimi işləyir: səssiz rejimdə və «Fokus» rejimində də çalır, kilid ekranında söndürülür.";
 "alarm_ios_fallback" = "iOS-un bu versiyasında zəngli saat azanla gur bildirişlər silsiləsidir: 10 dəqiqə ərzində hər dəqiqə bir. Bildirişləri söndürməyin və səssiz rejimi açmayın. Qalanlarını dayandırmaq üçün tətbiqi açın.";
 "alarm_permission_denied" = "Tətbiq üçün zəngli saatlara icazə verilməyib. Onları ayarlarda aktiv edin.";

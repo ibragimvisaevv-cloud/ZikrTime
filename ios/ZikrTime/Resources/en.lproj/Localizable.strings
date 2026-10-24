@@ -306,7 +306,7 @@
 "shop_empty" = "Nothing found";
 "shop_partner" = "Partner";
 "shop_become_seller" = "Become a seller";
-"shop_become_seller_text" = "Do you sell halal goods or services? Message us and we will add your shop to the app.";
+"shop_become_seller_text" = "Do you sell halal goods or services? Add your company through our Telegram bot — after a check it will appear here.";
 "shop_contact_telegram" = "Message on Telegram";
 "shop_whatsapp" = "WhatsApp";
 "shop_call" = "Call";
@@ -316,6 +316,8 @@
 "shop_seller_products" = "Seller's goods";
 "shop_price_on_request" = "Price on request";
 "shop_contacts_soon" = "Contacts will appear soon";
+"shop_add_company" = "Add your company";
+"shop_add_company_hint" = "In our Telegram bot: photos, goods and prices — in a couple of minutes";
 "alarm_ios_note" = "On iOS 26 and newer the alarm works like the built-in Clock alarm: it rings even in silent mode and Focus, and you turn it off on the lock screen.";
 "alarm_ios_fallback" = "On this iOS version the alarm is a series of loud notifications with the adhan, one every minute for 10 minutes. Keep notifications on and silent mode off. Open the app to stop the rest.";
 "alarm_permission_denied" = "Alarms are not allowed for the app. Turn them on in Settings.";

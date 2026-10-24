@@ -308,7 +308,7 @@
     <string name="shop_empty">Hiçbir şey bulunamadı</string>
     <string name="shop_partner">Ortak</string>
     <string name="shop_become_seller">Satıcı olun</string>
-    <string name="shop_become_seller_text">Helal ürün veya hizmet mi satıyorsunuz? Bize yazın, mağazanızı uygulamaya ekleyelim.</string>
+    <string name="shop_become_seller_text">Helal ürün veya hizmet mi satıyorsunuz? Şirketinizi Telegram botumuzla ekleyin — kontrolden sonra burada görünecek.</string>
     <string name="shop_contact_telegram">Telegram\'dan yaz</string>
     <string name="shop_whatsapp">WhatsApp</string>
     <string name="shop_call">Ara</string>
@@ -318,6 +318,8 @@
     <string name="shop_seller_products">Satıcının ürünleri</string>
     <string name="shop_price_on_request">Fiyat için sorun</string>
     <string name="shop_contacts_soon">İletişim bilgileri yakında eklenecek</string>
+    <string name="shop_add_company">Şirketinizi ekleyin</string>
+    <string name="shop_add_company_hint">Telegram botumuzla: fotoğraflar, ürünler ve fiyatlar — birkaç dakikada</string>
     <plurals name="days">
         <item quantity="one">%d gün</item>
         <item quantity="other">%d gün</item>

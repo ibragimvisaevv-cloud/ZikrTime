@@ -308,7 +308,7 @@
     <string name="shop_empty">Heç nə tapılmadı</string>
     <string name="shop_partner">Tərəfdaş</string>
     <string name="shop_become_seller">Satıcı ol</string>
-    <string name="shop_become_seller_text">Halal mal və ya xidmət satırsınız? Bizə yazın — mağazanızı tətbiqə əlavə edək.</string>
+    <string name="shop_become_seller_text">Halal mal və ya xidmət satırsınız? Şirkətinizi Telegram-botumuz vasitəsilə əlavə edin — yoxlamadan sonra burada görünəcək.</string>
     <string name="shop_contact_telegram">Telegram-da yaz</string>
     <string name="shop_whatsapp">WhatsApp</string>
     <string name="shop_call">Zəng et</string>
@@ -318,6 +318,8 @@
     <string name="shop_seller_products">Satıcının malları</string>
     <string name="shop_price_on_request">Qiymət sorğu ilə</string>
     <string name="shop_contacts_soon">Əlaqə məlumatları tezliklə görünəcək</string>
+    <string name="shop_add_company">Şirkətinizi əlavə edin</string>
+    <string name="shop_add_company_hint">Telegram-botumuz vasitəsilə: şəkillər, mallar və qiymətlər — bir neçə dəqiqəyə</string>
     <plurals name="days">
         <item quantity="one">%d gün</item>
         <item quantity="other">%d gün</item>

@@ -308,7 +308,7 @@
     <string name="shop_empty">Nothing found</string>
     <string name="shop_partner">Partner</string>
     <string name="shop_become_seller">Become a seller</string>
-    <string name="shop_become_seller_text">Do you sell halal goods or services? Message us and we will add your shop to the app.</string>
+    <string name="shop_become_seller_text">Do you sell halal goods or services? Add your company through our Telegram bot — after a check it will appear here.</string>
     <string name="shop_contact_telegram">Message on Telegram</string>
     <string name="shop_whatsapp">WhatsApp</string>
     <string name="shop_call">Call</string>
@@ -318,6 +318,8 @@
     <string name="shop_seller_products">Seller\'s goods</string>
     <string name="shop_price_on_request">Price on request</string>
     <string name="shop_contacts_soon">Contacts will appear soon</string>
+    <string name="shop_add_company">Add your company</string>
+    <string name="shop_add_company_hint">In our Telegram bot: photos, goods and prices — in a couple of minutes</string>
     <plurals name="days">
         <item quantity="one">%d day</item>
         <item quantity="other">%d days</item>

@@ -308,7 +308,7 @@
     <string name="shop_empty">Ничего не найдено</string>
     <string name="shop_partner">Партнёр</string>
     <string name="shop_become_seller">Стать продавцом</string>
-    <string name="shop_become_seller_text">Продаёте халяльные товары или услуги? Напишите нам — добавим ваш магазин в приложение.</string>
+    <string name="shop_become_seller_text">Продаёте халяльные товары или услуги? Добавьте свою компанию через наш Telegram-бот — после проверки она появится здесь.</string>
     <string name="shop_contact_telegram">Написать в Telegram</string>
     <string name="shop_whatsapp">WhatsApp</string>
     <string name="shop_call">Позвонить</string>
@@ -318,6 +318,8 @@
     <string name="shop_seller_products">Товары продавца</string>
     <string name="shop_price_on_request">Цена по запросу</string>
     <string name="shop_contacts_soon">Контакты скоро появятся</string>
+    <string name="shop_add_company">Добавить свою компанию</string>
+    <string name="shop_add_company_hint">Через наш Telegram-бот: фото, товары и цены — за пару минут</string>
     <plurals name="days">
         <item quantity="one">%d день</item>
         <item quantity="few">%d дня</item>

@@ -306,7 +306,7 @@
 "shop_empty" = "Hech narsa topilmadi";
 "shop_partner" = "Hamkor";
 "shop_become_seller" = "Sotuvchi boʻlish";
-"shop_become_seller_text" = "Halol mahsulot yoki xizmat sotasizmi? Bizga yozing — doʻkoningizni ilovaga qoʻshamiz.";
+"shop_become_seller_text" = "Halol mahsulot yoki xizmat sotasizmi? Kompaniyangizni Telegram-botimiz orqali qoʻshing — tekshiruvdan soʻng u shu yerda paydo boʻladi.";
 "shop_contact_telegram" = "Telegramda yozish";
 "shop_whatsapp" = "WhatsApp";
 "shop_call" = "Qoʻngʻiroq";
@@ -316,6 +316,8 @@
 "shop_seller_products" = "Sotuvchi mahsulotlari";
 "shop_price_on_request" = "Narxi soʻrov boʻyicha";
 "shop_contacts_soon" = "Kontaktlar tez orada paydo boʻladi";
+"shop_add_company" = "Kompaniyangizni qoʻshing";
+"shop_add_company_hint" = "Telegram-botimiz orqali: rasmlar, mahsulotlar va narxlar — bir necha daqiqada";
 "alarm_ios_note" = "iOS 26 va undan yangi versiyalarda budilnik tizim budilnigi kabi ishlaydi: ovozsiz rejimda va «Fokus» rejimida ham jiringlaydi, qulflangan ekranda oʻchiriladi.";
 "alarm_ios_fallback" = "iOSning bu versiyasida budilnik azonli baland bildirishnomalar turkumidir: 10 daqiqa davomida har daqiqada bittadan. Bildirishnomalarni oʻchirmang va ovozsiz rejimni yoqmang. Qolganlarini toʻxtatish uchun ilovani oching.";
 "alarm_permission_denied" = "Ilova uchun budilniklar taqiqlangan. Ularni sozlamalarda yoqing.";

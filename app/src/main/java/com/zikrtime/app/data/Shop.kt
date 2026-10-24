@@ -13,16 +13,17 @@ import java.net.URL
 
 /**
  * Магазин: продавцы и их товары.
- * Каталог лежит в открытом репозитории ZikrTime-content (обновляется без выпуска приложения);
+ * Каталог собирает Telegram-бот продавцов (shop-bot) в Yandex Object Storage — обновляется без выпуска приложения;
  * копия встроена в приложение (assets/shop/catalog.json) и сохраняется после каждой загрузки —
  * магазин открывается и без интернета.
  */
 object Shop {
-    const val CONTENT_BASE = "https://raw.githubusercontent.com/ibragimvisaevv-cloud/ZikrTime-content/main/shop/"
+    /** Каталог и фото собирает бот продавцов в Yandex Object Storage (быстро в России и Средней Азии). */
+    const val CONTENT_BASE = "https://storage.yandexcloud.net/zikrtime-shop/"
     private const val REMOTE = CONTENT_BASE + "catalog.json"
     private const val KEY = "shop_catalog"
     private const val KEY_AT = "shop_catalog_at"
-    private const val REFRESH_MS = 6 * 60 * 60 * 1000L
+    private const val REFRESH_MS = 30 * 60 * 1000L
 
     /** Текст на нескольких языках: {"ru": "...", "en": "..."}. */
     class Text(private val values: Map<String, String>) {
@@ -68,6 +69,8 @@ object Shop {
     class Catalog(
         val demo: Boolean,
         val contactTelegram: String,
+        /** Telegram-бот, через который продавцы добавляют свои компании. */
+        val sellerBot: String,
         val categories: List<Category>,
         val sellers: List<Seller>,
         val products: List<Product>,
@@ -179,7 +182,10 @@ object Shop {
                 images = strings(it.optJSONArray("images")),
             )
         }.filter { p -> sellers.any { it.id == p.seller } }
-        return Catalog(root.optBoolean("demo"), root.optString("contact_telegram").removePrefix("@"), categories, sellers, products)
+        return Catalog(
+            root.optBoolean("demo"), root.optString("contact_telegram").removePrefix("@"),
+            root.optString("seller_bot").removePrefix("@"), categories, sellers, products,
+        )
     }
 
     /** «2 500 ₽» */

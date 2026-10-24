@@ -306,7 +306,7 @@
 "shop_empty" = "Hiçbir şey bulunamadı";
 "shop_partner" = "Ortak";
 "shop_become_seller" = "Satıcı olun";
-"shop_become_seller_text" = "Helal ürün veya hizmet mi satıyorsunuz? Bize yazın, mağazanızı uygulamaya ekleyelim.";
+"shop_become_seller_text" = "Helal ürün veya hizmet mi satıyorsunuz? Şirketinizi Telegram botumuzla ekleyin — kontrolden sonra burada görünecek.";
 "shop_contact_telegram" = "Telegram'dan yaz";
 "shop_whatsapp" = "WhatsApp";
 "shop_call" = "Ara";
@@ -316,6 +316,8 @@
 "shop_seller_products" = "Satıcının ürünleri";
 "shop_price_on_request" = "Fiyat için sorun";
 "shop_contacts_soon" = "İletişim bilgileri yakında eklenecek";
+"shop_add_company" = "Şirketinizi ekleyin";
+"shop_add_company_hint" = "Telegram botumuzla: fotoğraflar, ürünler ve fiyatlar — birkaç dakikada";
 "alarm_ios_note" = "iOS 26 ve sonrasında alarm, saat uygulamasının alarmı gibi çalışır: sessiz modda ve Odak modunda da çalar, kilit ekranından kapatılır.";
 "alarm_ios_fallback" = "Bu iOS sürümünde alarm, ezanlı yüksek sesli bildirimlerden oluşur: 10 dakika boyunca her dakika bir tane. Bildirimleri kapatmayın ve sessiz modu açmayın. Kalanları durdurmak için uygulamayı açın.";
 "alarm_permission_denied" = "Uygulamanın alarm kurmasına izin verilmiyor. Ayarlar'dan izin verin.";

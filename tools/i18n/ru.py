@@ -327,7 +327,7 @@ STRINGS = {
     "shop_empty": "Ничего не найдено",
     "shop_partner": "Партнёр",
     "shop_become_seller": "Стать продавцом",
-    "shop_become_seller_text": "Продаёте халяльные товары или услуги? Напишите нам — добавим ваш магазин в приложение.",
+    "shop_become_seller_text": "Продаёте халяльные товары или услуги? Добавьте свою компанию через наш Telegram-бот — после проверки она появится здесь.",
     "shop_contact_telegram": "Написать в Telegram",
     "shop_whatsapp": "WhatsApp",
     "shop_call": "Позвонить",
@@ -337,6 +337,8 @@ STRINGS = {
     "shop_seller_products": "Товары продавца",
     "shop_price_on_request": "Цена по запросу",
     "shop_contacts_soon": "Контакты скоро появятся",
+    "shop_add_company": "Добавить свою компанию",
+    "shop_add_company_hint": "Через наш Telegram-бот: фото, товары и цены — за пару минут",
 }
 
 PLURALS = {

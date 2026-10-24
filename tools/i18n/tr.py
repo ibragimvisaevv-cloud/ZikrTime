@@ -327,7 +327,7 @@ STRINGS = {
     "shop_empty": "Hiçbir şey bulunamadı",
     "shop_partner": "Ortak",
     "shop_become_seller": "Satıcı olun",
-    "shop_become_seller_text": "Helal ürün veya hizmet mi satıyorsunuz? Bize yazın, mağazanızı uygulamaya ekleyelim.",
+    "shop_become_seller_text": "Helal ürün veya hizmet mi satıyorsunuz? Şirketinizi Telegram botumuzla ekleyin — kontrolden sonra burada görünecek.",
     "shop_contact_telegram": "Telegram'dan yaz",
     "shop_whatsapp": "WhatsApp",
     "shop_call": "Ara",
@@ -337,6 +337,8 @@ STRINGS = {
     "shop_seller_products": "Satıcının ürünleri",
     "shop_price_on_request": "Fiyat için sorun",
     "shop_contacts_soon": "İletişim bilgileri yakında eklenecek",
+    "shop_add_company": "Şirketinizi ekleyin",
+    "shop_add_company_hint": "Telegram botumuzla: fotoğraflar, ürünler ve fiyatlar — birkaç dakikada",
 }
 
 PLURALS = {
