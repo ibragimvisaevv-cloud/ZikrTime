@@ -59,6 +59,7 @@ object QaHooks {
                 nav.startQuiz(null)
             }
             "shop" -> nav.tab = Tab.SHOP
+            "places" -> nav.open(Screen.PLACES)
             "shop_seller" -> {
                 nav.tab = Tab.SHOP
                 nav.shopSeller = "demo_perfume"

@@ -12,8 +12,11 @@ android {
         applicationId = "com.zikrtime.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 8
-        versionName = "0.5.3"
+        versionCode = 9
+        versionName = "0.6.0"
+        // Ключ Яндекс Карт (MapKit): из gradle.properties или переменной окружения YANDEX_MAPKIT_KEY
+        val mapkitKey = (project.findProperty("yandexMapkitKey") as String?) ?: System.getenv("YANDEX_MAPKIT_KEY") ?: ""
+        buildConfigField("String", "MAPKIT_KEY", "\"$mapkitKey\"")
     }
 
     signingConfigs {
@@ -76,6 +79,8 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material-icons-core")
     implementation("io.coil-kt:coil-compose:2.7.0")
+    // Яндекс Карты (бесплатная лайт-версия: до 1000 пользователей карты в день)
+    implementation("com.yandex.android:maps.mobile:4.45.0-lite")
 
     debugImplementation("androidx.compose.ui:ui-tooling")
 

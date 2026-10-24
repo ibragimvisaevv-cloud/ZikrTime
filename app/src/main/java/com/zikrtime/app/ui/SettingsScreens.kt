@@ -77,6 +77,8 @@ import java.time.format.DateTimeFormatter
 fun MoreScreen() {
     val nav = LocalNav.current
     val context = LocalContext.current
+    // Ссылку «Поддержать проект» берём из списка мест (обновляется не чаще раза в минуту).
+    androidx.compose.runtime.LaunchedEffect(Unit) { com.zikrtime.app.data.Places.refresh(context) }
     val current = Lang.saved(context)
     val languageName = Lang.supported.firstOrNull { it.code == current }?.nativeName ?: stringResource(R.string.language_system)
 
@@ -121,7 +123,14 @@ fun MoreScreen() {
                 icon = painterResource(R.drawable.ic_tasbih),
                 onClick = { nav.open(Screen.TASBIH) },
             )
+            SettingRow(
+                title = stringResource(R.string.places_title),
+                subtitle = stringResource(R.string.places_entry_hint),
+                icon = painterResource(R.drawable.ic_mosque),
+                onClick = { nav.open(Screen.PLACES) },
+            )
         }
+        DonateCard()
         ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
             SettingRow(
                 title = stringResource(R.string.about_title),

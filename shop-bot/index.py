@@ -234,7 +234,210 @@ def clean_phone(text):
 # --------------------------------------------------------------------------------------------
 
 
-class Bot:
+PLACE_KINDS = {
+    "mosque": "🕌 Мечеть",
+    "room": "🧎 Молельная комната (мусалла)",
+    "mall": "🛍 Намазхана в ТЦ / на работе",
+    "other": "📍 Другое место для намаза",
+}
+WHO_TEXT = {"all": "для всех", "men": "только мужчины", "women": "только женщины", "both": "есть мужская и женская"}
+
+
+class PlacesMixin:
+    """Карта мест для намаза: люди предлагают места, владелец проверяет на месте и публикует."""
+
+    PLACE_STEPS = ["kind", "name", "location", "address", "hours", "who", "wudu", "photo", "note"]
+
+    def start_place(self, uid):
+        self.user(uid)["state"] = {"flow": "place", "step": "kind", "data": {}}
+        self.dirty = True
+        rows = [[btn(v, f"pk:{k}")] for k, v in PLACE_KINDS.items()]
+        rows.append([btn("Отмена", "menu")])
+        self.send(uid, "Спасибо, что помогаете! 🤲\nШаг 1 из 9. Что это за место?", {"inline_keyboard": rows})
+
+    def ask_place_step(self, uid, step):
+        n = self.PLACE_STEPS.index(step) + 1
+        p = f"Шаг {n} из 9. "
+        skip = [btn("Пропустить →", "pskp")]
+        if step == "name":
+            return self.send(uid, p + "Как называется место? Например: «Молельная комната в ТЦ Авиапарк, 3 этаж».")
+        if step == "location":
+            return self.send(uid, p + "Отправьте геопозицию: 📎 → «Геопозиция» → передвиньте метку точно на вход и нажмите «Отправить».")
+        if step == "address":
+            return self.send(uid, p + "Адрес и как найти (этаж, вход, ориентир):", kb(skip))
+        if step == "hours":
+            return self.send(uid, p + "Когда открыто? Например: «круглосуточно» или «10:00–22:00».", kb(skip))
+        if step == "who":
+            return self.send(uid, p + "Для кого?", kb([btn("Для всех", "pw:all"), btn("Есть мужская и женская", "pw:both")],
+                                                       [btn("Только мужчины", "pw:men"), btn("Только женщины", "pw:women")], skip))
+        if step == "wudu":
+            return self.send(uid, p + "Есть где сделать омовение?", kb([btn("Да", "pu:yes"), btn("Нет", "pu:no")], skip))
+        if step == "photo":
+            return self.send(uid, p + "Фото места или входа (по желанию):", kb(skip))
+        if step == "note":
+            return self.send(uid, p + "Что ещё полезно знать? (коврики, пятничный намаз, как пройти)", kb(skip))
+
+    def next_place_step(self, uid, st):
+        i = self.PLACE_STEPS.index(st["step"]) + 1
+        if i >= len(self.PLACE_STEPS):
+            return self.finish_place(uid, st["data"])
+        st["step"] = self.PLACE_STEPS[i]
+        self.dirty = True
+        self.ask_place_step(uid, st["step"])
+
+    def place_input(self, uid, st, m, text):
+        step, data = st["step"], st["data"]
+        if step == "location":
+            loc = m.get("location") or (m.get("venue") or {}).get("location")
+            if not loc:
+                return self.send(uid, "Нужна именно геопозиция: 📎 → «Геопозиция». Так мы найдём место на карте.")
+            data["lat"], data["lon"] = round(loc["latitude"], 6), round(loc["longitude"], 6)
+            if (m.get("venue") or {}).get("address") and not data.get("address"):
+                data["address"] = m["venue"]["address"][:150]
+            return self.next_place_step(uid, st)
+        if step == "photo":
+            url = self.photo_url("place_" + str(uid), m)
+            if not url:
+                return self.send(uid, "Пришлите фото или нажмите «Пропустить».", kb([btn("Пропустить →", "pskp")]))
+            data["photo"] = url
+            return self.next_place_step(uid, st)
+        if not text:
+            return self.send(uid, "Напишите ответ текстом.")
+        limits = {"name": 80, "address": 150, "hours": 60, "note": 300}
+        if step not in limits:
+            return self.send(uid, "Выберите ответ кнопкой.")
+        if len(text) > limits[step]:
+            return self.send(uid, f"Слишком длинно — до {limits[step]} символов.")
+        data[step] = text
+        self.next_place_step(uid, st)
+
+    def finish_place(self, uid, data):
+        pid = new_id("m")
+        admin = self.is_admin(uid)
+        place = {
+            "id": pid, "kind": data.get("kind", "other"), "name": data.get("name", ""),
+            "lat": data.get("lat"), "lon": data.get("lon"), "address": data.get("address", ""),
+            "hours": data.get("hours", ""), "who": data.get("who", ""), "wudu": data.get("wudu"),
+            "photo": data.get("photo", ""), "note": data.get("note", ""),
+            "status": "approved" if admin else "pending", "author": uid, "created": time.time(),
+        }
+        self.db["places"][pid] = place
+        self.user(uid)["state"] = None
+        self.dirty = True
+        if admin:
+            self.places_dirty = True
+            self.send(uid, "✅ Место добавлено на карту.")
+        else:
+            self.send(uid, "🙏 Джазакаллаху хайран! Мы проверим место и добавим его на карту в приложении. Сообщим вам.")
+            for a in self.db["admins"]:
+                self.send(a, "🆕 <b>Новое место для намаза</b>\n\n" + self.place_text(place), self.place_mod_kb(place))
+                self.tg.call("sendLocation", chat_id=a, latitude=place["lat"], longitude=place["lon"])
+        self.menu(uid)
+
+    def place_text(self, p):
+        lines = [f"<b>{esc(p['name'])}</b>", PLACE_KINDS.get(p["kind"], ""), f"Статус: {STATUS_TEXT.get(p['status'], p['status'])}"]
+        if p.get("address"):
+            lines.append(f"📍 {esc(p['address'])}")
+        if p.get("hours"):
+            lines.append(f"🕐 {esc(p['hours'])}")
+        if p.get("who"):
+            lines.append(f"👥 {WHO_TEXT.get(p['who'], '')}")
+        if p.get("wudu") is not None:
+            lines.append("💧 Омовение: " + ("есть" if p["wudu"] else "нет"))
+        if p.get("note"):
+            lines.append("\n" + esc(p["note"]))
+        if p.get("lat") is not None:
+            lines.append(f"\n<a href=\"https://yandex.ru/maps/?pt={p['lon']},{p['lat']}&z=17&l=map\">Открыть в Яндекс Картах</a>")
+        return "\n".join(lines)
+
+    def place_mod_kb(self, p):
+        return kb([btn("✅ Проверил, добавить", f"pm:ok:{p['id']}"), btn("❌ Нет такого", f"pm:no:{p['id']}")])
+
+    def place_card(self, uid, pid):
+        p = self.db["places"].get(pid)
+        if not p or not self.is_admin(uid):
+            return
+        rows = []
+        if p["status"] != "approved":
+            rows.append([btn("✅ Добавить на карту", f"pm:ok:{pid}")])
+        else:
+            rows.append([btn("🙈 Скрыть с карты", f"pm:hide:{pid}")])
+        rows.append([btn("📍 Точка", f"pm:loc:{pid}"), btn("🗑 Удалить", f"pm:del:{pid}")])
+        rows.append([btn("⬅️ Все места", "pl_all")])
+        text = self.place_text(p)
+        if p.get("photo"):
+            self.send_photo(uid, p["photo"], text, {"inline_keyboard": rows})
+        else:
+            self.send(uid, text, {"inline_keyboard": rows})
+
+    def places_list(self, uid, which):
+        if not self.is_admin(uid):
+            return
+        places = sorted(self.db["places"].values(), key=lambda x: x["created"])
+        if which == "pending":
+            places = [p for p in places if p["status"] == "pending"]
+            if not places:
+                return self.send(uid, "Нет мест на проверке.", kb([btn("⬅️ Меню", "menu")]))
+            for p in places[:10]:
+                self.send(uid, self.place_text(p), self.place_mod_kb(p))
+                self.tg.call("sendLocation", chat_id=uid, latitude=p["lat"], longitude=p["lon"])
+            return
+        rows = [[btn(f"{STATUS_TEXT[p['status']].split(' ')[0]} {p['name'][:40]}", f"pc:{p['id']}")] for p in places[:90]]
+        rows.append([btn("➕ Добавить место", "place"), btn("⬅️ Меню", "menu")])
+        self.send(uid, f"Места для намаза ({len(places)}):", {"inline_keyboard": rows})
+
+    def moderate_place(self, uid, action, pid):
+        p = self.db["places"].get(pid)
+        if not p:
+            return self.send(uid, "Место не найдено.")
+        if action == "loc":
+            self.tg.call("sendLocation", chat_id=uid, latitude=p["lat"], longitude=p["lon"])
+            return
+        was_public = p["status"] == "approved"
+        if action == "ok":
+            p["status"] = "approved"
+            if p.get("author") and p["author"] != uid:
+                self.send(p["author"], f"🎉 Место «{esc(p['name'])}» проверено и добавлено на карту в приложении Зикр-тайм. Джазакаллаху хайран!")
+            self.send(uid, f"✅ «{esc(p['name'])}» на карте.")
+        elif action == "no":
+            p["status"] = "rejected"
+            self.send(uid, f"❌ «{esc(p['name'])}» отклонено.")
+        elif action == "hide":
+            p["status"] = "hidden"
+            self.send(uid, f"🙈 «{esc(p['name'])}» скрыто с карты.")
+        elif action == "del":
+            del self.db["places"][pid]
+            self.send(uid, "🗑 Удалено.")
+        self.dirty = True
+        if was_public or p.get("status") == "approved":
+            self.places_dirty = True
+
+    def build_places(self):
+        items = []
+        for p in sorted(self.db["places"].values(), key=lambda x: x["created"]):
+            if p["status"] != "approved" or p.get("lat") is None:
+                continue
+            item = {k: p.get(k) for k in ("id", "kind", "name", "lat", "lon", "address", "hours", "who", "photo", "note")}
+            if p.get("wudu") is not None:
+                item["wudu"] = p["wudu"]
+            items.append(item)
+        return {"version": 1, "updated": int(time.time()), "seller_bot": self.bot_username(),
+                "donate_url": self.db.get("donate_url", ""), "places": items}
+
+    def write_places(self):
+        data = json.dumps(self.build_places(), ensure_ascii=False).encode()
+        self.st.put("places.json", data, "application/json; charset=utf-8", cache="public, max-age=60")
+
+    def set_donate(self, uid, url):
+        url = url.strip()
+        if url and not re.match(r"^https://[\w.-]+\.[a-z]{2,}(/\S*)?$", url):
+            return self.send(uid, "Нужна ссылка вида https://pay.cloudtips.ru/p/…  (или /donate без ссылки — убрать кнопку).")
+        self.db["donate_url"] = url
+        self.dirty = self.catalog_dirty = self.places_dirty = True
+        self.send(uid, "✅ Кнопка «Поддержать проект» ведёт на: " + url if url else "Кнопка «Поддержать проект» скрыта.")
+
+
+class Bot(PlacesMixin):
     def __init__(self, storage, tg, token=None):
         self.st = storage
         self.tg = tg
@@ -247,14 +450,19 @@ class Bot:
         self.db.setdefault("users", {})
         self.db.setdefault("invites", {})
         self.db.setdefault("contact_telegram", "")
+        self.db.setdefault("places", {})
+        self.db.setdefault("donate_url", "")
         self.dirty = False
         self.catalog_dirty = False
+        self.places_dirty = False
 
     # ---------- база ----------
     def save(self):
         if self.catalog_dirty:
             self.write_catalog()
-        if self.dirty or self.catalog_dirty:
+        if self.places_dirty:
+            self.write_places()
+        if self.dirty or self.catalog_dirty or self.places_dirty:
             self.st.put(DB_KEY, json.dumps(self.db, ensure_ascii=False).encode(), "application/json")
 
     def changed(self, seller=None):
@@ -315,6 +523,7 @@ class Bot:
         return {
             "version": 1, "demo": False, "updated": int(time.time()),
             "contact_telegram": self.db.get("contact_telegram", ""), "seller_bot": self.bot_username(),
+            "donate_url": self.db.get("donate_url", ""),
             "categories": [{"id": c["id"], "icon": c["icon"], "names": c["names"]} for c in CATEGORIES],
             "sellers": sellers, "products": products,
         }
@@ -371,6 +580,8 @@ class Bot:
                 return self.claim_invite(uid, arg[4:])
             if arg == "add":
                 return self.start_add(uid)
+            if arg == "place":
+                return self.start_place(uid)
             return self.menu(uid)
         if text.startswith("/owner"):
             return self.claim_owner(uid, frm, text[6:].strip())
@@ -378,6 +589,8 @@ class Bot:
             u["state"] = None
             self.dirty = True
             return self.menu(uid)
+        if text.startswith("/donate") and uid == self.db["owner"]:
+            return self.set_donate(uid, text[7:])
         if text.startswith("/admin ") and uid == self.db["owner"]:
             return self.add_admin(uid, text[7:].strip())
         if text == "/help":
@@ -404,6 +617,10 @@ class Bot:
         if self.is_admin(uid):
             pending = sum(1 for s in self.db["sellers"].values() if s["status"] == "pending")
             rows.append([btn(f"🛡 На проверке ({pending})", "adm:pending"), btn("📋 Все компании", "adm:all")])
+        rows.append([btn("🕌 Предложить место для намаза", "place")])
+        if self.is_admin(uid):
+            pp = sum(1 for p in self.db["places"].values() if p["status"] == "pending")
+            rows.append([btn(f"📍 Места на проверке ({pp})", "pl_pending"), btn("🗺 Все места", "pl_all")])
         rows.append([btn("❓ Как это работает", "help")])
         if mine:
             text = "Ваши компании в магазине <b>Зикр-тайм</b>. Выберите, что изменить:"
@@ -541,6 +758,8 @@ class Bot:
         flow = st["flow"]
         if flow == "add":
             return self.add_input(uid, st, m, text)
+        if flow == "place":
+            return self.place_input(uid, st, m, text)
         if flow == "edit":
             return self.edit_input(uid, st, m, text)
         if flow == "padd":
@@ -1032,6 +1251,29 @@ class Bot:
                 if not self.is_admin(uid):
                     self.notify_admins(f"🗑 Продавец удалил компанию «{esc(s['name'])}».")
                 return self.menu(uid)
+        if act == "place":
+            return self.start_place(uid)
+        if act == "pk" and st.get("flow") == "place" and st["step"] == "kind":
+            st["data"]["kind"] = parts[1] if parts[1] in PLACE_KINDS else "other"
+            return self.next_place_step(uid, st)
+        if act == "pw" and st.get("flow") == "place" and st["step"] == "who":
+            st["data"]["who"] = parts[1] if parts[1] in WHO_TEXT else ""
+            return self.next_place_step(uid, st)
+        if act == "pu" and st.get("flow") == "place" and st["step"] == "wudu":
+            st["data"]["wudu"] = parts[1] == "yes"
+            return self.next_place_step(uid, st)
+        if act == "pskp" and st.get("flow") == "place":
+            if st["step"] in ("kind", "name", "location"):
+                return self.send(uid, "Этот шаг обязательный.")
+            return self.next_place_step(uid, st)
+        if act == "pl_pending":
+            return self.places_list(uid, "pending")
+        if act == "pl_all":
+            return self.places_list(uid, "all")
+        if act == "pc":
+            return self.place_card(uid, parts[1])
+        if act == "pm" and self.is_admin(uid):
+            return self.moderate_place(uid, parts[1], parts[2])
         if act == "adm" and self.is_admin(uid):
             return self.admin_list(uid, parts[1])
         if act == "mod" and self.is_admin(uid):

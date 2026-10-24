@@ -9,5 +9,6 @@ class ZikrApp : Application() {
         super.onCreate()
         Store.init(this)
         PrayerAlarms.createChannels(this)
+        com.zikrtime.app.ui.initYandexMapKey()
     }
 }

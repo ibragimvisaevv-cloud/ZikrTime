@@ -177,6 +177,7 @@ private fun AppRoot() {
             Screen.ABOUT -> AboutScreen()
             Screen.SHOP_SELLER -> com.zikrtime.app.ui.SellerScreen()
             Screen.SHOP_PRODUCT -> com.zikrtime.app.ui.ProductScreen()
+            Screen.PLACES -> com.zikrtime.app.ui.PlacesScreen()
         }
     }
 }

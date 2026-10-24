@@ -221,6 +221,41 @@ b2.save()
 check(json.loads(storage2.files["data/db.json"])["owner"] == 77, "владелец по имени")
 index.OWNER_USERNAME = ""
 
+# Места для намаза: заявка от человека → владелец проверяет → на карте
+msg(FRIEND, "/start place")
+press(FRIEND, "pk:room")
+msg(FRIEND, "Молельная комната в ТЦ Авиапарк")
+msg(FRIEND, "просто текст")  # нужна геопозиция
+check(any("геопозиция" in (t or "") for t in tg.texts(FRIEND)[-1:]), "место: просит геопозицию")
+msg(FRIEND, location={"latitude": 55.7905, "longitude": 37.5310})
+msg(FRIEND, "3 этаж, рядом с фуд-кортом")
+msg(FRIEND, "10:00–22:00")
+press(FRIEND, "pw:both")
+press(FRIEND, "pu:yes")
+press(FRIEND, "pskp")   # фото
+press(FRIEND, "pskp")   # заметка
+pl = [x for x in db()["places"].values()]
+check(len(pl) == 1 and pl[0]["status"] == "pending" and pl[0]["lat"] == 55.7905 and pl[0]["wudu"] is True, "место сохранено")
+check(any("Новое место для намаза" in (t or "") for t in tg.texts(OWNER)), "владельцу пришла заявка на место")
+check(any(m_ == "sendLocation" and p_.get("chat_id") == OWNER for m_, p_ in tg.sent), "владельцу пришла точка")
+press(FRIEND, f"pm:ok:{pl[0]['id']}")  # не админ
+check(db()["places"][pl[0]["id"]]["status"] == "pending", "чужой не одобряет место")
+press(OWNER, f"pm:ok:{pl[0]['id']}")
+places = json.loads(storage.files["places.json"])
+check(len(places["places"]) == 1 and places["places"][0]["who"] == "both" and places["places"][0]["hours"] == "10:00–22:00", "место в places.json")
+check(any("добавлено на карту" in (t or "") for t in tg.texts(FRIEND)), "автору сообщили")
+press(OWNER, f"pm:hide:{pl[0]['id']}")
+check(json.loads(storage.files["places.json"])["places"] == [], "место скрыто")
+
+# Пожертвования: ссылку задаёт владелец
+msg(OWNER, "/donate http://bad")
+check(db()["donate_url"] == "", "плохая ссылка отклонена")
+msg(OWNER, "/donate https://pay.cloudtips.ru/p/abc123")
+check(catalog()["donate_url"] == "https://pay.cloudtips.ru/p/abc123", "ссылка в каталоге")
+check(json.loads(storage.files["places.json"])["donate_url"] == "https://pay.cloudtips.ru/p/abc123", "ссылка в places.json")
+msg(SELLER, "/donate https://evil.example.com")
+check(db()["donate_url"] == "https://pay.cloudtips.ru/p/abc123", "не владелец не меняет ссылку")
+
 # Удаление
 press(SELLER, f"del2:{sid}")
 check(sid not in db()["sellers"] and len(catalog()["sellers"]) == 1, "удаление")

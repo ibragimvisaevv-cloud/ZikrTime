@@ -182,6 +182,8 @@ fun HomeScreen() {
             )
         }
 
+        PlacesEntryCard(onOpen = { nav.open(Screen.PLACES) })
+
         if (today.dayOfWeek == java.time.DayOfWeek.FRIDAY) FridayCard(today)
 
         FocusSummary(usedMillis = usedMillis, onOpen = { nav.tab = Tab.FOCUS }, onQuiz = { nav.startQuiz(null) })

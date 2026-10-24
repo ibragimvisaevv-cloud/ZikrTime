@@ -71,6 +71,8 @@ object Shop {
         val contactTelegram: String,
         /** Telegram-бот, через который продавцы добавляют свои компании. */
         val sellerBot: String,
+        /** Ссылка «Поддержать проект» (CloudTips). */
+        val donateUrl: String = "",
         val categories: List<Category>,
         val sellers: List<Seller>,
         val products: List<Product>,
@@ -184,7 +186,7 @@ object Shop {
         }.filter { p -> sellers.any { it.id == p.seller } }
         return Catalog(
             root.optBoolean("demo"), root.optString("contact_telegram").removePrefix("@"),
-            root.optString("seller_bot").removePrefix("@"), categories, sellers, products,
+            root.optString("seller_bot").removePrefix("@"), root.optString("donate_url"), categories, sellers, products,
         )
     }
 
