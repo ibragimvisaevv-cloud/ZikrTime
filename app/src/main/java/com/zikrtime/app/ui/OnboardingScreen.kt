@@ -57,7 +57,8 @@ import com.zikrtime.app.ui.theme.Gold
 @Composable
 fun OnboardingScreen(onCityChosen: (City) -> Unit) {
     // Шаг сохраняется при пересоздании экрана (после смены языка экран перезапускается).
-    var step by rememberSaveable { mutableIntStateOf(0) }
+    val nav = LocalNav.current
+    var step by rememberSaveable { mutableIntStateOf(nav.onboardingStep) }
     BackHandler(enabled = step > 0) { step-- }
     when (step) {
         0 -> LanguageStep(onNext = { step = 1 })
@@ -85,27 +86,37 @@ private fun LanguageStep(onNext: () -> Unit) {
     val context = LocalContext.current
     val activity = context as? Activity
     val current = Lang.saved(context)
+    // Кнопка «Продолжить» всегда видна внизу, список прокручивается над ней.
     Column(
         Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .windowInsetsPadding(WindowInsets.safeDrawing)
-            .verticalScroll(rememberScrollState())
-            .padding(horizontal = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+            .windowInsetsPadding(WindowInsets.safeDrawing),
     ) {
-        Spacer(Modifier.height(24.dp))
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            AppIconImage(Modifier.size(56.dp))
-            Spacer(Modifier.width(14.dp))
-            Text(stringResource(R.string.app_name), style = MaterialTheme.typography.headlineSmall)
+        Column(
+            Modifier
+                .weight(1f)
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            Spacer(Modifier.height(24.dp))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                AppIconImage(Modifier.size(56.dp))
+                Spacer(Modifier.width(14.dp))
+                Text(stringResource(R.string.app_name), style = MaterialTheme.typography.headlineSmall)
+            }
+            Text(stringResource(R.string.onboarding_language_title), style = MaterialTheme.typography.headlineMedium)
+            ZCard(padding = PaddingValues(vertical = 6.dp, horizontal = 8.dp)) {
+                LanguageList(current = current, onPick = { code -> if (code != current) activity?.let { Lang.set(it, code) } })
+            }
+            Spacer(Modifier.height(8.dp))
         }
-        Text(stringResource(R.string.onboarding_language_title), style = MaterialTheme.typography.headlineMedium)
-        ZCard(padding = PaddingValues(vertical = 6.dp, horizontal = 8.dp)) {
-            LanguageList(current = current, onPick = { code -> if (code != current) activity?.let { Lang.set(it, code) } })
-        }
-        PrimaryButton(stringResource(R.string.action_continue), onClick = onNext)
-        Spacer(Modifier.height(16.dp))
+        PrimaryButton(
+            stringResource(R.string.action_continue),
+            onClick = onNext,
+            modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp),
+        )
     }
 }
 
@@ -113,33 +124,33 @@ private fun LanguageStep(onNext: () -> Unit) {
 private fun Welcome(onNext: () -> Unit) {
     Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Emerald, EmeraldDeep, EmeraldNight)))) {
         StarPattern(Modifier.fillMaxSize(), color = Gold.copy(alpha = 0.09f), cell = 72f)
-        Column(
-            Modifier
-                .fillMaxSize()
-                .windowInsetsPadding(WindowInsets.safeDrawing)
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 28.dp, vertical = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Spacer(Modifier.height(24.dp))
-            AppIconImage(Modifier.size(132.dp))
-            Spacer(Modifier.height(20.dp))
-            Text(stringResource(R.string.app_name), fontSize = 38.sp, fontWeight = FontWeight.SemiBold, color = Cream)
-            Text(stringResource(R.string.slogan), style = MaterialTheme.typography.titleMedium, color = Gold, textAlign = TextAlign.Center)
-            Spacer(Modifier.height(32.dp))
-            Column(verticalArrangement = Arrangement.spacedBy(18.dp)) {
-                Feature(R.drawable.ic_nav_prayer, stringResource(R.string.onboarding_feature_times))
-                Feature(R.drawable.ic_alarm, stringResource(R.string.onboarding_feature_alarm))
-                Feature(R.drawable.ic_nav_focus, stringResource(R.string.onboarding_feature_focus))
-                Feature(R.drawable.ic_nav_knowledge, stringResource(R.string.onboarding_feature_quiz))
-                Feature(R.drawable.ic_qibla, stringResource(R.string.onboarding_feature_tools))
+        Column(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing)) {
+            Column(
+                Modifier
+                    .weight(1f)
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 28.dp, vertical = 24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Spacer(Modifier.height(16.dp))
+                AppIconImage(Modifier.size(120.dp))
+                Spacer(Modifier.height(20.dp))
+                Text(stringResource(R.string.app_name), fontSize = 36.sp, fontWeight = FontWeight.SemiBold, color = Cream, textAlign = TextAlign.Center)
+                Text(stringResource(R.string.slogan), style = MaterialTheme.typography.titleMedium, color = Gold, textAlign = TextAlign.Center)
+                Spacer(Modifier.height(32.dp))
+                Column(verticalArrangement = Arrangement.spacedBy(18.dp)) {
+                    Feature(R.drawable.ic_nav_prayer, stringResource(R.string.onboarding_feature_times))
+                    Feature(R.drawable.ic_alarm, stringResource(R.string.onboarding_feature_alarm))
+                    Feature(R.drawable.ic_nav_focus, stringResource(R.string.onboarding_feature_focus))
+                    Feature(R.drawable.ic_nav_knowledge, stringResource(R.string.onboarding_feature_quiz))
+                    Feature(R.drawable.ic_qibla, stringResource(R.string.onboarding_feature_tools))
+                }
             }
-            Spacer(Modifier.height(36.dp))
             Button(
                 onClick = onNext,
                 colors = ButtonDefaults.buttonColors(containerColor = Gold, contentColor = Color(0xFF2B1E00)),
                 shape = RoundedCornerShape(18.dp),
-                modifier = Modifier.fillMaxWidth().height(56.dp),
+                modifier = Modifier.padding(horizontal = 28.dp, vertical = 16.dp).fillMaxWidth().height(56.dp),
             ) {
                 Text(stringResource(R.string.action_start), style = MaterialTheme.typography.titleMedium)
             }

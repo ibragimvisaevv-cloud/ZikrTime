@@ -208,6 +208,8 @@
     <string name="qibla_distance">До Каабы</string>
     <string name="qibla_hint">Держите телефон горизонтально, подальше от металла и магнитов.</string>
     <string name="qibla_calibrate">Компас неточен: несколько раз поводите телефоном «восьмёркой».</string>
+    <string name="qibla_turn_left">Повернитесь на %1$d° влево</string>
+    <string name="qibla_turn_right">Повернитесь на %1$d° вправо</string>
     <string name="compass_n">С</string>
     <string name="compass_e">В</string>
     <string name="compass_s">Ю</string>
@@ -259,6 +261,15 @@
         <item quantity="many">%d дней</item>
         <item quantity="other">%d дня</item>
     </plurals>
+    <string-array name="weekdays_short">
+        <item>Пн</item>
+        <item>Вт</item>
+        <item>Ср</item>
+        <item>Чт</item>
+        <item>Пт</item>
+        <item>Сб</item>
+        <item>Вс</item>
+    </string-array>
     <string-array name="hijri_months">
         <item>Мухаррам</item>
         <item>Сафар</item>

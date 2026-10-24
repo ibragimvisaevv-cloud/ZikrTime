@@ -234,6 +234,8 @@ STRINGS = {
     "qibla_distance": "Distance to the Kaaba",
     "qibla_hint": "Hold the phone flat, away from metal and magnets.",
     "qibla_calibrate": "The compass is inaccurate: move the phone in a figure-eight a few times.",
+    "qibla_turn_left": "Turn %1$d° to the left",
+    "qibla_turn_right": "Turn %1$d° to the right",
     "compass_n": "N",
     "compass_e": "E",
     "compass_s": "S",
@@ -294,6 +296,7 @@ PLURALS = {
 }
 
 ARRAYS = {
+    "weekdays_short": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
     "hijri_months": [
         "Muharram", "Safar", "Rabi al-Awwal", "Rabi al-Thani", "Jumada al-Ula", "Jumada al-Akhirah",
         "Rajab", "Shaban", "Ramadan", "Shawwal", "Dhu al-Qadah", "Dhu al-Hijjah",

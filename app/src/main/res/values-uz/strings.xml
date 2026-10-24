@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Сгенерировано tools/i18n/build_strings.py — правьте tools/i18n/uz.py -->
+<resources>
+    <string name="app_name">ZikrTime</string>
+    <string name="slogan">Avval zikr, keyin lenta</string>
+    <string name="greeting">Assalomu alaykum</string>
+    <string name="accessibility_description">ZikrTime faqat hozir qaysi ilova ochiqligini tekshiradi. Agar bu roʻyxatingizdagi ijtimoiy tarmoq boʻlsa va kunlik limit tugagan yoki namoz vaqti kirgan boʻlsa, ilova eslatma koʻrsatadi. Ekrandagi matn, parollar va xabarlar oʻqilmaydi va hech qayerga yuborilmaydi.</string>
+    <string name="action_back">Orqaga</string>
+    <string name="action_close">Yopish</string>
+    <string name="action_continue">Davom etish</string>
+    <string name="action_done">Tayyor</string>
+    <string name="action_grant">Ruxsat berish</string>
+    <string name="action_allow">Ruxsat berish</string>
+    <string name="action_open_settings">Sozlamalarni ochish</string>
+    <string name="action_app_info">Ilova haqida</string>
+    <string name="action_refresh">Hozir yangilash</string>
+    <string name="action_reset">Nolga tushirish</string>
+    <string name="action_search">Qidirish</string>
+    <string name="action_start">Boshlash</string>
+    <string name="search_nothing">Hech narsa topilmadi</string>
+    <string name="state_off">Oʻchiq</string>
+    <string name="state_granted">Ruxsat berilgan</string>
+    <string name="tab_prayer">Namoz</string>
+    <string name="tab_knowledge">Bilim</string>
+    <string name="tab_focus">Fokus</string>
+    <string name="tab_more">Yana</string>
+    <string name="prayer_fajr">Bomdod</string>
+    <string name="prayer_sunrise">Quyosh chiqishi</string>
+    <string name="prayer_dhuhr">Peshin</string>
+    <string name="prayer_asr">Asr vaqti</string>
+    <string name="prayer_maghrib">Shom</string>
+    <string name="prayer_isha">Xufton</string>
+    <string name="home_today">Bugungi namozlar</string>
+    <string name="home_next_prayer">Keyingi namoz</string>
+    <string name="home_in_time">%1$s qoldi</string>
+    <string name="home_now">Hozir</string>
+    <string name="home_mark_prayed">Namozni belgilash</string>
+    <string name="home_source_online">Vaqt: aladhan.com, %1$s. Namozlarni belgilab boring — ketma-ketlik shunday oʻsadi.</string>
+    <string name="home_source_local">Vaqt: telefonda hisoblangan, %1$s. Namozlarni belgilab boring — ketma-ketlik shunday oʻsadi.</string>
+    <string name="alarm_short">Budilnik</string>
+    <string name="streak_knowledge">Bilim ketma-ketligi</string>
+    <string name="streak_knowledge_hint">viktorina oʻynalgan kunlar</string>
+    <string name="streak_prayers">Namoz ketma-ketligi</string>
+    <string name="streak_prayers_hint">besh vaqt namoz oʻqilgan kunlar</string>
+    <string name="focus_title">Fokus</string>
+    <string name="focus_subtitle">Kamroq lenta, koʻproq zikr</string>
+    <string name="focus_cta_title">Ijtimoiy tarmoqlarni cheklang</string>
+    <string name="focus_cta_text">Kunlik limit belgilang va savollarga javob berib qoʻshimcha daqiqalar oling.</string>
+    <string name="focus_today">Bugun ijtimoiy tarmoqlarda</string>
+    <string name="focus_used_of">%1$s / %2$s</string>
+    <string name="focus_earn_more">Javoblar uchun +%1$d daq →</string>
+    <string name="focus_no_access">Foydalanish statistikasiga ruxsat yoʻq</string>
+    <string name="focus_limit_bonus">Limit %1$s · bugun qoʻshildi +%2$d daq</string>
+    <string name="focus_earn_button">Savollarga javob berish: +%1$d daq</string>
+    <string name="focus_enable">Ijtimoiy tarmoqlarni cheklash</string>
+    <string name="focus_enable_hint">Limit tugaganda ilova yopiladi</string>
+    <string name="focus_need_permissions">Statistikaga ruxsat bering va quyidagi bloklash usullaridan birini yoqing, aks holda limit ishlamaydi.</string>
+    <string name="focus_daily_limit">Kunlik limit</string>
+    <string name="focus_daily_limit_hint">Barcha tanlangan ilovalar uchun birgalikda. Viktorinada kuniga yana %1$d daqiqagacha olish mumkin.</string>
+    <string name="focus_prayer_lock">Namoz vaqtida tanaffus</string>
+    <string name="focus_prayer_lock_hint">Azondan keyin ijtimoiy tarmoqlar yopiladi</string>
+    <string name="focus_prayer_lock_duration">Tanaffus davomiyligi</string>
+    <string name="focus_apps">Ilovalar</string>
+    <string name="focus_apps_none">Hali hech narsa tanlanmagan</string>
+    <string name="focus_social_label">ijtimoiy tarmoq</string>
+    <string name="focus_permissions">Ruxsatlar</string>
+    <string name="unit_min">daq</string>
+    <string name="unit_km">%1$d km</string>
+    <string name="perm_usage_title">Foydalanish statistikasiga ruxsat</string>
+    <string name="perm_usage_text">Bugun ijtimoiy tarmoqlarda qancha vaqt oʻtkazganingizni hisoblash uchun.</string>
+    <string name="perm_block_ways">Ilovalarni yopish uchun ikki usuldan birini yoqing:</string>
+    <string name="perm_overlay_title">1-usul. Boshqa ilovalar ustidan</string>
+    <string name="perm_overlay_text">Yoqish eng oson, telefon uni xavfli deb hisoblamaydi. Bildirishnomalar panelida jim bildirishnoma turadi.</string>
+    <string name="perm_service_title">2-usul. «ZikrTime» xizmati</string>
+    <string name="perm_service_text">Darhol ishlaydi, lekin koʻp telefonlar uni Google Play’dan oʻrnatilmagan ilovalar uchun bloklaydi.</string>
+    <string name="perm_notifications_title">Bildirishnomalar</string>
+    <string name="perm_notifications_text">Budilnik va namoz eslatmalari uchun kerak.</string>
+    <string name="perm_notifications_off">Ilova uchun bildirishnomalar oʻchirilgan.</string>
+    <string name="perm_fullscreen_title">Toʻliq ekranli budilnik</string>
+    <string name="perm_fullscreen_text">Budilnik qulflangan ekran ustida chiqishi uchun.</string>
+    <string name="perm_exact_title">Aniq vaqt</string>
+    <string name="perm_exact_text">Eslatmalar va budilnik daqiqasi-daqiqasiga kelishi uchun.</string>
+    <string name="disclosure_title">Maxsus imkoniyatlar xizmati</string>
+    <string name="disclosure_text_1">ZikrTime bu xizmatdan faqat qaysi ilova ochiqligini bilish uchun foydalanadi. Agar bu roʻyxatingizdagi ijtimoiy tarmoq boʻlsa va limit tugagan yoki namoz vaqti kirgan boʻlsa, ilova sizni bosh ekranga qaytaradi va eslatma koʻrsatadi.</string>
+    <string name="disclosure_text_2">Ekrandagi matn, xabarlar va parollar oʻqilmaydi. Internetga hech narsa yuborilmaydi — hammasi telefoningizda qoladi.</string>
+    <string name="disclosure_text_3">Sozlamalarda «Yuklab olingan ilovalar» (yoki «Oʻrnatilgan xizmatlar») → «ZikrTime» ni oching va yoqing. Agar tugma faol boʻlmasa, ilova maʼlumotlarini oching → ⋮ menyusi → «Cheklangan sozlamalarga ruxsat berish».</string>
+    <string name="knowledge_title">Bilim</string>
+    <string name="knowledge_subtitle">Har kuni yangi narsa oʻrganing</string>
+    <string name="knowledge_round_title">%1$d ta toʻgʻri javob = +%2$d daq</string>
+    <string name="knowledge_round_text">Ijtimoiy tarmoqlarda qoʻshimcha vaqt — kuniga %1$d daqiqagacha. Bilim esa siz bilan qoladi.</string>
+    <string name="knowledge_bonus_today">%1$d/%2$d daq</string>
+    <string name="knowledge_start">Raundni boshlash</string>
+    <string name="knowledge_topics">Mavzular</string>
+    <string name="knowledge_topic_progress">Toʻgʻri: %1$d · savollar: %2$d</string>
+    <string name="knowledge_progress">Natijalaringiz</string>
+    <string name="knowledge_disclaimer">Savollar maʼlum manbalar asosida tuzilgan. Agar xatolikni sezsangiz, bizga xabar bering.</string>
+    <string name="stat_correct">Toʻgʻri javoblar</string>
+    <string name="stat_accuracy">Aniqlik</string>
+    <string name="stat_best_streak">Eng uzun ketma-ketlik</string>
+    <string name="quiz_progress">%1$d / %2$d</string>
+    <string name="quiz_correct">Toʻgʻri!</string>
+    <string name="quiz_wrong">Unchalik emas</string>
+    <string name="quiz_correct_answer">Toʻgʻri javob: %1$s</string>
+    <string name="quiz_info_title">Bilib qoʻying</string>
+    <string name="quiz_next">Keyingi savol</string>
+    <string name="quiz_finish">Yakunlash</string>
+    <string name="quiz_mashallah">MashaAlloh!</string>
+    <string name="quiz_result_added">Raund yakunlandi. Limitga %1$d daqiqa qoʻshildi.</string>
+    <string name="quiz_result_no_bonus">Raund yakunlandi. Bugungi bonus toʻliq olingan — lekin bilim siz bilan qoladi.</string>
+    <string name="quiz_again">Yana bir raund</string>
+    <string name="more_title">Yana</string>
+    <string name="settings_language">Til</string>
+    <string name="settings_city">Shahar</string>
+    <string name="settings_prayer_times">Namoz vaqtlari</string>
+    <string name="language_system">Telefon tili</string>
+    <string name="language_note">Savollar, shahar nomlari va bildirishnomalar ham tanlangan tilga oʻtadi.</string>
+    <string name="city_locate">Joylashuvni aniqlash</string>
+    <string name="city_locating">Aniqlanmoqda…</string>
+    <string name="city_locate_failed">Joylashuvni aniqlab boʻlmadi. Geolokatsiyani yoqing yoki roʻyxatdan shaharni tanlang.</string>
+    <string name="city_locate_denied">Geolokatsiyaga ruxsat boʻlmasa, roʻyxatdan shaharni tanlang.</string>
+    <string name="city_my_location">Mening joylashuvim</string>
+    <string name="city_search">Shaharni qidirish</string>
+    <string name="prayer_method">Hisoblash usuli</string>
+    <string name="method_angles">Bomdod %1$s°, xufton %2$s°</string>
+    <string name="method_angles_minutes">Bomdod %1$s°, xufton shomdan %2$d daq keyin</string>
+    <string name="prayer_method_hint">Agar masjidingizdagi vaqt farq qilsa, boshqa usulni sinab koʻring yoki quyida tuzatish kiriting.</string>
+    <string name="prayer_source">Manba</string>
+    <string name="prayer_source_online">Vaqtni internetdan yuklash</string>
+    <string name="prayer_source_online_hint">aladhan.com, xuddi shu usul bilan. Internet boʻlmasa — telefonda hisoblanadi.</string>
+    <string name="prayer_source_loading">Yuklanmoqda…</string>
+    <string name="prayer_source_updated">Yangilandi: %1$s</string>
+    <string name="prayer_source_failed">Hali yuklanmadi — telefondagi hisob koʻrsatilmoqda.</string>
+    <string name="prayer_notifications">Bildirishnomalar</string>
+    <string name="prayer_notify">Namoz vaqtini eslatish</string>
+    <string name="prayer_notify_adhan">Azon ovozi</string>
+    <string name="prayer_notify_adhan_hint">Har bir eslatma bilan azon yangrasin</string>
+    <string name="prayer_corrections">Tuzatishlar, daq</string>
+    <string name="prayer_corrections_hint">Masjidingiz jadvaliga moslash uchun istalgan vaqtni bir necha daqiqaga suring.</string>
+    <string name="method_russia">Rossiya musulmonlari diniy boshqarmasi</string>
+    <string name="method_mwl">Butunjahon islom ligasi</string>
+    <string name="method_turkey">Diyonat, Turkiya</string>
+    <string name="method_makkah">Ummul-Quro, Makka</string>
+    <string name="method_egypt">Misr geodeziya boshqarmasi</string>
+    <string name="method_karachi">Islom fanlari universiteti, Karachi</string>
+    <string name="method_isna">Shimoliy Amerika islom jamiyati</string>
+    <string name="madhab_standard">Standart (shofiʼiy, molikiy, hanbaliy)</string>
+    <string name="madhab_hanafi">Hanafiy</string>
+    <string name="alarm_title">Bomdod budilnigi</string>
+    <string name="alarm_enable">Bomdodga uygʻotish</string>
+    <string name="alarm_enable_hint">Faqat qoʻlda oʻchiriladigan baland azon</string>
+    <string name="alarm_status_on">Bomdoddan %1$d daq oldin</string>
+    <string name="alarm_next">Keyingisi: %1$s, %2$s (bomdod %3$s)</string>
+    <string name="alarm_next_none">Kunlar tanlanmagan</string>
+    <string name="alarm_offset">Uygʻotish</string>
+    <string name="alarm_offset_zero">Bomdod vaqtida</string>
+    <string name="alarm_offset_value">%1$d daq oldin</string>
+    <string name="alarm_days">Kunlar</string>
+    <string name="alarm_sound">Ovoz</string>
+    <string name="alarm_sound_adhan">Azon</string>
+    <string name="alarm_sound_system">Telefon budilnigi ohangi</string>
+    <string name="alarm_max_volume">Maksimal ovoz balandligi</string>
+    <string name="alarm_max_volume_hint">Budilnikdan keyin ovoz avvalgi holatiga qaytadi</string>
+    <string name="alarm_vibrate">Tebranish</string>
+    <string name="alarm_wake_check">Savolga javob berib oʻchirish</string>
+    <string name="alarm_wake_check_hint">Albatta uygʻonish uchun</string>
+    <string name="alarm_snooze_allow">Kechiktirishga ruxsat</string>
+    <string name="alarm_snooze_hint">5 daqiqaga. Uxlab qolmaslik uchun odatda oʻchiq</string>
+    <string name="alarm_test">Budilnikni tekshirish (10 soniyadan keyin)</string>
+    <string name="alarm_test_toast">Budilnik 10 soniyadan keyin chalinadi</string>
+    <string name="alarm_note">Budilnik siz oʻchirmaguningizcha chalinadi. Telefonni quvvatlangan holda saqlang va ilovani majburan toʻxtatmang.</string>
+    <string name="alarm_ring_title">Bomdodga turish vaqti</string>
+    <string name="alarm_ring_text">Namoz uyqudan yaxshiroq</string>
+    <string name="alarm_fajr_at">Bomdod %1$s da</string>
+    <string name="alarm_better_than_sleep">Namoz uyqudan yaxshiroq</string>
+    <string name="alarm_awake">Uygʻondim</string>
+    <string name="alarm_answer_to_stop">Savolga javob berib oʻchirish</string>
+    <string name="alarm_stop">Oʻchirish</string>
+    <string name="alarm_snooze">%1$d daqiqaga kechiktirish</string>
+    <string name="alarm_test_label">TEKSHIRUV</string>
+    <string name="block_quiz_title">Savollarga javob bering</string>
+    <string name="block_earned">%1$d daqiqa qoʻshildi. Ilovaga qaytishingiz mumkin.</string>
+    <string name="block_limit_title">Bugungi limit tugadi</string>
+    <string name="block_limit_text">Bugun ijtimoiy tarmoqlarda: %1$s. Limit: %2$s.</string>
+    <string name="block_quiz_button">%1$d ta savolga javob berish: +%2$d daq</string>
+    <string name="block_bonus_used">Bugungi bonus toʻliq olingan (%1$d daq). Ertaga limit qaytadan boshlanadi.</string>
+    <string name="block_prayer_label">Namoz vaqti kirdi</string>
+    <string name="block_prayer_open">Ijtimoiy tarmoqlar yana ochiq.</string>
+    <string name="block_prayer_text">Ijtimoiy tarmoqlar %1$s da ochiladi. Namozga turish uchun ayni vaqt.</string>
+    <string name="block_prayed">Namozni oʻqidim</string>
+    <string name="channel_prayer">Namoz vaqtlari</string>
+    <string name="channel_prayer_adhan">Namoz vaqtlari (azon)</string>
+    <string name="channel_prayer_desc">Namoz vaqti kirganini eslatadi</string>
+    <string name="channel_alarm">Bomdod budilnigi</string>
+    <string name="channel_alarm_desc">Bomdod namozidan oldin baland budilnik</string>
+    <string name="channel_guard">Ijtimoiy tarmoqlar limiti</string>
+    <string name="channel_guard_desc">Limit ishlayotgan paytdagi doimiy bildirishnoma</string>
+    <string name="guard_title">ZikrTime limitni kuzatmoqda</string>
+    <string name="guard_text">Ijtimoiy tarmoqlar limiti: kuniga %1$d daq</string>
+    <string name="notify_prayer_title">%1$s namozi vaqti</string>
+    <string name="notify_prayer_text">%1$s · %2$s.</string>
+    <string name="notify_prayer_lock">Ijtimoiy tarmoqlar %1$d daqiqaga toʻxtatildi.</string>
+    <string name="qibla_title">Qibla</string>
+    <string name="qibla_subtitle">Kaʼba yoʻnalishi</string>
+    <string name="qibla_turn">Kaʼba tepada boʻlguncha buriling</string>
+    <string name="qibla_aligned">Siz qiblaga qarab turibsiz</string>
+    <string name="qibla_no_sensor">Telefonda kompas yoʻq — quyidagi burchakdan foydalaning</string>
+    <string name="qibla_bearing">Shimoldan yoʻnalish</string>
+    <string name="qibla_distance">Kaʼbagacha masofa</string>
+    <string name="qibla_hint">Telefonni gorizontal ushlang, metall va magnitlardan uzoqroq.</string>
+    <string name="qibla_calibrate">Kompas noaniq: telefonni bir necha marta «sakkiz» shaklida harakatlantiring.</string>
+    <string name="qibla_turn_left">Chapga %1$d° buriling</string>
+    <string name="qibla_turn_right">Oʻngga %1$d° buriling</string>
+    <string name="compass_n">Sh</string>
+    <string name="compass_e">Shq</string>
+    <string name="compass_s">J</string>
+    <string name="compass_w">Gʻ</string>
+    <string name="tasbih_title">Tasbeh</string>
+    <string name="tasbih_subtitle">Zikr hisoblagichi</string>
+    <string name="tasbih_of">%1$d dan</string>
+    <string name="tasbih_laps">Aylanmalar: %1$d</string>
+    <string name="tasbih_tap_hint">Hisoblash uchun doirani bosing</string>
+    <string name="tasbih_target">Maqsad</string>
+    <string name="tasbih_today">Bugun: %1$d</string>
+    <string name="zikr_1_name">Subhanalloh</string>
+    <string name="zikr_1_meaning">Alloh pokdir</string>
+    <string name="zikr_2_name">Alhamdulilloh</string>
+    <string name="zikr_2_meaning">Allohga hamd boʻlsin</string>
+    <string name="zikr_3_name">Allohu akbar</string>
+    <string name="zikr_3_meaning">Alloh buyukdir</string>
+    <string name="zikr_4_name">La ilaha illalloh</string>
+    <string name="zikr_4_meaning">Allohdan oʻzga iloh yoʻq</string>
+    <string name="zikr_5_name">Astagʻfirulloh</string>
+    <string name="zikr_5_meaning">Allohdan magʻfirat soʻrayman</string>
+    <string name="zikr_6_name">Salovat</string>
+    <string name="zikr_6_meaning">Allohim, Muhammadga salovat yubor</string>
+    <string name="onboarding_language_title">Tilni tanlang</string>
+    <string name="onboarding_city_title">Qayerdasiz?</string>
+    <string name="onboarding_city_text">Namoz vaqtlarini hisoblash uchun shahar kerak. Uni keyin oʻzgartirish mumkin.</string>
+    <string name="onboarding_feature_times">Shahringiz uchun aniq namoz vaqtlari</string>
+    <string name="onboarding_feature_alarm">Uxlab qolmaslik uchun baland bomdod budilnigi</string>
+    <string name="onboarding_feature_focus">Ijtimoiy tarmoqlar uchun kunlik limit</string>
+    <string name="onboarding_feature_quiz">Islom haqidagi javoblar uchun qoʻshimcha daqiqalar</string>
+    <string name="onboarding_feature_tools">Qibla kompasi va tasbeh hisoblagichi</string>
+    <string name="about_title">Ilova haqida</string>
+    <string name="about_version">Versiya %1$s</string>
+    <string name="about_privacy_title">Maxfiylik</string>
+    <string name="about_privacy_text">Barcha maʼlumotlaringiz — sozlamalar, belgilar va statistika — faqat shu telefonda saqlanadi. Internet faqat aladhan.com dan namoz vaqtlarini yuklash uchun kerak.</string>
+    <string name="about_times_title">Namoz vaqtlari</string>
+    <string name="about_times_text">Vaqtlar aladhan.com dan olinadi yoki telefonda xuddi shu astronomik formulalar bilan hisoblanadi. Masjid jadvali bir necha daqiqaga farq qilishi mumkin — sozlamalardagi tuzatishlardan foydalaning.</string>
+    <string name="about_quiz_title">Savollar</string>
+    <string name="about_quiz_text">Savollar Qurʼon, paygʻambarlar, sira va Islom asoslari haqidagi maʼlum faktlarni qamrab oladi. Bu fatvo emas: diniy hukmlar boʻyicha olimlarga murojaat qiling.</string>
+    <string name="about_licenses_title">Litsenziyalar</string>
+    <string name="about_licenses_text">Amiri shrifti — SIL Open Font License 1.1. Azon yozuvi — Wikimedia Commons, CC0 (jamoat mulki). Namoz vaqtlari maʼlumotlari — aladhan.com.</string>
+    <string name="duration_m">%1$d daq</string>
+    <string name="duration_h">%1$d soat</string>
+    <string name="duration_h_m">%1$d soat %2$d daq</string>
+    <string name="hijri_date_format">%3$d-yil %1$d-%2$s (hijriy)</string>
+    <plurals name="days">
+        <item quantity="one">%d kun</item>
+        <item quantity="other">%d kun</item>
+    </plurals>
+    <string-array name="weekdays_short">
+        <item>Du</item>
+        <item>Se</item>
+        <item>Ch</item>
+        <item>Pa</item>
+        <item>Ju</item>
+        <item>Sh</item>
+        <item>Ya</item>
+    </string-array>
+    <string-array name="hijri_months">
+        <item>Muharram</item>
+        <item>Safar</item>
+        <item>Rabiʼul-avval</item>
+        <item>Rabiʼul-oxir</item>
+        <item>Jumodul-avval</item>
+        <item>Jumodul-oxir</item>
+        <item>Rajab</item>
+        <item>Shaʼbon</item>
+        <item>Ramazon</item>
+        <item>Shavvol</item>
+        <item>Zulqaʼda</item>
+        <item>Zulhijja</item>
+    </string-array>
+</resources>

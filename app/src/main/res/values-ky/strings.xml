@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Сгенерировано tools/i18n/build_strings.py — правьте tools/i18n/ky.py -->
+<resources>
+    <string name="app_name">Зикр-тайм</string>
+    <string name="slogan">Адегенде зикир, анан лента</string>
+    <string name="greeting">Ассаламу алейкум</string>
+    <string name="accessibility_description">Зикр-тайм азыр кайсы колдонмо ачык экенин гана текшерет. Эгер бул тизмеңиздеги социалдык тармак болсо жана күндүк лимит түгөнсө же намаз убактысы кирсе, колдонмо эскертүү көрсөтөт. Экрандагы текст, сырсөздөр жана билдирүүлөр окулбайт жана эч жакка жөнөтүлбөйт.</string>
+    <string name="action_back">Артка</string>
+    <string name="action_close">Жабуу</string>
+    <string name="action_continue">Улантуу</string>
+    <string name="action_done">Даяр</string>
+    <string name="action_grant">Уруксат берүү</string>
+    <string name="action_allow">Уруксат берүү</string>
+    <string name="action_open_settings">Жөндөөлөрдү ачуу</string>
+    <string name="action_app_info">Колдонмо жөнүндө</string>
+    <string name="action_refresh">Азыр жаңыртуу</string>
+    <string name="action_reset">Нөлдөө</string>
+    <string name="action_search">Издөө</string>
+    <string name="action_start">Баштоо</string>
+    <string name="search_nothing">Эч нерсе табылган жок</string>
+    <string name="state_off">Өчүк</string>
+    <string name="state_granted">Уруксат берилди</string>
+    <string name="tab_prayer">Намаз</string>
+    <string name="tab_knowledge">Билим</string>
+    <string name="tab_focus">Фокус</string>
+    <string name="tab_more">Дагы</string>
+    <string name="prayer_fajr">Багымдат</string>
+    <string name="prayer_sunrise">Күн чыгуу</string>
+    <string name="prayer_dhuhr">Бешим</string>
+    <string name="prayer_asr">Аср убактысы</string>
+    <string name="prayer_maghrib">Шам</string>
+    <string name="prayer_isha">Куптан</string>
+    <string name="home_today">Бүгүнкү намаздар</string>
+    <string name="home_next_prayer">Кийинки намаз</string>
+    <string name="home_in_time">%1$s калды</string>
+    <string name="home_now">Азыр</string>
+    <string name="home_mark_prayed">Намазды белгилөө</string>
+    <string name="home_source_online">Убакыт: aladhan.com, %1$s. Намаздарды белгилеп туруңуз — катар ушинтип өсөт.</string>
+    <string name="home_source_local">Убакыт: телефондо эсептелген, %1$s. Намаздарды белгилеп туруңуз — катар ушинтип өсөт.</string>
+    <string name="alarm_short">Ойготкуч</string>
+    <string name="streak_knowledge">Билим катары</string>
+    <string name="streak_knowledge_hint">викторина ойнолгон күндөр</string>
+    <string name="streak_prayers">Намаз катары</string>
+    <string name="streak_prayers_hint">беш убак намаз окулган күндөр</string>
+    <string name="focus_title">Фокус</string>
+    <string name="focus_subtitle">Азыраак лента, көбүрөөк зикир</string>
+    <string name="focus_cta_title">Социалдык тармактарды чектеңиз</string>
+    <string name="focus_cta_text">Күндүк лимит коюп, суроолорго жооп берүү менен кошумча мүнөт алыңыз.</string>
+    <string name="focus_today">Бүгүн социалдык тармактарда</string>
+    <string name="focus_used_of">%1$s / %2$s</string>
+    <string name="focus_earn_more">Жооптор үчүн +%1$d мүн →</string>
+    <string name="focus_no_access">Колдонуу статистикасына уруксат жок</string>
+    <string name="focus_limit_bonus">Лимит %1$s · бүгүн алынды +%2$d мүн</string>
+    <string name="focus_earn_button">Суроолорго жооп берүү: +%1$d мүн</string>
+    <string name="focus_enable">Социалдык тармактарды чектөө</string>
+    <string name="focus_enable_hint">Лимит бүткөндө колдонмо жабылат</string>
+    <string name="focus_need_permissions">Статистикага уруксат берип, төмөндөгү бөгөттөө ыкмаларынын бирин күйгүзүңүз, болбосо лимит иштебейт.</string>
+    <string name="focus_daily_limit">Күндүк лимит</string>
+    <string name="focus_daily_limit_hint">Бардык тандалган колдонмолор үчүн чогуу. Викторинада күнүнө дагы %1$d мүнөткө чейин алса болот.</string>
+    <string name="focus_prayer_lock">Намаз убагында тыныгуу</string>
+    <string name="focus_prayer_lock_hint">Азандан кийин социалдык тармактар жабылат</string>
+    <string name="focus_prayer_lock_duration">Тыныгуунун узактыгы</string>
+    <string name="focus_apps">Колдонмолор</string>
+    <string name="focus_apps_none">Азырынча эч нерсе тандалган жок</string>
+    <string name="focus_social_label">социалдык тармак</string>
+    <string name="focus_permissions">Уруксаттар</string>
+    <string name="unit_min">мүн</string>
+    <string name="unit_km">%1$d км</string>
+    <string name="perm_usage_title">Колдонуу статистикасына уруксат</string>
+    <string name="perm_usage_text">Бүгүн социалдык тармактарда канча убакыт өткөргөнүңүздү эсептөө үчүн.</string>
+    <string name="perm_block_ways">Колдонмолорду жабуу үчүн эки ыкманын бирин күйгүзүңүз:</string>
+    <string name="perm_overlay_title">1-ыкма. Башка колдонмолордун үстүнөн</string>
+    <string name="perm_overlay_text">Күйгүзүү эң оңой, телефон аны коркунучтуу деп эсептебейт. Билдирмелер тактасында үнсүз билдирме турат.</string>
+    <string name="perm_service_title">2-ыкма. «Зикр-тайм» кызматы</string>
+    <string name="perm_service_text">Дароо иштейт, бирок көп телефондор аны Google Play\'ден орнотулбаган колдонмолор үчүн бөгөттөйт.</string>
+    <string name="perm_notifications_title">Билдирмелер</string>
+    <string name="perm_notifications_text">Ойготкуч жана намаз эскертүүлөрү үчүн керек.</string>
+    <string name="perm_notifications_off">Колдонмо үчүн билдирмелер өчүрүлгөн.</string>
+    <string name="perm_fullscreen_title">Толук экрандагы ойготкуч</string>
+    <string name="perm_fullscreen_text">Ойготкуч кулпуланган экрандын үстүнөн чыгышы үчүн.</string>
+    <string name="perm_exact_title">Так убакыт</string>
+    <string name="perm_exact_text">Эскертүүлөр жана ойготкуч мүнөтүнө чейин так келиши үчүн.</string>
+    <string name="disclosure_title">Атайын мүмкүнчүлүктөр кызматы</string>
+    <string name="disclosure_text_1">«Зикр-тайм» бул кызматты кайсы колдонмо ачык экенин билүү үчүн гана колдонот. Эгер бул тизмеңиздеги социалдык тармак болсо жана лимит түгөнсө же намаз убактысы болсо, колдонмо сизди башкы экранга кайтарып, эскертүү көрсөтөт.</string>
+    <string name="disclosure_text_2">Экрандагы текст, билдирүүлөр жана сырсөздөр окулбайт. Интернетке эч нерсе жөнөтүлбөйт — баары телефонуңузда калат.</string>
+    <string name="disclosure_text_3">Жөндөөлөрдөн «Жүктөлгөн колдонмолор» (же «Орнотулган кызматтар») → «Зикр-тайм» бөлүмүн ачып, күйгүзүңүз. Эгер которгуч активдүү болбосо, колдонмо жөнүндө маалыматты ачыңыз → ⋮ менюсу → «Чектелген жөндөөлөргө уруксат берүү».</string>
+    <string name="knowledge_title">Билим</string>
+    <string name="knowledge_subtitle">Күн сайын жаңы нерсе үйрөнүңүз</string>
+    <string name="knowledge_round_title">%1$d туура жооп = +%2$d мүн</string>
+    <string name="knowledge_round_text">Социалдык тармактарда кошумча убакыт — күнүнө %1$d мүнөткө чейин. Ал эми билим сиз менен калат.</string>
+    <string name="knowledge_bonus_today">%1$d/%2$d мүн</string>
+    <string name="knowledge_start">Раундду баштоо</string>
+    <string name="knowledge_topics">Темалар</string>
+    <string name="knowledge_topic_progress">Туура: %1$d · суроо: %2$d</string>
+    <string name="knowledge_progress">Сиздин жыйынтык</string>
+    <string name="knowledge_disclaimer">Суроолор белгилүү булактар боюнча түзүлгөн. Ката байкасаңыз, бизге билдириңиз.</string>
+    <string name="stat_correct">Туура жооптор</string>
+    <string name="stat_accuracy">Тактык</string>
+    <string name="stat_best_streak">Эң узун катар</string>
+    <string name="quiz_progress">%1$d / %2$d</string>
+    <string name="quiz_correct">Туура!</string>
+    <string name="quiz_wrong">Так эмес</string>
+    <string name="quiz_correct_answer">Туура жооп: %1$s</string>
+    <string name="quiz_info_title">Билип коюңуз</string>
+    <string name="quiz_next">Кийинки суроо</string>
+    <string name="quiz_finish">Бүтүрүү</string>
+    <string name="quiz_mashallah">МашаАллах!</string>
+    <string name="quiz_result_added">Раунд бүттү. Лимитке %1$d мүнөт кошулду.</string>
+    <string name="quiz_result_no_bonus">Раунд бүттү. Бүгүнкү бонус толук алынды — бирок билим сиз менен калат.</string>
+    <string name="quiz_again">Дагы бир раунд</string>
+    <string name="more_title">Дагы</string>
+    <string name="settings_language">Тил</string>
+    <string name="settings_city">Шаар</string>
+    <string name="settings_prayer_times">Намаз убакыттары</string>
+    <string name="language_system">Телефондун тили</string>
+    <string name="language_note">Суроолор, шаарлардын аттары жана билдирмелер да тандалган тилге өтөт.</string>
+    <string name="city_locate">Жайгашкан жерди аныктоо</string>
+    <string name="city_locating">Аныкталууда…</string>
+    <string name="city_locate_failed">Жайгашкан жерди аныктоо мүмкүн болбоду. Геолокацияны күйгүзүңүз же шаарды тизмеден тандаңыз.</string>
+    <string name="city_locate_denied">Геолокацияга уруксат болбосо, шаарды тизмеден тандаңыз.</string>
+    <string name="city_my_location">Менин жайгашкан жерим</string>
+    <string name="city_search">Шаарды издөө</string>
+    <string name="prayer_method">Эсептөө ыкмасы</string>
+    <string name="method_angles">Багымдат %1$s°, куптан %2$s°</string>
+    <string name="method_angles_minutes">Багымдат %1$s°, куптан шамдан %2$d мүн кийин</string>
+    <string name="prayer_method_hint">Эгер мечитиңиздеги убакыт башкача болсо, башка ыкманы сынап көрүңүз же төмөндө оңдоо киргизиңиз.</string>
+    <string name="prayer_source">Булак</string>
+    <string name="prayer_source_online">Убакытты интернеттен жүктөө</string>
+    <string name="prayer_source_online_hint">aladhan.com, ошол эле ыкма менен. Интернет жок болсо — телефондо эсептелет.</string>
+    <string name="prayer_source_loading">Жүктөлүүдө…</string>
+    <string name="prayer_source_updated">Жаңыртылды: %1$s</string>
+    <string name="prayer_source_failed">Азырынча жүктөлгөн жок — телефондогу эсеп көрсөтүлүүдө.</string>
+    <string name="prayer_notifications">Билдирмелер</string>
+    <string name="prayer_notify">Намаз убактысын эскертүү</string>
+    <string name="prayer_notify_adhan">Азандын үнү</string>
+    <string name="prayer_notify_adhan_hint">Ар бир эскертүү менен азан ойнотулсун</string>
+    <string name="prayer_corrections">Оңдоолор, мүн</string>
+    <string name="prayer_corrections_hint">Мечитиңиздин ырааттамасына дал келтирүү үчүн каалаган убакытты бир нече мүнөткө жылдырыңыз.</string>
+    <string name="method_russia">Россия мусулмандарынын диний башкармалыгы</string>
+    <string name="method_mwl">Бүткүл дүйнөлүк ислам лигасы</string>
+    <string name="method_turkey">Диянет, Түркия</string>
+    <string name="method_makkah">Умм аль-Кура, Мекке</string>
+    <string name="method_egypt">Египеттин геодезия башкармалыгы</string>
+    <string name="method_karachi">Ислам илимдери университети, Карачи</string>
+    <string name="method_isna">Түндүк Американын ислам коому</string>
+    <string name="madhab_standard">Стандарттуу (шафии, малики, ханбали)</string>
+    <string name="madhab_hanafi">Ханафий</string>
+    <string name="alarm_title">Багымдатка ойготкуч</string>
+    <string name="alarm_enable">Багымдатка ойготуу</string>
+    <string name="alarm_enable_hint">Колдон гана өчүрүлө турган катуу азан</string>
+    <string name="alarm_status_on">Багымдаттан %1$d мүн мурун</string>
+    <string name="alarm_next">Кийинкиси: %1$s, %2$s (багымдат %3$s)</string>
+    <string name="alarm_next_none">Күндөр тандалган жок</string>
+    <string name="alarm_offset">Ойготуу</string>
+    <string name="alarm_offset_zero">Багымдат убагында</string>
+    <string name="alarm_offset_value">%1$d мүн мурун</string>
+    <string name="alarm_days">Күндөр</string>
+    <string name="alarm_sound">Үн</string>
+    <string name="alarm_sound_adhan">Азан</string>
+    <string name="alarm_sound_system">Телефондун ойготкуч обону</string>
+    <string name="alarm_max_volume">Эң катуу үн</string>
+    <string name="alarm_max_volume_hint">Ойготкучтан кийин үн мурунку абалына кайтат</string>
+    <string name="alarm_vibrate">Титирөө</string>
+    <string name="alarm_wake_check">Суроого жооп берип өчүрүү</string>
+    <string name="alarm_wake_check_hint">Сөзсүз ойгонуш үчүн</string>
+    <string name="alarm_snooze_allow">Кийинкиге калтырууга уруксат</string>
+    <string name="alarm_snooze_hint">5 мүнөткө. Уктап калбаш үчүн демейки боюнча өчүк</string>
+    <string name="alarm_test">Ойготкучту текшерүү (10 секунддан кийин)</string>
+    <string name="alarm_test_toast">Ойготкуч 10 секунддан кийин шыңгырайт</string>
+    <string name="alarm_note">Ойготкуч сиз өчүргөнчө ойнойт. Телефонду кубатталган абалда кармаңыз жана колдонмону мажбурлап токтотпоңуз.</string>
+    <string name="alarm_ring_title">Багымдатка туруу убактысы</string>
+    <string name="alarm_ring_text">Намаз уйкудан жакшы</string>
+    <string name="alarm_fajr_at">Багымдат %1$s</string>
+    <string name="alarm_better_than_sleep">Намаз уйкудан жакшы</string>
+    <string name="alarm_awake">Ойгондум</string>
+    <string name="alarm_answer_to_stop">Суроого жооп берип өчүрүү</string>
+    <string name="alarm_stop">Өчүрүү</string>
+    <string name="alarm_snooze">%1$d мүнөткө кийинкиге калтыруу</string>
+    <string name="alarm_test_label">ТЕКШЕРҮҮ</string>
+    <string name="block_quiz_title">Суроолорго жооп бериңиз</string>
+    <string name="block_earned">%1$d мүнөт кошулду. Колдонмого кайта аласыз.</string>
+    <string name="block_limit_title">Бүгүнкү лимит түгөндү</string>
+    <string name="block_limit_text">Бүгүн социалдык тармактарда: %1$s. Лимит: %2$s.</string>
+    <string name="block_quiz_button">%1$d суроого жооп берүү: +%2$d мүн</string>
+    <string name="block_bonus_used">Бүгүнкү бонус толук алынды (%1$d мүн). Эртең лимит кайра башталат.</string>
+    <string name="block_prayer_label">Намаз убактысы кирди</string>
+    <string name="block_prayer_open">Социалдык тармактар кайра ачык.</string>
+    <string name="block_prayer_text">Социалдык тармактар %1$s ачылат. Намазга туруунун так убагы.</string>
+    <string name="block_prayed">Намазымды окудум</string>
+    <string name="channel_prayer">Намаз убакыттары</string>
+    <string name="channel_prayer_adhan">Намаз убакыттары (азан)</string>
+    <string name="channel_prayer_desc">Намаз убактысы киргенин эскертүү</string>
+    <string name="channel_alarm">Багымдатка ойготкуч</string>
+    <string name="channel_alarm_desc">Багымдат намазынын алдында катуу ойготкуч</string>
+    <string name="channel_guard">Социалдык тармактар лимити</string>
+    <string name="channel_guard_desc">Лимит иштеп турганда туруктуу билдирме</string>
+    <string name="guard_title">«Зикр-тайм» лимитти көзөмөлдөп турат</string>
+    <string name="guard_text">Социалдык тармактар лимити: күнүнө %1$d мүн</string>
+    <string name="notify_prayer_title">%1$s намазынын убактысы</string>
+    <string name="notify_prayer_text">%1$s · %2$s.</string>
+    <string name="notify_prayer_lock">Социалдык тармактар %1$d мүнөткө токтотулду.</string>
+    <string name="qibla_title">Кыбла</string>
+    <string name="qibla_subtitle">Кааба тарапты көрсөтөт</string>
+    <string name="qibla_turn">Кааба өйдө жакта болгончо буруңуз</string>
+    <string name="qibla_aligned">Сиз кыблага карап турасыз</string>
+    <string name="qibla_no_sensor">Телефондо компас жок — төмөндөгү бурчка таяныңыз</string>
+    <string name="qibla_bearing">Түндүктөн багыт</string>
+    <string name="qibla_distance">Каабага чейин</string>
+    <string name="qibla_hint">Телефонду туура кармаңыз, металл жана магниттерден алысыраак.</string>
+    <string name="qibla_calibrate">Компас так эмес: телефонду бир нече жолу «сегиз» түрүндө кыймылдатыңыз.</string>
+    <string name="qibla_turn_left">Солго %1$d° буруңуз</string>
+    <string name="qibla_turn_right">Оңго %1$d° буруңуз</string>
+    <string name="compass_n">Тн</string>
+    <string name="compass_e">Ч</string>
+    <string name="compass_s">Тш</string>
+    <string name="compass_w">Б</string>
+    <string name="tasbih_title">Теспе</string>
+    <string name="tasbih_subtitle">Зикир эсептегич</string>
+    <string name="tasbih_of">%1$d ичинен</string>
+    <string name="tasbih_laps">Айлампа: %1$d</string>
+    <string name="tasbih_tap_hint">Эсептөө үчүн тегеректи басыңыз</string>
+    <string name="tasbih_target">Максат</string>
+    <string name="tasbih_today">Бүгүн: %1$d</string>
+    <string name="zikr_1_name">Субханаллах</string>
+    <string name="zikr_1_meaning">Аллах аруу</string>
+    <string name="zikr_2_name">Алхамдулиллах</string>
+    <string name="zikr_2_meaning">Аллахка мактоо</string>
+    <string name="zikr_3_name">Аллаху акбар</string>
+    <string name="zikr_3_meaning">Аллах улук</string>
+    <string name="zikr_4_name">Ла илаха иллаллах</string>
+    <string name="zikr_4_meaning">Аллахтан башка кудай жок</string>
+    <string name="zikr_5_name">Астагфируллах</string>
+    <string name="zikr_5_meaning">Аллахтан кечирим сурайм</string>
+    <string name="zikr_6_name">Салават</string>
+    <string name="zikr_6_meaning">О, Аллах, Мухаммадга салават жибер</string>
+    <string name="onboarding_language_title">Тилди тандаңыз</string>
+    <string name="onboarding_city_title">Сиз кайдасыз?</string>
+    <string name="onboarding_city_text">Намаз убакыттарын эсептөө үчүн шаар керек. Аны кийин өзгөртсө болот.</string>
+    <string name="onboarding_feature_times">Шаарыңыз үчүн так намаз убакыттары</string>
+    <string name="onboarding_feature_alarm">Уктап калбаш үчүн багымдатка катуу ойготкуч</string>
+    <string name="onboarding_feature_focus">Социалдык тармактарга күндүк лимит</string>
+    <string name="onboarding_feature_quiz">Ислам жөнүндө жооптор үчүн кошумча мүнөттөр</string>
+    <string name="onboarding_feature_tools">Кыбла компасы жана теспе эсептегич</string>
+    <string name="about_title">Колдонмо жөнүндө</string>
+    <string name="about_version">Версия %1$s</string>
+    <string name="about_privacy_title">Купуялык</string>
+    <string name="about_privacy_text">Бардык маалыматыңыз — жөндөөлөр, белгилер жана статистика — ушул телефондо гана сакталат. Интернет aladhan.com сайтынан намаз убакыттарын жүктөө үчүн гана керек.</string>
+    <string name="about_times_title">Намаз убакыттары</string>
+    <string name="about_times_text">Убакыттар aladhan.com сайтынан алынат же телефондо ошол эле астрономиялык формулалар менен эсептелет. Мечиттин ырааттамасы бир нече мүнөткө айырмаланышы мүмкүн — жөндөөлөрдөгү оңдоолорду колдонуңуз.</string>
+    <string name="about_quiz_title">Суроолор</string>
+    <string name="about_quiz_text">Суроолор Куран, пайгамбарлар, сира жана Исламдын негиздери жөнүндө белгилүү фактыларды камтыйт. Бул фатва эмес: диний өкүмдөр боюнча аалымдарга кайрылыңыз.</string>
+    <string name="about_licenses_title">Лицензиялар</string>
+    <string name="about_licenses_text">Amiri арип — SIL Open Font License 1.1. Азандын жазуусу — Wikimedia Commons, CC0 (коомдук мүлк). Намаз убакыттарынын маалыматы — aladhan.com.</string>
+    <string name="duration_m">%1$d мүн</string>
+    <string name="duration_h">%1$d саат</string>
+    <string name="duration_h_m">%1$d саат %2$d мүн</string>
+    <string name="hijri_date_format">%3$d-ж. %1$d-%2$s (хижра)</string>
+    <plurals name="days">
+        <item quantity="one">%d күн</item>
+        <item quantity="other">%d күн</item>
+    </plurals>
+    <string-array name="weekdays_short">
+        <item>Дш</item>
+        <item>Шш</item>
+        <item>Шр</item>
+        <item>Бш</item>
+        <item>Жм</item>
+        <item>Иш</item>
+        <item>Жк</item>
+    </string-array>
+    <string-array name="hijri_months">
+        <item>Мухаррам</item>
+        <item>Сафар</item>
+        <item>Рабиул-аввал</item>
+        <item>Рабиус-сани</item>
+        <item>Жумадал-уула</item>
+        <item>Жумадал-ахира</item>
+        <item>Ражаб</item>
+        <item>Шаабан</item>
+        <item>Рамазан</item>
+        <item>Шаввал</item>
+        <item>Зулкаада</item>
+        <item>Зулхижжа</item>
+    </string-array>
+</resources>

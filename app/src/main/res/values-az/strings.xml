@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Сгенерировано tools/i18n/build_strings.py — правьте tools/i18n/az.py -->
+<resources>
+    <string name="app_name">ZikrTime</string>
+    <string name="slogan">Əvvəl zikr, sonra lent</string>
+    <string name="greeting">Əssəlamu əleykum</string>
+    <string name="accessibility_description">ZikrTime yalnız hazırda hansı tətbiqin açıq olduğunu yoxlayır. Əgər bu, siyahınızdakı sosial şəbəkədirsə və gündəlik limit bitibsə və ya namaz vaxtı giribsə, tətbiq xatırlatma göstərir. Ekrandakı mətn, parollar və mesajlar oxunmur və heç yerə göndərilmir.</string>
+    <string name="action_back">Geri</string>
+    <string name="action_close">Bağla</string>
+    <string name="action_continue">Davam et</string>
+    <string name="action_done">Hazırdır</string>
+    <string name="action_grant">İcazə ver</string>
+    <string name="action_allow">İcazə ver</string>
+    <string name="action_open_settings">Ayarları aç</string>
+    <string name="action_app_info">Tətbiq haqqında</string>
+    <string name="action_refresh">İndi yenilə</string>
+    <string name="action_reset">Sıfırla</string>
+    <string name="action_search">Axtar</string>
+    <string name="action_start">Başla</string>
+    <string name="search_nothing">Heç nə tapılmadı</string>
+    <string name="state_off">Söndürülüb</string>
+    <string name="state_granted">İcazə verilib</string>
+    <string name="tab_prayer">Namaz</string>
+    <string name="tab_knowledge">Bilik</string>
+    <string name="tab_focus">Fokus</string>
+    <string name="tab_more">Daha çox</string>
+    <string name="prayer_fajr">Sübh</string>
+    <string name="prayer_sunrise">Günəş</string>
+    <string name="prayer_dhuhr">Zöhr</string>
+    <string name="prayer_asr">Əsr vaxtı</string>
+    <string name="prayer_maghrib">Məğrib</string>
+    <string name="prayer_isha">İşa</string>
+    <string name="home_today">Bugünkü namazlar</string>
+    <string name="home_next_prayer">Növbəti namaz</string>
+    <string name="home_in_time">%1$s qaldı</string>
+    <string name="home_now">İndi</string>
+    <string name="home_mark_prayed">Namazı qeyd et</string>
+    <string name="home_source_online">Vaxt: aladhan.com, %1$s. Namazları qeyd edin — seriya belə böyüyür.</string>
+    <string name="home_source_local">Vaxt: telefonda hesablanıb, %1$s. Namazları qeyd edin — seriya belə böyüyür.</string>
+    <string name="alarm_short">Zəngli saat</string>
+    <string name="streak_knowledge">Bilik seriyası</string>
+    <string name="streak_knowledge_hint">viktorina oynanılan günlər</string>
+    <string name="streak_prayers">Namaz seriyası</string>
+    <string name="streak_prayers_hint">beş vaxt namaz qılınan günlər</string>
+    <string name="focus_title">Fokus</string>
+    <string name="focus_subtitle">Daha az lent, daha çox zikr</string>
+    <string name="focus_cta_title">Sosial şəbəkələri məhdudlaşdırın</string>
+    <string name="focus_cta_text">Gündəlik limit təyin edin və suallara cavab verərək əlavə dəqiqələr qazanın.</string>
+    <string name="focus_today">Bu gün sosial şəbəkələrdə</string>
+    <string name="focus_used_of">%1$s / %2$s</string>
+    <string name="focus_earn_more">Cavablar üçün +%1$d dəq →</string>
+    <string name="focus_no_access">İstifadə statistikasına giriş yoxdur</string>
+    <string name="focus_limit_bonus">Limit %1$s · bu gün qazanılıb +%2$d dəq</string>
+    <string name="focus_earn_button">Suallara cavab ver: +%1$d dəq</string>
+    <string name="focus_enable">Sosial şəbəkələri məhdudlaşdır</string>
+    <string name="focus_enable_hint">Limit bitəndə tətbiq bağlanır</string>
+    <string name="focus_need_permissions">Statistikaya icazə verin və aşağıdakı bloklama üsullarından birini aktiv edin, əks halda limit işləməyəcək.</string>
+    <string name="focus_daily_limit">Gündəlik limit</string>
+    <string name="focus_daily_limit_hint">Bütün seçilmiş tətbiqlər üçün birlikdə. Viktorinada gündə daha %1$d dəqiqəyə qədər qazanmaq olar.</string>
+    <string name="focus_prayer_lock">Namaz vaxtı fasilə</string>
+    <string name="focus_prayer_lock_hint">Azandan sonra sosial şəbəkələr bağlanır</string>
+    <string name="focus_prayer_lock_duration">Fasilənin müddəti</string>
+    <string name="focus_apps">Tətbiqlər</string>
+    <string name="focus_apps_none">Hələ heç nə seçilməyib</string>
+    <string name="focus_social_label">sosial şəbəkə</string>
+    <string name="focus_permissions">İcazələr</string>
+    <string name="unit_min">dəq</string>
+    <string name="unit_km">%1$d km</string>
+    <string name="perm_usage_title">İstifadə statistikasına giriş</string>
+    <string name="perm_usage_text">Bu gün sosial şəbəkələrdə nə qədər vaxt keçirdiyinizi hesablamaq üçün.</string>
+    <string name="perm_block_ways">Tətbiqləri bağlamaq üçün iki üsuldan birini aktiv edin:</string>
+    <string name="perm_overlay_title">1-ci üsul. Digər tətbiqlərin üzərində</string>
+    <string name="perm_overlay_text">Aktiv etmək ən asandır, telefon onu təhlükəli hesab etmir. Bildiriş panelində səssiz bildiriş qalacaq.</string>
+    <string name="perm_service_title">2-ci üsul. «ZikrTime» xidməti</string>
+    <string name="perm_service_text">Dərhal işləyir, amma bir çox telefon onu Google Play-dən quraşdırılmayan tətbiqlər üçün bloklayır.</string>
+    <string name="perm_notifications_title">Bildirişlər</string>
+    <string name="perm_notifications_text">Zəngli saat və namaz xatırlatmaları üçün lazımdır.</string>
+    <string name="perm_notifications_off">Tətbiq üçün bildirişlər söndürülüb.</string>
+    <string name="perm_fullscreen_title">Tam ekran zəngli saat</string>
+    <string name="perm_fullscreen_text">Zəngli saat kilidli ekranın üzərində görünsün deyə.</string>
+    <string name="perm_exact_title">Dəqiq vaxt</string>
+    <string name="perm_exact_text">Xatırlatmalar və zəngli saat dəqiqəsi-dəqiqəsinə gəlsin deyə.</string>
+    <string name="disclosure_title">Xüsusi imkanlar xidməti</string>
+    <string name="disclosure_text_1">ZikrTime bu xidmətdən yalnız hansı tətbiqin açıq olduğunu bilmək üçün istifadə edir. Əgər bu, siyahınızdakı sosial şəbəkədirsə və limit bitibsə və ya namaz vaxtıdırsa, tətbiq sizi əsas ekrana qaytarır və xatırlatma göstərir.</string>
+    <string name="disclosure_text_2">Ekrandakı mətn, mesajlar və parollar oxunmur. İnternetə heç nə göndərilmir — hər şey telefonunuzda qalır.</string>
+    <string name="disclosure_text_3">Ayarlarda «Yüklənmiş tətbiqlər» (və ya «Quraşdırılmış xidmətlər») → «ZikrTime» bölməsini açın və aktiv edin. Əgər açar aktiv deyilsə, tətbiq məlumatını açın → ⋮ menyusu → «Məhdud ayarlara icazə ver».</string>
+    <string name="knowledge_title">Bilik</string>
+    <string name="knowledge_subtitle">Hər gün yeni bir şey öyrənin</string>
+    <string name="knowledge_round_title">%1$d düzgün cavab = +%2$d dəq</string>
+    <string name="knowledge_round_text">Sosial şəbəkələrdə əlavə vaxt — gündə %1$d dəqiqəyə qədər. Bilik isə sizinlə qalır.</string>
+    <string name="knowledge_bonus_today">%1$d/%2$d dəq</string>
+    <string name="knowledge_start">Raundu başla</string>
+    <string name="knowledge_topics">Mövzular</string>
+    <string name="knowledge_topic_progress">Düzgün: %1$d · sual: %2$d</string>
+    <string name="knowledge_progress">Nəticələriniz</string>
+    <string name="knowledge_disclaimer">Suallar tanınmış mənbələr əsasında tərtib olunub. Səhv görsəniz, bizə bildirin.</string>
+    <string name="stat_correct">Düzgün cavablar</string>
+    <string name="stat_accuracy">Dəqiqlik</string>
+    <string name="stat_best_streak">Ən uzun seriya</string>
+    <string name="quiz_progress">%1$d / %2$d</string>
+    <string name="quiz_correct">Düzdür!</string>
+    <string name="quiz_wrong">Tam deyil</string>
+    <string name="quiz_correct_answer">Düzgün cavab: %1$s</string>
+    <string name="quiz_info_title">Bilmək faydalıdır</string>
+    <string name="quiz_next">Növbəti sual</string>
+    <string name="quiz_finish">Bitir</string>
+    <string name="quiz_mashallah">MaşaAllah!</string>
+    <string name="quiz_result_added">Raund bitdi. Limitə %1$d dəqiqə əlavə olundu.</string>
+    <string name="quiz_result_no_bonus">Raund bitdi. Bugünkü bonus artıq tam alınıb — amma bilik sizinlə qalır.</string>
+    <string name="quiz_again">Daha bir raund</string>
+    <string name="more_title">Daha çox</string>
+    <string name="settings_language">Dil</string>
+    <string name="settings_city">Şəhər</string>
+    <string name="settings_prayer_times">Namaz vaxtları</string>
+    <string name="language_system">Telefonun dili</string>
+    <string name="language_note">Suallar, şəhər adları və bildirişlər də seçilmiş dilə keçəcək.</string>
+    <string name="city_locate">Yerimi müəyyən et</string>
+    <string name="city_locating">Müəyyən edilir…</string>
+    <string name="city_locate_failed">Yerinizi müəyyən etmək mümkün olmadı. Geolokasiyanı aktiv edin və ya şəhəri siyahıdan seçin.</string>
+    <string name="city_locate_denied">Geolokasiyaya icazə olmadan şəhəri siyahıdan seçin.</string>
+    <string name="city_my_location">Mənim yerim</string>
+    <string name="city_search">Şəhər axtar</string>
+    <string name="prayer_method">Hesablama üsulu</string>
+    <string name="method_angles">Sübh %1$s°, işa %2$s°</string>
+    <string name="method_angles_minutes">Sübh %1$s°, işa məğribdən %2$d dəq sonra</string>
+    <string name="prayer_method_hint">Məscidinizdəki vaxt fərqlənirsə, başqa üsulu yoxlayın və ya aşağıda düzəliş edin.</string>
+    <string name="prayer_source">Mənbə</string>
+    <string name="prayer_source_online">Vaxtları internetdən yüklə</string>
+    <string name="prayer_source_online_hint">aladhan.com, eyni üsulla. İnternet olmadıqda — telefonda hesablanır.</string>
+    <string name="prayer_source_loading">Yüklənir…</string>
+    <string name="prayer_source_updated">Yeniləndi: %1$s</string>
+    <string name="prayer_source_failed">Hələ yüklənməyib — telefondakı hesablama göstərilir.</string>
+    <string name="prayer_notifications">Bildirişlər</string>
+    <string name="prayer_notify">Namaz vaxtını xatırlat</string>
+    <string name="prayer_notify_adhan">Azan səsi</string>
+    <string name="prayer_notify_adhan_hint">Hər xatırlatma ilə azan səslənsin</string>
+    <string name="prayer_corrections">Düzəlişlər, dəq</string>
+    <string name="prayer_corrections_hint">Məscidinizin cədvəlinə uyğunlaşdırmaq üçün istənilən vaxtı bir neçə dəqiqə sürüşdürün.</string>
+    <string name="method_russia">Rusiya Müsəlmanlarının Dini İdarəsi</string>
+    <string name="method_mwl">Ümumdünya İslam Liqası</string>
+    <string name="method_turkey">Diyanət, Türkiyə</string>
+    <string name="method_makkah">Ümmül-Qura, Məkkə</string>
+    <string name="method_egypt">Misir Geodeziya İdarəsi</string>
+    <string name="method_karachi">İslam Elmləri Universiteti, Karaçi</string>
+    <string name="method_isna">Şimali Amerika İslam Cəmiyyəti</string>
+    <string name="madhab_standard">Standart (şafii, maliki, hənbəli)</string>
+    <string name="madhab_hanafi">Hənəfi</string>
+    <string name="alarm_title">Sübh namazı üçün zəngli saat</string>
+    <string name="alarm_enable">Sübh namazına oyat</string>
+    <string name="alarm_enable_hint">Yalnız əllə söndürülən güclü azan</string>
+    <string name="alarm_status_on">Sübhdən %1$d dəq əvvəl</string>
+    <string name="alarm_next">Növbəti: %1$s, %2$s (sübh %3$s)</string>
+    <string name="alarm_next_none">Günlər seçilməyib</string>
+    <string name="alarm_offset">Oyat</string>
+    <string name="alarm_offset_zero">Sübh vaxtında</string>
+    <string name="alarm_offset_value">%1$d dəq əvvəl</string>
+    <string name="alarm_days">Günlər</string>
+    <string name="alarm_sound">Səs</string>
+    <string name="alarm_sound_adhan">Azan</string>
+    <string name="alarm_sound_system">Telefonun zəngli saat melodiyası</string>
+    <string name="alarm_max_volume">Maksimum səs</string>
+    <string name="alarm_max_volume_hint">Zəngli saatdan sonra səs əvvəlki vəziyyətinə qayıdacaq</string>
+    <string name="alarm_vibrate">Vibrasiya</string>
+    <string name="alarm_wake_check">Suala cavab verib söndür</string>
+    <string name="alarm_wake_check_hint">Mütləq oyanmaq üçün</string>
+    <string name="alarm_snooze_allow">Təxirə salmağa icazə ver</string>
+    <string name="alarm_snooze_hint">5 dəqiqəlik. Yatıb qalmamaq üçün standart olaraq söndürülüb</string>
+    <string name="alarm_test">Zəngli saatı yoxla (10 saniyədən sonra)</string>
+    <string name="alarm_test_toast">Zəngli saat 10 saniyədən sonra çalacaq</string>
+    <string name="alarm_note">Zəngli saat siz söndürənə qədər çalır. Telefonu şarjlı saxlayın və tətbiqi məcburi dayandırmayın.</string>
+    <string name="alarm_ring_title">Sübh namazına durmaq vaxtıdır</string>
+    <string name="alarm_ring_text">Namaz yuxudan xeyirlidir</string>
+    <string name="alarm_fajr_at">Sübh %1$s</string>
+    <string name="alarm_better_than_sleep">Namaz yuxudan xeyirlidir</string>
+    <string name="alarm_awake">Oyandım</string>
+    <string name="alarm_answer_to_stop">Suala cavab verib söndür</string>
+    <string name="alarm_stop">Söndür</string>
+    <string name="alarm_snooze">%1$d dəqiqə təxirə sal</string>
+    <string name="alarm_test_label">YOXLAMA</string>
+    <string name="block_quiz_title">Suallara cavab verin</string>
+    <string name="block_earned">%1$d dəqiqə əlavə olundu. Tətbiqə qayıda bilərsiniz.</string>
+    <string name="block_limit_title">Bugünkü limit bitdi</string>
+    <string name="block_limit_text">Bu gün sosial şəbəkələrdə: %1$s. Limit: %2$s.</string>
+    <string name="block_quiz_button">%1$d suala cavab ver: +%2$d dəq</string>
+    <string name="block_bonus_used">Bugünkü bonus tam alınıb (%1$d dəq). Sabah limit yenidən başlayır.</string>
+    <string name="block_prayer_label">Namaz vaxtı girdi</string>
+    <string name="block_prayer_open">Sosial şəbəkələr yenidən açıqdır.</string>
+    <string name="block_prayer_text">Sosial şəbəkələr %1$s açılacaq. Namaza durmaq üçün ən yaxşı vaxtdır.</string>
+    <string name="block_prayed">Namazımı qıldım</string>
+    <string name="channel_prayer">Namaz vaxtları</string>
+    <string name="channel_prayer_adhan">Namaz vaxtları (azan)</string>
+    <string name="channel_prayer_desc">Namaz vaxtının girməsi barədə xatırlatmalar</string>
+    <string name="channel_alarm">Sübh üçün zəngli saat</string>
+    <string name="channel_alarm_desc">Sübh namazından əvvəl güclü zəngli saat</string>
+    <string name="channel_guard">Sosial şəbəkə limiti</string>
+    <string name="channel_guard_desc">Limit işləyərkən daimi bildiriş</string>
+    <string name="guard_title">ZikrTime limiti izləyir</string>
+    <string name="guard_text">Sosial şəbəkə limiti: gündə %1$d dəq</string>
+    <string name="notify_prayer_title">%1$s namazının vaxtı</string>
+    <string name="notify_prayer_text">%1$s · %2$s.</string>
+    <string name="notify_prayer_lock">Sosial şəbəkələr %1$d dəqiqəlik dayandırıldı.</string>
+    <string name="qibla_title">Qiblə</string>
+    <string name="qibla_subtitle">Kəbənin istiqaməti</string>
+    <string name="qibla_turn">Kəbə yuxarıda olana qədər dönün</string>
+    <string name="qibla_aligned">Siz qibləyə baxırsınız</string>
+    <string name="qibla_no_sensor">Telefonda kompas yoxdur — aşağıdakı bucağa əsaslanın</string>
+    <string name="qibla_bearing">Şimaldan istiqamət</string>
+    <string name="qibla_distance">Kəbəyə qədər</string>
+    <string name="qibla_hint">Telefonu üfüqi tutun, metal və maqnitlərdən uzaq.</string>
+    <string name="qibla_calibrate">Kompas dəqiq deyil: telefonu bir neçə dəfə «səkkiz» şəklində hərəkət etdirin.</string>
+    <string name="qibla_turn_left">Sola %1$d° dönün</string>
+    <string name="qibla_turn_right">Sağa %1$d° dönün</string>
+    <string name="compass_n">Şm</string>
+    <string name="compass_e">Şq</string>
+    <string name="compass_s">C</string>
+    <string name="compass_w">Q</string>
+    <string name="tasbih_title">Təsbeh</string>
+    <string name="tasbih_subtitle">Zikr sayğacı</string>
+    <string name="tasbih_of">%1$d-dən</string>
+    <string name="tasbih_laps">Dövrə: %1$d</string>
+    <string name="tasbih_tap_hint">Saymaq üçün dairəyə toxunun</string>
+    <string name="tasbih_target">Hədəf</string>
+    <string name="tasbih_today">Bu gün: %1$d</string>
+    <string name="zikr_1_name">Sübhanallah</string>
+    <string name="zikr_1_meaning">Allah pakdır</string>
+    <string name="zikr_2_name">Əlhəmdulillah</string>
+    <string name="zikr_2_meaning">Həmd Allaha məxsusdur</string>
+    <string name="zikr_3_name">Allahu əkbər</string>
+    <string name="zikr_3_meaning">Allah böyükdür</string>
+    <string name="zikr_4_name">La ilahə illəllah</string>
+    <string name="zikr_4_meaning">Allahdan başqa ilah yoxdur</string>
+    <string name="zikr_5_name">Əstəğfirullah</string>
+    <string name="zikr_5_meaning">Allahdan bağışlanma diləyirəm</string>
+    <string name="zikr_6_name">Salavat</string>
+    <string name="zikr_6_meaning">Allahım, Muhəmmədə salavat göndər</string>
+    <string name="onboarding_language_title">Dili seçin</string>
+    <string name="onboarding_city_title">Haradasınız?</string>
+    <string name="onboarding_city_text">Namaz vaxtlarını hesablamaq üçün şəhər lazımdır. Onu sonra dəyişmək olar.</string>
+    <string name="onboarding_feature_times">Şəhəriniz üçün dəqiq namaz vaxtları</string>
+    <string name="onboarding_feature_alarm">Yatıb qalmamaq üçün güclü sübh zəngli saatı</string>
+    <string name="onboarding_feature_focus">Sosial şəbəkələr üçün gündəlik limit</string>
+    <string name="onboarding_feature_quiz">İslam haqqında cavablar üçün əlavə dəqiqələr</string>
+    <string name="onboarding_feature_tools">Qiblə kompası və təsbeh sayğacı</string>
+    <string name="about_title">Tətbiq haqqında</string>
+    <string name="about_version">Versiya %1$s</string>
+    <string name="about_privacy_title">Məxfilik</string>
+    <string name="about_privacy_text">Bütün məlumatlarınız — ayarlar, qeydlər və statistika — yalnız bu telefonda saxlanılır. İnternet yalnız aladhan.com-dan namaz vaxtlarını yükləmək üçün lazımdır.</string>
+    <string name="about_times_title">Namaz vaxtları</string>
+    <string name="about_times_text">Vaxtlar aladhan.com-dan götürülür və ya telefonda eyni astronomik düsturlarla hesablanır. Məscidin cədvəli bir neçə dəqiqə fərqlənə bilər — ayarlardakı düzəlişlərdən istifadə edin.</string>
+    <string name="about_quiz_title">Suallar</string>
+    <string name="about_quiz_text">Suallar Quran, peyğəmbərlər, siyər və İslamın əsasları haqqında tanınmış faktları əhatə edir. Bu, fətva deyil: dini hökmlər üçün alimlərə müraciət edin.</string>
+    <string name="about_licenses_title">Lisenziyalar</string>
+    <string name="about_licenses_text">Amiri şrifti — SIL Open Font License 1.1. Azan yazısı — Wikimedia Commons, CC0 (ictimai mülkiyyət). Namaz vaxtları məlumatı — aladhan.com.</string>
+    <string name="duration_m">%1$d dəq</string>
+    <string name="duration_h">%1$d saat</string>
+    <string name="duration_h_m">%1$d saat %2$d dəq</string>
+    <string name="hijri_date_format">%1$d %2$s %3$d h.</string>
+    <plurals name="days">
+        <item quantity="one">%d gün</item>
+        <item quantity="other">%d gün</item>
+    </plurals>
+    <string-array name="weekdays_short">
+        <item>B.e</item>
+        <item>Ç.a</item>
+        <item>Ç</item>
+        <item>C.a</item>
+        <item>C</item>
+        <item>Ş</item>
+        <item>B</item>
+    </string-array>
+    <string-array name="hijri_months">
+        <item>Məhərrəm</item>
+        <item>Səfər</item>
+        <item>Rəbiüləvvəl</item>
+        <item>Rəbiülaxır</item>
+        <item>Cəmadiyələvvəl</item>
+        <item>Cəmadiyəlaxır</item>
+        <item>Rəcəb</item>
+        <item>Şaban</item>
+        <item>Ramazan</item>
+        <item>Şəvval</item>
+        <item>Zilqədə</item>
+        <item>Zilhiccə</item>
+    </string-array>
+</resources>

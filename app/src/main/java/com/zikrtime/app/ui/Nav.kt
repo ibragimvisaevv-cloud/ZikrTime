@@ -24,6 +24,9 @@ class Nav {
     /** Увеличивается при каждом новом раунде — чтобы экран викторины начинался заново. */
     var quizRound by mutableIntStateOf(0)
 
+    /** С какого шага начинать знакомство (0 — язык, 1 — приветствие, 2 — город). */
+    var onboardingStep by mutableIntStateOf(0)
+
     fun open(screen: Screen) {
         if (stack.lastOrNull() != screen) stack.add(screen)
     }

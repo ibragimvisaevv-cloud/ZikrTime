@@ -1,4 +1,6 @@
 onboarding
+onboarding_welcome
+onboarding_city
 home
 knowledge
 quiz

@@ -13,12 +13,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -39,7 +41,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
@@ -50,6 +51,7 @@ import com.zikrtime.app.i18n.Lang
 import com.zikrtime.app.prayer.Prayer
 import com.zikrtime.app.prayer.PrayerSchedule
 import com.zikrtime.app.quiz.QuestionBank
+import com.zikrtime.app.ui.BigClock
 import com.zikrtime.app.ui.GhostButton
 import com.zikrtime.app.ui.QuizRound
 import com.zikrtime.app.ui.StarPattern
@@ -59,7 +61,6 @@ import com.zikrtime.app.ui.theme.Cream
 import com.zikrtime.app.ui.theme.EmeraldDeep
 import com.zikrtime.app.ui.theme.EmeraldNight
 import com.zikrtime.app.ui.theme.Gold
-import com.zikrtime.app.ui.theme.Tabular
 import com.zikrtime.app.ui.theme.ZikrTheme
 import kotlinx.coroutines.delay
 import java.time.ZonedDateTime
@@ -143,56 +144,68 @@ private fun AlarmScreen(test: Boolean, onStop: () -> Unit, onSnooze: () -> Unit)
             Modifier
                 .fillMaxSize()
                 .windowInsetsPadding(WindowInsets.safeDrawing)
-                .verticalScroll(rememberScrollState())
-                .padding(24.dp),
+                .padding(horizontal = 24.dp, vertical = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
             if (test) {
                 Text(stringResource(R.string.alarm_test_label), style = MaterialTheme.typography.labelLarge, color = Gold)
             }
-            Spacer(Modifier.height(if (checking) 8.dp else 40.dp))
-            Text(clock(now), fontSize = if (checking) 48.sp else 84.sp, fontWeight = FontWeight.Light, color = Cream, style = Tabular)
-            Text(
-                stringResource(R.string.alarm_fajr_at, clock(fajr)),
-                style = MaterialTheme.typography.titleLarge,
-                color = Gold,
-                textAlign = TextAlign.Center,
-            )
+            // Время и слова азана — по центру экрана; если не помещаются, прокручиваются.
+            BoxWithConstraints(Modifier.weight(1f).fillMaxWidth()) {
+                Column(
+                    Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState())
+                        .heightIn(min = maxHeight),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(14.dp, Alignment.CenterVertically),
+                ) {
+                    BigClock(now, fontSize = if (checking) 48.sp else 84.sp, color = Cream)
+                    Text(
+                        stringResource(R.string.alarm_fajr_at, clock(fajr)),
+                        style = MaterialTheme.typography.titleLarge,
+                        color = Gold,
+                        textAlign = TextAlign.Center,
+                    )
+                    if (!checking) {
+                        Spacer(Modifier.height(12.dp))
+                        // «Намаз лучше сна» — слова из утреннего азана
+                        Text(
+                            "الصَّلَاةُ خَيْرٌ مِنَ النَّوْمِ",
+                            style = ArabicStyle.copy(fontSize = 34.sp, lineHeight = 58.sp, textDirection = TextDirection.Rtl),
+                            color = Cream,
+                            textAlign = TextAlign.Center,
+                        )
+                        Text(
+                            stringResource(R.string.alarm_better_than_sleep),
+                            style = MaterialTheme.typography.titleMedium,
+                            color = Cream.copy(alpha = 0.85f),
+                            textAlign = TextAlign.Center,
+                        )
+                    } else {
+                        Surface(shape = RoundedCornerShape(28.dp), color = MaterialTheme.colorScheme.surface, modifier = Modifier.fillMaxWidth()) {
+                            QuizRound(
+                                bank = bank,
+                                category = null,
+                                target = 1,
+                                finishText = stringResource(R.string.alarm_stop),
+                                onFinished = onStop,
+                                modifier = Modifier.padding(20.dp),
+                            )
+                        }
+                    }
+                }
+            }
             if (!checking) {
-                Spacer(Modifier.height(24.dp))
-                // «Намаз лучше сна» — слова из утреннего азана
-                Text(
-                    "الصَّلَاةُ خَيْرٌ مِنَ النَّوْمِ",
-                    style = ArabicStyle.copy(fontSize = 36.sp, lineHeight = 60.sp, textDirection = TextDirection.Rtl),
-                    color = Cream,
-                    textAlign = TextAlign.Center,
-                )
-                Text(
-                    stringResource(R.string.alarm_better_than_sleep),
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Cream.copy(alpha = 0.85f),
-                    textAlign = TextAlign.Center,
-                )
-                Spacer(Modifier.height(40.dp))
+                Spacer(Modifier.height(16.dp))
                 if (Store.alarmWakeCheck) {
                     AlarmButton(stringResource(R.string.alarm_answer_to_stop), onClick = { checking = true })
                 } else {
                     AlarmButton(stringResource(R.string.alarm_awake), onClick = onStop)
                 }
                 if (Store.alarmSnoozeAllowed) {
+                    Spacer(Modifier.height(10.dp))
                     GhostButton(stringResource(R.string.alarm_snooze, AlarmService.SNOOZE_MINUTES), onClick = onSnooze, color = Cream)
-                }
-            } else {
-                Surface(shape = RoundedCornerShape(28.dp), color = MaterialTheme.colorScheme.surface, modifier = Modifier.fillMaxWidth()) {
-                    QuizRound(
-                        bank = bank,
-                        category = null,
-                        target = 1,
-                        finishText = stringResource(R.string.alarm_stop),
-                        onFinished = onStop,
-                        modifier = Modifier.padding(20.dp),
-                    )
                 }
             }
         }

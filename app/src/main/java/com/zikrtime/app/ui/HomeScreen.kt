@@ -5,6 +5,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -197,6 +199,7 @@ fun HomeScreen() {
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun NextPrayerHero(prayer: Prayer, at: ZonedDateTime, previous: java.time.Instant?, now: ZonedDateTime) {
     val left = Duration.between(now, at).toMinutes().coerceAtLeast(0) + 1
@@ -222,14 +225,19 @@ private fun NextPrayerHero(prayer: Prayer, at: ZonedDateTime, previous: java.tim
                 Icon(painterResource(prayerIconRes(prayer)), contentDescription = null, tint = Gold, modifier = Modifier.size(44.dp))
             }
             Spacer(Modifier.height(6.dp))
-            Row(verticalAlignment = Alignment.Bottom) {
-                Text(clock(at), fontSize = 40.sp, fontWeight = FontWeight.Light, color = Gold, style = Tabular)
-                Spacer(Modifier.width(12.dp))
+            // Время и «через …» в одну строку, а на узком экране — друг под другом.
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalArrangement = Arrangement.spacedBy(2.dp),
+            ) {
+                BigClock(at, fontSize = 40.sp, color = Gold, modifier = Modifier.align(Alignment.Bottom))
                 Text(
                     stringResource(R.string.home_in_time, durationText(left)),
                     style = MaterialTheme.typography.titleMedium,
                     color = Cream,
-                    modifier = Modifier.padding(bottom = 8.dp),
+                    maxLines = 1,
+                    softWrap = false,
+                    modifier = Modifier.align(Alignment.Bottom).padding(bottom = 8.dp),
                 )
             }
             if (progress != null) {

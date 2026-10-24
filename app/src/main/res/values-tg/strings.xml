@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Сгенерировано tools/i18n/build_strings.py — правьте tools/i18n/tg.py -->
+<resources>
+    <string name="app_name">Зикр-тайм</string>
+    <string name="slogan">Аввал зикр, баъд лента</string>
+    <string name="greeting">Ассалому алайкум</string>
+    <string name="accessibility_description">Зикр-тайм танҳо месанҷад, ки ҳозир кадом барнома кушода аст. Агар ин шабакаи иҷтимоӣ аз рӯйхати шумо бошад ва маҳдудияти рӯзона тамом шуда бошад ё вақти намоз дарояд, барнома ёдраскунӣ нишон медиҳад. Матни экран, паролҳо ва паёмҳо хонда намешаванд ва ба ҳеҷ ҷо фиристода намешаванд.</string>
+    <string name="action_back">Бозгашт</string>
+    <string name="action_close">Пӯшидан</string>
+    <string name="action_continue">Идома</string>
+    <string name="action_done">Тайёр</string>
+    <string name="action_grant">Иҷозат додан</string>
+    <string name="action_allow">Иҷозат додан</string>
+    <string name="action_open_settings">Кушодани танзимот</string>
+    <string name="action_app_info">Маълумот дар бораи барнома</string>
+    <string name="action_refresh">Ҳозир навсозӣ кардан</string>
+    <string name="action_reset">Аз нав</string>
+    <string name="action_search">Ҷустуҷӯ</string>
+    <string name="action_start">Оғоз</string>
+    <string name="search_nothing">Чизе ёфт нашуд</string>
+    <string name="state_off">Хомӯш</string>
+    <string name="state_granted">Иҷозат дода шуд</string>
+    <string name="tab_prayer">Намоз</string>
+    <string name="tab_knowledge">Дониш</string>
+    <string name="tab_focus">Фокус</string>
+    <string name="tab_more">Дигар</string>
+    <string name="prayer_fajr">Бомдод</string>
+    <string name="prayer_sunrise">Тулӯи офтоб</string>
+    <string name="prayer_dhuhr">Пешин</string>
+    <string name="prayer_asr">Вақти намози аср</string>
+    <string name="prayer_maghrib">Шом</string>
+    <string name="prayer_isha">Хуфтан</string>
+    <string name="home_today">Намозҳои имрӯз</string>
+    <string name="home_next_prayer">Намози навбатӣ</string>
+    <string name="home_in_time">пас аз %1$s</string>
+    <string name="home_now">Ҳозир</string>
+    <string name="home_mark_prayed">Қайд кардани намоз</string>
+    <string name="home_source_online">Вақт: aladhan.com, %1$s. Намозҳоро қайд кунед — силсила ҳамин тавр меафзояд.</string>
+    <string name="home_source_local">Вақт: дар телефон ҳисоб шудааст, %1$s. Намозҳоро қайд кунед — силсила ҳамин тавр меафзояд.</string>
+    <string name="alarm_short">Соати зангдор</string>
+    <string name="streak_knowledge">Силсилаи дониш</string>
+    <string name="streak_knowledge_hint">рӯзҳое, ки викторина бозӣ шуд</string>
+    <string name="streak_prayers">Силсилаи намоз</string>
+    <string name="streak_prayers_hint">рӯзҳо бо ҳамаи панҷ намоз</string>
+    <string name="focus_title">Фокус</string>
+    <string name="focus_subtitle">Камтар лента, бештар зикр</string>
+    <string name="focus_cta_title">Шабакаҳои иҷтимоиро маҳдуд кунед</string>
+    <string name="focus_cta_text">Маҳдудияти рӯзона гузоред ва бо ҷавоб ба саволҳо дақиқаҳои иловагӣ гиред.</string>
+    <string name="focus_today">Имрӯз дар шабакаҳои иҷтимоӣ</string>
+    <string name="focus_used_of">%1$s аз %2$s</string>
+    <string name="focus_earn_more">+%1$d дақ барои ҷавобҳо →</string>
+    <string name="focus_no_access">Ба омори истифода дастрасӣ нест</string>
+    <string name="focus_limit_bonus">Маҳдудият %1$s · имрӯз гирифта шуд +%2$d дақ</string>
+    <string name="focus_earn_button">Ҷавоб ба саволҳо: +%1$d дақ</string>
+    <string name="focus_enable">Маҳдуд кардани шабакаҳои иҷтимоӣ</string>
+    <string name="focus_enable_hint">Вақте маҳдудият тамом шавад, барнома пӯшида мешавад</string>
+    <string name="focus_need_permissions">Ба омор иҷозат диҳед ва яке аз усулҳои бастанро дар поён фаъол кунед, вагарна маҳдудият кор намекунад.</string>
+    <string name="focus_daily_limit">Маҳдудияти рӯзона</string>
+    <string name="focus_daily_limit_hint">Барои ҳамаи барномаҳои интихобшуда якҷоя. Дар викторина ҳар рӯз боз то %1$d дақ гирифтан мумкин аст.</string>
+    <string name="focus_prayer_lock">Танаффус ҳангоми намоз</string>
+    <string name="focus_prayer_lock_hint">Пас аз азон шабакаҳои иҷтимоӣ баста мешаванд</string>
+    <string name="focus_prayer_lock_duration">Давомнокии танаффус</string>
+    <string name="focus_apps">Барномаҳо</string>
+    <string name="focus_apps_none">Ҳоло чизе интихоб нашудааст</string>
+    <string name="focus_social_label">шабакаи иҷтимоӣ</string>
+    <string name="focus_permissions">Иҷозатҳо</string>
+    <string name="unit_min">дақ</string>
+    <string name="unit_km">%1$d км</string>
+    <string name="perm_usage_title">Дастрасӣ ба омори истифода</string>
+    <string name="perm_usage_text">Барои ҳисоб кардани он ки имрӯз дар шабакаҳои иҷтимоӣ чӣ қадар вақт гузарондед.</string>
+    <string name="perm_block_ways">Барои бастани барномаҳо яке аз ду усулро фаъол кунед:</string>
+    <string name="perm_overlay_title">Усули 1. Болои барномаҳои дигар</string>
+    <string name="perm_overlay_text">Фаъол кардани он аз ҳама осон аст ва телефон онро хатарнок намешуморад. Дар панел огоҳиномаи ором мемонад.</string>
+    <string name="perm_service_title">Усули 2. Хидмати «Зикр-тайм»</string>
+    <string name="perm_service_text">Фавран кор мекунад, вале бисёр телефонҳо онро барои барномаҳое, ки на аз Google Play гузошта шудаанд, манъ мекунанд.</string>
+    <string name="perm_notifications_title">Огоҳиномаҳо</string>
+    <string name="perm_notifications_text">Барои соати зангдор ва ёдраскуниҳои намоз лозиманд.</string>
+    <string name="perm_notifications_off">Огоҳиномаҳо барои барнома хомӯш карда шудаанд.</string>
+    <string name="perm_fullscreen_title">Соати зангдор дар тамоми экран</string>
+    <string name="perm_fullscreen_text">То соати зангдор болои экрани қулфшуда пайдо шавад.</string>
+    <string name="perm_exact_title">Вақти дақиқ</string>
+    <string name="perm_exact_text">То ёдраскуниҳо ва соати зангдор айнан сари вақт оянд.</string>
+    <string name="disclosure_title">Хидмати имкониятҳои махсус</string>
+    <string name="disclosure_text_1">«Зикр-тайм» ин хидматро танҳо барои донистани он истифода мебарад, ки кадом барнома кушода аст. Агар ин шабакаи иҷтимоӣ аз рӯйхати шумо бошад ва маҳдудият тамом шуда бошад ё вақти намоз бошад, барнома шуморо ба экрани асосӣ бармегардонад ва ёдраскунӣ нишон медиҳад.</string>
+    <string name="disclosure_text_2">Матни экран, паёмҳо ва паролҳо хонда намешаванд. Ба интернет ҳеҷ чиз фиристода намешавад — ҳама чиз дар телефони шумо мемонад.</string>
+    <string name="disclosure_text_3">Дар танзимот «Барномаҳои боргиришуда» (ё «Хидматҳои насбшуда») → «Зикр-тайм»-ро кушоед ва фаъол кунед. Агар тугма ғайрифаъол бошад, маълумоти барномаро кушоед → менюи ⋮ → «Иҷозати танзимоти маҳдуд».</string>
+    <string name="knowledge_title">Дониш</string>
+    <string name="knowledge_subtitle">Ҳар рӯз чизи наве омӯзед</string>
+    <string name="knowledge_round_title">%1$d ҷавоби дуруст = +%2$d дақ</string>
+    <string name="knowledge_round_text">Вақти иловагӣ дар шабакаҳои иҷтимоӣ — то %1$d дақиқа дар як рӯз. Дониш бошад, бо шумо мемонад.</string>
+    <string name="knowledge_bonus_today">%1$d/%2$d дақ</string>
+    <string name="knowledge_start">Оғози давр</string>
+    <string name="knowledge_topics">Мавзӯъҳо</string>
+    <string name="knowledge_topic_progress">Дуруст: %1$d · саволҳо: %2$d</string>
+    <string name="knowledge_progress">Пешрафти шумо</string>
+    <string name="knowledge_disclaimer">Саволҳо аз рӯи манбаъҳои маъруф тартиб дода шудаанд. Агар хато бинед, ба мо хабар диҳед.</string>
+    <string name="stat_correct">Ҷавобҳои дуруст</string>
+    <string name="stat_accuracy">Дақиқӣ</string>
+    <string name="stat_best_streak">Беҳтарин силсила</string>
+    <string name="quiz_progress">%1$d аз %2$d</string>
+    <string name="quiz_correct">Дуруст!</string>
+    <string name="quiz_wrong">На он қадар</string>
+    <string name="quiz_correct_answer">Ҷавоби дуруст: %1$s</string>
+    <string name="quiz_info_title">Донистан муфид аст</string>
+    <string name="quiz_next">Саволи навбатӣ</string>
+    <string name="quiz_finish">Анҷом</string>
+    <string name="quiz_mashallah">МошоАллоҳ!</string>
+    <string name="quiz_result_added">Давр анҷом ёфт. Ба маҳдудият %1$d дақ илова шуд.</string>
+    <string name="quiz_result_no_bonus">Давр анҷом ёфт. Бонуси имрӯза аллакай пурра гирифта шудааст — вале дониш бо шумо мемонад.</string>
+    <string name="quiz_again">Боз як давр</string>
+    <string name="more_title">Дигар</string>
+    <string name="settings_language">Забон</string>
+    <string name="settings_city">Шаҳр</string>
+    <string name="settings_prayer_times">Вақтҳои намоз</string>
+    <string name="language_system">Забони телефон</string>
+    <string name="language_note">Саволҳо, номи шаҳрҳо ва огоҳиномаҳо низ ба забони интихобшуда мегузаранд.</string>
+    <string name="city_locate">Муайян кардани ҷойгиршавӣ</string>
+    <string name="city_locating">Муайян карда истодаем…</string>
+    <string name="city_locate_failed">Ҷойгиршавиро муайян кардан нашуд. Геолокатсияро фаъол кунед ё шаҳрро аз рӯйхат интихоб кунед.</string>
+    <string name="city_locate_denied">Бе иҷозати геолокатсия шаҳрро аз рӯйхат интихоб кунед.</string>
+    <string name="city_my_location">Ҷойгиршавии ман</string>
+    <string name="city_search">Ҷустуҷӯи шаҳр</string>
+    <string name="prayer_method">Усули ҳисоб</string>
+    <string name="method_angles">Бомдод %1$s°, хуфтан %2$s°</string>
+    <string name="method_angles_minutes">Бомдод %1$s°, хуфтан %2$d дақ пас аз шом</string>
+    <string name="prayer_method_hint">Агар вақт дар масҷиди шумо фарқ кунад, усули дигарро санҷед ё дар поён ислоҳ ворид кунед.</string>
+    <string name="prayer_source">Манбаъ</string>
+    <string name="prayer_source_online">Вақтро аз интернет гирифтан</string>
+    <string name="prayer_source_online_hint">aladhan.com бо ҳамон усул. Бе интернет — ҳисоб дар телефон.</string>
+    <string name="prayer_source_loading">Бор карда истодаем…</string>
+    <string name="prayer_source_updated">Навсозӣ: %1$s</string>
+    <string name="prayer_source_failed">Ҳоло бор нашуд — ҳисоби телефон нишон дода мешавад.</string>
+    <string name="prayer_notifications">Огоҳиномаҳо</string>
+    <string name="prayer_notify">Ёдраскунии вақти намоз</string>
+    <string name="prayer_notify_adhan">Садои азон</string>
+    <string name="prayer_notify_adhan_hint">Бо ҳар ёдраскунӣ азон садо диҳад</string>
+    <string name="prayer_corrections">Ислоҳҳо, дақ</string>
+    <string name="prayer_corrections_hint">Барои мувофиқат бо ҷадвали масҷиди худ ҳар вақтро чанд дақиқа ҷойиваз кунед.</string>
+    <string name="method_russia">Идораи рӯҳонии мусулмонони Русия</string>
+    <string name="method_mwl">Иттиҳоди умумиҷаҳонии исломӣ</string>
+    <string name="method_turkey">Диёнат, Туркия</string>
+    <string name="method_makkah">Умм-ул-Қуро, Макка</string>
+    <string name="method_egypt">Идораи геодезии Миср</string>
+    <string name="method_karachi">Донишгоҳи улуми исломӣ, Карочӣ</string>
+    <string name="method_isna">Ҷамъияти исломии Амрикои Шимолӣ</string>
+    <string name="madhab_standard">Стандартӣ (шофеӣ, моликӣ, ҳанбалӣ)</string>
+    <string name="madhab_hanafi">Ҳанафӣ</string>
+    <string name="alarm_title">Соати зангдори бомдод</string>
+    <string name="alarm_enable">Барои бомдод бедор кардан</string>
+    <string name="alarm_enable_hint">Азони баланд, ки танҳо дастӣ хомӯш мешавад</string>
+    <string name="alarm_status_on">%1$d дақ пеш аз бомдод</string>
+    <string name="alarm_next">Навбатӣ: %1$s, соати %2$s (бомдод %3$s)</string>
+    <string name="alarm_next_none">Рӯзҳо интихоб нашудаанд</string>
+    <string name="alarm_offset">Бедор кардан</string>
+    <string name="alarm_offset_zero">Дар вақти бомдод</string>
+    <string name="alarm_offset_value">%1$d дақ пеш</string>
+    <string name="alarm_days">Рӯзҳо</string>
+    <string name="alarm_sound">Садо</string>
+    <string name="alarm_sound_adhan">Азон</string>
+    <string name="alarm_sound_system">Оҳанги соати зангдори телефон</string>
+    <string name="alarm_max_volume">Баландии ҳадди аксар</string>
+    <string name="alarm_max_volume_hint">Пас аз занг баландӣ ба ҳолати пештара бармегардад</string>
+    <string name="alarm_vibrate">Ларзиш</string>
+    <string name="alarm_wake_check">Бо ҷавоб ба савол хомӯш кардан</string>
+    <string name="alarm_wake_check_hint">То ҳатман бедор шавед</string>
+    <string name="alarm_snooze_allow">Иҷозати «мавқуф гузоштан»</string>
+    <string name="alarm_snooze_hint">Ба 5 дақиқа. Пешфарз хомӯш аст, то хоб намонед</string>
+    <string name="alarm_test">Санҷиши соати зангдор (пас аз 10 сония)</string>
+    <string name="alarm_test_toast">Соати зангдор пас аз 10 сония занг мезанад</string>
+    <string name="alarm_note">Соати зангдор то хомӯш кардани шумо садо медиҳад. Телефонро заряднок нигоҳ доред ва барномаро маҷбуран қатъ накунед.</string>
+    <string name="alarm_ring_title">Вақти хестан ба бомдод</string>
+    <string name="alarm_ring_text">Намоз аз хоб беҳтар аст</string>
+    <string name="alarm_fajr_at">Бомдод соати %1$s</string>
+    <string name="alarm_better_than_sleep">Намоз аз хоб беҳтар аст</string>
+    <string name="alarm_awake">Бедор шудам</string>
+    <string name="alarm_answer_to_stop">Ҷавоб ба савол ва хомӯш кардан</string>
+    <string name="alarm_stop">Хомӯш кардан</string>
+    <string name="alarm_snooze">Ба %1$d дақ мавқуф гузоштан</string>
+    <string name="alarm_test_label">САНҶИШ</string>
+    <string name="block_quiz_title">Ба саволҳо ҷавоб диҳед</string>
+    <string name="block_earned">%1$d дақ илова шуд. Метавонед ба барнома баргардед.</string>
+    <string name="block_limit_title">Маҳдудияти имрӯз тамом шуд</string>
+    <string name="block_limit_text">Имрӯз дар шабакаҳои иҷтимоӣ: %1$s. Маҳдудият: %2$s.</string>
+    <string name="block_quiz_button">Ҷавоб ба %1$d савол: +%2$d дақ</string>
+    <string name="block_bonus_used">Бонуси имрӯза пурра гирифта шуд (%1$d дақ). Фардо маҳдудият аз нав оғоз мешавад.</string>
+    <string name="block_prayer_label">Вақти намоз даромад</string>
+    <string name="block_prayer_open">Шабакаҳои иҷтимоӣ боз кушодаанд.</string>
+    <string name="block_prayer_text">Шабакаҳои иҷтимоӣ соати %1$s кушода мешаванд. Айни вақти ба намоз хестан.</string>
+    <string name="block_prayed">Намозро хондам</string>
+    <string name="channel_prayer">Вақтҳои намоз</string>
+    <string name="channel_prayer_adhan">Вақтҳои намоз (азон)</string>
+    <string name="channel_prayer_desc">Ёдраскунӣ дар бораи даромадани вақти намоз</string>
+    <string name="channel_alarm">Соати зангдори бомдод</string>
+    <string name="channel_alarm_desc">Соати зангдори баланд пеш аз намози бомдод</string>
+    <string name="channel_guard">Маҳдудияти шабакаҳои иҷтимоӣ</string>
+    <string name="channel_guard_desc">Огоҳиномаи доимӣ ҳангоми кори маҳдудият</string>
+    <string name="guard_title">«Зикр-тайм» маҳдудиятро назорат мекунад</string>
+    <string name="guard_text">Маҳдудияти шабакаҳои иҷтимоӣ: %1$d дақ дар як рӯз</string>
+    <string name="notify_prayer_title">Вақти намози %1$s</string>
+    <string name="notify_prayer_text">%1$s · %2$s.</string>
+    <string name="notify_prayer_lock">Шабакаҳои иҷтимоӣ ба %1$d дақ қатъ шуданд.</string>
+    <string name="qibla_title">Қибла</string>
+    <string name="qibla_subtitle">Самти Каъба</string>
+    <string name="qibla_turn">Гардед, то Каъба дар боло бошад</string>
+    <string name="qibla_aligned">Шумо рӯ ба қибла ҳастед</string>
+    <string name="qibla_no_sensor">Дар телефон қутбнамо нест — аз рӯи кунҷи поён самтро муайян кунед</string>
+    <string name="qibla_bearing">Самт аз шимол</string>
+    <string name="qibla_distance">То Каъба</string>
+    <string name="qibla_hint">Телефонро уфуқӣ нигоҳ доред, дуртар аз металл ва магнитҳо.</string>
+    <string name="qibla_calibrate">Қутбнамо дақиқ нест: телефонро чанд бор ба шакли «ҳашт» ҳаракат диҳед.</string>
+    <string name="qibla_turn_left">Ба чап %1$d° гардед</string>
+    <string name="qibla_turn_right">Ба рост %1$d° гардед</string>
+    <string name="compass_n">Ш</string>
+    <string name="compass_e">Шқ</string>
+    <string name="compass_s">Ҷ</string>
+    <string name="compass_w">Ғ</string>
+    <string name="tasbih_title">Тасбеҳ</string>
+    <string name="tasbih_subtitle">Ҳисобкунаки зикр</string>
+    <string name="tasbih_of">аз %1$d</string>
+    <string name="tasbih_laps">Даврҳо: %1$d</string>
+    <string name="tasbih_tap_hint">Барои ҳисоб доираро пахш кунед</string>
+    <string name="tasbih_target">Ҳадаф</string>
+    <string name="tasbih_today">Имрӯз: %1$d</string>
+    <string name="zikr_1_name">Субҳоналлоҳ</string>
+    <string name="zikr_1_meaning">Аллоҳ пок аст</string>
+    <string name="zikr_2_name">Алҳамдулиллоҳ</string>
+    <string name="zikr_2_meaning">Ҳамд мар Аллоҳро</string>
+    <string name="zikr_3_name">Аллоҳу акбар</string>
+    <string name="zikr_3_meaning">Аллоҳ бузург аст</string>
+    <string name="zikr_4_name">Ло илоҳа иллаллоҳ</string>
+    <string name="zikr_4_meaning">Ҷуз Аллоҳ маъбуде нест</string>
+    <string name="zikr_5_name">Астағфируллоҳ</string>
+    <string name="zikr_5_meaning">Аз Аллоҳ омурзиш мехоҳам</string>
+    <string name="zikr_6_name">Салавот</string>
+    <string name="zikr_6_meaning">Худоё, бар Муҳаммад дуруд фирист</string>
+    <string name="onboarding_language_title">Забонро интихоб кунед</string>
+    <string name="onboarding_city_title">Шумо дар куҷоед?</string>
+    <string name="onboarding_city_text">Шаҳр барои ҳисоб кардани вақтҳои намоз лозим аст. Онро баъдтар иваз кардан мумкин аст.</string>
+    <string name="onboarding_feature_times">Вақтҳои дақиқи намоз барои шаҳри шумо</string>
+    <string name="onboarding_feature_alarm">Соати зангдори баланди бомдод — то хоб намонед</string>
+    <string name="onboarding_feature_focus">Маҳдудияти рӯзона барои шабакаҳои иҷтимоӣ</string>
+    <string name="onboarding_feature_quiz">Дақиқаҳои иловагӣ барои ҷавобҳо дар бораи Ислом</string>
+    <string name="onboarding_feature_tools">Қутбнамои қибла ва ҳисобкунаки тасбеҳ</string>
+    <string name="about_title">Дар бораи барнома</string>
+    <string name="about_version">Версияи %1$s</string>
+    <string name="about_privacy_title">Махфият</string>
+    <string name="about_privacy_text">Ҳамаи маълумоти шумо — танзимот, қайдҳо ва омор — танҳо дар ҳамин телефон нигоҳ дошта мешаванд. Интернет танҳо барои гирифтани вақтҳои намоз аз aladhan.com лозим аст.</string>
+    <string name="about_times_title">Вақтҳои намоз</string>
+    <string name="about_times_text">Вақтҳо аз aladhan.com гирифта мешаванд ё дар телефон бо ҳамон формулаҳои астрономӣ ҳисоб карда мешаванд. Ҷадвали масҷид метавонад чанд дақиқа фарқ кунад — ислоҳҳоро дар танзимот истифода баред.</string>
+    <string name="about_quiz_title">Саволҳо</string>
+    <string name="about_quiz_text">Саволҳо далелҳои маъруфро дар бораи Қуръон, паёмбарон, сира ва асосҳои Ислом дар бар мегиранд. Ин фатво нест: дар масъалаҳои аҳкоми динӣ ба уламо муроҷиат кунед.</string>
+    <string name="about_licenses_title">Иҷозатномаҳо</string>
+    <string name="about_licenses_text">Ҳарфи Amiri — SIL Open Font License 1.1. Сабти азон — Wikimedia Commons, CC0 (моликияти умумӣ). Маълумоти вақтҳои намоз — aladhan.com.</string>
+    <string name="duration_m">%1$d дақ</string>
+    <string name="duration_h">%1$d соат</string>
+    <string name="duration_h_m">%1$d соат %2$d дақ</string>
+    <string name="hijri_date_format">%1$d %2$s %3$d ҳ.</string>
+    <plurals name="days">
+        <item quantity="one">%d рӯз</item>
+        <item quantity="other">%d рӯз</item>
+    </plurals>
+    <string-array name="weekdays_short">
+        <item>Дш</item>
+        <item>Сш</item>
+        <item>Чш</item>
+        <item>Пш</item>
+        <item>Ҷм</item>
+        <item>Шб</item>
+        <item>Яш</item>
+    </string-array>
+    <string-array name="hijri_months">
+        <item>Муҳаррам</item>
+        <item>Сафар</item>
+        <item>Рабеъ-ул-аввал</item>
+        <item>Рабеъ-ус-сонӣ</item>
+        <item>Ҷумодӣ-ул-аввал</item>
+        <item>Ҷумодӣ-ус-сонӣ</item>
+        <item>Раҷаб</item>
+        <item>Шаъбон</item>
+        <item>Рамазон</item>
+        <item>Шаввол</item>
+        <item>Зулқаъда</item>
+        <item>Зулҳиҷҷа</item>
+    </string-array>
+</resources>

@@ -29,13 +29,6 @@ jobs:
       - name: Проверка переводов
         run: python3 tools/ci/check_strings.py
 
-      - name: Поиск записей азана (лицензии)
-        continue-on-error: true
-        run: |
-          mkdir -p ci-out
-          python3 tools/ci/probe_adhan.py ci-out/adhan_candidates.json
-          python3 tools/ci/fetch_adhan.py ci-out/adhan
-
       - name: Тесты и сборка
         run: |
           chmod +x gradlew
@@ -61,7 +54,7 @@ jobs:
   emulator:
     needs: build
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 50
     steps:
       - uses: actions/checkout@v4
 
@@ -82,6 +75,7 @@ jobs:
           api-level: 34
           target: google_apis
           arch: x86_64
+          profile: pixel_5
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           script: bash tools/ci/emulator_check.sh build-out

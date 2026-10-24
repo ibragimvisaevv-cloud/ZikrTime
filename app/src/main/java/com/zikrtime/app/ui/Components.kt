@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -41,6 +42,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -62,8 +64,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.zikrtime.app.R
 import com.zikrtime.app.i18n.Lang
@@ -71,6 +76,8 @@ import com.zikrtime.app.prayer.AsrMadhab
 import com.zikrtime.app.prayer.CalcMethod
 import com.zikrtime.app.prayer.Prayer
 import com.zikrtime.app.ui.theme.LocalDarkTheme
+import com.zikrtime.app.ui.theme.Tabular
+import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.ZonedDateTime
 import java.time.chrono.HijrahDate
@@ -283,6 +290,7 @@ fun SliderRow(
             onValueChange = { onChange(((it / step).toInt() * step + if (it % step >= step / 2f) step else 0).coerceIn(range)) },
             valueRange = range.first.toFloat()..range.last.toFloat(),
             steps = ((range.last - range.first) / step - 1).coerceAtLeast(0),
+            colors = SliderDefaults.colors(activeTickColor = Color.Transparent, inactiveTickColor = Color.Transparent),
         )
     }
 }
@@ -293,8 +301,8 @@ fun PrimaryButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifi
         onClick = onClick,
         enabled = enabled,
         shape = RoundedCornerShape(16.dp),
-        modifier = modifier.fillMaxWidth().height(54.dp),
-    ) { Text(text, style = MaterialTheme.typography.titleSmall) }
+        modifier = modifier.fillMaxWidth().heightIn(min = 54.dp),
+    ) { Text(text, style = MaterialTheme.typography.titleSmall, textAlign = TextAlign.Center) }
 }
 
 @Composable
@@ -303,8 +311,8 @@ fun TonalButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier
         onClick = onClick,
         enabled = enabled,
         shape = RoundedCornerShape(16.dp),
-        modifier = modifier.fillMaxWidth().height(50.dp),
-    ) { Text(text, style = MaterialTheme.typography.titleSmall) }
+        modifier = modifier.fillMaxWidth().heightIn(min = 50.dp),
+    ) { Text(text, style = MaterialTheme.typography.titleSmall, textAlign = TextAlign.Center) }
 }
 
 @Composable
@@ -314,8 +322,8 @@ fun GhostButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier
         shape = RoundedCornerShape(16.dp),
         colors = ButtonDefaults.outlinedButtonColors(contentColor = color),
         border = BorderStroke(1.dp, color.copy(alpha = 0.5f)),
-        modifier = modifier.fillMaxWidth().height(50.dp),
-    ) { Text(text, style = MaterialTheme.typography.titleSmall) }
+        modifier = modifier.fillMaxWidth().heightIn(min = 50.dp),
+    ) { Text(text, style = MaterialTheme.typography.titleSmall, textAlign = TextAlign.Center) }
 }
 
 /** Кольцевой индикатор прогресса. */
@@ -494,6 +502,33 @@ fun clock(time: ZonedDateTime): String {
     val context = LocalContext.current
     return time.format(clockFormatter(context))
 }
+
+/** Крупное время: цифры большим шрифтом, «AM/PM» (если телефон в 12-часовом формате) — мелко рядом. */
+@Composable
+fun BigClock(time: ZonedDateTime, fontSize: TextUnit, color: Color, modifier: Modifier = Modifier, weight: FontWeight = FontWeight.Light) {
+    val context = LocalContext.current
+    val locale = Lang.locale(context)
+    val h24 = android.text.format.DateFormat.is24HourFormat(context)
+    val digits = time.format(DateTimeFormatter.ofPattern(if (h24) "HH:mm" else "h:mm", locale))
+    Row(modifier, verticalAlignment = Alignment.Bottom) {
+        Text(digits, fontSize = fontSize, fontWeight = weight, color = color, style = Tabular, maxLines = 1, softWrap = false)
+        if (!h24) {
+            Spacer(Modifier.width(6.dp))
+            Text(
+                time.format(DateTimeFormatter.ofPattern("a", locale)),
+                fontSize = fontSize * 0.32f,
+                fontWeight = FontWeight.Medium,
+                color = color,
+                maxLines = 1,
+                modifier = Modifier.padding(bottom = (fontSize.value * 0.18f).dp),
+            )
+        }
+    }
+}
+
+/** Короткие названия дней недели («Пн», «Mo»…), от понедельника. */
+@Composable
+fun weekdayShort(day: DayOfWeek): String = stringArrayResource(R.array.weekdays_short)[day.value - 1]
 
 @Composable
 fun gregorianDate(date: LocalDate): String {

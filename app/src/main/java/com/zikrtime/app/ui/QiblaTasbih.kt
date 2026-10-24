@@ -15,6 +15,8 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -51,13 +53,14 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDirection
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zikrtime.app.R
@@ -70,6 +73,8 @@ import com.zikrtime.app.ui.theme.EmeraldDeep
 import com.zikrtime.app.ui.theme.Gold
 import com.zikrtime.app.ui.theme.Tabular
 import kotlin.math.abs
+import kotlin.math.sin
+import kotlin.math.cos
 import kotlin.math.roundToInt
 
 // ---------------- Кибла ----------------
@@ -131,9 +136,10 @@ fun QiblaScreen() {
         }
         Text(
             when {
-                heading == null -> stringResource(R.string.qibla_no_sensor)
+                heading == null || relative == null -> stringResource(R.string.qibla_no_sensor)
                 aligned -> stringResource(R.string.qibla_aligned)
-                else -> stringResource(R.string.qibla_turn)
+                relative < 0 -> stringResource(R.string.qibla_turn_left, abs(relative).roundToInt())
+                else -> stringResource(R.string.qibla_turn_right, relative.roundToInt())
             },
             style = MaterialTheme.typography.titleMedium,
             color = if (aligned) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
@@ -169,13 +175,14 @@ private fun Compass(heading: Float, qibla: Float, aligned: Boolean) {
         stringResource(R.string.compass_n), stringResource(R.string.compass_e),
         stringResource(R.string.compass_s), stringResource(R.string.compass_w),
     )
-    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        // Вращающийся циферблат: север сверху, когда телефон смотрит на север
-        Box(Modifier.fillMaxSize().graphicsLayer { rotationZ = -heading }) {
-            Canvas(Modifier.fillMaxSize()) {
-                val r = size.minDimension / 2
-                drawCircle(scheme.surfaceContainerLow, radius = r)
-                drawCircle(ring, radius = r - 2.dp.toPx(), style = Stroke(3.dp.toPx()))
+    BoxWithConstraints(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        val radius = with(LocalDensity.current) { (minOf(maxWidth, maxHeight) / 2).toPx() }
+        Canvas(Modifier.fillMaxSize()) {
+            val r = size.minDimension / 2
+            drawCircle(scheme.surfaceContainerLow, radius = r)
+            drawCircle(ring, radius = r - 2.dp.toPx(), style = Stroke(3.dp.toPx()))
+            // Циферблат поворачивается вместе с телефоном: север указывает на север.
+            rotate(-heading) {
                 for (deg in 0 until 360 step 5) {
                     val major = deg % 30 == 0
                     rotate(deg.toFloat()) {
@@ -188,45 +195,66 @@ private fun Compass(heading: Float, qibla: Float, aligned: Boolean) {
                         )
                     }
                 }
-            }
-            letters.forEachIndexed { i, letter ->
-                Box(Modifier.fillMaxSize().graphicsLayer { rotationZ = i * 90f }, contentAlignment = Alignment.TopCenter) {
-                    Text(
-                        letter,
-                        style = MaterialTheme.typography.titleMedium,
-                        color = if (i == 0) scheme.error else scheme.onSurfaceVariant,
-                        modifier = Modifier.padding(top = 30.dp),
-                    )
+                rotate(qibla) {
+                    // Золотая метка на кольце и стрелка от центра к Каабе
+                    val mark = Path().apply {
+                        moveTo(center.x, center.y - r + 8.dp.toPx())
+                        lineTo(center.x - 8.dp.toPx(), center.y - r + 24.dp.toPx())
+                        lineTo(center.x + 8.dp.toPx(), center.y - r + 24.dp.toPx())
+                        close()
+                    }
+                    drawPath(mark, Gold)
+                    val tipY = center.y - r * 0.5f + 22.dp.toPx()
+                    val w = 6.dp.toPx()
+                    val needle = Path().apply {
+                        moveTo(center.x, tipY)
+                        lineTo(center.x + w, center.y)
+                        lineTo(center.x, center.y + w * 1.8f)
+                        lineTo(center.x - w, center.y)
+                        close()
+                    }
+                    drawPath(needle, Gold)
                 }
             }
-            // Кааба на своём азимуте
-            Box(Modifier.fillMaxSize().graphicsLayer { rotationZ = qibla }, contentAlignment = Alignment.TopCenter) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(top = 58.dp)) {
-                    Box(
-                        Modifier.size(44.dp).clip(CircleShape).background(Brush.linearGradient(listOf(Emerald, EmeraldDeep))),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        Icon(painterResource(R.drawable.ic_kaaba), contentDescription = null, tint = Gold, modifier = Modifier.size(26.dp))
-                    }
-                    Canvas(Modifier.size(width = 4.dp, height = 70.dp)) {
-                        drawLine(Gold, Offset(size.width / 2, 0f), Offset(size.width / 2, size.height), strokeWidth = 3.dp.toPx(), cap = StrokeCap.Round)
-                    }
-                }
-            }
-        }
-        // Неподвижная метка «куда смотрит телефон»
-        Canvas(Modifier.fillMaxSize()) {
-            val r = size.minDimension / 2
-            val path = Path().apply {
-                moveTo(center.x, center.y - r - 2.dp.toPx())
-                lineTo(center.x - 10.dp.toPx(), center.y - r + 14.dp.toPx())
-                lineTo(center.x + 10.dp.toPx(), center.y - r + 14.dp.toPx())
+            // Неподвижная метка «куда смотрит телефон»
+            val pointer = Path().apply {
+                moveTo(center.x, center.y - r - 4.dp.toPx())
+                lineTo(center.x - 10.dp.toPx(), center.y - r + 12.dp.toPx())
+                lineTo(center.x + 10.dp.toPx(), center.y - r + 12.dp.toPx())
                 close()
             }
-            drawPath(path, if (aligned) Gold else scheme.primary)
-            drawCircle(if (aligned) Gold else scheme.primary, radius = 7.dp.toPx())
+            drawPath(pointer, if (aligned) Gold else scheme.primary)
+            drawCircle(scheme.surface, radius = 10.dp.toPx())
+            drawCircle(if (aligned) Gold else scheme.primary, radius = 6.dp.toPx())
+        }
+        // Буквы сторон света: двигаются по кругу, но всегда стоят ровно.
+        letters.forEachIndexed { i, letter ->
+            Text(
+                letter,
+                style = MaterialTheme.typography.titleMedium,
+                color = if (i == 0) scheme.error else scheme.onSurfaceVariant,
+                modifier = Modifier.offset { polar(i * 90f - heading, radius - 40.dp.toPx()) },
+            )
+        }
+        // Кааба на своём азимуте
+        Box(
+            Modifier
+                .offset { polar(qibla - heading, radius * 0.5f) }
+                .size(42.dp)
+                .clip(CircleShape)
+                .background(Brush.linearGradient(listOf(Emerald, EmeraldDeep)))
+                .border(2.dp, Gold, CircleShape),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(painterResource(R.drawable.ic_kaaba), contentDescription = null, tint = Gold, modifier = Modifier.size(24.dp))
         }
     }
+}
+
+/** Смещение от центра на distance пикселей в направлении angle (0° — вверх, по часовой стрелке). */
+private fun polar(angle: Float, distance: Float): IntOffset {
+    val a = Math.toRadians(angle.toDouble())
+    return IntOffset((distance * sin(a)).roundToInt(), (-distance * cos(a)).roundToInt())
 }
 
 // ---------------- Тасбих ----------------

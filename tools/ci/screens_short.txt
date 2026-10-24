@@ -1,0 +1,12 @@
+onboarding_welcome
+home
+knowledge
+quiz
+focus
+more
+prayer_settings
+alarm
+qibla
+tasbih
+block_limit
+alarm_ring

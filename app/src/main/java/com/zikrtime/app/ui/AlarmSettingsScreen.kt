@@ -4,47 +4,61 @@ import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.os.LocaleList
 import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilterChip
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.app.NotificationManagerCompat
 import com.zikrtime.app.R
 import com.zikrtime.app.alarm.FajrAlarm
 import com.zikrtime.app.data.Store
-import com.zikrtime.app.i18n.Lang
 import com.zikrtime.app.prayer.AdhanSound
 import com.zikrtime.app.prayer.PrayerAlarms
-import java.time.DayOfWeek
+import com.zikrtime.app.ui.theme.Cream
+import com.zikrtime.app.ui.theme.EmeraldDeep
+import com.zikrtime.app.ui.theme.EmeraldNight
+import com.zikrtime.app.ui.theme.Gold
 import java.time.ZonedDateTime
-import java.time.format.TextStyle
 import java.time.temporal.WeekFields
+import java.util.Locale
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AlarmSettingsScreen() {
     val nav = LocalNav.current
@@ -63,30 +77,18 @@ fun AlarmSettingsScreen() {
     }
 
     ScreenScaffold(title = stringResource(R.string.alarm_title), onBack = { nav.back() }) {
-        ZCard {
-            SwitchRow(
-                title = stringResource(R.string.alarm_enable),
-                subtitle = stringResource(R.string.alarm_enable_hint),
-                icon = painterResource(R.drawable.ic_alarm),
-                checked = Store.alarmEnabled,
-                onChange = {
-                    Store.alarmEnabled = it
-                    if (it && Build.VERSION.SDK_INT >= 33 && !notificationsAllowed) notifPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
-                    changed()
-                },
-            )
-            if (Store.alarmEnabled) {
-                val next = remember(version, Store.alarmOffsetMinutes, Store.alarmDays) { FajrAlarm.nextTrigger(ZonedDateTime.now()) }
-                Spacer(Modifier.height(6.dp))
-                Text(
-                    if (next != null) stringResource(R.string.alarm_next, gregorianDate(next.toLocalDate()), clock(next), clock(FajrAlarm.fajrFor(next)))
-                    else stringResource(R.string.alarm_next_none),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.padding(start = 4.dp),
-                )
-            }
+        val next = remember(version, Store.alarmEnabled, Store.alarmOffsetMinutes, Store.alarmDays) {
+            if (Store.alarmEnabled) FajrAlarm.nextTrigger(ZonedDateTime.now()) else null
         }
+        AlarmHero(
+            enabled = Store.alarmEnabled,
+            next = next,
+            onToggle = {
+                Store.alarmEnabled = it
+                if (it && Build.VERSION.SDK_INT >= 33 && !notificationsAllowed) notifPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+                changed()
+            },
+        )
 
         if (Store.alarmEnabled) {
             ZCard {
@@ -102,30 +104,22 @@ fun AlarmSettingsScreen() {
                         changed()
                     },
                 )
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(12.dp))
                 Text(stringResource(R.string.alarm_days), style = MaterialTheme.typography.bodyLarge)
-                Spacer(Modifier.height(8.dp))
-                val locale = Lang.locale(context)
-                val first = WeekFields.of(locale).firstDayOfWeek
+                Spacer(Modifier.height(10.dp))
+                // Неделя начинается так, как принято в стране телефона (понедельник или воскресенье).
+                val first = WeekFields.of(LocaleList.getDefault()[0] ?: Locale.getDefault()).firstDayOfWeek
                 val week = (0L..6L).map { first.plus(it) }
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.fillMaxWidth()) {
                     week.forEach { day ->
-                        val on = day in Store.alarmDays
-                        FilterChip(
-                            selected = on,
+                        DayToggle(
+                            label = weekdayShort(day),
+                            selected = day in Store.alarmDays,
+                            modifier = Modifier.weight(1f),
                             onClick = {
-                                Store.alarmDays = if (on) Store.alarmDays - day else Store.alarmDays + day
+                                Store.alarmDays = if (day in Store.alarmDays) Store.alarmDays - day else Store.alarmDays + day
                                 changed()
                             },
-                            label = {
-                                Text(
-                                    day.getDisplayName(TextStyle.SHORT_STANDALONE, locale).take(3),
-                                    textAlign = TextAlign.Center,
-                                    modifier = Modifier.fillMaxWidth(),
-                                    maxLines = 1,
-                                )
-                            },
-                            modifier = Modifier.weight(1f),
                         )
                     }
                 }
@@ -213,5 +207,80 @@ fun AlarmSettingsScreen() {
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
+    }
+}
+
+/** Главная карточка: включатель и время следующего будильника крупно. */
+@Composable
+private fun AlarmHero(enabled: Boolean, next: ZonedDateTime?, onToggle: (Boolean) -> Unit) {
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(28.dp))
+            .background(Brush.linearGradient(listOf(EmeraldDeep, EmeraldNight)))
+            .clickable { onToggle(!enabled) },
+    ) {
+        StarPattern(Modifier.matchParentSize(), color = Gold.copy(alpha = 0.10f))
+        Column(Modifier.padding(horizontal = 22.dp, vertical = 20.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(painterResource(R.drawable.ic_alarm), contentDescription = null, tint = Gold, modifier = Modifier.size(26.dp))
+                Spacer(Modifier.width(12.dp))
+                Text(
+                    stringResource(R.string.alarm_enable),
+                    style = MaterialTheme.typography.titleMedium,
+                    color = Cream,
+                    modifier = Modifier.weight(1f),
+                )
+                Spacer(Modifier.width(8.dp))
+                Switch(
+                    checked = enabled,
+                    onCheckedChange = onToggle,
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = EmeraldDeep,
+                        checkedTrackColor = Gold,
+                        uncheckedThumbColor = Cream.copy(alpha = 0.8f),
+                        uncheckedTrackColor = Color.Transparent,
+                        uncheckedBorderColor = Cream.copy(alpha = 0.5f),
+                    ),
+                )
+            }
+            Spacer(Modifier.height(10.dp))
+            if (enabled && next != null) {
+                BigClock(next, fontSize = 56.sp, color = Gold)
+                Text(
+                    gregorianDate(next.toLocalDate()) + " · " + stringResource(R.string.alarm_fajr_at, clock(FajrAlarm.fajrFor(next))),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Cream.copy(alpha = 0.85f),
+                )
+            } else {
+                Text(
+                    if (enabled) stringResource(R.string.alarm_next_none) else stringResource(R.string.alarm_enable_hint),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Cream.copy(alpha = 0.85f),
+                )
+            }
+        }
+    }
+}
+
+/** Кружок дня недели: выбран — закрашен. */
+@Composable
+private fun DayToggle(label: String, selected: Boolean, modifier: Modifier = Modifier, onClick: () -> Unit) {
+    val scheme = MaterialTheme.colorScheme
+    Box(
+        modifier
+            .aspectRatio(1f)
+            .clip(CircleShape)
+            .background(if (selected) scheme.primary else scheme.surfaceContainerHigh)
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            label,
+            style = MaterialTheme.typography.labelMedium,
+            color = if (selected) scheme.onPrimary else scheme.onSurfaceVariant,
+            maxLines = 1,
+            softWrap = false,
+        )
     }
 }

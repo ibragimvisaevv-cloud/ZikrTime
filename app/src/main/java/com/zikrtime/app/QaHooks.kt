@@ -33,6 +33,14 @@ object QaHooks {
         if (intent.getBooleanExtra("qa_demo", false)) seed(activity)
         when (screen) {
             "onboarding" -> Store.onboarded = false
+            "onboarding_welcome" -> {
+                Store.onboarded = false
+                nav.onboardingStep = 1
+            }
+            "onboarding_city" -> {
+                Store.onboarded = false
+                nav.onboardingStep = 2
+            }
             "home" -> nav.tab = Tab.PRAYER
             "knowledge" -> nav.tab = Tab.KNOWLEDGE
             "focus" -> nav.tab = Tab.FOCUS
