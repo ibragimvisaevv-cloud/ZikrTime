@@ -23,7 +23,7 @@ object Shop {
     private const val REMOTE = CONTENT_BASE + "catalog.json"
     private const val KEY = "shop_catalog"
     private const val KEY_AT = "shop_catalog_at"
-    private const val REFRESH_MS = 30 * 60 * 1000L
+    private const val REFRESH_MS = 60 * 1000L // при каждом открытии магазина, не чаще раза в минуту
 
     /** Текст на нескольких языках: {"ru": "...", "en": "..."}. */
     class Text(private val values: Map<String, String>) {
