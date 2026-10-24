@@ -100,11 +100,12 @@ jobs:
           YC_FOLDER_ID: ${{ secrets.YC_FOLDER_ID }}
         run: |
           if ! yc iam service-account get --name "$RUNTIME_SA" > /dev/null 2>&1; then
-            yc iam service-account create --name "$RUNTIME_SA"
+            yc iam service-account create --name "$RUNTIME_SA" > diag/sa.txt 2>&1 || { cat diag/sa.txt; exit 1; }
           fi
-          SA_ID=$(yc iam service-account get --name "$RUNTIME_SA" --format json | jq -r .id)
+          SA_ID=$(yc iam service-account get --name "$RUNTIME_SA" --format json 2>> diag/sa.txt | jq -r .id)
+          echo "sa id length: ${#SA_ID}" >> diag/sa.txt
           yc resource-manager folder add-access-binding --id "$FOLDER" --role storage.editor \
-            --subject "serviceAccount:$SA_ID" > /dev/null 2>&1 || true
+            --subject "serviceAccount:$SA_ID" >> diag/sa.txt 2>&1 || echo "binding: см. выше" >> diag/sa.txt
           echo "SA_ID=$SA_ID" >> "$GITHUB_ENV"
 
       - name: Облачная функция
