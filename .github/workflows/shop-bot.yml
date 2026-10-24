@@ -9,6 +9,9 @@ on:
     paths: ["shop-bot/**", ".github/workflows/shop-bot.yml"]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 concurrency:
   group: shop-bot
   cancel-in-progress: false
@@ -52,20 +55,40 @@ jobs:
           YC_SA_KEY: ${{ secrets.YC_SA_KEY }}
           YC_FOLDER_ID: ${{ secrets.YC_FOLDER_ID }}
         run: |
-          curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash -s -- -i "$HOME/yc" -n
-          echo "$HOME/yc/bin" >> "$GITHUB_PATH"
+          mkdir -p diag
+          # Проверка ключа без вывода секретов: только имена полей и длины
           printf '%s' "$YC_SA_KEY" > "$RUNNER_TEMP/key.json"
-          "$HOME/yc/bin/yc" config profile create ci
-          "$HOME/yc/bin/yc" config set service-account-key "$RUNNER_TEMP/key.json"
-          "$HOME/yc/bin/yc" config set folder-id "$YC_FOLDER_ID"
+          python3 - "$RUNNER_TEMP/key.json" > diag/key-check.txt 2>&1 <<'PY' || true
+          import json, sys
+          raw = open(sys.argv[1], encoding="utf-8-sig").read()
+          print("длина ключа:", len(raw), "начало:", repr(raw.strip()[:1]), "конец:", repr(raw.strip()[-1:]))
+          try:
+              k = json.loads(raw)
+              print("поля:", sorted(k.keys()))
+              print("private_key начинается правильно:", str(k.get("private_key", "")).lstrip().startswith("PLEASE DO NOT REMOVE") or "BEGIN PRIVATE KEY" in str(k.get("private_key", "")))
+          except Exception as e:
+              print("не JSON:", type(e).__name__, str(e)[:120])
+          PY
+          python3 -c "import json,sys;k=json.load(open(sys.argv[1],encoding='utf-8-sig'));json.dump(k,open(sys.argv[1],'w'))" "$RUNNER_TEMP/key.json" || true
+          f="$YC_FOLDER_ID"; echo "folder id: длина ${#f}, начало ${f:0:3}" >> diag/key-check.txt
+          curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash -s -- -i "$HOME/yc" -n > diag/install.txt 2>&1
+          echo "$HOME/yc/bin" >> "$GITHUB_PATH"
+          YC="$HOME/yc/bin/yc"
+          $YC config profile create ci > diag/yc.txt 2>&1
+          $YC config set service-account-key "$RUNNER_TEMP/key.json" >> diag/yc.txt 2>&1
+          $YC config set folder-id "$(echo "$YC_FOLDER_ID" | tr -d ' \r\n')" >> diag/yc.txt 2>&1
+          $YC resource-manager folder get "$(echo "$YC_FOLDER_ID" | tr -d ' \r\n')" --format json 2>&1 | python3 -c "import sys,json
+          t=sys.stdin.read()
+          try: print('каталог найден:', json.loads(t).get('name'))
+          except Exception: print('ошибка доступа к каталогу:', t[:400])" >> diag/yc.txt
 
       - name: Хранилище (фото и каталог)
         if: steps.keys.outputs.ready == 'true'
         run: |
           if ! yc storage bucket get --name "$BUCKET" > /dev/null 2>&1; then
-            yc storage bucket create --name "$BUCKET" --default-storage-class standard --public-read
+            yc storage bucket create --name "$BUCKET" --default-storage-class standard --public-read > diag/bucket.txt 2>&1 || { cat diag/bucket.txt; exit 1; }
           fi
-          yc storage bucket update --name "$BUCKET" --public-read > /dev/null
+          yc storage bucket update --name "$BUCKET" --public-read > /dev/null 2>> diag/bucket.txt || true
 
       - name: Сервисный аккаунт функции
         if: steps.keys.outputs.ready == 'true'
@@ -95,7 +118,7 @@ jobs:
             --function-name "$FUNCTION" --runtime python312 --entrypoint index.handler \
             --memory 256m --execution-timeout 60s --source-path "$RUNNER_TEMP/src" \
             --service-account-id "$SA_ID" \
-            --environment "BOT_TOKEN=$SHOP_BOT_TOKEN,BUCKET=$BUCKET,OWNER_USERNAME=${OWNER_USERNAME#@}" > /dev/null
+            --environment "BOT_TOKEN=$SHOP_BOT_TOKEN,BUCKET=$BUCKET,OWNER_USERNAME=${OWNER_USERNAME#@}" > /dev/null 2> diag/function.txt
           FID=$(yc serverless function get --name "$FUNCTION" --format json | jq -r .id)
           echo "FUNCTION_URL=https://functions.yandexcloud.net/$FID" >> "$GITHUB_ENV"
 
@@ -103,10 +126,12 @@ jobs:
         if: steps.keys.outputs.ready == 'true'
         env:
           SHOP_BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
+          OWNER_USERNAME: ${{ secrets.SHOP_OWNER_USERNAME }}
         run: |
           SECRET=$(python3 -c "import hashlib,os;print(hashlib.sha256((os.environ['SHOP_BOT_TOKEN']+':webhook').encode()).hexdigest()[:32])")
           API="https://api.telegram.org/bot$SHOP_BOT_TOKEN"
-          curl -sf "$API/setWebhook" -H 'Content-Type: application/json' -d "{\"url\":\"$FUNCTION_URL\",\"secret_token\":\"$SECRET\",\"max_connections\":1,\"allowed_updates\":[\"message\",\"callback_query\"]}" > /dev/null
+          curl -s "$API/setWebhook" -H 'Content-Type: application/json' -d "{\"url\":\"$FUNCTION_URL\",\"secret_token\":\"$SECRET\",\"max_connections\":1,\"allowed_updates\":[\"message\",\"callback_query\"]}" > diag/webhook.txt
+          grep -q '"ok":true' diag/webhook.txt
           curl -sf "$API/setMyCommands" -H 'Content-Type: application/json' \
             -d '{"commands":[{"command":"menu","description":"Главное меню"},{"command":"help","description":"Как это работает"},{"command":"cancel","description":"Отменить шаг"}]}' > /dev/null
           curl -sf "$API/setMyDescription" -H 'Content-Type: application/json' \
@@ -114,6 +139,9 @@ jobs:
           curl -sf "$API/setMyShortDescription" -H 'Content-Type: application/json' \
             -d '{"short_description":"Добавьте свою компанию в магазин приложения «Зикр-тайм»"}' > /dev/null
           BOT=$(curl -sf "$API/getMe" | jq -r .result.username)
+          echo "bot=$BOT" > diag/bot.txt
+          echo "function=$FUNCTION_URL" >> diag/bot.txt
+          [ -z "$OWNER_USERNAME" ] && echo "owner_code=$(python3 -c "import hashlib,os;print(hashlib.sha256((os.environ['SHOP_BOT_TOKEN']+':owner').encode()).hexdigest()[:8])")" >> diag/bot.txt || echo "owner=by_username" >> diag/bot.txt
           CODE=$(python3 -c "import hashlib,os;print(hashlib.sha256((os.environ['SHOP_BOT_TOKEN']+':owner').encode()).hexdigest()[:8])")
           {
             echo "### ✅ Бот @$BOT работает"
@@ -122,3 +150,11 @@ jobs:
             echo ""
             echo "Каталог для приложения: https://storage.yandexcloud.net/$BUCKET/catalog.json"
           } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Диагностика (без секретов)
+        if: always() && steps.keys.outputs.ready == 'true'
+        run: |
+          mkdir -p diag && cd diag
+          git init -q && git checkout -q -b ci-shopbot
+          git add -A && git -c user.name=ci -c user.email=ci@local commit -qm "diag ${{ github.run_number }}" || exit 0
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" ci-shopbot
