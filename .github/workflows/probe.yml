@@ -1,0 +1,68 @@
+name: Probe
+
+# Поиск причины падения эмулятора: несколько эмуляторов параллельно, на каждом — своё сочетание эффектов.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/probe.yml"]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: gradle/actions/setup-gradle@v4
+      - run: chmod +x gradlew && ./gradlew assembleDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: probe-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
+
+  probe:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: lang-plain, screen: onboarding, extras: "--ez qa_parallax false --ez qa_tilt false" }
+          - { name: lang-parallax, screen: onboarding, extras: "--ez qa_tilt false" }
+          - { name: lang-splash, screen: onboarding, extras: "--ez qa_parallax false --ez qa_tilt false --ez qa_splash true" }
+          - { name: welcome-plain, screen: onboarding_welcome, extras: "--ez qa_parallax false --ez qa_tilt false" }
+          - { name: city-plain, screen: onboarding_city, extras: "--ez qa_parallax false --ez qa_tilt false" }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: probe-apk
+      - name: KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -skin 720x1520
+          script: |
+            mkdir -p out; adb install -r -g app-debug.apk > out/install.txt 2>&1; adb shell wm density 320; adb logcat -c; adb shell am start -S -W -n com.zikrtime.app/.MainActivity --es qa_screen ${{ matrix.screen }} ${{ matrix.extras }} > out/start.txt 2>&1 || true; sleep 15; (timeout 15 adb get-state > out/state.txt 2>&1 && echo ALIVE > out/result.txt) || echo DIED > out/result.txt; timeout 25 adb exec-out screencap -p > out/screen.png || true; timeout 20 adb logcat -d -t 3000 > out/logcat.txt 2>&1 || true
+      - name: Publish
+        if: always()
+        run: |
+          mkdir -p out && cd out && [ -f result.txt ] || echo "NO RESULT" > result.txt
+          git init -q && git checkout -q -b "probe-${{ matrix.name }}" && git add -A
+          git -c user.name=ci -c user.email=ci@users.noreply.github.com commit -qm "probe ${{ matrix.name }}"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" "probe-${{ matrix.name }}"
