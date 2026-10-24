@@ -139,7 +139,7 @@ fun YandexPlacesMap(
     val clusterListener = remember {
         ClusterListener { cluster: Cluster ->
             cluster.appearance.setIcon(ImageProvider.fromBitmap(clusterBitmap(cluster.size, density)))
-            cluster.addClusterTapListener(clusterTap)
+            cluster.addClusterTapListener(java.lang.ref.WeakReference(clusterTap))
         }
     }
     val marks = remember { HashMap<String, PlacemarkMapObject>() }
@@ -153,7 +153,7 @@ fun YandexPlacesMap(
         val big = ImageProvider.fromBitmap(markerBitmap(true, density))
         icons[0] = normal
         icons[1] = big
-        val collection = map.mapObjects.addClusterizedPlacemarkCollection(clusterListener)
+        val collection = map.mapObjects.addClusterizedPlacemarkCollection(java.lang.ref.WeakReference(clusterListener))
         places.forEach { p ->
             marks[p.id] = collection.addPlacemark().apply {
                 geometry = Point(p.lat, p.lon)
