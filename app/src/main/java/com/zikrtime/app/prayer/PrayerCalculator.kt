@@ -38,9 +38,21 @@ enum class CalcMethod(
     val fajrAngle: Double,
     val ishaAngle: Double?,
     val ishaMinutes: Int? = null,
-    /** Номер метода в API aladhan.com. */
-    val aladhanId: Int,
+    /** Номер метода в API aladhan.com (null — у сервиса такого расписания нет). */
+    val aladhanId: Int?,
+    /**
+     * Поправки в минутах к каждому времени (фаджр, восход, зухр, аср, магриб, иша) — «ихтият»,
+     * как в официальных расписаниях. Дробные значения нужны, чтобы округление совпадало с расписанием.
+     */
+    val offsets: DoubleArray = DoubleArray(6),
 ) {
+    /**
+     * Московская Соборная мечеть (ДУМ РФ). Подобрано по официальному расписанию dumrf.ru
+     * (24.10.2026: 05:15, 07:14, 12:19, 14:34, 17:12, 18:50): фаджр 18°, иша 15°,
+     * восход на 5 мин раньше, зухр на 5 мин и магриб на 4 мин позже расчётных.
+     * В Москве приложение каждый день сверяется с сайтом dumrf.ru (см. [DumrfLive]).
+     */
+    MOSCOW_CATHEDRAL(18.0, 15.0, aladhanId = null, offsets = doubleArrayOf(0.5, -5.0, 5.0, -0.5, 4.0, -0.5)),
     RUSSIA(16.0, 15.0, aladhanId = 14),
     MWL(18.0, 17.0, aladhanId = 3),
     TURKEY(18.0, 17.0, aladhanId = 13),
@@ -103,15 +115,16 @@ object PrayerCalculator {
             return Instant.ofEpochSecond(midnightUtc.epochSecond + minutes * 60).atZone(zone)
         }
 
+        val o = method.offsets
         return PrayerTimes(
             date = date,
             times = mapOf(
-                Prayer.FAJR to at(utc[FAJR]),
-                Prayer.SUNRISE to at(utc[SUNRISE]),
-                Prayer.DHUHR to at(utc[DHUHR]),
-                Prayer.ASR to at(utc[ASR]),
-                Prayer.MAGHRIB to at(utc[MAGHRIB]),
-                Prayer.ISHA to at(utc[ISHA]),
+                Prayer.FAJR to at(utc[FAJR] + o[0] / 60.0),
+                Prayer.SUNRISE to at(utc[SUNRISE] + o[1] / 60.0),
+                Prayer.DHUHR to at(utc[DHUHR] + o[2] / 60.0),
+                Prayer.ASR to at(utc[ASR] + o[3] / 60.0),
+                Prayer.MAGHRIB to at(utc[MAGHRIB] + o[4] / 60.0),
+                Prayer.ISHA to at(utc[ISHA] + o[5] / 60.0),
             ),
         )
     }

@@ -94,8 +94,8 @@ class AlarmService : Service() {
             }
         }.getOrNull()
 
-        val adhanId = AdhanSound.resId(this)
-        player = if (Store.alarmSound == "adhan" && adhanId != 0) {
+        val adhanId = if (Store.alarmSound == "system") 0 else AdhanSound.resId(this, AdhanSound.voice(Store.alarmSound).id)
+        player = if (adhanId != 0) {
             play {
                 resources.openRawResourceFd(adhanId).use { setDataSource(it.fileDescriptor, it.startOffset, it.length) }
             }

@@ -1,4 +1,10 @@
-Adhan recording: "Beautiful adhan.ogg" by Adam-synagda
-Source: https://commons.wikimedia.org/wiki/File:Beautiful_adhan.ogg
-License: CC0 1.0 Universal (public domain dedication)
-Processing: silence trimmed, converted to mono (Ogg Vorbis / AAC), 29-second fade-out version for iOS notifications.
+Adhan recordings (Wikimedia Commons). Processing: silence trimmed, loudness normalized, mono Ogg Vorbis; 29-second fade-out versions for iOS notifications.
+
+1. "Beautiful adhan.ogg" by Adam-synagda — CC0 1.0 (public domain dedication)
+   https://commons.wikimedia.org/wiki/File:Beautiful_adhan.ogg
+2. "Azan.ogg" by Andrewler — CC BY-SA 4.0
+   https://commons.wikimedia.org/wiki/File:Azan.ogg
+3. "The Adhan - Muslim Call to Prayer - Aaqib Azeez.mp3" uploaded by Atcovi — CC BY-SA 4.0
+   https://commons.wikimedia.org/wiki/File:The_Adhan_-_Muslim_Call_to_Prayer_-_Aaqib_Azeez.mp3
+
+CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/ — the processed versions 2 and 3 are shared under the same license.

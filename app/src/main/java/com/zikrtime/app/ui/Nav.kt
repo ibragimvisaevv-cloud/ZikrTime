@@ -8,10 +8,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 
 /** Экраны второго уровня (поверх вкладок). */
-enum class Screen { LANGUAGE, CITY, PRAYER_SETTINGS, ALARM, QIBLA, TASBIH, QUIZ, APPS, ABOUT }
+enum class Screen { LANGUAGE, CITY, PRAYER_SETTINGS, ALARM, QIBLA, TASBIH, QUIZ, APPS, ABOUT, SHOP_SELLER, SHOP_PRODUCT }
 
 /** Вкладки нижней панели. */
-enum class Tab { PRAYER, KNOWLEDGE, FOCUS, MORE }
+enum class Tab { PRAYER, KNOWLEDGE, SHOP, FOCUS, MORE }
 
 /** Простая навигация: текущая вкладка и стопка открытых экранов. */
 class Nav {
@@ -23,6 +23,13 @@ class Nav {
 
     /** Увеличивается при каждом новом раунде — чтобы экран викторины начинался заново. */
     var quizRound by mutableIntStateOf(0)
+
+    /** Открытый продавец / товар в магазине. */
+    var shopSeller by mutableStateOf<String?>(null)
+    var shopProduct by mutableStateOf<String?>(null)
+
+    /** Только для проверки в CI: начать раунд сразу с карточек подготовки. */
+    var quizStartWithCards = false
 
     /** С какого шага начинать знакомство (0 — язык, 1 — приветствие, 2 — город). */
     var onboardingStep by mutableIntStateOf(0)

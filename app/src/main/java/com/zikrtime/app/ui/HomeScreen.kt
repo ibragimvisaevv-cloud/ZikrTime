@@ -32,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -143,7 +144,8 @@ fun HomeScreen() {
                 )
             }
             Text(
-                stringResource(
+                if (Store.method == com.zikrtime.app.prayer.CalcMethod.MOSCOW_CATHEDRAL) stringResource(R.string.home_source_dumrf)
+                else stringResource(
                     if (PrayerSchedule.isOnline(today)) R.string.home_source_online else R.string.home_source_local,
                     methodName(Store.method),
                 ),
@@ -180,6 +182,8 @@ fun HomeScreen() {
             )
         }
 
+        if (today.dayOfWeek == java.time.DayOfWeek.FRIDAY) FridayCard(today)
+
         FocusSummary(usedMillis = usedMillis, onOpen = { nav.tab = Tab.FOCUS }, onQuiz = { nav.startQuiz(null) })
 
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -208,13 +212,7 @@ private fun NextPrayerHero(prayer: Prayer, at: ZonedDateTime, previous: java.tim
         val passed = Duration.between(it, now.toInstant()).toSeconds().toFloat()
         if (total > 0) (passed / total).coerceIn(0f, 1f) else null
     }
-    Box(
-        Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(28.dp))
-            .background(Brush.linearGradient(listOf(Emerald, EmeraldDeep))),
-    ) {
-        StarPattern(Modifier.matchParentSize(), color = Gold.copy(alpha = 0.12f))
+    GlassHero {
         Column(Modifier.padding(24.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {
@@ -365,5 +363,30 @@ private fun StreakCard(title: String, value: Int, hint: String, modifier: Modifi
         Text(title, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondaryContainer)
         Text(daysText(value), style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.onSecondaryContainer)
         Text(hint, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.75f))
+    }
+}
+
+/** В пятницу — карточка с аятом или хадисом о пятнице (меняется каждые несколько часов). */
+@Composable
+private fun FridayCard(today: java.time.LocalDate) {
+    val res = LocalContext.current.resources
+    val items = com.zikrtime.app.prayer.FridayReminders.itemNumbers
+    var index by remember(today) { mutableStateOf((java.time.LocalTime.now().hour / 3) % items.size) }
+    val n = items[index]
+    ZCard(onClick = { index = (index + 1) % items.size }) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            IconBadge(painterResource(R.drawable.ic_shop_book), container = Gold.copy(alpha = 0.35f), tint = Color(0xFF8A6414))
+            Spacer(Modifier.width(12.dp))
+            Text(stringResource(R.string.home_friday_title), style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+            Text("${index + 1}/${items.size}", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        Spacer(Modifier.height(12.dp))
+        Text("«" + com.zikrtime.app.prayer.FridayReminders.text(res, n) + "»", style = MaterialTheme.typography.bodyLarge)
+        Spacer(Modifier.height(8.dp))
+        Text(
+            com.zikrtime.app.prayer.FridayReminders.source(res, n),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.primary,
+        )
     }
 }

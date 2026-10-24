@@ -32,6 +32,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.Alignment
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.Column
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -83,7 +91,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ZikrTheme {
-                Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                Box(Modifier.fillMaxSize()) {
+                    // Переливающийся фон под всеми экранами
+                    com.zikrtime.app.ui.AuroraBackground()
                     CompositionLocalProvider(LocalNav provides nav) {
                         AppRoot()
                     }
@@ -100,6 +110,7 @@ class MainActivity : ComponentActivity() {
     private fun handleOpen(intent: Intent?) {
         when (intent?.getStringExtra(EXTRA_OPEN)) {
             "alarm" -> nav.open(Screen.ALARM)
+            "focus" -> nav.tab = com.zikrtime.app.ui.Tab.FOCUS
         }
     }
 
@@ -110,12 +121,15 @@ class MainActivity : ComponentActivity() {
         if (Store.onboarded) {
             PrayerAlarms.scheduleNext(this)
             FajrAlarm.schedule(this)
+            com.zikrtime.app.prayer.FridayReminders.schedule(this)
             GuardService.sync(this)
+            com.zikrtime.app.widget.Widgets.updateAll(this)
             lifecycleScope.launch {
                 // Время из интернета: если загрузилось новое — переставляем будильники.
                 if (OnlineTimes.refresh()) {
                     PrayerAlarms.scheduleNext(this@MainActivity)
                     FajrAlarm.schedule(this@MainActivity)
+                    com.zikrtime.app.widget.Widgets.updateAll(this@MainActivity)
                 }
             }
         }
@@ -161,6 +175,8 @@ private fun AppRoot() {
             Screen.QUIZ -> QuizScreen()
             Screen.APPS -> AppsScreen()
             Screen.ABOUT -> AboutScreen()
+            Screen.SHOP_SELLER -> com.zikrtime.app.ui.SellerScreen()
+            Screen.SHOP_PRODUCT -> com.zikrtime.app.ui.ProductScreen()
         }
     }
 }
@@ -171,33 +187,48 @@ private fun Tabs() {
     val items = listOf(
         Triple(Tab.PRAYER, R.drawable.ic_nav_prayer, R.string.tab_prayer),
         Triple(Tab.KNOWLEDGE, R.drawable.ic_nav_knowledge, R.string.tab_knowledge),
+        Triple(Tab.SHOP, R.drawable.ic_nav_shop, R.string.tab_shop),
         Triple(Tab.FOCUS, R.drawable.ic_nav_focus, R.string.tab_focus),
         Triple(Tab.MORE, R.drawable.ic_nav_more, R.string.tab_more),
     )
-    Scaffold(
-        bottomBar = {
-            NavigationBar(containerColor = MaterialTheme.colorScheme.surfaceContainer) {
-                items.forEach { (tab, icon, label) ->
-                    NavigationBarItem(
-                        selected = nav.tab == tab,
-                        onClick = { nav.tab = tab },
-                        icon = { Icon(painterResource(icon), contentDescription = null) },
-                        label = { Text(stringResource(label)) },
-                        colors = NavigationBarItemDefaults.colors(
-                            indicatorColor = MaterialTheme.colorScheme.primaryContainer,
-                            selectedIconColor = MaterialTheme.colorScheme.primary,
-                        ),
-                    )
+    Box(Modifier.fillMaxSize()) {
+        AnimatedContent(
+            targetState = nav.tab,
+            transitionSpec = {
+                (fadeIn(androidx.compose.animation.core.tween(260)) + androidx.compose.animation.scaleIn(initialScale = 0.985f)) togetherWith
+                    fadeOut(androidx.compose.animation.core.tween(160))
+            },
+            label = "tabs",
+        ) { tab ->
+            Box(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.statusBars)) {
+                when (tab) {
+                    Tab.PRAYER -> HomeScreen()
+                    Tab.KNOWLEDGE -> KnowledgeScreen()
+                    Tab.SHOP -> com.zikrtime.app.ui.ShopScreen()
+                    Tab.FOCUS -> FocusScreen()
+                    Tab.MORE -> MoreScreen()
                 }
             }
-        },
-    ) { padding ->
-        Box(Modifier.padding(padding)) {
-            when (nav.tab) {
-                Tab.PRAYER -> HomeScreen()
-                Tab.KNOWLEDGE -> KnowledgeScreen()
-                Tab.FOCUS -> FocusScreen()
-                Tab.MORE -> MoreScreen()
+        }
+        com.zikrtime.app.ui.GlassNavBar(
+            items = items,
+            selected = items.first { it.first == nav.tab },
+            onSelect = { nav.tab = it.first },
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .windowInsetsPadding(WindowInsets.navigationBars)
+                .padding(horizontal = 12.dp, vertical = 10.dp),
+        ) { (_, icon, label), selected ->
+            val color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Icon(painterResource(icon), contentDescription = null, tint = color, modifier = Modifier.size(24.dp))
+                Text(
+                    stringResource(label),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = color,
+                    maxLines = 1,
+                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                )
             }
         }
     }

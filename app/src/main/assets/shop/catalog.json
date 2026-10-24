@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "demo": true,
+  "contact_telegram": "",
+  "categories": [
+    {"id": "perfume", "icon": "perfume", "names": {"ru": "Парфюм и благовония", "en": "Perfume & incense", "uz": "Atir va tutatqilar", "tg": "Атр ва бухур", "kk": "Иіссу және хош иістер", "ky": "Атыр жана жыпар", "az": "Ətir və buxur", "tr": "Parfüm ve buhur"}},
+    {"id": "auto", "icon": "car", "names": {"ru": "Автопрокат", "en": "Car rental", "uz": "Avtoijara", "tg": "Иҷораи мошин", "kk": "Көлік жалға беру", "ky": "Унаа ижарасы", "az": "Avtomobil icarəsi", "tr": "Araç kiralama"}},
+    {"id": "books", "icon": "book", "names": {"ru": "Книги и Коран", "en": "Books & Quran", "uz": "Kitoblar va Qurʼon", "tg": "Китобҳо ва Қуръон", "kk": "Кітаптар және Құран", "ky": "Китептер жана Куран", "az": "Kitablar və Quran", "tr": "Kitaplar ve Kur'an"}},
+    {"id": "clothes", "icon": "clothes", "names": {"ru": "Одежда", "en": "Clothing", "uz": "Kiyim", "tg": "Либос", "kk": "Киім", "ky": "Кийим", "az": "Geyim", "tr": "Giyim"}},
+    {"id": "food", "icon": "food", "names": {"ru": "Халяль-продукты", "en": "Halal food", "uz": "Halol mahsulotlar", "tg": "Маҳсулоти ҳалол", "kk": "Халал өнімдер", "ky": "Халал азыктар", "az": "Halal məhsullar", "tr": "Helal gıda"}},
+    {"id": "gifts", "icon": "gift", "names": {"ru": "Подарки", "en": "Gifts", "uz": "Sovgʻalar", "tg": "Тӯҳфаҳо", "kk": "Сыйлықтар", "ky": "Белектер", "az": "Hədiyyələr", "tr": "Hediyeler"}}
+  ],
+  "sellers": [
+    {
+      "id": "demo_perfume", "name": "Ароматы Востока", "partner": true, "accent": "#8A5A2B",
+      "city": {"ru": "Грозный", "en": "Grozny"},
+      "description": {"ru": "Пример карточки продавца: масляные духи без спирта, бахур и уд. Здесь будет описание магазина-партнёра.", "en": "Sample seller card: alcohol-free oil perfumes, bakhoor and oud. The partner's description will appear here."},
+      "address": "", "phone": "", "telegram": "", "whatsapp": "", "instagram": "",
+      "categories": ["perfume", "gifts"]
+    },
+    {
+      "id": "demo_auto", "name": "Автопрокат «Дорога»", "partner": true, "accent": "#1F4E79",
+      "city": {"ru": "Грозный", "en": "Grozny"},
+      "description": {"ru": "Пример карточки продавца: прокат автомобилей на сутки и неделю. Здесь будут условия и автопарк партнёра.", "en": "Sample seller card: car rental by the day or week. The partner's terms and cars will appear here."},
+      "address": "", "phone": "", "telegram": "", "whatsapp": "", "instagram": "",
+      "categories": ["auto"]
+    },
+    {
+      "id": "demo_books", "name": "Книжная лавка «Нур»", "partner": false, "accent": "#0F5C4A",
+      "city": {"ru": "Москва", "en": "Moscow"},
+      "description": {"ru": "Пример карточки продавца: книги, переводы смыслов Корана, товары для намаза.", "en": "Sample seller card: books, Quran translations and prayer essentials."},
+      "address": "", "phone": "", "telegram": "", "whatsapp": "", "instagram": "",
+      "categories": ["books", "clothes", "gifts"]
+    }
+  ],
+  "products": [
+    {"id": "p1", "seller": "demo_perfume", "category": "perfume", "price": 1500, "unit": {"ru": "6 мл", "en": "6 ml"},
+     "title": {"ru": "Масляные духи «Уд» (пример)", "en": "Oud oil perfume (sample)"},
+     "description": {"ru": "Пример товара. Масляные духи без спирта в роллере.", "en": "Sample product. Alcohol-free oil perfume in a roll-on bottle."}},
+    {"id": "p2", "seller": "demo_perfume", "category": "perfume", "price": 900, "unit": {"ru": "50 г", "en": "50 g"},
+     "title": {"ru": "Бахур для дома (пример)", "en": "Home bakhoor (sample)"},
+     "description": {"ru": "Пример товара. Благовония для дома.", "en": "Sample product. Incense for the home."}},
+    {"id": "p3", "seller": "demo_perfume", "category": "gifts", "price": 3200, "old_price": 3800,
+     "title": {"ru": "Подарочный набор ароматов (пример)", "en": "Fragrance gift set (sample)"},
+     "description": {"ru": "Пример товара. Набор из трёх ароматов в коробке.", "en": "Sample product. Three fragrances in a gift box."}},
+    {"id": "a1", "seller": "demo_auto", "category": "auto", "price": 3500, "unit": {"ru": "сутки", "en": "per day"},
+     "title": {"ru": "Седан эконом-класса (пример)", "en": "Economy sedan (sample)"},
+     "description": {"ru": "Пример товара. Автомат, кондиционер, без водителя.", "en": "Sample product. Automatic, air conditioning, self-drive."}},
+    {"id": "a2", "seller": "demo_auto", "category": "auto", "price": 7000, "unit": {"ru": "сутки", "en": "per day"},
+     "title": {"ru": "Бизнес-седан (пример)", "en": "Business sedan (sample)"},
+     "description": {"ru": "Пример товара. Комфортный седан для поездок и встреч.", "en": "Sample product. A comfortable sedan for trips and meetings."}},
+    {"id": "b1", "seller": "demo_books", "category": "books", "price": 1200,
+     "title": {"ru": "Перевод смыслов Корана (пример)", "en": "Quran translation (sample)"},
+     "description": {"ru": "Пример товара. Арабский текст и перевод смыслов.", "en": "Sample product. Arabic text with a translation of the meanings."}},
+    {"id": "b2", "seller": "demo_books", "category": "clothes", "price": 1800,
+     "title": {"ru": "Молитвенный коврик (пример)", "en": "Prayer mat (sample)"},
+     "description": {"ru": "Пример товара. Мягкий коврик для намаза.", "en": "Sample product. A soft prayer mat."}},
+    {"id": "b3", "seller": "demo_books", "category": "gifts", "price": 600,
+     "title": {"ru": "Тасбих из 33 бусин (пример)", "en": "33-bead tasbih (sample)"},
+     "description": {"ru": "Пример товара. Чётки для зикра.", "en": "Sample product. Prayer beads for dhikr."}}
+  ]
+}

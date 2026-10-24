@@ -49,7 +49,6 @@ import androidx.core.app.NotificationManagerCompat
 import com.zikrtime.app.R
 import com.zikrtime.app.alarm.FajrAlarm
 import com.zikrtime.app.data.Store
-import com.zikrtime.app.prayer.AdhanSound
 import com.zikrtime.app.prayer.PrayerAlarms
 import com.zikrtime.app.ui.theme.Cream
 import com.zikrtime.app.ui.theme.EmeraldDeep
@@ -127,15 +126,7 @@ fun AlarmSettingsScreen() {
 
             SectionLabel(stringResource(R.string.alarm_sound))
             ZCard(padding = PaddingValues(vertical = 6.dp, horizontal = 8.dp)) {
-                val hasAdhan = AdhanSound.available(context)
-                if (hasAdhan) {
-                    RadioLine(stringResource(R.string.alarm_sound_adhan), selected = Store.alarmSound == "adhan", onClick = { Store.alarmSound = "adhan" })
-                }
-                RadioLine(
-                    stringResource(R.string.alarm_sound_system),
-                    selected = Store.alarmSound == "system" || !hasAdhan,
-                    onClick = { Store.alarmSound = "system" },
-                )
+                AdhanVoiceList(selected = Store.alarmSound, onSelect = { Store.alarmSound = it }, includeSystem = true)
             }
 
             ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 6.dp)) {

@@ -63,6 +63,8 @@ class GuardService : Service() {
         return START_STICKY
     }
 
+    private var lastWidgetUpdate = 0L
+
     /** Одна проверка. Возвращает, через сколько миллисекунд проверить снова. */
     private fun check(): Long {
         if (!shouldRun(this)) {
@@ -72,6 +74,11 @@ class GuardService : Service() {
         if (!getSystemService(PowerManager::class.java).isInteractive) return CHECK_SCREEN_OFF_MS
 
         val now = System.currentTimeMillis()
+        // Раз в минуту обновляем виджет «Экранное время».
+        if (now - lastWidgetUpdate > 60_000) {
+            lastWidgetUpdate = now
+            runCatching { com.zikrtime.app.widget.Widgets.updateScreenTime(this) }
+        }
         val snapshot = ScreenTime.snapshot(this, now) ?: return CHECK_SCREEN_OFF_MS
         // Открытая соцсеть, которую мы ещё не закрывали после её последнего открытия.
         val open = snapshot.openPackages.filter { (pkg, openedAt) -> openedAt > (lastBlocked[pkg] ?: 0L) }

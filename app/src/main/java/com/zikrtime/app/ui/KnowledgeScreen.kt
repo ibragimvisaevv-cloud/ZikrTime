@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -151,22 +152,108 @@ fun QuizScreen() {
     }
 }
 
+/** Этапы раунда: предложение подготовиться → карточки → вопросы → итог. */
+private enum class Stage { ASK, CARDS, QUIZ, RESULT }
+
 @Composable
 private fun QuizFlow(bank: com.zikrtime.app.quiz.QuizBank, category: String?, onDone: () -> Unit, onAgain: () -> Unit) {
-    var added by rememberSaveable { mutableStateOf<Int?>(null) }
-    val finished = added
-    if (finished == null) {
-        QuizRound(
+    val nav = LocalNav.current
+    var stage by rememberSaveable { mutableStateOf(if (nav.quizStartWithCards) Stage.CARDS else Stage.ASK) }
+    var added by rememberSaveable { mutableStateOf(0) }
+    // Порядок вопросов определяем сразу: карточки — ровно по первым вопросам раунда.
+    val order = remember(bank, category) { QuestionBank.roundOrder(bank, category, Store.recentQuestions) }
+    val cards = remember(order) { order.take(PREP_CARDS) }
+    when (stage) {
+        Stage.ASK -> PrepOffer(onRead = { stage = Stage.CARDS }, onSkip = { stage = Stage.QUIZ })
+        Stage.CARDS -> StudyCards(bank = bank, cards = cards, onReady = { stage = Stage.QUIZ })
+        Stage.QUIZ -> QuizRound(
             bank = bank,
             category = category,
+            plannedOrder = order,
             onFinished = {
                 added = Store.addBonus()
                 Store.recordRoundCompleted()
+                stage = Stage.RESULT
             },
         )
-    } else {
-        RoundResult(addedMinutes = finished, onAgain = onAgain, onDone = onDone)
+        Stage.RESULT -> RoundResult(addedMinutes = added, onAgain = onAgain, onDone = onDone)
     }
+}
+
+private const val PREP_CARDS = 5
+
+/** «Хотите подготовиться?» — две кнопки. */
+@Composable
+private fun PrepOffer(onRead: () -> Unit, onSkip: () -> Unit) {
+    GlassHero {
+        Column(Modifier.padding(24.dp)) {
+            Text("📖", style = MaterialTheme.typography.displaySmall)
+            Spacer(Modifier.height(12.dp))
+            Text(stringResource(R.string.prep_title), style = MaterialTheme.typography.headlineSmall, color = com.zikrtime.app.ui.theme.Cream)
+            Spacer(Modifier.height(6.dp))
+            Text(stringResource(R.string.prep_text), style = MaterialTheme.typography.bodyLarge, color = com.zikrtime.app.ui.theme.Cream.copy(alpha = 0.85f))
+            Spacer(Modifier.height(20.dp))
+            GoldButton(stringResource(R.string.prep_read), onClick = onRead)
+            Spacer(Modifier.height(10.dp))
+            GhostButton(stringResource(R.string.prep_skip), onClick = onSkip, color = com.zikrtime.app.ui.theme.Cream)
+        }
+    }
+}
+
+/** Учебные карточки: по одной справке на карточку, листаются кнопкой «Дальше». */
+@Composable
+private fun StudyCards(bank: com.zikrtime.app.quiz.QuizBank, cards: List<com.zikrtime.app.quiz.Question>, onReady: () -> Unit) {
+    var index by rememberSaveable { mutableStateOf(0) }
+    if (cards.isEmpty()) {
+        androidx.compose.runtime.LaunchedEffect(Unit) { onReady() }
+        return
+    }
+    Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.fillMaxWidth()) {
+        cards.indices.forEach { i ->
+            LinearProgressIndicator(
+                progress = { if (i <= index) 1f else 0f },
+                modifier = Modifier.weight(1f).height(5.dp),
+                strokeCap = StrokeCap.Round,
+                drawStopIndicator = {},
+            )
+        }
+    }
+    Text(
+        stringResource(R.string.prep_card_progress, index + 1, cards.size),
+        style = MaterialTheme.typography.labelLarge,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+    )
+    androidx.compose.animation.AnimatedContent(
+        targetState = index,
+        transitionSpec = {
+            (androidx.compose.animation.slideInHorizontally { it / 3 } + androidx.compose.animation.fadeIn()) togetherWith
+                (androidx.compose.animation.slideOutHorizontally { -it / 3 } + androidx.compose.animation.fadeOut())
+        },
+        label = "card",
+    ) { i ->
+        val q = cards[i]
+        ZCard(padding = PaddingValues(22.dp)) {
+            CategoryChip(bank.categoryName(q.category))
+            Spacer(Modifier.height(14.dp))
+            q.arabic?.let { arabic ->
+                Text(
+                    arabic,
+                    style = com.zikrtime.app.ui.theme.ArabicStyle.copy(textDirection = androidx.compose.ui.text.style.TextDirection.Rtl),
+                    color = MaterialTheme.colorScheme.primary,
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                Spacer(Modifier.height(10.dp))
+            }
+            Text(q.info, style = MaterialTheme.typography.titleMedium.copy(lineHeight = androidx.compose.ui.unit.TextUnit(26f, androidx.compose.ui.unit.TextUnitType.Sp)))
+        }
+    }
+    if (index < cards.size - 1) {
+        ShimmerButton(stringResource(R.string.prep_next), onClick = { index++ })
+    } else {
+        ShimmerButton(stringResource(R.string.prep_start_quiz), onClick = onReady)
+    }
+    GhostButton(stringResource(R.string.prep_skip), onClick = onReady)
 }
 
 @Composable

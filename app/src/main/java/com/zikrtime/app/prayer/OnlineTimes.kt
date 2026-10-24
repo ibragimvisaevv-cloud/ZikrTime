@@ -47,7 +47,7 @@ object OnlineTimes {
 
     /** Время на дату из сохранённых данных или null, если их нет. */
     fun day(date: LocalDate): Day? {
-        if (!Store.onlineTimes) return null
+        if (!Store.onlineTimes || Store.method.aladhanId == null) return null
         val key = key(YearMonth.from(date))
         val month = memory[key] ?: Store.getRaw(key)?.let { runCatching { decode(it) }.getOrNull() }?.also { memory[key] = it }
         return month?.get(date)
@@ -59,13 +59,15 @@ object OnlineTimes {
      */
     suspend fun refresh(force: Boolean = false): Boolean {
         if (!Store.onlineTimes) return false
+        // Московская Соборная мечеть: официальное расписание берём с dumrf.ru, а не с aladhan.com.
+        if (Store.method.aladhanId == null) return DumrfLive.refresh(force).also { version++ }
         val today = LocalDate.now()
         val months = buildList {
             add(YearMonth.from(today))
             if (today.lengthOfMonth() - today.dayOfMonth < 10) add(YearMonth.from(today).plusMonths(1))
         }
         val city = Store.location
-        val method = Store.method.aladhanId
+        val method = Store.method.aladhanId ?: return false
         val school = if (Store.madhab == AsrMadhab.HANAFI) 1 else 0
         var ok = true
         for (month in months) {

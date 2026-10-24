@@ -43,10 +43,11 @@ object PrayerAlarms {
             NotificationChannel(CHANNEL_ID, res.getString(R.string.channel_prayer), NotificationManager.IMPORTANCE_HIGH)
                 .apply { description = res.getString(R.string.channel_prayer_desc) },
         )
-        // Отдельный канал со звуком азана (звук канала нельзя поменять после создания).
-        AdhanSound.uri(context)?.let { uri ->
+        // Отдельный канал на каждую запись азана (звук канала нельзя поменять после создания).
+        for (voice in AdhanSound.voices) {
+            val uri = AdhanSound.uri(context, voice.id) ?: continue
             nm.createNotificationChannel(
-                NotificationChannel(CHANNEL_ADHAN_ID, res.getString(R.string.channel_prayer_adhan), NotificationManager.IMPORTANCE_HIGH).apply {
+                NotificationChannel(adhanChannel(voice.id), res.getString(R.string.channel_prayer_adhan) + " · " + res.getString(R.string.adhan_voice, voice.number), NotificationManager.IMPORTANCE_HIGH).apply {
                     description = res.getString(R.string.channel_prayer_desc)
                     setSound(
                         uri,
@@ -59,8 +60,12 @@ object PrayerAlarms {
             )
         }
         FajrAlarm.createChannel(context)
+        FridayReminders.createChannel(context)
         GuardService.createChannel(context)
     }
+
+    /** Канал уведомлений для выбранной записи азана (первая запись — прежний канал, чтобы не терять настройки). */
+    fun adhanChannel(voiceId: String): String = if (voiceId == "adhan") CHANNEL_ADHAN_ID else "${CHANNEL_ADHAN_ID}_$voiceId"
 
     fun canScheduleExact(context: Context): Boolean =
         Build.VERSION.SDK_INT < Build.VERSION_CODES.S ||
@@ -106,6 +111,7 @@ object PrayerAlarms {
         }
         // Следующий будильник — строго после только что сработавшего намаза.
         scheduleNext(context, after = firedAt.plusSeconds(30))
+        com.zikrtime.app.widget.Widgets.updateAll(context)
     }
 
     private fun showNotification(context: Context, prayer: Prayer, time: ZonedDateTime) {
@@ -129,7 +135,8 @@ object PrayerAlarms {
                 append(res.getString(R.string.notify_prayer_lock, Store.prayerLockMinutes))
             }
         }
-        val channel = if (Store.notificationAdhan && AdhanSound.available(context)) CHANNEL_ADHAN_ID else CHANNEL_ID
+        val voice = Store.notificationVoice
+        val channel = if (Store.notificationAdhan && AdhanSound.available(context, voice)) adhanChannel(voice) else CHANNEL_ID
         val notification = NotificationCompat.Builder(context, channel)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(res.getString(R.string.notify_prayer_title, prayerName(res, prayer)))
@@ -161,6 +168,8 @@ class BootReceiver : BroadcastReceiver() {
         Store.init(context)
         PrayerAlarms.scheduleNext(context)
         FajrAlarm.schedule(context)
+        FridayReminders.schedule(context)
         GuardService.sync(context)
+        com.zikrtime.app.widget.Widgets.updateAll(context)
     }
 }

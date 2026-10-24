@@ -4,6 +4,10 @@ onboarding_city
 home
 knowledge
 quiz
+quiz_cards
+shop
+shop_seller
+shop_product
 focus
 more
 language

@@ -318,7 +318,8 @@ fun PrayerSettingsScreen() {
             CalcMethod.entries.forEach { m ->
                 RadioLine(
                     text = methodName(m),
-                    subtitle = m.ishaAngle?.let { stringResource(R.string.method_angles, fmtAngle(m.fajrAngle), fmtAngle(it)) }
+                    subtitle = if (m == CalcMethod.MOSCOW_CATHEDRAL) stringResource(R.string.method_moscow_note)
+                    else m.ishaAngle?.let { stringResource(R.string.method_angles, fmtAngle(m.fajrAngle), fmtAngle(it)) }
                         ?: stringResource(R.string.method_angles_minutes, fmtAngle(m.fajrAngle), m.ishaMinutes ?: 0),
                     selected = Store.method == m,
                     onClick = {
@@ -390,7 +391,25 @@ fun PrayerSettingsScreen() {
                     checked = Store.notificationAdhan,
                     onChange = { Store.notificationAdhan = it },
                 )
+                if (Store.notificationAdhan) {
+                    Text(
+                        stringResource(R.string.prayer_notify_voice),
+                        style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(start = 4.dp, top = 6.dp),
+                    )
+                    AdhanVoiceList(selected = Store.notificationVoice, onSelect = { Store.notificationVoice = it }, includeSystem = false)
+                }
             }
+            SwitchRow(
+                title = stringResource(R.string.friday_notify),
+                subtitle = stringResource(R.string.friday_notify_hint),
+                checked = Store.fridayReminders,
+                onChange = {
+                    Store.fridayReminders = it
+                    com.zikrtime.app.prayer.FridayReminders.schedule(context)
+                },
+            )
             if (Store.prayerNotifications && !notificationsAllowed) {
                 Text(stringResource(R.string.perm_notifications_off), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
                 TextButton(onClick = {

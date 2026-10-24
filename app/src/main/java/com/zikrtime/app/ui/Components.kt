@@ -6,6 +6,11 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.runtime.remember
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -105,7 +110,6 @@ fun ScreenScaffold(
     Column(
         Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
             .windowInsetsPadding(WindowInsets.statusBars),
     ) {
         Row(
@@ -158,7 +162,7 @@ fun TabColumn(title: String? = null, subtitle: String? = null, content: @Composa
             }
         }
         content()
-        Spacer(Modifier.height(24.dp))
+        Spacer(Modifier.height(112.dp))
     }
 }
 
@@ -168,21 +172,28 @@ fun TabColumn(title: String? = null, subtitle: String? = null, content: @Composa
 fun ZCard(
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
-    color: Color = MaterialTheme.colorScheme.surfaceContainerLow,
+    color: Color = Color.Unspecified,
     padding: PaddingValues = PaddingValues(20.dp),
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    val border = if (LocalDarkTheme.current || color != MaterialTheme.colorScheme.surfaceContainerLow) null
-    else BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
-    val shape = RoundedCornerShape(24.dp)
+    val shape = RoundedCornerShape(26.dp)
+    val base = if (color == Color.Unspecified) modifier.fillMaxWidth().glass(shape) else modifier
+        .fillMaxWidth()
+        .shadow(8.dp, shape, ambientColor = color, spotColor = color)
+        .clip(shape)
+        .background(Brush.verticalGradient(listOf(color, color.copy(alpha = 0.85f))))
+        .border(glassBorder(), shape)
     if (onClick != null) {
-        Surface(onClick = onClick, modifier = modifier.fillMaxWidth(), shape = shape, color = color, border = border) {
-            Column(Modifier.padding(padding), content = content)
-        }
+        val interaction = remember { MutableInteractionSource() }
+        Column(
+            base
+                .pressScale(interaction, 0.98f)
+                .clickable(interactionSource = interaction, indication = androidx.compose.material3.ripple(), onClick = onClick)
+                .padding(padding),
+            content = content,
+        )
     } else {
-        Surface(modifier = modifier.fillMaxWidth(), shape = shape, color = color, border = border) {
-            Column(Modifier.padding(padding), content = content)
-        }
+        Column(base.padding(padding), content = content)
     }
 }
 
@@ -204,8 +215,13 @@ fun IconBadge(
     container: Color = MaterialTheme.colorScheme.primaryContainer,
     size: Dp = 40.dp,
 ) {
+    val shape = RoundedCornerShape(size * 0.34f)
     Box(
-        modifier.size(size).clip(RoundedCornerShape(size * 0.32f)).background(container),
+        modifier
+            .size(size)
+            .clip(shape)
+            .background(Brush.linearGradient(listOf(container.copy(alpha = 0.55f), container)))
+            .border(1.dp, Brush.linearGradient(listOf(Color.White.copy(alpha = 0.6f), Color.Transparent)), shape),
         contentAlignment = Alignment.Center,
     ) {
         Icon(painter, contentDescription = null, tint = tint, modifier = Modifier.size(size * 0.55f))
@@ -296,34 +312,50 @@ fun SliderRow(
 }
 
 @Composable
-fun PrimaryButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true) {
-    Button(
-        onClick = onClick,
-        enabled = enabled,
-        shape = RoundedCornerShape(16.dp),
-        modifier = modifier.fillMaxWidth().heightIn(min = 54.dp),
-    ) { Text(text, style = MaterialTheme.typography.titleSmall, textAlign = TextAlign.Center) }
-}
+fun PrimaryButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true) =
+    ShimmerButton(text, onClick, modifier, enabled)
 
 @Composable
 fun TonalButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true) {
-    FilledTonalButton(
-        onClick = onClick,
-        enabled = enabled,
-        shape = RoundedCornerShape(16.dp),
-        modifier = modifier.fillMaxWidth().heightIn(min = 50.dp),
-    ) { Text(text, style = MaterialTheme.typography.titleSmall, textAlign = TextAlign.Center) }
+    val interaction = remember { MutableInteractionSource() }
+    val shape = RoundedCornerShape(18.dp)
+    Box(
+        modifier
+            .fillMaxWidth()
+            .heightIn(min = 52.dp)
+            .pressScale(interaction)
+            .glass(shape, elevation = 4.dp)
+            .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.45f))
+            .clickable(interactionSource = interaction, indication = androidx.compose.material3.ripple(), enabled = enabled, onClick = onClick),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text,
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.primary,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+        )
+    }
 }
 
 @Composable
 fun GhostButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, color: Color = MaterialTheme.colorScheme.primary) {
-    OutlinedButton(
-        onClick = onClick,
-        shape = RoundedCornerShape(16.dp),
-        colors = ButtonDefaults.outlinedButtonColors(contentColor = color),
-        border = BorderStroke(1.dp, color.copy(alpha = 0.5f)),
-        modifier = modifier.fillMaxWidth().heightIn(min = 50.dp),
-    ) { Text(text, style = MaterialTheme.typography.titleSmall, textAlign = TextAlign.Center) }
+    val interaction = remember { MutableInteractionSource() }
+    val shape = RoundedCornerShape(18.dp)
+    Box(
+        modifier
+            .fillMaxWidth()
+            .heightIn(min = 50.dp)
+            .pressScale(interaction)
+            .clip(shape)
+            .background(color.copy(alpha = 0.06f))
+            .border(BorderStroke(1.dp, Brush.linearGradient(listOf(color.copy(alpha = 0.7f), color.copy(alpha = 0.2f)))), shape)
+            .clickable(interactionSource = interaction, indication = androidx.compose.material3.ripple(), onClick = onClick),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(text, style = MaterialTheme.typography.titleSmall, color = color, textAlign = TextAlign.Center, modifier = Modifier.padding(12.dp))
+    }
 }
 
 /** Кольцевой индикатор прогресса. */
@@ -457,6 +489,7 @@ fun prayerIconRes(p: Prayer): Int = when (p) {
 @Composable
 fun methodName(m: CalcMethod): String = stringResource(
     when (m) {
+        CalcMethod.MOSCOW_CATHEDRAL -> R.string.method_moscow
         CalcMethod.RUSSIA -> R.string.method_russia
         CalcMethod.MWL -> R.string.method_mwl
         CalcMethod.TURKEY -> R.string.method_turkey

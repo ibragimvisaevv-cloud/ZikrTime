@@ -86,6 +86,16 @@ object Store {
         get() = bool(K_NOTIFY_ADHAN, false)
         set(v) = put(K_NOTIFY_ADHAN, v)
 
+    /** Какая запись азана звучит в уведомлениях (id из AdhanSound.voices). */
+    var notificationVoice: String
+        get() = str(K_NOTIFY_VOICE, "adhan")
+        set(v) = put(K_NOTIFY_VOICE, v)
+
+    /** Пятничные напоминания (сура «Аль-Кахф», салават, час принятия дуа). */
+    var fridayReminders: Boolean
+        get() = bool(K_FRIDAY, true)
+        set(v) = put(K_FRIDAY, v)
+
     // ---------------- Будильник на фаджр ----------------
 
     var alarmEnabled: Boolean
@@ -102,7 +112,7 @@ object Store {
             ?: DayOfWeek.values().toSet()
         set(v) = put(K_ALARM_DAYS, v.map { it.value.toString() }.toSet())
 
-    /** "adhan" — встроенный азан, "system" — мелодия будильника телефона. */
+    /** "adhan", "adhan_2", "adhan_3" — записи азана, "system" — мелодия будильника телефона. */
     var alarmSound: String
         get() = str(K_ALARM_SOUND, "adhan")
         set(v) = put(K_ALARM_SOUND, v)
@@ -307,6 +317,8 @@ object Store {
     private const val K_MADHAB = "madhab"
     private const val K_NOTIFY = "notify"
     private const val K_NOTIFY_ADHAN = "notify_adhan"
+    private const val K_NOTIFY_VOICE = "notify_voice"
+    private const val K_FRIDAY = "friday_reminders"
     private const val K_ONLINE = "online_times"
     private const val K_ONLINE_AT = "online_updated_at"
     private const val K_ADJ = "adj_"

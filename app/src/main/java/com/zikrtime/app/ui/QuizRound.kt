@@ -60,8 +60,10 @@ fun QuizRound(
     modifier: Modifier = Modifier,
     target: Int = Store.CORRECT_ANSWERS_PER_ROUND,
     finishText: String = stringResource(R.string.quiz_finish),
+    /** Готовый порядок вопросов (например, после учебных карточек). */
+    plannedOrder: List<com.zikrtime.app.quiz.Question>? = null,
 ) {
-    val order = remember(bank, category) { QuestionBank.roundOrder(bank, category, Store.recentQuestions) }
+    val order = remember(bank, category, plannedOrder) { plannedOrder ?: QuestionBank.roundOrder(bank, category, Store.recentQuestions) }
     var index by remember { mutableIntStateOf(0) }
     var correct by remember { mutableIntStateOf(0) }
     var selected by remember { mutableStateOf<Int?>(null) }
