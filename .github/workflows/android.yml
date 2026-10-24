@@ -32,7 +32,19 @@ jobs:
       - name: Тесты и сборка
         run: |
           chmod +x gradlew
-          ./gradlew testDebugUnitTest assembleDebug assembleRelease --stacktrace
+          set -o pipefail
+          mkdir -p ci-out
+          ./gradlew testDebugUnitTest assembleDebug assembleRelease --stacktrace 2>&1 | tee ci-out/gradle.log
+
+      - name: Ошибки сборки — в ветку ci-build-log
+        if: failure()
+        run: |
+          mkdir -p /tmp/blog && cd /tmp/blog
+          grep -E "^e: |error:|What went wrong|Could not|FAILED|Exception" -A3 "$GITHUB_WORKSPACE/ci-out/gradle.log" | head -300 > errors.txt || true
+          tail -150 "$GITHUB_WORKSPACE/ci-out/gradle.log" > tail.txt
+          git init -q && git checkout -q -b ci-build-log && git add -A
+          git -c user.name=ci -c user.email=ci@local commit -qm "build log ${{ github.run_number }}"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" ci-build-log
 
       - name: Отчёты тестов
         if: always()
