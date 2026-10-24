@@ -225,6 +225,12 @@ index.OWNER_USERNAME = ""
 press(SELLER, f"del2:{sid}")
 check(sid not in db()["sellers"] and len(catalog()["sellers"]) == 1, "удаление")
 
+# Подпись SigV4 — официальный пример AWS (GET Object с Range)
+from datetime import datetime as _dt, timezone as _tz
+_h = index.sigv4("GET", "examplebucket.s3.amazonaws.com", "/test.txt", {"Range": "bytes=0-9"}, b"",
+                 "AKIAIOSFODNN7EXAMPLE", "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY", "us-east-1", _dt(2013, 5, 24, tzinfo=_tz.utc))
+check(_h["authorization"].endswith("Signature=f0e8bdb87c964420e857bd35b5d6ed310bd44f0170aba48dd91039c6036bdb41"), "подпись SigV4")
+
 # Вебхук без секрета отклоняется
 r = index.handler({"headers": {}, "body": "{}"}, None)
 check(r["statusCode"] == 403, "секрет вебхука")

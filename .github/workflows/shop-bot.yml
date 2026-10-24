@@ -1,5 +1,6 @@
-# Бот-кабинет продавцов магазина: проверка и развёртывание в Yandex Cloud (облачная функция + Object Storage).
-# Нужны секреты репозитория: YC_SA_KEY (авторизованный ключ сервисного аккаунта, JSON), YC_FOLDER_ID, SHOP_BOT_TOKEN,
+# Бот-кабинет продавцов магазина: проверка и развёртывание.
+# Бот работает на Vercel (вне России — там доступен Telegram), данные и фото — в Yandex Object Storage.
+# Нужны секреты: VERCEL_TOKEN, YC_SA_KEY (авторизованный ключ сервисного аккаунта, JSON), YC_FOLDER_ID, SHOP_BOT_TOKEN,
 # и по желанию SHOP_OWNER_USERNAME — Telegram-имя владельца (станет владельцем при первом сообщении боту).
 name: Shop bot
 
@@ -41,10 +42,13 @@ jobs:
           YC_SA_KEY: ${{ secrets.YC_SA_KEY }}
           YC_FOLDER_ID: ${{ secrets.YC_FOLDER_ID }}
           SHOP_BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
-          if [ -z "$YC_SA_KEY" ] || [ -z "$YC_FOLDER_ID" ] || [ -z "$SHOP_BOT_TOKEN" ]; then
+          mkdir -p diag
+          if [ -z "$YC_SA_KEY" ] || [ -z "$YC_FOLDER_ID" ] || [ -z "$SHOP_BOT_TOKEN" ] || [ -z "$VERCEL_TOKEN" ]; then
             echo "ready=false" >> "$GITHUB_OUTPUT"
-            echo "### Бот не развёрнут: добавьте секреты YC_SA_KEY, YC_FOLDER_ID, SHOP_BOT_TOKEN" >> "$GITHUB_STEP_SUMMARY"
+            echo "нет секретов: $( [ -z "$VERCEL_TOKEN" ] && echo VERCEL_TOKEN )" > diag/keys.txt
+            echo "### Бот не развёрнут: добавьте секреты VERCEL_TOKEN, YC_SA_KEY, YC_FOLDER_ID, SHOP_BOT_TOKEN" >> "$GITHUB_STEP_SUMMARY"
           else
             echo "ready=true" >> "$GITHUB_OUTPUT"
           fi
@@ -106,17 +110,43 @@ jobs:
             --subject "serviceAccount:$SA_ID" >> diag/sa.txt 2>&1 || echo "binding: см. выше" >> diag/sa.txt
           echo "SA_ID=$SA_ID" >> "$GITHUB_ENV"
 
-      - name: Облачная функция
+      - name: Ключ доступа к хранилищу для бота
+        if: steps.keys.outputs.ready == 'true'
+        run: |
+          # Старые ключи удаляем, создаём один свежий
+          for k in $(yc iam access-key list --service-account-id "$SA_ID" --format json | jq -r '.[].id'); do
+            yc iam access-key delete "$k" > /dev/null 2>&1 || true
+          done
+          yc iam access-key create --service-account-id "$SA_ID" --description "shop bot on vercel" --format json > "$RUNNER_TEMP/ak.json"
+          KEY_ID=$(jq -r .access_key.key_id "$RUNNER_TEMP/ak.json"); SECRET=$(jq -r .secret "$RUNNER_TEMP/ak.json")
+          echo "::add-mask::$SECRET"
+          echo "S3_KEY_ID=$KEY_ID" >> "$GITHUB_ENV"
+          echo "S3_SECRET=$SECRET" >> "$GITHUB_ENV"
+          rm "$RUNNER_TEMP/ak.json"
+
+      - name: Бот на Vercel
         if: steps.keys.outputs.ready == 'true'
         env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
           OWNER_USERNAME: ${{ secrets.SHOP_OWNER_USERNAME }}
         run: |
-          # yc serverless в этом облаке не находит адрес сервиса — разворачиваем через REST API
-          export IAM_TOKEN=$(yc iam create-token)
-          export SA_ID FOLDER FUNCTION BUCKET
-          URL=$(python3 shop-bot/deploy_function.py 2> diag/function.txt) || { cat diag/function.txt; exit 1; }
-          echo "FUNCTION_URL=$URL" >> "$GITHUB_ENV"
+          cd shop-bot
+          URL=$(npx --yes vercel@39.3.0 deploy --prod --yes --token "$VERCEL_TOKEN" \
+            -e BOT_TOKEN="$BOT_TOKEN" -e BUCKET="$BUCKET" -e S3_KEY_ID="$S3_KEY_ID" -e S3_SECRET="$S3_SECRET" \
+            -e OWNER_USERNAME="${OWNER_USERNAME#@}" 2> ../diag/vercel.txt) || { tail -20 ../diag/vercel.txt; exit 1; }
+          cd ..
+          HOST=${URL#https://}
+          API=https://api.vercel.com
+          DEP=$(curl -s -H "Authorization: Bearer $VERCEL_TOKEN" "$API/v13/deployments/$HOST")
+          PROJECT=$(echo "$DEP" | jq -r .projectId)
+          # Telegram должен достучаться без входа в Vercel — снимаем защиту развёртываний
+          curl -s -X PATCH -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" \
+            "$API/v9/projects/$PROJECT" -d '{"ssoProtection": null}' | jq -c '{name, ssoProtection}' >> diag/vercel.txt
+          ALIAS=$(echo "$DEP" | jq -r '[.alias[]? | select(endswith(".vercel.app"))] | sort_by(length) | .[0] // empty')
+          BASE=https://${ALIAS:-$HOST}
+          echo "deploy: $HOST alias: $ALIAS" >> diag/vercel.txt
+          echo "FUNCTION_URL=$BASE/api/webhook" >> "$GITHUB_ENV"
 
       - name: Подключение к Telegram
         if: steps.keys.outputs.ready == 'true'
@@ -136,7 +166,7 @@ jobs:
             -d '{"short_description":"Добавьте свою компанию в магазин приложения «Зикр-тайм»"}' > /dev/null
           BOT=$(curl -sf "$API/getMe" | jq -r .result.username)
           echo "bot=$BOT" > diag/bot.txt
-          echo "function=$FUNCTION_URL" >> diag/bot.txt
+          echo "webhook=$FUNCTION_URL" >> diag/bot.txt
           [ -z "$OWNER_USERNAME" ] && echo "owner_code=$(python3 -c "import hashlib,os;print(hashlib.sha256((os.environ['SHOP_BOT_TOKEN']+':owner').encode()).hexdigest()[:8])")" >> diag/bot.txt || echo "owner=by_username" >> diag/bot.txt
           CODE=$(python3 -c "import hashlib,os;print(hashlib.sha256((os.environ['SHOP_BOT_TOKEN']+':owner').encode()).hexdigest()[:8])")
           {

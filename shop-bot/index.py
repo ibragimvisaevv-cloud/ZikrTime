@@ -101,6 +101,55 @@ class ObjectStorage:
             pass
 
 
+def sigv4(method, host, path, headers, payload, key_id, secret, region, now):
+    """Подпись запроса AWS Signature V4 (Yandex Object Storage совместим с S3). Возвращает заголовки."""
+    import hmac
+    amz_date, day = now.strftime("%Y%m%dT%H%M%SZ"), now.strftime("%Y%m%d")
+    payload_hash = hashlib.sha256(payload or b"").hexdigest()
+    hdrs = {"host": host, "x-amz-content-sha256": payload_hash, "x-amz-date": amz_date}
+    for k, v in (headers or {}).items():
+        hdrs[k.lower()] = v
+    signed = ";".join(sorted(hdrs))
+    canonical = "\n".join([method, path, "", "".join(f"{k}:{hdrs[k].strip()}\n" for k in sorted(hdrs)), signed, payload_hash])
+    scope = f"{day}/{region}/s3/aws4_request"
+    to_sign = "\n".join(["AWS4-HMAC-SHA256", amz_date, scope, hashlib.sha256(canonical.encode()).hexdigest()])
+
+    def h(k, m):
+        return hmac.new(k, m.encode(), hashlib.sha256).digest()
+
+    sig_key = h(h(h(h(("AWS4" + secret).encode(), day), region), "s3"), "aws4_request")
+    signature = hmac.new(sig_key, to_sign.encode(), hashlib.sha256).hexdigest()
+    hdrs["authorization"] = f"AWS4-HMAC-SHA256 Credential={key_id}/{scope}, SignedHeaders={signed}, Signature={signature}"
+    return hdrs
+
+
+class S3Storage(ObjectStorage):
+    """Тот же Yandex Object Storage, но по статическому ключу (подпись SigV4) — для запуска бота вне Yandex Cloud."""
+
+    def __init__(self, key_id, secret):
+        self.key_id = key_id
+        self.secret = secret
+
+    def _req(self, method, key, data=None, headers=None):
+        from datetime import datetime, timezone
+        from urllib.parse import quote
+        host = STORAGE_HOST.split("://")[1]
+        path = "/" + quote(f"{BUCKET}/{key}", safe="/-_.~")
+        hdrs = sigv4(method, host, path, headers, data, self.key_id, self.secret, "ru-central1", datetime.now(timezone.utc))
+        req = urllib.request.Request(STORAGE_HOST + path, data=data, method=method)
+        for k, v in hdrs.items():
+            if k != "host":
+                req.add_header(k, v)
+        return urllib.request.urlopen(req, timeout=20)
+
+
+def make_storage(iam_token=""):
+    key_id, secret = os.environ.get("S3_KEY_ID"), os.environ.get("S3_SECRET")
+    if key_id and secret:
+        return S3Storage(key_id, secret)
+    return ObjectStorage(iam_token)
+
+
 class Telegram:
     def __init__(self, token):
         self.token = token
@@ -1051,7 +1100,7 @@ def probe(token):
         except Exception as e:
             result[name] = f"fail {type(e).__name__} {time.time() - t:.1f}s"
     try:
-        ObjectStorage(token).put("diag/probe.txt", b"ok", "text/plain")
+        make_storage(token).put("diag/probe.txt", b"ok", "text/plain")
         result["storage_write"] = "ok"
     except Exception as e:
         result["storage_write"] = f"fail {type(e).__name__} {str(e)[:80]}"
@@ -1070,7 +1119,7 @@ def handler(event, context):
     if update.get("probe"):
         return {"statusCode": 200, "body": json.dumps(probe(token), ensure_ascii=False)}
     tg = Telegram(BOT_TOKEN)
-    bot = Bot(ObjectStorage(token), tg)
+    bot = Bot(make_storage(token), tg)
     try:
         bot.handle(update)
     except Exception as e:  # не даём Telegram повторять одно и то же обновление бесконечно

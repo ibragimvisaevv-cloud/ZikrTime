@@ -7,7 +7,8 @@
 
 ## Как устроено
 
-- `index.py` — облачная функция Yandex Cloud (Python 3.12, без сторонних библиотек), вызывается Telegram (webhook).
+- `index.py` — логика бота (Python 3.12, без сторонних библиотек). Работает на **Vercel** (`api/webhook.py`): из российских облаков Telegram недоступен.
+- Данные и фото — в Yandex Object Storage (быстро открываются у пользователей в России), доступ по статическому ключу сервисного аккаунта.
 - Хранилище `zikrtime-shop`: `data/db.json` (база), `img/…` (фото), `catalog.json` (каталог для приложения).
 - `.github/workflows/shop-bot.yml` — проверка (`test_bot.py`) и развёртывание при каждом изменении папки `shop-bot/`.
 
@@ -22,7 +23,8 @@
    - `SHOP_BOT_TOKEN` — токен бота;
    - `YC_FOLDER_ID` — ID каталога;
    - `YC_SA_KEY` — всё содержимое файла JSON;
-   - `SHOP_OWNER_USERNAME` — ваше имя в Telegram (без @).
+   - `SHOP_OWNER_USERNAME` — ваше имя в Telegram (без @);
+   - `VERCEL_TOKEN` — vercel.com → вход через GitHub → Settings → Tokens → Create.
 5. Actions → «Shop bot» → Run workflow. Когда станет зелёным — напишите боту `/start`: вы станете владельцем.
 
 ## Команды владельца
