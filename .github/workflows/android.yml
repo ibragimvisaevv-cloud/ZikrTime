@@ -38,6 +38,8 @@ jobs:
             echo "::warning::Нет секрета RELEASE_KEY_PASSWORD — сборка подписана отладочным ключом и не будет опубликована"
             exit 0
           fi
+          mkdir -p keystore ci-out
+          exec > >(tee ci-out/signing.log) 2>&1
           if [ -f keystore/release.jks.enc ]; then
             openssl enc -d -aes-256-cbc -pbkdf2 -iter 300000 -in keystore/release.jks.enc -out keystore/release.jks -pass env:RELEASE_KEY_PASSWORD
           else
@@ -67,7 +69,9 @@ jobs:
         run: |
           mkdir -p /tmp/blog && cd /tmp/blog
           grep -E "^e: |error:|What went wrong|Could not|FAILED|Exception" -A3 "$GITHUB_WORKSPACE/ci-out/gradle.log" | head -300 > errors.txt || true
-          tail -150 "$GITHUB_WORKSPACE/ci-out/gradle.log" > tail.txt
+          tail -150 "$GITHUB_WORKSPACE/ci-out/gradle.log" > tail.txt 2>/dev/null || true
+          cp "$GITHUB_WORKSPACE/ci-out/signing.log" . 2>/dev/null || true
+          date -u > when.txt
           git init -q && git checkout -q -b ci-build-log && git add -A
           git -c user.name=ci -c user.email=ci@local commit -qm "build log ${{ github.run_number }}"
           git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" ci-build-log
