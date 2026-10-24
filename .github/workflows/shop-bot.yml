@@ -147,6 +147,18 @@ jobs:
             echo "Каталог для приложения: https://storage.yandexcloud.net/$BUCKET/catalog.json"
           } >> "$GITHUB_STEP_SUMMARY"
 
+      - name: Состояние вебхука
+        if: always() && steps.keys.outputs.ready == 'true'
+        env:
+          SHOP_BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
+        run: |
+          mkdir -p diag
+          sleep 20
+          curl -s "https://api.telegram.org/bot$SHOP_BOT_TOKEN/getWebhookInfo" | jq '.result | {url, pending_update_count, last_error_date, last_error_message, max_connections}' > diag/webhookinfo.txt || true
+          # Пробный вызов функции без секрета — должен вернуть 403 (значит функция доступна)
+          curl -s -o /dev/null -w "function http: %{http_code}\n" -X POST "$FUNCTION_URL" -d '{}' >> diag/webhookinfo.txt || true
+          curl -s "https://storage.yandexcloud.net/$BUCKET/catalog.json" -o /dev/null -w "catalog http: %{http_code}\n" >> diag/webhookinfo.txt || true
+
       - name: Диагностика (без секретов)
         if: always() && steps.keys.outputs.ready == 'true'
         run: |
