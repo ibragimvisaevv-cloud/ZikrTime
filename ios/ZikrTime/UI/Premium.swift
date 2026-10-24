@@ -18,7 +18,7 @@ struct AuroraBackground: View {
         ZStack {
             Brand.background
             Circle()
-                .fill(Brand.emerald.opacity(dark ? 0.45 : 0.16))
+                .fill(Brand.emerald.opacity(dark ? 0.32 : 0.16))
                 .frame(width: 380, height: 380)
                 .blur(radius: 90)
                 .offset(x: moved ? -130 : -50, y: moved ? -280 : -210)
@@ -79,7 +79,8 @@ struct Glass: ViewModifier {
         let dark = scheme == .dark
         content
             .background(
-                LinearGradient(colors: [Color.white.opacity(dark ? 0.07 : 0.62), Color.white.opacity(dark ? 0.02 : 0.30)],
+                LinearGradient(colors: dark ? [Color(hex: 0x16302A).opacity(0.80), Color(hex: 0x0C1C18).opacity(0.72)]
+                                            : [Color.white.opacity(0.62), Color.white.opacity(0.30)],
                                startPoint: .topLeading, endPoint: .bottomTrailing),
                 in: shape
             )

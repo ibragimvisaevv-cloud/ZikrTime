@@ -71,7 +71,7 @@ fun AuroraBackground(modifier: Modifier = Modifier) {
     )
     val base = if (dark) Color(0xFF07100D) else Color(0xFFF7F3EA)
     val blobs = if (dark) {
-        listOf(Emerald.copy(alpha = 0.55f), Gold.copy(alpha = 0.13f), Color(0xFF0E6B6B).copy(alpha = 0.30f))
+        listOf(Emerald.copy(alpha = 0.38f), Gold.copy(alpha = 0.10f), Color(0xFF0E6B6B).copy(alpha = 0.22f))
     } else {
         listOf(Emerald.copy(alpha = 0.13f), Gold.copy(alpha = 0.20f), Color(0xFF2E8C7A).copy(alpha = 0.10f))
     }
@@ -134,7 +134,8 @@ fun Modifier.sheen(alpha: Float = 0.28f, periodMs: Int = 3_600): Modifier = comp
 fun glassFill(): Brush {
     val dark = LocalDarkTheme.current
     return if (dark) {
-        Brush.verticalGradient(listOf(Color.White.copy(alpha = 0.085f), Color.White.copy(alpha = 0.035f)))
+        // Тёмное «дымчатое» стекло: фон под ним приглушён, светлый текст хорошо читается.
+        Brush.verticalGradient(listOf(Color(0xFF16302A).copy(alpha = 0.86f), Color(0xFF0C1C18).copy(alpha = 0.80f)))
     } else {
         Brush.verticalGradient(listOf(Color.White.copy(alpha = 0.88f), Color.White.copy(alpha = 0.66f)))
     }
@@ -145,7 +146,7 @@ fun glassBorder(): BorderStroke {
     val dark = LocalDarkTheme.current
     return BorderStroke(
         1.dp,
-        if (dark) Brush.linearGradient(listOf(Color.White.copy(alpha = 0.22f), Color.White.copy(alpha = 0.04f)))
+        if (dark) Brush.linearGradient(listOf(Color.White.copy(alpha = 0.20f), Color.White.copy(alpha = 0.05f), Gold.copy(alpha = 0.18f)))
         else Brush.linearGradient(listOf(Color.White, Color.White.copy(alpha = 0.35f), Gold.copy(alpha = 0.25f))),
     )
 }

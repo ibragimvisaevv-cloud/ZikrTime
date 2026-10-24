@@ -50,6 +50,15 @@ for lang in uz tg kk; do
     xcrun simctl io "$UDID" screenshot "$OUT/${lang}_${s}.png" > /dev/null 2>&1
   done
 done
+# Тёмная тема
+xcrun simctl ui "$UDID" appearance dark
+for s in home more knowledge quiz_cards shop shop_seller prayer_settings alarm; do
+  xcrun simctl terminate "$UDID" "$BUNDLE" 2>/dev/null || true
+  xcrun simctl launch "$UDID" "$BUNDLE" -qa_screen "$s" -qa_lang ru -qa_demo 1 > /dev/null
+  sleep 4
+  xcrun simctl io "$UDID" screenshot "$OUT/dark_ru_${s}.png" > /dev/null 2>&1
+done
+xcrun simctl ui "$UDID" appearance light
 # Журнал падений приложения, если были
 find ~/Library/Logs/DiagnosticReports -name "ZikrTime*" -newer "$APP" -exec cp {} ci-out/ \; 2>/dev/null || true
 echo done > ci-out/screens-done.txt

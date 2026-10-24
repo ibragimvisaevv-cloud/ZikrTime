@@ -73,6 +73,17 @@ adb logcat -d -b crash > "$OUT/crash-debug.txt"
 publish # промежуточный результат
 [ -f tools/ci/langs_short.txt ] && run_set tools/ci/langs_short.txt tools/ci/screens_short.txt ""
 
+# Тёмная тема (у многих телефон в ночном режиме): главные экраны по-русски
+adb shell cmd uimode night yes
+sleep 2
+for s in home more knowledge quiz_cards shop shop_seller focus prayer_settings alarm tasbih; do
+  progress "dark $s"
+  open_screen "$s" ru
+  shot "dark_ru_${s}" 5
+done
+adb shell cmd uimode night no
+sleep 2
+
 # 3. Крупный шрифт (как у многих пользователей): главные экраны по-русски
 adb shell settings put system font_scale 1.3
 for s in home alarm focus quiz; do

@@ -64,11 +64,11 @@ private val DarkColors = darkColorScheme(
     tertiary = Color(0xFFA6CCE0),
     onTertiary = Color(0xFF0B3443),
     background = Color(0xFF0B1210),
-    onBackground = Color(0xFFE2E5E1),
+    onBackground = Color(0xFFF1F4F1),
     surface = Color(0xFF0B1210),
-    onSurface = Color(0xFFE2E5E1),
+    onSurface = Color(0xFFF1F4F1),
     surfaceVariant = Color(0xFF29322E),
-    onSurfaceVariant = Color(0xFFBDC7C2),
+    onSurfaceVariant = Color(0xFFC6D2CC),
     surfaceContainerLowest = Color(0xFF070D0B),
     surfaceContainerLow = Color(0xFF131C19),
     surfaceContainer = Color(0xFF17211E),
@@ -80,15 +80,19 @@ private val DarkColors = darkColorScheme(
 
 private val base = Typography()
 
+// Заголовки плотнее и с чуть сжатым трекингом, основной текст — чуть крупнее и с воздухом между строк.
 private val AppTypography = base.copy(
-    displaySmall = base.displaySmall.copy(fontWeight = FontWeight.SemiBold),
-    headlineLarge = base.headlineLarge.copy(fontWeight = FontWeight.SemiBold),
-    headlineMedium = base.headlineMedium.copy(fontWeight = FontWeight.SemiBold),
-    headlineSmall = base.headlineSmall.copy(fontWeight = FontWeight.SemiBold),
-    titleLarge = base.titleLarge.copy(fontWeight = FontWeight.SemiBold),
-    titleMedium = base.titleMedium.copy(fontWeight = FontWeight.SemiBold),
-    titleSmall = base.titleSmall.copy(fontWeight = FontWeight.SemiBold),
-    labelLarge = base.labelLarge.copy(fontWeight = FontWeight.SemiBold),
+    displaySmall = base.displaySmall.copy(fontWeight = FontWeight.Bold, letterSpacing = (-0.5).sp),
+    headlineLarge = base.headlineLarge.copy(fontWeight = FontWeight.Bold, letterSpacing = (-0.5).sp),
+    headlineMedium = base.headlineMedium.copy(fontWeight = FontWeight.Bold, letterSpacing = (-0.4).sp),
+    headlineSmall = base.headlineSmall.copy(fontWeight = FontWeight.Bold, letterSpacing = (-0.3).sp),
+    titleLarge = base.titleLarge.copy(fontWeight = FontWeight.SemiBold, letterSpacing = (-0.2).sp),
+    titleMedium = base.titleMedium.copy(fontWeight = FontWeight.SemiBold, fontSize = 17.sp, letterSpacing = 0.sp),
+    titleSmall = base.titleSmall.copy(fontWeight = FontWeight.SemiBold, fontSize = 15.sp, letterSpacing = 0.sp),
+    bodyLarge = base.bodyLarge.copy(fontWeight = FontWeight.Medium, lineHeight = 25.sp, letterSpacing = 0.2.sp),
+    bodyMedium = base.bodyMedium.copy(fontSize = 15.sp, lineHeight = 21.sp, letterSpacing = 0.15.sp),
+    bodySmall = base.bodySmall.copy(fontSize = 13.sp, lineHeight = 18.sp),
+    labelLarge = base.labelLarge.copy(fontWeight = FontWeight.SemiBold, fontSize = 15.sp),
 )
 
 private val AppShapes = Shapes(
@@ -114,11 +118,13 @@ val LocalDarkTheme = staticCompositionLocalOf { false }
 fun ZikrTheme(content: @Composable () -> Unit) {
     val dark = isSystemInDarkTheme()
     androidx.compose.runtime.CompositionLocalProvider(LocalDarkTheme provides dark) {
-        MaterialTheme(
-            colorScheme = if (dark) DarkColors else LightColors,
-            typography = AppTypography,
-            shapes = AppShapes,
-            content = content,
-        )
+        val colors = if (dark) DarkColors else LightColors
+        MaterialTheme(colorScheme = colors, typography = AppTypography, shapes = AppShapes) {
+            // Цвет текста по умолчанию — светлый в тёмной теме, тёмный в светлой (раньше его давал Surface).
+            androidx.compose.runtime.CompositionLocalProvider(
+                androidx.compose.material3.LocalContentColor provides colors.onSurface,
+                content = content,
+            )
+        }
     }
 }
