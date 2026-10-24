@@ -92,7 +92,8 @@ class MainActivity : ComponentActivity() {
         if (BuildConfig.DEBUG && QaHooks.handle(this, intent, nav)) return
         handleOpen(intent)
         enableEdgeToEdge()
-        val showSplash = savedInstanceState == null && intent?.hasExtra("qa_screen") != true
+        val showSplash = savedInstanceState == null && com.zikrtime.app.ui.LiveFlags.splash &&
+            (intent?.hasExtra("qa_screen") != true || intent?.getBooleanExtra("qa_splash", false) == true)
         setContent {
             ZikrTheme {
                 val tilt = com.zikrtime.app.ui.rememberTilt()

@@ -50,6 +50,31 @@ shot() {
   if ! timeout 25 adb exec-out screencap -p > "$OUT/screens/$1.png"; then hang "$1"; fi
 }
 
+# 0. Поиск причины падения эмулятора: включаем новые эффекты по одному (debug-сборка)
+adb install -r -g "$DEBUG_APK" > "$OUT/install-probe.txt" 2>&1
+probe() { # имя экран доп.параметры...
+  local name=$1 scr=$2; shift 2
+  timeout 60 adb shell am start -S -W -n $PKG/.MainActivity --es qa_screen "$scr" --ez qa_demo true "$@" > /dev/null 2>&1
+  sleep 8
+  if timeout 15 adb get-state > /dev/null 2>&1; then
+    progress "probe $name ok"
+    timeout 25 adb exec-out screencap -p > "$OUT/screens/probe-$name.png" || true
+  else
+    progress "probe $name EMULATOR DIED"
+    publish
+    exit 1
+  fi
+  publish
+}
+probe base more --ez qa_tilt false --ez qa_parallax false
+probe sky home --ez qa_tilt false --ez qa_parallax false
+probe parallax more --ez qa_tilt false
+probe tilt more --ez qa_parallax false
+probe splash more --ez qa_tilt false --ez qa_parallax false --ez qa_splash true
+probe onboarding onboarding_welcome
+probe all home --ez qa_splash true
+adb uninstall $PKG > /dev/null 2>&1
+
 # 1. Release-сборка: ставится и запускается без падений
 # Не показывать окна «приложение не отвечает» для фоновых процессов (лаунчер эмулятора) — они закрывают скриншоты
 adb shell settings put secure anr_show_background 0 || true

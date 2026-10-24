@@ -98,6 +98,13 @@ import kotlin.random.Random
 
 // ---------------- Наклон телефона (параллакс) ----------------
 
+/** Включатели «живых» эффектов (для проверки на эмуляторе можно выключать по одному). */
+object LiveFlags {
+    var tilt = true
+    var parallax = true
+    var splash = true
+}
+
 /** Наклон телефона относительно привычного положения: x и y от -1 до 1. */
 val LocalTilt = staticCompositionLocalOf<State<Offset>> { mutableStateOf(Offset.Zero) }
 
@@ -108,6 +115,7 @@ fun rememberTilt(): State<Offset> {
     val tilt = remember { mutableStateOf(Offset.Zero) }
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     DisposableEffect(lifecycle) {
+        if (!LiveFlags.tilt) return@DisposableEffect onDispose { }
         val sm = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         val sensor = sm.getDefaultSensor(Sensor.TYPE_GRAVITY) ?: sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         var bx = Float.NaN
@@ -154,7 +162,7 @@ fun rememberTilt(): State<Offset> {
  * Слой смещается при наклоне телефона на [depth] (отрицательное — в обратную сторону).
  * [overscan] слегка увеличивает слой, чтобы при сдвиге не открывались края.
  */
-fun Modifier.parallax(depth: Dp, overscan: Boolean = false): Modifier = composed {
+fun Modifier.parallax(depth: Dp, overscan: Boolean = false): Modifier = if (!LiveFlags.parallax) this else composed {
     val tilt = LocalTilt.current
     graphicsLayer {
         val t = tilt.value

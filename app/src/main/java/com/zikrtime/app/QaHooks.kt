@@ -32,6 +32,9 @@ object QaHooks {
             Lang.set(activity, lang)
             return true
         }
+        com.zikrtime.app.ui.LiveFlags.tilt = intent.getBooleanExtra("qa_tilt", true)
+        com.zikrtime.app.ui.LiveFlags.parallax = intent.getBooleanExtra("qa_parallax", true)
+        com.zikrtime.app.ui.LiveFlags.splash = intent.getBooleanExtra("qa_splash", false)
         val screen = intent.getStringExtra("qa_screen") ?: return false
         if (intent.getBooleanExtra("qa_demo", false)) seed(activity)
         when (screen) {
