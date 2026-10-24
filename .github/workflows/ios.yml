@@ -1,15 +1,7 @@
 name: iOS
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "ios/**"
-      - "tools/ios/**"
-      - "tools/i18n/**"
-      - "app/src/main/assets/**"
-      - "shared/**"
-      - ".github/workflows/ios.yml"
+  # iOS собирается на Mac — минуты GitHub тратятся в 10 раз быстрее. Только вручную.
   workflow_dispatch:
 
 permissions:

@@ -127,7 +127,9 @@ fun rememberTilt(): State<Offset> {
                 by += (gy - by) * 0.015f
                 vx += ((bx - gx) * 2.4f - vx) * 0.18f
                 vy += ((gy - by) * 2.4f - vy) * 0.18f
-                tilt.value = Offset(vx.coerceIn(-1f, 1f), vy.coerceIn(-1f, 1f))
+                val next = Offset(vx.coerceIn(-1f, 1f), vy.coerceIn(-1f, 1f))
+                // Перерисовываем только при заметном наклоне — бережём батарею.
+                if (abs(next.x - tilt.value.x) > 0.004f || abs(next.y - tilt.value.y) > 0.004f) tilt.value = next
             }
 
             override fun onAccuracyChanged(s: Sensor?, accuracy: Int) = Unit

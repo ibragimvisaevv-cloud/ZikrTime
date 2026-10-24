@@ -33,7 +33,21 @@ adb shell wm density 320
 adb shell wm size > "$OUT/display.txt"; adb shell wm density >> "$OUT/display.txt"
 progress "boot ok"
 
-shot() { sleep "${2:-4}"; adb exec-out screencap -p > "$OUT/screens/$1.png"; }
+# Если экран не снимается (зависание) — сохраняем журнал и состояние системы, чтобы найти причину.
+hang() { # имя
+  progress "HANG $1"
+  timeout 30 adb logcat -d -t 1500 > "$OUT/hang-$1-logcat.txt" 2>&1
+  timeout 30 adb shell top -b -n 1 -m 25 > "$OUT/hang-$1-top.txt" 2>&1
+  timeout 30 adb shell dumpsys activity top > "$OUT/hang-$1-activity.txt" 2>&1
+  timeout 30 adb shell "kill -3 \$(pidof $PKG)" 2>/dev/null; sleep 3
+  timeout 30 adb shell cat /data/anr/traces.txt > "$OUT/hang-$1-traces.txt" 2>&1
+  timeout 30 adb logcat -d -t 600 -s art > "$OUT/hang-$1-art.txt" 2>&1
+  publish
+}
+shot() {
+  sleep "${2:-4}"
+  if ! timeout 25 adb exec-out screencap -p > "$OUT/screens/$1.png"; then hang "$1"; fi
+}
 
 # 1. Release-сборка: ставится и запускается без падений
 # Не показывать окна «приложение не отвечает» для фоновых процессов (лаунчер эмулятора) — они закрывают скриншоты
@@ -41,8 +55,10 @@ adb shell settings put secure anr_show_background 0 || true
 adb install -r "$RELEASE_APK" > "$OUT/install-release.txt" 2>&1
 sleep 2
 adb logcat -b all -c
-adb shell am start -W -n $PKG/.MainActivity > /dev/null
+timeout 60 adb shell am start -W -n $PKG/.MainActivity > /dev/null || progress "am start timeout"
+progress "release started"
 shot release-start 6
+progress "release shot"
 adb logcat -d -b crash > "$OUT/crash-release.txt"
 adb shell am force-stop $PKG
 sleep 1
@@ -57,7 +73,7 @@ sleep 5
 adb logcat -b all -c
 
 open_screen() { # screen lang
-  adb shell am start -S -W -n $PKG/.MainActivity --es qa_screen "$1" --es qa_lang "$2" --ez qa_demo true > /dev/null
+  timeout 60 adb shell am start -S -W -n $PKG/.MainActivity --es qa_screen "$1" --es qa_lang "$2" --ez qa_demo true > /dev/null || hang "start-$1-$2"
 }
 
 run_set() { # файл-языков файл-экранов префикс
