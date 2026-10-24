@@ -22,7 +22,8 @@ enum PrayerNotifications {
         return status == .authorized || status == .provisional
     }
 
-    /// Планирует уведомления на ближайшие дни (iOS хранит не больше 64 запланированных уведомлений на приложение).
+    /// Планирует уведомления на ближайшие дни (iOS хранит не больше 64 запланированных уведомлений на приложение:
+    /// до 24 о намазах, до 9 пятничных и до 30 — запасной будильник на старых iOS).
     static func reschedule() async {
         if QA.active { return }
         let pending = await center.pendingNotificationRequests()
@@ -37,11 +38,11 @@ enum PrayerNotifications {
             let day = today.adding(days: offset)
             let times = PrayerSchedule.times(for: day)
             for p in Prayer.obligatory {
-                guard let time = times[p], time > now, count < 30 else { continue }
+                guard let time = times[p], time > now, count < 24 else { continue }
                 let content = UNMutableNotificationContent()
                 content.title = L("notify_prayer_title", L(p.nameKey))
                 content.body = L("notify_prayer_text", Fmt.clock(time), place)
-                content.sound = store.notifyAdhan ? UNNotificationSound(named: UNNotificationSoundName("adhan_short.caf")) : .default
+                content.sound = store.notifyAdhan ? UNNotificationSound(named: UNNotificationSoundName(AdhanVoice.byId(store.notifyVoice).fileName)) : .default
                 content.interruptionLevel = .timeSensitive
                 let trigger = UNCalendarNotificationTrigger(
                     dateMatching: Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: time),
@@ -144,7 +145,7 @@ enum FajrAlarm {
                 let content = UNMutableNotificationContent()
                 content.title = L("alarm_ring_title")
                 content.body = L("alarm_fajr_at", Fmt.clock(item.fajr)) + " · " + L("alarm_better_than_sleep")
-                content.sound = UNNotificationSound(named: UNNotificationSoundName("adhan_short.caf"))
+                content.sound = UNNotificationSound(named: UNNotificationSoundName(AdhanVoice.byId(Store.shared.alarmVoice).fileName))
                 content.interruptionLevel = .timeSensitive
                 let at = item.trigger.addingTimeInterval(Double(k) * 60)
                 let trigger = UNCalendarNotificationTrigger(
@@ -221,7 +222,7 @@ enum AlarmKitScheduler {
             attributes: attributes,
             stopIntent: nil,
             secondaryIntent: nil,
-            sound: .named("adhan_short.caf")
+            sound: .named(AdhanVoice.byId(Store.shared.alarmVoice).fileName)
         )
         let id = UUID()
         do {

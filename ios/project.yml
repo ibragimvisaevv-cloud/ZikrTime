@@ -9,8 +9,8 @@ options:
 settings:
   base:
     SWIFT_VERSION: "5.0"
-    MARKETING_VERSION: "0.4.0"
-    CURRENT_PROJECT_VERSION: "2"
+    MARKETING_VERSION: "0.5.0"
+    CURRENT_PROJECT_VERSION: "3"
     DEVELOPMENT_TEAM: ""
 targets:
   ZikrTime:
@@ -27,6 +27,13 @@ targets:
       - path: ../app/src/main/res/font/amiri.ttf
         buildPhase: resources
       - path: ../shared/audio/adhan_short.caf
+        buildPhase: resources
+      - path: ../shared/audio/adhan_2_short.caf
+        buildPhase: resources
+      - path: ../shared/audio/adhan_3_short.caf
+        buildPhase: resources
+      # Встроенная копия каталога магазина (свежая загружается из репозитория ZikrTime-content)
+      - path: ../app/src/main/assets/shop/catalog.json
         buildPhase: resources
     info:
       path: ZikrTime/Info.plist

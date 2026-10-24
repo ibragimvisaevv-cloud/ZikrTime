@@ -103,12 +103,22 @@ struct QuizView: View {
     @State private var correct = 0
     @State private var answered = 0
     @State private var finished = false
+    @State private var stage: Stage = QA.quizCards ? .cards : .ask
+    @State private var cardIndex = 0
 
+    private enum Stage { case ask, cards, quiz }
     private let target = 3
+    private let prepCards = 5
 
     var body: some View {
         Page {
-            if finished {
+            if stage == .ask {
+                PrepOffer(onRead: { withAnimation { stage = .cards } }, onSkip: { withAnimation { stage = .quiz } })
+            } else if stage == .cards {
+                if !queue.isEmpty { StudyCards(cards: Array(queue.prefix(prepCards)), bank: bank, index: $cardIndex) {
+                    withAnimation { stage = .quiz }
+                } }
+            } else if finished {
                 result
             } else if queue.indices.contains(index) {
                 QuizCard(
@@ -146,6 +156,8 @@ struct QuizView: View {
                 correct = 0
                 answered = 0
                 finished = false
+                cardIndex = 0
+                stage = .ask
             }
             .padding(.top, 8)
             TonalButton(title: L("action_done")) { dismiss() }
@@ -325,5 +337,78 @@ private struct InfoCard: View {
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Brand.goldSoft, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+    }
+}
+
+/// Перед тестом: «Хотите подготовиться?» — карточки или сразу вопросы.
+private struct PrepOffer: View {
+    let onRead: () -> Void
+    let onSkip: () -> Void
+
+    var body: some View {
+        GlassHero {
+            VStack(alignment: .leading, spacing: 10) {
+                Image(systemName: "book.pages").font(.system(size: 36)).foregroundStyle(Brand.gold)
+                Text(L("prep_title")).font(.title2.weight(.semibold)).foregroundStyle(Brand.cream)
+                Text(L("prep_text")).font(.body).foregroundStyle(Brand.cream.opacity(0.85))
+                GoldButton(title: L("prep_read"), action: onRead).padding(.top, 10)
+                Button(action: onSkip) {
+                    Text(L("prep_skip"))
+                        .font(.headline)
+                        .foregroundStyle(Brand.cream)
+                        .frame(maxWidth: .infinity, minHeight: 48)
+                }
+                .buttonStyle(PressScaleStyle())
+            }
+            .padding(24)
+        }
+    }
+}
+
+/// Карточки для подготовки: по ним будут первые вопросы раунда.
+private struct StudyCards: View {
+    let cards: [Question]
+    let bank: QuizBank
+    @Binding var index: Int
+    let onReady: () -> Void
+
+    var body: some View {
+        if cards.isEmpty {
+            Color.clear.onAppear(perform: onReady)
+        } else {
+            let i = min(index, cards.count - 1)
+            let q = cards[i]
+            VStack(alignment: .leading, spacing: 16) {
+                HStack(spacing: 6) {
+                    ForEach(0..<cards.count, id: \.self) { k in
+                        Capsule().fill(k <= i ? Brand.primary : Brand.primarySoft).frame(height: 6)
+                    }
+                    Text(L("prep_card_progress", i + 1, cards.count))
+                        .font(.footnote.weight(.semibold).monospacedDigit())
+                        .foregroundStyle(Brand.secondaryText)
+                        .padding(.leading, 8)
+                        .fixedSize()
+                }
+                Card {
+                    CategoryChip(text: bank.categoryName(q.category))
+                    Label(L("quiz_info_title"), systemImage: "lightbulb")
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(Brand.primary)
+                        .padding(.top, 14)
+                    Text(q.info)
+                        .font(.title3)
+                        .lineSpacing(4)
+                        .padding(.top, 8)
+                }
+                .id(i)
+                .transition(.asymmetric(insertion: .move(edge: .trailing).combined(with: .opacity), removal: .opacity))
+                if i < cards.count - 1 {
+                    ShimmerButton(title: L("prep_next")) { withAnimation(.easeInOut) { index = i + 1 } }
+                } else {
+                    ShimmerButton(title: L("prep_start_quiz"), action: onReady)
+                }
+                TonalButton(title: L("prep_skip"), action: onReady)
+            }
+        }
     }
 }

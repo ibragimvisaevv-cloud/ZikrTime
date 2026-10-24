@@ -277,7 +277,7 @@ struct PrayerSettingsView: View {
                                 .foregroundStyle(store.method == m ? Brand.primary : Brand.secondaryText)
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(L(m.nameKey)).foregroundStyle(.primary)
-                                Text(angles(m)).font(.caption).foregroundStyle(Brand.secondaryText)
+                                Text(m == .moscowCathedral ? L("method_moscow_note") : angles(m)).font(.caption).foregroundStyle(Brand.secondaryText)
                             }
                             Spacer()
                         }
@@ -335,6 +335,26 @@ struct PrayerSettingsView: View {
                     set: {
                         store.notifyAdhan = $0
                         Lifecycle.settingsChanged()
+                    }
+                ))
+                if store.notifyAdhan {
+                    Text(L("prayer_notify_voice")).font(.footnote.weight(.semibold)).foregroundStyle(Brand.primary).padding(.top, 8)
+                    AdhanVoiceList(selected: Binding(
+                        get: { store.notifyVoice },
+                        set: {
+                            store.notifyVoice = $0
+                            Lifecycle.settingsChanged()
+                        }
+                    ))
+                }
+                ToggleRow(title: L("friday_notify"), subtitle: L("friday_notify_hint"), isOn: Binding(
+                    get: { store.fridayReminders },
+                    set: { value in
+                        store.fridayReminders = value
+                        Task {
+                            if value { await PrayerNotifications.requestPermission() }
+                            await FridayReminders.reschedule()
+                        }
                     }
                 ))
                 if store.notify && !notificationsAllowed {

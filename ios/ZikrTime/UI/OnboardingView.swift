@@ -38,7 +38,7 @@ struct OnboardingView: View {
                 .padding(.horizontal, 20)
                 .padding(.vertical, 12)
         }
-        .background(Brand.background.ignoresSafeArea())
+        .background(AuroraBackground())
     }
 
     private var welcomeStep: some View {

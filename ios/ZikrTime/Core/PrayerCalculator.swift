@@ -95,12 +95,13 @@ enum Prayer: Int, CaseIterable, Codable {
 
 /// Методы расчёта (углы солнца под горизонтом для фаджра и иши), как в Android-версии.
 enum CalcMethod: String, CaseIterable {
+    case moscowCathedral = "MOSCOW_CATHEDRAL"
     case russia = "RUSSIA", mwl = "MWL", turkey = "TURKEY", makkah = "MAKKAH", egypt = "EGYPT", karachi = "KARACHI", isna = "ISNA"
 
     var fajrAngle: Double {
         switch self {
         case .russia: return 16
-        case .mwl, .turkey, .karachi: return 18
+        case .moscowCathedral, .mwl, .turkey, .karachi: return 18
         case .makkah: return 18.5
         case .egypt: return 19.5
         case .isna: return 15
@@ -109,7 +110,7 @@ enum CalcMethod: String, CaseIterable {
 
     var ishaAngle: Double? {
         switch self {
-        case .russia: return 15
+        case .russia, .moscowCathedral: return 15
         case .mwl, .turkey: return 17
         case .makkah: return nil
         case .egypt: return 17.5
@@ -121,9 +122,10 @@ enum CalcMethod: String, CaseIterable {
     /// Иша через N минут после магриба (Умм аль-Кура).
     var ishaMinutes: Int? { self == .makkah ? 90 : nil }
 
-    /// Номер метода в API aladhan.com.
-    var aladhanId: Int {
+    /// Номер метода в API aladhan.com (nil — своё расписание, не из aladhan).
+    var aladhanId: Int? {
         switch self {
+        case .moscowCathedral: return nil
         case .russia: return 14
         case .mwl: return 3
         case .turkey: return 13
@@ -134,7 +136,13 @@ enum CalcMethod: String, CaseIterable {
         }
     }
 
-    var nameKey: String { "method_" + rawValue.lowercased() }
+    /// Поправки в минутах (фаджр, восход, зухр, аср, магриб, иша), подобранные по официальному расписанию.
+    /// Московская Соборная мечеть: совпадает с dumrf.ru минута в минуту (сверка 24.10.2026).
+    var offsets: [Double] {
+        self == .moscowCathedral ? [0.5, -5, 5, -0.5, 4, -0.5] : [0, 0, 0, 0, 0, 0]
+    }
+
+    var nameKey: String { self == .moscowCathedral ? "method_moscow" : "method_" + rawValue.lowercased() }
 }
 
 /// Мазхаб для аср-намаза: тень равна предмету (1) или вдвое больше (2, ханафитский).
@@ -169,13 +177,14 @@ enum PrayerCalculator {
             let minutes = (hours * 60.0 + 0.5).rounded(.down)
             return midnight.addingTimeInterval(minutes * 60)
         }
+        let o = method.offsets.map { $0 / 60.0 }
         return [
-            .fajr: at(utc[FAJR]),
-            .sunrise: at(utc[SUNRISE]),
-            .dhuhr: at(utc[DHUHR]),
-            .asr: at(utc[ASR]),
-            .maghrib: at(utc[MAGHRIB]),
-            .isha: at(utc[ISHA]),
+            .fajr: at(utc[FAJR] + o[0]),
+            .sunrise: at(utc[SUNRISE] + o[1]),
+            .dhuhr: at(utc[DHUHR] + o[2]),
+            .asr: at(utc[ASR] + o[3]),
+            .maghrib: at(utc[MAGHRIB] + o[4]),
+            .isha: at(utc[ISHA] + o[5]),
         ]
     }
 

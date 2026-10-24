@@ -59,6 +59,17 @@ struct AlarmSettingsView: View {
                 }
 
                 Card {
+                    Text(L("alarm_sound")).font(.body)
+                    AdhanVoiceList(selected: Binding(
+                        get: { store.alarmVoice },
+                        set: {
+                            store.alarmVoice = $0
+                            changed()
+                        }
+                    ))
+                }
+
+                Card {
                     Label(L(FajrAlarm.usesAlarmKit ? "alarm_ios_note" : "alarm_ios_fallback"), systemImage: "info.circle")
                         .font(.footnote)
                         .foregroundStyle(Brand.secondaryText)
@@ -111,9 +122,7 @@ private struct AlarmHero: View {
     let next: (trigger: Date, fajr: Date)?
 
     var body: some View {
-        ZStack(alignment: .topLeading) {
-            LinearGradient(colors: [Brand.emeraldDeep, Brand.emeraldNight], startPoint: .topLeading, endPoint: .bottomTrailing)
-            StarPattern(color: Brand.gold.opacity(0.10))
+        GlassHero {
             VStack(alignment: .leading, spacing: 8) {
                 HStack(spacing: 12) {
                     Image(systemName: "alarm.fill").font(.title2).foregroundStyle(Brand.gold)
@@ -134,6 +143,5 @@ private struct AlarmHero: View {
             }
             .padding(22)
         }
-        .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
     }
 }

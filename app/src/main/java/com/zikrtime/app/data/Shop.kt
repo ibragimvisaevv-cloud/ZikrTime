@@ -96,10 +96,12 @@ object Shop {
         load(context)
         val last = Store.getRaw(KEY_AT)?.toLongOrNull() ?: 0L
         if (!force && System.currentTimeMillis() - last < REFRESH_MS) return
-        val text = withContext(Dispatchers.IO) { runCatching { download() }.getOrNull() }
+        val result = withContext(Dispatchers.IO) { runCatching { download() } }
+        val text = result.getOrNull()
         val parsed = text?.let { runCatching { parse(it) }.getOrNull() }
         if (parsed == null) {
-            offline = text == null
+            // «Нет интернета» — только если не было связи (а не, например, ответ 404).
+            offline = result.exceptionOrNull() is java.io.IOException
             return
         }
         offline = false

@@ -4,6 +4,7 @@ import SwiftUI
 struct ZikrTimeApp: App {
     @StateObject private var store = Store.shared
     @StateObject private var online = OnlineTimes.shared
+    @StateObject private var shop = ShopStore.shared
     @StateObject private var router = Router()
     @Environment(\.scenePhase) private var phase
 
@@ -16,6 +17,7 @@ struct ZikrTimeApp: App {
             RootView()
                 .environmentObject(store)
                 .environmentObject(online)
+                .environmentObject(shop)
                 .environmentObject(router)
                 .id(store.language) // смена языка — перестраиваем все экраны
                 .tint(Brand.primary)
@@ -42,6 +44,7 @@ enum Lifecycle {
     static func reschedule() async {
         if QA.active { return } // при автоматической проверке не показываем системные запросы разрешений
         await PrayerNotifications.reschedule()
+        await FridayReminders.reschedule()
         await FajrAlarm.reschedule()
     }
 
@@ -63,6 +66,8 @@ enum Lifecycle {
 enum QA {
     private static var screen: String? { UserDefaults.standard.string(forKey: "qa_screen") }
     static var active: Bool { screen != nil }
+    /// Раунд викторины сразу с карточек подготовки (для скриншота).
+    static var quizCards: Bool { screen == "quiz_cards" }
 
     /// С какого шага открыть знакомство (для скриншотов).
     static var onboardingStep: Int {
@@ -91,6 +96,16 @@ enum QA {
             router.tab = .knowledge
             router.knowledgePath = [.quiz(category: nil)]
         case "qibla": router.tab = .qibla
+        case "shop": router.tab = .shop
+        case "shop_seller":
+            router.tab = .shop
+            router.shopPath = [.seller("demo_perfume")]
+        case "shop_product":
+            router.tab = .shop
+            router.shopPath = [.product("p1")]
+        case "quiz_cards":
+            router.tab = .knowledge
+            router.knowledgePath = [.quiz(category: nil)]
         case "more": router.tab = .more
         case "tasbih": router.open(.tasbih, in: .more)
         case "alarm": router.open(.alarm, in: .more)

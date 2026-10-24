@@ -11,6 +11,7 @@ final class Store: ObservableObject {
     private enum K {
         static let onboarded = "onboarded", language = "language", city = "city", method = "method", madhab = "madhab"
         static let online = "online_times", adjustments = "adjustments", notify = "notify", notifyAdhan = "notify_adhan"
+        static let notifyVoice = "notify_voice", alarmVoice = "alarm_voice", friday = "friday_reminders"
         static let alarmOn = "alarm_on", alarmOffset = "alarm_offset", alarmDays = "alarm_days"
         static let prayed = "prayed", quizDays = "quiz_days", totalCorrect = "total_correct", totalAnswered = "total_answered"
         static let catCorrect = "cat_correct", recent = "recent_questions"
@@ -38,6 +39,11 @@ final class Store: ObservableObject {
     // MARK: Уведомления
     @Published var notify: Bool { didSet { d.set(notify, forKey: K.notify) } }
     @Published var notifyAdhan: Bool { didSet { d.set(notifyAdhan, forKey: K.notifyAdhan) } }
+    /// Голос азана в уведомлениях и в будильнике ("adhan", "adhan_2", "adhan_3").
+    @Published var notifyVoice: String { didSet { d.set(notifyVoice, forKey: K.notifyVoice) } }
+    @Published var alarmVoice: String { didSet { d.set(alarmVoice, forKey: K.alarmVoice) } }
+    /// Пятничные напоминания (Аль-Кахф, джума, последний час).
+    @Published var fridayReminders: Bool { didSet { d.set(fridayReminders, forKey: K.friday) } }
 
     // MARK: Будильник на фаджр
     @Published var alarmEnabled: Bool { didSet { d.set(alarmEnabled, forKey: K.alarmOn) } }
@@ -77,6 +83,9 @@ final class Store: ObservableObject {
         adjustments = adj.count == Prayer.allCases.count ? adj : Array(repeating: 0, count: Prayer.allCases.count)
         notify = defaults.object(forKey: K.notify) as? Bool ?? true
         notifyAdhan = defaults.object(forKey: K.notifyAdhan) as? Bool ?? false
+        notifyVoice = AdhanVoice.byId(defaults.string(forKey: K.notifyVoice) ?? "").id
+        alarmVoice = AdhanVoice.byId(defaults.string(forKey: K.alarmVoice) ?? "").id
+        fridayReminders = defaults.object(forKey: K.friday) as? Bool ?? true
         alarmEnabled = defaults.bool(forKey: K.alarmOn)
         alarmOffset = defaults.object(forKey: K.alarmOffset) as? Int ?? 30
         alarmDays = Set(defaults.array(forKey: K.alarmDays) as? [Int] ?? Array(1...7))

@@ -1,12 +1,13 @@
 import SwiftUI
 
 enum AppTab: Hashable {
-    case prayer, knowledge, qibla, more
+    case prayer, knowledge, shop, qibla, more
 }
 
 enum Route: Hashable {
     case language, city, prayerSettings, alarm, tasbih, about, focus
     case quiz(category: String?)
+    case seller(String), product(String)
 }
 
 /// Вкладки и стопки экранов.
@@ -15,6 +16,7 @@ final class Router: ObservableObject {
     @Published var tab: AppTab = .prayer
     @Published var prayerPath: [Route] = []
     @Published var knowledgePath: [Route] = []
+    @Published var shopPath: [Route] = []
     @Published var qiblaPath: [Route] = []
     @Published var morePath: [Route] = []
     @Published var onboardingStep = QA.onboardingStep
@@ -24,6 +26,7 @@ final class Router: ObservableObject {
         switch tab {
         case .prayer: prayerPath.append(route)
         case .knowledge: knowledgePath.append(route)
+        case .shop: shopPath.append(route)
         case .qibla: qiblaPath.append(route)
         case .more: morePath.append(route)
         }
@@ -48,6 +51,12 @@ struct RootView: View {
                 }
                 .tabItem { Label(L("tab_knowledge"), systemImage: "book") }
                 .tag(AppTab.knowledge)
+
+                NavigationStack(path: $router.shopPath) {
+                    ShopView().destinations()
+                }
+                .tabItem { Label(L("tab_shop"), systemImage: "bag") }
+                .tag(AppTab.shop)
 
                 NavigationStack(path: $router.qiblaPath) {
                     QiblaView().destinations()
@@ -80,6 +89,8 @@ extension View {
             case .about: AboutView()
             case .focus: FocusInfoView()
             case .quiz(let category): QuizView(category: category)
+            case .seller(let id): SellerView(id: id)
+            case .product(let id): ProductView(id: id)
             }
         }
     }

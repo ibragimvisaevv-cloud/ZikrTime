@@ -30,7 +30,7 @@ struct HomeView: View {
                 }
                 .padding(.horizontal, 14)
                 .padding(.vertical, 8)
-                .background(Brand.primarySoft, in: Capsule())
+                .glass(cornerRadius: 20, shadow: 6)
             }
             .buttonStyle(.plain)
 
@@ -51,7 +51,8 @@ struct HomeView: View {
                         toggle: { store.setPrayed(today, p, !prayed.contains(p)) }
                     )
                 }
-                Text(L(PrayerSchedule.isOnline(today) ? "home_source_online" : "home_source_local", L(store.method.nameKey)))
+                Text(store.method == .moscowCathedral ? L("home_source_dumrf")
+                     : L(PrayerSchedule.isOnline(today) ? "home_source_online" : "home_source_local", L(store.method.nameKey)))
                     .font(.caption)
                     .foregroundStyle(Brand.secondaryText)
                     .padding(.horizontal, 8)
@@ -71,6 +72,8 @@ struct HomeView: View {
                     router.prayerPath.append(.alarm)
                 }
             }
+
+            if today.weekday == 5 { FridayCard(day: today) }
 
             HStack(spacing: 12) {
                 StreakCard(title: L("streak_knowledge"), value: Streaks.current(store.quizDaySet, today: today), hint: L("streak_knowledge_hint"))
@@ -103,9 +106,7 @@ private struct NextPrayerHero: View {
     let now: Date
 
     var body: some View {
-        ZStack(alignment: .topLeading) {
-            Brand.heroGradient
-            StarPattern(color: Brand.gold.opacity(0.12))
+        GlassHero {
             VStack(alignment: .leading, spacing: 6) {
                 HStack(alignment: .center) {
                     VStack(alignment: .leading, spacing: 4) {
@@ -135,7 +136,6 @@ private struct NextPrayerHero: View {
             }
             .padding(24)
         }
-        .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
     }
 
     private var countdown: some View {
@@ -200,7 +200,7 @@ private struct ActionTile: View {
                 Text(value).font(.headline.monospacedDigit()).foregroundStyle(Brand.primary).lineLimit(1).minimumScaleFactor(0.7)
             }
         }
-        .buttonStyle(.plain)
+        .buttonStyle(PressScaleStyle())
     }
 }
 
@@ -215,5 +215,37 @@ private struct StreakCard: View {
             Text(Fmt.days(value)).font(.title2.weight(.semibold))
             Text(hint).font(.caption).foregroundStyle(Brand.secondaryText)
         }
+    }
+}
+
+/// В пятницу — карточка с аятом или хадисом о пятнице; нажатие — следующий текст.
+private struct FridayCard: View {
+    let day: LocalDay
+    @State private var index = (Calendar.current.component(.hour, from: Date()) / 3) % FridayReminders.items.count
+
+    var body: some View {
+        let n = FridayReminders.items[index]
+        Button {
+            withAnimation(.easeInOut) { index = (index + 1) % FridayReminders.items.count }
+        } label: {
+            Card {
+                HStack(spacing: 12) {
+                    IconBadge(systemName: "book.closed", tint: Color(hex: 0x8A6414), background: Brand.gold.opacity(0.35))
+                    Text(L("home_friday_title")).font(.headline).foregroundStyle(.primary)
+                    Spacer()
+                    Text("\(index + 1)/\(FridayReminders.items.count)").font(.caption.weight(.semibold)).foregroundStyle(Brand.secondaryText)
+                }
+                Text("«" + FridayReminders.text(n) + "»")
+                    .font(.body)
+                    .foregroundStyle(.primary)
+                    .multilineTextAlignment(.leading)
+                    .padding(.top, 12)
+                Text(FridayReminders.source(n))
+                    .font(.footnote.weight(.medium))
+                    .foregroundStyle(Brand.primary)
+                    .padding(.top, 8)
+            }
+        }
+        .buttonStyle(PressScaleStyle(scale: 0.98))
     }
 }

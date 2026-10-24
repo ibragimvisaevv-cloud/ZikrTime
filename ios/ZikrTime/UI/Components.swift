@@ -1,20 +1,24 @@
 import SwiftUI
 
-/// Карточка с мягкой рамкой.
+/// Карточка: по умолчанию — стеклянная, с цветом — мягкий градиент того же цвета.
 struct Card<Content: View>: View {
     var padding: CGFloat = 20
     var background: Color = Brand.card
     @ViewBuilder var content: Content
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) { content }
+        let shape = RoundedRectangle(cornerRadius: 24, style: .continuous)
+        let inner = VStack(alignment: .leading, spacing: 0) { content }
             .padding(padding)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(background, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: 24, style: .continuous)
-                    .strokeBorder(background == Brand.card ? Brand.cardBorder : .clear, lineWidth: 1)
-            )
+        if background == Brand.card {
+            inner.glass()
+        } else {
+            inner
+                .background(LinearGradient(colors: [background, background.opacity(0.85)], startPoint: .top, endPoint: .bottom), in: shape)
+                .overlay(shape.strokeBorder(LinearGradient(colors: [.white.opacity(0.6), .white.opacity(0.05)], startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 1))
+                .shadow(color: background.opacity(0.5), radius: 10, x: 0, y: 4)
+        }
     }
 }
 
@@ -38,11 +42,13 @@ struct IconBadge: View {
     var size: CGFloat = 40
 
     var body: some View {
+        let shape = RoundedRectangle(cornerRadius: size * 0.32, style: .continuous)
         Image(systemName: systemName)
             .font(.system(size: size * 0.45, weight: .semibold))
             .foregroundStyle(tint)
             .frame(width: size, height: size)
-            .background(background, in: RoundedRectangle(cornerRadius: size * 0.32, style: .continuous))
+            .background(LinearGradient(colors: [background.opacity(0.55), background], startPoint: .topLeading, endPoint: .bottomTrailing), in: shape)
+            .overlay(shape.strokeBorder(LinearGradient(colors: [.white.opacity(0.6), .clear], startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 1))
     }
 }
 
@@ -97,16 +103,20 @@ struct PrimaryButton: View {
     let action: () -> Void
 
     var body: some View {
-        Button(action: action) {
-            Text(title)
-                .font(.headline)
-                .multilineTextAlignment(.center)
-                .frame(maxWidth: .infinity, minHeight: 54)
-                .padding(.horizontal, 12)
-                .foregroundStyle(textColor)
-                .background(color, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        if color == Brand.emerald && textColor == .white {
+            ShimmerButton(title: title, action: action)
+        } else {
+            Button(action: action) {
+                Text(title)
+                    .font(.headline)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity, minHeight: 54)
+                    .padding(.horizontal, 12)
+                    .foregroundStyle(textColor)
+                    .background(color, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+            }
+            .buttonStyle(PressScaleStyle())
         }
-        .buttonStyle(.plain)
     }
 }
 
@@ -122,9 +132,9 @@ struct TonalButton: View {
                 .frame(maxWidth: .infinity, minHeight: 50)
                 .padding(.horizontal, 12)
                 .foregroundStyle(Brand.primary)
-                .background(Brand.primarySoft, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+                .glass(cornerRadius: 16, shadow: 6)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(PressScaleStyle())
     }
 }
 
@@ -180,7 +190,7 @@ struct CheckCircle: View {
         Button(action: action) {
             ZStack {
                 if checked {
-                    Circle().fill(Brand.primary)
+                    Circle().fill(LinearGradient(colors: [Color(hex: 0x1A7D63), Brand.emeraldDeep], startPoint: .topLeading, endPoint: .bottomTrailing))
                     Image(systemName: "checkmark").font(.system(size: 12, weight: .bold)).foregroundStyle(.white)
                 } else {
                     Circle().strokeBorder(Brand.secondaryText.opacity(enabled ? 0.9 : 0.3), lineWidth: 1.8)
@@ -217,6 +227,6 @@ struct Page<Content: View>: View {
                 .padding(.horizontal, 20)
                 .padding(.vertical, 12)
         }
-        .background(Brand.background.ignoresSafeArea())
+        .background(AuroraBackground())
     }
 }

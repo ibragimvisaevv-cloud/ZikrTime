@@ -68,6 +68,29 @@ do {
     }
 }
 
+// Московская Соборная мечеть: официальное время dumrf.ru 24.10.2026 — 05:15, 07:14, 12:19, 14:34, 17:12, 18:50
+do {
+    let tz = TimeZone(identifier: "Europe/Moscow")!
+    let day = LocalDay(year: 2026, month: 10, day: 24)
+    let t = PrayerCalculator.calculate(day: day, latitude: 55.7558, longitude: 37.6173, method: .moscowCathedral, madhab: .standard)
+    let want: [(Prayer, Int, Int)] = [(.fajr, 5, 15), (.sunrise, 7, 14), (.dhuhr, 12, 19), (.asr, 14, 34), (.maghrib, 17, 12), (.isha, 18, 50)]
+    for (p, h, m) in want {
+        check(t[p]! == day.at(hour: h, minute: m, in: tz), "MOSCOW_CATHEDRAL \(p): не совпадает с dumrf.ru")
+    }
+    let html = """
+    <div class="namaz"><h3>Время намазов на сегодня 13 Джумада-ль-Уля (Москва):</h3>
+    <ul><li><span>Фаджр</span> <b>05:15</b></li><li><span>Шурук</span> <b>07:14</b></li>
+    <li><span>Зухр</span> <b>12:19</b></li><li><span>Аср</span> <b>14:34</b></li>
+    <li><span>Магриб</span>&nbsp;<b>17:12</b></li><li><span>Иша</span> <b>18:50</b></li></ul></div>
+    """
+    let parsed = DumrfParser.parse(html)
+    check(parsed?[.fajr]?.hour == 5 && parsed?[.fajr]?.minute == 15, "dumrf: фаджр")
+    check(parsed?[.isha]?.hour == 18 && parsed?[.isha]?.minute == 50, "dumrf: иша")
+    check(DumrfParser.parse("<html><body>Новости</body></html>") == nil, "dumrf: пустая страница")
+    check(DumrfParser.parse("Время намазов: Фаджр 18:00 Шурук 07:14 Зухр 12:19 Аср 14:34 Магриб 17:12 Иша 18:50") == nil, "dumrf: порядок")
+    check(DumrfParser.isMoscow(latitude: 55.75, longitude: 37.62) && !DumrfParser.isMoscow(latitude: 43.31, longitude: 45.69), "dumrf: Москва")
+}
+
 // Порядок времён в течение года для всех методов
 for method in CalcMethod.allCases {
     var day = LocalDay(year: 2026, month: 1, day: 1)
@@ -117,6 +140,15 @@ if let data = try? Data(contentsOf: root.appendingPathComponent("app/src/main/as
 } else {
     check(false, "Не читается cities.json")
 }
+if let data = try? Data(contentsOf: root.appendingPathComponent("app/src/main/assets/shop/catalog.json")),
+   let shop = try? ShopCatalog.parse(data) {
+    check(!shop.sellers.isEmpty && !shop.products.isEmpty, "Магазин: пустой каталог")
+    check(shop.products.allSatisfy { shop.seller($0.seller) != nil }, "Магазин: товар без продавца")
+    check(shop.categories.allSatisfy { !$0.name.get("tg").isEmpty }, "Магазин: названия категорий")
+} else {
+    check(false, "Не читается shop/catalog.json")
+}
+check(ShopCatalog.price(2500, currency: "RUB") == "2 500 ₽" && ShopCatalog.price(990, currency: "RUB") == "990 ₽", "Цена")
 check("بِسْمِ".hasArabic && !"Muhammad ﷺ".hasArabic, "Определение арабского текста")
 
 print(failures == 0 ? "Логика iPhone-версии: всё верно" : "Ошибок: \(failures)")
