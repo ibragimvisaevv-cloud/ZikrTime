@@ -1,0 +1,989 @@
+Command line invocation:
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild -project ios/ZikrTime.xcodeproj -scheme ZikrTime -configuration Debug -sdk iphonesimulator -destination "generic/platform=iOS Simulator" -derivedDataPath ios/build CODE_SIGNING_ALLOWED=NO build
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+    SDKROOT = iphonesimulator26.5
+
+2026-10-24 18:00:49.937 xcodebuild[5411:20053] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (1 target)
+    Target 'ZikrTime' in project 'ZikrTime' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: 66f7a30286cdae11c9790721e13824af
+Build description path: /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/XCBuildData/66f7a30286cdae11c9790721e13824af.xcbuilddata
+ClangStatCache /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk /Users/runner/work/ZikrTime/ZikrTime/ios/build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-688ef53f1462e2c8f657fdc38a81448ff45c64a1807a658693f2a61704f17a36.sdkstatcache
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime.xcodeproj
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -o /Users/runner/work/ZikrTime/ZikrTime/ios/build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-688ef53f1462e2c8f657fdc38a81448ff45c64a1807a658693f2a61704f17a36.sdkstatcache
+
+CreateBuildDirectory /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime.xcodeproj
+    builtin-create-build-directory /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex
+
+CreateBuildDirectory /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime.xcodeproj
+    builtin-create-build-directory /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products
+
+CreateBuildDirectory /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime.xcodeproj
+    builtin-create-build-directory /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator
+
+CreateBuildDirectory /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime.xcodeproj
+    builtin-create-build-directory /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+CreateBuildDirectory /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ExplicitPrecompiledModules
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime.xcodeproj
+    builtin-create-build-directory /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+WriteAuxiliaryFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime-63c6c3a331d9425c04367bcf86288525-VFS-iphonesimulator/all-product-headers.yaml
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime.xcodeproj
+    write-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime-63c6c3a331d9425c04367bcf86288525-VFS-iphonesimulator/all-product-headers.yaml
+
+CreateBuildDirectory /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime.xcodeproj
+    builtin-create-build-directory /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator
+
+WriteAuxiliaryFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime.hmap (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    write-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime.hmap
+
+WriteAuxiliaryFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime.DependencyStaticMetadataFileList (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    write-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime.DependencyMetadataFileList (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    write-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime.DependencyMetadataFileList
+
+WriteAuxiliaryFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-project-headers.hmap (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    write-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-project-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-own-target-headers.hmap (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    write-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-own-target-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-generated-files.hmap (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    write-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-generated-files.hmap
+
+WriteAuxiliaryFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-all-target-headers.hmap (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    write-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-all-target-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-all-non-framework-target-headers.hmap (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    write-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-all-non-framework-target-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-DebugDylibPath-normal-x86_64.txt (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    write-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-DebugDylibPath-normal-x86_64.txt
+
+WriteAuxiliaryFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-DebugDylibPath-normal-arm64.txt (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    write-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-DebugDylibPath-normal-arm64.txt
+
+WriteAuxiliaryFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-DebugDylibInstallName-normal-x86_64.txt (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    write-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-DebugDylibInstallName-normal-x86_64.txt
+
+WriteAuxiliaryFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-DebugDylibInstallName-normal-arm64.txt (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    write-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-DebugDylibInstallName-normal-arm64.txt
+
+WriteAuxiliaryFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime.SwiftFileList (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    write-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime.SwiftFileList
+
+WriteAuxiliaryFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime_const_extract_protocols.json (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    write-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime.SwiftConstValuesFileList (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    write-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime.LinkFileList (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    write-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime.LinkFileList
+
+WriteAuxiliaryFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime-OutputFileMap.json (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    write-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime-OutputFileMap.json
+
+WriteAuxiliaryFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime_const_extract_protocols.json (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    write-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime.SwiftFileList (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    write-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime.SwiftFileList
+
+WriteAuxiliaryFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime.SwiftConstValuesFileList (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    write-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime.LinkFileList (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    write-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime.LinkFileList
+
+WriteAuxiliaryFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime-OutputFileMap.json (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    write-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime-OutputFileMap.json
+
+MkDir /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    /bin/mkdir -p /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app
+
+MkDir /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/assetcatalog_output/thinned (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    /bin/mkdir -p /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/assetcatalog_output/thinned
+
+MkDir /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/assetcatalog_output/unthinned (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    /bin/mkdir -p /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/assetcatalog_output/unthinned
+
+Ld /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/Binary/__preview.dylib normal x86_64 (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target x86_64-apple-ios17.0-simulator -dynamiclib -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -O0 -L/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator -F/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator -install_name @rpath/ZikrTime.debug.dylib -Xlinker -dead_strip -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime_dependency_info.dat -o /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/Binary/__preview.dylib
+
+Ld /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/Binary/__preview.dylib normal arm64 (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -dynamiclib -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -O0 -L/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator -F/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator -install_name @rpath/ZikrTime.debug.dylib -Xlinker -dead_strip -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime_dependency_info.dat -o /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/Binary/__preview.dylib
+
+GenerateAssetSymbols /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/Assets.xcassets (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/actool /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/Assets.xcassets --compile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app --output-format human-readable-text --notices --warnings --export-dependency-info /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/assetcatalog_dependencies --output-partial-info-plist /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/assetcatalog_generated_info.plist --app-icon AppIcon --compress-pngs --enable-on-demand-resources YES --development-region en --target-device iphone --minimum-deployment-target 17.0 --platform iphonesimulator --bundle-identifier com.zikrtime.ios --generate-swift-asset-symbol-extensions NO --generate-swift-asset-symbols /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources/GeneratedAssetSymbols.swift --generate-objc-asset-symbols /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources/GeneratedAssetSymbols.h --generate-asset-symbol-index /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources/GeneratedAssetSymbols-Index.plist
+/* com.apple.actool.compilation-results */
+/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources/GeneratedAssetSymbols-Index.plist
+/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources/GeneratedAssetSymbols.h
+/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources/GeneratedAssetSymbols.swift
+
+
+CpResource /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/quiz /Users/runner/work/ZikrTime/ZikrTime/app/src/main/assets/quiz (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/runner/work/ZikrTime/ZikrTime/app/src/main/assets/quiz /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app
+
+CpResource /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/cities.json /Users/runner/work/ZikrTime/ZikrTime/app/src/main/assets/cities.json (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/runner/work/ZikrTime/ZikrTime/app/src/main/assets/cities.json /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app
+
+CpResource /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/catalog.json /Users/runner/work/ZikrTime/ZikrTime/app/src/main/assets/shop/catalog.json (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/runner/work/ZikrTime/ZikrTime/app/src/main/assets/shop/catalog.json /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app
+
+CpResource /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/amiri.ttf /Users/runner/work/ZikrTime/ZikrTime/app/src/main/res/font/amiri.ttf (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/runner/work/ZikrTime/ZikrTime/app/src/main/res/font/amiri.ttf /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app
+
+CpResource /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/adhan_short.caf /Users/runner/work/ZikrTime/ZikrTime/shared/audio/adhan_short.caf (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/runner/work/ZikrTime/ZikrTime/shared/audio/adhan_short.caf /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app
+
+CpResource /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/adhan_3_short.caf /Users/runner/work/ZikrTime/ZikrTime/shared/audio/adhan_3_short.caf (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/runner/work/ZikrTime/ZikrTime/shared/audio/adhan_3_short.caf /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app
+
+CpResource /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/adhan_2_short.caf /Users/runner/work/ZikrTime/ZikrTime/shared/audio/adhan_2_short.caf (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/runner/work/ZikrTime/ZikrTime/shared/audio/adhan_2_short.caf /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app
+
+CopyStringsFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/uz.lproj/Localizable.strings /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/uz.lproj/Localizable.strings (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copyStrings --validate --outputencoding binary --outfilename Localizable.strings --outdir /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/uz.lproj -- /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/uz.lproj/Localizable.strings
+/Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/uz.lproj/Localizable.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'ZikrTime' from project 'ZikrTime')
+
+CopyStringsFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/uz.lproj/InfoPlist.strings /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/uz.lproj/InfoPlist.strings (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copyStrings --validate --outputencoding binary --outfilename InfoPlist.strings --outdir /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/uz.lproj -- /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/uz.lproj/InfoPlist.strings
+/Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/uz.lproj/InfoPlist.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'ZikrTime' from project 'ZikrTime')
+
+CopyStringsFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/tr.lproj/Localizable.strings /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/tr.lproj/Localizable.strings (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copyStrings --validate --outputencoding binary --outfilename Localizable.strings --outdir /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/tr.lproj -- /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/tr.lproj/Localizable.strings
+/Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/tr.lproj/Localizable.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'ZikrTime' from project 'ZikrTime')
+
+CopyStringsFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/tr.lproj/InfoPlist.strings /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/tr.lproj/InfoPlist.strings (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copyStrings --validate --outputencoding binary --outfilename InfoPlist.strings --outdir /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/tr.lproj -- /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/tr.lproj/InfoPlist.strings
+/Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/tr.lproj/InfoPlist.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'ZikrTime' from project 'ZikrTime')
+
+CopyStringsFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/tg.lproj/Localizable.strings /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/tg.lproj/Localizable.strings (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copyStrings --validate --outputencoding binary --outfilename Localizable.strings --outdir /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/tg.lproj -- /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/tg.lproj/Localizable.strings
+/Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/tg.lproj/Localizable.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'ZikrTime' from project 'ZikrTime')
+
+CopyStringsFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/tg.lproj/InfoPlist.strings /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/tg.lproj/InfoPlist.strings (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copyStrings --validate --outputencoding binary --outfilename InfoPlist.strings --outdir /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/tg.lproj -- /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/tg.lproj/InfoPlist.strings
+/Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/tg.lproj/InfoPlist.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'ZikrTime' from project 'ZikrTime')
+
+CopyStringsFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/ru.lproj/Localizable.strings /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/ru.lproj/Localizable.strings (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copyStrings --validate --outputencoding binary --outfilename Localizable.strings --outdir /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/ru.lproj -- /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/ru.lproj/Localizable.strings
+/Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/ru.lproj/Localizable.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'ZikrTime' from project 'ZikrTime')
+
+CopyStringsFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/ru.lproj/InfoPlist.strings /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/ru.lproj/InfoPlist.strings (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copyStrings --validate --outputencoding binary --outfilename InfoPlist.strings --outdir /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/ru.lproj -- /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/ru.lproj/InfoPlist.strings
+/Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/ru.lproj/InfoPlist.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'ZikrTime' from project 'ZikrTime')
+
+CopyStringsFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/ky.lproj/Localizable.strings /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/ky.lproj/Localizable.strings (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copyStrings --validate --outputencoding binary --outfilename Localizable.strings --outdir /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/ky.lproj -- /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/ky.lproj/Localizable.strings
+/Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/ky.lproj/Localizable.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'ZikrTime' from project 'ZikrTime')
+
+CopyStringsFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/ky.lproj/InfoPlist.strings /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/ky.lproj/InfoPlist.strings (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copyStrings --validate --outputencoding binary --outfilename InfoPlist.strings --outdir /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/ky.lproj -- /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/ky.lproj/InfoPlist.strings
+/Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/ky.lproj/InfoPlist.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'ZikrTime' from project 'ZikrTime')
+
+CopyStringsFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/kk.lproj/Localizable.strings /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/kk.lproj/Localizable.strings (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copyStrings --validate --outputencoding binary --outfilename Localizable.strings --outdir /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/kk.lproj -- /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/kk.lproj/Localizable.strings
+/Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/kk.lproj/Localizable.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'ZikrTime' from project 'ZikrTime')
+
+CopyStringsFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/kk.lproj/InfoPlist.strings /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/kk.lproj/InfoPlist.strings (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copyStrings --validate --outputencoding binary --outfilename InfoPlist.strings --outdir /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/kk.lproj -- /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/kk.lproj/InfoPlist.strings
+/Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/kk.lproj/InfoPlist.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'ZikrTime' from project 'ZikrTime')
+
+CopyStringsFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/en.lproj/Localizable.strings /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/en.lproj/Localizable.strings (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copyStrings --validate --outputencoding binary --outfilename Localizable.strings --outdir /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/en.lproj -- /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/en.lproj/Localizable.strings
+/Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/en.lproj/Localizable.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'ZikrTime' from project 'ZikrTime')
+
+CreateUniversalBinary /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/__preview.dylib normal arm64\ x86_64 (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo -create /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/Binary/__preview.dylib /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/Binary/__preview.dylib -output /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/__preview.dylib
+
+CopyStringsFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/en.lproj/InfoPlist.strings /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/en.lproj/InfoPlist.strings (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copyStrings --validate --outputencoding binary --outfilename InfoPlist.strings --outdir /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/en.lproj -- /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/en.lproj/InfoPlist.strings
+/Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/en.lproj/InfoPlist.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'ZikrTime' from project 'ZikrTime')
+
+CopyStringsFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/az.lproj/Localizable.strings /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/az.lproj/Localizable.strings (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copyStrings --validate --outputencoding binary --outfilename Localizable.strings --outdir /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/az.lproj -- /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/az.lproj/Localizable.strings
+/Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/az.lproj/Localizable.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'ZikrTime' from project 'ZikrTime')
+
+CopyStringsFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/az.lproj/InfoPlist.strings /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/az.lproj/InfoPlist.strings (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copyStrings --validate --outputencoding binary --outfilename InfoPlist.strings --outdir /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/az.lproj -- /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/az.lproj/InfoPlist.strings
+/Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/az.lproj/InfoPlist.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'ZikrTime' from project 'ZikrTime')
+
+CompileAssetCatalogVariant thinned /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/Assets.xcassets (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/actool /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/Assets.xcassets --compile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/assetcatalog_output/thinned --output-format human-readable-text --notices --warnings --export-dependency-info /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/assetcatalog_dependencies_thinned --output-partial-info-plist /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/assetcatalog_generated_info.plist_thinned --app-icon AppIcon --compress-pngs --enable-on-demand-resources YES --development-region en --target-device iphone --minimum-deployment-target 17.0 --platform iphonesimulator
+/* com.apple.actool.compilation-results */
+/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/assetcatalog_generated_info.plist_thinned
+/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/assetcatalog_output/thinned/AppIcon60x60@2x.png
+/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/assetcatalog_output/thinned/AppIcon76x76@2x~ipad.png
+/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/assetcatalog_output/thinned/Assets.car
+
+
+SwiftDriver ZikrTime normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-SwiftDriver -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name ZikrTime -Onone @/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator -F /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator -c -j5 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/work/ZikrTime/ZikrTime/ios/build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-688ef53f1462e2c8f657fdc38a81448ff45c64a1807a658693f2a61704f17a36.sdkstatcache -output-file-map /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex -sdk-module-cache-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-generated-files.hmap -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-own-target-headers.hmap -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-project-headers.hmap -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime-Swift.h -working-directory /Users/runner/work/ZikrTime/ZikrTime/ios -experimental-emit-module-separately -disable-cmo
+
+SwiftDriver ZikrTime normal x86_64 com.apple.xcode.tools.swift.compiler (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-SwiftDriver -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name ZikrTime -Onone @/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target x86_64-apple-ios17.0-simulator -g -module-cache-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator -F /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator -c -j5 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/work/ZikrTime/ZikrTime/ios/build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-688ef53f1462e2c8f657fdc38a81448ff45c64a1807a658693f2a61704f17a36.sdkstatcache -output-file-map /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex -sdk-module-cache-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-generated-files.hmap -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-own-target-headers.hmap -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-project-headers.hmap -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources-normal/x86_64 -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources/x86_64 -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime-Swift.h -working-directory /Users/runner/work/ZikrTime/ZikrTime/ios -experimental-emit-module-separately -disable-cmo
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/ActivityKit-CA3D8GPPX0GV9217LZODE0XRC.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/ptrauth-24YL34747UNY4ZI8I9KDV0UDC.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_Builtin_stdbool-5BV25BGGYOFMQ6HEAYOPQ9LZ1.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_Builtin_stdarg-9Z8JYCOJMP7WG20XLTJ4IEHP8.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_Builtin_float-8QURGT53U4WTRWYJW5XPLCYJX.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/ActivityKit-703E23ZXPATYO9ZST6Y8F1U8V.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_AvailabilityInternal-9MCUFBXXNTSIU9HHG53G0GE93.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/DeveloperToolsSupport-7H6EZ0RSGGA9JZS5B3YKUUM00.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_SwiftConcurrencyShims-8DZZTZFR23COTUX5XSU4ZLTU8.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_SwiftConcurrencyShims-2UKBSLEZLPIHHV78MIIIO3NH0.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/SwiftShims-61S5VMQP79IBW0QTWAUEEMW2G.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_Builtin_stddef-C78108SUN47JLGCE41BJXORIE.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/ptrcheck-5SURELVNTI3Q4FYYRKESZK4K4.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_AvailabilityInternal-3EC9EZSFF6IWZG8RYDBN4WGN2.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/DeveloperToolsSupport-DOJWPNGJN60AMKPZSAW41X48.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/ptrauth-3PA7BU3UXN5G0HUEVWMDLNWOF.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_Builtin_float-8MWZBOZWZNRAY852HDP5JV0ER.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_DarwinFoundation1-CWCUBNUXRYTMAN8X5T76W7IXE.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/SwiftShims-AMTLNXTLM6JOLXLYFPGEWS1IA.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_Builtin_stdarg-5H3RAVR2D1FKRHCE5GLKYXV06.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_Builtin_stddef-4FT5W2YS0QF4HENHOH15JD9TA.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/ptrcheck-94QW2BTKD17V4JQ0Q6VLFMU5F.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_Builtin_stdbool-3HJ3DMZDMEQQHAHI6YZWQ90RM.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/ExtensionFoundation-15KA9IB7ASI0JENZI77KNVGY.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_Builtin_limits-7QPCAHKCH890497NNSVT98FRQ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_DarwinFoundation2-9NIJNEUW1FL6JJIE4AOJOWG9Y.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_DarwinFoundation1-B8HD7GSYQ5NQK2NYHXLFKBEX4.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_Builtin_limits-3D67SAWMV2VE5Z97MEJ84H7BT.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_DarwinFoundation2-1OCCNKBSBND6E8IGZMH0VJKF5.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/ExtensionFoundation-D861463BCFW7O04GB95C5OGE0.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/sys_types-9AF3N9TELMKLLABNIF3KJLGUI.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_Builtin_stdint-2LQPUXDM0VRXITC5U8ND5QJVC.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_Builtin_tgmath-CM3N3GUPSHGKPUQBLT3WZPKGD.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_Builtin_tgmath-2W920QC6VNB1ZV8OXES6F49VS.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/sys_types-E6SM7B37AB4ZPULOYVABCSGLV.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_Builtin_stdint-9HUYLXCSZYVJ15YKAE7DH2YWU.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_DarwinFoundation3-5XPVBF4Z816PWO1NHO3L6DFUX.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_Builtin_intrinsics-6KLBIAGO5Q2G7688BWFYMJMQL.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_Builtin_stdatomic-8S4Z5V56S563C5VF8WDJL1SJB.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_DarwinFoundation3-DUBEBY6ZIHXZRCPQIVE9B6ASW.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_Builtin_stdatomic-9SEH184X60JUOEM6SELEZF7GJ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_Builtin_inttypes-D8QJSUZDS9XK3WXQX4EI1F4NU.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_Builtin_inttypes-4Q99PM7CN5GLWLZFZKR2L9AWB.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_Builtin_intrinsics-8FG1CJW7N32FR15FVLM2BAPK9.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/Darwin-7OL2FZ8QUWJX1DGYVFCC2SP3C.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/Darwin-EPIEWTA9ET67FAC8VXSYYOQ2V.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/simd-E1K7AV29PWMHYWYOMGXHVN8IB.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/ObjectiveC-1ZW3R5YE3R0C9ZHQ5YAI45NH2.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/MachO-CDW0LTJ9RSX5Q42VD1FM10MJG.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/ObjectiveC-971NBQ04MD8SE9XVFAHFUDLXS.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/simd-9DKSFCAQF0K5OWU6OZYKVPH87.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/MachO-BHE6PMQVI9SEN5PDV19F11YUP.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/os_object-ECCB225VCVF42LXXWA192TWY0.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/os_object-5F23WEDAJL0D4SO2DNYG4B73Z.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/os_workgroup-2UKMN6W2P4UNYF12C251IHPGK.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/Spatial-EZG224BYGBC4RABIHIN6OWYCG.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/os_workgroup-21QFIDPRR3FHUC8AMTHWNV1SU.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/Dispatch-AE9TIG9I865QOSAG6VQA5SFT4.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/Dispatch-3OCEE6K273U7E6Z137WBF3PB6.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/dnssd-F3ZW5ANL9J80Z8KB01F23C9AO.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/XPC-CFT5LTCK5CYV14X61GWB8FHJG.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/dnssd-151CC4DBEURX14X9TBE16VP7L.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/XPC-B1B6AAYKKVI1OR72892B5ZR13.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreFoundation-3GKWSEF1AD3WEDMC4BBQET2BZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreFoundation-AFUSTAX3DMNEC8LQDHA8CAAM3.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/os-7PF09SG1KLIXMKMJKOUMT4UTN.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/os-42678K0O5D72BPTA7QBEUMUAE.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/Spatial-1VDQQRIJUIC3ZSOZ3DLGPOZOR.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/Security-9RL363CAAG82QAGW8O8Q4255L.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreGraphics-AFDLXN1KCMYCPL2ADXJKTXY1.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CFNetwork-4BLQD18GAQA722FZ07N1JFRXI.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/Security-6Q11GHPF3MP5K7EAG78WYYDS9.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreAudioTypes-DGJNPG6OJBKWRUD3WDC04PF1M.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreGraphics-6HUK6G5FUZ1ONRGGYBL87STKU.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CFNetwork-EZM5KRBZ5P4V8VKT45UFH9FW.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreText-A9ENFNIBZA59D46QKHZWR6BYQ.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/ImageIO-38OLUW7JI5QXBU0H9V4UZYWT.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreAudio-6IL5P7BWDVDHRT0FSW3LWKO95.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreText-D539AI95D07R8DESCIURST9LS.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/Foundation-3IXERNTBV910I1H39DIVM9QVJ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/ImageIO-42B7WTQN1KUXQFQN4BKUER87Y.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/Foundation-DU3O3N69GDG6YYZHZ68B28PBW.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreAudioTypes-6GL9KRGY6SMRK8YR9AR67VEY3.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreAudio-8SP64JS69G5PBVNLGVLJT4MGW.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreData-5D9SYWX1L6G825PC7NAQT65IR.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/RelevanceKit-6J3B9AQ10KK6QJS74YYRM14XM.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/FileProvider-85CU92A8CXEGI49C5HW5O8C8I.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/OSLog-BSPUZE4FEPUE1M9851E50F93D.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/UserNotifications-4AWS2IGUU37KM66PR6T1CW8OS.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/DataDetection-68H4YFKKKYH5D6TPFGVOXT0EX.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/Network-AB2J1YNXLPB5BM7NEJZDXPS4N.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/Symbols-7VWN3A1YTOMLFG5DCV7HQEMJZ.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/UniformTypeIdentifiers-2F4559MZDW1MRFT2GK0D1P0F2.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/DataDetection-2N6NR82F5TBBPB5OAEOU7S0M2.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_LocationEssentials-8T62IHBWF01YVLKZCVCKKH8B8.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreMIDI-6BSNNWZMEH30878YPDF3AJDL4.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreMIDI-CX4QH2UUDPLDASSQNKF07AY38.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/RelevanceKit-D0JZW1KAZCWDC8SSWO1DLF748.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/UIUtilities-3CTZ9SBY2CS4C75BIQO597851.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/IOSurface-33CZSR25J6Q7BYMMH5NP55TSZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/IOSurface-EWE19BIZMJK4IPSS4Q10KMN2W.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreTransferable-98RQEBTECUUQ82KRNR5D7VEOF.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/AudioToolbox-4484D57GNALUR8V7KBCS2RWZQ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/AudioToolbox-A3C82FHNVBUD4QWX5I9HH28OG.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/Metal-CXUFIZKYODH179YLN8BQCO5JL.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/UIUtilities-2BTWB6HM8IH6TYZ69GSRH1DI1.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/Symbols-BMGQ0MOEDUJVMQC2ME99XSYVJ.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreTransferable-2AOXBBCM2Q5OQ45AXJEILEGGE.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/Network-5LT8BLW5KOKBCW0P1880I52PZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/UniformTypeIdentifiers-A3CG4QWRJFLI3YHGYOFJ15AFP.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/OSLog-ECGSSSO1J1561Q759YL45JEJD.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/AlarmKit-DNP6GZL1WKGV8VXJYIS10J7N1.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/Metal-DBR1Q0BVFJXZO676CG4QMOJDN.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreSpotlight-E403577CNNHF1BFQ463JCM0M5.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/UserNotifications-53HQF1KXKJ5U643D92UUCOH9M.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/AppIntents-I64VLDCY24JSFKFLUX90UVTA.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/AVRouting-3WXLH690V33E4JTGOJNM87D7R.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/AVRouting-BH3768XZBQXGK8CJY0FDUTUNQ.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreData-EF8K7WRX995E6TL57Y7E2JEM5.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/AlarmKit-2LJAU5T9F1H0Q6BL3MM1YREOX.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/AppIntents-56GJ3UUVESJGP3EY39YXKX5HV.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/OpenGLES-2FV5YFWKQK3W275XJA55HNERG.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/Accessibility-6J6SD6OT9XJFTB9MPHZ60QPX5.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/OpenGLES-4BTXXWMBLEC1DSP6A4V5Q8YX8.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreSpotlight-7VN4D2GLJ800Y02ES04FBLJSJ.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/_LocationEssentials-8XUII8VYMZ01NPNFXZ1VCUSLY.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreLocation-2HFFZHQYMWE47KEWU4ECELY3M.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/Accessibility-B987A8PY67NNGQ9TPRD7COVMF.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreVideo-AV093G80QS4GX1MJ8E4YJRVB.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/FileProvider-79U49EZQ11E27L80R1WRLIJHD.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreVideo-EO8UP0O1RS1XWUNP707THHAEJ.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreLocation-DHLI7QZHNOEM0XCE86RUKMJ9D.pcm
+
+LinkAssetCatalog /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Resources/Assets.xcassets (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-linkAssetCatalog --thinned /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/assetcatalog_output/thinned --thinned-dependencies /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/assetcatalog_dependencies_thinned --thinned-info-plist-content /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/assetcatalog_generated_info.plist_thinned --unthinned /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/assetcatalog_output/unthinned --unthinned-dependencies /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/assetcatalog_dependencies_unthinned --unthinned-info-plist-content /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/assetcatalog_generated_info.plist_unthinned --output /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app --plist-output /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/assetcatalog_generated_info.plist
+note: Emplaced /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/AppIcon60x60@2x.png (in target 'ZikrTime' from project 'ZikrTime')
+note: Emplaced /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/Assets.car (in target 'ZikrTime' from project 'ZikrTime')
+note: Emplaced /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/AppIcon76x76@2x~ipad.png (in target 'ZikrTime' from project 'ZikrTime')
+
+ProcessInfoPlistFile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/Info.plist /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Info.plist (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-infoPlistUtility /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/assetcatalog_generated_info.plist -o /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/Info.plist
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreImage-8UQLDR9ZYU5CY6GLETKCXRME3.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/QuartzCore-EL5LL2RHLEW0TKAPE9H8AO75F.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreMedia-D3GDT6I3Q0ACM0Z1V5KL11OK.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreMedia-38IZAEHT29UT7D9WO4PQUKUCR.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/CoreImage-A3YEIZIINTIVYNENU0VYWEBRZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/QuartzCore-EP29GKWTZIBQVJFZ92C32VAGG.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/SwiftUICore-3OXJXMRUPYU7PZVUIMCE2SIFH.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/UIKit-AGKHQI01Z8B0CKFIRIQ9L95A8.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/MediaToolbox-6Q3QAQQX48UN380NITAAGN32L.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/AVFAudio-301LTUMFFB16ZF2V4ANK5XXAR.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/AVFAudio-APSJ774YHFK3KULGB0Q6R1TG6.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/MediaToolbox-2SNXUHQL9X59701SXNF48GF4Z.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/UIKit-3UL1NXWUWM4KJFNQ78580Y0GC.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/SwiftUICore-70MO6CI3V66OE80JQG2JJ259I.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/AVFoundation-USEVCC8BW5Q53JGK47COZGM1.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/AVFoundation-7XAV89FED54CAIQ59F0NLLAM.pcm
+
+SwiftExplicitDependencyGeneratePcm x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/SwiftUI-883FWPBUCV5UW75ARG2UN8L90.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/SwiftUI-1U9T55JSFD74DFKMOEGWT5W31.pcm
+
+SwiftEmitModule normal x86_64 Emitting\ module\ for\ ZikrTime (in target 'ZikrTime' from project 'ZikrTime')
+EmitSwiftModule normal x86_64 (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal x86_64 Compiling\ OnboardingView.swift,\ PrayerCalculator.swift,\ PrayerSchedule.swift,\ Premium.swift,\ QiblaTasbihViews.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/OnboardingView.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/PrayerCalculator.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/PrayerSchedule.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/Premium.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/QiblaTasbihViews.swift (in target 'ZikrTime' from project 'ZikrTime')
+SwiftCompile normal x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/OnboardingView.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/PrayerCalculator.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/PrayerSchedule.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/Premium.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/QiblaTasbihViews.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal x86_64 Compiling\ Adhan.swift,\ AlarmSettingsView.swift,\ Alarms.swift,\ Components.swift,\ Content.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/Adhan.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/AlarmSettingsView.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/Alarms.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/Components.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/Content.swift (in target 'ZikrTime' from project 'ZikrTime')
+SwiftCompile normal x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/Adhan.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/AlarmSettingsView.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/Alarms.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/Components.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/Content.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal x86_64 Compiling\ RootView.swift,\ SettingsViews.swift,\ ShopCatalog.swift,\ ShopStore.swift,\ ShopViews.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/RootView.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/SettingsViews.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/ShopCatalog.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/ShopStore.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/ShopViews.swift (in target 'ZikrTime' from project 'ZikrTime')
+
+SwiftCompile normal x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/RootView.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/SettingsViews.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/ShopCatalog.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/ShopStore.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/ShopViews.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal x86_64 Compiling\ Dumrf.swift,\ Formatting.swift,\ HomeView.swift,\ KnowledgeView.swift,\ L10n.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/Dumrf.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/Formatting.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/HomeView.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/KnowledgeView.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/L10n.swift (in target 'ZikrTime' from project 'ZikrTime')
+
+SwiftCompile normal x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/Dumrf.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/Formatting.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/HomeView.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/KnowledgeView.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/L10n.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ ZikrTime (in target 'ZikrTime' from project 'ZikrTime')
+
+EmitSwiftModule normal arm64 (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftDriverJobDiscovery normal x86_64 Emitting module for ZikrTime (in target 'ZikrTime' from project 'ZikrTime')
+
+SwiftDriver\ Compilation\ Requirements ZikrTime normal x86_64 com.apple.xcode.tools.swift.compiler (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name ZikrTime -Onone @/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target x86_64-apple-ios17.0-simulator -g -module-cache-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator -F /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator -c -j5 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/work/ZikrTime/ZikrTime/ios/build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-688ef53f1462e2c8f657fdc38a81448ff45c64a1807a658693f2a61704f17a36.sdkstatcache -output-file-map /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex -sdk-module-cache-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-generated-files.hmap -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-own-target-headers.hmap -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-project-headers.hmap -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources-normal/x86_64 -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources/x86_64 -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime-Swift.h -working-directory /Users/runner/work/ZikrTime/ZikrTime/ios -experimental-emit-module-separately -disable-cmo
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for ZikrTime (in target 'ZikrTime' from project 'ZikrTime')
+
+SwiftDriver\ Compilation\ Requirements ZikrTime normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name ZikrTime -Onone @/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator -F /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator -c -j5 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/work/ZikrTime/ZikrTime/ios/build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-688ef53f1462e2c8f657fdc38a81448ff45c64a1807a658693f2a61704f17a36.sdkstatcache -output-file-map /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex -sdk-module-cache-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-generated-files.hmap -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-own-target-headers.hmap -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-project-headers.hmap -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime-Swift.h -working-directory /Users/runner/work/ZikrTime/ZikrTime/ios -experimental-emit-module-separately -disable-cmo
+
+SwiftCompile normal arm64 Compiling\ RootView.swift,\ SettingsViews.swift,\ ShopCatalog.swift,\ ShopStore.swift,\ ShopViews.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/RootView.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/SettingsViews.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/ShopCatalog.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/ShopStore.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/ShopViews.swift (in target 'ZikrTime' from project 'ZikrTime')
+SwiftCompile normal arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/RootView.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/SettingsViews.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/ShopCatalog.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/ShopStore.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/ShopViews.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftMergeGeneratedHeaders /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources/ZikrTime-Swift.h /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime-Swift.h /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime-Swift.h (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-swiftHeaderTool -arch arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime-Swift.h -arch x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime-Swift.h -o /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources/ZikrTime-Swift.h
+
+SwiftDriverJobDiscovery normal x86_64 Compiling Dumrf.swift, Formatting.swift, HomeView.swift, KnowledgeView.swift, L10n.swift (in target 'ZikrTime' from project 'ZikrTime')
+
+Copy /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.swiftmodule/x86_64-apple-ios-simulator.swiftmodule /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime.swiftmodule (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime.swiftmodule /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.swiftmodule/x86_64-apple-ios-simulator.swiftmodule
+
+Copy /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.swiftmodule/x86_64-apple-ios-simulator.swiftdoc /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime.swiftdoc (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime.swiftdoc /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.swiftmodule/x86_64-apple-ios-simulator.swiftdoc
+
+Copy /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.swiftmodule/x86_64-apple-ios-simulator.abi.json /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime.abi.json (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime.abi.json /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.swiftmodule/x86_64-apple-ios-simulator.abi.json
+
+Copy /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.swiftmodule/arm64-apple-ios-simulator.swiftmodule /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime.swiftmodule (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime.swiftmodule /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.swiftmodule/arm64-apple-ios-simulator.swiftmodule
+
+Copy /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.swiftmodule/arm64-apple-ios-simulator.swiftdoc /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime.swiftdoc (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime.swiftdoc /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.swiftmodule/arm64-apple-ios-simulator.swiftdoc
+
+Copy /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.swiftmodule/arm64-apple-ios-simulator.abi.json /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime.abi.json (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime.abi.json /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.swiftmodule/arm64-apple-ios-simulator.abi.json
+
+Copy /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime.swiftsourceinfo (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime.swiftsourceinfo /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo
+
+Copy /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime.swiftsourceinfo (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime.swiftsourceinfo /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
+
+SwiftCompile normal arm64 Compiling\ OnboardingView.swift,\ PrayerCalculator.swift,\ PrayerSchedule.swift,\ Premium.swift,\ QiblaTasbihViews.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/OnboardingView.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/PrayerCalculator.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/PrayerSchedule.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/Premium.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/QiblaTasbihViews.swift (in target 'ZikrTime' from project 'ZikrTime')
+SwiftCompile normal arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/OnboardingView.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/PrayerCalculator.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/PrayerSchedule.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/Premium.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/QiblaTasbihViews.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal arm64 Compiling\ Dumrf.swift,\ Formatting.swift,\ HomeView.swift,\ KnowledgeView.swift,\ L10n.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/Dumrf.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/Formatting.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/HomeView.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/KnowledgeView.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/L10n.swift (in target 'ZikrTime' from project 'ZikrTime')
+
+SwiftCompile normal arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/Dumrf.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/Formatting.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/HomeView.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/KnowledgeView.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/L10n.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftDriverJobDiscovery normal x86_64 Compiling OnboardingView.swift, PrayerCalculator.swift, PrayerSchedule.swift, Premium.swift, QiblaTasbihViews.swift (in target 'ZikrTime' from project 'ZikrTime')
+
+SwiftCompile normal arm64 Compiling\ Adhan.swift,\ AlarmSettingsView.swift,\ Alarms.swift,\ Components.swift,\ Content.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/Adhan.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/AlarmSettingsView.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/Alarms.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/Components.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/Content.swift (in target 'ZikrTime' from project 'ZikrTime')
+SwiftCompile normal arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/Adhan.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/AlarmSettingsView.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/Alarms.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/Components.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/Content.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftDriverJobDiscovery normal x86_64 Compiling RootView.swift, SettingsViews.swift, ShopCatalog.swift, ShopStore.swift, ShopViews.swift (in target 'ZikrTime' from project 'ZikrTime')
+
+SwiftCompile normal x86_64 Compiling\ Store.swift,\ Theme.swift,\ ZikrTimeApp.swift,\ GeneratedAssetSymbols.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/Store.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/Theme.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/App/ZikrTimeApp.swift /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'ZikrTime' from project 'ZikrTime')
+
+SwiftCompile normal x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/Store.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/Theme.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/App/ZikrTimeApp.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal x86_64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftDriverJobDiscovery normal x86_64 Compiling Adhan.swift, AlarmSettingsView.swift, Alarms.swift, Components.swift, Content.swift (in target 'ZikrTime' from project 'ZikrTime')
+
+SwiftCompile normal arm64 Compiling\ Store.swift,\ Theme.swift,\ ZikrTimeApp.swift,\ GeneratedAssetSymbols.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/Store.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/Theme.swift /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/App/ZikrTimeApp.swift /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'ZikrTime' from project 'ZikrTime')
+
+SwiftCompile normal arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/Core/Store.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/UI/Theme.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/ZikrTime/App/ZikrTimeApp.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    
+
+SwiftDriverJobDiscovery normal x86_64 Compiling Store.swift, Theme.swift, ZikrTimeApp.swift, GeneratedAssetSymbols.swift (in target 'ZikrTime' from project 'ZikrTime')
+
+SwiftDriver\ Compilation ZikrTime normal x86_64 com.apple.xcode.tools.swift.compiler (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-Swift-Compilation -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name ZikrTime -Onone @/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target x86_64-apple-ios17.0-simulator -g -module-cache-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator -F /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator -c -j5 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/work/ZikrTime/ZikrTime/ios/build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-688ef53f1462e2c8f657fdc38a81448ff45c64a1807a658693f2a61704f17a36.sdkstatcache -output-file-map /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex -sdk-module-cache-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-generated-files.hmap -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-own-target-headers.hmap -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-project-headers.hmap -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources-normal/x86_64 -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources/x86_64 -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime-Swift.h -working-directory /Users/runner/work/ZikrTime/ZikrTime/ios -experimental-emit-module-separately -disable-cmo
+
+SwiftDriverJobDiscovery normal arm64 Compiling RootView.swift, SettingsViews.swift, ShopCatalog.swift, ShopStore.swift, ShopViews.swift (in target 'ZikrTime' from project 'ZikrTime')
+
+Ld /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/Binary/ZikrTime.debug.dylib normal x86_64 (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target x86_64-apple-ios17.0-simulator -dynamiclib -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -O0 -L/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator -F/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator -filelist /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime.LinkFileList -install_name @rpath/ZikrTime.debug.dylib -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime.swiftmodule @/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime-linker-args.resp -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point -o /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/Binary/ZikrTime.debug.dylib
+
+SwiftDriverJobDiscovery normal arm64 Compiling Dumrf.swift, Formatting.swift, HomeView.swift, KnowledgeView.swift, L10n.swift (in target 'ZikrTime' from project 'ZikrTime')
+
+SwiftDriverJobDiscovery normal arm64 Compiling OnboardingView.swift, PrayerCalculator.swift, PrayerSchedule.swift, Premium.swift, QiblaTasbihViews.swift (in target 'ZikrTime' from project 'ZikrTime')
+
+SwiftDriverJobDiscovery normal arm64 Compiling Store.swift, Theme.swift, ZikrTimeApp.swift, GeneratedAssetSymbols.swift (in target 'ZikrTime' from project 'ZikrTime')
+
+SwiftDriverJobDiscovery normal arm64 Compiling Adhan.swift, AlarmSettingsView.swift, Alarms.swift, Components.swift, Content.swift (in target 'ZikrTime' from project 'ZikrTime')
+
+SwiftDriver\ Compilation ZikrTime normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-Swift-Compilation -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name ZikrTime -Onone @/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator -F /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator -c -j5 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/work/ZikrTime/ZikrTime/ios/build/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-688ef53f1462e2c8f657fdc38a81448ff45c64a1807a658693f2a61704f17a36.sdkstatcache -output-file-map /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex -sdk-module-cache-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-generated-files.hmap -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-own-target-headers.hmap -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-project-headers.hmap -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime-Swift.h -working-directory /Users/runner/work/ZikrTime/ZikrTime/ios -experimental-emit-module-separately -disable-cmo
+
+Ld /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/Binary/ZikrTime.debug.dylib normal arm64 (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -dynamiclib -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -O0 -L/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator -F/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator -filelist /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime.LinkFileList -install_name @rpath/ZikrTime.debug.dylib -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime.swiftmodule @/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime-linker-args.resp -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point -o /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/Binary/ZikrTime.debug.dylib
+
+ConstructStubExecutorLinkFileList /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-ExecutorLinkFileList-normal-x86_64.txt (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    construct-stub-executor-link-file-list /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/Binary/ZikrTime.debug.dylib /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor_no_swift_entry_point.a /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor.a --output /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-ExecutorLinkFileList-normal-x86_64.txt
+note: Using stub executor library with Swift entry point. (in target 'ZikrTime' from project 'ZikrTime')
+
+Ld /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/Binary/ZikrTime normal x86_64 (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target x86_64-apple-ios17.0-simulator -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -O0 -L/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator -F/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator -Xlinker -rpath -Xlinker @executable_path -Xlinker -rpath -Xlinker @executable_path/Frameworks -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -e ___debug_blank_executor_main -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_dylib -Xlinker /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-DebugDylibPath-normal-x86_64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_instlnm -Xlinker /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-DebugDylibInstallName-normal-x86_64.txt -Xlinker -filelist -Xlinker /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-ExecutorLinkFileList-normal-x86_64.txt /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/Binary/ZikrTime.debug.dylib -o /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/Binary/ZikrTime
+
+CreateUniversalBinary /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/ZikrTime.debug.dylib normal arm64\ x86_64 (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo -create /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/Binary/ZikrTime.debug.dylib /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/Binary/ZikrTime.debug.dylib -output /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/ZikrTime.debug.dylib
+
+ConstructStubExecutorLinkFileList /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-ExecutorLinkFileList-normal-arm64.txt (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    construct-stub-executor-link-file-list /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/Binary/ZikrTime.debug.dylib /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor_no_swift_entry_point.a /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor.a --output /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-ExecutorLinkFileList-normal-arm64.txt
+note: Using stub executor library with Swift entry point. (in target 'ZikrTime' from project 'ZikrTime')
+
+Ld /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/Binary/ZikrTime normal arm64 (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -O0 -L/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator -F/Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator -Xlinker -rpath -Xlinker @executable_path -Xlinker -rpath -Xlinker @executable_path/Frameworks -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -e ___debug_blank_executor_main -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_dylib -Xlinker /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-DebugDylibPath-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_instlnm -Xlinker /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-DebugDylibInstallName-normal-arm64.txt -Xlinker -filelist -Xlinker /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime-ExecutorLinkFileList-normal-arm64.txt /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/Binary/ZikrTime.debug.dylib -o /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/Binary/ZikrTime
+
+CreateUniversalBinary /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/ZikrTime normal arm64\ x86_64 (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo -create /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/Binary/ZikrTime /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/Binary/ZikrTime -output /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/ZikrTime
+
+CopySwiftLibs /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/ZikrTime.debug.dylib --scan-folder /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/Frameworks --scan-folder /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/PlugIns --scan-folder /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/SystemExtensions --scan-folder /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/Extensions --platform iphonesimulator --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.D0OVbb/Metal.xctoolchain --toolchain /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+ExtractAppIntentsMetadata (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.D0OVbb/Metal.xctoolchain --module-name ZikrTime --sdk-root /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk --xcode-version 17F113 --platform-family iOS --deployment-target 17.0 --bundle-identifier com.zikrtime.ios --output /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app --target-triple arm64-apple-ios17.0-simulator --target-triple x86_64-apple-ios17.0-simulator --binary-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/ZikrTime --dependency-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime_dependency_info.dat --dependency-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime_dependency_info.dat --stringsdata-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --stringsdata-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime.SwiftFileList --source-file-list /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime.SwiftFileList --metadata-file-list /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime.DependencyMetadataFileList --static-metadata-file-list /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime.DependencyStaticMetadataFileList --swift-const-vals-list /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/arm64/ZikrTime.SwiftConstValuesFileList --swift-const-vals-list /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/Objects-normal/x86_64/ZikrTime.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-10-24 18:01:08.562 appintentsmetadataprocessor[6297:22925] Starting appintentsmetadataprocessor export
+2026-10-24 18:01:08.591 appintentsmetadataprocessor[6297:22925] Extracted no relevant App Intents symbols, skipping writing output
+
+AppIntentsSSUTraining (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsnltrainingprocessor --infoplist-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/Info.plist --temp-dir-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ssu --bundle-id com.zikrtime.ios --product-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app --extracted-metadata-path /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/Metadata.appintents --metadata-file-list /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Intermediates.noindex/ZikrTime.build/Debug-iphonesimulator/ZikrTime.build/ZikrTime.DependencyMetadataFileList --source-file /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/Info.plist --archive-ssu-assets
+2026-10-24 18:01:08.620 appintentsnltrainingprocessor[6298:22929] Parsing options for appintentsnltrainingprocessor
+2026-10-24 18:01:08.621 appintentsnltrainingprocessor[6298:22929] Starting AppIntents SSU YAML Generation
+2026-10-24 18:01:08.625 appintentsnltrainingprocessor[6298:22929] No AppShortcuts found - Skipping.
+
+RegisterExecutionPolicyException /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-RegisterExecutionPolicyException /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app
+
+Validate /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    builtin-validationUtility /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app -shallow-bundle -infoplist-subpath Info.plist
+
+Touch /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app (in target 'ZikrTime' from project 'ZikrTime')
+    cd /Users/runner/work/ZikrTime/ZikrTime/ios
+    /usr/bin/touch -c /Users/runner/work/ZikrTime/ZikrTime/ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app
+
+** BUILD SUCCEEDED **
+
