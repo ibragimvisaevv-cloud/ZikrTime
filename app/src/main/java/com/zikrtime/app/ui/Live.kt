@@ -85,6 +85,7 @@ import com.zikrtime.app.ui.theme.EmeraldNight
 import com.zikrtime.app.ui.theme.Gold
 import com.zikrtime.app.ui.theme.Tabular
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.time.Duration
 import java.time.ZonedDateTime
 import kotlin.math.PI
@@ -569,14 +570,10 @@ fun CrescentSplash(modifier: Modifier = Modifier) {
     val turn = remember { Animatable(-35f) }
     val star = remember { Animatable(0f) }
     LaunchedEffect(Unit) {
-        kotlinx.coroutines.coroutineScope {
-            kotlinx.coroutines.launch { grow.animateTo(1f, spring(dampingRatio = 0.5f, stiffness = 160f)) }
-            kotlinx.coroutines.launch { turn.animateTo(0f, spring(dampingRatio = 0.6f, stiffness = 120f)) }
-            kotlinx.coroutines.launch {
-                delay(300)
-                star.animateTo(1f, tween(450))
-            }
-        }
+        launch { grow.animateTo(1f, spring(dampingRatio = 0.5f, stiffness = 160f)) }
+        launch { turn.animateTo(0f, spring(dampingRatio = 0.6f, stiffness = 120f)) }
+        delay(300)
+        star.animateTo(1f, tween(450))
     }
     val glow by rememberInfiniteTransition(label = "splash").animateFloat(
         0.3f, 0.6f, infiniteRepeatable(tween(900), RepeatMode.Reverse), label = "splash-glow",
