@@ -106,6 +106,8 @@ jobs:
     needs: [build, emulator]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - uses: actions/download-artifact@v4
         with:
           name: build-out
@@ -121,5 +123,5 @@ jobs:
           gh release create "v${VERSION}-${{ github.run_number }}" "$NAME" \
             --repo "${{ github.repository }}" \
             --title "Зикр-тайм ${VERSION} (сборка ${{ github.run_number }})" \
-            --notes "Скачайте ${NAME} на телефон и откройте файл, чтобы установить." \
+            --notes-file tools/ci/release_notes.md \
             --latest
