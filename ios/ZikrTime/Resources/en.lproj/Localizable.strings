@@ -343,6 +343,17 @@
 "places_distance_km" = "%1$@ km";
 "donate_title" = "Support the project";
 "donate_text" = "Sadaqah for the app's development: checking places, servers, new features";
+"block_open_app" = "Open Zikr-time";
+"block_go_home" = "To home screen";
+"perm_battery_title" = "Work in the background";
+"perm_battery_text" = "Without it, battery saving may stop the protection and social apps won't close at prayer time.";
+"perm_xiaomi_title" = "Xiaomi: pop-ups and autostart";
+"perm_xiaomi_text" = "Enable «Display pop-up windows while running in the background» and «Autostart» — otherwise the phone won't let the block screen appear.";
+"focus_test_title" = "Check that blocking works";
+"focus_test_text" = "For one minute social apps will close as at prayer time. Press the button and open any app from your list.";
+"focus_test_running" = "Check is on for 1 minute — open a social app now. If it doesn't close, check the permissions above.";
+"focus_test_button" = "Check (1 minute)";
+"places_osm_credit" = "Some places are from OpenStreetMap (© OpenStreetMap contributors). Found a mistake or a closed place? Write to our bot.";
 "alarm_ios_note" = "On iOS 26 and newer the alarm works like the built-in Clock alarm: it rings even in silent mode and Focus, and you turn it off on the lock screen.";
 "alarm_ios_fallback" = "On this iOS version the alarm is a series of loud notifications with the adhan, one every minute for 10 minutes. Keep notifications on and silent mode off. Open the app to stop the rest.";
 "alarm_permission_denied" = "Alarms are not allowed for the app. Turn them on in Settings.";

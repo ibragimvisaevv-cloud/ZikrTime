@@ -18,6 +18,13 @@ import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.CameraPosition
 import com.yandex.mapkit.map.MapObject
 import com.yandex.mapkit.map.MapObjectTapListener
+import com.yandex.mapkit.map.Cluster
+import com.yandex.mapkit.map.ClusterListener
+import com.yandex.mapkit.map.ClusterTapListener
+import com.yandex.mapkit.map.PlacemarkMapObject
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import com.yandex.mapkit.mapview.MapView
 import com.yandex.runtime.image.ImageProvider
 import com.zikrtime.app.BuildConfig
@@ -43,6 +50,26 @@ private fun markerBitmap(selected: Boolean, density: Float): Bitmap {
     c.drawCircle(r, r, r - 4.5f * density, p)
     p.color = if (selected) 0xFF0F5C4A.toInt() else 0xFFFFF6E0.toInt()
     c.drawCircle(r, r, r * 0.28f, p)
+    return bmp
+}
+
+/** Кластер: золотой круг с числом мест. */
+private fun clusterBitmap(count: Int, density: Float): Bitmap {
+    val text = if (count > 999) "999+" else count.toString()
+    val size = ((if (count > 99) 46 else 38) * density).toInt()
+    val bmp = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+    val c = Canvas(bmp)
+    val p = Paint(Paint.ANTI_ALIAS_FLAG)
+    val r = size / 2f
+    p.color = 0xFFE2B659.toInt()
+    c.drawCircle(r, r, r - density, p)
+    p.color = 0xFF0F5C4A.toInt()
+    c.drawCircle(r, r, r - 3.5f * density, p)
+    p.color = 0xFFFFF6E0.toInt()
+    p.textSize = 13 * density
+    p.isFakeBoldText = true
+    p.textAlign = Paint.Align.CENTER
+    c.drawText(text, r, r - (p.descent() + p.ascent()) / 2, p)
     return bmp
 }
 
@@ -101,23 +128,52 @@ fun YandexPlacesMap(
             MapKitFactory.getInstance().onStop()
         }
     }
-    LaunchedEffect(places, selected, dark) {
+    // Метки (их по России тысячи) собираем в кластеры: на мелком масштабе — кружки с числом мест.
+    val clusterTap = remember {
+        ClusterTapListener { cluster: Cluster ->
+            val map = mapView.mapWindow.map
+            map.move(CameraPosition(cluster.appearance.geometry, map.cameraPosition.zoom + 2.5f, 0f, 0f))
+            true
+        }
+    }
+    val clusterListener = remember {
+        ClusterListener { cluster: Cluster ->
+            cluster.appearance.setIcon(ImageProvider.fromBitmap(clusterBitmap(cluster.size, density)))
+            cluster.addClusterTapListener(clusterTap)
+        }
+    }
+    val marks = remember { HashMap<String, PlacemarkMapObject>() }
+    val icons = remember { arrayOfNulls<ImageProvider>(2) }
+    LaunchedEffect(places, dark) {
         val map = mapView.mapWindow.map
         map.isNightModeEnabled = dark
-        val objects = map.mapObjects
-        objects.clear()
+        map.mapObjects.clear()
+        marks.clear()
         val normal = ImageProvider.fromBitmap(markerBitmap(false, density))
         val big = ImageProvider.fromBitmap(markerBitmap(true, density))
+        icons[0] = normal
+        icons[1] = big
+        val collection = map.mapObjects.addClusterizedPlacemarkCollection(clusterListener)
         places.forEach { p ->
-            objects.addPlacemark().apply {
+            marks[p.id] = collection.addPlacemark().apply {
                 geometry = Point(p.lat, p.lon)
                 setIcon(if (p.id == selected) big else normal)
                 userData = p.id
                 addTapListener(java.lang.ref.WeakReference(tap))
             }
         }
+        collection.clusterPlacemarks(55.0, 14)
+    }
+    var shown by remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(selected) {
+        val (normal, big) = icons[0] to icons[1]
+        if (normal != null && big != null) {
+            shown?.let { marks[it]?.setIcon(normal) }
+            selected?.let { marks[it]?.setIcon(big) }
+        }
+        shown = selected
         places.firstOrNull { it.id == selected }?.let {
-            map.move(CameraPosition(Point(it.lat, it.lon), 15.5f, 0f, 0f))
+            mapView.mapWindow.map.move(CameraPosition(Point(it.lat, it.lon), 15.5f, 0f, 0f))
         }
     }
     AndroidView(factory = { mapView }, modifier = modifier)

@@ -364,6 +364,17 @@ STRINGS = {
     "places_distance_km": "%1$s km",
     "donate_title": "Layihəni dəstəklə",
     "donate_text": "Tətbiqin inkişafı üçün sədəqə: yerlərin yoxlanması, serverlər, yeni imkanlar",
+    "block_open_app": "Zikr-taymı aç",
+    "block_go_home": "Ana ekrana",
+    "perm_battery_title": "Arxa planda işləmə",
+    "perm_battery_text": "Bunsuz batareyaya qənaət qorumanı dayandıra bilər və namaz vaxtı sosial şəbəkələr bağlanmaz.",
+    "perm_xiaomi_title": "Xiaomi: açılan pəncərələr və avtostart",
+    "perm_xiaomi_text": "«Arxa planda işləyərkən açılan pəncərələri göstər» və «Avtostart»ı aktiv edin — əks halda telefon bloklama ekranını göstərməyə icazə verməz.",
+    "focus_test_title": "Bloklamanı yoxla",
+    "focus_test_text": "Bir dəqiqə ərzində sosial şəbəkələr namaz vaxtındakı kimi bağlanacaq. Düyməni basın və siyahıdakı istənilən tətbiqi açın.",
+    "focus_test_running": "Yoxlama 1 dəqiqə davam edir — sosial şəbəkəni açın. Bağlanmasa, yuxarıdakı icazələri yoxlayın.",
+    "focus_test_button": "Yoxla (1 dəqiqə)",
+    "places_osm_credit": "Yerlərin bir hissəsi OpenStreetMap-dəndir (© OpenStreetMap iştirakçıları). Səhv və ya bağlı yer tapdınız? Botumuza yazın.",
 }
 
 PLURALS = {

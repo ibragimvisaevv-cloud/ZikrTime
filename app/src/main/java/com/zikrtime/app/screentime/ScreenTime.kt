@@ -143,6 +143,11 @@ object ScreenTime {
         usedMillis: Long? = usedTodayMillis(context, now.toInstant().toEpochMilli()),
     ): BlockReason {
         if (!Store.blockingEnabled) return BlockReason.None
+        // Проверка из настроек: на минуту ведём себя так, будто наступило время намаза.
+        val test = Store.testLockUntil
+        if (test > now.toInstant().toEpochMilli()) {
+            return BlockReason.PrayerTime(PrayerSchedule.next(now).first, now.toLocalDate(), java.time.Instant.ofEpochMilli(test))
+        }
         // Блокировка на намаз снимается, если намаз отмечен как совершённый.
         val starts = PrayerSchedule.recentStarts(now).filter {
             it.prayer !in Store.lockDismissed(it.date) && it.prayer !in Store.prayedOn(it.date)

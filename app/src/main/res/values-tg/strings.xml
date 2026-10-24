@@ -345,6 +345,17 @@
     <string name="places_distance_km">%1$s км</string>
     <string name="donate_title">Дастгирии лоиҳа</string>
     <string name="donate_text">Садақа барои рушди барнома: санҷиши ҷойҳо, серверҳо, имкониятҳои нав</string>
+    <string name="block_open_app">Кушодани Зикр-тайм</string>
+    <string name="block_go_home">Ба экрани асосӣ</string>
+    <string name="perm_battery_title">Кор дар замина</string>
+    <string name="perm_battery_text">Бе ин сарфаи батарея метавонад ҳимояро қатъ кунад ва шабакаҳои иҷтимоӣ дар вақти намоз баста намешаванд.</string>
+    <string name="perm_xiaomi_title">Xiaomi: равзанаҳои поп-ап ва оғози худкор</string>
+    <string name="perm_xiaomi_text">«Намоиши равзанаҳо ҳангоми кор дар замина» ва «Оғози худкор»-ро фаъол кунед — вагарна телефон экрани бастанро нишон доданро иҷозат намедиҳад.</string>
+    <string name="focus_test_title">Санҷиши басташавӣ</string>
+    <string name="focus_test_text">Як дақиқа шабакаҳои иҷтимоӣ мисли вақти намоз баста мешаванд. Тугмаро пахш кунед ва ягон барномаи рӯйхатро кушоед.</string>
+    <string name="focus_test_running">Санҷиш 1 дақиқа давом мекунад — шабакаи иҷтимоиро кушоед. Агар баста нашавад, иҷозатҳои болоро санҷед.</string>
+    <string name="focus_test_button">Санҷидан (1 дақиқа)</string>
+    <string name="places_osm_credit">Қисми ҷойҳо аз OpenStreetMap (© иштирокчиёни OpenStreetMap). Хато ё ҷои басташуда ёфтед? Ба боти мо нависед.</string>
     <plurals name="days">
         <item quantity="one">%d рӯз</item>
         <item quantity="other">%d рӯз</item>

@@ -345,6 +345,17 @@
     <string name="places_distance_km">%1$s км</string>
     <string name="donate_title">Поддержать проект</string>
     <string name="donate_text">Садака на развитие приложения: проверка мест, серверы, новые функции</string>
+    <string name="block_open_app">Открыть Зикр-тайм</string>
+    <string name="block_go_home">На главный экран</string>
+    <string name="perm_battery_title">Работа в фоне</string>
+    <string name="perm_battery_text">Без этого экономия батареи может остановить защиту, и соцсети не закроются во время намаза.</string>
+    <string name="perm_xiaomi_title">Xiaomi: всплывающие окна и автозапуск</string>
+    <string name="perm_xiaomi_text">Включите «Отображать всплывающие окна, когда запущено в фоне» и «Автозапуск» — иначе телефон не даст показать экран блокировки.</string>
+    <string name="focus_test_title">Проверить блокировку</string>
+    <string name="focus_test_text">На одну минуту соцсети будут закрываться, как во время намаза. Нажмите кнопку и откройте любое приложение из списка.</string>
+    <string name="focus_test_running">Проверка идёт 1 минуту — откройте соцсеть. Если она не закрылась, проверьте разрешения выше.</string>
+    <string name="focus_test_button">Проверить (1 минута)</string>
+    <string name="places_osm_credit">Часть мест — из OpenStreetMap (© участники OpenStreetMap). Нашли ошибку или место закрыто? Напишите в наш бот.</string>
     <plurals name="days">
         <item quantity="one">%d день</item>
         <item quantity="few">%d дня</item>

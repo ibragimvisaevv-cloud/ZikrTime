@@ -17,8 +17,11 @@ class FakeStorage:
     def get(self, key):
         return self.files.get(key)
 
-    def put(self, key, data, content_type, cache="no-cache"):
+    def put(self, key, data, content_type, cache="no-cache", encoding=None):
         assert isinstance(data, bytes)
+        if encoding == "gzip":
+            import gzip
+            data = gzip.decompress(data)
         self.files[key] = data
 
 
@@ -255,6 +258,28 @@ check(catalog()["donate_url"] == "https://pay.cloudtips.ru/p/abc123", "ссыл�
 check(json.loads(storage.files["places.json"])["donate_url"] == "https://pay.cloudtips.ru/p/abc123", "ссылка в places.json")
 msg(SELLER, "/donate https://evil.example.com")
 check(db()["donate_url"] == "https://pay.cloudtips.ru/p/abc123", "не владелец не меняет ссылку")
+
+# Импорт из OpenStreetMap
+import import_osm  # noqa: E402
+els = [
+    {"type": "node", "id": 1, "lat": 55.78, "lon": 37.63, "tags": {"name": "Московская Соборная мечеть", "addr:street": "Выползов переулок", "addr:housenumber": "7", "addr:city": "Москва"}},
+    {"type": "way", "id": 2, "center": {"lat": 55.79, "lon": 37.53}, "tags": {"name": "Молельная комната ТЦ"}},
+    {"type": "node", "id": 3, "lat": 43.3, "lon": 45.7, "tags": {"building": "mosque"}},
+]
+items = [import_osm.convert(e) for e in els]
+check(items[0]["kind"] == "mosque" and "Выползов" in items[0]["address"], "osm: мечеть и адрес")
+check(items[1]["kind"] == "room" and items[1]["lat"] == 55.79, "osm: молельная комната из way")
+check(items[2]["name"] == "Мечеть", "osm: имя по умолчанию")
+d = {"places": {}}
+check(import_osm.merge(d, items) == (3, 0, 0), "osm: добавлены")
+d["places"]["osmn1"]["status"] = "hidden"
+import_osm.merge(d, items)
+check(d["places"]["osmn1"]["status"] == "hidden", "osm: скрытое остаётся скрытым")
+d["osm_removed"] = ["osmw2"]
+del d["places"]["osmw2"]
+import_osm.merge(d, items)
+check("osmw2" not in d["places"], "osm: удалённое не возвращается")
+check(import_osm.merge(d, items[:1])[2] == 1, "osm: исчезнувшее из OSM убирается")
 
 # Удаление
 press(SELLER, f"del2:{sid}")

@@ -161,6 +161,11 @@ object Store {
         get() = bool(K_PRAYER_LOCK, true)
         set(v) = put(K_PRAYER_LOCK, v)
 
+    /** Проверка блокировки: до этого момента (мс) соцсети закрываются, как во время намаза. */
+    var testLockUntil: Long
+        get() = long(K_TEST_LOCK, 0L)
+        set(v) = put(K_TEST_LOCK, v)
+
     var prayerLockMinutes: Int
         get() = int(K_PRAYER_LOCK_MIN, 15)
         set(v) = put(K_PRAYER_LOCK_MIN, v)
@@ -337,6 +342,7 @@ object Store {
     private const val K_APPS_INIT = "apps_init"
     private const val K_PRAYER_LOCK = "prayer_lock"
     private const val K_PRAYER_LOCK_MIN = "prayer_lock_min"
+    private const val K_TEST_LOCK = "test_lock_until"
     private const val K_BONUS = "bonus_"
     private const val K_PRAYED = "prayed_"
     private const val K_LOCK_OFF = "lockoff_"

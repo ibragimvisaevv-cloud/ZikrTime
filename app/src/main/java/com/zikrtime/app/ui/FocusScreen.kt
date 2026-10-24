@@ -221,6 +221,59 @@ fun FocusScreen() {
                 granted = hasService,
                 onGrant = { showDisclosure = true },
             )
+            HorizontalDivider(Modifier.padding(vertical = 14.dp), color = MaterialTheme.colorScheme.outlineVariant)
+            // Экономия батареи останавливает защиту — просим разрешить работу в фоне.
+            val power = context.getSystemService(android.os.PowerManager::class.java)
+            val hasBattery = remember(resume) { power.isIgnoringBatteryOptimizations(context.packageName) }
+            PermissionRow(
+                title = stringResource(R.string.perm_battery_title),
+                text = stringResource(R.string.perm_battery_text),
+                granted = hasBattery,
+                onGrant = {
+                    runCatching {
+                        context.startActivity(
+                            Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, Uri.parse("package:${context.packageName}"))
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                        )
+                    }
+                },
+            )
+            // Xiaomi / Redmi / POCO: отдельное разрешение «Всплывающие окна в фоне» и автозапуск.
+            if (android.os.Build.MANUFACTURER.lowercase() in setOf("xiaomi", "redmi", "poco")) {
+                Spacer(Modifier.height(12.dp))
+                PermissionRow(
+                    title = stringResource(R.string.perm_xiaomi_title),
+                    text = stringResource(R.string.perm_xiaomi_text),
+                    granted = false,
+                    onGrant = {
+                        val miui = Intent("miui.intent.action.APP_PERM_EDITOR")
+                            .putExtra("extra_pkgname", context.packageName).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        val details = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:${context.packageName}"))
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        runCatching { context.startActivity(miui) }.onFailure { runCatching { context.startActivity(details) } }
+                    },
+                )
+            }
+        }
+
+        // Проверка: на минуту соцсети закрываются, как во время намаза.
+        if (Store.blockingEnabled) {
+            var testStarted by remember { mutableStateOf(false) }
+            ZCard {
+                Text(stringResource(R.string.focus_test_title), style = MaterialTheme.typography.titleSmall)
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    stringResource(if (testStarted) R.string.focus_test_running else R.string.focus_test_text),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = if (testStarted) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Spacer(Modifier.height(12.dp))
+                TonalButton(stringResource(R.string.focus_test_button), onClick = {
+                    Store.testLockUntil = System.currentTimeMillis() + 60_000
+                    testStarted = true
+                    GuardService.sync(context, checkNow = true)
+                })
+            }
         }
     }
 

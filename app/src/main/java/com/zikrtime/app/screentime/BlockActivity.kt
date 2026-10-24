@@ -99,6 +99,17 @@ class BlockActivity : ComponentActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        visible = true
+        GuardService.hideOverlay(this)
+    }
+
+    override fun onPause() {
+        visible = false
+        super.onPause()
+    }
+
     private fun closeToHome() {
         startActivity(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         finish()
@@ -110,6 +121,10 @@ class BlockActivity : ComponentActivity() {
     }
 
     companion object {
+        /** Экран блокировки сейчас на экране — если нет, служба покажет запасной экран поверх приложений. */
+        @Volatile
+        var visible = false
+
         private const val TYPE = "type"
         private const val USED = "used"
         private const val ALLOWED = "allowed"

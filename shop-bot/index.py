@@ -96,8 +96,11 @@ class ObjectStorage:
                 return None
             raise
 
-    def put(self, key, data, content_type, cache="no-cache"):
-        with self._req("PUT", key, data, {"Content-Type": content_type, "Cache-Control": cache}):
+    def put(self, key, data, content_type, cache="no-cache", encoding=None):
+        headers = {"Content-Type": content_type, "Cache-Control": cache}
+        if encoding:
+            headers["Content-Encoding"] = encoding
+        with self._req("PUT", key, data, headers):
             pass
 
 
@@ -373,7 +376,8 @@ class PlacesMixin:
     def places_list(self, uid, which):
         if not self.is_admin(uid):
             return
-        places = sorted(self.db["places"].values(), key=lambda x: x["created"])
+        # Сначала места, которые предложили люди, потом импорт из OpenStreetMap
+        places = sorted(self.db["places"].values(), key=lambda x: (x.get("source") == "osm", x["created"]))
         if which == "pending":
             places = [p for p in places if p["status"] == "pending"]
             if not places:
@@ -384,7 +388,9 @@ class PlacesMixin:
             return
         rows = [[btn(f"{STATUS_TEXT[p['status']].split(' ')[0]} {p['name'][:40]}", f"pc:{p['id']}")] for p in places[:90]]
         rows.append([btn("➕ Добавить место", "place"), btn("⬅️ Меню", "menu")])
-        self.send(uid, f"Места для намаза ({len(places)}):", {"inline_keyboard": rows})
+        osm = sum(1 for p in places if p.get("source") == "osm")
+        self.send(uid, f"Места для намаза: {len(places)} (из них {osm} из OpenStreetMap). Показаны первые 90:",
+                  {"inline_keyboard": rows})
 
     def moderate_place(self, uid, action, pid):
         p = self.db["places"].get(pid)
@@ -406,6 +412,9 @@ class PlacesMixin:
             p["status"] = "hidden"
             self.send(uid, f"🙈 «{esc(p['name'])}» скрыто с карты.")
         elif action == "del":
+            if p.get("source") == "osm":
+                # чтобы ежемесячный импорт из OpenStreetMap не вернул удалённое место
+                self.db.setdefault("osm_removed", []).append(pid)
             del self.db["places"][pid]
             self.send(uid, "🗑 Удалено.")
         self.dirty = True
@@ -417,16 +426,22 @@ class PlacesMixin:
         for p in sorted(self.db["places"].values(), key=lambda x: x["created"]):
             if p["status"] != "approved" or p.get("lat") is None:
                 continue
-            item = {k: p.get(k) for k in ("id", "kind", "name", "lat", "lon", "address", "hours", "who", "photo", "note")}
+            # Компактно: пустые поля не пишем (мест по России — тысячи)
+            item = {k: p.get(k) for k in ("id", "kind", "name", "lat", "lon", "address", "hours", "who", "photo", "note") if p.get(k) not in (None, "")}
             if p.get("wudu") is not None:
                 item["wudu"] = p["wudu"]
+            if p.get("source") == "osm":
+                item["src"] = "osm"
             items.append(item)
         return {"version": 1, "updated": int(time.time()), "seller_bot": self.bot_username(),
                 "donate_url": self.db.get("donate_url", ""), "places": items}
 
     def write_places(self):
-        data = json.dumps(self.build_places(), ensure_ascii=False).encode()
-        self.st.put("places.json", data, "application/json; charset=utf-8", cache="public, max-age=60")
+        import gzip
+        data = json.dumps(self.build_places(), ensure_ascii=False, separators=(",", ":")).encode()
+        # Сжатый файл: телефоны распаковывают сами (Content-Encoding: gzip)
+        self.st.put("places.json", gzip.compress(data, 9), "application/json; charset=utf-8",
+                    cache="public, max-age=60", encoding="gzip")
 
     def set_donate(self, uid, url):
         url = url.strip()

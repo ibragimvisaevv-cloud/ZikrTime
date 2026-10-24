@@ -73,7 +73,9 @@ object PrayerAlarms {
 
     fun scheduleNext(context: Context, after: ZonedDateTime = ZonedDateTime.now()) {
         val am = context.getSystemService(AlarmManager::class.java)
-        if (!Store.prayerNotifications) {
+        // Будильник на время намаза нужен и для уведомления, и чтобы вовремя закрыть соцсети.
+        val lockNeeded = Store.blockingEnabled && Store.prayerLockEnabled
+        if (!Store.prayerNotifications && !lockNeeded) {
             am.cancel(pendingIntent(context, null, 0L))
             return
         }
@@ -108,6 +110,10 @@ object PrayerAlarms {
 
         if (prayer != null && Store.prayerNotifications) {
             showNotification(context, prayer, firedAt)
+        }
+        // Наступил намаз: будим защиту соцсетей (её могла остановить экономия батареи) и сразу проверяем.
+        if (Store.blockingEnabled && Store.prayerLockEnabled) {
+            com.zikrtime.app.screentime.GuardService.sync(context, checkNow = true)
         }
         // Следующий будильник — строго после только что сработавшего намаза.
         scheduleNext(context, after = firedAt.plusSeconds(30))

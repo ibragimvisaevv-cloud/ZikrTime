@@ -345,6 +345,17 @@
     <string name="places_distance_km">%1$s km</string>
     <string name="donate_title">Layihəni dəstəklə</string>
     <string name="donate_text">Tətbiqin inkişafı üçün sədəqə: yerlərin yoxlanması, serverlər, yeni imkanlar</string>
+    <string name="block_open_app">Zikr-taymı aç</string>
+    <string name="block_go_home">Ana ekrana</string>
+    <string name="perm_battery_title">Arxa planda işləmə</string>
+    <string name="perm_battery_text">Bunsuz batareyaya qənaət qorumanı dayandıra bilər və namaz vaxtı sosial şəbəkələr bağlanmaz.</string>
+    <string name="perm_xiaomi_title">Xiaomi: açılan pəncərələr və avtostart</string>
+    <string name="perm_xiaomi_text">«Arxa planda işləyərkən açılan pəncərələri göstər» və «Avtostart»ı aktiv edin — əks halda telefon bloklama ekranını göstərməyə icazə verməz.</string>
+    <string name="focus_test_title">Bloklamanı yoxla</string>
+    <string name="focus_test_text">Bir dəqiqə ərzində sosial şəbəkələr namaz vaxtındakı kimi bağlanacaq. Düyməni basın və siyahıdakı istənilən tətbiqi açın.</string>
+    <string name="focus_test_running">Yoxlama 1 dəqiqə davam edir — sosial şəbəkəni açın. Bağlanmasa, yuxarıdakı icazələri yoxlayın.</string>
+    <string name="focus_test_button">Yoxla (1 dəqiqə)</string>
+    <string name="places_osm_credit">Yerlərin bir hissəsi OpenStreetMap-dəndir (© OpenStreetMap iştirakçıları). Səhv və ya bağlı yer tapdınız? Botumuza yazın.</string>
     <plurals name="days">
         <item quantity="one">%d gün</item>
         <item quantity="other">%d gün</item>

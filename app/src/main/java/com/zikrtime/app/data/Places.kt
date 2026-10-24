@@ -36,6 +36,8 @@ object Places {
         val wudu: Boolean?,
         val photo: String,
         val note: String,
+        /** "osm" — место из OpenStreetMap, иначе — предложено через бота и проверено. */
+        val source: String = "",
     )
 
     class Data(val places: List<Place>, val sellerBot: String, val donateUrl: String)
@@ -88,7 +90,7 @@ object Places {
                 id = o.optString("id"), kind = o.optString("kind", "other"), name = o.optString("name"),
                 lat = lat, lon = lon, address = o.optString("address"), hours = o.optString("hours"),
                 who = o.optString("who"), wudu = if (o.has("wudu") && !o.isNull("wudu")) o.optBoolean("wudu") else null,
-                photo = o.optString("photo"), note = o.optString("note"),
+                photo = o.optString("photo"), note = o.optString("note"), source = o.optString("src"),
             )
         }
         return Data(list, root.optString("seller_bot").removePrefix("@"), root.optString("donate_url"))

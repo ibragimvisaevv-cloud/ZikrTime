@@ -9,6 +9,9 @@ on:
     branches: [main]
     paths: ["shop-bot/**", ".github/workflows/shop-bot.yml"]
   workflow_dispatch:
+  # Раз в месяц обновляем мечети и молельные комнаты из OpenStreetMap
+  schedule:
+    - cron: "17 3 1 * *"
 
 permissions:
   contents: write
@@ -123,6 +126,14 @@ jobs:
           echo "S3_KEY_ID=$KEY_ID" >> "$GITHUB_ENV"
           echo "S3_SECRET=$SECRET" >> "$GITHUB_ENV"
           rm "$RUNNER_TEMP/ak.json"
+
+      - name: Мечети и молельные комнаты из OpenStreetMap
+        if: steps.keys.outputs.ready == 'true' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
+        env:
+          BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
+        run: |
+          sleep 15  # новый ключ хранилища начинает работать не сразу
+          python3 shop-bot/import_osm.py 2>&1 | tail -5 | tee diag/osm.txt
 
       - name: Бот на Vercel
         if: steps.keys.outputs.ready == 'true'

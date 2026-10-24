@@ -345,6 +345,17 @@
     <string name="places_distance_km">%1$s км</string>
     <string name="donate_title">Жобаны қолдау</string>
     <string name="donate_text">Қосымшаны дамытуға садақа: орындарды тексеру, серверлер, жаңа мүмкіндіктер</string>
+    <string name="block_open_app">Зікір-таймды ашу</string>
+    <string name="block_go_home">Басты экранға</string>
+    <string name="perm_battery_title">Фонда жұмыс</string>
+    <string name="perm_battery_text">Онсыз батареяны үнемдеу қорғауды тоқтатуы мүмкін, сонда намаз уақытында әлеуметтік желілер жабылмайды.</string>
+    <string name="perm_xiaomi_title">Xiaomi: қалқымалы терезелер және автоіске қосу</string>
+    <string name="perm_xiaomi_text">«Фонда жұмыс істегенде қалқымалы терезелерді көрсету» және «Автоіске қосу» параметрлерін қосыңыз — әйтпесе телефон бұғаттау экранын көрсетпейді.</string>
+    <string name="focus_test_title">Бұғаттауды тексеру</string>
+    <string name="focus_test_text">Бір минут бойы әлеуметтік желілер намаз уақытындағыдай жабылады. Батырманы басып, тізімдегі кез келген қосымшаны ашыңыз.</string>
+    <string name="focus_test_running">Тексеру 1 минут жүреді — әлеуметтік желіні ашыңыз. Жабылмаса, жоғарыдағы рұқсаттарды тексеріңіз.</string>
+    <string name="focus_test_button">Тексеру (1 минут)</string>
+    <string name="places_osm_credit">Орындардың бір бөлігі OpenStreetMap-тен (© OpenStreetMap қатысушылары). Қате не жабық орын таптыңыз ба? Ботымызға жазыңыз.</string>
     <plurals name="days">
         <item quantity="one">%d күн</item>
         <item quantity="other">%d күн</item>

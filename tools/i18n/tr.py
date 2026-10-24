@@ -364,6 +364,17 @@ STRINGS = {
     "places_distance_km": "%1$s km",
     "donate_title": "Projeyi destekle",
     "donate_text": "Uygulamanın gelişimi için sadaka: yerlerin kontrolü, sunucular, yeni özellikler",
+    "block_open_app": "Zikr-time'ı aç",
+    "block_go_home": "Ana ekrana",
+    "perm_battery_title": "Arka planda çalışma",
+    "perm_battery_text": "Bu olmadan pil tasarrufu korumayı durdurabilir ve namaz vaktinde sosyal ağlar kapanmaz.",
+    "perm_xiaomi_title": "Xiaomi: açılır pencereler ve otomatik başlatma",
+    "perm_xiaomi_text": "«Arka planda çalışırken açılır pencereleri göster» ve «Otomatik başlatma»yı açın — aksi halde telefon engelleme ekranını göstermez.",
+    "focus_test_title": "Engellemeyi test et",
+    "focus_test_text": "Bir dakika boyunca sosyal ağlar namaz vaktindeki gibi kapanacak. Düğmeye basın ve listenizdeki herhangi bir uygulamayı açın.",
+    "focus_test_running": "Test 1 dakika sürüyor — bir sosyal ağ açın. Kapanmazsa yukarıdaki izinleri kontrol edin.",
+    "focus_test_button": "Test et (1 dakika)",
+    "places_osm_credit": "Yerlerin bir kısmı OpenStreetMap'ten (© OpenStreetMap katkıda bulunanlar). Hata veya kapalı bir yer mi buldunuz? Botumuza yazın.",
 }
 
 PLURALS = {

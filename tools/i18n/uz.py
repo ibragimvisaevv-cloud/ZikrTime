@@ -364,6 +364,17 @@ STRINGS = {
     "places_distance_km": "%1$s km",
     "donate_title": "Loyihani qoʻllab-quvvatlash",
     "donate_text": "Ilovani rivojlantirish uchun sadaqa: joylarni tekshirish, serverlar, yangi imkoniyatlar",
+    "block_open_app": "Zikr-taymni ochish",
+    "block_go_home": "Bosh ekranga",
+    "perm_battery_title": "Fonda ishlash",
+    "perm_battery_text": "Busiz batareyani tejash himoyani toʻxtatishi mumkin va namoz vaqtida ijtimoiy tarmoqlar yopilmaydi.",
+    "perm_xiaomi_title": "Xiaomi: qalqib chiquvchi oynalar va avtoishga tushirish",
+    "perm_xiaomi_text": "«Fonda ishlayotganda qalqib chiquvchi oynalarni koʻrsatish» va «Avtoishga tushirish»ni yoqing — aks holda telefon bloklash ekranini koʻrsatishga ruxsat bermaydi.",
+    "focus_test_title": "Bloklashni tekshirish",
+    "focus_test_text": "Bir daqiqa davomida ijtimoiy tarmoqlar namoz vaqtidagidek yopiladi. Tugmani bosing va roʻyxatdagi istalgan ilovani oching.",
+    "focus_test_running": "Tekshiruv 1 daqiqa davom etadi — ijtimoiy tarmoqni oching. Yopilmasa, yuqoridagi ruxsatlarni tekshiring.",
+    "focus_test_button": "Tekshirish (1 daqiqa)",
+    "places_osm_credit": "Joylarning bir qismi OpenStreetMap’dan (© OpenStreetMap ishtirokchilari). Xato yoki yopilgan joy topdingizmi? Botimizga yozing.",
 }
 
 PLURALS = {

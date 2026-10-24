@@ -380,6 +380,17 @@ STRINGS = {
     "places_distance_km": "%1$s km",
     "donate_title": "Support the project",
     "donate_text": "Sadaqah for the app's development: checking places, servers, new features",
+    "block_open_app": "Open Zikr-time",
+    "block_go_home": "To home screen",
+    "perm_battery_title": "Work in the background",
+    "perm_battery_text": "Without it, battery saving may stop the protection and social apps won't close at prayer time.",
+    "perm_xiaomi_title": "Xiaomi: pop-ups and autostart",
+    "perm_xiaomi_text": "Enable «Display pop-up windows while running in the background» and «Autostart» — otherwise the phone won't let the block screen appear.",
+    "focus_test_title": "Check that blocking works",
+    "focus_test_text": "For one minute social apps will close as at prayer time. Press the button and open any app from your list.",
+    "focus_test_running": "Check is on for 1 minute — open a social app now. If it doesn't close, check the permissions above.",
+    "focus_test_button": "Check (1 minute)",
+    "places_osm_credit": "Some places are from OpenStreetMap (© OpenStreetMap contributors). Found a mistake or a closed place? Write to our bot.",
 }
 
 PLURALS = {

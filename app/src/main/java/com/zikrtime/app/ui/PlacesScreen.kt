@@ -132,13 +132,24 @@ fun PlacesScreen() {
                     }
                 }
             }
-            items(places, key = { it.id }) { p ->
+            // В списке — ближайшие 100, на карте — все (кластерами)
+            items(places.take(100), key = { it.id }) { p ->
                 PlaceCard(
                     place = p,
                     distanceKm = Places.distanceKm(origin.first, origin.second, p.lat, p.lon),
                     expanded = p.id == selected,
                     onClick = { selected = if (selected == p.id) null else p.id },
                 )
+            }
+            if (places.any { it.source == "osm" }) {
+                item {
+                    Text(
+                        stringResource(R.string.places_osm_credit),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(horizontal = 4.dp),
+                    )
+                }
             }
             item {
                 GlassHero {
