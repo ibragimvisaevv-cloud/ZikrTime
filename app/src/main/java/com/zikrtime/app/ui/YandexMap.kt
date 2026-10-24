@@ -113,7 +113,7 @@ fun YandexPlacesMap(
                 geometry = Point(p.lat, p.lon)
                 setIcon(if (p.id == selected) big else normal)
                 userData = p.id
-                addTapListener(tap)
+                addTapListener(java.lang.ref.WeakReference(tap))
             }
         }
         places.firstOrNull { it.id == selected }?.let {
