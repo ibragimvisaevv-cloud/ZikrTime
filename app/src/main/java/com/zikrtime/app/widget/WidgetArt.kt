@@ -265,12 +265,26 @@ object WidgetArt {
             val x = cx + ringR * cos(a).toFloat()
             val y = cx + ringR * sin(a).toFloat()
             val r = if (d == 0 && count > 0) beadR * 1.35f else beadR
+            p.shader = null
             if (on) {
-                p.shader = RadialGradient(x - r * 0.35f, y - r * 0.35f, r * 1.4f, intArrayOf(0xFFFFFFFF.toInt(), GOLD_LIGHT, GOLD, GOLD_DARK), null, Shader.TileMode.CLAMP)
+                // Золотая бусина с бликом
+                p.color = alpha(GOLD, 0.35f)
+                c.drawCircle(x, y, r * 1.45f, p)
+                p.color = GOLD_DARK
+                c.drawCircle(x, y, r, p)
+                p.color = GOLD
+                c.drawCircle(x - r * 0.12f, y - r * 0.12f, r * 0.82f, p)
+                p.color = alpha(0xFFFFFFFF.toInt(), 0.75f)
+                c.drawCircle(x - r * 0.38f, y - r * 0.38f, r * 0.28f, p)
             } else {
-                p.shader = RadialGradient(x - r * 0.35f, y - r * 0.35f, r * 1.4f, intArrayOf(alpha(0xFFFFFFFF.toInt(), 0.35f), alpha(CREAM, 0.16f), alpha(CREAM, 0.08f)), null, Shader.TileMode.CLAMP)
+                p.color = alpha(CREAM, 0.16f)
+                c.drawCircle(x, y, r, p)
+                p.style = Paint.Style.STROKE
+                p.strokeWidth = 0.8f * s
+                p.color = alpha(CREAM, 0.3f)
+                c.drawCircle(x, y, r, p)
+                p.style = Paint.Style.FILL
             }
-            c.drawCircle(x, y, r, p)
         }
         p.shader = null
         // Прогресс к цели — тонкая дуга внутри

@@ -456,7 +456,10 @@ fun SellerScreen() {
     val catalog = Shop.catalog ?: remember { Shop.load(context) }
     val seller = catalog.seller(nav.shopSeller)
     ScreenScaffold(title = seller?.name.orEmpty(), onBack = { nav.back() }) {
-        if (seller == null) return@ScreenScaffold
+        if (seller == null) {
+            Text(stringResource(R.string.search_nothing), style = MaterialTheme.typography.bodyLarge)
+            return@ScreenScaffold
+        }
         val accent = accentOf(seller)
         Box(
             Modifier

@@ -75,12 +75,12 @@ object QaHooks {
             "zakat" -> nav.open(Screen.ZAKAT)
             "shop_seller" -> {
                 nav.tab = Tab.SHOP
-                nav.shopSeller = "demo_perfume"
+                nav.shopSeller = com.zikrtime.app.data.Shop.load(activity).sellers.firstOrNull()?.id ?: "demo_perfume"
                 nav.open(Screen.SHOP_SELLER)
             }
             "shop_product" -> {
                 nav.tab = Tab.SHOP
-                nav.shopProduct = "p1"
+                nav.shopProduct = com.zikrtime.app.data.Shop.load(activity).products.firstOrNull()?.id ?: "p1"
                 nav.open(Screen.SHOP_PRODUCT)
             }
             "block_limit" -> activity.startActivity(BlockActivity.intent(activity, BlockReason.LimitReached(42, 40)))
