@@ -1,0 +1,6 @@
+{"new_reviews": 0, "reviews_rebuilt": true, "sent": 0}public db.json http: 404
+private db.json http: 403
+reviews.json http: 200
+miniapp http: 200
+{"error": "Откройте кабинет из бота заново"}
+api (без подписи должно быть 401): 401

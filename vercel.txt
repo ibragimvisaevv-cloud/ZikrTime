@@ -1,0 +1,56 @@
+Vercel CLI 65.2.0 (Node.js 22.23.3)
+> NOTE: The Vercel CLI now collects telemetry regarding usage of the CLI.
+> This information is used to shape the CLI roadmap and prioritize features.
+> You can learn more, including how to opt-out if you'd not like to participate in this program, by visiting the following URL:
+> https://vercel.com/docs/cli/about-telemetry
+! -e is deprecated. Use --env.
+Loading teams…
+
+  Directory       ~/work/ZikrTime/ZikrTime/shop-bot
+
+Searching for existing projects…
+
+✓ Linked          ibragimvisaevv-cloud/shop-bot
+Deploying ibragimvisaevv-cloud/shop-bot
+Uploading [--------------------] (0.0B/12.1KB)
+Uploading [===============-----] (9.2KB/12.1KB)
+Uploading [====================] (12.1KB/12.1KB)
+  Inspect         https://vercel.com/ibragimvisaevv-cloud/shop-bot/83h5JKhjgvcyzDSsVVBebpxdtpHC
+  Production      https://shop-msy2t7nl6-ibragimvisaevv-cloud.vercel.app
+Building…
+Building…
+Running build in Washington, D.C., USA (East) – iad1
+Build machine configuration: 2 cores, 8 GB
+Retrieving list of deployment files...
+Downloading 14 deployment files...
+Restored build cache from previous deployment (GsW49gj9fGwH6Co8iZNfzkyREQrK)
+Running "vercel build"
+Vercel CLI 65.1.0
+No Python version specified in .python-version, pyproject.toml, or Pipfile.lock. Using python version: 3.12
+Using uv 0.13.5 (x86_64-unknown-linux-gnu)
+No Python manifest found; creating an empty pyproject.toml and uv.lock...
+Compiling Python bytecode...
+Using Python 3.12 from pyproject.toml
+Writing .python-version file with version 3.12
+Using uv 0.13.5 (x86_64-unknown-linux-gnu)
+Installing required dependencies from uv.lock...
+Compiling Python bytecode...
+Build Completed in /vercel/output [2s]
+Deploying outputs...
+[2K[1A[2K[G  Production      https://shop-msy2t7nl6-ibragimvisaevv-cloud.vercel.app
+Completing…
+▲ Aliased         https://shop-bot-rho.vercel.app
+
+✓ Ready in 10s
+
+Next steps:
+- Automatically deploy changes on every push by connecting Git:
+  vercel git connect
+- Check the production response:
+  vercel curl https://shop-bot-rho.vercel.app
+- View build logs:
+  vercel inspect shop-msy2t7nl6-ibragimvisaevv-cloud.vercel.app --logs
+- Create a new deployment from the same source:
+  vercel redeploy shop-msy2t7nl6-ibragimvisaevv-cloud.vercel.app
+{"name":"shop-bot","ssoProtection":null}
+deploy: shop-msy2t7nl6-ibragimvisaevv-cloud.vercel.app alias: shop-bot-rho.vercel.app

@@ -1,0 +1,7 @@
+miniapp/index.html 576
+miniapp/app.js 26256
+miniapp/style.css 6515
+miniapp/config.js 74
+miniapp/telegram-web-app.js 119731
+https://storage.yandexcloud.net/zikrtime-shop/miniapp/index.html
+https://storage.yandexcloud.net/zikrtime-shop/privacy.html 9550

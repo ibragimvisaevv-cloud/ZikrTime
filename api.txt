@@ -1,0 +1,3 @@
+функция: d4e19urtqg3suhvp2jg2
+версия создана
+api: https://functions.yandexcloud.net/d4e19urtqg3suhvp2jg2

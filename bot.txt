@@ -1,0 +1,3 @@
+bot=ZeekrTime_Bot
+webhook=https://shop-bot-rho.vercel.app/api/webhook
+owner=by_username

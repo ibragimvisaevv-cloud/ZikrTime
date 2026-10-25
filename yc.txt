@@ -1,0 +1,2 @@
+Profile 'ci' created and activated
+каталог найден: default

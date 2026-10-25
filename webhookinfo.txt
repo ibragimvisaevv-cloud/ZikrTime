@@ -1,0 +1,11 @@
+{
+  "url": "https://shop-bot-rho.vercel.app/api/webhook",
+  "pending_update_count": 0,
+  "last_error_date": null,
+  "last_error_message": null,
+  "max_connections": 1
+}
+function http: 403
+catalog http: 200
+probe:
+{"telegram": "ok 0.6s", "storage": "ok 0.6s", "storage_write": "ok"}
