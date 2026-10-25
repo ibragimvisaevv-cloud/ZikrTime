@@ -1,5 +1,6 @@
 """Выкладывает мини-приложение (кабинет продавца) в публичный бакет: miniapp/index.html, app.js, style.css, config.js.
 Нужны S3_KEY_ID, S3_SECRET, BUCKET и API_URL (адрес облачной функции API)."""
+import json
 import os
 import sys
 import urllib.request
@@ -26,6 +27,30 @@ def main():
         st.put("miniapp/" + name, data, TYPES[name.rsplit(".", 1)[1]], cache="no-cache")
         print("miniapp/" + name, len(data))
     print(index.MINIAPP_URL)
+    upload_site(st)
+
+
+def bot_contact():
+    """Ссылка на бота для страницы политики: имя бота берём у Telegram по токену."""
+    token = os.environ.get("BOT_TOKEN", "")
+    if token:
+        try:
+            with urllib.request.urlopen(f"https://api.telegram.org/bot{token}/getMe", timeout=20) as r:
+                user = json.load(r)["result"]["username"]
+            return f'Telegram-бот <a href="https://t.me/{user}">@{user}</a>'
+        except Exception as e:
+            print("getMe:", type(e).__name__)
+    return "Telegram-бот, ссылка на который есть в приложении (раздел «Магазин»)"
+
+
+def upload_site(st):
+    """Публичные страницы (политика конфиденциальности) — в корень бакета."""
+    base = os.path.join(os.path.dirname(os.path.abspath(__file__)), "site")
+    contact = bot_contact().encode()
+    for name in sorted(os.listdir(base)):
+        data = open(os.path.join(base, name), "rb").read().replace(b"{{CONTACT}}", contact)
+        st.put(name, data, TYPES[name.rsplit(".", 1)[1]], cache="no-cache")
+        print(f"https://storage.yandexcloud.net/{os.environ.get('BUCKET', 'zikrtime-shop')}/{name}", len(data))
 
 
 if __name__ == "__main__":

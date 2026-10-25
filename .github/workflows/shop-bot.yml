@@ -148,8 +148,10 @@ jobs:
           echo "API_URL=$URL" >> "$GITHUB_ENV"
           echo "api: $URL" >> diag/api.txt
 
-      - name: Мини-приложение в хранилище
+      - name: Мини-приложение и политика конфиденциальности в хранилище
         if: steps.keys.outputs.ready == 'true'
+        env:
+          BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
         run: |
           sleep 10  # новый ключ хранилища начинает работать не сразу
           python3 shop-bot/upload_miniapp.py > diag/miniapp.txt 2>&1 || { cat diag/miniapp.txt; exit 1; }
