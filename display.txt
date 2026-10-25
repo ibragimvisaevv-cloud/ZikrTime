@@ -1,0 +1,3 @@
+Physical size: 720x1520
+Physical density: 160
+Override density: 320

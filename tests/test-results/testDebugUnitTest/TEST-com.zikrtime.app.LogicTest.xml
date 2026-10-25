@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.zikrtime.app.LogicTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-25T12:26:20" hostname="runnervmtai0g" time="0.014">
+  <properties/>
+  <testcase name="streaks" classname="com.zikrtime.app.LogicTest" time="0.002"/>
+  <testcase name="usageTime" classname="com.zikrtime.app.LogicTest" time="0.002"/>
+  <testcase name="blockPolicy" classname="com.zikrtime.app.LogicTest" time="0.01"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

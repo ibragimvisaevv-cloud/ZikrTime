@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.zikrtime.app.MoscowScheduleTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-25T12:26:20" hostname="runnervmtai0g" time="0.014">
+  <properties/>
+  <testcase name="parsesDumrfHomePage" classname="com.zikrtime.app.MoscowScheduleTest" time="0.009"/>
+  <testcase name="rejectsPageWithoutSchedule" classname="com.zikrtime.app.MoscowScheduleTest" time="0.001"/>
+  <testcase name="formulaMatchesOfficialTimetable" classname="com.zikrtime.app.MoscowScheduleTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
