@@ -352,6 +352,8 @@
     <string name="perm_xiaomi_title">Xiaomi: pop-ups and autostart</string>
     <string name="perm_xiaomi_text">Enable «Display pop-up windows while running in the background» and «Autostart» — otherwise the phone won\'t let the block screen appear.</string>
     <string name="focus_test_title">Check that blocking works</string>
+    <string name="widget_tap_to_mark">Tap a prayer to mark it ✓</string>
+    <string name="widget_next_in">%1$s in %2$s</string>
     <string name="widget_tasbih_name">Tasbih</string>
     <string name="zakat_note">Zakat is due if wealth at or above nisab has been held for a full lunar year. This is a guide only: in complex cases (business, debts, jewellery) ask an imam.</string>
     <string name="zakat_loading">Loading…</string>

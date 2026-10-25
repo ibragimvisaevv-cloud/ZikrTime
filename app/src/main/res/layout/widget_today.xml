@@ -29,29 +29,69 @@
         android:orientation="vertical"
         android:padding="14dp">
 
-        <TextView
-            android:id="@+id/w_title"
+        <!-- Шапка: город и дата слева, живой отсчёт до намаза справа -->
+        <LinearLayout
+            android:id="@+id/w_head"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:textColor="#FFF6E0"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/w_subtitle"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/w_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:shadowColor="#66000000"
+                    android:shadowDy="1"
+                    android:shadowRadius="3"
+                    android:textColor="#FFF6E0"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/w_subtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="#CCFFF6E0"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <Chronometer
+                android:id="@+id/w_countdown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/widget_chip"
+                android:countDown="true"
+                android:maxLines="1"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:textColor="#FFF6E0"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Дуга дня: солнце встаёт, поднимается и садится; ночью — луна -->
+        <ImageView
+            android:id="@+id/w_arc"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:textColor="#B3FFF6E0"
-            android:textSize="11sp" />
+            android:layout_height="58dp"
+            android:layout_marginTop="2dp"
+            android:importantForAccessibility="no"
+            android:scaleType="fitXY" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:orientation="horizontal">
 
         <LinearLayout
@@ -62,7 +102,7 @@
             android:layout_marginHorizontal="2dp"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingVertical="8dp">
+            android:paddingVertical="6dp">
 
             <ImageView
                 android:id="@+id/w_icon0"
@@ -89,6 +129,15 @@
                 android:textColor="#FFF6E0"
                 android:textSize="15sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/w_mark0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:textColor="#FFE7A8"
+                android:textSize="13sp"
+                android:textStyle="bold" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/w_col1"
@@ -98,7 +147,7 @@
             android:layout_marginHorizontal="2dp"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingVertical="8dp">
+            android:paddingVertical="6dp">
 
             <ImageView
                 android:id="@+id/w_icon1"
@@ -125,6 +174,15 @@
                 android:textColor="#FFF6E0"
                 android:textSize="15sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/w_mark1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:textColor="#FFE7A8"
+                android:textSize="13sp"
+                android:textStyle="bold" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/w_col2"
@@ -134,7 +192,7 @@
             android:layout_marginHorizontal="2dp"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingVertical="8dp">
+            android:paddingVertical="6dp">
 
             <ImageView
                 android:id="@+id/w_icon2"
@@ -161,6 +219,15 @@
                 android:textColor="#FFF6E0"
                 android:textSize="15sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/w_mark2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:textColor="#FFE7A8"
+                android:textSize="13sp"
+                android:textStyle="bold" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/w_col3"
@@ -170,7 +237,7 @@
             android:layout_marginHorizontal="2dp"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingVertical="8dp">
+            android:paddingVertical="6dp">
 
             <ImageView
                 android:id="@+id/w_icon3"
@@ -197,6 +264,15 @@
                 android:textColor="#FFF6E0"
                 android:textSize="15sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/w_mark3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:textColor="#FFE7A8"
+                android:textSize="13sp"
+                android:textStyle="bold" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/w_col4"
@@ -206,7 +282,7 @@
             android:layout_marginHorizontal="2dp"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingVertical="8dp">
+            android:paddingVertical="6dp">
 
             <ImageView
                 android:id="@+id/w_icon4"
@@ -233,6 +309,15 @@
                 android:textColor="#FFF6E0"
                 android:textSize="15sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/w_mark4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:textColor="#FFE7A8"
+                android:textSize="13sp"
+                android:textStyle="bold" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/w_col5"
@@ -242,7 +327,7 @@
             android:layout_marginHorizontal="2dp"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingVertical="8dp">
+            android:paddingVertical="6dp">
 
             <ImageView
                 android:id="@+id/w_icon5"
@@ -269,17 +354,19 @@
                 android:textColor="#FFF6E0"
                 android:textSize="15sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/w_mark5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:textColor="#FFE7A8"
+                android:textSize="13sp"
+                android:textStyle="bold" />
         </LinearLayout>
         </LinearLayout>
 
-        <!-- Линия дня: где сейчас солнце относительно намазов -->
-        <ImageView
-            android:id="@+id/w_line"
-            android:layout_width="match_parent"
-            android:layout_height="12dp"
-            android:layout_marginTop="2dp"
-            android:importantForAccessibility="no"
-            android:scaleType="fitXY" />
+
 
     </LinearLayout>
 </FrameLayout>

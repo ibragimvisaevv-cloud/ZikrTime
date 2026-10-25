@@ -240,6 +240,117 @@ object WidgetArt {
         return bmp
     }
 
+    /**
+     * Дуга суток над колонками намазов: днём (от восхода до заката) кривая поднимается над горизонтом,
+     * ночью уходит под него. Точки — намазы по их времени, пунктир ведёт от точки к своей колонке.
+     * [times] — доли суток (0…1) шести намазов, [now] — доля суток сейчас, [next] — индекс следующего.
+     */
+    fun dayArc(context: Context, wDp: Int, hDp: Int, times: List<Float>, now: Float, next: Int): Bitmap {
+        val s = px(context)
+        val w = max(1, (wDp * s).toInt())
+        val h = max(1, (hDp * s).toInt())
+        val bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
+        val c = Canvas(bmp)
+        val p = Paint(Paint.ANTI_ALIAS_FLAG)
+        val pad = 6 * s
+        val horizon = h * 0.62f
+        val up = horizon - 7 * s
+        val down = h - horizon - 4 * s
+        val sunrise = times[1]
+        val sunset = times[4]
+        fun x(t: Float) = pad + (w - 2 * pad) * t
+        fun y(t: Float): Float {
+            return if (t in sunrise..sunset) {
+                horizon - up * kotlin.math.sin(Math.PI * (t - sunrise) / (sunset - sunrise)).toFloat()
+            } else {
+                val night = 1f - (sunset - sunrise)
+                val u = ((t - sunset + 1f) % 1f) / night
+                horizon + down * kotlin.math.sin(Math.PI * u).toFloat()
+            }
+        }
+        // Свечение у горизонта там, где солнце
+        val sunX = x(now)
+        val isDay = now in sunrise..sunset
+        p.shader = RadialGradient(sunX, horizon, w * 0.35f, intArrayOf(alpha(if (isDay) GOLD_LIGHT else 0xFF6FA8FF.toInt(), 0.35f), 0), null, Shader.TileMode.CLAMP)
+        c.drawRect(0f, 0f, w.toFloat(), h.toFloat(), p)
+        p.shader = null
+        // Горизонт
+        p.strokeWidth = 1 * s
+        p.shader = LinearGradient(0f, 0f, w.toFloat(), 0f, intArrayOf(0, alpha(CREAM, 0.45f), 0), null, Shader.TileMode.CLAMP)
+        c.drawLine(0f, horizon, w.toFloat(), horizon, p)
+        p.shader = null
+        // Кривая суток: пройденная часть золотая, остальная — пунктиром
+        val steps = 120
+        val passed = Path()
+        val rest = Path()
+        for (i in 0..steps) {
+            val t = i / steps.toFloat()
+            val (px, py) = x(t) to y(t)
+            if (t <= now) {
+                if (i == 0) passed.moveTo(px, py) else passed.lineTo(px, py)
+                if (t + 1f / steps > now) rest.moveTo(px, py)
+            } else {
+                if (rest.isEmpty) rest.moveTo(px, py) else rest.lineTo(px, py)
+            }
+        }
+        p.style = Paint.Style.STROKE
+        p.strokeCap = Paint.Cap.ROUND
+        p.strokeWidth = 2.2f * s
+        p.shader = LinearGradient(0f, 0f, sunX, 0f, intArrayOf(alpha(GOLD, 0.25f), GOLD_LIGHT), null, Shader.TileMode.CLAMP)
+        c.drawPath(passed, p)
+        p.shader = null
+        p.strokeWidth = 1.4f * s
+        p.color = alpha(CREAM, 0.4f)
+        p.pathEffect = android.graphics.DashPathEffect(floatArrayOf(4 * s, 4 * s), 0f)
+        c.drawPath(rest, p)
+        // Пунктир от намаза на дуге к его колонке внизу
+        p.color = alpha(CREAM, 0.18f)
+        p.strokeWidth = 1 * s
+        times.forEachIndexed { i, t ->
+            c.drawLine(x(t), y(t), pad + (w - 2 * pad) * (i + 0.5f) / 6f, h.toFloat(), p)
+        }
+        p.pathEffect = null
+        p.style = Paint.Style.FILL
+        // Точки намазов
+        times.forEachIndexed { i, t ->
+            val done = t <= now
+            if (i == next) {
+                p.color = alpha(GOLD, 0.35f)
+                c.drawCircle(x(t), y(t), 6.5f * s, p)
+                p.color = GOLD_LIGHT
+                c.drawCircle(x(t), y(t), 3.6f * s, p)
+            } else {
+                p.color = if (done) GOLD else alpha(CREAM, 0.7f)
+                c.drawCircle(x(t), y(t), 2.6f * s, p)
+            }
+        }
+        // Солнце или луна
+        val sy = y(now)
+        if (isDay) {
+            p.shader = RadialGradient(sunX, sy, 16 * s, intArrayOf(alpha(GOLD_LIGHT, 0.9f), alpha(GOLD, 0.3f), 0), floatArrayOf(0f, 0.5f, 1f), Shader.TileMode.CLAMP)
+            c.drawCircle(sunX, sy, 16 * s, p)
+            p.shader = null
+            p.color = alpha(GOLD_LIGHT, 0.85f)
+            p.strokeWidth = 1.6f * s
+            p.style = Paint.Style.STROKE
+            for (i in 0 until 8) {
+                val a = Math.toRadians(i * 45.0)
+                c.drawLine(sunX + 8 * s * cos(a).toFloat(), sy + 8 * s * sin(a).toFloat(), sunX + 11.5f * s * cos(a).toFloat(), sy + 11.5f * s * sin(a).toFloat(), p)
+            }
+            p.style = Paint.Style.FILL
+            p.shader = RadialGradient(sunX - 1.5f * s, sy - 1.5f * s, 7 * s, intArrayOf(0xFFFFFFFF.toInt(), GOLD_LIGHT, GOLD), null, Shader.TileMode.CLAMP)
+            c.drawCircle(sunX, sy, 6 * s, p)
+            p.shader = null
+        } else {
+            p.shader = RadialGradient(sunX, sy, 14 * s, intArrayOf(alpha(CREAM, 0.45f), 0), null, Shader.TileMode.CLAMP)
+            c.drawCircle(sunX, sy, 14 * s, p)
+            p.shader = null
+            p.color = CREAM
+            c.drawPath(crescent(sunX, sy, 6.5f * s), p)
+        }
+        return bmp
+    }
+
     /** Чётки для виджета тасбиха: 33 бусины по кругу, отсчитанные — золотые, текущая — крупнее. */
     fun beads(context: Context, sizeDp: Int, count: Int, target: Int): Bitmap {
         val s = px(context)

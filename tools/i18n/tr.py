@@ -371,6 +371,8 @@ STRINGS = {
     "perm_xiaomi_title": "Xiaomi: açılır pencereler ve otomatik başlatma",
     "perm_xiaomi_text": "«Arka planda çalışırken açılır pencereleri göster» ve «Otomatik başlatma»yı açın — aksi halde telefon engelleme ekranını göstermez.",
     "focus_test_title": "Engellemeyi test et",
+    "widget_tap_to_mark": "İşaretlemek için namaza dokunun ✓",
+    "widget_next_in": "%1$s — %2$s sonra",
     "widget_tasbih_name": "Tesbih",
     "zakat_note": "Zekât, nisaba ulaşan varlık tam bir kameri yıl elinizde kaldıysa verilir. Hesap yaklaşıktır: karmaşık durumlarda bir imama danışın.",
     "zakat_loading": "Yükleniyor…",

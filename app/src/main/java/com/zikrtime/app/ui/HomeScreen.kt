@@ -142,7 +142,10 @@ fun HomeScreen() {
                     isCurrent = p == current,
                     started = !times[p].isAfter(now),
                     done = p in prayed,
-                    onToggle = { Store.setPrayed(today, p, p !in prayed) },
+                    onToggle = {
+                        Store.setPrayed(today, p, p !in prayed)
+                        com.zikrtime.app.widget.Widgets.updateAll(context)
+                    },
                 )
             }
             Text(

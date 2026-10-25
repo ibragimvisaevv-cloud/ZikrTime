@@ -371,6 +371,8 @@ STRINGS = {
     "perm_xiaomi_title": "Xiaomi: açılan pəncərələr və avtostart",
     "perm_xiaomi_text": "«Arxa planda işləyərkən açılan pəncərələri göstər» və «Avtostart»ı aktiv edin — əks halda telefon bloklama ekranını göstərməyə icazə verməz.",
     "focus_test_title": "Bloklamanı yoxla",
+    "widget_tap_to_mark": "Qeyd etmək üçün namaza toxunun ✓",
+    "widget_next_in": "%1$s — %2$s sonra",
     "widget_tasbih_name": "Təsbeh",
     "zakat_note": "Zəkat nisabdan az olmayan əmlak tam bir qəməri il qalıbsa verilir. Hesab təxminidir: mürəkkəb hallarda imamdan soruşun.",
     "zakat_loading": "Yüklənir…",

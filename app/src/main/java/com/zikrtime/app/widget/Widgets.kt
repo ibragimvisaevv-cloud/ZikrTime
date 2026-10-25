@@ -88,6 +88,13 @@ object Widgets {
         return views
     }
 
+    private fun toggleAction(context: Context, index: Int): PendingIntent =
+        PendingIntent.getBroadcast(
+            context, 200 + index,
+            Intent(context, TodayWidget::class.java).setAction(TodayWidget.ACTION_TOGGLE).putExtra(TodayWidget.EXTRA_INDEX, index),
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+        )
+
     private fun tasbihAction(context: Context, action: String): PendingIntent =
         PendingIntent.getBroadcast(
             context, action.hashCode(),
@@ -104,7 +111,7 @@ object Widgets {
     }
 
     /** Небо для фона виджета — как в приложении: по времени суток. */
-    private fun skyBitmap(context: Context, size: Pair<Int, Int>, now: ZonedDateTime, seed: Int): android.graphics.Bitmap {
+    private fun skyBitmap(context: Context, size: Pair<Int, Int>, now: ZonedDateTime, seed: Int, body: WidgetArt.Body? = null): android.graphics.Bitmap {
         val times = PrayerSchedule.forDate(now.toLocalDate())
         val period = skyPeriod(now, times)
         val day = !now.isBefore(times[Prayer.SUNRISE]) && now.isBefore(times[Prayer.MAGHRIB])
@@ -122,7 +129,7 @@ object Widgets {
             SkyPeriod.DAWN, SkyPeriod.SUNSET -> 0.5f
             else -> 0f
         }
-        return WidgetArt.sky(context, size.first, size.second, colors, glow, stars, if (day) WidgetArt.Body.SUN else WidgetArt.Body.MOON, seed)
+        return WidgetArt.sky(context, size.first, size.second, colors, glow, stars, body ?: if (day) WidgetArt.Body.SUN else WidgetArt.Body.MOON, seed)
     }
 
     private fun ids(context: Context, manager: AppWidgetManager, cls: Class<*>): IntArray =
@@ -244,7 +251,18 @@ object Widgets {
         val pattern = DateTimeFormatter.ofPattern("EEEE, d MMMM", Lang.locale(local))
         views.setTextViewText(R.id.w_subtitle, date.format(pattern).replaceFirstChar { it.uppercase(Lang.locale(local)) })
         val fmt = clockFormatter(local)
+        val prayed = Store.prayedOn(date)
+        val marks = listOf(R.id.w_mark0, R.id.w_mark1, R.id.w_mark2, R.id.w_mark3, R.id.w_mark4, R.id.w_mark5)
         Prayer.entries.forEachIndexed { i, p ->
+            // Отметка: ✓ — прочитан, ○ — время прошло, а отметки нет. Нажатие по колонке — отметить.
+            val started = !times[p].isAfter(now)
+            views.setTextViewText(marks[i], when {
+                !p.isPrayer -> ""
+                p in prayed -> "✓"
+                started -> "○"
+                else -> ""
+            })
+            if (p.isPrayer) views.setOnClickPendingIntent(columns[i].first, toggleAction(context, i))
             val (col, name, time) = columns[i]
             views.setTextViewText(name, prayerName(res, p))
             views.setTextViewText(time, times[p].format(fmt))
@@ -265,11 +283,32 @@ object Widgets {
                 }
             }
         }
+        // Живой отсчёт до следующего намаза
+        val (nextPrayer, nextAt) = PrayerSchedule.next(now)
+        val left = nextAt.toInstant().toEpochMilli() - now.toInstant().toEpochMilli()
+        views.setChronometer(R.id.w_countdown, SystemClock.elapsedRealtime() + left, res.getString(R.string.widget_next_in, prayerName(res, nextPrayer), "%s"), true)
+        views.setChronometerCountDown(R.id.w_countdown, true)
+        val soon = left < 15 * 60_000L
+        views.setInt(R.id.w_countdown, "setBackgroundResource", if (soon) R.drawable.widget_pill_gold else R.drawable.widget_chip)
+        views.setTextColor(R.id.w_countdown, if (soon) 0xFF2B1E00.toInt() else 0xFFFFF6E0.toInt())
+        // Подсказка, пока ничего не отмечено
+        if (prayed.isEmpty() && Prayer.entries.any { it.isPrayer && !times[it].isAfter(now) }) {
+            views.setTextViewText(R.id.w_subtitle, res.getString(R.string.widget_tap_to_mark))
+        }
         runCatching {
-            views.setImageViewBitmap(R.id.w_bg, skyBitmap(context, size, now, 23))
+            views.setImageViewBitmap(R.id.w_bg, skyBitmap(context, size, now, 23, WidgetArt.Body.NONE))
             views.setViewVisibility(R.id.w_star, android.view.View.GONE)
-            val day = !now.isBefore(times[Prayer.SUNRISE]) && now.isBefore(times[Prayer.MAGHRIB])
-            views.setImageViewBitmap(R.id.w_line, WidgetArt.dayLine(context, size.first - 28, dayPosition(now, times), Prayer.entries.indexOf(next), day))
+            if (size.second >= 150) {
+                val midnight = date.atStartOfDay(now.zone)
+                fun frac(t: ZonedDateTime) = (java.time.Duration.between(midnight, t).seconds / 86_400f).coerceIn(0f, 0.999f)
+                views.setViewVisibility(R.id.w_arc, android.view.View.VISIBLE)
+                views.setImageViewBitmap(
+                    R.id.w_arc,
+                    WidgetArt.dayArc(context, size.first - 28, 58, Prayer.entries.map { frac(times[it]) }, frac(now), Prayer.entries.indexOf(next)),
+                )
+            } else {
+                views.setViewVisibility(R.id.w_arc, android.view.View.GONE)
+            }
         }
         views.setOnClickPendingIntent(R.id.widget_root, openApp(context))
         return views
@@ -330,7 +369,26 @@ abstract class BaseWidget : AppWidgetProvider() {
 }
 
 class NextPrayerWidget : BaseWidget()
-class TodayWidget : BaseWidget()
+/** Намазы на сегодня: нажатие по намазу — отметить прочитанным (или снять отметку). */
+class TodayWidget : BaseWidget() {
+    override fun onReceive(context: Context, intent: Intent) {
+        if (intent.action != ACTION_TOGGLE) return super.onReceive(context, intent)
+        Store.init(context)
+        val prayer = Prayer.entries.getOrNull(intent.getIntExtra(EXTRA_INDEX, -1)) ?: return
+        val now = ZonedDateTime.now()
+        val today = now.toLocalDate()
+        val times = PrayerSchedule.forDate(today)
+        if (!prayer.isPrayer || times[prayer].isAfter(now)) return
+        Store.setPrayed(today, prayer, prayer !in Store.prayedOn(today))
+        com.zikrtime.app.ui.Haptics.tick(context)
+        Widgets.updateAll(context)
+    }
+
+    companion object {
+        const val ACTION_TOGGLE = "com.zikrtime.app.PRAYED_TOGGLE"
+        const val EXTRA_INDEX = "index"
+    }
+}
 class ScreenTimeWidget : BaseWidget()
 
 /** Тасбих на рабочем столе: нажатие — +1 (с лёгкой вибрацией), ↺ — сброс. */

@@ -352,6 +352,8 @@
     <string name="perm_xiaomi_title">Xiaomi: равзанаҳои поп-ап ва оғози худкор</string>
     <string name="perm_xiaomi_text">«Намоиши равзанаҳо ҳангоми кор дар замина» ва «Оғози худкор»-ро фаъол кунед — вагарна телефон экрани бастанро нишон доданро иҷозат намедиҳад.</string>
     <string name="focus_test_title">Санҷиши басташавӣ</string>
+    <string name="widget_tap_to_mark">Барои қайд намозро пахш кунед ✓</string>
+    <string name="widget_next_in">%1$s баъд аз %2$s</string>
     <string name="widget_tasbih_name">Тасбеҳ</string>
     <string name="zakat_note">Закот дода мешавад, агар мол аз нисоб кам набуда, як соли қамарӣ монда бошад. Ҳисоб тахминӣ аст: дар ҳолатҳои мураккаб аз имом пурсед.</string>
     <string name="zakat_loading">Боргирӣ…</string>
