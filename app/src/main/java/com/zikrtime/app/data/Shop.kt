@@ -22,6 +22,7 @@ object Shop {
     const val CONTENT_BASE = "https://storage.yandexcloud.net/zikrtime-shop/"
     private const val REMOTE = CONTENT_BASE + "catalog.json"
     private const val KEY = "shop_catalog"
+    private const val KEY_TAG = "shop_catalog_etag"
     private const val KEY_AT = "shop_catalog_at"
     private const val REFRESH_MS = 60 * 1000L // при каждом открытии магазина, не чаще раза в минуту
 
@@ -101,7 +102,14 @@ object Shop {
         load(context)
         val last = Store.getRaw(KEY_AT)?.toLongOrNull() ?: 0L
         if (!force && System.currentTimeMillis() - last < REFRESH_MS) return
-        val result = withContext(Dispatchers.IO) { runCatching { download() } }
+        val hasCopy = Store.getRaw(KEY) != null
+        val result = withContext(Dispatchers.IO) { runCatching { Net.getIfChanged(REMOTE, KEY_TAG, hasCopy) } }
+        if (result.isSuccess && result.getOrNull() == null) {
+            // Каталог не изменился — ничего не скачивали
+            offline = false
+            Store.putRaw(KEY_AT, System.currentTimeMillis().toString())
+            return
+        }
         val text = result.getOrNull()
         val parsed = text?.let { runCatching { parse(it) }.getOrNull() }
         if (parsed == null) {
@@ -113,18 +121,6 @@ object Shop {
         Store.putRaw(KEY, text)
         Store.putRaw(KEY_AT, System.currentTimeMillis().toString())
         catalog = parsed
-    }
-
-    private fun download(): String {
-        val conn = URL(REMOTE).openConnection() as HttpURLConnection
-        conn.connectTimeout = 10_000
-        conn.readTimeout = 15_000
-        try {
-            if (conn.responseCode != 200) error("HTTP ${conn.responseCode}")
-            return conn.inputStream.bufferedReader(Charsets.UTF_8).use { it.readText() }
-        } finally {
-            conn.disconnect()
-        }
     }
 
     /** Адрес картинки: полный URL или путь внутри репозитория каталога. */

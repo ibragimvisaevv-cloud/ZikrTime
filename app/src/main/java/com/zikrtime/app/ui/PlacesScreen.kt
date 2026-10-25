@@ -86,7 +86,10 @@ fun PlacesScreen() {
     val context = LocalContext.current
     val nav = LocalNav.current
     val data = Places.data ?: remember { Places.load() }
-    LaunchedEffect(Unit) { Places.refresh(context) }
+    LaunchedEffect(Unit) {
+        Places.refresh(context)
+        com.zikrtime.app.data.Reviews.refresh()
+    }
     var filter by rememberSaveable { mutableStateOf("all") }
     var selected by rememberSaveable { mutableStateOf<String?>(null) }
     var here by remember { mutableStateOf<Pair<Double, Double>?>(null) }
@@ -251,6 +254,7 @@ private fun PlaceCard(place: Places.Place, distanceKm: Double, expanded: Boolean
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
+                RatingBadge("place:${place.id}")
             }
         }
         if (expanded) {
@@ -269,6 +273,8 @@ private fun PlaceCard(place: Places.Place, distanceKm: Double, expanded: Boolean
             if (place.note.isNotBlank()) InfoLine("ℹ️", place.note)
             Spacer(Modifier.height(12.dp))
             ShimmerButton(stringResource(R.string.places_route), onClick = { openRoute(context, place.lat, place.lon) })
+            Spacer(Modifier.height(16.dp))
+            ReviewsBlock("place:${place.id}", inCard = false)
         }
     }
 }

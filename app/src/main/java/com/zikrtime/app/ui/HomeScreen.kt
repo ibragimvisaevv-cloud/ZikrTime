@@ -184,6 +184,8 @@ fun HomeScreen() {
             )
         }
 
+        RamadanHomeCard(now, onOpen = { nav.open(Screen.RAMADAN) })
+
         PlacesEntryCard(onOpen = { nav.open(Screen.PLACES) })
 
         if (today.dayOfWeek == java.time.DayOfWeek.FRIDAY) FridayCard(today)

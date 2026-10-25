@@ -71,6 +71,8 @@ object QaHooks {
             "shop" -> nav.tab = Tab.SHOP
             "widgets" -> widgetPreview = true
             "places" -> nav.open(Screen.PLACES)
+            "ramadan" -> nav.open(Screen.RAMADAN)
+            "zakat" -> nav.open(Screen.ZAKAT)
             "shop_seller" -> {
                 nav.tab = Tab.SHOP
                 nav.shopSeller = "demo_perfume"

@@ -330,7 +330,13 @@ fun TasbihScreen() {
     ScreenScaffold(
         title = stringResource(R.string.tasbih_title),
         onBack = { nav.back() },
-        actions = { TextButton(onClick = { Store.tasbihCount = 0 }) { Text(stringResource(R.string.action_reset)) } },
+        actions = {
+            val ctx = LocalContext.current
+            TextButton(onClick = {
+                Store.tasbihCount = 0
+                com.zikrtime.app.widget.Widgets.updateTasbih(ctx)
+            }) { Text(stringResource(R.string.action_reset)) }
+        },
     ) {
         Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             TASBIH_NAMES.forEachIndexed { i, (name, _) ->
@@ -380,6 +386,7 @@ fun TasbihScreen() {
         val press = remember { MutableInteractionSource() }
         fun addOne() {
             Store.addTasbih()
+            com.zikrtime.app.widget.Widgets.updateTasbih(context)
             val c = Store.tasbihCount
             when {
                 target > 0 && c % target == 0 -> {

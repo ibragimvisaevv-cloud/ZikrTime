@@ -10,6 +10,8 @@ shop
 shop_seller
 shop_product
 places
+ramadan
+zakat
 focus
 more
 language

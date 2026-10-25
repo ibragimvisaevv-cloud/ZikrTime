@@ -35,7 +35,7 @@ fun WidgetPreview() {
         Widget(1, evening, 350, 170)
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             Widget(2, day, 170, 170)
-            Widget(0, now.withHour(5).withMinute(50), 170, 170)
+            Widget(3, now, 170, 170)
         }
     }
 }

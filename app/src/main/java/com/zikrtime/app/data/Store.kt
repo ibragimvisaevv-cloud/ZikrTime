@@ -245,6 +245,16 @@ object Store {
         get() = int(K_TASBIH_TARGET, 33)
         set(v) = put(K_TASBIH_TARGET, v)
 
+    /** Отмеченные дни поста (ISO-даты). */
+    var ramadanFasts: Set<String>
+        get() = strSet("ramadan_fasts")
+        set(v) = put("ramadan_fasts", v)
+
+    /** Сдвиг начала Рамадана относительно календаря Умм аль-Кура (−1, 0, +1 день) — как объявит муфтият. */
+    var ramadanShift: Int
+        get() = int("ramadan_shift", 0)
+        set(v) = put("ramadan_shift", v)
+
     var tasbihPhrase: Int
         get() = int(K_TASBIH_PHRASE, 0)
         set(v) = put(K_TASBIH_PHRASE, v)

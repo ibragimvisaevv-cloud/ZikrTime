@@ -129,6 +129,18 @@ fun MoreScreen() {
                 icon = painterResource(R.drawable.ic_mosque),
                 onClick = { nav.open(Screen.PLACES) },
             )
+            SettingRow(
+                title = stringResource(R.string.ramadan_title),
+                subtitle = stringResource(R.string.ramadan_subtitle),
+                icon = painterResource(R.drawable.ic_prayer_isha),
+                onClick = { nav.open(Screen.RAMADAN) },
+            )
+            SettingRow(
+                title = stringResource(R.string.zakat_title),
+                subtitle = stringResource(R.string.zakat_subtitle),
+                icon = painterResource(R.drawable.ic_calc),
+                onClick = { nav.open(Screen.ZAKAT) },
+            )
         }
         DonateCard()
         ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {

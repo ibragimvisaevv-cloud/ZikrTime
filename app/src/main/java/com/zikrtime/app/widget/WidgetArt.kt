@@ -240,6 +240,55 @@ object WidgetArt {
         return bmp
     }
 
+    /** Чётки для виджета тасбиха: 33 бусины по кругу, отсчитанные — золотые, текущая — крупнее. */
+    fun beads(context: Context, sizeDp: Int, count: Int, target: Int): Bitmap {
+        val s = px(context)
+        val size = max(1, (sizeDp * s).toInt())
+        val bmp = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+        val c = Canvas(bmp)
+        val p = Paint(Paint.ANTI_ALIAS_FLAG)
+        val cx = size / 2f
+        val ringR = size / 2f - 10 * s
+        val beadR = (ringR * kotlin.math.sin(Math.PI / 33).toFloat() * 0.86f)
+        p.style = Paint.Style.STROKE
+        p.strokeWidth = 1.2f * s
+        p.color = alpha(CREAM, 0.2f)
+        c.drawCircle(cx, cx, ringR, p)
+        p.style = Paint.Style.FILL
+        val lap = count % 33
+        val lit = if (count > 0 && lap == 0) 33 else lap
+        for (k in 0 until 33) {
+            // Последняя отсчитанная бусина — сверху, остальные идут против часовой стрелки
+            val d = k
+            val on = d < lit
+            val a = Math.toRadians(-90.0 - d * 360.0 / 33)
+            val x = cx + ringR * cos(a).toFloat()
+            val y = cx + ringR * sin(a).toFloat()
+            val r = if (d == 0 && count > 0) beadR * 1.35f else beadR
+            if (on) {
+                p.shader = RadialGradient(x - r * 0.35f, y - r * 0.35f, r * 1.4f, intArrayOf(0xFFFFFFFF.toInt(), GOLD_LIGHT, GOLD, GOLD_DARK), null, Shader.TileMode.CLAMP)
+            } else {
+                p.shader = RadialGradient(x - r * 0.35f, y - r * 0.35f, r * 1.4f, intArrayOf(alpha(0xFFFFFFFF.toInt(), 0.35f), alpha(CREAM, 0.16f), alpha(CREAM, 0.08f)), null, Shader.TileMode.CLAMP)
+            }
+            c.drawCircle(x, y, r, p)
+        }
+        p.shader = null
+        // Прогресс к цели — тонкая дуга внутри
+        if (target > 0) {
+            val inner = ringR - beadR * 2.6f
+            val rect = RectF(cx - inner, cx - inner, cx + inner, cx + inner)
+            p.style = Paint.Style.STROKE
+            p.strokeWidth = 3 * s
+            p.strokeCap = Paint.Cap.ROUND
+            p.color = alpha(CREAM, 0.14f)
+            c.drawArc(rect, 0f, 360f, false, p)
+            p.color = GOLD
+            val sweep = 360f * (count % target) / target
+            if (sweep > 0f) c.drawArc(rect, -90f, sweep, false, p)
+        }
+        return bmp
+    }
+
     private fun octagram(x: Float, y: Float, r: Float): Path {
         val path = Path()
         for (square in 0..1) {

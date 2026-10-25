@@ -22,6 +22,7 @@ object Places {
     private const val REMOTE = Shop.CONTENT_BASE + "places.json"
     private const val KEY = "places_json"
     private const val KEY_AT = "places_at"
+    private const val KEY_TAG = "places_etag"
     private const val REFRESH_MS = 60 * 1000L
 
     class Place(
@@ -59,19 +60,14 @@ object Places {
         val last = Store.getRaw(KEY_AT)?.toLongOrNull() ?: 0L
         if (!force && System.currentTimeMillis() - last < REFRESH_MS) return
         loading = true
-        val text = withContext(Dispatchers.IO) {
-            runCatching {
-                val conn = URL(REMOTE).openConnection() as HttpURLConnection
-                conn.connectTimeout = 10_000
-                conn.readTimeout = 15_000
-                try {
-                    if (conn.responseCode != 200) null else conn.inputStream.bufferedReader(Charsets.UTF_8).use { it.readText() }
-                } finally {
-                    conn.disconnect()
-                }
-            }.getOrNull()
-        }
+        val hasCopy = Store.getRaw(KEY) != null
+        val result = withContext(Dispatchers.IO) { runCatching { Net.getIfChanged(REMOTE, KEY_TAG, hasCopy) } }
         loading = false
+        if (result.isSuccess && result.getOrNull() == null) {
+            Store.putRaw(KEY_AT, System.currentTimeMillis().toString())
+            return
+        }
+        val text = result.getOrNull()
         val parsed = text?.let { runCatching { parse(it) }.getOrNull() } ?: return
         Store.putRaw(KEY, text)
         Store.putRaw(KEY_AT, System.currentTimeMillis().toString())

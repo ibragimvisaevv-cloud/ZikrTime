@@ -83,7 +83,10 @@ fun ShopScreen() {
     val nav = LocalNav.current
     val lang = remember { Lang.content(context) }
     val catalog = Shop.catalog ?: remember { Shop.load(context) }
-    LaunchedEffect(Unit) { Shop.refresh(context) }
+    LaunchedEffect(Unit) {
+        Shop.refresh(context)
+        com.zikrtime.app.data.Reviews.refresh()
+    }
     var category by rememberSaveable { mutableStateOf<String?>(null) }
     var query by rememberSaveable { mutableStateOf("") }
 
@@ -264,6 +267,7 @@ private fun SellerCard(seller: Shop.Seller, lang: String, catalog: Shop.Catalog,
             Spacer(Modifier.width(12.dp))
             Column(Modifier.weight(1f)) {
                 Text(seller.name, style = MaterialTheme.typography.titleSmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                RatingBadge("seller:${seller.id}")
                 Text(
                     seller.city.get(lang),
                     style = MaterialTheme.typography.bodySmall,
@@ -307,6 +311,7 @@ private fun PartnerCard(seller: Shop.Seller, lang: String, catalog: Shop.Catalog
         }
         Column(Modifier.padding(start = 12.dp, end = 12.dp, top = 26.dp, bottom = 12.dp)) {
             Text(seller.name, style = MaterialTheme.typography.titleSmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            RatingBadge("seller:${seller.id}")
             Text(
                 listOf(seller.city.get(lang), if (count > 0) pluralStringResource(R.plurals.shop_products_count, count, count) else "")
                     .filter { it.isNotBlank() }.joinToString(" · "),
@@ -501,6 +506,7 @@ fun SellerScreen() {
                 nav.open(Screen.SHOP_PRODUCT)
             }
         }
+        ReviewsBlock("seller:${seller.id}")
     }
 }
 

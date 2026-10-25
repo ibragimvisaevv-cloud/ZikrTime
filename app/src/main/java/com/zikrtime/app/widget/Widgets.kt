@@ -44,6 +44,7 @@ object Widgets {
                 manager.updateAppWidget(it, today(context, size(manager, it, 320, 160)))
             }
             updateScreenTime(context, manager)
+            updateTasbih(context, manager)
             scheduleNextUpdate(context)
         }
     }
@@ -52,6 +53,47 @@ object Widgets {
         val ids = ids(context, manager, ScreenTimeWidget::class.java)
         ids.forEach { manager.updateAppWidget(it, screenTime(context, size(manager, it, 160, 160))) }
     }
+
+    /** Виджет тасбиха: счёт, зикр, чётки. Вызывается и из приложения после каждого нажатия. */
+    fun updateTasbih(context: Context, manager: AppWidgetManager = AppWidgetManager.getInstance(context)) {
+        val ids = ids(context, manager, TasbihWidget::class.java)
+        ids.forEach { runCatching { manager.updateAppWidget(it, tasbih(context, size(manager, it, 160, 160))) } }
+    }
+
+    private val zikrNames = listOf(
+        R.string.zikr_1_name, R.string.zikr_2_name, R.string.zikr_3_name,
+        R.string.zikr_4_name, R.string.zikr_5_name, R.string.zikr_6_name,
+    )
+
+    private fun tasbih(context: Context, size: Pair<Int, Int>): RemoteViews {
+        val res = Lang.wrap(context).resources
+        val views = RemoteViews(context.packageName, R.layout.widget_tasbih)
+        val count = Store.tasbihCount
+        val target = Store.tasbihTarget
+        views.setTextViewText(R.id.w_count, (if (target > 0) count % target else count).toString())
+        views.setTextViewText(R.id.w_name, res.getString(zikrNames[Store.tasbihPhrase.coerceIn(zikrNames.indices)]))
+        runCatching {
+            views.setImageViewBitmap(
+                R.id.w_bg,
+                WidgetArt.sky(
+                    context, size.first, size.second,
+                    intArrayOf(0xFF1A7D63.toInt(), 0xFF0F5C4A.toInt(), 0xFF04231C.toInt()),
+                    0x40FFE7A8, 0f, WidgetArt.Body.NONE, 41,
+                ),
+            )
+            views.setImageViewBitmap(R.id.w_beads, WidgetArt.beads(context, minOf(size.first, size.second) - 12, count, target))
+        }
+        views.setOnClickPendingIntent(R.id.widget_root, tasbihAction(context, TasbihWidget.ACTION_ADD))
+        views.setOnClickPendingIntent(R.id.w_reset, tasbihAction(context, TasbihWidget.ACTION_RESET))
+        return views
+    }
+
+    private fun tasbihAction(context: Context, action: String): PendingIntent =
+        PendingIntent.getBroadcast(
+            context, action.hashCode(),
+            Intent(context, TasbihWidget::class.java).setAction(action),
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+        )
 
     /** Размер виджета в dp (для картинки фона). */
     private fun size(manager: AppWidgetManager, id: Int, defW: Int, defH: Int): Pair<Int, Int> {
@@ -116,6 +158,7 @@ object Widgets {
     fun preview(context: Context, kind: Int, now: ZonedDateTime, size: Pair<Int, Int>): RemoteViews = when (kind) {
         0 -> nextPrayer(context, size, now)
         1 -> today(context, size, now)
+        3 -> tasbih(context, size)
         else -> screenTime(context, size)
     }
 
@@ -289,3 +332,34 @@ abstract class BaseWidget : AppWidgetProvider() {
 class NextPrayerWidget : BaseWidget()
 class TodayWidget : BaseWidget()
 class ScreenTimeWidget : BaseWidget()
+
+/** Тасбих на рабочем столе: нажатие — +1 (с лёгкой вибрацией), ↺ — сброс. */
+class TasbihWidget : BaseWidget() {
+    override fun onReceive(context: Context, intent: Intent) {
+        when (intent.action) {
+            ACTION_ADD -> {
+                Store.init(context)
+                Store.addTasbih()
+                val target = Store.tasbihTarget
+                val c = Store.tasbihCount
+                when {
+                    target > 0 && c % target == 0 -> com.zikrtime.app.ui.Haptics.done(context)
+                    c % 33 == 0 -> com.zikrtime.app.ui.Haptics.lap(context)
+                    else -> com.zikrtime.app.ui.Haptics.tick(context)
+                }
+                Widgets.updateTasbih(context)
+            }
+            ACTION_RESET -> {
+                Store.init(context)
+                Store.tasbihCount = 0
+                Widgets.updateTasbih(context)
+            }
+            else -> super.onReceive(context, intent)
+        }
+    }
+
+    companion object {
+        const val ACTION_ADD = "com.zikrtime.app.TASBIH_ADD"
+        const val ACTION_RESET = "com.zikrtime.app.TASBIH_RESET"
+    }
+}
