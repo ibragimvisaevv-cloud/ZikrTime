@@ -253,9 +253,9 @@ object WidgetArt {
         val c = Canvas(bmp)
         val p = Paint(Paint.ANTI_ALIAS_FLAG)
         val pad = 6 * s
-        val horizon = h * 0.62f
-        val up = horizon - 7 * s
-        val down = h - horizon - 4 * s
+        val horizon = h * 0.66f
+        val up = horizon - 11 * s
+        val down = h - horizon - 3 * s
         val sunrise = times[1]
         val sunset = times[4]
         fun x(t: Float) = pad + (w - 2 * pad) * t
@@ -268,12 +268,8 @@ object WidgetArt {
                 horizon + down * kotlin.math.sin(Math.PI * u).toFloat()
             }
         }
-        // Свечение у горизонта там, где солнце
         val sunX = x(now)
         val isDay = now in sunrise..sunset
-        p.shader = RadialGradient(sunX, horizon, w * 0.35f, intArrayOf(alpha(if (isDay) GOLD_LIGHT else 0xFF6FA8FF.toInt(), 0.35f), 0), null, Shader.TileMode.CLAMP)
-        c.drawRect(0f, 0f, w.toFloat(), h.toFloat(), p)
-        p.shader = null
         // Горизонт
         p.strokeWidth = 1 * s
         p.shader = LinearGradient(0f, 0f, w.toFloat(), 0f, intArrayOf(0, alpha(CREAM, 0.45f), 0), null, Shader.TileMode.CLAMP)
@@ -327,26 +323,26 @@ object WidgetArt {
         // Солнце или луна
         val sy = y(now)
         if (isDay) {
-            p.shader = RadialGradient(sunX, sy, 16 * s, intArrayOf(alpha(GOLD_LIGHT, 0.9f), alpha(GOLD, 0.3f), 0), floatArrayOf(0f, 0.5f, 1f), Shader.TileMode.CLAMP)
-            c.drawCircle(sunX, sy, 16 * s, p)
+            p.shader = RadialGradient(sunX, sy, 13 * s, intArrayOf(alpha(GOLD_LIGHT, 0.9f), alpha(GOLD, 0.3f), 0), floatArrayOf(0f, 0.5f, 1f), Shader.TileMode.CLAMP)
+            c.drawCircle(sunX, sy, 13 * s, p)
             p.shader = null
             p.color = alpha(GOLD_LIGHT, 0.85f)
             p.strokeWidth = 1.6f * s
             p.style = Paint.Style.STROKE
             for (i in 0 until 8) {
                 val a = Math.toRadians(i * 45.0)
-                c.drawLine(sunX + 8 * s * cos(a).toFloat(), sy + 8 * s * sin(a).toFloat(), sunX + 11.5f * s * cos(a).toFloat(), sy + 11.5f * s * sin(a).toFloat(), p)
+                c.drawLine(sunX + 7 * s * cos(a).toFloat(), sy + 7 * s * sin(a).toFloat(), sunX + 10f * s * cos(a).toFloat(), sy + 10f * s * sin(a).toFloat(), p)
             }
             p.style = Paint.Style.FILL
             p.shader = RadialGradient(sunX - 1.5f * s, sy - 1.5f * s, 7 * s, intArrayOf(0xFFFFFFFF.toInt(), GOLD_LIGHT, GOLD), null, Shader.TileMode.CLAMP)
-            c.drawCircle(sunX, sy, 6 * s, p)
+            c.drawCircle(sunX, sy, 5 * s, p)
             p.shader = null
         } else {
-            p.shader = RadialGradient(sunX, sy, 14 * s, intArrayOf(alpha(CREAM, 0.45f), 0), null, Shader.TileMode.CLAMP)
-            c.drawCircle(sunX, sy, 14 * s, p)
+            p.shader = RadialGradient(sunX, sy, 11 * s, intArrayOf(alpha(CREAM, 0.45f), 0), null, Shader.TileMode.CLAMP)
+            c.drawCircle(sunX, sy, 11 * s, p)
             p.shader = null
             p.color = CREAM
-            c.drawPath(crescent(sunX, sy, 6.5f * s), p)
+            c.drawPath(crescent(sunX, sy, 5.5f * s), p)
         }
         return bmp
     }

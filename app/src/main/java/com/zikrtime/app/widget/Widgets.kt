@@ -252,21 +252,13 @@ object Widgets {
         views.setTextViewText(R.id.w_subtitle, date.format(pattern).replaceFirstChar { it.uppercase(Lang.locale(local)) })
         val fmt = clockFormatter(local)
         val prayed = Store.prayedOn(date)
-        val marks = listOf(R.id.w_mark0, R.id.w_mark1, R.id.w_mark2, R.id.w_mark3, R.id.w_mark4, R.id.w_mark5)
         Prayer.entries.forEachIndexed { i, p ->
-            // Отметка: ✓ — прочитан, ○ — время прошло, а отметки нет. Нажатие по колонке — отметить.
-            val started = !times[p].isAfter(now)
-            views.setTextViewText(marks[i], when {
-                !p.isPrayer -> ""
-                p in prayed -> "✓"
-                started -> "○"
-                else -> ""
-            })
+            // Нажатие по намазу — отметить прочитанным; отмеченный показывает ✓ вместо иконки
             if (p.isPrayer) views.setOnClickPendingIntent(columns[i].first, toggleAction(context, i))
             val (col, name, time) = columns[i]
             views.setTextViewText(name, prayerName(res, p))
             views.setTextViewText(time, times[p].format(fmt))
-            views.setImageViewResource(icons[i], prayerIconRes(p))
+            views.setImageViewResource(icons[i], if (p in prayed) R.drawable.ic_check else prayerIconRes(p))
             views.setInt(col, "setBackgroundResource", if (p == next) R.drawable.widget_pill_gold else 0)
             when {
                 // Следующий намаз — на золотой плашке тёмным текстом
@@ -298,13 +290,13 @@ object Widgets {
         runCatching {
             views.setImageViewBitmap(R.id.w_bg, skyBitmap(context, size, now, 23, WidgetArt.Body.NONE))
             views.setViewVisibility(R.id.w_star, android.view.View.GONE)
-            if (size.second >= 150) {
+            if (size.second >= 140) {
                 val midnight = date.atStartOfDay(now.zone)
                 fun frac(t: ZonedDateTime) = (java.time.Duration.between(midnight, t).seconds / 86_400f).coerceIn(0f, 0.999f)
                 views.setViewVisibility(R.id.w_arc, android.view.View.VISIBLE)
                 views.setImageViewBitmap(
                     R.id.w_arc,
-                    WidgetArt.dayArc(context, size.first - 28, 58, Prayer.entries.map { frac(times[it]) }, frac(now), Prayer.entries.indexOf(next)),
+                    WidgetArt.dayArc(context, size.first - 28, 40, Prayer.entries.map { frac(times[it]) }, frac(now), Prayer.entries.indexOf(next)),
                 )
             } else {
                 views.setViewVisibility(R.id.w_arc, android.view.View.GONE)
