@@ -53,7 +53,7 @@ import com.zikrtime.app.ui.theme.EmeraldDeep
 import com.zikrtime.app.ui.theme.EmeraldNight
 import com.zikrtime.app.ui.theme.Gold
 
-/** Первый запуск: язык → знакомство → город. */
+/** Первый запуск: язык → знакомство → разрешения → город. */
 @Composable
 fun OnboardingScreen(onCityChosen: (City) -> Unit) {
     // Шаг сохраняется при пересоздании экрана (после смены языка экран перезапускается).
@@ -63,6 +63,7 @@ fun OnboardingScreen(onCityChosen: (City) -> Unit) {
     when (step) {
         0 -> LanguageStep(onNext = { step = 1 })
         1 -> Welcome(onNext = { step = 2 })
+        2 -> PermissionsStep(onNext = { step = 3 })
         else -> Column(
             Modifier
                 .fillMaxSize()
@@ -166,5 +167,36 @@ private fun Feature(icon: Int, text: String) {
         }
         Spacer(Modifier.width(16.dp))
         Text(text, style = MaterialTheme.typography.bodyLarge, color = Cream)
+    }
+}
+
+/** Сразу просим всё, что нужно для азана, будильника и блокировки, — чтобы потом ничего не «молчало». */
+@Composable
+private fun PermissionsStep(onNext: () -> Unit) {
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .windowInsetsPadding(WindowInsets.safeDrawing),
+    ) {
+        Column(
+            Modifier
+                .weight(1f)
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            Spacer(Modifier.height(16.dp))
+            Text(stringResource(R.string.onboarding_perms_title), style = MaterialTheme.typography.headlineMedium)
+            Text(stringResource(R.string.onboarding_perms_text), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            ZCard { EssentialPermissions() }
+            Spacer(Modifier.height(8.dp))
+        }
+        val all = Perms.allGranted(LocalContext.current).also { AppEvents.resumeCount }
+        PrimaryButton(
+            stringResource(if (all) R.string.action_continue else R.string.onboarding_perms_later),
+            onClick = onNext,
+            modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp),
+        )
     }
 }

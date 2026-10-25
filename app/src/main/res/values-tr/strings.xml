@@ -352,6 +352,15 @@
     <string name="perm_xiaomi_title">Xiaomi: açılır pencereler ve otomatik başlatma</string>
     <string name="perm_xiaomi_text">«Arka planda çalışırken açılır pencereleri göster» ve «Otomatik başlatma»yı açın — aksi halde telefon engelleme ekranını göstermez.</string>
     <string name="focus_test_title">Engellemeyi test et</string>
+    <string name="places_near_city">Şu an şehir merkezine yakın yerler. Yakınınızdakileri bulmak için 📍 dokunun</string>
+    <string name="places_near_you">Size en yakınlar — konumunuza göre</string>
+    <string name="places_where_am_i">Neredeyim</string>
+    <string name="shop_partners_title">Ortaklarımız</string>
+    <string name="perm_overlay_both_text">Alarm ve engelleme ekranı diğer uygulamaların üzerinde görünebilsin diye</string>
+    <string name="onboarding_perms_later">Atla, sonra yaparım</string>
+    <string name="onboarding_perms_text">Ezanın ve sabah alarmının zamanında çalması, namaz vaktinde sosyal medyanın kapanması için uygulamanın bu izinlere ihtiyacı var. Her satırda «İzin ver»e dokunun.</string>
+    <string name="onboarding_perms_title">İzinler</string>
+    <string name="alarm_open">Aç</string>
     <string name="quiz_streak">üst üste %1$d</string>
     <string name="focus_test_text">Bir dakika boyunca sosyal ağlar namaz vaktindeki gibi kapanacak. Düğmeye basın ve listenizdeki herhangi bir uygulamayı açın.</string>
     <string name="focus_test_running">Test 1 dakika sürüyor — bir sosyal ağ açın. Kapanmazsa yukarıdaki izinleri kontrol edin.</string>
@@ -360,6 +369,10 @@
     <plurals name="days">
         <item quantity="one">%d gün</item>
         <item quantity="other">%d gün</item>
+    </plurals>
+    <plurals name="shop_products_count">
+        <item quantity="one">%d ürün</item>
+        <item quantity="other">%d ürün</item>
     </plurals>
     <string-array name="weekdays_short">
         <item>Pzt</item>

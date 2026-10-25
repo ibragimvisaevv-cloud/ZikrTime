@@ -371,6 +371,15 @@ STRINGS = {
     "perm_xiaomi_title": "Xiaomi: açılır pencereler ve otomatik başlatma",
     "perm_xiaomi_text": "«Arka planda çalışırken açılır pencereleri göster» ve «Otomatik başlatma»yı açın — aksi halde telefon engelleme ekranını göstermez.",
     "focus_test_title": "Engellemeyi test et",
+    "places_near_city": "Şu an şehir merkezine yakın yerler. Yakınınızdakileri bulmak için 📍 dokunun",
+    "places_near_you": "Size en yakınlar — konumunuza göre",
+    "places_where_am_i": "Neredeyim",
+    "shop_partners_title": "Ortaklarımız",
+    "perm_overlay_both_text": "Alarm ve engelleme ekranı diğer uygulamaların üzerinde görünebilsin diye",
+    "onboarding_perms_later": "Atla, sonra yaparım",
+    "onboarding_perms_text": "Ezanın ve sabah alarmının zamanında çalması, namaz vaktinde sosyal medyanın kapanması için uygulamanın bu izinlere ihtiyacı var. Her satırda «İzin ver»e dokunun.",
+    "onboarding_perms_title": "İzinler",
+    "alarm_open": "Aç",
     "quiz_streak": "üst üste %1$d",
     "focus_test_text": "Bir dakika boyunca sosyal ağlar namaz vaktindeki gibi kapanacak. Düğmeye basın ve listenizdeki herhangi bir uygulamayı açın.",
     "focus_test_running": "Test 1 dakika sürüyor — bir sosyal ağ açın. Kapanmazsa yukarıdaki izinleri kontrol edin.",
@@ -380,6 +389,7 @@ STRINGS = {
 
 PLURALS = {
     "days": {"one": "%d gün", "other": "%d gün"},
+    "shop_products_count": {"one": "%d ürün", "other": "%d ürün"},
 }
 
 ARRAYS = {

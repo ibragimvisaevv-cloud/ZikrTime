@@ -352,6 +352,15 @@
     <string name="perm_xiaomi_title">Xiaomi: pop-ups and autostart</string>
     <string name="perm_xiaomi_text">Enable «Display pop-up windows while running in the background» and «Autostart» — otherwise the phone won\'t let the block screen appear.</string>
     <string name="focus_test_title">Check that blocking works</string>
+    <string name="places_near_city">Showing places near the city centre. Tap 📍 to find places near you</string>
+    <string name="places_near_you">Nearest to you — based on your location</string>
+    <string name="places_where_am_i">Where am I</string>
+    <string name="shop_partners_title">Our partners</string>
+    <string name="perm_overlay_both_text">So the alarm and the block screen can appear over other apps</string>
+    <string name="onboarding_perms_later">Skip, I\'ll do it later</string>
+    <string name="onboarding_perms_text">To make the adhan and the Fajr alarm sound on time and to close social apps during prayer, the app needs these permissions. Tap “Allow” on each row.</string>
+    <string name="onboarding_perms_title">Permissions</string>
+    <string name="alarm_open">Open</string>
     <string name="quiz_streak">%1$d in a row</string>
     <string name="focus_test_text">For one minute social apps will close as at prayer time. Press the button and open any app from your list.</string>
     <string name="focus_test_running">Check is on for 1 minute — open a social app now. If it doesn\'t close, check the permissions above.</string>
@@ -360,6 +369,10 @@
     <plurals name="days">
         <item quantity="one">%d day</item>
         <item quantity="other">%d days</item>
+    </plurals>
+    <plurals name="shop_products_count">
+        <item quantity="one">%d product</item>
+        <item quantity="other">%d products</item>
     </plurals>
     <string-array name="weekdays_short">
         <item>Mo</item>

@@ -53,6 +53,22 @@ private fun markerBitmap(selected: Boolean, density: Float): Bitmap {
     return bmp
 }
 
+/** «Я здесь»: синяя точка с белой обводкой и мягким ореолом. */
+private fun meBitmap(density: Float): Bitmap {
+    val size = (34 * density).toInt()
+    val bmp = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+    val c = Canvas(bmp)
+    val p = Paint(Paint.ANTI_ALIAS_FLAG)
+    val r = size / 2f
+    p.color = 0x402F80ED
+    c.drawCircle(r, r, r, p)
+    p.color = 0xFFFFFFFF.toInt()
+    c.drawCircle(r, r, 9 * density, p)
+    p.color = 0xFF2F80ED.toInt()
+    c.drawCircle(r, r, 6.5f * density, p)
+    return bmp
+}
+
 /** Кластер: золотой круг с числом мест. */
 private fun clusterBitmap(count: Int, density: Float): Bitmap {
     val text = if (count > 999) "999+" else count.toString()
@@ -83,6 +99,9 @@ fun YandexPlacesMap(
     dark: Boolean,
     onSelect: (String) -> Unit,
     modifier: Modifier = Modifier,
+    /** Где сейчас человек (если известно) и счётчик нажатий «Где я» — по нему камера летит к нему. */
+    me: Pair<Double, Double>? = null,
+    focusMe: Int = 0,
 ) {
     val context = LocalContext.current
     val density = context.resources.displayMetrics.density
@@ -143,6 +162,7 @@ fun YandexPlacesMap(
         }
     }
     val marks = remember { HashMap<String, PlacemarkMapObject>() }
+    val meMark = remember { arrayOfNulls<PlacemarkMapObject>(1) }
     val icons = remember { arrayOfNulls<ImageProvider>(2) }
     LaunchedEffect(places, dark) {
         val map = mapView.mapWindow.map
@@ -163,6 +183,22 @@ fun YandexPlacesMap(
             }
         }
         collection.clusterPlacemarks(55.0, 14)
+        meMark[0] = null
+        me?.let { meMark[0] = addMe(map, it, density) }
+    }
+    LaunchedEffect(me) {
+        val map = mapView.mapWindow.map
+        meMark[0]?.let { runCatching { map.mapObjects.remove(it) } }
+        meMark[0] = me?.let { addMe(map, it, density) }
+    }
+    LaunchedEffect(focusMe, me) {
+        if (focusMe > 0 && me != null) {
+            mapView.mapWindow.map.move(
+                CameraPosition(Point(me.first, me.second), 13.5f, 0f, 0f),
+                com.yandex.mapkit.Animation(com.yandex.mapkit.Animation.Type.SMOOTH, 0.8f),
+                null,
+            )
+        }
     }
     var shown by remember { mutableStateOf<String?>(null) }
     LaunchedEffect(selected) {
@@ -178,6 +214,13 @@ fun YandexPlacesMap(
     }
     AndroidView(factory = { mapView }, modifier = modifier)
 }
+
+private fun addMe(map: com.yandex.mapkit.map.Map, me: Pair<Double, Double>, density: Float): PlacemarkMapObject =
+    map.mapObjects.addPlacemark().apply {
+        geometry = Point(me.first, me.second)
+        setIcon(ImageProvider.fromBitmap(meBitmap(density)))
+        zIndex = 100f
+    }
 
 /** Ключ задаём при запуске приложения. */
 fun initYandexMapKey() {

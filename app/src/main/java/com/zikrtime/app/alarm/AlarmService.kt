@@ -70,7 +70,22 @@ class AlarmService : Service() {
         // Если экран включён и телефон разблокирован, полноэкранное уведомление может показаться баннером —
         // поэтому пробуем открыть экран будильника и напрямую.
         runCatching { startActivity(AlarmActivity.intent(this, test).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
+        // Подстраховка: если через несколько секунд экран будильника так и не появился (телефон запретил
+        // показ поверх других окон), в уведомлении появляется кнопка «Выключить», чтобы звук можно было остановить.
+        handler.removeCallbacksAndMessages(null)
+        handler.postDelayed({
+            if (AlarmState.ringing && !AlarmActivity.visible) {
+                runCatching { startActivity(AlarmActivity.intent(this, test).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
+                fallbackStop = true
+                runCatching { getSystemService(android.app.NotificationManager::class.java).notify(NOTIFICATION_ID, notification(test)) }
+            }
+        }, 8_000)
+        // Никогда не звоним бесконечно: через 20 минут будильник выключается сам.
+        handler.postDelayed({ if (AlarmState.ringing) stopAlarm() }, AUTO_STOP_MINUTES * 60_000L)
     }
+
+    private val handler = android.os.Handler(android.os.Looper.getMainLooper())
+    private var fallbackStop = false
 
     private fun startSound() {
         val audio = getSystemService(AudioManager::class.java)
@@ -121,6 +136,8 @@ class AlarmService : Service() {
     }
 
     private fun stopAlarm() {
+        handler.removeCallbacksAndMessages(null)
+        fallbackStop = false
         player?.runCatching { stop() }
         player?.release()
         player = null
@@ -152,7 +169,9 @@ class AlarmService : Service() {
             .setAutoCancel(false)
             .setContentIntent(full)
             .setFullScreenIntent(full, true)
-        if (!Store.alarmWakeCheck) {
+        // «Открыть» — всегда: нажатие открывает экран будильника, даже если он не появился сам.
+        builder.addAction(0, res.getString(R.string.alarm_open), full)
+        if (!Store.alarmWakeCheck || fallbackStop) {
             val stop = PendingIntent.getService(
                 this, 11, Intent(this, AlarmService::class.java).setAction(ACTION_STOP),
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
@@ -163,6 +182,7 @@ class AlarmService : Service() {
     }
 
     override fun onDestroy() {
+        handler.removeCallbacksAndMessages(null)
         player?.release()
         player = null
         vibrator?.cancel()
@@ -177,6 +197,7 @@ class AlarmService : Service() {
         const val ACTION_STOP = "com.zikrtime.app.ALARM_STOP"
         const val ACTION_SNOOZE = "com.zikrtime.app.ALARM_SNOOZE"
         const val SNOOZE_MINUTES = 5
+        const val AUTO_STOP_MINUTES = 20
 
         fun start(context: Context, test: Boolean, fajrMillis: Long) {
             val intent = Intent(context, AlarmService::class.java)

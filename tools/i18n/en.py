@@ -387,6 +387,15 @@ STRINGS = {
     "perm_xiaomi_title": "Xiaomi: pop-ups and autostart",
     "perm_xiaomi_text": "Enable «Display pop-up windows while running in the background» and «Autostart» — otherwise the phone won't let the block screen appear.",
     "focus_test_title": "Check that blocking works",
+    "places_near_city": "Showing places near the city centre. Tap 📍 to find places near you",
+    "places_near_you": "Nearest to you — based on your location",
+    "places_where_am_i": "Where am I",
+    "shop_partners_title": "Our partners",
+    "perm_overlay_both_text": "So the alarm and the block screen can appear over other apps",
+    "onboarding_perms_later": "Skip, I'll do it later",
+    "onboarding_perms_text": "To make the adhan and the Fajr alarm sound on time and to close social apps during prayer, the app needs these permissions. Tap “Allow” on each row.",
+    "onboarding_perms_title": "Permissions",
+    "alarm_open": "Open",
     "quiz_streak": "%1$d in a row",
     "focus_test_text": "For one minute social apps will close as at prayer time. Press the button and open any app from your list.",
     "focus_test_running": "Check is on for 1 minute — open a social app now. If it doesn't close, check the permissions above.",
@@ -396,6 +405,7 @@ STRINGS = {
 
 PLURALS = {
     "days": {"one": "%d day", "other": "%d days"},
+    "shop_products_count": {"one": "%d product", "other": "%d products"},
 }
 
 ARRAYS = {

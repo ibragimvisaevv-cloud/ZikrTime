@@ -24,6 +24,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!-- Определение города для расчёта времени намаза -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- Точное место — чтобы показать ближайшие мечети на карте -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- Учёт времени в соцсетях. Выдаётся пользователем в настройках «Доступ к истории использования» -->
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"

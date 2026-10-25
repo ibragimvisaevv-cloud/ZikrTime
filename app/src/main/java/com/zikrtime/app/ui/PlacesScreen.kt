@@ -52,6 +52,11 @@ import com.zikrtime.app.ui.theme.EmeraldDeep
 import com.zikrtime.app.ui.theme.Gold
 import com.zikrtime.app.ui.theme.LocalDarkTheme
 import java.util.Locale
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material3.Icon
 
 private fun kindName(kind: String): Int = when (kind) {
     "mosque" -> R.string.place_kind_mosque
@@ -85,9 +90,27 @@ fun PlacesScreen() {
     var filter by rememberSaveable { mutableStateOf("all") }
     var selected by rememberSaveable { mutableStateOf<String?>(null) }
     var here by remember { mutableStateOf<Pair<Double, Double>?>(null) }
-    LaunchedEffect(Unit) {
-        LocationHelper.requestOnce(context) { loc -> if (loc != null) here = loc.latitude to loc.longitude }
+    var focusMe by remember { mutableIntStateOf(0) }
+    var locating by remember { mutableStateOf(false) }
+    fun locate() {
+        locating = true
+        LocationHelper.requestPrecise(context) { loc ->
+            locating = false
+            if (loc != null) {
+                here = loc.latitude to loc.longitude
+                focusMe++
+            }
+        }
     }
+    val locationPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { granted ->
+        if (granted.values.any { it }) locate()
+    }
+    fun whereAmI() {
+        if (LocationHelper.hasPermission(context)) locate()
+        else locationPermission.launch(arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION))
+    }
+    // Если доступ к месту уже есть — сразу ищем ближайшие к человеку, а не к центру города
+    LaunchedEffect(Unit) { if (LocationHelper.hasPermission(context)) locate() }
     val origin = here ?: (Store.location.latitude to Store.location.longitude)
     val all = data.places.sortedBy { Places.distanceKm(origin.first, origin.second, it.lat, it.lon) }
     val places = all.filter {
@@ -102,18 +125,41 @@ fun PlacesScreen() {
 
     ScreenScaffold(title = stringResource(R.string.places_title), onBack = { nav.back() }, scrollable = false) {
         if (hasYandexMap) {
-            YandexPlacesMap(
-                places = places,
-                selected = selected,
-                centerLat = origin.first,
-                centerLon = origin.second,
-                dark = LocalDarkTheme.current,
-                onSelect = { id ->
-                    selected = id
-                },
-                modifier = Modifier.fillMaxWidth().height(300.dp).clip(RoundedCornerShape(26.dp)),
-            )
+            Box(Modifier.fillMaxWidth().height(300.dp)) {
+                YandexPlacesMap(
+                    places = places,
+                    selected = selected,
+                    centerLat = origin.first,
+                    centerLon = origin.second,
+                    dark = LocalDarkTheme.current,
+                    onSelect = { id ->
+                        selected = id
+                    },
+                    modifier = Modifier.fillMaxSize().clip(RoundedCornerShape(26.dp)),
+                    me = here,
+                    focusMe = focusMe,
+                )
+                // «Где я»: показать себя на карте и ближайшие места
+                androidx.compose.material3.SmallFloatingActionButton(
+                    onClick = { whereAmI() },
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    contentColor = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.align(Alignment.BottomEnd).padding(12.dp),
+                ) {
+                    if (locating) {
+                        androidx.compose.material3.CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
+                    } else {
+                        Icon(androidx.compose.material.icons.Icons.Default.LocationOn, contentDescription = stringResource(R.string.places_where_am_i))
+                    }
+                }
+            }
         }
+        Text(
+            stringResource(if (here != null) R.string.places_near_you else R.string.places_near_city),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.clickable(enabled = here == null) { whereAmI() },
+        )
         Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             FilterPill(stringResource(R.string.places_all), filter == "all") { filter = "all" }
             FilterPill(stringResource(R.string.places_mosques), filter == "mosque") { filter = "mosque" }

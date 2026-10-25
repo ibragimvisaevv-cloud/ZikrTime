@@ -352,6 +352,15 @@
     <string name="perm_xiaomi_title">Xiaomi: калкыма терезелер жана автоиштетүү</string>
     <string name="perm_xiaomi_text">«Фондо иштеп жатканда калкыма терезелерди көрсөтүү» жана «Автоиштетүү» күйгүзүңүз — антпесе телефон бөгөттөө экранын көрсөтпөйт.</string>
     <string name="focus_test_title">Бөгөттөөнү текшерүү</string>
+    <string name="places_near_city">Азыр — шаардын борборуна жакындары. Жаныңыздагы жерлерди табуу үчүн 📍 басыңыз</string>
+    <string name="places_near_you">Сизге эң жакындары — жайгашкан жериңиз боюнча</string>
+    <string name="places_where_am_i">Мен кайдамын</string>
+    <string name="shop_partners_title">Өнөктөштөрүбүз</string>
+    <string name="perm_overlay_both_text">Ойготкуч жана бөгөттөө экраны башка тиркемелердин үстүнөн чыгышы үчүн</string>
+    <string name="onboarding_perms_later">Өткөрүп жиберүү, кийин</string>
+    <string name="onboarding_perms_text">Азан жана багымдат ойготкучу өз убагында шыңгырашы жана намаз маалында социалдык тармактар жабылышы үчүн тиркемеге бул уруксаттар керек. Ар бир сапта «Уруксат берүү» баскычын басыңыз.</string>
+    <string name="onboarding_perms_title">Уруксаттар</string>
+    <string name="alarm_open">Ачуу</string>
     <string name="quiz_streak">катары менен %1$d</string>
     <string name="focus_test_text">Бир мүнөт бою социалдык тармактар намаз убагындагыдай жабылат. Баскычты басып, тизмедеги каалаган тиркемени ачыңыз.</string>
     <string name="focus_test_running">Текшерүү 1 мүнөт жүрөт — социалдык тармакты ачыңыз. Жабылбаса, жогорудагы уруксаттарды текшериңиз.</string>
@@ -360,6 +369,10 @@
     <plurals name="days">
         <item quantity="one">%d күн</item>
         <item quantity="other">%d күн</item>
+    </plurals>
+    <plurals name="shop_products_count">
+        <item quantity="one">%d товар</item>
+        <item quantity="other">%d товар</item>
     </plurals>
     <string-array name="weekdays_short">
         <item>Дш</item>

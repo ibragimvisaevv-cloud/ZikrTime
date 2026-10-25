@@ -352,6 +352,15 @@
     <string name="perm_xiaomi_title">Xiaomi: всплывающие окна и автозапуск</string>
     <string name="perm_xiaomi_text">Включите «Отображать всплывающие окна, когда запущено в фоне» и «Автозапуск» — иначе телефон не даст показать экран блокировки.</string>
     <string name="focus_test_title">Проверить блокировку</string>
+    <string name="places_near_city">Сейчас — ближайшие к центру города. Нажмите 📍, чтобы найти места рядом с вами</string>
+    <string name="places_near_you">Ближайшие к вам — по вашему местоположению</string>
+    <string name="places_where_am_i">Где я</string>
+    <string name="shop_partners_title">Наши партнёры</string>
+    <string name="perm_overlay_both_text">Чтобы экран будильника и блокировки появлялся поверх других приложений</string>
+    <string name="onboarding_perms_later">Пропустить, сделаю позже</string>
+    <string name="onboarding_perms_text">Чтобы азан и будильник на фаджр звучали вовремя, а соцсети закрывались во время намаза, приложению нужны эти разрешения. Нажмите «Разрешить» в каждой строке.</string>
+    <string name="onboarding_perms_title">Разрешения</string>
+    <string name="alarm_open">Открыть</string>
     <string name="quiz_streak">%1$d подряд</string>
     <string name="focus_test_text">На одну минуту соцсети будут закрываться, как во время намаза. Нажмите кнопку и откройте любое приложение из списка.</string>
     <string name="focus_test_running">Проверка идёт 1 минуту — откройте соцсеть. Если она не закрылась, проверьте разрешения выше.</string>
@@ -362,6 +371,12 @@
         <item quantity="few">%d дня</item>
         <item quantity="many">%d дней</item>
         <item quantity="other">%d дня</item>
+    </plurals>
+    <plurals name="shop_products_count">
+        <item quantity="one">%d товар</item>
+        <item quantity="few">%d товара</item>
+        <item quantity="many">%d товаров</item>
+        <item quantity="other">%d товара</item>
     </plurals>
     <string-array name="weekdays_short">
         <item>Пн</item>

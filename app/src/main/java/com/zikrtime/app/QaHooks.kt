@@ -43,9 +43,13 @@ object QaHooks {
                 Store.onboarded = false
                 nav.onboardingStep = 1
             }
-            "onboarding_city" -> {
+            "onboarding_perms" -> {
                 Store.onboarded = false
                 nav.onboardingStep = 2
+            }
+            "onboarding_city" -> {
+                Store.onboarded = false
+                nav.onboardingStep = 3
             }
             "home" -> nav.tab = Tab.PRAYER
             "knowledge" -> nav.tab = Tab.KNOWLEDGE

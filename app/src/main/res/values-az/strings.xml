@@ -352,6 +352,15 @@
     <string name="perm_xiaomi_title">Xiaomi: açılan pəncərələr və avtostart</string>
     <string name="perm_xiaomi_text">«Arxa planda işləyərkən açılan pəncərələri göstər» və «Avtostart»ı aktiv edin — əks halda telefon bloklama ekranını göstərməyə icazə verməz.</string>
     <string name="focus_test_title">Bloklamanı yoxla</string>
+    <string name="places_near_city">Hazırda şəhər mərkəzinə yaxınlar. Yaxınlığınızdakı yerləri tapmaq üçün 📍 basın</string>
+    <string name="places_near_you">Sizə ən yaxınlar — yerləşdiyiniz yerə görə</string>
+    <string name="places_where_am_i">Mən haradayam</string>
+    <string name="shop_partners_title">Tərəfdaşlarımız</string>
+    <string name="perm_overlay_both_text">Zəngli saat və bloklama ekranı digər tətbiqlərin üstündə görünsün deyə</string>
+    <string name="onboarding_perms_later">Keç, sonra edərəm</string>
+    <string name="onboarding_perms_text">Azan və sübh zəngli saatı vaxtında səslənsin, namaz vaxtı sosial şəbəkələr bağlansın deyə tətbiqə bu icazələr lazımdır. Hər sətirdə «İcazə ver» düyməsini basın.</string>
+    <string name="onboarding_perms_title">İcazələr</string>
+    <string name="alarm_open">Aç</string>
     <string name="quiz_streak">ardıcıl %1$d</string>
     <string name="focus_test_text">Bir dəqiqə ərzində sosial şəbəkələr namaz vaxtındakı kimi bağlanacaq. Düyməni basın və siyahıdakı istənilən tətbiqi açın.</string>
     <string name="focus_test_running">Yoxlama 1 dəqiqə davam edir — sosial şəbəkəni açın. Bağlanmasa, yuxarıdakı icazələri yoxlayın.</string>
@@ -360,6 +369,10 @@
     <plurals name="days">
         <item quantity="one">%d gün</item>
         <item quantity="other">%d gün</item>
+    </plurals>
+    <plurals name="shop_products_count">
+        <item quantity="one">%d məhsul</item>
+        <item quantity="other">%d məhsul</item>
     </plurals>
     <string-array name="weekdays_short">
         <item>B.e</item>

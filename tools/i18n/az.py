@@ -371,6 +371,15 @@ STRINGS = {
     "perm_xiaomi_title": "Xiaomi: açılan pəncərələr və avtostart",
     "perm_xiaomi_text": "«Arxa planda işləyərkən açılan pəncərələri göstər» və «Avtostart»ı aktiv edin — əks halda telefon bloklama ekranını göstərməyə icazə verməz.",
     "focus_test_title": "Bloklamanı yoxla",
+    "places_near_city": "Hazırda şəhər mərkəzinə yaxınlar. Yaxınlığınızdakı yerləri tapmaq üçün 📍 basın",
+    "places_near_you": "Sizə ən yaxınlar — yerləşdiyiniz yerə görə",
+    "places_where_am_i": "Mən haradayam",
+    "shop_partners_title": "Tərəfdaşlarımız",
+    "perm_overlay_both_text": "Zəngli saat və bloklama ekranı digər tətbiqlərin üstündə görünsün deyə",
+    "onboarding_perms_later": "Keç, sonra edərəm",
+    "onboarding_perms_text": "Azan və sübh zəngli saatı vaxtında səslənsin, namaz vaxtı sosial şəbəkələr bağlansın deyə tətbiqə bu icazələr lazımdır. Hər sətirdə «İcazə ver» düyməsini basın.",
+    "onboarding_perms_title": "İcazələr",
+    "alarm_open": "Aç",
     "quiz_streak": "ardıcıl %1$d",
     "focus_test_text": "Bir dəqiqə ərzində sosial şəbəkələr namaz vaxtındakı kimi bağlanacaq. Düyməni basın və siyahıdakı istənilən tətbiqi açın.",
     "focus_test_running": "Yoxlama 1 dəqiqə davam edir — sosial şəbəkəni açın. Bağlanmasa, yuxarıdakı icazələri yoxlayın.",
@@ -380,6 +389,7 @@ STRINGS = {
 
 PLURALS = {
     "days": {"one": "%d gün", "other": "%d gün"},
+    "shop_products_count": {"one": "%d məhsul", "other": "%d məhsul"},
 }
 
 ARRAYS = {

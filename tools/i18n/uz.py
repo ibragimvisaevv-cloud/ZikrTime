@@ -371,6 +371,15 @@ STRINGS = {
     "perm_xiaomi_title": "Xiaomi: qalqib chiquvchi oynalar va avtoishga tushirish",
     "perm_xiaomi_text": "«Fonda ishlayotganda qalqib chiquvchi oynalarni koʻrsatish» va «Avtoishga tushirish»ni yoqing — aks holda telefon bloklash ekranini koʻrsatishga ruxsat bermaydi.",
     "focus_test_title": "Bloklashni tekshirish",
+    "places_near_city": "Hozir shahar markaziga yaqinlari. Yoningizdagi joylarni topish uchun 📍 ni bosing",
+    "places_near_you": "Sizga eng yaqinlari — joylashuvingiz bo‘yicha",
+    "places_where_am_i": "Men qayerdaman",
+    "shop_partners_title": "Hamkorlarimiz",
+    "perm_overlay_both_text": "Budilnik va bloklash ekrani boshqa ilovalar ustida chiqishi uchun",
+    "onboarding_perms_later": "O‘tkazib yuborish, keyinroq",
+    "onboarding_perms_text": "Azon va bomdod budilnigi o‘z vaqtida chalinishi, namoz vaqtida ijtimoiy tarmoqlar yopilishi uchun ilovaga shu ruxsatlar kerak. Har bir qatorda «Ruxsat berish»ni bosing.",
+    "onboarding_perms_title": "Ruxsatlar",
+    "alarm_open": "Ochish",
     "quiz_streak": "ketma-ket %1$d",
     "focus_test_text": "Bir daqiqa davomida ijtimoiy tarmoqlar namoz vaqtidagidek yopiladi. Tugmani bosing va roʻyxatdagi istalgan ilovani oching.",
     "focus_test_running": "Tekshiruv 1 daqiqa davom etadi — ijtimoiy tarmoqni oching. Yopilmasa, yuqoridagi ruxsatlarni tekshiring.",
@@ -380,6 +389,7 @@ STRINGS = {
 
 PLURALS = {
     "days": {"one": "%d kun", "other": "%d kun"},
+    "shop_products_count": {"one": "%d mahsulot", "other": "%d mahsulot"},
 }
 
 ARRAYS = {

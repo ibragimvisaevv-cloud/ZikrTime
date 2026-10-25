@@ -77,6 +77,42 @@ object LocationHelper {
         }
     }
 
+    fun hasPrecise(context: Context): Boolean =
+        ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+
+    /** Свежее точное место (для карты мечетей): GPS, если разрешено, иначе — как requestOnce. */
+    @SuppressLint("MissingPermission")
+    fun requestPrecise(context: Context, onResult: (Location?) -> Unit) {
+        if (!hasPrecise(context) || Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            requestOnce(context, onResult)
+            return
+        }
+        val lm = context.getSystemService(LocationManager::class.java)
+        val provider = listOf(LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER)
+            .firstOrNull { runCatching { lm.isProviderEnabled(it) }.getOrDefault(false) }
+        if (provider == null) {
+            requestOnce(context, onResult)
+            return
+        }
+        val last = runCatching { lm.getLastKnownLocation(provider) }.getOrNull()
+        // Пока GPS ищет спутники, сразу показываем последнюю точку (если она свежая — до 10 минут)
+        if (last != null && System.currentTimeMillis() - last.time < 10 * 60 * 1000L) onResult(last)
+        val handler = Handler(Looper.getMainLooper())
+        var delivered = false
+        lm.getCurrentLocation(provider, null, context.mainExecutor) { loc ->
+            if (!delivered) {
+                delivered = true
+                if (loc != null) onResult(loc) else if (last == null) requestOnce(context, onResult)
+            }
+        }
+        handler.postDelayed({
+            if (!delivered) {
+                delivered = true
+                if (last == null) requestOnce(context, onResult)
+            }
+        }, 25_000)
+    }
+
     /** Название города по координатам (если на телефоне есть геокодер). Ответ — в главном потоке. */
     fun placeName(context: Context, lat: Double, lon: Double, onResult: (String?) -> Unit) {
         val main = Handler(Looper.getMainLooper())

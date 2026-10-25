@@ -352,6 +352,15 @@
     <string name="perm_xiaomi_title">Xiaomi: равзанаҳои поп-ап ва оғози худкор</string>
     <string name="perm_xiaomi_text">«Намоиши равзанаҳо ҳангоми кор дар замина» ва «Оғози худкор»-ро фаъол кунед — вагарна телефон экрани бастанро нишон доданро иҷозат намедиҳад.</string>
     <string name="focus_test_title">Санҷиши басташавӣ</string>
+    <string name="places_near_city">Ҳоло — наздик ба маркази шаҳр. Барои ёфтани ҷойҳои наздик 📍-ро пахш кунед</string>
+    <string name="places_near_you">Наздиктаринҳо ба шумо — аз рӯи ҷойгиршавӣ</string>
+    <string name="places_where_am_i">Ман куҷо</string>
+    <string name="shop_partners_title">Шарикони мо</string>
+    <string name="perm_overlay_both_text">То экрани зангӯла ва басташавӣ болои барномаҳои дигар пайдо шавад</string>
+    <string name="onboarding_perms_later">Гузаштан, баъдтар</string>
+    <string name="onboarding_perms_text">Барои он ки азон ва зангӯлаи бомдод сари вақт садо диҳанд ва ҳангоми намоз шабакаҳои иҷтимоӣ баста шаванд, ба барнома ин иҷозатҳо лозиманд. Дар ҳар сатр «Иҷозат додан»-ро пахш кунед.</string>
+    <string name="onboarding_perms_title">Иҷозатҳо</string>
+    <string name="alarm_open">Кушодан</string>
     <string name="quiz_streak">%1$d пай дар пай</string>
     <string name="focus_test_text">Як дақиқа шабакаҳои иҷтимоӣ мисли вақти намоз баста мешаванд. Тугмаро пахш кунед ва ягон барномаи рӯйхатро кушоед.</string>
     <string name="focus_test_running">Санҷиш 1 дақиқа давом мекунад — шабакаи иҷтимоиро кушоед. Агар баста нашавад, иҷозатҳои болоро санҷед.</string>
@@ -360,6 +369,10 @@
     <plurals name="days">
         <item quantity="one">%d рӯз</item>
         <item quantity="other">%d рӯз</item>
+    </plurals>
+    <plurals name="shop_products_count">
+        <item quantity="one">%d мол</item>
+        <item quantity="other">%d мол</item>
     </plurals>
     <string-array name="weekdays_short">
         <item>Дш</item>

@@ -160,37 +160,9 @@ fun AlarmSettingsScreen() {
                 Toast.makeText(context, testToast, Toast.LENGTH_LONG).show()
             })
 
-            if (!notificationsAllowed || !fullScreenAllowed || !exactAllowed) {
+            if (!Perms.allGranted(context).also { resume }) {
                 SectionLabel(stringResource(R.string.focus_permissions))
-                ZCard {
-                    Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
-                        if (!notificationsAllowed) {
-                            PermissionRow(stringResource(R.string.perm_notifications_title), stringResource(R.string.perm_notifications_text), false) {
-                                if (Build.VERSION.SDK_INT >= 33) notifPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
-                                else context.startActivity(
-                                    Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
-                                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                                )
-                            }
-                        }
-                        if (!fullScreenAllowed && Build.VERSION.SDK_INT >= 34) {
-                            PermissionRow(stringResource(R.string.perm_fullscreen_title), stringResource(R.string.perm_fullscreen_text), false) {
-                                context.startActivity(
-                                    Intent(Settings.ACTION_MANAGE_APP_USE_FULL_SCREEN_INTENT, Uri.parse("package:${context.packageName}"))
-                                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                                )
-                            }
-                        }
-                        if (!exactAllowed && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                            PermissionRow(stringResource(R.string.perm_exact_title), stringResource(R.string.perm_exact_text), false) {
-                                context.startActivity(
-                                    Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM, Uri.parse("package:${context.packageName}"))
-                                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                                )
-                            }
-                        }
-                    }
-                }
+                ZCard { EssentialPermissions(showGranted = false) }
             }
             Text(
                 stringResource(R.string.alarm_note),

@@ -99,16 +99,14 @@ fun HomeScreen() {
     }
 
     TabColumn {
-        // Шапка: приветствие, даты и город
-        Row(verticalAlignment = Alignment.Top) {
-            Column(Modifier.weight(1f)) {
-                Text(stringResource(R.string.greeting), style = MaterialTheme.typography.headlineSmall)
-                Text(
-                    gregorianDate(today) + " · " + hijriDate(today),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
+        // Шапка: даты (григорианская и по хиджре) и город
+        Column {
+            Text(gregorianDate(today), style = MaterialTheme.typography.headlineSmall)
+            Text(
+                hijriDate(today),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         }
         Surface(
             onClick = { nav.open(Screen.CITY) },

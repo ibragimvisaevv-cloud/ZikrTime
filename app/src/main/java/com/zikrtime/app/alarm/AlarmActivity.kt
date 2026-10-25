@@ -108,7 +108,21 @@ class AlarmActivity : ComponentActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        visible = true
+    }
+
+    override fun onPause() {
+        super.onPause()
+        visible = false
+    }
+
     companion object {
+        /** Экран будильника сейчас на экране (служба проверяет, удалось ли его показать). */
+        @Volatile
+        var visible = false
+
         fun intent(context: Context, test: Boolean): Intent =
             Intent(context, AlarmActivity::class.java)
                 .putExtra(FajrAlarm.EXTRA_TEST, test)

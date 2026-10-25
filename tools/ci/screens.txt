@@ -1,5 +1,6 @@
 onboarding
 onboarding_welcome
+onboarding_perms
 onboarding_city
 home
 knowledge

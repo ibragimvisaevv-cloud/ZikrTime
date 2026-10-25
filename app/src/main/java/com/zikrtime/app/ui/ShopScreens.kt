@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.background
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -90,7 +92,8 @@ fun ShopScreen() {
             (query.isBlank() || p.title.get(lang).contains(query.trim(), ignoreCase = true) ||
                 catalog.seller(p.seller)?.name?.contains(query.trim(), ignoreCase = true) == true)
     }
-    val sellers = catalog.sellers.filter { category == null || category in it.categories }
+    val sellers = catalog.sellers.filter { (category == null || category in it.categories) && !it.partner }
+    val partners = catalog.sellers.filter { it.partner }
 
     TabColumn(title = stringResource(R.string.shop_title), subtitle = stringResource(R.string.shop_subtitle)) {
         if (catalog.demo) {
@@ -100,6 +103,22 @@ fun ShopScreen() {
         }
         if (Shop.offline) {
             Text(stringResource(R.string.shop_offline), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+
+        // Партнёры — закреплены наверху, по две карточки в ряд
+        if (partners.isNotEmpty() && query.isBlank() && category == null) {
+            SectionLabel(stringResource(R.string.shop_partners_title))
+            partners.chunked(2).forEach { pair ->
+                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    pair.forEach { p ->
+                        PartnerCard(p, lang, catalog, Modifier.weight(1f)) {
+                            nav.shopSeller = p.id
+                            nav.open(Screen.SHOP_SELLER)
+                        }
+                    }
+                    if (pair.size == 1) Spacer(Modifier.weight(1f))
+                }
+            }
         }
 
         // Поиск
@@ -252,6 +271,50 @@ private fun SellerCard(seller: Shop.Seller, lang: String, catalog: Shop.Catalog,
                     maxLines = 1,
                 )
             }
+        }
+    }
+}
+
+/** Карточка партнёра: обложка с золотой рамкой, логотип, название, город и число товаров. */
+@Composable
+private fun PartnerCard(seller: Shop.Seller, lang: String, catalog: Shop.Catalog, modifier: Modifier, onClick: () -> Unit) {
+    val interaction = remember { MutableInteractionSource() }
+    val shape = RoundedCornerShape(24.dp)
+    val accent = accentOf(seller)
+    val count = catalog.products.count { it.seller == seller.id }
+    Column(
+        modifier
+            .pressScale(interaction)
+            .glass(shape)
+            .border(1.5.dp, Brush.linearGradient(listOf(Gold, Gold.copy(alpha = 0.25f), Gold)), shape)
+            .clickable(interactionSource = interaction, indication = null, onClick = onClick),
+    ) {
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .height(96.dp)
+                .background(Brush.linearGradient(listOf(accent, accent.copy(alpha = 0.75f), EmeraldDeep))),
+        ) {
+            val coverUrl = Shop.imageUrl(seller.cover)
+            if (coverUrl != null) {
+                AsyncImage(model = coverUrl, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
+            } else {
+                StarPattern(Modifier.fillMaxSize(), color = Gold.copy(alpha = 0.18f), cell = 44f)
+            }
+            Box(Modifier.matchParentSize().sheen(alpha = 0.12f, periodMs = 5_000))
+            CategoryChip("⭐ " + stringResource(R.string.shop_partner), Modifier.align(Alignment.TopStart).padding(8.dp))
+            Box(Modifier.align(Alignment.BottomStart).padding(start = 10.dp).offset(y = 20.dp)) { SellerLogo(seller, 42.dp) }
+        }
+        Column(Modifier.padding(start = 12.dp, end = 12.dp, top = 26.dp, bottom = 12.dp)) {
+            Text(seller.name, style = MaterialTheme.typography.titleSmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(
+                listOf(seller.city.get(lang), if (count > 0) pluralStringResource(R.plurals.shop_products_count, count, count) else "")
+                    .filter { it.isNotBlank() }.joinToString(" · "),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
         }
     }
 }
