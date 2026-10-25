@@ -352,6 +352,7 @@
     <string name="perm_xiaomi_title">Xiaomi: qalqib chiquvchi oynalar va avtoishga tushirish</string>
     <string name="perm_xiaomi_text">«Fonda ishlayotganda qalqib chiquvchi oynalarni koʻrsatish» va «Avtoishga tushirish»ni yoqing — aks holda telefon bloklash ekranini koʻrsatishga ruxsat bermaydi.</string>
     <string name="focus_test_title">Bloklashni tekshirish</string>
+    <string name="shop_ad">Reklama</string>
     <string name="widget_tap_to_mark">Belgilash uchun namozni bosing ✓</string>
     <string name="widget_next_in">%1$s — %2$s dan keyin</string>
     <string name="widget_tasbih_name">Tasbeh</string>

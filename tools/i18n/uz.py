@@ -371,6 +371,7 @@ STRINGS = {
     "perm_xiaomi_title": "Xiaomi: qalqib chiquvchi oynalar va avtoishga tushirish",
     "perm_xiaomi_text": "«Fonda ishlayotganda qalqib chiquvchi oynalarni koʻrsatish» va «Avtoishga tushirish»ni yoqing — aks holda telefon bloklash ekranini koʻrsatishga ruxsat bermaydi.",
     "focus_test_title": "Bloklashni tekshirish",
+    "shop_ad": "Reklama",
     "widget_tap_to_mark": "Belgilash uchun namozni bosing ✓",
     "widget_next_in": "%1$s — %2$s dan keyin",
     "widget_tasbih_name": "Tasbeh",

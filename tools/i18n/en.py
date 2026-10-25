@@ -387,6 +387,7 @@ STRINGS = {
     "perm_xiaomi_title": "Xiaomi: pop-ups and autostart",
     "perm_xiaomi_text": "Enable «Display pop-up windows while running in the background» and «Autostart» — otherwise the phone won't let the block screen appear.",
     "focus_test_title": "Check that blocking works",
+    "shop_ad": "Ad",
     "widget_tap_to_mark": "Tap a prayer to mark it ✓",
     "widget_next_in": "%1$s in %2$s",
     "widget_tasbih_name": "Tasbih",

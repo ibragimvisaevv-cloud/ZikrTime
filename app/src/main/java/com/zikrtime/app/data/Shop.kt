@@ -52,7 +52,11 @@ object Shop {
         val cover: String,
         val categories: List<String>,
         val accent: Long?,
-    )
+        /** До какого момента (секунды) компания продвигается; 0 — не продвигается. */
+        val promoUntil: Long = 0,
+    ) {
+        val promoted: Boolean get() = promoUntil * 1000 > System.currentTimeMillis()
+    }
 
     class Product(
         val id: String,
@@ -123,6 +127,29 @@ object Shop {
         catalog = parsed
     }
 
+    /**
+     * Порядок в магазине: сначала продвигаемые (за плату), потом остальные — в случайном порядке.
+     * Порядок свой у каждого телефона и меняется раз в день, чтобы все продавцы были на виду по очереди.
+     */
+    private fun daySeed(): Long {
+        val device = Store.getRaw("shop_seed")?.toLongOrNull()
+            ?: kotlin.random.Random.nextLong(1, Long.MAX_VALUE / 2).also { Store.putRaw("shop_seed", it.toString()) }
+        return device + java.time.LocalDate.now().toEpochDay()
+    }
+
+    fun rankSellers(sellers: List<Seller>): List<Seller> {
+        val seed = daySeed()
+        val (promo, rest) = sellers.partition { it.promoted }
+        return promo.shuffled(kotlin.random.Random(seed)) + rest.shuffled(kotlin.random.Random(seed + 1))
+    }
+
+    fun rankProducts(products: List<Product>, catalog: Catalog): List<Product> {
+        val order = rankSellers(catalog.sellers).withIndex().associate { (i, s) -> s.id to i }
+        val seed = daySeed()
+        val (promo, rest) = products.partition { catalog.seller(it.seller)?.promoted == true }
+        return promo.sortedBy { order[it.seller] ?: Int.MAX_VALUE } + rest.shuffled(kotlin.random.Random(seed + 2))
+    }
+
     /** Адрес картинки: полный URL или путь внутри репозитория каталога. */
     fun imageUrl(path: String): String? = when {
         path.isBlank() -> null
@@ -164,6 +191,7 @@ object Shop {
                 cover = it.optString("cover"),
                 categories = strings(it.optJSONArray("categories")),
                 accent = it.optString("accent").removePrefix("#").takeIf { s -> s.length == 6 }?.toLongOrNull(16),
+                promoUntil = it.optLong("promo_until"),
             )
         }
         val products = objects("products").map {

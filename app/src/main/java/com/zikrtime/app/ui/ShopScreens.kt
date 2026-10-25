@@ -90,12 +90,12 @@ fun ShopScreen() {
     var category by rememberSaveable { mutableStateOf<String?>(null) }
     var query by rememberSaveable { mutableStateOf("") }
 
-    val products = catalog.products.filter { p ->
+    val products = Shop.rankProducts(catalog.products, catalog).filter { p ->
         (category == null || p.category == category) &&
             (query.isBlank() || p.title.get(lang).contains(query.trim(), ignoreCase = true) ||
                 catalog.seller(p.seller)?.name?.contains(query.trim(), ignoreCase = true) == true)
     }
-    val sellers = catalog.sellers.filter { (category == null || category in it.categories) && !it.partner }
+    val sellers = Shop.rankSellers(catalog.sellers).filter { (category == null || category in it.categories) && !it.partner }
     val partners = catalog.sellers.filter { it.partner }
 
     TabColumn(title = stringResource(R.string.shop_title), subtitle = stringResource(R.string.shop_subtitle)) {
@@ -260,6 +260,8 @@ private fun SellerCard(seller: Shop.Seller, lang: String, catalog: Shop.Catalog,
             }
             if (seller.partner) {
                 CategoryChip(stringResource(R.string.shop_partner), Modifier.align(Alignment.TopStart).padding(10.dp))
+            } else if (seller.promoted) {
+                AdLabel(Modifier.align(Alignment.TopStart).padding(10.dp))
             }
         }
         Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -393,6 +395,7 @@ private fun ProductCard(product: Shop.Product, catalog: Shop.Catalog, lang: Stri
     ) {
         Box {
             ProductImage(product, catalog, Modifier.fillMaxWidth().aspectRatio(1f))
+            if (catalog.seller(product.seller)?.promoted == true) AdLabel(Modifier.align(Alignment.BottomStart).padding(8.dp))
             if (product.oldPrice != null && product.price != null && product.oldPrice > product.price) {
                 val percent = 100 - product.price * 100 / product.oldPrice
                 Box(
@@ -628,4 +631,14 @@ private fun openMap(context: Context, seller: Shop.Seller) {
         "geo:0,0?q=" + Uri.encode(seller.address)
     }
     open(context, uri)
+}
+
+/** Пометка «Реклама» у продвигаемых за плату компаний и их товаров. */
+@Composable
+private fun AdLabel(modifier: Modifier = Modifier) {
+    Box(
+        modifier.clip(RoundedCornerShape(50)).background(Color.Black.copy(alpha = 0.55f)).padding(horizontal = 8.dp, vertical = 3.dp),
+    ) {
+        Text(stringResource(R.string.shop_ad), style = MaterialTheme.typography.labelSmall, color = Color.White)
+    }
 }

@@ -352,6 +352,7 @@
     <string name="perm_xiaomi_title">Xiaomi: всплывающие окна и автозапуск</string>
     <string name="perm_xiaomi_text">Включите «Отображать всплывающие окна, когда запущено в фоне» и «Автозапуск» — иначе телефон не даст показать экран блокировки.</string>
     <string name="focus_test_title">Проверить блокировку</string>
+    <string name="shop_ad">Реклама</string>
     <string name="widget_tap_to_mark">Нажмите на намаз, чтобы отметить ✓</string>
     <string name="widget_next_in">%1$s через %2$s</string>
     <string name="widget_tasbih_name">Тасбих</string>

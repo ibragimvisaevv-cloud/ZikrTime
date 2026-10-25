@@ -352,6 +352,7 @@
     <string name="perm_xiaomi_title">Xiaomi: açılan pəncərələr və avtostart</string>
     <string name="perm_xiaomi_text">«Arxa planda işləyərkən açılan pəncərələri göstər» və «Avtostart»ı aktiv edin — əks halda telefon bloklama ekranını göstərməyə icazə verməz.</string>
     <string name="focus_test_title">Bloklamanı yoxla</string>
+    <string name="shop_ad">Reklam</string>
     <string name="widget_tap_to_mark">Qeyd etmək üçün namaza toxunun ✓</string>
     <string name="widget_next_in">%1$s — %2$s sonra</string>
     <string name="widget_tasbih_name">Təsbeh</string>
