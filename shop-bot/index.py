@@ -37,6 +37,8 @@ OWNER_USERNAME = os.environ.get("OWNER_USERNAME", "").lstrip("@").lower()
 DATA_BUCKET = os.environ.get("DATA_BUCKET", BUCKET + "-data")
 STORAGE_HOST = "https://storage.yandexcloud.net"
 REVIEW_PREFIX = "reviews/pending/"
+# Мини-приложение (кабинет продавца) — статичная страница в публичном бакете
+MINIAPP_URL = f"{STORAGE_HOST}/{BUCKET}/miniapp/index.html"
 REVIEW_MAX_BYTES = 4096
 PUBLIC_BASE = f"{STORAGE_HOST}/{BUCKET}/"
 DB_KEY = "data/db.json"
@@ -82,6 +84,10 @@ STATUS_TEXT = {
 # --------------------------------------------------------------------------------------------
 
 
+class Conflict(Exception):
+    """База изменилась, пока мы её обрабатывали (условная запись не прошла) — нужно повторить."""
+
+
 class ObjectStorage:
     """Yandex Object Storage по HTTP с IAM-токеном сервисного аккаунта функции."""
 
@@ -97,20 +103,33 @@ class ObjectStorage:
         return urllib.request.urlopen(req, timeout=20)
 
     def get(self, key):
+        return self.get_tagged(key)[0]
+
+    def get_tagged(self, key):
+        """Содержимое и ETag (по нему потом делаем условную запись)."""
         try:
             with self._req("GET", key) as r:
-                return r.read()
+                return r.read(), r.headers.get("ETag")
         except urllib.error.HTTPError as e:
             if e.code == 404:
-                return None
+                return None, None
             raise
 
-    def put(self, key, data, content_type, cache="no-cache", encoding=None):
+    def put(self, key, data, content_type, cache="no-cache", encoding=None, if_match=None, if_none_match=False):
         headers = {"Content-Type": content_type, "Cache-Control": cache}
         if encoding:
             headers["Content-Encoding"] = encoding
-        with self._req("PUT", key, data, headers):
-            pass
+        if if_match:
+            headers["If-Match"] = if_match
+        if if_none_match:
+            headers["If-None-Match"] = "*"
+        try:
+            with self._req("PUT", key, data, headers):
+                pass
+        except urllib.error.HTTPError as e:
+            if e.code in (409, 412):
+                raise Conflict(key)
+            raise
 
     def delete(self, key):
         try:
@@ -230,6 +249,52 @@ class Telegram:
     def download(self, file_path):
         with urllib.request.urlopen(f"https://api.telegram.org/file/bot{self.token}/{file_path}", timeout=30) as r:
             return r.read()
+
+
+class BufferedTelegram:
+    """Сообщения копятся и уходят только после успешного сохранения базы (при повторе не будет дублей).
+    Запросы, которым нужен ответ (getMe, getFile, скачивание фото), выполняются сразу."""
+    IMMEDIATE = {"getMe", "getFile", "answerCallbackQuery"}
+
+    def __init__(self, tg):
+        self.tg = tg
+        self.calls = []
+
+    def call(self, method, **params):
+        if method in self.IMMEDIATE:
+            return self.tg.call(method, **params)
+        self.calls.append((method, params))
+        return {"queued": True}
+
+    def download(self, file_path):
+        return self.tg.download(file_path)
+
+    def flush(self):
+        for method, params in self.calls:
+            if self.tg.call(method, **params) is None and method == "sendPhoto":
+                # не удалось отправить фото — отправим текстом
+                self.tg.call("sendMessage", chat_id=params.get("chat_id"), text=params.get("caption", ""),
+                             parse_mode="HTML", reply_markup=params.get("reply_markup"), disable_web_page_preview=True)
+        self.calls = []
+
+
+class OutboxTelegram:
+    """Для функции в Yandex Cloud: оттуда Telegram недоступен, поэтому сообщения кладём в очередь в базе,
+    а отправляет их бот на Vercel (при следующем обновлении или раз в 15 минут)."""
+
+    def __init__(self):
+        self.bot = None
+
+    def call(self, method, **params):
+        if method in ("getMe", "getFile", "answerCallbackQuery"):
+            return None
+        if self.bot is not None:
+            self.bot.db.setdefault("outbox", []).append([method, {k: v for k, v in params.items() if v is not None}])
+            self.bot.dirty = True
+        return {"queued": True}
+
+    def download(self, file_path):
+        raise RuntimeError("Telegram недоступен")
 
 
 # --------------------------------------------------------------------------------------------
@@ -554,11 +619,8 @@ class ReviewsMixin:
         n = 0
         for key in self.data.list(REVIEW_PREFIX, limit):
             raw = self.data.get(key)
-            try:
-                self.data.delete(key)
-            except Exception as e:  # не удалось удалить — пропустим, чтобы не прислать дважды
-                print("review delete", key, repr(e))
-                continue
+            # Файл удалим после сохранения базы (если сохранение не пройдёт — отзыв не потеряется)
+            self.delete_after_save.append(key)
             r = self.parse_review(raw) if raw else None
             self.dirty = True
             if not r:
@@ -621,8 +683,8 @@ class ReviewsMixin:
             }
         return {"version": 1, "updated": int(time.time()), "upload": self.upload_form(), "reviews": out}
 
-    def write_reviews(self):
-        data = json.dumps(self.build_reviews(), ensure_ascii=False, separators=(",", ":")).encode()
+    def write_reviews(self, built=None):
+        data = json.dumps(built or self.build_reviews(), ensure_ascii=False, separators=(",", ":")).encode()
         self.st.put("reviews.json", data, "application/json; charset=utf-8", cache="public, max-age=60")
 
     def cron(self, force=False):
@@ -633,14 +695,145 @@ class ReviewsMixin:
         return {"new_reviews": n, "reviews_rebuilt": self.reviews_dirty}
 
 
-class Bot(PlacesMixin, ReviewsMixin):
+class PromoMixin:
+    """Продвижение компании: продавец выбирает срок и переводит деньги по ссылке владельца,
+    владелец подтверждает перевод кнопкой — компания показывается в приложении выше остальных."""
+    DEFAULT_PRICES = {"7": 100, "30": 300}
+
+    def promo_prices(self):
+        p = self.db.get("promo_prices") or self.DEFAULT_PRICES
+        return {str(k): int(v) for k, v in p.items()}
+
+    def promo_pay_url(self):
+        return self.db.get("promo_pay_url") or self.db.get("donate_url", "")
+
+    def promo_active(self, s):
+        return (s.get("promo_until") or 0) > time.time()
+
+    def promo_status_text(self, s):
+        if self.promo_active(s):
+            return "⬆️ Продвигается до " + time.strftime("%d.%m.%Y", time.localtime(s["promo_until"]))
+        return ""
+
+    def promo_create(self, uid, sid, days):
+        """Новая заявка. Возвращает её (или None, если тариф неизвестен)."""
+        price = self.promo_prices().get(str(days))
+        s = self.db["sellers"].get(sid)
+        if price is None or not self.can_edit(uid, s):
+            return None
+        rid = new_id("pr")
+        req = {"id": rid, "sid": sid, "uid": uid, "days": int(days), "price": price, "status": "new", "created": time.time()}
+        self.db.setdefault("promo_requests", {})[rid] = req
+        self.dirty = True
+        return req
+
+    def promo_claim(self, uid, rid):
+        """Продавец нажал «Я оплатил» — заявка уходит владельцу на подтверждение."""
+        req = self.db.get("promo_requests", {}).get(rid)
+        if not req or req["uid"] != uid or req["status"] not in ("new", "claimed"):
+            return None
+        first = req["status"] == "new"
+        req["status"] = "claimed"
+        req["claimed"] = time.time()
+        self.dirty = True
+        if first:
+            self.notify_admins(self.promo_card(req), self.promo_kb(req))
+        return req
+
+    def promo_card(self, req):
+        s = self.db["sellers"].get(req["sid"]) or {}
+        who = self.user(req["uid"]).get("username")
+        return (f"💰 <b>Заявка на продвижение</b>\n\n🏪 {esc(s.get('name', '—'))}\n"
+                f"Срок: {req['days']} дн. · Сумма: {req['price']} ₽\n"
+                + (f"От: @{esc(who)}\n" if who else "")
+                + "\nПроверьте, что перевод пришёл, и подтвердите.")
+
+    def promo_kb(self, req):
+        return kb([btn("✅ Оплата получена", f"pr:ok:{req['id']}"), btn("❌ Нет оплаты", f"pr:no:{req['id']}")])
+
+    def promo_decide(self, uid, action, rid):
+        req = self.db.get("promo_requests", {}).get(rid)
+        if not req or req["status"] in ("done", "rejected"):
+            self.send(uid, "Эта заявка уже обработана.")
+            return None
+        s = self.db["sellers"].get(req["sid"])
+        self.dirty = True
+        if action == "ok" and s:
+            start = max(time.time(), s.get("promo_until") or 0)
+            s["promo_until"] = start + req["days"] * 86400
+            req["status"] = "done"
+            req["decided"] = time.time()
+            self.catalog_dirty = True
+            until = time.strftime("%d.%m.%Y", time.localtime(s["promo_until"]))
+            self.send(req["uid"], f"🎉 Оплата получена! «{esc(s['name'])}» продвигается до {until} — в приложении она показывается выше остальных.")
+            self.send(uid, f"✅ Продвижение «{esc(s['name'])}» включено до {until}.")
+        else:
+            req["status"] = "rejected"
+            req["decided"] = time.time()
+            contact = self.db.get("contact_telegram")
+            self.send(req["uid"], "Оплата за продвижение не найдена."
+                      + (f" Если вы переводили — напишите @{esc(contact)}." if contact else ""))
+            self.send(uid, "❌ Заявка отклонена.")
+        return req
+
+    def promo_menu(self, uid, sid):
+        s = self.db["sellers"].get(sid)
+        if not self.can_edit(uid, s):
+            return self.menu(uid)
+        lines = [f"⬆️ <b>Продвижение «{esc(s['name'])}»</b>",
+                 "Продвинутые компании показываются в приложении выше остальных (с пометкой «Реклама»). "
+                 "Остальные — в случайном порядке, он меняется каждый день."]
+        st = self.promo_status_text(s)
+        if st:
+            lines.append("\n" + st + " — можно продлить.")
+        rows = [[btn(f"{d} дн. — {p} ₽", f"pt:{sid}:{d}")] for d, p in sorted(self.promo_prices().items(), key=lambda x: int(x[0]))]
+        rows.append([btn("⬅️ Назад", f"s:{sid}")])
+        self.send(uid, "\n".join(lines), {"inline_keyboard": rows})
+
+    def promo_pay_text(self, req):
+        url = self.promo_pay_url()
+        text = (f"Переведите <b>{req['price']} ₽</b>" + (f" по ссылке:\n{esc(url)}" if url else " владельцу магазина")
+                + f"\n\nВ комментарии к переводу укажите: <code>{req['id']}</code>\n"
+                  "После перевода нажмите «Я оплатил» — мы проверим и включим продвижение.")
+        return text
+
+    def promo_pending_list(self, uid):
+        reqs = [r for r in self.db.get("promo_requests", {}).values() if r["status"] == "claimed"]
+        if not reqs:
+            return self.send(uid, "Заявок на продвижение нет.", kb([btn("⬅️ Меню", "menu")]))
+        for r in sorted(reqs, key=lambda x: x["created"])[:10]:
+            self.send(uid, self.promo_card(r), self.promo_kb(r))
+
+    def set_prices(self, uid, arg):
+        nums = [int(x) for x in re.findall(r"\d+", arg)]
+        if len(nums) != 2 or min(nums) < 1:
+            p = self.promo_prices()
+            return self.send(uid, f"Сейчас: 7 дней — {p.get('7')} ₽, 30 дней — {p.get('30')} ₽.\n"
+                                  "Изменить: <code>/prices 100 300</code> (цена за 7 и за 30 дней).")
+        self.db["promo_prices"] = {"7": nums[0], "30": nums[1]}
+        self.dirty = True
+        self.send(uid, f"✅ Тарифы: 7 дней — {nums[0]} ₽, 30 дней — {nums[1]} ₽.")
+
+    def set_pay_url(self, uid, url):
+        url = url.strip()
+        if url and not re.match(r"^https://[\w.-]+\.[a-z]{2,}(/\S*)?$", url):
+            return self.send(uid, "Нужна ссылка вида https://… (CloudTips, СБП-ссылка банка и т.п.).")
+        self.db["promo_pay_url"] = url
+        self.dirty = True
+        self.send(uid, "✅ Ссылка для оплаты продвижения: " + (url or "как у кнопки «Поддержать проект»"))
+
+
+class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
     def __init__(self, storage, tg, token=None, data=None):
         self.st = storage
         # Закрытое хранилище для базы; в тестах — то же, что и публичное
         self.data = data if data is not None else storage
         self.tg = tg
         self.token = token or BOT_TOKEN
-        raw = self.data.get(DB_KEY)
+        if hasattr(self.data, "get_tagged"):
+            raw, self.db_etag = self.data.get_tagged(DB_KEY)
+        else:
+            raw, self.db_etag = self.data.get(DB_KEY), None
         if raw is None and self.data is not storage:
             # Перенос базы из публичного бакета в закрытый (один раз), публичную копию удаляем
             raw = storage.get(DB_KEY)
@@ -663,17 +856,45 @@ class Bot(PlacesMixin, ReviewsMixin):
         self.catalog_dirty = False
         self.places_dirty = False
         self.reviews_dirty = False
+        self.delete_after_save = []
+        # Сообщения, отложенные функцией в Яндексе: отправим после сохранения
+        self.outbox_out = []
+        if isinstance(tg, BufferedTelegram) and self.db.get("outbox"):
+            self.outbox_out = self.db.pop("outbox")
+            self.dirty = True
+        if isinstance(tg, OutboxTelegram):
+            tg.bot = self
 
     # ---------- база ----------
     def save(self):
+        """Сначала база (условная запись: если её успели изменить — Conflict, всё повторяем), потом файлы для приложения."""
+        if self.reviews_dirty:
+            self.reviews_data = self.build_reviews()  # здесь же обновляется upload_at в базе
+        if self.dirty or self.catalog_dirty or self.places_dirty or self.reviews_dirty:
+            body = json.dumps(self.db, ensure_ascii=False).encode()
+            if self.db_etag:
+                self.data.put(DB_KEY, body, "application/json", if_match=self.db_etag)
+            elif self.data is not self.st:
+                self.data.put(DB_KEY, body, "application/json", if_none_match=True)
+            else:
+                self.data.put(DB_KEY, body, "application/json")
+        for key in self.delete_after_save:
+            try:
+                self.data.delete(key)
+            except Exception as e:
+                print("delete", key, repr(e))
+        self.delete_after_save = []
         if self.catalog_dirty:
             self.write_catalog()
         if self.places_dirty:
             self.write_places()
         if self.reviews_dirty:
-            self.write_reviews()
-        if self.dirty or self.catalog_dirty or self.places_dirty or self.reviews_dirty:
-            self.data.put(DB_KEY, json.dumps(self.db, ensure_ascii=False).encode(), "application/json")
+            self.write_reviews(self.reviews_data)
+        # Отправка сообщений — только когда всё сохранено
+        if isinstance(self.tg, BufferedTelegram):
+            for method, params in self.outbox_out:
+                self.tg.calls.append((method, params))
+            self.tg.flush()
 
     def changed(self, seller=None):
         self.dirty = True
@@ -717,6 +938,8 @@ class Bot(PlacesMixin, ReviewsMixin):
             }
             if s.get("lat") is not None and s.get("lon") is not None:
                 item["lat"], item["lon"] = s["lat"], s["lon"]
+            if self.promo_active(s):
+                item["promo_until"] = int(s["promo_until"])
             sellers.append(item)
             for p in sorted(s["products"].values(), key=lambda x: x["created"]):
                 prod = {
@@ -807,6 +1030,10 @@ class Bot(PlacesMixin, ReviewsMixin):
             return self.help(uid)
         if text == "/reviews" and self.is_admin(uid):
             return self.reviews_pending_list(uid)
+        if text.startswith("/prices") and uid == self.db["owner"]:
+            return self.set_prices(uid, text[7:])
+        if text.startswith("/payurl") and uid == self.db["owner"]:
+            return self.set_pay_url(uid, text[7:])
 
         st = u.get("state")
         if st:
@@ -834,7 +1061,9 @@ class Bot(PlacesMixin, ReviewsMixin):
             pp = sum(1 for p in self.db["places"].values() if p["status"] == "pending")
             rows.append([btn(f"📍 Места на проверке ({pp})", "pl_pending"), btn("🗺 Все места", "pl_all")])
             rv = len(self.db.get("reviews_pending", {}))
-            rows.append([btn(f"⭐ Отзывы на проверке ({rv})", "rv_pending")])
+            pr = sum(1 for r in self.db.get("promo_requests", {}).values() if r["status"] == "claimed")
+            rows.append([btn(f"⭐ Отзывы ({rv})", "rv_pending"), btn(f"💰 Продвижение ({pr})", "pr_pending")])
+        rows.insert(0, [{"text": "📱 Открыть кабинет", "web_app": {"url": MINIAPP_URL}}])
         rows.append([btn("❓ Как это работает", "help")])
         if mine:
             text = "Ваши компании в магазине <b>Зикр-тайм</b>. Выберите, что изменить:"
@@ -1032,6 +1261,8 @@ class Bot(PlacesMixin, ReviewsMixin):
     def seller_text(self, s):
         cat = CAT_BY_ID.get(s["category"], CAT_BY_ID["other"])["names"]["ru"]
         lines = [f"<b>{esc(s['name'])}</b> · {esc(cat)}", f"Статус: {STATUS_TEXT[s['status']]}" + (" · ⭐ партнёр" if s.get("partner") else "")]
+        if self.promo_active(s):
+            lines.append(self.promo_status_text(s))
         if s.get("city"):
             lines.append(f"🏙 {esc(s['city'])}")
         if s.get("address") or s.get("lat") is not None:
@@ -1063,6 +1294,7 @@ class Bot(PlacesMixin, ReviewsMixin):
             [btn("🟢 WhatsApp: " + ("да" if s.get("whatsapp") else "нет"), f"wa2:{sid}")] if s.get("phone") else None,
             [btn("📷 Instagram", f"e:{sid}:instagram"), btn("🗂 Категория", f"e:{sid}:category")],
             [btn("🖼 Логотип", f"e:{sid}:logo"), btn("🌄 Обложка", f"e:{sid}:cover")],
+            [btn("⬆️ Продвинуть" + (" (активно)" if self.promo_active(s) else ""), f"promo:{sid}")] if s["status"] == "approved" else None,
             [btn("🔗 Пригласить совладельца", f"inv:{sid}")],
             [btn("🙈 Скрыть" if s["status"] == "approved" else "👁 Показать", f"vis:{sid}")]
             if s["status"] in ("approved", "hidden") else None,
@@ -1355,6 +1587,21 @@ class Bot(PlacesMixin, ReviewsMixin):
             return self.menu(uid)
         if act == "help":
             return self.help(uid)
+        if act == "promo" and len(parts) == 2:
+            return self.promo_menu(uid, parts[1])
+        if act == "pt" and len(parts) == 3:
+            req = self.promo_create(uid, parts[1], parts[2])
+            if not req:
+                return self.menu(uid)
+            return self.send(uid, self.promo_pay_text(req), kb([btn("✅ Я оплатил", f"pc:{req['id']}")], [btn("⬅️ Назад", f"s:{parts[1]}")]))
+        if act == "pc" and len(parts) == 2:
+            req = self.promo_claim(uid, parts[1])
+            return self.send(uid, "🙏 Спасибо! Проверим перевод и включим продвижение — пришлём сообщение." if req else "Заявка не найдена.")
+        if act == "pr" and len(parts) == 3 and self.is_admin(uid):
+            self.promo_decide(uid, parts[1], parts[2])
+            return
+        if act == "pr_pending" and self.is_admin(uid):
+            return self.promo_pending_list(uid)
         if act == "rv" and len(parts) == 3 and self.is_admin(uid):
             return self.moderate_review(uid, parts[1], parts[2])
         if act == "rv_pending" and self.is_admin(uid):
@@ -1579,16 +1826,21 @@ def handler(event, context):
     if update.get("probe"):
         return {"statusCode": 200, "body": json.dumps(probe(token), ensure_ascii=False)}
     tg = Telegram(BOT_TOKEN)
-    bot = Bot(make_storage(token), tg, data=make_storage(token, DATA_BUCKET))
-    try:
-        bot.handle(update)
-    except Exception as e:  # не даём Telegram повторять одно и то же обновление бесконечно
-        print("error", repr(e))
-        chat = ((update.get("message") or {}).get("from") or (update.get("callback_query") or {}).get("from") or {}).get("id")
-        if chat:
-            tg.call("sendMessage", chat_id=chat, text="Что-то пошло не так. Попробуйте ещё раз или /menu.")
-    finally:
-        bot.save()
+    for attempt in range(4):
+        buf = BufferedTelegram(tg)
+        bot = Bot(make_storage(token), buf, data=make_storage(token, DATA_BUCKET))
+        try:
+            bot.handle(update)
+        except Exception as e:  # не даём Telegram повторять одно и то же обновление бесконечно
+            print("error", repr(e))
+            chat = ((update.get("message") or {}).get("from") or (update.get("callback_query") or {}).get("from") or {}).get("id")
+            if chat:
+                buf.call("sendMessage", chat_id=chat, text="Что-то пошло не так. Попробуйте ещё раз или /menu.")
+        try:
+            bot.save()
+            break
+        except Conflict:
+            time.sleep(0.3 * (attempt + 1))  # базу только что изменило мини-приложение — обработаем заново
     return {"statusCode": 200, "body": "ok"}
 
 
@@ -1597,9 +1849,15 @@ def cron_secret(token=None):
 
 
 def run_cron(force=False):
-    """Периодическая работа: отзывы на проверку владельцу, свежая форма загрузки отзывов."""
-    bot = Bot(make_storage(), Telegram(BOT_TOKEN), data=make_storage(bucket=DATA_BUCKET))
-    try:
-        return bot.cron(force)
-    finally:
-        bot.save()
+    """Периодическая работа: отзывы на проверку владельцу, свежая форма загрузки отзывов, отложенные сообщения."""
+    tg = Telegram(BOT_TOKEN)
+    for attempt in range(4):
+        bot = Bot(make_storage(), BufferedTelegram(tg), data=make_storage(bucket=DATA_BUCKET))
+        result = bot.cron(force)
+        result["sent"] = len(bot.outbox_out)
+        try:
+            bot.save()
+            return result
+        except Conflict:
+            time.sleep(0.3 * (attempt + 1))
+    return {"error": "conflict"}

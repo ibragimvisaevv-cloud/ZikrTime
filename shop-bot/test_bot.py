@@ -17,7 +17,7 @@ class FakeStorage:
     def get(self, key):
         return self.files.get(key)
 
-    def put(self, key, data, content_type, cache="no-cache", encoding=None):
+    def put(self, key, data, content_type, cache="no-cache", encoding=None, if_match=None, if_none_match=False):
         assert isinstance(data, bytes)
         if encoding == "gzip":
             import gzip
@@ -52,7 +52,7 @@ class FakeTg:
     def last_buttons(self, chat):
         for m, p in reversed(self.sent):
             if m in ("sendMessage", "sendPhoto") and p.get("chat_id") == chat and p.get("reply_markup"):
-                return [b["callback_data"] for row in p["reply_markup"]["inline_keyboard"] for b in row]
+                return [b.get("callback_data") for row in p["reply_markup"]["inline_keyboard"] for b in row if b.get("callback_data")]
         return []
 
 
@@ -333,6 +333,73 @@ pub, priv = FakeStorage(), FakeStorage()
 pub.files["data/db.json"] = json.dumps({"owner": 7}).encode()
 b2 = index.Bot(pub, FakeTg(), TOKEN, data=priv)
 check(b2.db["owner"] == 7 and "data/db.json" in priv.files and "data/db.json" not in pub.files, "база переносится в закрытый бакет")
+
+# Продвижение: заявка → «Я оплатил» → владелец подтверждает → promo_until в каталоге
+msg(OWNER, "/prices 150 400")
+check(db()["promo_prices"] == {"7": 150, "30": 400}, "продвижение: владелец меняет тарифы")
+msg(OWNER, "/payurl https://pay.cloudtips.ru/p/abc")
+press(SELLER, f"promo:{sid}")
+check(f"pt:{sid}:7" in tg.last_buttons(SELLER), "продвижение: тарифы в меню")
+press(SELLER, f"pt:{sid}:7")
+_req = next(iter(db()["promo_requests"].values()))
+check(_req["price"] == 150 and "pay.cloudtips.ru" in tg.texts(SELLER)[-1], "продвижение: заявка и ссылка на оплату")
+press(FRIEND, f"pc:{_req['id']}")
+check(db()["promo_requests"][_req["id"]]["status"] == "new", "продвижение: чужой не подтверждает оплату")
+press(SELLER, f"pc:{_req['id']}")
+check(any("Заявка на продвижение" in (t or "") for t in tg.texts(OWNER)), "продвижение: владелец получил заявку")
+press(SELLER, f"pr:ok:{_req['id']}")
+check(db()["promo_requests"][_req["id"]]["status"] == "claimed", "продвижение: продавец сам не одобряет")
+press(OWNER, f"pr:ok:{_req['id']}")
+_s = next(x for x in catalog()["sellers"] if x["id"] == sid)
+check(_s.get("promo_until", 0) > __import__("time").time() + 6 * 86400, "продвижение: включено на 7 дней")
+press(OWNER, f"pr:ok:{_req['id']}")
+check("Эта заявка уже обработана." in tg.texts(OWNER), "продвижение: повторное нажатие")
+
+# Условная запись: если базу изменили параллельно — Conflict
+class TaggedStorage(FakeStorage):
+    def __init__(self):
+        super().__init__()
+        self.tags = {}
+
+    def get_tagged(self, key):
+        return self.files.get(key), self.tags.get(key)
+
+    def put(self, key, data, content_type, cache="no-cache", encoding=None, if_match=None, if_none_match=False):
+        if if_match and self.tags.get(key) != if_match:
+            raise index.Conflict(key)
+        if if_none_match and key in self.files:
+            raise index.Conflict(key)
+        super().put(key, data, content_type, cache, encoding)
+        self.tags[key] = str(len(self.tags) + 1) + key
+
+_pub, _priv = FakeStorage(), TaggedStorage()
+_priv.put("data/db.json", json.dumps({"owner": 1}).encode(), "application/json")
+_b1 = index.Bot(_pub, FakeTg(), TOKEN, data=_priv)
+_b2 = index.Bot(_pub, FakeTg(), TOKEN, data=_priv)
+_b1.db["x"] = 1; _b1.dirty = True; _b1.save()
+_b2.db["y"] = 2; _b2.dirty = True
+try:
+    _b2.save()
+    check(False, "условная запись: конфликт не обнаружен")
+except index.Conflict:
+    pass
+check(json.loads(_priv.files["data/db.json"]).get("x") == 1, "условная запись: первая правка сохранена")
+
+# Буфер Telegram: сообщения уходят только после сохранения; очередь из Яндекса отправляется ботом
+_ftg = FakeTg()
+_buf = index.BufferedTelegram(_ftg)
+_pub2, _priv2 = FakeStorage(), TaggedStorage()
+_priv2.put("data/db.json", json.dumps({"owner": 1, "admins": [1], "outbox": [["sendMessage", {"chat_id": 1, "text": "из очереди"}]]}).encode(), "application/json")
+_b3 = index.Bot(_pub2, _buf, TOKEN, data=_priv2)
+_b3.send(1, "привет")
+check(not _ftg.texts(1), "буфер: до сохранения ничего не отправлено")
+_b3.save()
+check(_ftg.texts(1) == ["привет", "из очереди"] and "outbox" not in json.loads(_priv2.files["data/db.json"]), "буфер: отправлено после сохранения, очередь пуста")
+_q = index.OutboxTelegram()
+_b4 = index.Bot(_pub2, _q, TOKEN, data=_priv2)
+_b4.send(1, "в очередь")
+_b4.save()
+check(json.loads(_priv2.files["data/db.json"])["outbox"][0][1]["text"] == "в очередь", "очередь: сообщение из функции Яндекса сохранено")
 
 # Удаление
 press(SELLER, f"del2:{sid}")

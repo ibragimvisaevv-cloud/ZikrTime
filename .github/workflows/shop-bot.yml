@@ -33,6 +33,12 @@ jobs:
       - name: Проверка бота
         run: python3 shop-bot/test_bot.py
 
+      - name: Проверка API кабинета
+        run: python3 shop-bot/test_miniapi.py
+
+      - name: Проверка мини-приложения (синтаксис)
+        run: node --check shop-bot/miniapp/app.js
+
   deploy:
     needs: test
     runs-on: ubuntu-latest
@@ -131,6 +137,24 @@ jobs:
           echo "S3_SECRET=$SECRET" >> "$GITHUB_ENV"
           rm "$RUNNER_TEMP/ak.json"
 
+      - name: API кабинета продавца (функция Яндекса — открывается из России без VPN)
+        if: steps.keys.outputs.ready == 'true'
+        env:
+          BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
+        run: |
+          export IAM_TOKEN=$(yc iam create-token)
+          export SA_ID FOLDER BUCKET S3_KEY_ID S3_SECRET API_FUNCTION=shop-api DATA_BUCKET="$BUCKET-data"
+          URL=$(python3 shop-bot/deploy_api.py 2> diag/api.txt) || { cat diag/api.txt; exit 1; }
+          echo "API_URL=$URL" >> "$GITHUB_ENV"
+          echo "api: $URL" >> diag/api.txt
+
+      - name: Мини-приложение в хранилище
+        if: steps.keys.outputs.ready == 'true'
+        run: |
+          sleep 10  # новый ключ хранилища начинает работать не сразу
+          python3 shop-bot/upload_miniapp.py > diag/miniapp.txt 2>&1 || { cat diag/miniapp.txt; exit 1; }
+          cat diag/miniapp.txt
+
       - name: Мечети и молельные комнаты из OpenStreetMap
         if: steps.keys.outputs.ready == 'true' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
         env:
@@ -179,6 +203,9 @@ jobs:
             -d '{"description":"Кабинет продавца магазина в приложении «Зикр-тайм»: добавьте свою компанию, товары, цены и фото — после проверки их увидят пользователи приложения."}' > /dev/null
           curl -sf "$API/setMyShortDescription" -H 'Content-Type: application/json' \
             -d '{"short_description":"Добавьте свою компанию в магазин приложения «Зикр-тайм»"}' > /dev/null
+          # Кнопка «Кабинет» слева от поля ввода — открывает мини-приложение
+          curl -sf "$API/setChatMenuButton" -H 'Content-Type: application/json' \
+            -d "{\"menu_button\":{\"type\":\"web_app\",\"text\":\"Кабинет\",\"web_app\":{\"url\":\"https://storage.yandexcloud.net/$BUCKET/miniapp/index.html\"}}}" > diag/menubutton.txt || echo "menu button: fail" > diag/menubutton.txt
           BOT=$(curl -sf "$API/getMe" | jq -r .result.username)
           echo "bot=$BOT" > diag/bot.txt
           echo "webhook=$FUNCTION_URL" >> diag/bot.txt
@@ -206,6 +233,8 @@ jobs:
           curl -s -o /dev/null -w "public db.json http: %{http_code}\n" "https://storage.yandexcloud.net/$BUCKET/data/db.json" >> diag/cron.txt
           curl -s -o /dev/null -w "private db.json http: %{http_code}\n" "https://storage.yandexcloud.net/$BUCKET-data/data/db.json" >> diag/cron.txt
           curl -s -o /dev/null -w "reviews.json http: %{http_code}\n" "https://storage.yandexcloud.net/$BUCKET/reviews.json" >> diag/cron.txt
+          curl -s -o /dev/null -w "miniapp http: %{http_code}\n" "https://storage.yandexcloud.net/$BUCKET/miniapp/index.html" >> diag/cron.txt
+          curl -s -m 30 -X POST "$API_URL" -d '{"action":"me","initData":""}' -w "\napi (без подписи должно быть 401): %{http_code}\n" >> diag/cron.txt || echo "api timeout" >> diag/cron.txt
 
       - name: Состояние вебхука
         if: always() && steps.keys.outputs.ready == 'true'
