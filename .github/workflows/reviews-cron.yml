@@ -1,0 +1,22 @@
+name: Reviews cron
+
+# Раз в 15 минут: новые отзывы из приложения — владельцу в Telegram на проверку; форма отправки отзывов — свежая.
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Вызвать бота
+        env:
+          SHOP_BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
+        run: |
+          [ -n "$SHOP_BOT_TOKEN" ] || exit 0
+          HOOK=$(curl -s "https://api.telegram.org/bot$SHOP_BOT_TOKEN/getWebhookInfo" | jq -r .result.url)
+          [ -n "$HOOK" ] && [ "$HOOK" != "null" ] || { echo "вебхук не настроен"; exit 0; }
+          K=$(python3 -c "import hashlib,os;print(hashlib.sha256((os.environ['SHOP_BOT_TOKEN']+':cron').encode()).hexdigest()[:32])")
+          curl -s -m 70 "${HOOK%/api/webhook}/api/cron?k=$K"

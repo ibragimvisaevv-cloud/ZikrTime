@@ -100,6 +100,10 @@ jobs:
             yc storage bucket create --name "$BUCKET" --default-storage-class standard --public-read > diag/bucket.txt 2>&1 || { cat diag/bucket.txt; exit 1; }
           fi
           yc storage bucket update --name "$BUCKET" --public-read > /dev/null 2>> diag/bucket.txt || true
+          # Закрытый бакет для базы бота и отзывов на проверке (без публичного чтения)
+          if ! yc storage bucket get --name "$BUCKET-data" > /dev/null 2>&1; then
+            yc storage bucket create --name "$BUCKET-data" --default-storage-class standard >> diag/bucket.txt 2>&1 || { cat diag/bucket.txt; exit 1; }
+          fi
 
       - name: Сервисный аккаунт функции
         if: steps.keys.outputs.ready == 'true'
@@ -144,7 +148,7 @@ jobs:
         run: |
           cd shop-bot
           URL=$(npx --yes vercel@latest deploy --prod --yes --token "$VERCEL_TOKEN" \
-            -e BOT_TOKEN="$BOT_TOKEN" -e BUCKET="$BUCKET" -e S3_KEY_ID="$S3_KEY_ID" -e S3_SECRET="$S3_SECRET" \
+            -e BOT_TOKEN="$BOT_TOKEN" -e BUCKET="$BUCKET" -e DATA_BUCKET="$BUCKET-data" -e S3_KEY_ID="$S3_KEY_ID" -e S3_SECRET="$S3_SECRET" \
             -e OWNER_USERNAME="${OWNER_USERNAME#@}" 2> ../diag/vercel.txt) || { tail -20 ../diag/vercel.txt; exit 1; }
           cd ..
           HOST=${URL#https://}
@@ -187,6 +191,21 @@ jobs:
             echo ""
             echo "Каталог для приложения: https://storage.yandexcloud.net/$BUCKET/catalog.json"
           } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Отзывы и перенос базы в закрытый бакет
+        if: steps.keys.outputs.ready == 'true'
+        env:
+          SHOP_BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
+        run: |
+          K=$(python3 -c "import hashlib,os;print(hashlib.sha256((os.environ['SHOP_BOT_TOKEN']+':cron').encode()).hexdigest()[:32])")
+          CRON=${FUNCTION_URL%/api/webhook}/api/cron
+          sleep 10
+          curl -s -m 70 "$CRON?k=$K&force=1" > diag/cron.txt || echo "cron timeout" >> diag/cron.txt
+          cat diag/cron.txt
+          # База бота больше не должна открываться по прямой ссылке
+          curl -s -o /dev/null -w "public db.json http: %{http_code}\n" "https://storage.yandexcloud.net/$BUCKET/data/db.json" >> diag/cron.txt
+          curl -s -o /dev/null -w "private db.json http: %{http_code}\n" "https://storage.yandexcloud.net/$BUCKET-data/data/db.json" >> diag/cron.txt
+          curl -s -o /dev/null -w "reviews.json http: %{http_code}\n" "https://storage.yandexcloud.net/$BUCKET/reviews.json" >> diag/cron.txt
 
       - name: Состояние вебхука
         if: always() && steps.keys.outputs.ready == 'true'

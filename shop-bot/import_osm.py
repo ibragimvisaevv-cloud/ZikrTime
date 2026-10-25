@@ -143,7 +143,7 @@ def main():
     if len(items) < 100:
         raise SystemExit("Подозрительно мало мест — импорт отменён, чтобы не стереть данные")
     storage = index.make_storage()
-    bot = index.Bot(storage, index.Telegram(index.BOT_TOKEN))
+    bot = index.Bot(storage, index.Telegram(index.BOT_TOKEN), data=index.make_storage(bucket=index.DATA_BUCKET))
     added, updated, removed = merge(bot.db, items)
     bot.dirty = bot.places_dirty = True
     bot.save()

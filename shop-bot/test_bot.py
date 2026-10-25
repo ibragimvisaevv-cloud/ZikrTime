@@ -24,6 +24,12 @@ class FakeStorage:
             data = gzip.decompress(data)
         self.files[key] = data
 
+    def delete(self, key):
+        self.files.pop(key, None)
+
+    def list(self, prefix, limit=50):
+        return sorted(k for k in self.files if k.startswith(prefix))[:limit]
+
 
 class FakeTg:
     def __init__(self):
@@ -281,6 +287,53 @@ import_osm.merge(d, items)
 check("osmw2" not in d["places"], "osm: удалённое не возвращается")
 check(import_osm.merge(d, items[:1])[2] == 1, "osm: исчезнувшее из OSM убирается")
 
+# Отзывы: приложение кладёт файл в закрытый бакет, бот присылает его владельцу, одобренные — в reviews.json
+os.environ["S3_KEY_ID"], os.environ["S3_SECRET"] = "KEYID", "SECRET"
+_d = db()
+_d["places"]["pl_test"] = {"id": "pl_test", "kind": "room", "name": "Намазхана", "lat": 55.7, "lon": 37.6, "status": "approved", "created": 1}
+storage.files["data/db.json"] = json.dumps(_d).encode()
+_place_id = "pl_test"
+storage.files["reviews/pending/a1.json"] = json.dumps({"target": f"seller:{sid}", "rating": 5, "text": "Отличные  духи,\nспасибо", "name": "Амина", "device": "dev1"}).encode()
+storage.files["reviews/pending/a2.json"] = json.dumps({"target": f"place:{_place_id}", "rating": 4, "text": "", "device": "dev1"}).encode()
+storage.files["reviews/pending/bad.json"] = json.dumps({"target": "seller:nope", "rating": 5}).encode()
+storage.files["reviews/pending/bad2.json"] = b"not json"
+bot = index.Bot(storage, tg, TOKEN)
+res = bot.cron()
+bot.save()
+check(res["new_reviews"] == 2, "отзывы: забраны 2 из 4")
+check(not [k for k in storage.files if k.startswith("reviews/pending/")], "отзывы: файлы удалены из очереди")
+check(len(db()["reviews_pending"]) == 2, "отзывы: ждут проверки")
+check(any("Новый отзыв" in (t or "") and "Отличные духи, спасибо" in t for t in tg.texts(OWNER)), "отзывы: владелец получил карточку")
+rv = tg.last_buttons(OWNER)
+check(rv and rv[0].startswith("rv:ok:"), "отзывы: кнопки модерации")
+press(SELLER, rv[0].replace("rv:ok", "rv:ok"))
+check(len(db()["reviews_pending"]) == 2, "отзывы: не-админ не одобряет")
+_ids = list(db()["reviews_pending"].keys())
+_seller_rid = next(k for k, v in db()["reviews_pending"].items() if v["target"].startswith("seller:"))
+_place_rid = next(k for k in _ids if k != _seller_rid)
+press(OWNER, f"rv:ok:{_seller_rid}")
+press(OWNER, f"rv:no:{_place_rid}")
+rj = json.loads(storage.files["reviews.json"])
+check(rj["reviews"][f"seller:{sid}"]["avg"] == 5 and rj["reviews"][f"seller:{sid}"]["n"] == 1, "отзывы: рейтинг компании")
+check(f"place:{_place_id}" not in rj["reviews"], "отзывы: отклонённый не показан")
+check(rj["reviews"][f"seller:{sid}"]["items"][0]["n"] == "Амина" and "device" not in json.dumps(rj), "отзывы: имя есть, id устройства нет")
+check(rj["upload"]["fields"]["x-amz-algorithm"] == "AWS4-HMAC-SHA256" and rj["upload"]["url"].endswith(index.DATA_BUCKET), "отзывы: форма загрузки в закрытый бакет")
+_pol = json.loads(__import__("base64").b64decode(rj["upload"]["fields"]["policy"]))
+check(["starts-with", "$key", "reviews/pending/"] in _pol["conditions"], "отзывы: форма только для очереди отзывов")
+press(OWNER, f"rv:ok:{_seller_rid}")
+check("Этот отзыв уже проверен." in tg.texts(OWNER), "отзывы: повторное нажатие")
+for i in range(7):
+    storage.files[f"reviews/pending/s{i}.json"] = json.dumps({"target": f"seller:{sid}", "rating": 1, "device": "spam"}).encode()
+bot = index.Bot(storage, tg, TOKEN)
+check(bot.cron()["new_reviews"] == 5, "отзывы: не больше 5 в сутки с одного телефона")
+bot.save()
+
+# Закрытая база: перенос из публичного бакета
+pub, priv = FakeStorage(), FakeStorage()
+pub.files["data/db.json"] = json.dumps({"owner": 7}).encode()
+b2 = index.Bot(pub, FakeTg(), TOKEN, data=priv)
+check(b2.db["owner"] == 7 and "data/db.json" in priv.files and "data/db.json" not in pub.files, "база переносится в закрытый бакет")
+
 # Удаление
 press(SELLER, f"del2:{sid}")
 check(sid not in db()["sellers"] and len(catalog()["sellers"]) == 1, "удаление")
@@ -290,6 +343,12 @@ from datetime import datetime as _dt, timezone as _tz
 _h = index.sigv4("GET", "examplebucket.s3.amazonaws.com", "/test.txt", {"Range": "bytes=0-9"}, b"",
                  "AKIAIOSFODNN7EXAMPLE", "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY", "us-east-1", _dt(2013, 5, 24, tzinfo=_tz.utc))
 check(_h["authorization"].endswith("Signature=f0e8bdb87c964420e857bd35b5d6ed310bd44f0170aba48dd91039c6036bdb41"), "подпись SigV4")
+
+# SigV4 со строкой запроса — официальный пример AWS (GET Bucket / ListObjects)
+_h = index.sigv4("GET", "examplebucket.s3.amazonaws.com", "/", {}, b"",
+                 "AKIAIOSFODNN7EXAMPLE", "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY", "us-east-1", _dt(2013, 5, 24, tzinfo=_tz.utc),
+                 "max-keys=2&prefix=J")
+check(_h["authorization"].endswith("Signature=34b48302e7b5fa45bde8084f4b7868a86f0a534bc59db6670ed5711ef69dc6f7"), "подпись SigV4 со строкой запроса")
 
 # Вебхук без секрета отклоняется
 r = index.handler({"headers": {}, "body": "{}"}, None)

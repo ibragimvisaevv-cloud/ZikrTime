@@ -5,10 +5,14 @@
 только после одобрения владельцем; дальше правки продавца публикуются сразу (владелец получает
 уведомление и может скрыть компанию одной кнопкой).
 
-Данные: Yandex Object Storage (бакет BUCKET):
-  data/db.json   — вся база (продавцы, товары, состояния диалогов, приглашения);
-  img/...        — фотографии (публичные);
-  catalog.json   — каталог для приложения (публичный), пересобирается после каждой правки.
+Данные: Yandex Object Storage.
+  Публичный бакет BUCKET (его читают телефоны):
+    img/...        — фотографии;
+    catalog.json   — каталог магазина, пересобирается после каждой правки;
+    places.json    — места для намаза; reviews.json — одобренные отзывы и форма для отправки нового.
+  Закрытый бакет DATA_BUCKET (только для бота):
+    data/db.json        — вся база (продавцы, товары, состояния диалогов, приглашения);
+    reviews/pending/... — отзывы из приложения, ещё не показанные владельцу.
 
 Переменные окружения: BOT_TOKEN, BUCKET. Функции нужен сервисный аккаунт с ролью storage.editor.
 Владелец назначается командой /owner <код>; код печатается при развёртывании (GitHub Actions).
@@ -29,7 +33,11 @@ BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
 BUCKET = os.environ.get("BUCKET", "zikrtime-shop")
 # Telegram-имя владельца: он становится владельцем при первом сообщении боту (если владельца ещё нет).
 OWNER_USERNAME = os.environ.get("OWNER_USERNAME", "").lstrip("@").lower()
+# Закрытый бакет: база бота и отзывы на проверке не должны быть доступны по прямой ссылке.
+DATA_BUCKET = os.environ.get("DATA_BUCKET", BUCKET + "-data")
 STORAGE_HOST = "https://storage.yandexcloud.net"
+REVIEW_PREFIX = "reviews/pending/"
+REVIEW_MAX_BYTES = 4096
 PUBLIC_BASE = f"{STORAGE_HOST}/{BUCKET}/"
 DB_KEY = "data/db.json"
 
@@ -77,11 +85,12 @@ STATUS_TEXT = {
 class ObjectStorage:
     """Yandex Object Storage по HTTP с IAM-токеном сервисного аккаунта функции."""
 
-    def __init__(self, token):
+    def __init__(self, token, bucket=None):
         self.token = token
+        self.bucket = bucket or BUCKET
 
-    def _req(self, method, key, data=None, headers=None):
-        req = urllib.request.Request(f"{STORAGE_HOST}/{BUCKET}/{key}", data=data, method=method)
+    def _req(self, method, key, data=None, headers=None, query=""):
+        req = urllib.request.Request(f"{STORAGE_HOST}/{self.bucket}/{key}" + (f"?{query}" if query else ""), data=data, method=method)
         req.add_header("X-YaCloud-SubjectToken", self.token)
         for k, v in (headers or {}).items():
             req.add_header(k, v)
@@ -103,8 +112,60 @@ class ObjectStorage:
         with self._req("PUT", key, data, headers):
             pass
 
+    def delete(self, key):
+        try:
+            with self._req("DELETE", key):
+                pass
+        except urllib.error.HTTPError as e:
+            if e.code != 404:
+                raise
 
-def sigv4(method, host, path, headers, payload, key_id, secret, region, now):
+    def list(self, prefix, limit=50):
+        """Ключи объектов с префиксом (ListObjectsV2)."""
+        from urllib.parse import quote
+        query = f"list-type=2&max-keys={int(limit)}&prefix={quote(prefix, safe='-_.~')}"
+        with self._req("GET", "", query=query) as r:
+            xml = r.read().decode("utf-8")
+        return [html.unescape(k) for k in re.findall(r"<Key>([^<]+)</Key>", xml)]
+
+
+def signing_key(secret, day, region):
+    import hmac
+
+    def h(k, m):
+        return hmac.new(k, m.encode(), hashlib.sha256).digest()
+
+    return h(h(h(h(("AWS4" + secret).encode(), day), region), "s3"), "aws4_request")
+
+
+def presign_post(key_id, secret, bucket, prefix, max_bytes, days, now):
+    """Форма загрузки (S3 POST Object): телефон без ключей может положить один небольшой файл с префиксом prefix."""
+    import hmac
+    from datetime import timedelta
+    amz_date, day = now.strftime("%Y%m%dT%H%M%SZ"), now.strftime("%Y%m%d")
+    cred = f"{key_id}/{day}/ru-central1/s3/aws4_request"
+    expires = now + timedelta(days=days)
+    policy = {
+        "expiration": expires.strftime("%Y-%m-%dT%H:%M:%S.000Z"),
+        "conditions": [
+            {"bucket": bucket},
+            ["starts-with", "$key", prefix],
+            ["content-length-range", 1, max_bytes],
+            {"x-amz-algorithm": "AWS4-HMAC-SHA256"},
+            {"x-amz-credential": cred},
+            {"x-amz-date": amz_date},
+        ],
+    }
+    b64 = base64.b64encode(json.dumps(policy, separators=(",", ":")).encode()).decode()
+    sig = hmac.new(signing_key(secret, day, "ru-central1"), b64.encode(), hashlib.sha256).hexdigest()
+    return {
+        "url": f"{STORAGE_HOST}/{bucket}", "prefix": prefix, "max": max_bytes, "expires": int(expires.timestamp()),
+        "fields": {"policy": b64, "x-amz-algorithm": "AWS4-HMAC-SHA256", "x-amz-credential": cred,
+                   "x-amz-date": amz_date, "x-amz-signature": sig},
+    }
+
+
+def sigv4(method, host, path, headers, payload, key_id, secret, region, now, query=""):
     """Подпись запроса AWS Signature V4 (Yandex Object Storage совместим с S3). Возвращает заголовки."""
     import hmac
     amz_date, day = now.strftime("%Y%m%dT%H%M%SZ"), now.strftime("%Y%m%d")
@@ -113,14 +174,11 @@ def sigv4(method, host, path, headers, payload, key_id, secret, region, now):
     for k, v in (headers or {}).items():
         hdrs[k.lower()] = v
     signed = ";".join(sorted(hdrs))
-    canonical = "\n".join([method, path, "", "".join(f"{k}:{hdrs[k].strip()}\n" for k in sorted(hdrs)), signed, payload_hash])
+    canonical = "\n".join([method, path, query, "".join(f"{k}:{hdrs[k].strip()}\n" for k in sorted(hdrs)), signed, payload_hash])
     scope = f"{day}/{region}/s3/aws4_request"
     to_sign = "\n".join(["AWS4-HMAC-SHA256", amz_date, scope, hashlib.sha256(canonical.encode()).hexdigest()])
 
-    def h(k, m):
-        return hmac.new(k, m.encode(), hashlib.sha256).digest()
-
-    sig_key = h(h(h(h(("AWS4" + secret).encode(), day), region), "s3"), "aws4_request")
+    sig_key = signing_key(secret, day, region)
     signature = hmac.new(sig_key, to_sign.encode(), hashlib.sha256).hexdigest()
     hdrs["authorization"] = f"AWS4-HMAC-SHA256 Credential={key_id}/{scope}, SignedHeaders={signed}, Signature={signature}"
     return hdrs
@@ -129,28 +187,29 @@ def sigv4(method, host, path, headers, payload, key_id, secret, region, now):
 class S3Storage(ObjectStorage):
     """Тот же Yandex Object Storage, но по статическому ключу (подпись SigV4) — для запуска бота вне Yandex Cloud."""
 
-    def __init__(self, key_id, secret):
+    def __init__(self, key_id, secret, bucket=None):
         self.key_id = key_id
         self.secret = secret
+        self.bucket = bucket or BUCKET
 
-    def _req(self, method, key, data=None, headers=None):
+    def _req(self, method, key, data=None, headers=None, query=""):
         from datetime import datetime, timezone
         from urllib.parse import quote
         host = STORAGE_HOST.split("://")[1]
-        path = "/" + quote(f"{BUCKET}/{key}", safe="/-_.~")
-        hdrs = sigv4(method, host, path, headers, data, self.key_id, self.secret, "ru-central1", datetime.now(timezone.utc))
-        req = urllib.request.Request(STORAGE_HOST + path, data=data, method=method)
+        path = "/" + quote(f"{self.bucket}/{key}", safe="/-_.~")
+        hdrs = sigv4(method, host, path, headers, data, self.key_id, self.secret, "ru-central1", datetime.now(timezone.utc), query)
+        req = urllib.request.Request(STORAGE_HOST + path + (f"?{query}" if query else ""), data=data, method=method)
         for k, v in hdrs.items():
             if k != "host":
                 req.add_header(k, v)
         return urllib.request.urlopen(req, timeout=20)
 
 
-def make_storage(iam_token=""):
+def make_storage(iam_token="", bucket=None):
     key_id, secret = os.environ.get("S3_KEY_ID"), os.environ.get("S3_SECRET")
     if key_id and secret:
-        return S3Storage(key_id, secret)
-    return ObjectStorage(iam_token)
+        return S3Storage(key_id, secret, bucket)
+    return ObjectStorage(iam_token, bucket)
 
 
 class Telegram:
@@ -452,12 +511,145 @@ class PlacesMixin:
         self.send(uid, "✅ Кнопка «Поддержать проект» ведёт на: " + url if url else "Кнопка «Поддержать проект» скрыта.")
 
 
-class Bot(PlacesMixin):
-    def __init__(self, storage, tg, token=None):
+class ReviewsMixin:
+    """Отзывы о компаниях и местах: приложение кладёт файл в закрытый бакет, бот показывает его владельцу на проверку."""
+
+    def review_target(self, target):
+        kind, _, tid = str(target).partition(":")
+        if kind == "seller":
+            s = self.db["sellers"].get(tid)
+            return s["name"] if s and s["status"] == "approved" else None
+        if kind == "place":
+            p = self.db["places"].get(tid)
+            return (p.get("name") or "Место для намаза") if p and p["status"] == "approved" else None
+        return None
+
+    def parse_review(self, raw):
+        try:
+            d = json.loads(raw)
+            rating = int(d.get("rating"))
+        except Exception:
+            return None
+        target = str(d.get("target", ""))[:80]
+        if not 1 <= rating <= 5 or not self.review_target(target):
+            return None
+        text = " ".join(str(d.get("text") or "").split())[:600]
+        name = " ".join(str(d.get("name") or "").split())[:40]
+        device = re.sub(r"[^\w-]", "", str(d.get("device") or ""))[:40] or "anon"
+        # Не больше 5 отзывов в сутки с одного телефона
+        today = time.strftime("%Y-%m-%d")
+        rl = {k: v for k, v in self.db.get("review_rl", {}).items() if k.endswith(today)}
+        key = f"{device}:{today}"
+        if rl.get(key, 0) >= 5:
+            self.db["review_rl"] = rl
+            return None
+        rl[key] = rl.get(key, 0) + 1
+        self.db["review_rl"] = rl
+        return {"id": new_id("r"), "target": target, "r": rating, "t": text, "n": name, "d": int(time.time()), "device": device}
+
+    def collect_reviews(self, limit=30):
+        """Забрать новые отзывы из закрытого бакета и отправить владельцу на проверку."""
+        if not hasattr(self.data, "list"):
+            return 0
+        n = 0
+        for key in self.data.list(REVIEW_PREFIX, limit):
+            raw = self.data.get(key)
+            try:
+                self.data.delete(key)
+            except Exception as e:  # не удалось удалить — пропустим, чтобы не прислать дважды
+                print("review delete", key, repr(e))
+                continue
+            r = self.parse_review(raw) if raw else None
+            self.dirty = True
+            if not r:
+                continue
+            self.db.setdefault("reviews_pending", {})[r["id"]] = r
+            self.notify_review(r)
+            n += 1
+        return n
+
+    def review_card(self, r):
+        stars = "★" * r["r"] + "☆" * (5 - r["r"])
+        kind = "🏪" if r["target"].startswith("seller:") else "🕌"
+        lines = [f"📝 <b>Новый отзыв</b>", f"{kind} {esc(self.review_target(r['target']) or '—')}", stars]
+        if r.get("t"):
+            lines.append("«" + esc(r["t"]) + "»")
+        lines.append("— " + esc(r.get("n") or "без имени"))
+        return "\n".join(lines)
+
+    def notify_review(self, r):
+        self.notify_admins(self.review_card(r), kb([btn("✅ Опубликовать", f"rv:ok:{r['id']}"), btn("❌ Отклонить", f"rv:no:{r['id']}")]))
+
+    def moderate_review(self, uid, action, rid):
+        r = self.db.get("reviews_pending", {}).pop(rid, None)
+        if not r:
+            return self.send(uid, "Этот отзыв уже проверен.")
+        self.dirty = True
+        if action == "ok":
+            self.db.setdefault("reviews", {}).setdefault(r["target"], []).append({k: r[k] for k in ("id", "r", "t", "n", "d")})
+            self.reviews_dirty = True
+            self.send(uid, "✅ Отзыв опубликован — в приложении появится через пару минут.")
+        else:
+            self.send(uid, "❌ Отзыв отклонён.")
+
+    def reviews_pending_list(self, uid):
+        pending = list(self.db.get("reviews_pending", {}).values())
+        if not pending:
+            return self.send(uid, "Новых отзывов нет.", kb([btn("⬅️ Меню", "menu")]))
+        for r in sorted(pending, key=lambda x: x["d"])[:10]:
+            self.send(uid, self.review_card(r), kb([btn("✅ Опубликовать", f"rv:ok:{r['id']}"), btn("❌ Отклонить", f"rv:no:{r['id']}")]))
+
+    def upload_form(self):
+        key_id, secret = os.environ.get("S3_KEY_ID"), os.environ.get("S3_SECRET")
+        if not key_id or not secret:
+            return None
+        from datetime import datetime, timezone
+        self.db["upload_at"] = int(time.time())
+        self.dirty = True
+        return presign_post(key_id, secret, DATA_BUCKET, REVIEW_PREFIX, REVIEW_MAX_BYTES, 7, datetime.now(timezone.utc))
+
+    def build_reviews(self):
+        out = {}
+        for target, items in self.db.get("reviews", {}).items():
+            if not items or not self.review_target(target):
+                continue
+            items = sorted(items, key=lambda x: -x["d"])
+            out[target] = {
+                "avg": round(sum(i["r"] for i in items) / len(items), 1),
+                "n": len(items),
+                "items": [{k: i[k] for k in ("r", "t", "n", "d") if i.get(k) not in (None, "")} for i in items[:30]],
+            }
+        return {"version": 1, "updated": int(time.time()), "upload": self.upload_form(), "reviews": out}
+
+    def write_reviews(self):
+        data = json.dumps(self.build_reviews(), ensure_ascii=False, separators=(",", ":")).encode()
+        self.st.put("reviews.json", data, "application/json; charset=utf-8", cache="public, max-age=60")
+
+    def cron(self, force=False):
+        """Раз в несколько минут (GitHub Actions): новые отзывы — владельцу; форма загрузки — свежая."""
+        n = self.collect_reviews()
+        if force or time.time() - self.db.get("upload_at", 0) > 2 * 86400:
+            self.reviews_dirty = True
+        return {"new_reviews": n, "reviews_rebuilt": self.reviews_dirty}
+
+
+class Bot(PlacesMixin, ReviewsMixin):
+    def __init__(self, storage, tg, token=None, data=None):
         self.st = storage
+        # Закрытое хранилище для базы; в тестах — то же, что и публичное
+        self.data = data if data is not None else storage
         self.tg = tg
         self.token = token or BOT_TOKEN
-        raw = storage.get(DB_KEY)
+        raw = self.data.get(DB_KEY)
+        if raw is None and self.data is not storage:
+            # Перенос базы из публичного бакета в закрытый (один раз), публичную копию удаляем
+            raw = storage.get(DB_KEY)
+            if raw:
+                self.data.put(DB_KEY, raw, "application/json")
+                try:
+                    storage.delete(DB_KEY)
+                except Exception:
+                    storage.put(DB_KEY, b"{}", "application/json")
         self.db = json.loads(raw) if raw else {}
         self.db.setdefault("owner", None)
         self.db.setdefault("admins", [])
@@ -470,6 +662,7 @@ class Bot(PlacesMixin):
         self.dirty = False
         self.catalog_dirty = False
         self.places_dirty = False
+        self.reviews_dirty = False
 
     # ---------- база ----------
     def save(self):
@@ -477,8 +670,10 @@ class Bot(PlacesMixin):
             self.write_catalog()
         if self.places_dirty:
             self.write_places()
-        if self.dirty or self.catalog_dirty or self.places_dirty:
-            self.st.put(DB_KEY, json.dumps(self.db, ensure_ascii=False).encode(), "application/json")
+        if self.reviews_dirty:
+            self.write_reviews()
+        if self.dirty or self.catalog_dirty or self.places_dirty or self.reviews_dirty:
+            self.data.put(DB_KEY, json.dumps(self.db, ensure_ascii=False).encode(), "application/json")
 
     def changed(self, seller=None):
         self.dirty = True
@@ -610,6 +805,8 @@ class Bot(PlacesMixin):
             return self.add_admin(uid, text[7:].strip())
         if text == "/help":
             return self.help(uid)
+        if text == "/reviews" and self.is_admin(uid):
+            return self.reviews_pending_list(uid)
 
         st = u.get("state")
         if st:
@@ -636,6 +833,8 @@ class Bot(PlacesMixin):
         if self.is_admin(uid):
             pp = sum(1 for p in self.db["places"].values() if p["status"] == "pending")
             rows.append([btn(f"📍 Места на проверке ({pp})", "pl_pending"), btn("🗺 Все места", "pl_all")])
+            rv = len(self.db.get("reviews_pending", {}))
+            rows.append([btn(f"⭐ Отзывы на проверке ({rv})", "rv_pending")])
         rows.append([btn("❓ Как это работает", "help")])
         if mine:
             text = "Ваши компании в магазине <b>Зикр-тайм</b>. Выберите, что изменить:"
@@ -1156,6 +1355,10 @@ class Bot(PlacesMixin):
             return self.menu(uid)
         if act == "help":
             return self.help(uid)
+        if act == "rv" and len(parts) == 3 and self.is_admin(uid):
+            return self.moderate_review(uid, parts[1], parts[2])
+        if act == "rv_pending" and self.is_admin(uid):
+            return self.reviews_pending_list(uid)
         if act == "add":
             return self.start_add(uid)
         if act == "skip" and st.get("flow") == "add":
@@ -1376,7 +1579,7 @@ def handler(event, context):
     if update.get("probe"):
         return {"statusCode": 200, "body": json.dumps(probe(token), ensure_ascii=False)}
     tg = Telegram(BOT_TOKEN)
-    bot = Bot(make_storage(token), tg)
+    bot = Bot(make_storage(token), tg, data=make_storage(token, DATA_BUCKET))
     try:
         bot.handle(update)
     except Exception as e:  # не даём Telegram повторять одно и то же обновление бесконечно
@@ -1387,3 +1590,16 @@ def handler(event, context):
     finally:
         bot.save()
     return {"statusCode": 200, "body": "ok"}
+
+
+def cron_secret(token=None):
+    return hashlib.sha256(((token or BOT_TOKEN) + ":cron").encode()).hexdigest()[:32]
+
+
+def run_cron(force=False):
+    """Периодическая работа: отзывы на проверку владельцу, свежая форма загрузки отзывов."""
+    bot = Bot(make_storage(), Telegram(BOT_TOKEN), data=make_storage(bucket=DATA_BUCKET))
+    try:
+        return bot.cron(force)
+    finally:
+        bot.save()
