@@ -214,7 +214,10 @@ private struct SellerCard: View {
         VStack(alignment: .leading, spacing: 0) {
             ZStack(alignment: .topLeading) {
                 SellerCover(seller: seller, catalog: catalog).frame(height: 110)
-                if seller.partner { CategoryChip(text: L("shop_partner")).padding(10) }
+                VStack(alignment: .leading, spacing: 5) {
+                    if seller.partner { CategoryChip(text: L("shop_partner")) }
+                    if seller.promoted(at: Date()) { CategoryChip(text: L("shop_ad")) }
+                }.padding(10)
             }
             HStack(spacing: 12) {
                 SellerLogo(seller: seller, size: 44)
@@ -303,7 +306,7 @@ private struct ProductCard: View {
                 ProductImage(product: product, catalog: catalog)
                     .aspectRatio(1, contentMode: .fit)
                 if let old = product.oldPrice, let price = product.price, old > price {
-                    Text("−\(100 - price * 100 / old)%")
+                    Text("−\(100 - Int(Double(price) * 100 / Double(old)))%")
                         .font(.caption2.weight(.bold))
                         .foregroundStyle(.white)
                         .padding(.horizontal, 8)
@@ -320,6 +323,9 @@ private struct ProductCard: View {
                     .multilineTextAlignment(.leading)
                 PriceLine(product: product)
                 Text(catalog.seller(product.seller)?.name ?? "").font(.caption).foregroundStyle(Brand.secondaryText).lineLimit(1)
+                if catalog.seller(product.seller)?.promoted(at: Date()) == true {
+                    Text(L("shop_ad")).font(.caption2).foregroundStyle(Brand.secondaryText)
+                }
             }
             .padding(12)
         }

@@ -6,7 +6,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: release-check-${{ github.ref }}
+  group: release-check-${{ github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
 jobs:
   swift-logic:
@@ -57,7 +57,7 @@ jobs:
             app/build/test-results/
             app/build/reports/android-signature.txt
   ios:
-    runs-on: macos-15
+    runs-on: macos-26-intel
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4

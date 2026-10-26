@@ -12,5 +12,6 @@ swiftc -O -o build-logic/logic-check \
   ios/ZikrTime/Core/Ramadan.swift \
   ios/ZikrTime/Core/Zakat.swift \
   ios/ZikrTime/Core/CommunityModels.swift \
+  ios/ZikrTime/Core/FajrPlan.swift \
   build-logic/main.swift
 ./build-logic/logic-check "$(pwd)"

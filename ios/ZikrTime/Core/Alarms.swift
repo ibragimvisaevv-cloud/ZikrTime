@@ -71,16 +71,9 @@ enum FajrAlarm {
     /// Ближайшие сигналы: время будильника и время фаджра (с учётом выбранных дней недели).
     static func upcoming(days: Int, from now: Date = Date()) -> [(trigger: Date, fajr: Date)] {
         let store = Store.shared
-        var result: [(trigger: Date, fajr: Date)] = []
-        let today = LocalDay(now)
-        for offset in 0...(days + 1) {
-            let day = today.adding(days: offset)
-            guard store.alarmDays.contains(day.weekday), let fajr = PrayerSchedule.times(for: day)[.fajr] else { continue }
-            let trigger = fajr.addingTimeInterval(-Double(store.alarmOffset) * 60)
-            if trigger > now.addingTimeInterval(30) { result.append((trigger: trigger, fajr: fajr)) }
-            if result.count >= days { break }
+        return FajrPlan.upcoming(count: days, from: now, weekdays: store.alarmDays, offsetMinutes: store.alarmOffset) { day in
+            PrayerSchedule.times(for: day)[.fajr]
         }
-        return result
     }
 
     static func next() -> (trigger: Date, fajr: Date)? {

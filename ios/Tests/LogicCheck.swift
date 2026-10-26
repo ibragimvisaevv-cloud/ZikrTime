@@ -173,5 +173,19 @@ check(try! JSONDecoder().decode(ReviewsDocument.self, from: reviewJSON).reviews[
 let safeForm = ReviewUpload(url: "https://storage.yandexcloud.net/zikrtime-shop-data", prefix: "reviews/pending/", max: 4096, expires: 1, fields: [:])
 check(safeForm.destination != nil, "Review inbox endpoint")
 
+// A Friday-only alarm must be visible on Monday and cover subsequent weeks.
+let monday = LocalDay(year: 2026, month: 10, day: 26)
+let friday = monday.adding(days: 4)
+let alarmPlan = FajrPlan.upcoming(count: 2, from: monday.start(), weekdays: [5], offsetMinutes: 30) {
+    $0.at(hour: 6, minute: 0, in: .current)
+}
+check(alarmPlan.count == 2 && alarmPlan[0].trigger == friday.at(hour: 5, minute: 30, in: .current), "Friday-only alarm found four days ahead")
+check(alarmPlan.last?.fajr == friday.adding(days: 7).at(hour: 6, minute: 0, in: .current), "Friday-only alarm covers following week")
+let afterFriday = FajrPlan.upcoming(count: 1, from: friday.at(hour: 8, minute: 0, in: .current), weekdays: [5], offsetMinutes: 0) {
+    $0.at(hour: 6, minute: 0, in: .current)
+}
+check(afterFriday.first?.fajr == friday.adding(days: 7).at(hour: 6, minute: 0, in: .current), "Passed alarm advances a full week")
+check(FajrPlan.upcoming(count: 1, from: monday.start(), weekdays: [], offsetMinutes: 0) { $0.start() }.isEmpty, "No selected weekdays means no alarm")
+
 print(failures == 0 ? "Логика iPhone-версии: всё верно" : "Ошибок: \(failures)")
 exit(failures == 0 ? 0 : 1)
