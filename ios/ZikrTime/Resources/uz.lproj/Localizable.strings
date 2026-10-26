@@ -430,7 +430,7 @@
 "focus_ios_text" = "iPhone’da ijtimoiy tarmoqlar limiti keyingi versiyalarda paydo boʻladi: Apple ilovalarga «Ekran vaqti»ga kirishni faqat maxsus tekshiruvdan keyin beradi. Hozircha sozlamalardagi «Ekran vaqti»dan foydalaning — bu yerda esa viktorina va tasbehdan.";
 "notifications_denied" = "Bildirishnomalar oʻchirilgan. Namoz vaqtini oʻtkazib yubormaslik uchun ularni sozlamalarda yoqing.";
 "info_alarm_usage" = "ZikrTime sizni tanlangan vaqtda azon bilan bomdod namoziga uygʻotadi.";
-"info_location_usage" = "Joylashuv faqat namoz vaqtlari va qibla yoʻnalishini hisoblash uchun kerak.";
+"info_location_usage" = "Joylashuv namoz vaqtlarini hisoblash, qibla yoʻnalishini aniqlash va yaqin namoz joylarini topishga yordam beradi.";
 "ios_install_note" = "Bu iPhone uchun sinov versiyasi. Namoz vaqtlari, bomdod budilnigi, viktorina, qibla va tasbeh allaqachon ishlaydi.";
 "days_one" = "%ld kun";
 "days_few" = "%ld kun";

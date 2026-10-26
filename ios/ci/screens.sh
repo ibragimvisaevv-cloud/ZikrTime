@@ -33,30 +33,35 @@ xcrun simctl bootstatus "$UDID" -b
 xcrun simctl status_bar "$UDID" override --time "9:41" --batteryState charged --batteryLevel 100 --cellularBars 4 --wifiBars 3 2>/dev/null || true
 xcrun simctl install "$UDID" "$APP"
 
+capture() {
+  local screen="$1" lang="$2" file="$3" launch pid
+  xcrun simctl terminate "$UDID" "$BUNDLE" 2>/dev/null || true
+  launch=$(xcrun simctl launch "$UDID" "$BUNDLE" -qa_screen "$screen" -qa_lang "$lang" -qa_demo 1)
+  pid=${launch##*: }
+  sleep 4
+  # Simulator app processes run on the host. A screenshot alone can hide a crash.
+  if ! kill -0 "$pid" 2>/dev/null; then
+    echo "App exited on $lang/$screen: $launch" >&2
+    return 1
+  fi
+  xcrun simctl io "$UDID" screenshot "$OUT/$file.png" > /dev/null 2>&1
+  echo "$lang $screen"
+}
+
 for lang in ru en; do
   for s in onboarding onboarding_welcome onboarding_city home knowledge quiz quiz_cards shop shop_seller shop_product qibla more tasbih alarm prayer_settings language about focus places ramadan zakat; do
-    xcrun simctl terminate "$UDID" "$BUNDLE" 2>/dev/null || true
-    xcrun simctl launch "$UDID" "$BUNDLE" -qa_screen "$s" -qa_lang "$lang" -qa_demo 1 > /dev/null
-    sleep 4
-    xcrun simctl io "$UDID" screenshot "$OUT/${lang}_${s}.png" > /dev/null 2>&1
-    echo "$lang $s"
+    capture "$s" "$lang" "${lang}_${s}"
   done
 done
 for lang in uz tg kk; do
   for s in home knowledge quiz alarm; do
-    xcrun simctl terminate "$UDID" "$BUNDLE" 2>/dev/null || true
-    xcrun simctl launch "$UDID" "$BUNDLE" -qa_screen "$s" -qa_lang "$lang" -qa_demo 1 > /dev/null
-    sleep 4
-    xcrun simctl io "$UDID" screenshot "$OUT/${lang}_${s}.png" > /dev/null 2>&1
+    capture "$s" "$lang" "${lang}_${s}"
   done
 done
 # Тёмная тема
 xcrun simctl ui "$UDID" appearance dark
 for s in home more knowledge quiz_cards shop shop_seller prayer_settings alarm; do
-  xcrun simctl terminate "$UDID" "$BUNDLE" 2>/dev/null || true
-  xcrun simctl launch "$UDID" "$BUNDLE" -qa_screen "$s" -qa_lang ru -qa_demo 1 > /dev/null
-  sleep 4
-  xcrun simctl io "$UDID" screenshot "$OUT/dark_ru_${s}.png" > /dev/null 2>&1
+  capture "$s" ru "dark_ru_${s}"
 done
 xcrun simctl ui "$UDID" appearance light
 # Журнал падений приложения, если были

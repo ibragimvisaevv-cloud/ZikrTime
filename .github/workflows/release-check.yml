@@ -39,6 +39,12 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew testDebugUnitTest lintDebug assembleDebug assembleRelease bundleRelease --console=plain
+      - name: Verify update signing certificate
+        run: |
+          mkdir -p app/build/reports
+          SIGNER=$(find "$ANDROID_HOME/build-tools" -name apksigner | sort -V | tail -1)
+          "$SIGNER" verify --verbose --print-certs app/build/outputs/apk/release/app-release.apk | tee app/build/reports/android-signature.txt
+          grep -q 'certificate SHA-256 digest: 7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf' app/build/reports/android-signature.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -49,8 +55,9 @@ jobs:
             app/build/outputs/mapping/
             app/build/reports/
             app/build/test-results/
+            app/build/reports/android-signature.txt
   ios:
-    runs-on: macos-26
+    runs-on: macos-15
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
@@ -106,6 +113,8 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
+      - name: Screenshot checks
+        run: python3 -m pip install 'Pillow>=11,<13'
       - uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 35

@@ -430,7 +430,7 @@
 "focus_ios_text" = "iPhone'da sosyal medya sınırı sonraki sürümlerde gelecek: Apple, uygulamalara Ekran Süresi erişimini yalnızca özel bir incelemeden sonra veriyor. O zamana kadar Ayarlar'daki Ekran Süresi'ni, burada da testi ve tesbihi kullanın.";
 "notifications_denied" = "Bildirimler kapalı. Namaz vakitlerini kaçırmamak için Ayarlar'dan açın.";
 "info_alarm_usage" = "ZikrTime sizi seçtiğiniz saatte ezanla sabah namazına uyandırır.";
-"info_location_usage" = "Konumunuz yalnızca namaz vakitlerini ve kıble yönünü hesaplamak için kullanılır.";
+"info_location_usage" = "Konumunuz namaz vakitlerini hesaplamaya, kıble yönünü belirlemeye ve yakındaki namaz yerlerini bulmaya yardımcı olur.";
 "ios_install_note" = "Bu, iPhone için deneme sürümüdür. Namaz vakitleri, sabah alarmı, test, kıble ve tesbih zaten çalışıyor.";
 "days_one" = "%ld gün";
 "days_few" = "%ld gün";

@@ -430,7 +430,7 @@
 "focus_ios_text" = "On iPhone, the social media limit will come in a future version: Apple gives apps access to Screen Time only after a special review. Until then, use Screen Time in Settings — and the quiz and tasbih here.";
 "notifications_denied" = "Notifications are turned off. Turn them on in Settings so you don't miss prayer times.";
 "info_alarm_usage" = "ZikrTime wakes you up for the Fajr prayer with the adhan at the time you choose.";
-"info_location_usage" = "Your location is used only to calculate prayer times and the qibla direction.";
+"info_location_usage" = "Your location helps calculate prayer times, find the qibla direction and show nearby prayer places.";
 "ios_install_note" = "This is a test version for iPhone. Prayer times, the Fajr alarm, the quiz, qibla and tasbih already work.";
 "days_one" = "%ld day";
 "days_few" = "%ld days";

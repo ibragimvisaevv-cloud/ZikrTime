@@ -430,7 +430,7 @@
 "focus_ios_text" = "iPhone-da sosial şəbəkə limiti növbəti versiyalarda olacaq: Apple tətbiqlərə «Ekran vaxtı»na girişi yalnız xüsusi yoxlamadan sonra verir. Hələlik ayarlardakı «Ekran vaxtı»ndan, burada isə viktorina və təsbehdən istifadə edin.";
 "notifications_denied" = "Bildirişlər söndürülüb. Namaz vaxtını qaçırmamaq üçün onları ayarlarda aktiv edin.";
 "info_alarm_usage" = "ZikrTime sizi seçdiyiniz vaxtda azanla sübh namazına oyadır.";
-"info_location_usage" = "Yeriniz yalnız namaz vaxtlarını və qiblə istiqamətini hesablamaq üçün lazımdır.";
+"info_location_usage" = "Yeriniz namaz vaxtlarını hesablamağa, qiblə istiqamətini müəyyən etməyə və yaxınlıqdakı namaz yerlərini tapmağa kömək edir.";
 "ios_install_note" = "Bu, iPhone üçün sınaq versiyasıdır. Namaz vaxtları, sübh zəngli saatı, viktorina, qiblə və təsbeh artıq işləyir.";
 "days_one" = "%ld gün";
 "days_few" = "%ld gün";

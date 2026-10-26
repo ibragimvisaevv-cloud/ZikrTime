@@ -1,4 +1,4 @@
 /* Сгенерировано tools/ios/build_strings.py */
 "CFBundleDisplayName" = "Зікір-тайм";
 "NSAlarmKitUsageDescription" = "Зікір-тайм сізді таңдалған уақытта азанмен таң намазына оятады.";
-"NSLocationWhenInUseUsageDescription" = "Орналасқан жер тек намаз уақыты мен құбыла бағытын есептеу үшін қажет.";
+"NSLocationWhenInUseUsageDescription" = "Орналасқан жер намаз уақытын есептеуге, құбыла бағытын анықтауға және жақын намаз орындарын табуға көмектеседі.";
