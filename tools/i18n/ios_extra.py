@@ -14,7 +14,7 @@ STRINGS = {
     },
     "alarm_ios_fallback": {
         "en": "On this iOS version the alarm is a series of loud notifications with the adhan, one every minute for 10 minutes. Keep notifications on and silent mode off. Open the app to stop the rest.",
-        "ru": "На этой версии iOS будильник — это серия громких уведомлений с азаном: каждую минуту в течение 10 минут. Не выключайте уведомления и беззвучный режим. Откройте приложение, чтобы остановить остальные.",
+        "ru": "На этой версии iOS будильник — это серия громких уведомлений с азаном: каждую минуту в течение 10 минут. Оставьте уведомления включёнными, а беззвучный режим — выключенным. Откройте приложение, чтобы остановить остальные.",
         "uz": "iOSning bu versiyasida budilnik azonli baland bildirishnomalar turkumidir: 10 daqiqa davomida har daqiqada bittadan. Bildirishnomalarni oʻchirmang va ovozsiz rejimni yoqmang. Qolganlarini toʻxtatish uchun ilovani oching.",
         "tg": "Дар ин версияи iOS соати зангдор як қатор огоҳиномаҳои баланд бо азон аст: ҳар дақиқа дар давоми 10 дақиқа. Огоҳиномаҳоро хомӯш накунед ва реҷаи бесадоро фаъол накунед. Барои қатъ кардани боқимонда барномаро кушоед.",
         "kk": "iOS-тың бұл нұсқасында оятқыш — азаны бар қатты хабарландырулар тізбегі: 10 минут бойы әр минут сайын. Хабарландыруларды өшірмеңіз және дыбыссыз режимді қоспаңыз. Қалғанын тоқтату үшін қолданбаны ашыңыз.",

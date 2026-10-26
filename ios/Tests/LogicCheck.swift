@@ -151,5 +151,27 @@ if let data = try? Data(contentsOf: root.appendingPathComponent("app/src/main/as
 check(ShopCatalog.price(2500, currency: "RUB") == "2 500 ₽" && ShopCatalog.price(990, currency: "RUB") == "990 ₽", "Цена")
 check("بِسْمِ".hasArabic && !"Muhammad ﷺ".hasArabic, "Определение арабского текста")
 
+// Ramadan boundaries, date correction and zakat edge cases.
+let ramadan = Ramadan.currentOrNext(today: LocalDay(year: 2026, month: 2, day: 18), shift: 0)!
+check(ramadan.start.key == "2026-02-18" && ramadan.days == 30, "Ramadan 1447 Umm al-Qura")
+check(ramadan.dayOf(ramadan.start) == 1 && ramadan.dayOf(ramadan.end) == 30, "Ramadan boundaries")
+check(ramadan.dayOf(ramadan.end.adding(days: 1)) == nil, "Outside Ramadan")
+let shifted = Ramadan.currentOrNext(today: ramadan.start, shift: 1)!
+check(shifted.start == ramadan.start.adding(days: 1), "Ramadan local correction")
+check(Zakat.number("1 234,50") == 1234.5 && Zakat.number("nan") == 0 && Zakat.number("-5") == 0, "Zakat decimal validation")
+let below = Zakat.calculate(["cash": "84999", "gold_price": "1000"], silver: false)
+let threshold = Zakat.calculate(["cash": "85000", "gold_price": "1000"], silver: false)
+check(below.due == 0 && threshold.due == 2125, "Zakat threshold")
+check(Zakat.calculate(["cash": "100", "debts": "1000"], silver: false).total == 0, "Zakat debt floor")
+let xml = Data("<Metall><Record Date=\"23.10.2026\" Code=\"1\"><Buy>1000,25</Buy></Record><Record Date=\"23.10.2026\" Code=\"2\"><Buy>100,50</Buy></Record></Metall>".utf8)
+check(Zakat.prices(xml)?.gold == 1000.25 && Zakat.prices(xml)?.silver == 100.5, "CBR metal XML")
+let placesJSON = Data(#"{"places":[{"id":"a","kind":"mosque","name":"Test","lat":55.75,"lon":37.62}]}"#.utf8)
+let place = try! JSONDecoder().decode(PlacesDocument.self, from: placesJSON).places[0]
+check(place.valid && place.distanceKm(lat: 55.75, lon: 37.62) < 0.001, "Places decoding and distance")
+let reviewJSON = Data(#"{"reviews":{"place:a":{"avg":5.0,"n":1,"items":[{"r":5,"t":"Good","n":"","d":0}]}}}"#.utf8)
+check(try! JSONDecoder().decode(ReviewsDocument.self, from: reviewJSON).reviews["place:a"]?.n == 1, "Review wire format")
+let safeForm = ReviewUpload(url: "https://storage.yandexcloud.net/zikrtime-shop-data", prefix: "reviews/pending/", max: 4096, expires: 1, fields: [:])
+check(safeForm.destination != nil, "Review inbox endpoint")
+
 print(failures == 0 ? "Логика iPhone-версии: всё верно" : "Ошибок: \(failures)")
 exit(failures == 0 ? 0 : 1)

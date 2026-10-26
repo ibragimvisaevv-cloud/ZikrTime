@@ -27,12 +27,12 @@ struct ShopView: View {
         let c = shop.catalog
         let lang = L10n.code
         let q = query.trimmingCharacters(in: .whitespaces)
-        let products = c.products.filter { p in
+        let products = c.rankedProducts(seed: shop.orderSeed).filter { p in
             (category == nil || p.category == category) &&
                 (q.isEmpty || p.title.get(lang).localizedCaseInsensitiveContains(q) ||
                     (c.seller(p.seller)?.name.localizedCaseInsensitiveContains(q) ?? false))
         }
-        let sellers = c.sellers.filter { category == nil || $0.categories.contains(category!) }
+        let sellers = c.rankedSellers(seed: shop.orderSeed).filter { category == nil || $0.categories.contains(category!) }
 
         Page {
             VStack(alignment: .leading, spacing: 2) {
@@ -360,6 +360,7 @@ struct SellerView: View {
                     Card { Text(s.description.get(L10n.code)).font(.body) }
                 }
                 ContactButtons(seller: s)
+                ReviewsView(target: "seller:" + s.id)
                 if !s.address.isEmpty {
                     Button { openMap(s) } label: {
                         Card {
@@ -495,8 +496,8 @@ func openURL(_ string: String) {
 private func openMap(_ s: ShopCatalog.Seller) {
     let name = s.name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
     if let lat = s.lat, let lon = s.lon {
-        openURL("https://maps.apple.com/?ll=\(lat),\(lon)&q=\(name)")
+        openURL("https://yandex.ru/maps/?rtext=~\(lat),\(lon)&rtt=pd")
     } else {
-        openURL("https://maps.apple.com/?q=" + (s.address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""))
+        openURL("https://yandex.ru/maps/?text=" + (s.address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""))
     }
 }

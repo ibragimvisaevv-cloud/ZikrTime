@@ -67,8 +67,13 @@ final class Store: ObservableObject {
     @Published var tasbihPhrase: Int { didSet { d.set(tasbihPhrase, forKey: K.tasbihPhrase) } }
     @Published private(set) var tasbihDays: [String: Int] { didSet { d.set(tasbihDays, forKey: K.tasbihDays) } }
 
+    @Published var ramadanShift: Int { didSet { d.set(ramadanShift, forKey: "ramadan_shift") } }
+    @Published var ramadanFasts: Set<String> { didSet { d.set(Array(ramadanFasts).sorted(), forKey: "ramadan_fasts") } }
+
     init(defaults: UserDefaults = .standard) {
         d = defaults
+        ramadanShift = max(-1, min(1, defaults.integer(forKey: "ramadan_shift")))
+        ramadanFasts = Set(defaults.stringArray(forKey: "ramadan_fasts") ?? [])
         onboarded = defaults.bool(forKey: K.onboarded)
         language = defaults.string(forKey: K.language) ?? ""
         if let data = defaults.data(forKey: K.city), let saved = try? JSONDecoder().decode(City.self, from: data) {

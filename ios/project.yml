@@ -9,11 +9,14 @@ options:
 settings:
   base:
     SWIFT_VERSION: "5.0"
-    MARKETING_VERSION: "0.5.3"
-    CURRENT_PROJECT_VERSION: "6"
+    MARKETING_VERSION: "0.8.3"
+    CURRENT_PROJECT_VERSION: "15"
     DEVELOPMENT_TEAM: ""
 targets:
   ZikrTime:
+    configFiles:
+      Debug: Local-Debug.xcconfig
+      Release: Local-Release.xcconfig
     type: application
     platform: iOS
     sources:
@@ -47,6 +50,7 @@ targets:
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
         UIAppFonts: [amiri.ttf]
         UIRequiresFullScreen: true
+        YandexMapKitKey: $(YANDEX_MAPKIT_KEY)
         NSAlarmKitUsageDescription: ZikrTime wakes you up for the Fajr prayer with the adhan at the time you choose.
         NSLocationWhenInUseUsageDescription: Your location is used only to calculate prayer times and the qibla direction.
         ITSAppUsesNonExemptEncryption: false
@@ -59,3 +63,4 @@ targets:
         GENERATE_INFOPLIST_FILE: NO
         CODE_SIGN_STYLE: Automatic
         ENABLE_PREVIEWS: NO
+        OTHER_LDFLAGS: $(inherited) -ObjC

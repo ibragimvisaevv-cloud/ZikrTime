@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Запускает приложение в симуляторе iPhone, открывает экраны и снимает скриншоты.
-set -u
+set -euo pipefail
 OUT=ci-out/screens
 mkdir -p "$OUT"
 APP=ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app
@@ -34,7 +34,7 @@ xcrun simctl status_bar "$UDID" override --time "9:41" --batteryState charged --
 xcrun simctl install "$UDID" "$APP"
 
 for lang in ru en; do
-  for s in onboarding onboarding_welcome onboarding_city home knowledge quiz quiz_cards shop shop_seller shop_product qibla more tasbih alarm prayer_settings language about focus; do
+  for s in onboarding onboarding_welcome onboarding_city home knowledge quiz quiz_cards shop shop_seller shop_product qibla more tasbih alarm prayer_settings language about focus places ramadan zakat; do
     xcrun simctl terminate "$UDID" "$BUNDLE" 2>/dev/null || true
     xcrun simctl launch "$UDID" "$BUNDLE" -qa_screen "$s" -qa_lang "$lang" -qa_demo 1 > /dev/null
     sleep 4

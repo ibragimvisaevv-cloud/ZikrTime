@@ -245,7 +245,7 @@
     <string name="about_title">About</string>
     <string name="about_version">Version %1$s</string>
     <string name="about_privacy_title">Privacy</string>
-    <string name="about_privacy_text">All your data — settings, marks and statistics — is stored only on this phone. The internet is used only to load prayer times (aladhan.com, dumrf.ru) and the shop catalog.</string>
+    <string name="about_privacy_text">Settings, prayer marks and statistics stay on your phone. Online prayer times, maps, places, the shop and metal prices use the internet. When you send a review, its text, rating, optional name and a random installation ID are sent for moderation. See the privacy policy for details.</string>
     <string name="about_times_title">Prayer times</string>
     <string name="about_times_text">Times come from aladhan.com or are calculated on the phone with the same astronomical formulas. A mosque\'s schedule may differ by a few minutes — use corrections in the settings.</string>
     <string name="about_quiz_title">Questions</string>

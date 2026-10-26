@@ -98,16 +98,22 @@ class AlarmService : Service() {
             .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
             .build()
 
-        fun play(setSource: MediaPlayer.() -> Unit): MediaPlayer? = runCatching {
-            MediaPlayer().apply {
-                setAudioAttributes(attributes)
-                setSource()
-                isLooping = true
-                setWakeMode(this@AlarmService, PowerManager.PARTIAL_WAKE_LOCK)
-                prepare()
-                start()
+        fun play(setSource: MediaPlayer.() -> Unit): MediaPlayer? {
+            val candidate = MediaPlayer()
+            return try {
+                candidate.apply {
+                    setAudioAttributes(attributes)
+                    setSource()
+                    isLooping = true
+                    setWakeMode(this@AlarmService, PowerManager.PARTIAL_WAKE_LOCK)
+                    prepare()
+                    start()
+                }
+            } catch (_: Exception) {
+                candidate.release()
+                null
             }
-        }.getOrNull()
+        }
 
         val adhanId = if (Store.alarmSound == "system") 0 else AdhanSound.resId(this, AdhanSound.voice(Store.alarmSound).id)
         player = if (adhanId != 0) {
@@ -136,6 +142,13 @@ class AlarmService : Service() {
     }
 
     private fun stopAlarm() {
+        releaseAlarm()
+        ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
+        stopSelf()
+    }
+
+    /** Одинаковая очистка при ручном выключении и завершении службы системой. */
+    private fun releaseAlarm() {
         handler.removeCallbacksAndMessages(null)
         fallbackStop = false
         player?.runCatching { stop() }
@@ -148,8 +161,6 @@ class AlarmService : Service() {
             savedVolume = -1
         }
         AlarmState.ringing = false
-        ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
-        stopSelf()
     }
 
     private fun notification(test: Boolean): Notification {
@@ -182,11 +193,7 @@ class AlarmService : Service() {
     }
 
     override fun onDestroy() {
-        handler.removeCallbacksAndMessages(null)
-        player?.release()
-        player = null
-        vibrator?.cancel()
-        AlarmState.ringing = false
+        releaseAlarm()
         super.onDestroy()
     }
 
