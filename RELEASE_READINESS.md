@@ -30,7 +30,7 @@ Screen Time и виджеты Android не перенесены в эту iPhone
 ## Проверки
 
 - Локально и в GitHub Actions: 14 Android unit-тестов прошли; проверка 8 языков прошла.
-- [Android, коммит `ea2432a`](https://github.com/ibragimvisaevv-cloud/ZikrTime/actions/runs/40394054976):
+- [Android, коммит `3a998a4`](https://github.com/ibragimvisaevv-cloud/ZikrTime/actions/runs/40396953734):
   подписанные APK/AAB собраны, Android Lint — 0 ошибок / 52 предупреждения,
   24 запуска экранов на Android 15 (API 35) на русском/английском без падений и пустых снимков.
   Снимки проверены визуально; первый пустой снимок предыдущего прогона устранён
@@ -39,13 +39,15 @@ Screen Time и виджеты Android не перенесены в эту iPhone
   `7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf` (SHA-256).
 - Swift core-тесты, Xcode, симулятор iPhone и неподписанная IPA: окончательный результат будет внесён после CI.
 - Физический Android/iPhone: не проверены.
+- Рабочая политика конфиденциальности отвечает HTTP 200, содержит контакт и не содержит
+  незаполненных шаблонов. Формат 4 656 мест и опубликованных отзывов сверён с моделями iOS.
 
 Готовые Android-файлы в локальной папке `build/release-0.8.3/`:
 
 | Файл | SHA-256 |
 | --- | --- |
-| `ZikrTime-0.8.3.apk` | `70314c22cf235b2a0af6bb321742db3de4f3413886e42b5d4e0177421fd8e9d8` |
-| `ZikrTime-0.8.3.aab` | `8f3dbfec9292e8d6140e8cce5be16ed3c00868933b6b694fceacaa02d8a8211c` |
+| `ZikrTime-0.8.3.apk` | `b71e2bcd5ead7e7941e4ea19d64f8feb204461f3f4b09a393a8fe31a8e8ef4cf` |
+| `ZikrTime-0.8.3.aab` | `b2c0bd42adf064b13a727f505e676ca55795816c1db308d246855bef48ef6ac4` |
 
 Ненулевые предупреждения Lint остаются: устаревшие зависимости, ресурсы/совместимость XML,
 мелкие рекомендации к UI и запрос исключения из оптимизации батареи для будильника и фокуса.
@@ -59,7 +61,7 @@ python3 tools/ios/build_strings.py
 python3 tools/ios/configure.py
 cd ios
 xcodegen generate
-pod install
+pod install --deployment
 open ZikrTime.xcworkspace
 ```
 

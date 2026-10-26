@@ -6,6 +6,11 @@ mkdir -p "$OUT"
 APP=ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app
 BUNDLE=com.zikrtime.ios
 
+# Simulator services can stall on hosted Macs. Bound each wait and retain build artifacts.
+timed() {
+  python3 -c 'import subprocess,sys; sys.exit(subprocess.run(sys.argv[2:], timeout=int(sys.argv[1])).returncode)' "$@"
+}
+
 # Выбираем iPhone на самой новой версии iOS (обычный, не Pro/Max — ближе к массовому телефону)
 UDID=$(xcrun simctl list devices available -j | python3 -c '
 import json, sys, re
@@ -28,15 +33,16 @@ print(best[1])
 print(best[2] + " / " + best[3], file=sys.stderr)
 ')
 echo "Симулятор: $UDID"
-xcrun simctl boot "$UDID" 2>/dev/null || true
-xcrun simctl bootstatus "$UDID" -b
+timed 30 xcrun simctl boot "$UDID" 2>/dev/null || true
+timed 240 xcrun simctl bootstatus "$UDID" -b
 xcrun simctl status_bar "$UDID" override --time "9:41" --batteryState charged --batteryLevel 100 --cellularBars 4 --wifiBars 3 2>/dev/null || true
-xcrun simctl install "$UDID" "$APP"
+timed 60 xcrun simctl install "$UDID" "$APP"
 
 capture() {
   local screen="$1" lang="$2" file="$3" launch pid
-  xcrun simctl terminate "$UDID" "$BUNDLE" 2>/dev/null || true
-  launch=$(xcrun simctl launch "$UDID" "$BUNDLE" -qa_screen "$screen" -qa_lang "$lang" -qa_demo 1)
+  timed 20 xcrun simctl terminate "$UDID" "$BUNDLE" 2>/dev/null || true
+  echo "Launching $lang/$screen"
+  launch=$(timed 45 xcrun simctl launch "$UDID" "$BUNDLE" -qa_screen "$screen" -qa_lang "$lang" -qa_demo 1)
   pid=${launch##*: }
   sleep 4
   # Simulator app processes run on the host. A screenshot alone can hide a crash.
@@ -44,7 +50,7 @@ capture() {
     echo "App exited on $lang/$screen: $launch" >&2
     return 1
   fi
-  xcrun simctl io "$UDID" screenshot "$OUT/$file.png" > /dev/null 2>&1
+  timed 20 xcrun simctl io "$UDID" screenshot "$OUT/$file.png" > /dev/null 2>&1
   echo "$lang $screen"
 }
 
