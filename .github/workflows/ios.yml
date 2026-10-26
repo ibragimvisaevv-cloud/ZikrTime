@@ -43,7 +43,7 @@ jobs:
 
   build:
     needs: logic
-    runs-on: macos-26
+    runs-on: macos-26-intel
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
@@ -62,7 +62,7 @@ jobs:
           command -v xcodegen >/dev/null || brew install xcodegen
           command -v pod >/dev/null || brew install cocoapods
           python3 tools/ios/configure.py
-          cd ios && xcodegen generate && pod install
+          cd ios && xcodegen generate && pod install --deployment
 
       - name: Сборка для симулятора
         run: |

@@ -76,7 +76,7 @@ jobs:
           python3 tools/ios/configure.py
           cd ios
           xcodegen generate
-          pod install
+          pod install --deployment
       - name: Build for iPhone simulator
         run: |
           mkdir -p ci-out

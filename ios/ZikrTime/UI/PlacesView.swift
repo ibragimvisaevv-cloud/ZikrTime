@@ -140,7 +140,7 @@ private struct PrayerPlacesMap: UIViewRepresentable {
     let select: (PrayerPlace) -> Void
     func makeCoordinator() -> Coordinator { Coordinator(select: select) }
     func makeUIView(context: Context) -> YMKMapView {
-        let view = YMKMapView(frame: .zero, vulkanPreferred: true)!
+        let view = YMKMapView(frame: .zero, vulkanPreferred: true, transparencySupport: false)!
         return view
     }
     func updateUIView(_ view: YMKMapView, context: Context) {

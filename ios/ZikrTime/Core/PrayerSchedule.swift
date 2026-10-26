@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 
 /// Время намаза из интернета (aladhan.com): месяц целиком, хранится на телефоне.
 @MainActor
