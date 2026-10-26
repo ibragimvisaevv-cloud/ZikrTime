@@ -3,6 +3,7 @@
 set -euo pipefail
 OUT=ci-out/screens
 mkdir -p "$OUT"
+trap 'find ~/Library/Logs/DiagnosticReports -name "ZikrTime*" -newer "$APP" -exec cp {} ci-out/ \; 2>/dev/null || true' EXIT
 APP=ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app
 BUNDLE=com.zikrtime.ios
 
@@ -66,7 +67,14 @@ capture() {
       echo "App exited on $lang/$screen: $launch" >&2
       return 1
     fi
-    timed 30 xcrun simctl io "$UDID" screenshot "$OUT/$file.png" > /dev/null 2>&1
+    # The hosted Intel simulator may spend over 30 seconds encoding a full-size PNG.
+    # Keep the command's diagnostics and never reuse an older frame after a failure.
+    python3 -c 'import pathlib,sys; pathlib.Path(sys.argv[1]).unlink(missing_ok=True)' "$OUT/$file.png"
+    if ! timed 120 xcrun simctl io "$UDID" screenshot "$OUT/$file.png" > "ci-out/capture-$file.log" 2>&1; then
+      cat "ci-out/capture-$file.log" >&2
+      echo "Screenshot command failed on $lang/$screen (attempt $attempt)" >&2
+      continue
+    fi
     if "$CHECK_ENV/bin/python" tools/ci/check_screen.py "$OUT/$file.png"; then
       echo "$lang $screen"
       return 0
@@ -94,6 +102,4 @@ for s in $DARK_SCREENS; do
   capture "$s" ru "dark_ru_${s}"
 done
 xcrun simctl ui "$UDID" appearance light
-# Журнал падений приложения, если были
-find ~/Library/Logs/DiagnosticReports -name "ZikrTime*" -newer "$APP" -exec cp {} ci-out/ \; 2>/dev/null || true
 echo done > ci-out/screens-done.txt
