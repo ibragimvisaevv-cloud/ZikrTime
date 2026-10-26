@@ -10,6 +10,7 @@ import AlarmKit
 @MainActor
 enum PrayerNotifications {
     static let prefix = "prayer_"
+    private static let updates = SerialUpdate()
     private static var center: UNUserNotificationCenter { UNUserNotificationCenter.current() }
 
     @discardableResult
@@ -26,6 +27,10 @@ enum PrayerNotifications {
     /// до 24 о намазах, до 9 пятничных и до 30 — запасной будильник на старых iOS).
     static func reschedule() async {
         if QA.active { return }
+        await updates.submit { await replaceSchedule() }.value
+    }
+
+    private static func replaceSchedule() async {
         let pending = await center.pendingNotificationRequests()
         center.removePendingNotificationRequests(withIdentifiers: pending.map(\.identifier).filter { $0.hasPrefix(prefix) })
         let store = Store.shared
@@ -60,6 +65,7 @@ enum PrayerNotifications {
 @MainActor
 enum FajrAlarm {
     private static let fallbackPrefix = "fajr_"
+    private static let updates = SerialUpdate()
     private static var center: UNUserNotificationCenter { UNUserNotificationCenter.current() }
 
     /// Есть ли системные будильники (iOS 26 и новее).
@@ -83,6 +89,10 @@ enum FajrAlarm {
     /// Переставляет будильники после любых изменений (время намаза, город, настройки).
     static func reschedule() async {
         if QA.active { return }
+        await updates.submit { await replaceSchedule() }.value
+    }
+
+    private static func replaceSchedule() async {
         await cancelAll()
         guard Store.shared.alarmEnabled else { return }
         #if canImport(AlarmKit)

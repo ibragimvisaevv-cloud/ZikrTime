@@ -58,6 +58,7 @@ final class AdhanPreview: NSObject, ObservableObject, AVAudioPlayerDelegate {
 @MainActor
 enum FridayReminders {
     static let prefix = "friday_"
+    private static let updates = SerialUpdate()
     static let items = Array(1...7)
 
     static func text(_ n: Int) -> String { L("friday_\(n)_text") }
@@ -96,6 +97,10 @@ enum FridayReminders {
     /// Планирует напоминания на ближайшие 3 пятницы.
     static func reschedule() async {
         if QA.active { return }
+        await updates.submit { await replaceSchedule() }.value
+    }
+
+    private static func replaceSchedule() async {
         let center = UNUserNotificationCenter.current()
         let pending = await center.pendingNotificationRequests()
         center.removePendingNotificationRequests(withIdentifiers: pending.map(\.identifier).filter { $0.hasPrefix(prefix) })

@@ -15,3 +15,7 @@ swiftc -O -o build-logic/logic-check \
   ios/ZikrTime/Core/FajrPlan.swift \
   build-logic/main.swift
 ./build-logic/logic-check "$(pwd)"
+swiftc -O -o build-logic/serial-update-check \
+  ios/ZikrTime/Core/SerialUpdate.swift \
+  ios/Tests/SerialUpdateCheck.swift
+./build-logic/serial-update-check
