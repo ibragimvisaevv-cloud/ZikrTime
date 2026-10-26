@@ -134,7 +134,7 @@ fun QiblaScreen() {
     val aligned = relative != null && abs(relative) < 5f
     var wasAligned by remember { mutableStateOf(false) }
     LaunchedEffect(aligned) {
-        if (aligned && !wasAligned) view.performHapticFeedback(HapticFeedbackConstants.CONFIRM)
+        if (aligned && !wasAligned) view.performHapticFeedback(if (android.os.Build.VERSION.SDK_INT >= 30) HapticFeedbackConstants.CONFIRM else HapticFeedbackConstants.VIRTUAL_KEY)
         wasAligned = aligned
     }
 

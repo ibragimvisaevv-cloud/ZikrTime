@@ -137,7 +137,11 @@ object FridayReminders {
             .setContentIntent(open)
             .setAutoCancel(true)
             .build()
-        runCatching { nm.notify(REQUEST + slot.ordinal, notification) }
+        try {
+            nm.notify(REQUEST + slot.ordinal, notification)
+        } catch (_: SecurityException) {
+            // Notification permission may be revoked after areNotificationsEnabled().
+        }
     }
 }
 
