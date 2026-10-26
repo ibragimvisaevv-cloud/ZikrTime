@@ -15,6 +15,7 @@ final class OnlineTimes: ObservableObject {
     @Published private(set) var updatedAt: Date?
     @Published private(set) var loading = false
 
+    private var requestSerial = 0
     private let prefix = "otimes_"
     private let order: [Prayer] = [.fajr, .sunrise, .dhuhr, .asr, .maghrib, .isha]
     private var memory: [String: [String: Day]] = [:]
@@ -46,12 +47,16 @@ final class OnlineTimes: ObservableObject {
     /// Загружает текущий месяц (и следующий, если до конца месяца меньше 10 дней).
     @discardableResult
     func refresh(force: Bool = false) async -> Bool {
-        guard Store.shared.onlineTimes else { return false }
+        requestSerial += 1
+        let serial = requestSerial
+        let source = signature()
+        guard Store.shared.onlineTimes else { loading = false; return false }
+        loading = true
+        defer { if serial == requestSerial { loading = false } }
         guard let method = Store.shared.method.aladhanId else {
             // Московская Соборная мечеть — своё расписание с dumrf.ru.
-            loading = true
             let ok = await DumrfLive.refresh(force: force)
-            loading = false
+            guard serial == requestSerial, Store.shared.onlineTimes, signature() == source else { return false }
             if ok {
                 updatedAt = DumrfLive.updatedAt
                 version += 1
@@ -65,14 +70,14 @@ final class OnlineTimes: ObservableObject {
         }
         let city = Store.shared.city
         let school = Store.shared.madhab == .hanafi ? 1 : 0
-        loading = true
-        defer { loading = false }
         var ok = true
         var changed = false
         for (year, month) in months {
             let k = key(year: year, month: month)
             if !force && defaults.string(forKey: k) != nil { continue }
-            if let encoded = await download(city: city, year: year, month: month, method: method, school: school) {
+            let downloaded = await download(city: city, year: year, month: month, method: method, school: school)
+            guard serial == requestSerial, Store.shared.onlineTimes, signature() == source else { return false }
+            if let encoded = downloaded {
                 defaults.set(encoded, forKey: k)
                 memory[k] = nil
                 changed = true

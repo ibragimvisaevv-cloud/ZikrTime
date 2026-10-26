@@ -14,10 +14,26 @@ final class RemoteDocument<Value: Decodable>: ObservableObject {
 
     init(_ name: String) {
         self.name = name
+        #if DEBUG
+        if QA.active {
+            let fixture = name == "places" ? Self.placesFixture : Self.reviewsFixture
+            value = try? JSONDecoder().decode(Value.self, from: Data(fixture.utf8))
+            return
+        }
+        #endif
         if let data = defaults.data(forKey: "community_" + name) {
             value = try? JSONDecoder().decode(Value.self, from: data)
         }
     }
+
+    #if DEBUG
+    private static var placesFixture: String {
+        #"{"places":[{"id":"qa_mosque","kind":"mosque","name":"Московская Соборная мечеть","lat":55.7794,"lon":37.6267,"address":"Выползов переулок, 7","who":"both","wudu":true,"src":"osm"}],"seller_bot":""}"#
+    }
+    private static var reviewsFixture: String {
+        #"{"reviews":{"place:qa_mosque":{"avg":5.0,"n":1,"items":[{"r":5,"t":"Пример отзыва для проверки интерфейса","n":"Тест","d":1792886400}]}}}"#
+    }
+    #endif
 
     func refresh(force: Bool = false) async {
         guard !loading, force || Date().timeIntervalSince(updated) >= 60 else { return }
