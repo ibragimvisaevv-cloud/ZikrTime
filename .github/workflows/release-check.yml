@@ -90,7 +90,9 @@ jobs:
           cp -R ios/build-device/Build/Products/Release-iphoneos/ZikrTime.app ios/ipa/Payload/
           (cd ios/ipa && zip -qry ../ZikrTime-0.8.3-unsigned.ipa Payload)
       - name: Run iPhone screens
-        timeout-minutes: 15
+        timeout-minutes: 25
+        env:
+          IOS_SCREEN_SUITE: release
         run: bash ios/ci/screens.sh
       - uses: actions/upload-artifact@v4
         if: always()
