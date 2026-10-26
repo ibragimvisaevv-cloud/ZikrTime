@@ -71,7 +71,8 @@ jobs:
           git diff --exit-code ios/ZikrTime/Resources
       - name: Generate project and install map SDK
         run: |
-          brew install xcodegen cocoapods
+          command -v xcodegen >/dev/null || brew install xcodegen
+          command -v pod >/dev/null || brew install cocoapods
           python3 tools/ios/configure.py
           cd ios
           xcodegen generate
