@@ -54,12 +54,19 @@ struct ZakatView: View {
     private func fields(_ keys: [String]) -> some View {
         ForEach(keys, id: \.self) { key in
             VStack(alignment: .leading, spacing: 6) {
-                Text(L("zakat_" + key)).font(.caption).foregroundStyle(Brand.secondaryText)
-                TextField("0", text: Binding(get: { values[key] ?? "" }, set: { value in
+                Text(L("zakat_" + key)).font(.subheadline).foregroundStyle(Brand.secondaryText)
+                TextField("", text: Binding(get: { values[key] ?? "" }, set: { value in
                     values[key] = String(value.filter { $0.isNumber || $0 == "," || $0 == "." }.prefix(15))
-                }))
+                }), prompt: Text("0").foregroundColor(Brand.secondaryText))
                 .keyboardType(.decimalPad)
-                .textFieldStyle(.roundedBorder)
+                .textFieldStyle(.plain)
+                .font(.body.monospacedDigit())
+                .foregroundColor(.primary)
+                .tint(Brand.primary)
+                .padding(.horizontal, 12)
+                .frame(minHeight: 44)
+                .background(Brand.card, in: RoundedRectangle(cornerRadius: 10))
+                .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(Brand.secondaryText.opacity(0.65), lineWidth: 1))
                 .accessibilityLabel(L("zakat_" + key))
             }.padding(.top, 12)
         }

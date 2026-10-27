@@ -57,9 +57,30 @@ timed 60 xcrun simctl install "$UDID" "$APP"
 capture() {
   local screen="$1" lang="$2" file="$3" launch pid
   timed 20 xcrun simctl terminate "$UDID" "$BUNDLE" 2>/dev/null || true
+  local map_marker=""
+  if [ "$screen" = places ]; then
+    map_marker="$(timed 30 xcrun simctl get_app_container "$UDID" "$BUNDLE" data)/Documents/qa-map-loaded.txt"
+    rm -f "$map_marker"
+  fi
   echo "Launching $lang/$screen"
   launch=$(timed 90 xcrun simctl launch "$UDID" "$BUNDLE" -qa_screen "$screen" -qa_lang "$lang" -qa_demo 1)
   pid=${launch##*: }
+  if [ "$screen" = places ]; then
+    for map_attempt in {1..45}; do
+      if ! kill -0 "$pid" 2>/dev/null; then
+        echo "App exited while loading map: $lang/$screen" >&2
+        return 1
+      fi
+      if [ -s "$map_marker" ]; then break; fi
+      sleep 2
+    done
+    if [ ! -s "$map_marker" ]; then
+      echo "Map tiles did not finish loading within 90 seconds: $lang/$screen" | tee "ci-out/map-$file.log"
+      timed 120 xcrun simctl io "$UDID" screenshot "$OUT/$file-timeout.png" > "ci-out/capture-$file-timeout.log" 2>&1 || true
+      return 1
+    fi
+    cp "$map_marker" "ci-out/map-$file.log"
+  fi
   for attempt in {1..12}; do
     sleep 3
     # Simulator app processes run on the host. A screenshot alone can hide a crash.

@@ -147,6 +147,10 @@ private struct PrayerPlacesMap: UIViewRepresentable {
         let map: YMKMap = view.mapWindow.map
         let center = "\(latitude),\(longitude)"
         if context.coordinator.center != center {
+            #if DEBUG
+            // CI must observe loaded tiles, not just markers on an empty map.
+            if QA.active { map.setMapLoadedListenerWith(context.coordinator) }
+            #endif
             map.move(with: YMKCameraPosition(target: YMKPoint(latitude: latitude, longitude: longitude), zoom: 11, azimuth: 0, tilt: 0))
             context.coordinator.center = center
         }
@@ -164,12 +168,24 @@ private struct PrayerPlacesMap: UIViewRepresentable {
             mark.addTapListener(with: context.coordinator)
         }
     }
-    final class Coordinator: NSObject, YMKMapObjectTapListener {
+    final class Coordinator: NSObject, YMKMapObjectTapListener, YMKMapLoadedListener {
         let select: (PrayerPlace) -> Void
         var center = ""
         var ids: [String] = []
         var places: [String: PrayerPlace] = [:]
         init(select: @escaping (PrayerPlace) -> Void) { self.select = select }
+        func onMapLoaded(with statistics: YMKMapLoadStatistics) {
+            #if DEBUG
+            guard QA.active else { return }
+            let file = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+                .appendingPathComponent("qa-map-loaded.txt")
+            do {
+                try Data("visible tiles loaded\n".utf8).write(to: file, options: .atomic)
+            } catch {
+                print("Could not record map load: \(error)")
+            }
+            #endif
+        }
         func onMapObjectTap(with mapObject: YMKMapObject, point: YMKPoint) -> Bool {
             guard let id = mapObject.userData as? String, let place = places[id] else { return false }
             select(place)

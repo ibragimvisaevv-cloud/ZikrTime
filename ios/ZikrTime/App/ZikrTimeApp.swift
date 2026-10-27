@@ -92,6 +92,11 @@ enum QA {
             Store.shared.language = lang
         }
         if d.bool(forKey: "qa_demo") { Store.shared.seedDemo() }
+        if screen == "zakat", d.bool(forKey: "qa_demo") {
+            // Show both entered amounts and empty prompts in screenshot checks.
+            d.set(["cash": "150000", "gold_g": "12.5", "gold_price": "8000", "silver_price": "100"],
+                  forKey: "zakat_inputs")
+        }
         if let s = screen, s.hasPrefix("onboarding") { Store.shared.onboarded = false }
     }
 
