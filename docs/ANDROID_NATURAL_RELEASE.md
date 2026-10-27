@@ -49,4 +49,4 @@ AAB SHA-256: `bba6703ba1d7a3cce8dd011f86d050c1557136cbafccffab967ff0fc14fdefe5`.
 
 iOS в этом задании не изменялась и не собиралась; продолжение только по отдельной команде. Main и магазины не изменены.
 
-Тестовый prerelease: https://github.com/ibragimvisaevv-cloud/ZikrTime/releases/tag/v0.8.3-natural.1
+Файл для теста: `ZikrTime-0.8.3-natural.apk`, доступен в облачном чате вместе с архивом экранов и видео. Попытка публикации отдельного GitHub prerelease завершилась HTTP 403 (Resource not accessible by integration) в прогоне 40478896589. Релиз `v0.8.3-natural.1` не создан; существующий публичный `v0.8.3-rc.1` остаётся прежним. Дополнительные токены и права не запрашивались. Неудачный одноразовый workflow публикации удалён.
