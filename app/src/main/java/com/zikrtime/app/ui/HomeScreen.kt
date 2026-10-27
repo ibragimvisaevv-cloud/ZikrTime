@@ -1,5 +1,6 @@
 package com.zikrtime.app.ui
 
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -67,11 +68,12 @@ import kotlin.math.roundToInt
 fun HomeScreen() {
     val nav = LocalNav.current
     val context = LocalContext.current
-    var now by remember { mutableStateOf(ZonedDateTime.now()) }
+    val zone = CityZones.forCity(Store.location.id, OnlineTimes.day(java.time.LocalDate.now())?.zone ?: java.time.ZoneId.systemDefault())
+    var now by remember(zone) { mutableStateOf(ZonedDateTime.now(zone)) }
     val today = now.toLocalDate()
     val adjustments = Prayer.entries.map { Store.adjustment(it) }
-    val times = remember(today, Store.location, Store.method, Store.madhab, Store.onlineTimes, OnlineTimes.version, adjustments) {
-        PrayerSchedule.forDate(today)
+    val times = remember(today, zone, Store.location, Store.method, Store.madhab, Store.onlineTimes, OnlineTimes.version, adjustments) {
+        PrayerSchedule.forDate(today, zone)
     }
     val next = remember(now, times) { PrayerSchedule.next(now) }
     val previousStart = remember(now, times) { PrayerSchedule.recentStarts(now).map { it.time }.filter { !it.isAfter(now.toInstant()) }.maxOrNull() }
@@ -82,13 +84,13 @@ fun HomeScreen() {
         }
     }
 
-    val nextAt by androidx.compose.runtime.rememberUpdatedState(next.second)
-    LaunchedEffect(Unit) {
-        while (true) {
-            delay(1_000)
-            val n = ZonedDateTime.now()
-            // Раз в 15 секунд или сразу, как только наступил намаз.
-            if (Duration.between(now, n).seconds >= 15 || (now.isBefore(nextAt) && !n.isBefore(nextAt))) now = n
+    val lifecycle = androidx.compose.ui.platform.LocalLifecycleOwner.current.lifecycle
+    LaunchedEffect(zone, lifecycle, AppEvents.resumeCount) {
+        lifecycle.repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.RESUMED) {
+            while (true) {
+                now = ZonedDateTime.now(zone)
+                delay(15_000)
+            }
         }
     }
 
@@ -125,7 +127,17 @@ fun HomeScreen() {
             }
         }
 
-        SkyHero(next.first, next.second, previousStart?.let { java.time.Instant.from(it) }, times)
+        NaturalSkyHero(now, next.first, next.second, times)
+        ZCard(onClick = { nav.open(Screen.TASBIH) }) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                androidx.compose.foundation.Image(painterResource(R.drawable.stone_bead), null, Modifier.size(64.dp))
+                Column(Modifier.weight(1f)) {
+                    Text(stringResource(R.string.tasbih_title), style = MaterialTheme.typography.titleLarge)
+                    Text(stringResource(R.string.tasbih_today, Store.tasbihToday(today)), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                Text("›", fontSize = 28.sp)
+            }
+        }
 
         // Намазы на сегодня
         ZCard(padding = androidx.compose.foundation.layout.PaddingValues(horizontal = 12.dp, vertical = 12.dp)) {

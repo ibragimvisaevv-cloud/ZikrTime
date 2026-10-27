@@ -45,6 +45,9 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -366,122 +369,77 @@ fun TasbihScreen() {
                 textAlign = TextAlign.Center,
             )
         }
-        // Чётки: 33 бусины по кругу. Нажатие или движение пальцем вниз «перекидывает» бусину.
         val context = LocalContext.current
-        var burst by remember { mutableIntStateOf(0) }
-        val count33 = count % 33
-        val lit = if (count > 0 && count33 == 0) 33 else count33
-        val turn by androidx.compose.animation.core.animateFloatAsState(
-            -count * (360f / 33f),
-            androidx.compose.animation.core.spring(dampingRatio = 0.62f, stiffness = 260f),
-            label = "beads",
-        )
-        val pop = remember { androidx.compose.animation.core.Animatable(0f) }
-        LaunchedEffect(count) {
-            if (count > 0) {
-                pop.snapTo(1f)
-                pop.animateTo(0f, androidx.compose.animation.core.spring(dampingRatio = 0.4f, stiffness = 300f))
-            }
+        val travel = remember { BeadTravel(count, phrase) }
+        val turn = remember { androidx.compose.animation.core.Animatable(0f) }
+        val resume = AppEvents.resumeCount
+        val motionEnabled = remember(resume) {
+            android.provider.Settings.Global.getFloat(context.contentResolver, android.provider.Settings.Global.ANIMATOR_DURATION_SCALE, 1f) != 0f
         }
-        val press = remember { MutableInteractionSource() }
+        LaunchedEffect(count, phrase, motionEnabled) {
+            val reset = travel.update(count, phrase)
+            val destination = -travel.steps * (360f / 24f)
+            if (reset || !motionEnabled) turn.snapTo(destination)
+            else turn.animateTo(destination, androidx.compose.animation.core.tween(230, easing = androidx.compose.animation.core.FastOutSlowInEasing))
+        }
+        // Persist the count immediately; coalesce expensive widget redraws after a burst.
+        LaunchedEffect(count) {
+            kotlinx.coroutines.delay(300)
+            com.zikrtime.app.widget.Widgets.updateTasbih(context)
+        }
+        androidx.compose.runtime.DisposableEffect(Unit) {
+            onDispose { com.zikrtime.app.widget.Widgets.updateTasbih(context) }
+        }
+        val bead = androidx.compose.ui.graphics.ImageBitmap.imageResource(R.drawable.stone_bead)
+        val latestTarget by androidx.compose.runtime.rememberUpdatedState(target)
         fun addOne() {
             Store.addTasbih()
-            com.zikrtime.app.widget.Widgets.updateTasbih(context)
             val c = Store.tasbihCount
             when {
-                target > 0 && c % target == 0 -> {
-                    Haptics.done(context)
-                    burst++
-                }
-                c % 33 == 0 -> {
-                    Haptics.lap(context)
-                    burst++
-                }
+                latestTarget > 0 && c % latestTarget == 0 -> Haptics.done(context)
+                c % 33 == 0 -> Haptics.lap(context)
                 else -> Haptics.tick(context)
             }
         }
-        Box(Modifier.fillMaxWidth().aspectRatio(1f), contentAlignment = Alignment.Center) {
-            Box(
-                Modifier
-                    .fillMaxSize()
-                    .padding(14.dp)
-                    .pressScale(press, 0.97f)
-                    .clip(CircleShape)
-                    .background(Brush.radialGradient(listOf(EmeraldBright, Emerald, EmeraldDeep)))
-                    .border(1.5.dp, Brush.linearGradient(listOf(GoldLight.copy(alpha = 0.8f), Gold.copy(alpha = 0.2f), GoldLight.copy(alpha = 0.6f))), CircleShape)
-                    .pointerInput(target) {
-                        var dragged = 0f
-                        detectVerticalDragGestures(
-                            onDragStart = { dragged = 0f },
-                            onVerticalDrag = { change, dy ->
-                                change.consume()
-                                dragged += dy
-                                if (dragged > 46.dp.toPx()) {
-                                    dragged = 0f
-                                    addOne()
-                                }
-                            },
-                        )
-                    }
-                    .clickable(interactionSource = press, indication = null) { addOne() },
-                contentAlignment = Alignment.Center,
-            ) {
-                StarPattern(Modifier.fillMaxSize().parallax(8.dp, overscan = true), color = Gold.copy(alpha = 0.08f))
-                Canvas(Modifier.fillMaxSize().padding(10.dp)) {
-                    val ringR = size.minDimension / 2 - 16.dp.toPx()
-                    val beadR = (ringR * sin(Math.PI / 33).toFloat() * 0.86f)
-                    drawCircle(Cream.copy(alpha = 0.18f), ringR, center, style = Stroke(1.2.dp.toPx()))
-                    for (k in 0 until 33) {
-                        val d = ((count - k) % 33 + 33) % 33
-                        val on = d < lit
-                        val angle = Math.toRadians((k * 360.0 / 33) + turn - 90)
-                        val c = Offset(center.x + ringR * cos(angle).toFloat(), center.y + ringR * sin(angle).toFloat())
-                        val scale = if (d == 0 && count > 0) 1f + 0.55f * pop.value else 1f
-                        val r = beadR * scale
-                        if (on) {
-                            drawCircle(Gold.copy(alpha = 0.25f), r * 1.5f, c)
-                            drawCircle(Brush.radialGradient(BeadGold, Offset(c.x - r * 0.35f, c.y - r * 0.35f), r * 1.4f), r, c)
-                        } else {
-                            drawCircle(Brush.radialGradient(BeadIdle, Offset(c.x - r * 0.35f, c.y - r * 0.35f), r * 1.4f), r, c)
-                            drawCircle(Cream.copy(alpha = 0.22f), r, c, style = Stroke(0.8.dp.toPx()))
-                        }
-                    }
-                    // Прогресс до цели — тонкая золотая дуга внутри
-                    if (target > 0) {
-                        val inner = ringR - beadR * 2.6f
-                        drawArc(
-                            Cream.copy(alpha = 0.12f), 0f, 360f, false,
-                            Offset(center.x - inner, center.y - inner), androidx.compose.ui.geometry.Size(inner * 2, inner * 2),
-                            style = Stroke(3.dp.toPx()),
-                        )
-                        drawArc(
-                            Gold, -90f, 360f * progress, false,
-                            Offset(center.x - inner, center.y - inner), androidx.compose.ui.geometry.Size(inner * 2, inner * 2),
-                            style = Stroke(3.dp.toPx(), cap = StrokeCap.Round),
-                        )
-                    }
-                }
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        (if (target > 0) count % target else count).toString(),
-                        fontSize = 68.sp,
-                        color = Cream,
-                        style = Tabular,
-                        modifier = Modifier.graphicsLayer {
-                            val sc = 1f + 0.08f * pop.value
-                            scaleX = sc
-                            scaleY = sc
-                        },
-                    )
-                    if (target > 0) {
-                        Text(stringResource(R.string.tasbih_of, target), style = MaterialTheme.typography.titleMedium, color = Cream.copy(alpha = 0.8f))
-                    }
-                    if (laps > 0) {
-                        Text(stringResource(R.string.tasbih_laps, laps), style = MaterialTheme.typography.labelLarge, color = Gold)
-                    }
-                }
+        Box(Modifier.fillMaxWidth().aspectRatio(1f)
+            .clip(RoundedCornerShape(28.dp))
+            .background(Brush.radialGradient(listOf(Color(0xFF304151), Color(0xFF111D2A))))
+            .pointerInput(Unit) {
+                var dragged = 0f
+                detectVerticalDragGestures(onDragStart = { dragged = 0f }, onVerticalDrag = { change, dy ->
+                    change.consume()
+                    dragged += dy
+                    while (dragged > 46.dp.toPx()) { dragged -= 46.dp.toPx(); addOne() }
+                })
             }
-            RingBurst(burst, Modifier.fillMaxSize())
+            .clickable(role = androidx.compose.ui.semantics.Role.Button, onClickLabel = stringResource(R.string.tasbih_tap_hint)) { addOne() }
+            .semantics { contentDescription = "tasbih-counter" },
+            contentAlignment = Alignment.Center) {
+            Canvas(Modifier.fillMaxSize().padding(10.dp)) {
+                val radius = size.minDimension * 0.405f
+                val beadR = radius * 0.135f
+                drawCircle(Color(0xFF59625B), radius, style = Stroke(2.dp.toPx()))
+                for (k in 0 until 24) {
+                    val angle = Math.toRadians(k * 15.0 + turn.value - 90)
+                    val x = center.x + radius * cos(angle).toFloat()
+                    val y = center.y + radius * sin(angle).toFloat()
+                    drawCircle(Color.Black.copy(alpha = 0.32f), beadR * 1.06f, Offset(x + 1.dp.toPx(), y + 3.dp.toPx()))
+                    drawImage(bead, dstOffset = IntOffset((x-beadR).roundToInt(), (y-beadR).roundToInt()),
+                        dstSize = androidx.compose.ui.unit.IntSize((beadR*2).roundToInt(), (beadR*2).roundToInt()))
+                }
+                val inner = radius - beadR * 1.8f
+                drawCircle(Color(0xFF20303E), inner)
+                drawCircle(Color(0xFF405060), inner, style = Stroke(1.dp.toPx()))
+                if (target > 0) drawArc(Color(0xFFA4CDB7), -90f, 360f * progress, false,
+                    Offset(center.x-inner+6.dp.toPx(), center.y-inner+6.dp.toPx()),
+                    androidx.compose.ui.geometry.Size((inner-6.dp.toPx())*2, (inner-6.dp.toPx())*2),
+                    style = Stroke(3.dp.toPx(), cap = StrokeCap.Round))
+            }
+            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth(0.48f)) {
+                Text((if (target > 0) count % target else count).toString(), fontSize = 56.sp, color = Color.White, style = Tabular, maxLines = 1)
+                if (target > 0) Text(stringResource(R.string.tasbih_of, target), color = Color(0xFFCAD5DE), textAlign = TextAlign.Center)
+                if (laps > 0) Text(stringResource(R.string.tasbih_laps, laps), color = Color(0xFFA4CDB7), textAlign = TextAlign.Center)
+            }
         }
         Text(stringResource(R.string.tasbih_tap_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
         ZCard {

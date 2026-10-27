@@ -10,6 +10,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   swift-logic:
+    if: ${{ !contains(github.event.head_commit.message, '[android-only]') }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -34,6 +35,20 @@ jobs:
           if [ -n "$RELEASE_KEY_PASSWORD" ]; then
             openssl enc -d -aes-256-cbc -pbkdf2 -iter 300000 -in keystore/release.jks.enc -out keystore/release.jks -pass env:RELEASE_KEY_PASSWORD
           fi
+      - name: Baseline release sizes for natural UI
+        if: contains(github.event.head_commit.message, '[natural-ui]')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p ci-out/baseline
+          gh run download 40405870652 -n Android-release-check -D ci-out/baseline
+          python3 - <<'PYCODE'
+          import pathlib,hashlib,json
+          files=list(pathlib.Path('ci-out/baseline').rglob('app-release.apk'))+list(pathlib.Path('ci-out/baseline').rglob('app-release.aab'))
+          assert len(files)==2
+          pathlib.Path('app/build/reports').mkdir(parents=True,exist_ok=True)
+          pathlib.Path('app/build/reports/baseline-sizes.json').write_text(json.dumps({p.name:{'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in files},indent=2))
+          PYCODE
       - name: Tests, lint, APK and AAB
         env:
           RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
@@ -58,6 +73,7 @@ jobs:
             app/build/test-results/
             app/build/reports/android-signature.txt
   ios:
+    if: ${{ !contains(github.event.head_commit.message, '[android-only]') }}
     runs-on: macos-26-intel
     timeout-minutes: 40
     steps:
@@ -125,9 +141,9 @@ jobs:
           api-level: 35
           target: google_apis
           arch: x86_64
-          disable-animations: true
+          disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: bash tools/ci/release_smoke.sh android-out/outputs/apk/debug/app-debug.apk
+          script: ${{ contains(github.event.head_commit.message, '[natural-ui]') && 'bash tools/ci/natural_smoke.sh android-out/outputs/apk/debug/app-debug.apk' || 'bash tools/ci/release_smoke.sh android-out/outputs/apk/debug/app-debug.apk' }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
