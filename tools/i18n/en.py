@@ -276,7 +276,7 @@ STRINGS = {
     "about_title": "About",
     "about_version": "Version %1$s",
     "about_privacy_title": "Privacy",
-    "about_privacy_text": "All your data — settings, marks and statistics — is stored only on this phone. The internet is used only to load prayer times (aladhan.com, dumrf.ru) and the shop catalog.",
+    "about_privacy_text": "Settings, prayer marks and statistics stay on your phone. Online prayer times, maps, places, the shop and metal prices use the internet. When you send a review, its text, rating, optional name and a random installation ID are sent for moderation. See the privacy policy for details.",
     "about_times_title": "Prayer times",
     "about_times_text": "Times come from aladhan.com or are calculated on the phone with the same astronomical formulas. A mosque's schedule may differ by a few minutes — use corrections in the settings.",
     "about_quiz_title": "Questions",

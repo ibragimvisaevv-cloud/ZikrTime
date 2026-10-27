@@ -9,3 +9,9 @@ captures/
 .kotlin/
 __pycache__/
 keystore/*.jks
+
+ios/Pods/
+ios/*.xcworkspace/
+ios/*.xcodeproj/
+ios/Local*.xcconfig
+build-logic/
