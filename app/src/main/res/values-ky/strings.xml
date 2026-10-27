@@ -467,6 +467,8 @@
     <string name="learning_review_done">Жооптор сакталды. Суроолор кайталоо тартибине ылайык кайра чыгат.</string>
     <string name="learning_no_bonus">Бул айлампага кошумча мүнөт берилген жок.</string>
     <string name="learning_bonus_rule">Күнүнө %1$d кошумча мүнөткө чейин. Бир суроо 24 саатта бир гана жолу бонус берет; үч жарактуу туура жооп керек.</string>
+    <string name="learning_clear">Окуу тарыхын тазалоо</string>
+    <string name="learning_clear_confirmation">Кайталоо кезеги, сакталган жооптор жана бүтө элек сабак өчүрүлөт. Жеке статистика, кошумча мүнөттөр, фокус жөндөөлөрү жана тасбих эсептегичи сакталат. Окуу тарыхы тазалансынбы?</string>
     <string name="place_unknown">Маалымат жок</string>
     <string name="place_yes">Бар</string>
     <string name="place_no">Жок</string>

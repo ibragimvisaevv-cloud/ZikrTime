@@ -49,23 +49,29 @@ def ui():
 
 def find_control(root, identifier, attribute='resource-id'):
     return next((n for n in root.iter('node') if n.attrib.get(attribute) == identifier
-                 or (attribute == 'resource-id' and n.attrib.get('content-desc') == identifier)), None)
+                 or (attribute == 'resource-id' and (
+                     n.attrib.get(attribute, '').endswith('/' + identifier)
+                     or n.attrib.get('content-desc') == identifier))), None)
 
 
-def tap_control(identifier, attribute='resource-id'):
+def locate_control(identifier, attribute='resource-id'):
     for attempt in range(7):
         root = ui()
         node = find_control(root, identifier, attribute)
         if node is not None:
-            left, top, right, bottom = map(int, re.findall(r'\d+', node.attrib['bounds']))
-            shell('input', 'tap', (left + right) // 2, (top + bottom) // 2)
-            time.sleep(.7)
-            return
+            return node
         screen = next(root.iter('node'))
         _, _, width, height = map(int, re.findall(r'\d+', screen.attrib['bounds']))
         # Screen edge avoids the tasbih gesture detector and does not increment its count.
         shell('input', 'swipe', 5, int(height * .8), 5, int(height * .3), 350)
     raise AssertionError('UI control not found: ' + identifier)
+
+
+def tap_control(identifier, attribute='resource-id'):
+    node = locate_control(identifier, attribute)
+    left, top, right, bottom = map(int, re.findall(r'\d+', node.attrib['bounds']))
+    shell('input', 'tap', (left + right) // 2, (top + bottom) // 2)
+    time.sleep(.7)
 
 
 def screenshot(name):
@@ -346,6 +352,50 @@ elif mode == 'clear-progress':
     (OUT / 'progress-clear-passed.json').write_text(json.dumps({
         'confirmation_required': True, 'visible_history_empty': True,
         'operational_keys_preserved': sorted(work), 'process_restart_checked': True,
+    }))
+elif mode == 'clear-learning':
+    # Repopulate a real answer and its statistics after the separate history-clear test.
+    # Then clear learning with progress disabled: the controls must remain available.
+    launch('quiz')
+    tap_control('learning_skip')
+    tap_control('learning_answer_0')
+    assert 'selected' in learning()['sessions']['normal']
+    launch('progress')
+    assert prefs().get('personal_progress_enabled') == 'true'
+    tap_control('personal_progress_toggle')
+    assert prefs().get('personal_progress_enabled') == 'false'
+    launch('home')
+    locate_control('my_day_resume_learning')
+    screenshot('learning-clear-before-home')
+    launch('knowledge')
+    before = prefs()
+    assert learning().get('questions') and learning().get('sessions')
+    allowed_changes = {'learning_state_v1', 'recent_questions'}
+    unchanged = {k: v for k, v in before.items() if k not in allowed_changes}
+    tap_control('learning_clear')
+    assert prefs().get('learning_state_v1') == before['learning_state_v1']
+    tap_control('learning_clear_cancel')
+    assert prefs().get('learning_state_v1') == before['learning_state_v1'], 'Cancel erased learning'
+    tap_control('learning_clear')
+    tap_control('learning_clear_confirm')
+    after = prefs()
+    assert learning() == {'schema': 1}, 'Learning questions/sessions remain after clear'
+    assert after.get('recent_questions', '') == '', 'Legacy learning order remains after clear'
+    assert {k: v for k, v in after.items() if k not in allowed_changes} == unchanged, 'Learning clear changed other preferences'
+    assert historical(after) == historical(before), 'Learning clear erased personal statistics'
+    launch('home')
+    locate_control('my_day_start_learning')
+    assert find_control(ui(), 'my_day_resume_learning') is None, 'Home still offers a deleted learning session'
+    assert learning() == {'schema': 1}, 'Learning reappeared after process restart'
+    screenshot('learning-cleared-home')
+    launch('progress')
+    assert historical(prefs()) == historical(before)
+    tap_control('personal_progress_toggle')
+    assert prefs().get('personal_progress_enabled') == 'true'
+    (OUT / 'learning-clear-passed.json').write_text(json.dumps({
+        'available_when_progress_disabled': True, 'cancel_preserves_learning': True,
+        'only_learning_and_recent_order_cleared': True, 'other_preferences_preserved': sorted(unchanged),
+        'statistics_preserved': True, 'home_replaced_resume_with_start_after_restart': True,
     }))
 else:
     raise ValueError(mode)

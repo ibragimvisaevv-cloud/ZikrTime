@@ -467,6 +467,8 @@
     <string name="learning_review_done">Ҷавобҳо захира шуданд. Саволҳо мувофиқи ҷадвали такрор бармегарданд.</string>
     <string name="learning_no_bonus">Барои ин давр дақиқаҳои иловагӣ дода нашуданд.</string>
     <string name="learning_bonus_rule">То %1$d дақиқаи иловагӣ дар рӯз. Як савол дар 24 соат танҳо як бор бонус медиҳад; се ҷавоби дурусти мувофиқ лозим аст.</string>
+    <string name="learning_clear">Пок кардани таърихи омӯзиш</string>
+    <string name="learning_clear_confirmation">Навбати такрор, ҷавобҳои захирашуда ва машғулияти нотамом пок мешаванд. Омори шахсӣ, дақиқаҳои иловагӣ, танзимоти тамаркуз ва ҳисобкунаки тасбеҳ нигоҳ дошта мешаванд. Таърихи омӯзиш пок шавад?</string>
     <string name="place_unknown">Маълумот нест</string>
     <string name="place_yes">Ҳаст</string>
     <string name="place_no">Не</string>

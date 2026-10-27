@@ -208,7 +208,7 @@ private fun BlockScreen(reason: BlockReason, onClose: () -> Unit, onBackToApp: (
 
                 is BlockMode.Earned -> {
                     Spacer(Modifier.height(48.dp))
-                    Title(stringResource(R.string.quiz_mashallah))
+                    Title(stringResource(R.string.learning_complete))
                     Body(
                         if (m.minutes > 0) stringResource(R.string.block_earned, m.minutes)
                         else stringResource(R.string.quiz_result_no_bonus),

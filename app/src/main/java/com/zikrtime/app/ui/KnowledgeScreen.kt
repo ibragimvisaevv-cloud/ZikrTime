@@ -11,11 +11,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,6 +56,7 @@ fun KnowledgeScreen() {
     val context = LocalContext.current
     val bank = remember { QuestionBank.load(context) }
     val bonus = Store.bonusMinutes()
+    var clearLearning by remember { mutableStateOf(false) }
 
     TabColumn(title = stringResource(R.string.knowledge_title), subtitle = stringResource(R.string.knowledge_subtitle)) {
         ZCard(color = MaterialTheme.colorScheme.primaryContainer) {
@@ -94,6 +100,10 @@ fun KnowledgeScreen() {
             Spacer(Modifier.height(10.dp))
             PrimaryButton(stringResource(R.string.learning_review), onClick = { nav.startReview() },
                 modifier = Modifier.testTag("learning_review_start").semantics { testTagsAsResourceId = true })
+            TextButton(onClick = { clearLearning = true },
+                modifier = Modifier.testTag("learning_clear").semantics { testTagsAsResourceId = true }) {
+                Text(stringResource(R.string.learning_clear))
+            }
         }
         SectionLabel(stringResource(R.string.knowledge_topics))
         bank.categories.chunked(2).forEach { pair ->
@@ -129,6 +139,24 @@ fun KnowledgeScreen() {
             modifier = Modifier.padding(horizontal = 4.dp),
         )
     }
+    // Learning history is independent of personal statistics; clearing is always explicit.
+    if (clearLearning) AlertDialog(
+        onDismissRequest = { clearLearning = false },
+        title = { Text(stringResource(R.string.learning_clear)) },
+        text = { Text(stringResource(R.string.learning_clear_confirmation)) },
+        confirmButton = {
+            TextButton(onClick = { LearningStore.resetLearning(); clearLearning = false },
+                modifier = Modifier.testTag("learning_clear_confirm").semantics { testTagsAsResourceId = true }) {
+                Text(stringResource(R.string.action_reset))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = { clearLearning = false },
+                modifier = Modifier.testTag("learning_clear_cancel").semantics { testTagsAsResourceId = true }) {
+                Text(stringResource(R.string.action_close))
+            }
+        },
+    )
 }
 
 /** Экран раунда викторины. */

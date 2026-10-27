@@ -467,6 +467,8 @@
     <string name="learning_review_done">Ответы сохранены. Вопросы вернутся по расписанию повторения.</string>
     <string name="learning_no_bonus">Дополнительные минуты за этот раунд не начислены.</string>
     <string name="learning_bonus_rule">До %1$d бонусных минут в день. Один и тот же вопрос приносит бонус не чаще раза за 24 часа; нужны три подходящих правильных ответа.</string>
+    <string name="learning_clear">Сбросить историю обучения</string>
+    <string name="learning_clear_confirmation">Очередь повторения, сохранённые ответы и незавершённое занятие будут удалены. Личная статистика, бонусные минуты, настройки фокуса и счётчик тасбиха сохранятся. Сбросить историю обучения?</string>
     <string name="place_unknown">Нет данных</string>
     <string name="place_yes">Есть</string>
     <string name="place_no">Нет</string>

@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
+
 package com.zikrtime.app.ui
 
 import androidx.lifecycle.repeatOnLifecycle
@@ -36,6 +38,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -342,9 +347,9 @@ private fun MyDayActions() {
             TextButton(onClick = { nav.openAzkar("evening") }) { Text(stringResource(R.string.my_day_evening)) }
         }
         if (pending != null) {
-            TextButton(onClick = { nav.resumeLearning(context) }) { Text(stringResource(R.string.my_day_resume_learning)) }
+            TextButton(onClick = { nav.resumeLearning(context) }, modifier = Modifier.testTag("my_day_resume_learning").semantics { testTagsAsResourceId = true }) { Text(stringResource(R.string.my_day_resume_learning)) }
         } else {
-            TextButton(onClick = { nav.startQuiz(null) }) { Text(stringResource(R.string.my_day_start_learning)) }
+            TextButton(onClick = { nav.startQuiz(null) }, modifier = Modifier.testTag("my_day_start_learning").semantics { testTagsAsResourceId = true }) { Text(stringResource(R.string.my_day_start_learning)) }
         }
         if (AzkarStore.hasPending) {
             TextButton(onClick = { nav.resumeAzkar() }) { Text(stringResource(R.string.my_day_resume_azkar)) }

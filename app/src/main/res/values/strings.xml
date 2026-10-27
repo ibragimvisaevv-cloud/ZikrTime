@@ -467,6 +467,8 @@
     <string name="learning_review_done">Answers saved. Questions will return according to the review schedule.</string>
     <string name="learning_no_bonus">No extra minutes were added for this round.</string>
     <string name="learning_bonus_rule">Up to %1$d bonus minutes a day. The same question can earn a bonus only once in 24 hours; three eligible correct answers are required.</string>
+    <string name="learning_clear">Reset learning history</string>
+    <string name="learning_clear_confirmation">The review queue, saved answers and unfinished session will be deleted. Personal statistics, bonus minutes, focus settings and the tasbih counter will be kept. Reset learning history?</string>
     <string name="place_unknown">Unknown</string>
     <string name="place_yes">Yes</string>
     <string name="place_no">No</string>

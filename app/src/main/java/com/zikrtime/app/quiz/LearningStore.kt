@@ -28,7 +28,11 @@ object LearningStore {
         LearningPolicy.dueIds(states(root()),bank.questions.associate { it.id to it.contentVersion },now)
     fun dueCount(bank: QuizBank): Int = dueIds(bank).size
     fun historyCount(): Int = states(root()).size
-    fun resetLearning() { save(JSONObject()) }
+    fun resetLearning() {
+        save(JSONObject())
+        // Legacy picker history belongs to learning, not personal statistics or reward protection.
+        Store.putRaw("recent_questions", "")
+    }
 
     fun session(scope: String): LearningSession? = root().optJSONObject("sessions")?.optJSONObject(scope)?.let {
         LearningSessions.decode(it, scope)

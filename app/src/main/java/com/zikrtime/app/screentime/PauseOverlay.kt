@@ -24,20 +24,20 @@ object PauseOverlay {
         val dp=context.resources.displayMetrics.density
         val root=LinearLayout(wrapped).apply {
             orientation=LinearLayout.VERTICAL; gravity=Gravity.CENTER
-            setPadding((24*dp).toInt(),(24*dp).toInt(),(24*dp).toInt())
+            setPadding((24*dp).toInt(),(24*dp).toInt(),(24*dp).toInt(),(24*dp).toInt())
             background=GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,intArrayOf(0xFF263648.toInt(),0xFF16212E.toInt()))
         }
         root.addView(TextView(wrapped).apply { setText(R.string.pause_title); textSize=26f; setTextColor(0xFFF0F4F8.toInt()); gravity=Gravity.CENTER })
-        fun button(label: Int,id: String,action:()->Unit) {
+        fun button(label: Int,viewId: Int,action:()->Unit) {
             root.addView(Button(wrapped).apply {
-                setText(label); contentDescription=id; setOnClickListener { action() }
+                setText(label); id=viewId; setOnClickListener { action() }
                 layoutParams=LinearLayout.LayoutParams(-1,-2).apply { topMargin=(12*dp).toInt() }
             })
         }
-        button(R.string.pause_title,"pause_overlay_open") { hide(context); runCatching { context.startActivity(PauseActivity.intent(context,pkg)) } }
-        button(R.string.pause_exit,"pause_exit") { hide(context); context.startActivity(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
-        button(R.string.pause_settings,"pause_settings") { hide(context); context.startActivity(Intent(context,MainActivity::class.java).putExtra("open_focus",true).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)) }
-        button(R.string.pause_disable,"pause_disable") { FocusPause.setEnabled(context,false) }
+        button(R.string.pause_title,R.id.pause_overlay_open) { hide(context); runCatching { context.startActivity(PauseActivity.intent(context,pkg)) } }
+        button(R.string.pause_exit,R.id.pause_exit) { hide(context); context.startActivity(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
+        button(R.string.pause_settings,R.id.pause_settings) { hide(context); context.startActivity(Intent(context,MainActivity::class.java).putExtra("open_focus",true).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)) }
+        button(R.string.pause_disable,R.id.pause_disable) { FocusPause.setEnabled(context,false) }
         // Non-modal to system bars: calls, notification shade and system permissions remain reachable.
         val params=WindowManager.LayoutParams(-1,-2,WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,PixelFormat.TRANSLUCENT).apply { gravity=Gravity.CENTER }

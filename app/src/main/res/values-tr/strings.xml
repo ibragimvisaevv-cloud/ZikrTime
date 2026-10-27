@@ -467,6 +467,8 @@
     <string name="learning_review_done">Yanıtlar kaydedildi. Sorular tekrar takvimine göre geri gelecek.</string>
     <string name="learning_no_bonus">Bu tur için ek dakika verilmedi.</string>
     <string name="learning_bonus_rule">Günde en fazla %1$d bonus dakika. Aynı soru 24 saatte yalnızca bir kez bonus kazandırır; uygun üç doğru yanıt gerekir.</string>
+    <string name="learning_clear">Öğrenme geçmişini sıfırla</string>
+    <string name="learning_clear_confirmation">Tekrar sırası, kayıtlı yanıtlar ve tamamlanmamış oturum silinecek. Kişisel istatistikler, bonus dakikalar, odak ayarları ve tesbih sayacı korunacak. Öğrenme geçmişi sıfırlansın mı?</string>
     <string name="place_unknown">Bilgi yok</string>
     <string name="place_yes">Var</string>
     <string name="place_no">Yok</string>

@@ -52,6 +52,7 @@ capture progress-restore progress
 python3 tools/ci/features_controls.py enable-progress
 python3 tools/ci/features_controls.py learning
 python3 tools/ci/features_controls.py clear-progress
+python3 tools/ci/features_controls.py clear-learning
 adb install -r "$focus_apk"
 python3 tools/ci/features_controls.py focus
 # Fresh install data path, without demonstration history.
@@ -72,6 +73,8 @@ for screen in home progress azkar focus places; do capture "$screen-large" "$scr
 adb shell settings put system font_scale 1
 adb shell wm size reset
 adb shell wm density reset
+# Expanded complete and legacy cards, offline synthetic fixtures only.
+python3 tools/ci/features_places.py
 # Offline cache/empty-state and denied geolocation must still leave UI reachable.
 adb shell pm revoke "$pkg" android.permission.ACCESS_FINE_LOCATION || true
 adb shell pm revoke "$pkg" android.permission.ACCESS_COARSE_LOCATION || true

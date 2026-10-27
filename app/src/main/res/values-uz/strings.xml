@@ -467,6 +467,8 @@
     <string name="learning_review_done">Javoblar saqlandi. Savollar takrorlash jadvaliga koʻra qaytadi.</string>
     <string name="learning_no_bonus">Bu davra uchun qoʻshimcha daqiqalar berilmadi.</string>
     <string name="learning_bonus_rule">Kuniga %1$d tagacha bonus daqiqa. Bir savol 24 soatda faqat bir marta bonus beradi; uchta mos toʻgʻri javob kerak.</string>
+    <string name="learning_clear">Oʻrganish tarixini tozalash</string>
+    <string name="learning_clear_confirmation">Takrorlash navbati, saqlangan javoblar va tugallanmagan mashgʻulot oʻchiriladi. Shaxsiy statistika, bonus daqiqalar, fokus sozlamalari va tasbih hisoblagichi saqlanadi. Oʻrganish tarixi tozalansinmi?</string>
     <string name="place_unknown">Ma’lumot yo‘q</string>
     <string name="place_yes">Bor</string>
     <string name="place_no">Yo‘q</string>

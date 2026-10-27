@@ -467,6 +467,8 @@
     <string name="learning_review_done">Жауаптар сақталды. Сұрақтар қайталау кестесі бойынша қайта шығады.</string>
     <string name="learning_no_bonus">Бұл айналымға қосымша минут берілмеді.</string>
     <string name="learning_bonus_rule">Күніне %1$d қосымша минутқа дейін. Бір сұрақ 24 сағатта бір рет қана бонус береді; үш жарамды дұрыс жауап керек.</string>
+    <string name="learning_clear">Оқу тарихын тазалау</string>
+    <string name="learning_clear_confirmation">Қайталау кезегі, сақталған жауаптар және аяқталмаған сабақ жойылады. Жеке статистика, қосымша минуттар, фокус баптаулары және тәсбих санағышы сақталады. Оқу тарихын тазалау керек пе?</string>
     <string name="place_unknown">Мәлімет жоқ</string>
     <string name="place_yes">Бар</string>
     <string name="place_no">Жоқ</string>

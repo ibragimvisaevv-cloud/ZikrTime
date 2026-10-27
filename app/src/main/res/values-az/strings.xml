@@ -467,6 +467,8 @@
     <string name="learning_review_done">Cavablar saxlanıldı. Suallar təkrar cədvəlinə uyğun qayıdacaq.</string>
     <string name="learning_no_bonus">Bu raund üçün əlavə dəqiqə verilmədi.</string>
     <string name="learning_bonus_rule">Gündə %1$d bonus dəqiqəyədək. Eyni sual 24 saatda yalnız bir dəfə bonus verir; üç uyğun düzgün cavab lazımdır.</string>
+    <string name="learning_clear">Öyrənmə tarixçəsini sıfırla</string>
+    <string name="learning_clear_confirmation">Təkrar növbəsi, saxlanmış cavablar və yarımçıq məşğələ silinəcək. Şəxsi statistika, bonus dəqiqələr, fokus ayarları və təsbeh sayğacı saxlanacaq. Öyrənmə tarixçəsi sıfırlansın?</string>
     <string name="place_unknown">Məlumat yoxdur</string>
     <string name="place_yes">Var</string>
     <string name="place_no">Yoxdur</string>
