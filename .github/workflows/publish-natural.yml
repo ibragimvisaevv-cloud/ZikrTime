@@ -1,0 +1,26 @@
+name: Publish verified Android natural preview
+on:
+  push:
+    branches: [codex/release-readiness-ios]
+permissions:
+  contents: write
+  actions: read
+jobs:
+  publish:
+    if: contains(github.event.head_commit.message, '[publish-natural]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify evidence and publish existing signed APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          test "$(gh api repos/$GITHUB_REPOSITORY/actions/runs/40476255211 --jq .head_sha)" = 44d122e8870ea545001d18c289b8992b485b0d72
+          test "$(gh api repos/$GITHUB_REPOSITORY/actions/runs/40476255211/jobs --jq '.jobs[] | select(.name == "android") | .conclusion')" = success
+          test "$(gh api repos/$GITHUB_REPOSITORY/actions/runs/40477863659 --jq .conclusion)" = success
+          gh run download 40476255211 -n Android-release-check -D release-in
+          cp release-in/outputs/apk/release/app-release.apk ZikrTime-0.8.3-natural.apk
+          echo 'b8ca7a7fe7be69dd07841c03d63fba176293a10accd2c67b417c16a9960ce74b  ZikrTime-0.8.3-natural.apk' | sha256sum -c -
+          gh release create v0.8.3-natural.1 ZikrTime-0.8.3-natural.apk --prerelease --latest=false --target 44d122e8870ea545001d18c289b8992b485b0d72 --title 'ZikrTime 0.8.3 — главная и тасбих (тест)' --notes-file docs/ANDROID_NATURAL_RELEASE.md
