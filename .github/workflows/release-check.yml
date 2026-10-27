@@ -93,7 +93,7 @@ jobs:
       - name: Run iPhone screens
         timeout-minutes: 25
         env:
-          IOS_SCREEN_SUITE: release
+          IOS_SCREEN_SUITE: ${{ contains(github.event.head_commit.message, '[ui-fix]') && 'zakat-map' || 'release' }}
         run: bash ios/ci/screens.sh
       - uses: actions/upload-artifact@v4
         if: always()

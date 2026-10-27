@@ -27,6 +27,13 @@ if [ "${IOS_SCREEN_SUITE:-full}" = release ]; then
   DARK_SCREENS="home places ramadan zakat"
 fi
 
+if [ "${IOS_SCREEN_SUITE:-full}" = zakat-map ]; then
+  RU_SCREENS="zakat places"
+  EN_SCREENS="zakat places"
+  EXTRA_LANGUAGES=""
+  DARK_SCREENS="zakat places"
+fi
+
 # Выбираем iPhone на самой новой версии iOS (обычный, не Pro/Max — ближе к массовому телефону)
 UDID=$(xcrun simctl list devices available -j | python3 -c '
 import json, sys, re
@@ -52,7 +59,7 @@ echo "Симулятор: $UDID"
 timed 30 xcrun simctl boot "$UDID" 2>/dev/null || true
 timed 600 xcrun simctl bootstatus "$UDID" -b
 xcrun simctl status_bar "$UDID" override --time "9:41" --batteryState charged --batteryLevel 100 --cellularBars 4 --wifiBars 3 2>/dev/null || true
-timed 60 xcrun simctl install "$UDID" "$APP"
+timed 180 xcrun simctl install "$UDID" "$APP" > ci-out/install.log 2>&1 || { cat ci-out/install.log >&2; exit 1; }
 
 capture() {
   local screen="$1" lang="$2" file="$3" launch pid
