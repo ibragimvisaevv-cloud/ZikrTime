@@ -11,13 +11,13 @@ object PauseGate {
     private var attemptedAt=0L
     private var attemptedPackage=""
     fun show(context: Context,pkg: String) {
-        if(PauseActivity.visible || PauseOverlay.target==pkg || BlockActivity.visible) return
+        if(ScreenTime.hasActiveCall(context) || PauseActivity.visible || PauseOverlay.target==pkg || BlockActivity.visible) return
         val now=SystemClock.elapsedRealtime()
         if(attemptedPackage==pkg && now-attemptedAt<10_000) return
         attemptedAt=now; attemptedPackage=pkg
         runCatching { context.startActivity(PauseActivity.intent(context,pkg)) }
         handler.postDelayed({
-            if(PauseActivity.visible || !FocusPause.eligible(context,pkg) || !ScreenTime.hasUsageAccess(context)) return@postDelayed
+            if(ScreenTime.hasActiveCall(context) || PauseActivity.visible || !FocusPause.eligible(context,pkg) || !ScreenTime.hasUsageAccess(context)) return@postDelayed
             if(!context.getSystemService(android.os.PowerManager::class.java).isInteractive || context.getSystemService(android.app.KeyguardManager::class.java).isKeyguardLocked) return@postDelayed
             if(BlockerService.running && !BlockerService.isForeground(pkg)) return@postDelayed
             val snapshot=ScreenTime.snapshot(context) ?: return@postDelayed

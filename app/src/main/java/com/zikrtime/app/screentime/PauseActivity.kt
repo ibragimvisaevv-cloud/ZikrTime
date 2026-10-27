@@ -48,7 +48,7 @@ class PauseActivity : ComponentActivity() {
             ZikrTheme(natural=true) {
                 LaunchedEffect(target) {
                     while (true) {
-                        if (!FocusPause.eligible(this@PauseActivity,target) || !ScreenTime.hasUsageAccess(this@PauseActivity)) {
+                        if (!FocusPause.eligible(this@PauseActivity,target) || !ScreenTime.hasUsageAccess(this@PauseActivity) || ScreenTime.hasActiveCall(this@PauseActivity)) {
                             finish(); break
                         }
                         if (!lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED)) { delay(1_000); continue }

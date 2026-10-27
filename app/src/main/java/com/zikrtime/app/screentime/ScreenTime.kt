@@ -155,6 +155,11 @@ object ScreenTime {
         return Snapshot(UsageMath.foregroundMillis(list, from, now), UsageMath.openPackages(list))
     }
 
+    /** Includes VoIP calls inside a selected messenger, without requesting phone-state access. */
+    fun hasActiveCall(context: Context): Boolean = context.getSystemService(android.media.AudioManager::class.java).mode in setOf(
+        android.media.AudioManager.MODE_RINGTONE, android.media.AudioManager.MODE_IN_CALL, android.media.AudioManager.MODE_IN_COMMUNICATION,
+    )
+
     /** Never intercept system UI, emergency/phone handlers, settings or this app. */
     fun isSafeTarget(context: Context, pkg: String): Boolean {
         if (pkg == context.packageName || pkg in setOf("android", "com.android.systemui", "com.android.settings")) return false

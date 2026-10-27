@@ -51,6 +51,7 @@ python3 tools/ci/features_controls.py verify-disabled
 capture progress-restore progress
 python3 tools/ci/features_controls.py enable-progress
 python3 tools/ci/features_controls.py learning
+python3 tools/ci/features_controls.py clear-progress
 adb install -r "$focus_apk"
 python3 tools/ci/features_controls.py focus
 # Fresh install data path, without demonstration history.

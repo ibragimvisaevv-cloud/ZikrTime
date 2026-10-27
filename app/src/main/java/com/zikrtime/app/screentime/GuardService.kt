@@ -88,6 +88,7 @@ class GuardService : Service() {
             hideOverlay(this)
             return CHECK_SCREEN_OFF_MS
         }
+        if (ScreenTime.hasActiveCall(this)) { PauseOverlay.hide(this); hideOverlay(this); return CHECK_MS }
         val now = System.currentTimeMillis()
         if (now - lastWidgetUpdate > 60_000) {
             lastWidgetUpdate = now
@@ -120,7 +121,7 @@ class GuardService : Service() {
     private fun block(reason: BlockReason) {
         runCatching { startActivity(BlockActivity.intent(this, reason)) }
         handler.postDelayed({
-            if (!BlockActivity.visible && ScreenTime.hasUsageAccess(this) &&
+            if (!BlockActivity.visible && !ScreenTime.hasActiveCall(this) && ScreenTime.hasUsageAccess(this) &&
                 ScreenTime.snapshot(this)?.openPackages?.keys?.any { ScreenTime.isSafeTarget(this,it) } == true &&
                 ScreenTime.evaluate(this) !is BlockReason.None) showOverlay(this, reason)
         }, 1_200)

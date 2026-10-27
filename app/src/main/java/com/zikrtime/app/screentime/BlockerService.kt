@@ -22,7 +22,7 @@ class BlockerService : AccessibilityService() {
         override fun run() {
             val pkg=foregroundPackage ?: return
             if((!Store.blockingEnabled && !FocusPause.enabled(this@BlockerService)) || pkg !in Store.blockedPackages || !ScreenTime.isSafeTarget(this@BlockerService,pkg)) return
-            val interactive=getSystemService(PowerManager::class.java).isInteractive && !getSystemService(KeyguardManager::class.java).isKeyguardLocked
+            val interactive=getSystemService(PowerManager::class.java).isInteractive && !getSystemService(KeyguardManager::class.java).isKeyguardLocked && !ScreenTime.hasActiveCall(this@BlockerService)
             if(interactive && ScreenTime.hasUsageAccess(this@BlockerService)) {
                 val snapshot=ScreenTime.snapshot(this@BlockerService)
                 if(snapshot!=null) {
@@ -31,7 +31,7 @@ class BlockerService : AccessibilityService() {
                     if(FocusPause.needsPause(this@BlockerService,pkg,snapshot.openPackages[pkg] ?: openedAt,reason)) PauseGate.show(this@BlockerService,pkg)
                     else PauseOverlay.hide(this@BlockerService)
                 }
-            } else PauseOverlay.hide(this@BlockerService)
+            } else { PauseOverlay.hide(this@BlockerService); GuardService.hideOverlay(this@BlockerService) }
             handler.postDelayed(this,CHECK_INTERVAL_MS)
         }
     }
