@@ -346,6 +346,64 @@ elif mode == 'focus':
         'fallback_path_opened': True, 'disable_clears_session': True,
         'accessibility_reconnected_without_new_grant_or_target_launch': True,
     }))
+elif mode == 'focus-visual':
+    (OUT / 'screens').mkdir(parents=True, exist_ok=True)
+    font_before = shell('settings', 'get', 'system', 'font_scale').strip()
+    night_match = re.search(r'Night mode:\s*(yes|no|auto|custom)', shell('cmd', 'uimode', 'night'))
+    night_before = night_match.group(1) if night_match else 'auto'
+    try:
+        shell('cmd', 'uimode', 'night', 'yes')
+        shell('settings', 'put', 'system', 'font_scale', '1.3')
+        focus_setup(strict=True)
+        open_focus_target()
+        wait_pause()
+        screenshot('focus-visual-dark-large-pause')
+        locate_control('pause_done')
+        screenshot('focus-visual-dark-large-pause-actions')
+        tap_control('pause_done')
+        # Return to the top after replacing the longer prayer card with the intention form.
+        for _ in range(2):
+            tree = ui()
+            bounds = next(tree.iter('node')).attrib['bounds']
+            _, _, width, height = map(int, re.findall(r'\d+', bounds))
+            shell('input', 'swipe', 5, int(height * .25), 5, int(height * .8), 350)
+        screenshot('focus-visual-dark-large-intention')
+        strings = ET.parse('app/src/main/res/values/strings.xml').getroot()
+        custom_label = next(n.text for n in strings if n.attrib.get('name') == 'pause_custom')
+        tap_control(custom_label, 'text')
+        tap_control('android.widget.EditText', 'class')
+        shell('input', 'text', 'CI%stest%sintention')
+        time.sleep(1)
+        assert any('CI test intention' in n.attrib.get('text', '') for n in ui().iter('node'))
+        screenshot('focus-visual-dark-large-custom-keyboard')
+        shell('input', 'keyevent', 'KEYCODE_BACK')
+        time.sleep(.5)
+        screenshot('focus-visual-dark-large-custom')
+        # Cancel through the normal back action. Never tap Open app or create a grant.
+        shell('input', 'keyevent', 'KEYCODE_BACK')
+        time.sleep(1)
+        assert find_control(ui(), 'pause_screen') is None
+        assert 'session:' + FOCUS_TARGET not in prefs('focus_pause_v1'), 'Visual inspection unexpectedly granted app time'
+        (OUT / 'focus-visual-passed.json').write_text(json.dumps({
+            'dark_theme': True, 'font_scale': 1.3, 'real_foreground_pause': True,
+            'intention_form_visible': True, 'custom_intention_entered': True,
+            'text_entry_captured': True, 'back_cancels_without_grant': True,
+            'synthetic_target_only': FOCUS_TARGET,
+        }))
+    finally:
+        for args in [
+            ('settings', 'put', 'secure', 'enabled_accessibility_services', 'null'),
+            ('settings', 'put', 'secure', 'accessibility_enabled', '0'),
+            ('settings', 'put', 'system', 'font_scale', font_before if font_before not in ('', 'null') else '1'),
+            ('cmd', 'uimode', 'night', night_before),
+        ]:
+            try:
+                shell(*args)
+            except subprocess.SubprocessError:
+                pass
+        disabled = ET.Element('map')
+        ET.SubElement(disabled, 'boolean', {'name': 'enabled', 'value': 'false'})
+        write_tree(disabled, 'focus_pause_v1')
 elif mode == 'focus-notifications-denied':
     try:
         focus_setup(strict=False, accessibility=False)

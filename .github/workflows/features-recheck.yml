@@ -14,27 +14,29 @@ jobs:
     if: ${{ github.ref == 'refs/heads/codex/android-my-day-focus' && (github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[features-ui]')) }}
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    env:
+      MAP_ONLY: ${{ contains(github.event.head_commit.message, '[map-check]') }}
     steps:
       - uses: actions/checkout@v4
       - name: Verify the reusable build source and unchanged Android inputs
         env:
           GH_TOKEN: ${{ github.token }}
-          BUILD_SOURCE_SHA: e159e446e916bc03b7798a76bc86fe74809461de
+          BUILD_SOURCE_SHA: 8580897f572a18c47dbf402295b628e4624c9f8b
         run: |
           mkdir -p ci-out
-          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/12747372138" > ci-out/reused-artifact.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/12751240494" > ci-out/reused-artifact.json
           python3 - <<'PY'
           import json, os, pathlib
           artifact=json.loads(pathlib.Path('ci-out/reused-artifact.json').read_text())
-          assert artifact['id']==12747372138 and artifact['name']=='Android-features-build'
+          assert artifact['id']==12751240494 and artifact['name']=='Android-features-build'
           assert not artifact['expired'], 'Build artifact has expired; do not silently rebuild'
-          assert artifact['workflow_run']['id']==40533760627
+          assert artifact['workflow_run']['id']==40539273495
           assert artifact['workflow_run']['head_sha']==os.environ['BUILD_SOURCE_SHA']
           PY
           git fetch --no-tags --depth=1 origin "$BUILD_SOURCE_SHA"
           git diff --exit-code "$BUILD_SOURCE_SHA" HEAD -- app/ tools/i18n/ tools/quiz/ build.gradle.kts settings.gradle.kts gradle.properties gradle/ gradlew gradlew.bat
           printf '%s\n' "$BUILD_SOURCE_SHA" > ci-out/reused-build-source.txt
-          gh run download 40533760627 -n Android-features-build -D android-out
+          gh run download 40539273495 -n Android-features-build -D android-out
       - name: Retrieve previous Android UI build for migration fixture
         env:
           GH_TOKEN: ${{ github.token }}
@@ -45,6 +47,7 @@ jobs:
           mkdir -p fixtures
           keytool -genkeypair -keystore fixtures/test.jks -storepass android -keypass android -alias test -dname 'CN=Disposable CI Upgrade Fixture' -keyalg RSA -keysize 2048 -validity 2
           SIGNER=$(find "$ANDROID_HOME/build-tools" -name apksigner | sort -V | tail -1)
+          "$SIGNER" verify --verbose --print-certs android-out/outputs/apk/debug/app-debug.apk > ci-out/debug-apk-signature.txt
           "$SIGNER" sign --ks fixtures/test.jks --ks-key-alias test --ks-pass pass:android --key-pass pass:android --out fixtures/previous.apk previous-out/outputs/apk/debug/app-debug.apk
           "$SIGNER" sign --ks fixtures/test.jks --ks-key-alias test --ks-pass pass:android --key-pass pass:android --out fixtures/current.apk android-out/outputs/apk/debug/app-debug.apk
           "$SIGNER" verify fixtures/previous.apk
@@ -63,7 +66,12 @@ jobs:
           arch: x86_64
           disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: bash tools/ci/features_smoke.sh fixtures/current.apk fixtures/previous.apk fixtures/focus.apk
+          script: |
+            if [ "$MAP_ONLY" = true ]; then
+              bash tools/ci/map_loading_check.sh android-out/outputs/apk/debug/app-debug.apk
+            else
+              bash tools/ci/features_smoke.sh fixtures/current.apk fixtures/previous.apk fixtures/focus.apk
+            fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
