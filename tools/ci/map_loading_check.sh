@@ -91,7 +91,7 @@ adb shell input keyevent KEYCODE_WAKEUP
 adb shell wm dismiss-keyguard
 sleep 3
 adb logcat -c
-adb shell am start -S -W --activity-new-task --activity-clear-task -n "$PKG/.MainActivity" \
+adb shell am start -S -W -n "$PKG/.MainActivity" \
   --es qa_screen places --es qa_lang en --ez qa_onboarded true \
   --ez qa_tilt false --ez qa_parallax false > "$OUT/start.txt"
 START_SECONDS=$SECONDS
@@ -116,7 +116,7 @@ collect_diagnostics
 DIAGNOSTICS_DONE=1
 # User-facing screenshot of actual My Day controls after scrolling the hero.
 # This capture is not an additional behavioral-test claim.
-adb shell am start -S -W --activity-new-task --activity-clear-task -n "$PKG/.MainActivity" \
+adb shell am start -S -W -n "$PKG/.MainActivity" \
   --es qa_screen home --es qa_lang ru --ez qa_onboarded true \
   --ez qa_tilt false --ez qa_parallax false > "$OUT/home-start.txt"
 sleep 2
