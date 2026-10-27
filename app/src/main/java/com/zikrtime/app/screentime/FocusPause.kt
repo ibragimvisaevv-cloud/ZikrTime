@@ -48,11 +48,11 @@ object FocusPause {
     }
     fun session(context: Context, pkg: String): PauseSession? = runCatching {
         val j = JSONObject(prefs(context).getString("session:$pkg", null) ?: return null)
-        PauseSession(j.getLong("start"), j.getLong("budget"), j.optLong("consumed"), j.optBoolean("reminded"), j.optString("intention"))
+        PauseSession(j.getLong("start"), j.getLong("budget"), j.optLong("consumed"), j.optBoolean("reminded"), j.optString("intention"), j.optBoolean("expiryHandled"))
     }.getOrNull()
     private fun save(context: Context, pkg: String, s: PauseSession, openedAt: Long? = null) {
         val j = JSONObject().put("start",s.startedAt).put("budget",s.budgetMillis).put("consumed",s.consumedMillis)
-            .put("reminded",s.reminderSent).put("intention",s.intention)
+            .put("reminded",s.reminderSent).put("intention",s.intention).put("expiryHandled",s.expiryHandled)
         val editor = prefs(context).edit().putString("session:$pkg",j.toString())
         if (openedAt != null) editor.putLong("visit:$pkg",openedAt)
         editor.apply()
@@ -87,9 +87,9 @@ object FocusPause {
             save(context,pkg,s.copy(consumedMillis=maxOf(consumed,s.budgetMillis),intention=""))
             return true
         }
-        if (!s.reminderSent) {
-            remind(context)
-            save(context,pkg,s.copy(consumedMillis=consumed,reminderSent=true,intention=""),openedAt)
+        if (!s.reminderSent && !s.expiryHandled) {
+            val accepted=remind(context)
+            save(context,pkg,s.copy(consumedMillis=consumed,reminderSent=accepted,expiryHandled=true,intention=""),openedAt)
             return false
         }
         return false
@@ -110,14 +110,22 @@ object FocusPause {
             .setContentTitle(res.getString(R.string.pause_title)).setContentText(res.getString(R.string.pause_pending))
             .setContentIntent(open).setOnlyAlertOnce(true).setAutoCancel(true).build()) }
     }
-    private fun remind(context: Context) {
+    fun notificationsAvailable(context: Context): Boolean {
+        if (android.os.Build.VERSION.SDK_INT >= 33 && androidx.core.content.ContextCompat.checkSelfPermission(
+                context,android.Manifest.permission.POST_NOTIFICATIONS) != android.content.pm.PackageManager.PERMISSION_GRANTED) return false
+        val nm=context.getSystemService(NotificationManager::class.java)
+        return nm.areNotificationsEnabled() && nm.getNotificationChannel("focus_pause")?.importance != NotificationManager.IMPORTANCE_NONE
+    }
+    /** True means accepted by NotificationManager, not proof that the user saw it. */
+    private fun remind(context: Context): Boolean {
+        if (!notificationsAvailable(context)) return false
         val res=com.zikrtime.app.i18n.Lang.wrap(context).resources
         val nm=context.getSystemService(NotificationManager::class.java)
         nm.createNotificationChannel(NotificationChannel("focus_pause",res.getString(R.string.pause_title),NotificationManager.IMPORTANCE_DEFAULT))
         val intent=Intent(context,MainActivity::class.java).putExtra("open_focus",true)
         val open=PendingIntent.getActivity(context,81,intent,PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-        runCatching { nm.notify(81,NotificationCompat.Builder(context,"focus_pause").setSmallIcon(R.drawable.ic_notification)
+        return runCatching { nm.notify(81,NotificationCompat.Builder(context,"focus_pause").setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(res.getString(R.string.pause_title)).setContentText(res.getString(R.string.pause_reminder))
-            .setContentIntent(open).setAutoCancel(true).build()) }
+            .setContentIntent(open).setAutoCancel(true).build()) }.isSuccess
     }
 }

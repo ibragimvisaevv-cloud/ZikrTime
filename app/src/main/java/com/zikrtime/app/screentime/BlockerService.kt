@@ -20,26 +20,43 @@ class BlockerService : AccessibilityService() {
     private var keyboards: Set<String> = emptySet()
     private val check=object: Runnable {
         override fun run() {
-            val pkg=foregroundPackage ?: return
-            if((!Store.blockingEnabled && !FocusPause.enabled(this@BlockerService)) || pkg !in Store.blockedPackages || !ScreenTime.isSafeTarget(this@BlockerService,pkg)) return
+            if((!Store.blockingEnabled && !FocusPause.enabled(this@BlockerService)) || Store.blockedPackages.isEmpty()) return
             val interactive=getSystemService(PowerManager::class.java).isInteractive && !getSystemService(KeyguardManager::class.java).isKeyguardLocked && !ScreenTime.hasActiveCall(this@BlockerService)
             if(interactive && ScreenTime.hasUsageAccess(this@BlockerService)) {
                 val snapshot=ScreenTime.snapshot(this@BlockerService)
                 if(snapshot!=null) {
-                    val reason=ScreenTime.evaluate(this@BlockerService,usedMillis=snapshot.usedMillis)
-                    if(reason !is BlockReason.None) { block(reason); return }
-                    if(FocusPause.needsPause(this@BlockerService,pkg,snapshot.openPackages[pkg] ?: openedAt,reason)) PauseGate.show(this@BlockerService,pkg)
-                    else PauseOverlay.hide(this@BlockerService)
+                    if(foregroundPackage==null) recoverForeground(snapshot)
+                    val pkg=foregroundPackage
+                    if(pkg!=null) {
+                        if(pkg !in Store.blockedPackages || !ScreenTime.isSafeTarget(this@BlockerService,pkg)) return
+                        val reason=ScreenTime.evaluate(this@BlockerService,usedMillis=snapshot.usedMillis)
+                        if(reason !is BlockReason.None) { block(reason); return }
+                        if(FocusPause.needsPause(this@BlockerService,pkg,snapshot.openPackages[pkg] ?: openedAt,reason)) PauseGate.show(this@BlockerService,pkg)
+                        else PauseOverlay.hide(this@BlockerService)
+                    }
                 }
             } else { PauseOverlay.hide(this@BlockerService); GuardService.hideOverlay(this@BlockerService) }
+            // UsageEvents can arrive shortly after reconnect. Retry an unknown foreground;
+            // a later explicit non-target window event still stops this timer normally.
             handler.postDelayed(this,CHECK_INTERVAL_MS)
         }
+    }
+    private fun recoverForeground(snapshot: ScreenTime.Snapshot) {
+        val open=snapshot.openPackages.filterKeys {
+            it in Store.blockedPackages && ScreenTime.isSafeTarget(this,it)
+        }.maxByOrNull { it.value } ?: return
+        foregroundPackage=open.key
+        // Preserve the actual visit time; reconnect must not manufacture another soft-mode visit.
+        openedAt=open.value
     }
     override fun onServiceConnected() {
         super.onServiceConnected(); Store.init(this)
         instance=this; running=true
         keyboards=getSystemService(InputMethodManager::class.java)?.enabledInputMethodList?.map { it.packageName }?.toSet().orEmpty()
         GuardService.sync(this)
+        foregroundPackage=null
+        handler.removeCallbacks(check)
+        handler.post(check)
     }
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if(event?.eventType!=AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) return
@@ -56,7 +73,12 @@ class BlockerService : AccessibilityService() {
         performGlobalAction(GLOBAL_ACTION_HOME)
         runCatching { startActivity(BlockActivity.intent(this,reason)) }
     }
-    override fun onInterrupt() { foregroundPackage=null; handler.removeCallbacks(check); PauseOverlay.hide(this) }
+    override fun onInterrupt() {
+        foregroundPackage=null
+        handler.removeCallbacks(check)
+        PauseOverlay.hide(this)
+        handler.postDelayed(check,CHECK_INTERVAL_MS)
+    }
     override fun onDestroy() {
         running=false; if(instance===this) instance=null
         handler.removeCallbacksAndMessages(null); PauseOverlay.hide(this)

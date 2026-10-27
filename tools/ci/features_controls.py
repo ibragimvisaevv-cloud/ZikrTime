@@ -12,7 +12,11 @@ PKG = 'com.zikrtime.app'
 
 
 def adb(*args):
-    return subprocess.check_output(['adb', *map(str, args)], text=True)
+    try:
+        return subprocess.check_output(['adb', *map(str, args)], text=True, timeout=45)
+    except subprocess.TimeoutExpired:
+        (OUT / 'adb-timeout.txt').write_text('ADB command exceeded 45 seconds. This is an automation timeout, not proof of an app crash.\n')
+        raise
 
 
 def shell(*args):
@@ -76,7 +80,7 @@ def tap_control(identifier, attribute='resource-id'):
 
 def screenshot(name):
     with (OUT / 'screens' / (name + '.png')).open('wb') as handle:
-        subprocess.run(['adb', 'exec-out', 'screencap', '-p'], stdout=handle, check=True)
+        subprocess.run(['adb', 'exec-out', 'screencap', '-p'], stdout=handle, check=True, timeout=45)
     subprocess.run([sys.executable, 'tools/ci/check_screen.py', str(OUT / 'screens' / (name + '.png'))], check=True)
 
 
@@ -290,6 +294,15 @@ elif mode == 'focus':
     time.sleep(4)
     assert find_control(ui(), 'focus_fixture_foreground', 'content-desc') is not None
     assert focus_session()['consumed'] < 10000, 'Background time consumed the foreground allowance'
+    # Reconnect the actual service while the target stays foreground; no fresh grant/open.
+    grant = focus_session()
+    shell('settings', 'put', 'secure', 'enabled_accessibility_services', 'null')
+    shell('settings', 'put', 'secure', 'accessibility_enabled', '0')
+    time.sleep(2)
+    shell('settings', 'put', 'secure', 'enabled_accessibility_services', PKG + '/.screentime.BlockerService')
+    shell('settings', 'put', 'secure', 'accessibility_enabled', '1')
+    time.sleep(3)
+    assert focus_session()['start'] == grant['start'] and focus_session()['budget'] == grant['budget']
     # One real minute in the target: soft mode reminds but leaves the current visit open.
     time.sleep(65)
     assert focus_session()['reminded'] is True
@@ -331,7 +344,70 @@ elif mode == 'focus':
         'soft_one_minute_expiry_remains_open': True, 'soft_reopen_pauses': True,
         'strict_one_minute_expiry_pauses': True, 'usage_revocation_dismisses': True,
         'fallback_path_opened': True, 'disable_clears_session': True,
+        'accessibility_reconnected_without_new_grant_or_target_launch': True,
     }))
+elif mode == 'focus-notifications-denied':
+    try:
+        focus_setup(strict=False, accessibility=False)
+        shell('pm', 'revoke', PKG, 'android.permission.POST_NOTIFICATIONS')
+        root = prefs_tree('focus_pause_v1')
+        now = int(shell('date', '+%s').strip()) * 1000
+        session = {'start': now - 1000, 'budget': 1, 'consumed': 1,
+                   'reminded': False, 'expiryHandled': False, 'intention': 'CI synthetic expiry'}
+        ET.SubElement(root, 'string', {'name': 'session:' + FOCUS_TARGET}).text = json.dumps(session)
+        ET.SubElement(root, 'long', {'name': 'visit:' + FOCUS_TARGET, 'value': '0'})
+        write_tree(root, 'focus_pause_v1')
+        # Fresh process reads the fixture and actual revoked OS permission.
+        launch('focus')
+        shell('settings', 'put', 'secure', 'enabled_accessibility_services', PKG + '/.screentime.BlockerService')
+        shell('settings', 'put', 'secure', 'accessibility_enabled', '1')
+        time.sleep(3)
+        permission = shell('dumpsys', 'package', PKG)
+        assert re.search(r'android\.permission\.POST_NOTIFICATIONS:\s+granted=false', permission)
+        strings = ET.parse('app/src/main/res/values/strings.xml').getroot()
+        warning = next(n.text for n in strings if n.attrib.get('name') == 'perm_notifications_off')
+        locate_control(warning, 'text')
+        screenshot('focus-notifications-disabled-warning')
+        open_focus_target()
+        for _ in range(8):
+            if focus_session().get('expiryHandled'):
+                break
+            time.sleep(1)
+        state = focus_session()
+        assert state.get('expiryHandled') is True and state['reminded'] is False
+        tree = ui()
+        assert find_control(tree, 'focus_fixture_foreground', 'content-desc') is not None
+        assert find_control(tree, 'pause_screen') is None
+        screenshot('focus-notifications-denied-expired-visit')
+        shell('input', 'keyevent', 'KEYCODE_HOME')
+        time.sleep(2)
+        open_focus_target()
+        wait_pause()
+        assert focus_session()['reminded'] is False
+        screenshot('focus-notifications-denied-next-visit')
+        (OUT / 'focus-notifications-denied-passed.json').write_text(json.dumps({
+            'actual_post_notifications_revoked': True, 'warning_visible': True,
+            'synthetic_expired_budget_millis': 1, 'expiry_handled_without_claiming_reminder': True,
+            'current_visit_remains_open': True, 'next_visit_pauses': True,
+        }))
+    finally:
+        # Preserve evidence before restoring this disposable test environment.
+        try:
+            (OUT / 'focus-notifications-final-state.xml').write_bytes(ET.tostring(prefs_tree('focus_pause_v1')))
+        except (subprocess.SubprocessError, ET.ParseError):
+            pass
+        for args in [
+            ('pm', 'grant', PKG, 'android.permission.POST_NOTIFICATIONS'),
+            ('settings', 'put', 'secure', 'enabled_accessibility_services', 'null'),
+            ('settings', 'put', 'secure', 'accessibility_enabled', '0'),
+        ]:
+            try:
+                shell(*args)
+            except subprocess.SubprocessError:
+                pass
+        disabled = ET.Element('map')
+        ET.SubElement(disabled, 'boolean', {'name': 'enabled', 'value': 'false'})
+        write_tree(disabled, 'focus_pause_v1')
 elif mode == 'clear-progress':
     launch('progress')
     before = prefs()

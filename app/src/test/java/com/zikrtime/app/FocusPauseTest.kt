@@ -30,6 +30,15 @@ class FocusPauseTest {
         assertTrue(PausePolicy.needsPause(true,false,s,60_000,110_000,105_000,2_000,BlockReason.None))
         assertTrue(PausePolicy.needsPause(true,true,s,60_000,100_000,2_000,2_000,BlockReason.None))
     }
+    @Test fun deniedReminderIsHandledWithoutRepeatedPauseInSameVisit() {
+        val restored=PauseSession(1_000,60_000,60_000,reminderSent=false,expiryHandled=true)
+        assertFalse(restored.reminderSent)
+        for(now in listOf(100_000L,103_000L,106_000L)) {
+            assertFalse(PausePolicy.needsPause(true,false,restored,60_000,now,2_000,2_000,BlockReason.None))
+        }
+        assertTrue(PausePolicy.needsPause(true,false,restored,60_000,120_000,110_000,2_000,BlockReason.None))
+        assertTrue(PausePolicy.needsPause(true,true,restored,60_000,120_000,2_000,2_000,BlockReason.None))
+    }
     @Test fun foregroundUnionExcludesLockedScreenBackgroundAndShutdown() {
         val events=listOf(
             UsageEventLite("social","A",true,0),

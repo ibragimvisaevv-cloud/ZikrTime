@@ -7,6 +7,7 @@ data class PauseSession(
     val consumedMillis: Long = 0,
     val reminderSent: Boolean = false,
     val intention: String = "",
+    val expiryHandled: Boolean = false,
 )
 
 object PausePolicy {
@@ -24,7 +25,8 @@ object PausePolicy {
         if (session == null) return true
         if (remaining(session, measuredMillis, now) > 0) return false
         if (strict || now < session.startedAt) return true
-        // Soft mode permits the current visit after a reminder, until the app is opened again.
-        return session.reminderSent && openedAt > previousVisitAt
+        // A denied notification must not create a popup loop in the current visit.
+        // Legacy sessions stored only reminderSent and keep the same next-visit behavior.
+        return (session.reminderSent || session.expiryHandled) && openedAt > previousVisitAt
     }
 }

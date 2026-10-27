@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -38,6 +39,8 @@ class PauseActivity : ComponentActivity() {
     override fun attachBaseContext(newBase: Context) = super.attachBaseContext(Lang.wrap(newBase))
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Match system icon contrast to the same system light/dark theme used by ZikrTheme.
+        enableEdgeToEdge()
         Store.init(this)
         target = savedInstanceState?.getString(TARGET) ?: intent.getStringExtra(TARGET).orEmpty()
         if (!FocusPause.eligible(this,target) || !ScreenTime.hasUsageAccess(this)) { finish(); return }

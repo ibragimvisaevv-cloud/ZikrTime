@@ -11,6 +11,20 @@ adb shell input keyevent KEYCODE_WAKEUP
 adb shell wm dismiss-keyguard
 adb logcat -c
 cleanup() {
+  local result=$?
+  if [ "$result" -ne 0 ]; then
+    printf 'Smoke exit code: %s. Inspect diagnostics; a failed assertion or ADB timeout is not an app crash.\n' "$result" > ci-out/failure-status.txt
+    timeout 15s adb exec-out run-as "$pkg" cat shared_prefs/focus_pause_v1.xml > ci-out/failure-focus-prefs.xml 2>&1 || true
+    timeout 15s adb shell dumpsys accessibility > ci-out/failure-accessibility.txt 2>&1 || true
+    timeout 15s adb shell dumpsys activity activities > ci-out/failure-activities.txt 2>&1 || true
+    timeout 15s adb shell dumpsys usagestats > ci-out/failure-usagestats.txt 2>&1 || true
+    local app_pid
+    app_pid="$(timeout 10s adb shell pidof "$pkg" 2>/dev/null || true)"
+    app_pid="${app_pid%% *}"
+    if [[ "$app_pid" =~ ^[0-9]+$ ]]; then
+      timeout 15s adb logcat -d --pid="$app_pid" -t 400 > ci-out/failure-app-logcat.txt 2>&1 || true
+    fi
+  fi
   adb logcat -d -b crash > ci-out/crashes.txt || true
   adb shell svc wifi enable >/dev/null || true
   adb shell svc data enable >/dev/null || true
@@ -55,6 +69,7 @@ python3 tools/ci/features_controls.py clear-progress
 python3 tools/ci/features_controls.py clear-learning
 adb install -r "$focus_apk"
 python3 tools/ci/features_controls.py focus
+python3 tools/ci/features_controls.py focus-notifications-denied
 # Fresh install data path, without demonstration history.
 adb shell pm clear "$pkg" >/dev/null
 adb shell am start -S -W -n "$pkg/.MainActivity" > ci-out/fresh-start.txt

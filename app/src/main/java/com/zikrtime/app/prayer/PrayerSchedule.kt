@@ -65,17 +65,21 @@ object PrayerSchedule {
     fun today(): PrayerTimes = forDate(LocalDate.now())
 
     /** Ближайший обязательный намаз строго после момента [after]. */
-    fun next(after: ZonedDateTime = ZonedDateTime.now()): Pair<Prayer, ZonedDateTime> {
-        val zone = after.zone
-        for (offset in 0L..2L) {
-            val times = forDate(after.toLocalDate().plusDays(offset), zone)
-            for (p in Prayer.obligatory) {
-                if (times[p].isAfter(after)) return p to times[p]
-            }
-        }
+    fun next(after: ZonedDateTime = ZonedDateTime.now()): Pair<Prayer, ZonedDateTime> =
+        nextFrom(after) { date -> forDate(date, after.zone) }
+
+    /** Same selection for UI/alarms; provider keeps the midnight boundary independently testable. */
+    internal fun nextFrom(after: ZonedDateTime, timesForDate: (LocalDate) -> PrayerTimes): Pair<Prayer, ZonedDateTime> {
+        val date = after.toLocalDate()
+        // Summer Isha and manual corrections may carry a prayer past midnight.
+        // Compare instants across day boundaries instead of assuming date/enum order.
+        val next = (-1L..2L).asSequence().flatMap { offset ->
+            val times = timesForDate(date.plusDays(offset))
+            Prayer.obligatory.asSequence().map { it to times[it] }
+        }.filter { it.second.isAfter(after) }.minByOrNull { it.second.toInstant() }
+        if (next != null) return next
         // Сюда не попадаем при нормальных координатах; на всякий случай — фаджр завтра.
-        val tomorrow = forDate(after.toLocalDate().plusDays(1), zone)
-        return Prayer.FAJR to tomorrow[Prayer.FAJR]
+        return Prayer.FAJR to timesForDate(date.plusDays(1))[Prayer.FAJR]
     }
 
     /** Окна намазов за вчера и сегодня — для блокировки соцсетей (иша может перейти за полночь). */

@@ -73,6 +73,7 @@ fun FocusScreen() {
     val hasOverlay = remember(resume) { GuardService.canDrawOverlays(context) }
     val canBlock = hasService || hasOverlay
     val pauseRevision = FocusPause.version
+    val hasPauseNotifications = remember(resume,pauseRevision) { FocusPause.notificationsAvailable(context) }
     val pauseEnabled = remember(pauseRevision) { FocusPause.enabled(context) }
     val pauseStrict = remember(pauseRevision) { FocusPause.strict(context) }
     val pausePhrase = remember(pauseRevision) { FocusPause.phrase(context) }
@@ -160,7 +161,7 @@ fun FocusScreen() {
                     FilterChip(selected=pausePhrase==index,onClick={FocusPause.setPhrase(context,index)},label={Text(stringResource(label))})
                 }
                 Text(stringResource(R.string.pause_foreground),style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant)
-                if (android.os.Build.VERSION.SDK_INT >= 33 && androidx.core.content.ContextCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                if (!hasPauseNotifications) {
                     Text(stringResource(R.string.perm_notifications_off),style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.error)
                     TextButton(onClick={context.startActivity(Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).putExtra(Settings.EXTRA_APP_PACKAGE,context.packageName))}) { Text(stringResource(R.string.pause_settings)) }
                 }
