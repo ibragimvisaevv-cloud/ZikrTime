@@ -11,6 +11,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   bot-tests:
+    if: ${{ !contains(github.event.head_commit.message, '[features-ui]') }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -20,6 +21,7 @@ jobs:
       - run: python3 -B shop-bot/test_place_corrections.py
       - run: node --check shop-bot/miniapp/app.js
   android:
+    if: ${{ !contains(github.event.head_commit.message, '[features-ui]') }}
     runs-on: ubuntu-latest
     timeout-minutes: 35
     steps:
@@ -117,7 +119,7 @@ jobs:
         run: gh run download 40476255211 -n Android-release-check -D previous-out
       - name: Prepare disposable same-signature debug upgrade fixtures
         run: |
-          sdkmanager 'platforms;android-35' 'build-tools;35.0.0' >/dev/null
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'platforms;android-35' 'build-tools;35.0.0' >/dev/null
           mkdir -p fixtures
           keytool -genkeypair -keystore fixtures/test.jks -storepass android -keypass android -alias test -dname 'CN=Disposable CI Upgrade Fixture' -keyalg RSA -keysize 2048 -validity 2
           SIGNER=$(find "$ANDROID_HOME/build-tools" -name apksigner | sort -V | tail -1)

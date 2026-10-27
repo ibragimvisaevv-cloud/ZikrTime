@@ -1,0 +1,71 @@
+name: Android My Day UI recheck
+on:
+  push:
+    branches: [codex/android-my-day-focus]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: features-ui-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  emulator:
+    if: ${{ github.ref == 'refs/heads/codex/android-my-day-focus' && (github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[features-ui]')) }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify the reusable build source and unchanged Android inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BUILD_SOURCE_SHA: e159e446e916bc03b7798a76bc86fe74809461de
+        run: |
+          mkdir -p ci-out
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/12747372138" > ci-out/reused-artifact.json
+          python3 - <<'PY'
+          import json, os, pathlib
+          artifact=json.loads(pathlib.Path('ci-out/reused-artifact.json').read_text())
+          assert artifact['id']==12747372138 and artifact['name']=='Android-features-build'
+          assert not artifact['expired'], 'Build artifact has expired; do not silently rebuild'
+          assert artifact['workflow_run']['id']==40533760627
+          assert artifact['workflow_run']['head_sha']==os.environ['BUILD_SOURCE_SHA']
+          PY
+          git fetch --no-tags --depth=1 origin "$BUILD_SOURCE_SHA"
+          git diff --exit-code "$BUILD_SOURCE_SHA" HEAD -- app/ tools/i18n/ tools/quiz/ build.gradle.kts settings.gradle.kts gradle.properties gradle/ gradlew gradlew.bat
+          printf '%s\n' "$BUILD_SOURCE_SHA" > ci-out/reused-build-source.txt
+          gh run download 40533760627 -n Android-features-build -D android-out
+      - name: Retrieve previous Android UI build for migration fixture
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download 40476255211 -n Android-release-check -D previous-out
+      - name: Prepare disposable same-signature debug upgrade fixtures
+        run: |
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'platforms;android-35' 'build-tools;35.0.0' >/dev/null
+          mkdir -p fixtures
+          keytool -genkeypair -keystore fixtures/test.jks -storepass android -keypass android -alias test -dname 'CN=Disposable CI Upgrade Fixture' -keyalg RSA -keysize 2048 -validity 2
+          SIGNER=$(find "$ANDROID_HOME/build-tools" -name apksigner | sort -V | tail -1)
+          "$SIGNER" sign --ks fixtures/test.jks --ks-key-alias test --ks-pass pass:android --key-pass pass:android --out fixtures/previous.apk previous-out/outputs/apk/debug/app-debug.apk
+          "$SIGNER" sign --ks fixtures/test.jks --ks-key-alias test --ks-pass pass:android --key-pass pass:android --out fixtures/current.apk android-out/outputs/apk/debug/app-debug.apk
+          "$SIGNER" verify fixtures/previous.apk
+          "$SIGNER" verify fixtures/current.apk
+          bash tools/ci/build_focus_fixture.sh fixtures/test.jks fixtures/focus.apk
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - run: python3 -m pip install 'Pillow>=11,<13'
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: bash tools/ci/features_smoke.sh fixtures/current.apk fixtures/previous.apk fixtures/focus.apk
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Android-features-smoke
+          path: ci-out/
