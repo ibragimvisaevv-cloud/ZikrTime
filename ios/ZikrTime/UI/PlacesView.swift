@@ -176,6 +176,7 @@ private struct PrayerPlacesMap: UIViewRepresentable {
         init(select: @escaping (PrayerPlace) -> Void) { self.select = select }
         func onMapLoaded(with statistics: YMKMapLoadStatistics) {
             #if DEBUG
+            DispatchQueue.main.async {
             guard QA.active else { return }
             let file = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
                 .appendingPathComponent("qa-map-loaded.txt")
@@ -183,6 +184,7 @@ private struct PrayerPlacesMap: UIViewRepresentable {
                 try Data("visible tiles loaded\n".utf8).write(to: file, options: .atomic)
             } catch {
                 print("Could not record map load: \(error)")
+            }
             }
             #endif
         }
