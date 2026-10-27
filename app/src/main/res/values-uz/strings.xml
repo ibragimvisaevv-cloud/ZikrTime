@@ -457,7 +457,7 @@
     <string name="pause_remaining">Seansda qoldi: %1$d daq</string>
     <string name="pause_pending">Tanaffusni davom ettirish uchun ZikrTime’ni oching</string>
     <string name="pause_running">Nazorat ishlayapti</string>
-    <string name="pause_inactive">Xizmat hozir ishlamayapti</string>
+    <string name="pause_inactive">Tanaffus oʻchirilgan</string>
     <string name="learning_resume">Mashgʻulotni davom ettirish</string>
     <string name="learning_review">Takrorlash</string>
     <string name="learning_review_hint">Takrorlash vaqti kelgan beshtagacha savol. Xatolar keyingi kuni qaytadi. Takrorlash uchun bonus daqiqalar berilmaydi.</string>

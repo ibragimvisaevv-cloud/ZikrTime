@@ -457,7 +457,7 @@
     <string name="pause_remaining">Session remaining: %1$d min</string>
     <string name="pause_pending">Open ZikrTime to continue the pause</string>
     <string name="pause_running">Monitoring is running</string>
-    <string name="pause_inactive">The service is not running</string>
+    <string name="pause_inactive">Pause is off</string>
     <string name="learning_resume">Continue session</string>
     <string name="learning_review">Review</string>
     <string name="learning_review_hint">Up to five questions due for review. Mistakes return the next day. Reviews do not earn bonus minutes.</string>

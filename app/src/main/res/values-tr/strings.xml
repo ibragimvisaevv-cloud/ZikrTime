@@ -457,7 +457,7 @@
     <string name="pause_remaining">Oturumda kalan süre: %1$d dk</string>
     <string name="pause_pending">Molaya devam etmek için ZikrTime\'ı açın</string>
     <string name="pause_running">Denetim çalışıyor</string>
-    <string name="pause_inactive">Hizmet şu anda çalışmıyor</string>
+    <string name="pause_inactive">Mola kapalı</string>
     <string name="learning_resume">Oturuma devam et</string>
     <string name="learning_review">Tekrar et</string>
     <string name="learning_review_hint">Tekrar zamanı gelen en fazla beş soru. Yanlışlar ertesi gün geri gelir. Tekrarlar bonus dakika kazandırmaz.</string>

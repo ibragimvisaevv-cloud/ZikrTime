@@ -457,7 +457,7 @@
     <string name="pause_remaining">Осталось в сессии: %1$d мин</string>
     <string name="pause_pending">Откройте ZikrTime, чтобы продолжить паузу</string>
     <string name="pause_running">Контроль работает</string>
-    <string name="pause_inactive">Служба сейчас не работает</string>
+    <string name="pause_inactive">Пауза выключена</string>
     <string name="learning_resume">Продолжить занятие</string>
     <string name="learning_review">Повторить</string>
     <string name="learning_review_hint">До пяти вопросов, срок повторения которых наступил. Ошибки возвращаются на следующий день. Бонусные минуты за повторение не начисляются.</string>

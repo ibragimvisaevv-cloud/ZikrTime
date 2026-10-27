@@ -457,7 +457,7 @@
     <string name="pause_remaining">Сессияда калды: %1$d мүн</string>
     <string name="pause_pending">Тыныгууну улантуу үчүн ZikrTime колдонмосун ачыңыз</string>
     <string name="pause_running">Көзөмөл иштеп жатат</string>
-    <string name="pause_inactive">Кызмат азыр иштебей жатат</string>
+    <string name="pause_inactive">Тыныгуу өчүрүлгөн</string>
     <string name="learning_resume">Сабакты улантуу</string>
     <string name="learning_review">Кайталоо</string>
     <string name="learning_review_hint">Кайталоо мөөнөтү келген бешке чейин суроо. Ката жооптор эртеси кайталанат. Кайталоого кошумча мүнөт берилбейт.</string>

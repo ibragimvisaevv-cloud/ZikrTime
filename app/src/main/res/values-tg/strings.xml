@@ -457,7 +457,7 @@
     <string name="pause_remaining">Вақти боқимондаи ҷаласа: %1$d дақ</string>
     <string name="pause_pending">Барои идомаи таваққуф ZikrTime-ро кушоед</string>
     <string name="pause_running">Назорат фаъол аст</string>
-    <string name="pause_inactive">Хидмат ҳоло кор намекунад</string>
+    <string name="pause_inactive">Таваққуф хомӯш аст</string>
     <string name="learning_resume">Идомаи машғулият</string>
     <string name="learning_review">Такрор кардан</string>
     <string name="learning_review_hint">То панҷ саволе, ки вақти такрорашон расидааст. Хатоҳо рӯзи дигар бармегарданд. Барои такрор дақиқаҳои иловагӣ дода намешаванд.</string>

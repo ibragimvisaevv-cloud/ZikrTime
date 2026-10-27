@@ -326,5 +326,26 @@ elif mode == 'focus':
         'strict_one_minute_expiry_pauses': True, 'usage_revocation_dismisses': True,
         'fallback_path_opened': True, 'disable_clears_session': True,
     }))
+elif mode == 'clear-progress':
+    launch('progress')
+    before = prefs()
+    work = {k: v for k, v in before.items() if k.startswith(('bonus_', 'prayed_')) or k in {
+        'learning_state_v1', 'quiz_reward_guard_v1', 'city_id', 'tasbih_count', 'tasbih_target', 'limit',
+    }}
+    tap_control('personal_progress_clear')
+    assert historical(prefs()) == historical(before), 'Opening confirmation erased statistics'
+    tap_control('personal_progress_clear_confirm')
+    after = prefs()
+    assert all(after.get(k) == v for k, v in work.items()), 'Clearing history changed operational data'
+    history = historical(after)
+    ledger = json.loads(history.pop('personal_progress_ledger', '{}'))
+    assert not history and not ledger.get('events', [])
+    launch('progress')
+    assert all(prefs().get(k) == v for k, v in work.items())
+    screenshot('progress-cleared')
+    (OUT / 'progress-clear-passed.json').write_text(json.dumps({
+        'confirmation_required': True, 'visible_history_empty': True,
+        'operational_keys_preserved': sorted(work), 'process_restart_checked': True,
+    }))
 else:
     raise ValueError(mode)

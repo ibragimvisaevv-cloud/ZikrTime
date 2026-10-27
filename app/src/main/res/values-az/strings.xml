@@ -457,7 +457,7 @@
     <string name="pause_remaining">Seansda qalan vaxt: %1$d dəq</string>
     <string name="pause_pending">Fasiləni davam etdirmək üçün ZikrTime tətbiqini açın</string>
     <string name="pause_running">Nəzarət işləyir</string>
-    <string name="pause_inactive">Xidmət hazırda işləmir</string>
+    <string name="pause_inactive">Fasilə söndürülüb</string>
     <string name="learning_resume">Məşğələyə davam et</string>
     <string name="learning_review">Təkrar et</string>
     <string name="learning_review_hint">Təkrar vaxtı çatmış beşə qədər sual. Səhvlər növbəti gün qayıdır. Təkrar üçün bonus dəqiqə verilmir.</string>

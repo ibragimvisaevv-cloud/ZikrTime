@@ -233,9 +233,9 @@ STRINGS = {
         "az": "Nəzarət işləyir", "tr": "Denetim çalışıyor",
     },
     "pause_inactive": {
-        "ru": "Служба сейчас не работает", "en": "The service is not running",
-        "uz": "Xizmat hozir ishlamayapti", "tg": "Хидмат ҳоло кор намекунад",
-        "kk": "Қызмет қазір жұмыс істемейді", "ky": "Кызмат азыр иштебей жатат",
-        "az": "Xidmət hazırda işləmir", "tr": "Hizmet şu anda çalışmıyor",
+        "ru": "Пауза выключена", "en": "Pause is off",
+        "uz": "Tanaffus oʻchirilgan", "tg": "Таваққуф хомӯш аст",
+        "kk": "Үзіліс өшірулі", "ky": "Тыныгуу өчүрүлгөн",
+        "az": "Fasilə söndürülüb", "tr": "Mola kapalı",
     },
 }
