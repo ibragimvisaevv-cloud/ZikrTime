@@ -101,32 +101,6 @@ fun HomeScreen() {
     }
 
     TabColumn {
-        // Шапка: даты (григорианская и по хиджре) и город
-        Column {
-            Text(gregorianDate(today), style = MaterialTheme.typography.headlineSmall)
-            Text(
-                hijriDate(today),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-        Surface(
-            onClick = { nav.open(Screen.CITY) },
-            shape = RoundedCornerShape(50),
-            color = MaterialTheme.colorScheme.surfaceContainerHigh,
-        ) {
-            Row(Modifier.padding(start = 10.dp, end = 14.dp, top = 6.dp, bottom = 6.dp), verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Default.LocationOn, contentDescription = null, modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
-                Spacer(Modifier.width(6.dp))
-                Text(
-                    Cities.displayName(context, Store.location),
-                    style = MaterialTheme.typography.labelLarge,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-            }
-        }
-
         NaturalSkyHero(now, next.first, next.second, times)
         ZCard(onClick = { nav.open(Screen.TASBIH) }) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {

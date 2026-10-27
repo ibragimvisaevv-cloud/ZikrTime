@@ -390,6 +390,7 @@ fun TasbihScreen() {
         androidx.compose.runtime.DisposableEffect(Unit) {
             onDispose { com.zikrtime.app.widget.Widgets.updateTasbih(context) }
         }
+        val counterLabel = stringResource(R.string.tasbih_title)
         val bead = androidx.compose.ui.graphics.ImageBitmap.imageResource(R.drawable.stone_bead)
         val latestTarget by androidx.compose.runtime.rememberUpdatedState(target)
         fun addOne() {
@@ -413,7 +414,7 @@ fun TasbihScreen() {
                 })
             }
             .clickable(role = androidx.compose.ui.semantics.Role.Button, onClickLabel = stringResource(R.string.tasbih_tap_hint)) { addOne() }
-            .semantics { contentDescription = "tasbih-counter" },
+            .semantics { contentDescription = counterLabel },
             contentAlignment = Alignment.Center) {
             Canvas(Modifier.fillMaxSize().padding(10.dp)) {
                 val radius = size.minDimension * 0.405f

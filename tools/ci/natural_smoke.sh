@@ -36,10 +36,11 @@ adb shell uiautomator dump /sdcard/window.xml >/dev/null
 adb pull /sdcard/window.xml ci-out/tasbih-before.xml >/dev/null
 read -r x y < <(python3 - <<'PY'
 import xml.etree.ElementTree as E,re
-n=next(x for x in E.parse('ci-out/tasbih-before.xml').iter('node') if x.attrib.get('content-desc')=='tasbih-counter')
+n=next(x for x in E.parse('ci-out/tasbih-before.xml').iter('node') if x.attrib.get('content-desc')=='Тасбих')
 a,b,c,d=map(int,re.findall(r'\d+',n.attrib['bounds']));print((a+c)//2,(b+d)//2)
 PY
 )
+adb exec-out run-as "$pkg" cat shared_prefs/zikrtime.xml > ci-out/prefs-before.xml
 adb shell dumpsys gfxinfo "$pkg" reset >/dev/null
 adb shell screenrecord --time-limit 12 /sdcard/tasbih.mp4 &
 record_pid=$!
@@ -48,6 +49,16 @@ sleep 1
 adb shell "for n in \$(seq 1 40); do input tap $x $y; done"
 wait "$record_pid" || true
 adb pull /sdcard/tasbih.mp4 ci-out/tasbih.mp4 >/dev/null
+sleep 1
+adb exec-out run-as "$pkg" cat shared_prefs/zikrtime.xml > ci-out/prefs-after.xml
+python3 - <<'PYCODE'
+import xml.etree.ElementTree as E,json
+def count(path):
+    return int(next(n.attrib['value'] for n in E.parse(path).getroot() if n.attrib.get('name')=='tasbih_count'))
+before=count('ci-out/prefs-before.xml');after=count('ci-out/prefs-after.xml')
+assert after-before==40,(before,after)
+open('ci-out/tap-count.json','w').write(json.dumps({'before':before,'after':after,'taps':40}))
+PYCODE
 adb shell uiautomator dump /sdcard/window.xml >/dev/null
 adb pull /sdcard/window.xml ci-out/tasbih-after.xml >/dev/null
 adb exec-out screencap -p > ci-out/screens/tasbih-after.png
@@ -58,5 +69,16 @@ sleep 5
 adb shell dumpsys gfxinfo "$pkg" > ci-out/gfxinfo-idle.txt
 adb shell settings put global animator_duration_scale 0
 capture tasbih-no-motion tasbih
+adb logcat -d -b crash > ci-out/crashes.txt
+if grep -qE 'FATAL EXCEPTION|Fatal signal' ci-out/crashes.txt; then cat ci-out/crashes.txt; exit 1; fi
+
+# Check goal, phrase and reset actions using the real controls, then restart for persistence.
+adb shell input swipe 500 1500 500 500 400
+adb shell uiautomator dump /sdcard/window.xml >/dev/null
+adb pull /sdcard/window.xml ci-out/controls.xml >/dev/null
+adb exec-out screencap -p > ci-out/screens/tasbih-controls.png
+adb shell settings put global animator_duration_scale 1
+python3 tools/ci/natural_controls.py
+python3 tools/ci/natural_controls.py baseline-out/outputs/apk/debug/app-debug.apk "$1"
 adb logcat -d -b crash > ci-out/crashes.txt
 if grep -qE 'FATAL EXCEPTION|Fatal signal' ci-out/crashes.txt; then cat ci-out/crashes.txt; exit 1; fi

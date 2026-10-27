@@ -129,6 +129,11 @@ jobs:
         with:
           name: Android-release-check
           path: android-out
+      - name: Baseline emulator APK
+        if: contains(github.event.head_commit.message, '[natural-ui]')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download 40405870652 -n Android-release-check -D baseline-out
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
