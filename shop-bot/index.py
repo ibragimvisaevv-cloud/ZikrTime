@@ -370,7 +370,10 @@ PLACE_KINDS = {
 WHO_TEXT = {"all": "для всех", "men": "только мужчины", "women": "только женщины", "both": "есть мужская и женская"}
 
 
-class PlacesMixin:
+from place_corrections import PlaceCorrectionsMixin, EXTRA_FIELDS
+
+
+class PlacesMixin(PlaceCorrectionsMixin):
     """Карта мест для намаза: люди предлагают места, владелец проверяет на месте и публикует."""
 
     PLACE_STEPS = ["kind", "name", "location", "address", "hours", "who", "wudu", "photo", "note"]
@@ -510,7 +513,7 @@ class PlacesMixin:
                 self.send(uid, self.place_text(p), self.place_mod_kb(p))
                 self.tg.call("sendLocation", chat_id=uid, latitude=p["lat"], longitude=p["lon"])
             return
-        rows = [[btn(f"{STATUS_TEXT[p['status']].split(' ')[0]} {p['name'][:40]}", f"pc:{p['id']}")] for p in places[:90]]
+        rows = [[btn(f"{STATUS_TEXT[p['status']].split(' ')[0]} {p['name'][:40]}", f"plcard:{p['id']}")] for p in places[:90]]
         rows.append([btn("➕ Добавить место", "place"), btn("⬅️ Меню", "menu")])
         osm = sum(1 for p in places if p.get("source") == "osm")
         self.send(uid, f"Места для намаза: {len(places)} (из них {osm} из OpenStreetMap). Показаны первые 90:",
@@ -552,13 +555,18 @@ class PlacesMixin:
                 continue
             # Компактно: пустые поля не пишем (мест по России — тысячи)
             item = {k: p.get(k) for k in ("id", "kind", "name", "lat", "lon", "address", "hours", "who", "photo", "note") if p.get(k) not in (None, "")}
-            if p.get("wudu") is not None:
-                item["wudu"] = p["wudu"]
+            for flag in ("wudu", "women"):
+                if flag in p:
+                    # Explicit null overrides legacy who; malformed values remain unknown.
+                    item[flag] = p[flag] if isinstance(p[flag], bool) else None
+            for field in EXTRA_FIELDS:
+                if p.get(field):
+                    item[field] = p[field]
             if p.get("source") == "osm":
                 item["src"] = "osm"
             items.append(item)
         return {"version": 1, "updated": int(time.time()), "seller_bot": self.bot_username(),
-                "donate_url": self.db.get("donate_url", ""), "places": items}
+                "donate_url": self.db.get("donate_url", ""), "corrections_enabled": True, "places": items}
 
     def write_places(self):
         import gzip
@@ -851,6 +859,7 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
         self.db.setdefault("invites", {})
         self.db.setdefault("contact_telegram", "")
         self.db.setdefault("places", {})
+        self.db.setdefault("place_corrections", {})
         self.db.setdefault("donate_url", "")
         self.dirty = False
         self.catalog_dirty = False
@@ -1015,6 +1024,8 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
                 return self.start_add(uid)
             if arg == "place":
                 return self.start_place(uid)
+            if arg.startswith("fix_"):
+                return self.start_place_correction(uid, arg[4:])
             return self.menu(uid)
         if text.startswith("/owner"):
             return self.claim_owner(uid, frm, text[6:].strip())
@@ -1060,6 +1071,8 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
         if self.is_admin(uid):
             pp = sum(1 for p in self.db["places"].values() if p["status"] == "pending")
             rows.append([btn(f"📍 Места на проверке ({pp})", "pl_pending"), btn("🗺 Все места", "pl_all")])
+            fixes = sum(r.get("status") == "pending" for r in self.db.get("place_corrections", {}).values())
+            rows.append([btn(f"✏️ Исправления мест ({fixes})", "pf_pending")])
             rv = len(self.db.get("reviews_pending", {}))
             pr = sum(1 for r in self.db.get("promo_requests", {}).values() if r["status"] == "claimed")
             rows.append([btn(f"⭐ Отзывы ({rv})", "rv_pending"), btn(f"💰 Продвижение ({pr})", "pr_pending")])
@@ -1203,6 +1216,8 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
             return self.add_input(uid, st, m, text)
         if flow == "place":
             return self.place_input(uid, st, m, text)
+        if flow == "place_fix":
+            return self.correction_input(uid, st, text)
         if flow == "edit":
             return self.edit_input(uid, st, m, text)
         if flow == "padd":
@@ -1716,6 +1731,16 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
                 if not self.is_admin(uid):
                     self.notify_admins(f"🗑 Продавец удалил компанию «{esc(s['name'])}».")
                 return self.menu(uid)
+        if act == "pfx" and len(parts) == 2:
+            return self.correction_field(uid, parts[1])
+        if act == "pfv" and len(parts) == 2:
+            return self.correction_boolean(uid, parts[1])
+        if act == "pfsend":
+            return self.send_place_correction(uid)
+        if act == "pf_pending":
+            return self.corrections_list(uid)
+        if act == "pfmod" and len(parts) == 3:
+            return self.moderate_place_correction(uid, parts[1], parts[2])
         if act == "place":
             return self.start_place(uid)
         if act == "pk" and st.get("flow") == "place" and st["step"] == "kind":
@@ -1735,7 +1760,7 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
             return self.places_list(uid, "pending")
         if act == "pl_all":
             return self.places_list(uid, "all")
-        if act == "pc":
+        if act == "plcard" and len(parts) == 2:
             return self.place_card(uid, parts[1])
         if act == "pm" and self.is_admin(uid):
             return self.moderate_place(uid, parts[1], parts[2])
