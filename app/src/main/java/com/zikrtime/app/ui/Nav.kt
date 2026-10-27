@@ -8,7 +8,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 
 /** Экраны второго уровня (поверх вкладок). */
-enum class Screen { LANGUAGE, CITY, PRAYER_SETTINGS, ALARM, QIBLA, TASBIH, QUIZ, APPS, ABOUT, SHOP_SELLER, SHOP_PRODUCT, PLACES, RAMADAN, ZAKAT }
+enum class Screen { LANGUAGE, CITY, PRAYER_SETTINGS, ALARM, QIBLA, TASBIH, QUIZ, APPS, ABOUT, SHOP_SELLER, SHOP_PRODUCT, PLACES, RAMADAN, ZAKAT, REVIEW, PROGRESS, AZKAR }
 
 /** Вкладки нижней панели. */
 enum class Tab { PRAYER, KNOWLEDGE, SHOP, FOCUS, MORE }
@@ -43,6 +43,21 @@ class Nav {
         quizRound++
         open(Screen.QUIZ)
     }
+
+    var azkarPeriod by mutableStateOf("morning")
+
+    fun startReview() { quizRound++; open(Screen.REVIEW) }
+    fun resumeLearning(context: android.content.Context) {
+        val bank = com.zikrtime.app.quiz.QuestionBank.load(context)
+        val pending = com.zikrtime.app.quiz.LearningStore.pendingSession(bank) ?: return
+        if (pending.scope == "review") startReview() else startQuiz(pending.category)
+    }
+    fun openAzkar(period: String) {
+        azkarPeriod = if (period == "evening") "evening" else "morning"
+        com.zikrtime.app.data.AzkarStore.start(azkarPeriod)
+        open(Screen.AZKAR)
+    }
+    fun resumeAzkar() { com.zikrtime.app.data.AzkarStore.pendingPeriod?.let { openAzkar(it) } }
 
     fun back(): Boolean {
         if (stack.isEmpty()) return false

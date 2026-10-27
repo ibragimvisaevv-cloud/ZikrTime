@@ -29,6 +29,9 @@ def load(lang):
 def main():
     master = load(MASTER)
     m_by_id = {q[0]: q for q in master.QUESTIONS}
+    metadata = json.loads((HERE / "source_metadata.json").read_text(encoding="utf-8"))
+    if set(metadata) != set(m_by_id):
+        raise ValueError("Source metadata IDs must match the bank; never reuse another question ID")
     errors = []
     OUT.mkdir(parents=True, exist_ok=True)
     built = []
@@ -58,6 +61,15 @@ def main():
             if not info or len(info) < 20:
                 errors.append(f"{lang}/{qid}: нет справки")
             item = {"id": qid, "cat": cat, "q": text, "options": options, "answer": 0, "info": info}
+            meta = metadata[qid]
+            item["contentVersion"] = meta["contentVersion"]
+            source = {"translationVersion": meta.get("translationVersion", {}).get(lang, 1)}
+            for key in ("reference", "translation", "url", "originalReview", "translationReview"):
+                if key not in meta:
+                    continue
+                value = meta[key]
+                source[key] = value.get(lang) if isinstance(value, dict) and lang in value else value
+            item["source"] = source
             if m[5]:
                 item["arabic"] = m[5]
             questions.append(item)

@@ -38,7 +38,11 @@
     "112"
    ],
    "answer": 0,
-   "info": "Kur'an'da 114 sure ve 6200'den fazla ayet vardır. Sureler, ne zaman ve nerede indiklerine göre Mekki ve Medeni olarak ikiye ayrılır."
+   "info": "Kur'an'da 114 sure ve 6200'den fazla ayet vardır. Sureler, ne zaman ve nerede indiklerine göre Mekki ve Medeni olarak ikiye ayrılır.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "quran_first_sura",
@@ -51,7 +55,11 @@
     "Nâs"
    ],
    "answer": 0,
-   "info": "Fâtiha “Açılış” demektir. Namazın her rekâtında okunduğu için “Ümmü'l-Kitâb” yani “Kitabın Anası” diye de anılır."
+   "info": "Fâtiha “Açılış” demektir. Namazın her rekâtında okunduğu için “Ümmü'l-Kitâb” yani “Kitabın Anası” diye de anılır.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "quran_longest",
@@ -64,7 +72,12 @@
     "Yâsîn"
    ],
    "answer": 0,
-   "info": "Bakara (“İnek”) suresi 286 ayettir. Ayetü'l-Kürsî ve Kur'an'ın en uzun ayeti olan borcun yazılmasıyla ilgili ayet (2:282) bu surededir."
+   "info": "Bakara (“İnek”) suresi 286 ayettir. Ayetü'l-Kürsî ve Kur'an'ın en uzun ayeti olan borcun yazılmasıyla ilgili ayet (2:282) bu surededir.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 2:282"
+   }
   },
   {
    "id": "quran_shortest",
@@ -77,7 +90,11 @@
     "Mülk"
    ],
    "answer": 0,
-   "info": "Kevser suresi üç kısa ayetten oluşur. Kevser, Peygamber Efendimiz'e ﷺ verilen cennetteki bir nehrin adıdır."
+   "info": "Kevser suresi üç kısa ayetten oluşur. Kevser, Peygamber Efendimiz'e ﷺ verilen cennetteki bir nehrin adıdır.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "quran_month",
@@ -90,7 +107,12 @@
     "Zilhicce"
    ],
    "answer": 0,
-   "info": "Bu, Bakara suresinde (2:185) bildirilir. Vahiy Kadir Gecesi başlamış ve yaklaşık 23 yıl sürmüştür."
+   "info": "Bu, Bakara suresinde (2:185) bildirilir. Vahiy Kadir Gecesi başlamış ve yaklaşık 23 yıl sürmüştür.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 2:185"
+   }
   },
   {
    "id": "quran_jibril",
@@ -103,7 +125,12 @@
     "Mâlik"
    ],
    "answer": 0,
-   "info": "Cebrail (a.s.) peygamberlere vahyi ulaştırırdı. Kur'an onu “Rûhu'l-Emîn” yani “Güvenilir Ruh” diye de anar (26:193)."
+   "info": "Cebrail (a.s.) peygamberlere vahyi ulaştırırdı. Kur'an onu “Rûhu'l-Emîn” yani “Güvenilir Ruh” diye de anar (26:193).",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 26:193"
+   }
   },
   {
    "id": "quran_hira",
@@ -116,7 +143,11 @@
     "Kâbe'nin yanında"
    ],
    "answer": 0,
-   "info": "Hira Mağarası, Mekke yakınındaki Nur Dağı'ndadır. Peygamberimiz ﷺ peygamberlikten önce de ibadet için oraya çekilirdi."
+   "info": "Hira Mağarası, Mekke yakınındaki Nur Dağı'ndadır. Peygamberimiz ﷺ peygamberlikten önce de ibadet için oraya çekilirdi.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "quran_iqra",
@@ -129,7 +160,12 @@
     "“Andolsun…” (Ve)"
    ],
    "answer": 0,
-   "info": "İlk inen ayetler Alak suresinin başıdır (96:1–5): insanı yaratan Rabbin adıyla okumak hakkındadır."
+   "info": "İlk inen ayetler Alak suresinin başıdır (96:1–5): insanı yaratan Rabbin adıyla okumak hakkındadır.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 96:1–5"
+   }
   },
   {
    "id": "quran_kursi_sura",
@@ -142,7 +178,12 @@
     "Mülk"
    ],
    "answer": 0,
-   "info": "Ayetü'l-Kürsî, Bakara suresinin 255. ayetidir. Allah'ın büyüklüğünü, ilmini ve göklerle yer üzerindeki hâkimiyetini anlatır."
+   "info": "Ayetü'l-Kürsî, Bakara suresinin 255. ayetidir. Allah'ın büyüklüğünü, ilmini ve göklerle yer üzerindeki hâkimiyetini anlatır.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "Bakara, 255. ayet"
+   }
   },
   {
    "id": "quran_greatest_ayah",
@@ -155,7 +196,12 @@
     "İhlâs'ın ilk ayeti"
    ],
    "answer": 0,
-   "info": "Bu, Müslim'in rivayet ettiği Übey b. Ka'b hadisinde geçer. Ayetü'l-Kürsî farz namazlardan sonra ve uyumadan önce okunur."
+   "info": "Bu, Müslim'in rivayet ettiği Übey b. Ka'b hadisinde geçer. Ayetü'l-Kürsî farz namazlardan sonra ve uyumadan önce okunur.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "Müslim; Übey bin Kab rivayeti (bankada numara belirtilmemiş)"
+   }
   },
   {
    "id": "quran_no_basmala",
@@ -168,7 +214,11 @@
     "İhlâs"
    ],
    "answer": 0,
-   "info": "Dokuzuncu sure olan Tevbe, başında besmele bulunmayan tek suredir. “Berâe” (“Uzaklaşma”) diye de anılır."
+   "info": "Dokuzuncu sure olan Tevbe, başında besmele bulunmayan tek suredir. “Berâe” (“Uzaklaşma”) diye de anılır.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "quran_two_basmala",
@@ -181,7 +231,11 @@
     "Meryem"
    ],
    "answer": 0,
-   "info": "Neml suresinde besmele başta ve 30. ayette, Hz. Süleyman'ın Sebe melikesine yazdığı mektupta geçer. Bu yüzden Kur'an'da toplam 114 besmele vardır."
+   "info": "Neml suresinde besmele başta ve 30. ayette, Hz. Süleyman'ın Sebe melikesine yazdığı mektupta geçer. Bu yüzden Kur'an'da toplam 114 besmele vardır.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "quran_third",
@@ -194,7 +248,12 @@
     "Mülk"
    ],
    "answer": 0,
-   "info": "Bu, Buhârî'nin rivayet ettiği bir hadiste geçer. İhlâs suresi tamamen Allah'ın birliğine, yani tevhide ayrılmıştır."
+   "info": "Bu, Buhârî'nin rivayet ettiği bir hadiste geçer. İhlâs suresi tamamen Allah'ın birliğine, yani tevhide ayrılmıştır.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "Buhari (bankada numara belirtilmemiş)"
+   }
   },
   {
    "id": "quran_maryam",
@@ -207,7 +266,11 @@
     "Ahzâb"
    ],
    "answer": 0,
-   "info": "Hz. İsa'nın annesi Meryem, Kur'an'da adı geçen tek kadındır. 19. sure onun adını taşır."
+   "info": "Hz. İsa'nın annesi Meryem, Kur'an'da adı geçen tek kadındır. 19. sure onun adını taşır.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "quran_fatiha_ayat",
@@ -220,7 +283,12 @@
     "8"
    ],
    "answer": 0,
-   "info": "Fâtiha yedi ayettir. Her rekâtta tekrar okunduğu için Kur'an onu “tekrarlanan yedi ayet” diye anar (15:87)."
+   "info": "Fâtiha yedi ayettir. Her rekâtta tekrar okunduğu için Kur'an onu “tekrarlanan yedi ayet” diye anar (15:87).",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 15:87"
+   }
   },
   {
    "id": "prophet_adam",
@@ -233,7 +301,11 @@
     "İbrahim"
    ],
    "answer": 0,
-   "info": "Hz. Âdem, Allah'ın yarattığı ilk insan ve ilk peygamberdir. Bütün insanlar ondan ve eşi Havva'dan gelir."
+   "info": "Hz. Âdem, Allah'ın yarattığı ilk insan ve ilk peygamberdir. Bütün insanlar ondan ve eşi Havva'dan gelir.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "prophet_nuh",
@@ -246,7 +318,11 @@
     "Hud"
    ],
    "answer": 0,
-   "info": "Hz. Nuh, kavmini uzun yıllar tek olan Allah'a ibadete çağırdı. Allah'ın emriyle gemiyi yaptı ve iman edenlerle birlikte tufandan kurtuldu."
+   "info": "Hz. Nuh, kavmini uzun yıllar tek olan Allah'a ibadete çağırdı. Allah'ın emriyle gemiyi yaptı ve iman edenlerle birlikte tufandan kurtuldu.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "prophet_kaaba",
@@ -259,7 +335,12 @@
     "Musa"
    ],
    "answer": 0,
-   "info": "Bu, Bakara suresinde (2:127) anlatılır. Hz. İbrahim ve Hz. İsmail Kâbe'nin temellerini yükseltip Allah'tan amellerini kabul etmesini dilediler."
+   "info": "Bu, Bakara suresinde (2:127) anlatılır. Hz. İbrahim ve Hz. İsmail Kâbe'nin temellerini yükseltip Allah'tan amellerini kabul etmesini dilediler.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 2:127"
+   }
   },
   {
    "id": "prophet_yunus",
@@ -272,7 +353,12 @@
     "Lut"
    ],
    "answer": 0,
-   "info": "Hz. Yunus balığın karnında Allah'ın birliğini ikrar edip hatasını itiraf ederek dua etti. Onun duası (21:87) zor anlarda bugün de okunur."
+   "info": "Hz. Yunus balığın karnında Allah'ın birliğini ikrar edip hatasını itiraf ederek dua etti. Onun duası (21:87) zor anlarda bugün de okunur.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 21:87"
+   }
   },
   {
    "id": "prophet_tawrat",
@@ -285,7 +371,11 @@
     "İbrahim"
    ],
    "answer": 0,
-   "info": "Tevrat, Hz. Musa'ya indirilen kitaptır. Allah'ın indirdiği bütün kitaplara iman, imanın esaslarındandır."
+   "info": "Tevrat, Hz. Musa'ya indirilen kitaptır. Allah'ın indirdiği bütün kitaplara iman, imanın esaslarındandır.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "prophet_zabur",
@@ -298,7 +388,11 @@
     "İsa"
    ],
    "answer": 0,
-   "info": "Zebur, Hz. Davut'a indirildi. Hz. Davut hem peygamber hem hükümdardı; Allah ona güzel bir ses vermişti."
+   "info": "Zebur, Hz. Davut'a indirildi. Hz. Davut hem peygamber hem hükümdardı; Allah ona güzel bir ses vermişti.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "prophet_injil",
@@ -311,7 +405,11 @@
     "Zekeriya"
    ],
    "answer": 0,
-   "info": "İncil, Meryem oğlu Hz. İsa'ya indirildi. Müslümanlar Hz. İsa'nın Allah'ın elçisi olduğuna ve Allah'ın onu katına yükselttiğine inanır."
+   "info": "İncil, Meryem oğlu Hz. İsa'ya indirildi. Müslümanlar Hz. İsa'nın Allah'ın elçisi olduğuna ve Allah'ın onu katına yükselttiğine inanır.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "prophet_suleyman",
@@ -324,7 +422,11 @@
     "Zülkifl"
    ],
    "answer": 0,
-   "info": "Hz. Süleyman'a eşsiz bir hükümranlık verildi: rüzgâr ve cinler ona boyun eğdi, kuşların ve karıncaların dilini anlardı."
+   "info": "Hz. Süleyman'a eşsiz bir hükümranlık verildi: rüzgâr ve cinler ona boyun eğdi, kuşların ve karıncaların dilini anlardı.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "prophet_ayyub",
@@ -337,7 +439,11 @@
     "Nuh"
    ],
    "answer": 0,
-   "info": "Hz. Eyüp sağlığını, malını ve çocuklarını kaybetti ama şikâyet etmedi. Allah ona şifa verdi ve nimetlerini geri verdi; sabrı müminlere örnek oldu."
+   "info": "Hz. Eyüp sağlığını, malını ve çocuklarını kaybetti ama şikâyet etmedi. Allah ona şifa verdi ve nimetlerini geri verdi; sabrı müminlere örnek oldu.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "prophet_yaqub",
@@ -350,7 +456,11 @@
     "İsmail"
    ],
    "answer": 0,
-   "info": "Hz. Yusuf, Hz. Yakup'un oğlu, Hz. İshak'ın torunu ve Hz. İbrahim'in torununun oğludur. Hz. Yakup, İsrail adıyla da bilinir."
+   "info": "Hz. Yusuf, Hz. Yakup'un oğlu, Hz. İshak'ın torunu ve Hz. İbrahim'in torununun oğludur. Hz. Yakup, İsrail adıyla da bilinir.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "prophet_yusuf_well",
@@ -363,7 +473,12 @@
     "İsmail"
    ],
    "answer": 0,
-   "info": "Hz. Yusuf'un kıssası onun adını taşıyan 12. surede anlatılır. Kur'an onu kıssaların en güzeli diye anar (12:3)."
+   "info": "Hz. Yusuf'un kıssası onun adını taşıyan 12. surede anlatılır. Kur'an onu kıssaların en güzeli diye anar (12:3).",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 12:3"
+   }
   },
   {
    "id": "prophet_harun",
@@ -376,7 +491,12 @@
     "Hud"
    ],
    "answer": 0,
-   "info": "Hz. Musa, daha güzel konuştuğu için kardeşi Harun'u kendisine yardımcı kılmasını Allah'tan istedi. Allah duasını kabul etti (20:29–36)."
+   "info": "Hz. Musa, daha güzel konuştuğu için kardeşi Harun'u kendisine yardımcı kılmasını Allah'tan istedi. Allah duasını kabul etti (20:29–36).",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 20:29–36"
+   }
   },
   {
    "id": "prophet_yahya",
@@ -389,7 +509,12 @@
     "Harun"
    ],
    "answer": 0,
-   "info": "Allah, eşi kısır olduğu hâlde Hz. Zekeriya'ya yaşlılığında Yahya'yı verdi. Ondan önce kimseye bu ad verilmemişti (19:7)."
+   "info": "Allah, eşi kısır olduğu hâlde Hz. Zekeriya'ya yaşlılığında Yahya'yı verdi. Ondan önce kimseye bu ad verilmemişti (19:7).",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 19:7"
+   }
   },
   {
    "id": "prophet_count",
@@ -402,7 +527,12 @@
     "313"
    ],
    "answer": 0,
-   "info": "Genellikle Kur'an'da 25 peygamberin adının geçtiği kabul edilir. Peygamberler çok daha fazladır; Allah hepsini bize bildirmemiştir (40:78)."
+   "info": "Genellikle Kur'an'da 25 peygamberin adının geçtiği kabul edilir. Peygamberler çok daha fazladır; Allah hepsini bize bildirmemiştir (40:78).",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 40:78"
+   }
   },
   {
    "id": "prophet_last",
@@ -415,7 +545,12 @@
     "Yahya"
    ],
    "answer": 0,
-   "info": "Kur'an, Hz. Muhammed'i ﷺ “peygamberlerin sonuncusu” (Hâtemü'n-nebiyyîn) olarak anar (33:40). Ondan sonra peygamber gelmeyecektir; Kur'an son kitaptır."
+   "info": "Kur'an, Hz. Muhammed'i ﷺ “peygamberlerin sonuncusu” (Hâtemü'n-nebiyyîn) olarak anar (33:40). Ondan sonra peygamber gelmeyecektir; Kur'an son kitaptır.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 33:40"
+   }
   },
   {
    "id": "seerah_birthplace",
@@ -428,7 +563,11 @@
     "Kudüs"
    ],
    "answer": 0,
-   "info": "Peygamberimiz ﷺ Fil Yılı'nda, yaklaşık 571'de Mekke'de doğdu. Kureyş kabilesinin Hâşimoğulları kolundandı."
+   "info": "Peygamberimiz ﷺ Fil Yılı'nda, yaklaşık 571'de Mekke'de doğdu. Kureyş kabilesinin Hâşimoğulları kolundandı.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "seerah_mother",
@@ -441,7 +580,11 @@
     "Fâtıma"
    ],
    "answer": 0,
-   "info": "Annesi Âmine binti Vehb'dir. Peygamberimiz ﷺ yaklaşık altı yaşındayken vefat etti; babası Abdullah ise o doğmadan önce vefat etmişti."
+   "info": "Annesi Âmine binti Vehb'dir. Peygamberimiz ﷺ yaklaşık altı yaşındayken vefat etti; babası Abdullah ise o doğmadan önce vefat etmişti.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "seerah_nurse",
@@ -454,7 +597,11 @@
     "Fâtıma"
    ],
    "answer": 0,
-   "info": "Araplarda bebekleri çöldeki sütannelere verme geleneği vardı. Peygamberimiz ﷺ ilk çocukluğunu Benî Sa'd kabilesinden Halime'nin yanında geçirdi."
+   "info": "Araplarda bebekleri çöldeki sütannelere verme geleneği vardı. Peygamberimiz ﷺ ilk çocukluğunu Benî Sa'd kabilesinden Halime'nin yanında geçirdi.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "seerah_khadija",
@@ -467,7 +614,11 @@
     "Sevde"
    ],
    "answer": 0,
-   "info": "Hz. Hatice (r.a.) onun peygamberliğine ilk iman eden kişi oldu ve en zor yıllarda ona destek oldu."
+   "info": "Hz. Hatice (r.a.) onun peygamberliğine ilk iman eden kişi oldu ve en zor yıllarda ona destek oldu.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "seerah_age40",
@@ -480,7 +631,11 @@
     "50"
    ],
    "answer": 0,
-   "info": "Vahiy, Peygamberimiz ﷺ 40 yaşındayken başladı. Mekkeliler ona daha önce de “el-Emîn” yani “güvenilir” derdi."
+   "info": "Vahiy, Peygamberimiz ﷺ 40 yaşındayken başladı. Mekkeliler ona daha önce de “el-Emîn” yani “güvenilir” derdi.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "seerah_mission_years",
@@ -493,7 +648,11 @@
     "40 yıl"
    ],
    "answer": 0,
-   "info": "Peygamberimiz ﷺ yaklaşık 13 yıl Mekke'de, yaklaşık 10 yıl Medine'de İslam'a davet etti. Hicri 11 yılında 63 yaşında vefat etti."
+   "info": "Peygamberimiz ﷺ yaklaşık 13 yıl Mekke'de, yaklaşık 10 yıl Medine'de İslam'a davet etti. Hicri 11 yılında 63 yaşında vefat etti.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "seerah_hijra",
@@ -506,7 +665,11 @@
     "İsrâ"
    ],
    "answer": 0,
-   "info": "Hicret 622 yılında gerçekleşti. O zamanlar Yesrib adını taşıyan Medine'de ilk Müslüman topluluk oluştu."
+   "info": "Hicret 622 yılında gerçekleşti. O zamanlar Yesrib adını taşıyan Medine'de ilk Müslüman topluluk oluştu.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "seerah_calendar",
@@ -519,7 +682,11 @@
     "Mekke'nin fethi"
    ],
    "answer": 0,
-   "info": "Hicri takvim Hz. Ömer döneminde kabul edildi. Ay takvimi olduğu için güneş takvimine göre her yıl yaklaşık 11 gün kayar."
+   "info": "Hicri takvim Hz. Ömer döneminde kabul edildi. Ay takvimi olduğu için güneş takvimine göre her yıl yaklaşık 11 gün kayar.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "seerah_companion_hijra",
@@ -532,7 +699,12 @@
     "Osman"
    ],
    "answer": 0,
-   "info": "Hz. Ebû Bekir (r.a.) Peygamberimizle ﷺ birlikte Sevr Mağarası'nda üç gün saklandı. Bu olay Kur'an'da anılır (9:40)."
+   "info": "Hz. Ebû Bekir (r.a.) Peygamberimizle ﷺ birlikte Sevr Mağarası'nda üç gün saklandı. Bu olay Kur'an'da anılır (9:40).",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 9:40"
+   }
   },
   {
    "id": "seerah_isra",
@@ -545,7 +717,11 @@
     "Tavaf"
    ],
    "answer": 0,
-   "info": "İsrâ, Kudüs'e yapılan gece yolculuğudur; Mi'rac ise göklere yükseliştir. Beş vakit namaz o zaman farz kılındı."
+   "info": "İsrâ, Kudüs'e yapılan gece yolculuğudur; Mi'rac ise göklere yükseliştir. Beş vakit namaz o zaman farz kılındı.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "seerah_badr",
@@ -558,7 +734,11 @@
     "Huneyn"
    ],
    "answer": 0,
-   "info": "Bedir Savaşı hicretin 2. yılında, Ramazan ayında yapıldı. Yaklaşık 313 Müslüman kendilerinin üç katı bir orduyu yendi."
+   "info": "Bedir Savaşı hicretin 2. yılında, Ramazan ayında yapıldı. Yaklaşık 313 Müslüman kendilerinin üç katı bir orduyu yendi.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "seerah_muezzin",
@@ -571,7 +751,11 @@
     "Selmân-ı Fârisî"
    ],
    "answer": 0,
-   "info": "Bilâl, Mekke'de köleydi ve imanı yüzünden işkence gördü; sonra Hz. Ebû Bekir onu azat etti. Peygamberimiz ﷺ güzel ve gür sesi için onu ezan okumaya seçti."
+   "info": "Bilâl, Mekke'de köleydi ve imanı yüzünden işkence gördü; sonra Hz. Ebû Bekir onu azat etti. Peygamberimiz ﷺ güzel ve gür sesi için onu ezan okumaya seçti.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "seerah_grave",
@@ -584,7 +768,11 @@
     "Taif'te"
    ],
    "answer": 0,
-   "info": "Peygamberimiz ﷺ Medine'de, bugün Mescid-i Nebevi'nin içinde kalan Hz. Âişe'nin odasında medfundur. Yanında Hz. Ebû Bekir ve Hz. Ömer yatar."
+   "info": "Peygamberimiz ﷺ Medine'de, bugün Mescid-i Nebevi'nin içinde kalan Hz. Âişe'nin odasında medfundur. Yanında Hz. Ebû Bekir ve Hz. Ömer yatar.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "seerah_first_caliph",
@@ -597,7 +785,11 @@
     "Ali"
    ],
    "answer": 0,
-   "info": "Peygamberimizin ﷺ vefatından sonra Hz. Ebû Bekir es-Sıddîk ilk halife oldu. Dört halife: Ebû Bekir, Ömer, Osman ve Ali."
+   "info": "Peygamberimizin ﷺ vefatından sonra Hz. Ebû Bekir es-Sıddîk ilk halife oldu. Dört halife: Ebû Bekir, Ömer, Osman ve Ali.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_pillars_islam",
@@ -610,7 +802,11 @@
     "7"
    ],
    "answer": 0,
-   "info": "İslam'ın beş şartı: kelime-i şehadet, namaz, zekât, Ramazan orucu ve gücü yetene hac."
+   "info": "İslam'ın beş şartı: kelime-i şehadet, namaz, zekât, Ramazan orucu ve gücü yetene hac.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_pillars_iman",
@@ -623,7 +819,11 @@
     "4"
    ],
    "answer": 0,
-   "info": "Allah'a, meleklerine, kitaplarına, peygamberlerine, ahiret gününe ve kadere iman. Bunlar meşhur Cibril hadisinde sayılır."
+   "info": "Allah'a, meleklerine, kitaplarına, peygamberlerine, ahiret gününe ve kadere iman. Bunlar meşhur Cibril hadisinde sayılır.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_daily_prayers",
@@ -636,7 +836,11 @@
     "6"
    ],
    "answer": 0,
-   "info": "Sabah, öğle, ikindi, akşam ve yatsı. Beş vakit namaz Mi'rac gecesinde farz kılındı."
+   "info": "Sabah, öğle, ikindi, akşam ve yatsı. Beş vakit namaz Mi'rac gecesinde farz kılındı.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_fajr_rakats",
@@ -649,7 +853,11 @@
     "1"
    ],
    "answer": 0,
-   "info": "Sabah namazının farzı iki rekâttır. Öncesinde iki rekât sünnet kılınır; Peygamberimiz ﷺ onu neredeyse hiç terk etmezdi."
+   "info": "Sabah namazının farzı iki rekâttır. Öncesinde iki rekât sünnet kılınır; Peygamberimiz ﷺ onu neredeyse hiç terk etmezdi.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_maghrib_rakats",
@@ -662,7 +870,11 @@
     "5"
    ],
    "answer": 0,
-   "info": "Akşam namazı, üç rekât olan tek farz namazdır. Güneş battıktan sonra kılınır."
+   "info": "Akşam namazı, üç rekât olan tek farz namazdır. Güneş battıktan sonra kılınır.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_four_rakats",
@@ -675,7 +887,11 @@
     "6"
    ],
    "answer": 0,
-   "info": "Öğle, ikindi ve yatsının farzları dörder rekâttır. Yolcu bunları ikiye indirerek kılar."
+   "info": "Öğle, ikindi ve yatsının farzları dörder rekâttır. Yolcu bunları ikiye indirerek kılar.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_wudu",
@@ -688,7 +904,12 @@
     "İstinca"
    ],
    "answer": 0,
-   "info": "Abdestte yüz ve dirseklere kadar kollar yıkanır, başa mesh edilir, ayaklar topuklara kadar yıkanır (5:6). Gusül ise bütün bedenin yıkanmasıdır."
+   "info": "Abdestte yüz ve dirseklere kadar kollar yıkanır, başa mesh edilir, ayaklar topuklara kadar yıkanır (5:6). Gusül ise bütün bedenin yıkanmasıdır.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 5:6"
+   }
   },
   {
    "id": "fiqh_tayammum",
@@ -701,7 +922,12 @@
     "Sahur"
    ],
    "answer": 0,
-   "info": "Teyemmüm, su bulunmadığında veya kullanılamadığında temiz toprakla yapılan temizliktir. Kur'an'da geçer (4:43, 5:6)."
+   "info": "Teyemmüm, su bulunmadığında veya kullanılamadığında temiz toprakla yapılan temizliktir. Kur'an'da geçer (4:43, 5:6).",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 4:43, 5:6"
+   }
   },
   {
    "id": "fiqh_adhan",
@@ -714,7 +940,11 @@
     "Dua"
    ],
    "answer": 0,
-   "info": "Ezan namaza çağırır; kamet ise namaz başlamadan hemen önceki ikinci çağrıdır. Sabah ezanına “Namaz uykudan hayırlıdır” sözleri eklenir."
+   "info": "Ezan namaza çağırır; kamet ise namaz başlamadan hemen önceki ikinci çağrıdır. Sabah ezanına “Namaz uykudan hayırlıdır” sözleri eklenir.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_qibla",
@@ -727,7 +957,11 @@
     "Doğuya"
    ],
    "answer": 0,
-   "info": "Kâbe'nin yönüne kıble denir. Kıbleyi bu uygulamanın “Kıble” bölümünde bulabilirsiniz."
+   "info": "Kâbe'nin yönüne kıble denir. Kıbleyi bu uygulamanın “Kıble” bölümünde bulabilirsiniz.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_first_qibla",
@@ -740,7 +974,12 @@
     "Arafat Dağı"
    ],
    "answer": 0,
-   "info": "Hicretten sonra yaklaşık 16–17 ay Müslümanlar Kudüs'teki Mescid-i Aksa'ya yönelerek namaz kıldı. Sonra kıble Kâbe olarak değiştirildi (2:144)."
+   "info": "Hicretten sonra yaklaşık 16–17 ay Müslümanlar Kudüs'teki Mescid-i Aksa'ya yönelerek namaz kıldı. Sonra kıble Kâbe olarak değiştirildi (2:144).",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 2:144"
+   }
   },
   {
    "id": "fiqh_zakat",
@@ -753,7 +992,11 @@
     "Fidye"
    ],
    "answer": 0,
-   "info": "Zekât İslam'ın beş şartından biridir. Genellikle nisaba ulaşmış ve üzerinden bir yıl geçmiş birikimin yüzde 2,5'idir."
+   "info": "Zekât İslam'ın beş şartından biridir. Genellikle nisaba ulaşmış ve üzerinden bir yıl geçmiş birikimin yüzde 2,5'idir.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_zakat_fitr",
@@ -766,7 +1009,11 @@
     "Fidye"
    ],
    "answer": 0,
-   "info": "Fitre, kişinin kendisi ve ailesi için verilir; böylece yoksullar da bayramı sevinçle karşılar. Bayram namazından önce verilmelidir."
+   "info": "Fitre, kişinin kendisi ve ailesi için verilir; böylece yoksullar da bayramı sevinçle karşılar. Bayram namazından önce verilmelidir.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_suhoor",
@@ -779,7 +1026,11 @@
     "Akika"
    ],
    "answer": 0,
-   "info": "Sahur tan ağarmadan önceki yemektir; iftar ise güneş battıktan sonra orucu açmaktır. Peygamberimiz ﷺ sahurda bereket olduğunu bildirmiştir."
+   "info": "Sahur tan ağarmadan önceki yemektir; iftar ise güneş battıktan sonra orucu açmaktır. Peygamberimiz ﷺ sahurda bereket olduğunu bildirmiştir.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_jumuah",
@@ -792,7 +1043,11 @@
     "Pazartesi"
    ],
    "answer": 0,
-   "info": "Cuma namazı öğle namazının yerine kılınır ve öncesinde hutbe okunur. Cuma, Müslümanlar için haftanın en faziletli günüdür."
+   "info": "Cuma namazı öğle namazının yerine kılınır ve öncesinde hutbe okunur. Cuma, Müslümanlar için haftanın en faziletli günüdür.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_tawaf",
@@ -805,7 +1060,11 @@
     "10"
    ],
    "answer": 0,
-   "info": "Tavaf, Kâbe'nin etrafında saat yönünün tersine yedi kez dönmektir. Hacerü'l-Esved köşesinden başlanır."
+   "info": "Tavaf, Kâbe'nin etrafında saat yönünün tersine yedi kez dönmektir. Hacerü'l-Esved köşesinden başlanır.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_sai",
@@ -818,7 +1077,12 @@
     "Mina ile Arafat"
    ],
    "answer": 0,
-   "info": "Sa'y, küçük İsmail'e su ararken Safa ile Merve tepeleri arasında yedi kez koşan Hz. Hacer'i hatırlatır (2:158)."
+   "info": "Sa'y, küçük İsmail'e su ararken Safa ile Merve tepeleri arasında yedi kez koşan Hz. Hacer'i hatırlatır (2:158).",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 2:158"
+   }
   },
   {
    "id": "fiqh_hajj_month",
@@ -831,7 +1095,11 @@
     "Muharrem"
    ],
    "answer": 0,
-   "info": "Haccın temel menasiki Zilhicce'nin 8'i ile 13'ü arasında yapılır. Arefe günü Zilhicce'nin 9'udur."
+   "info": "Haccın temel menasiki Zilhicce'nin 8'i ile 13'ü arasında yapılır. Arefe günü Zilhicce'nin 9'udur.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_ramadan_number",
@@ -844,7 +1112,11 @@
     "12."
    ],
    "answer": 0,
-   "info": "Ramazan dokuzuncu aydır; ardından Şevval gelir. Hicri takvimde 12 kameri ay vardır."
+   "info": "Ramazan dokuzuncu aydır; ardından Şevval gelir. Hicri takvimde 12 kameri ay vardır.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_qadr",
@@ -857,7 +1129,12 @@
     "Muharrem'in ilk gecesi"
    ],
    "answer": 0,
-   "info": "Bu, Kadir suresinde (97:3) bildirilir. Ramazan'ın son on gecesinde, özellikle tek gecelerde aranır."
+   "info": "Bu, Kadir suresinde (97:3) bildirilir. Ramazan'ın son on gecesinde, özellikle tek gecelerde aranır.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 97:3"
+   }
   },
   {
    "id": "fiqh_eid_fitr",
@@ -870,7 +1147,11 @@
     "Aşure"
    ],
    "answer": 0,
-   "info": "Ramazan Bayramı, Şevval'in 1'inde bayram namazıyla kutlanır. Diğer bayram olan Kurban Bayramı, Zilhicce'nin 10'una denk gelir."
+   "info": "Ramazan Bayramı, Şevval'in 1'inde bayram namazıyla kutlanır. Diğer bayram olan Kurban Bayramı, Zilhicce'nin 10'una denk gelir.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_zamzam",
@@ -883,7 +1164,11 @@
     "Tesnim"
    ],
    "answer": 0,
-   "info": "Zemzem kaynağı, Hz. Hacer oğlu İsmail için su ararken Allah'ın rahmetiyle ortaya çıktı. Binlerce yıldır kurumadan akar."
+   "info": "Zemzem kaynağı, Hz. Hacer oğlu İsmail için su ararken Allah'ın rahmetiyle ortaya çıktı. Binlerce yıldır kurumadan akar.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "arabic_subhanallah",
@@ -896,7 +1181,11 @@
     "Allah'tan bağışlanma dilerim"
    ],
    "answer": 0,
-   "info": "Bu sözle Allah'ı tesbih eder, O'nu her türlü kusurdan uzak tutarız. Namazdan sonra 33 kez söylemek âdettir."
+   "info": "Bu sözle Allah'ı tesbih eder, O'nu her türlü kusurdan uzak tutarız. Namazdan sonra 33 kez söylemek âdettir.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "arabic_alhamdulillah",
@@ -909,7 +1198,11 @@
     "Allah en büyüktür"
    ],
    "answer": 0,
-   "info": "Müslümanlar her durumda, sevinçte de sıkıntıda da bu sözle Allah'a şükreder. Fâtiha, besmeleden sonra bu sözle başlar."
+   "info": "Müslümanlar her durumda, sevinçte de sıkıntıda da bu sözle Allah'a şükreder. Fâtiha, besmeleden sonra bu sözle başlar.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "arabic_allahuakbar",
@@ -922,7 +1215,11 @@
     "Allah her türlü noksanlıktan uzaktır"
    ],
    "answer": 0,
-   "info": "Her namaz bu sözle, yani tekbirle başlar. Ezanda ve bayram günlerinde de söylenir."
+   "info": "Her namaz bu sözle, yani tekbirle başlar. Ezanda ve bayram günlerinde de söylenir.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "arabic_inshaallah",
@@ -935,7 +1232,12 @@
     "Allah'ın adıyla"
    ],
    "answer": 0,
-   "info": "Gelecekten söz ederken Müslümanlar “inşallah” der (18:23–24). Bir şeyi beğenince ise “maşallah”, yani “Allah'ın dilediği oldu” denir."
+   "info": "Gelecekten söz ederken Müslümanlar “inşallah” der (18:23–24). Bir şeyi beğenince ise “maşallah”, yani “Allah'ın dilediği oldu” denir.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 18:23–24"
+   }
   },
   {
    "id": "arabic_astaghfirullah",
@@ -948,7 +1250,11 @@
     "Allah'a tevekkül ederim"
    ],
    "answer": 0,
-   "info": "Bu, istiğfardır, yani bağışlanma dilemektir. Peygamberimiz ﷺ günde yetmiş defadan fazla Allah'tan bağışlanma dilerdi."
+   "info": "Bu, istiğfardır, yani bağışlanma dilemektir. Peygamberimiz ﷺ günde yetmiş defadan fazla Allah'tan bağışlanma dilerdi.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "arabic_sabr",
@@ -961,7 +1267,12 @@
     "İlim"
    ],
    "answer": 0,
-   "info": "Sabır, ibadette, günahtan kaçınmada ve imtihanlarda dayanıklı ve kararlı olmaktır. Kur'an, Allah'ın sabredenlerle beraber olduğunu bildirir (2:153)."
+   "info": "Sabır, ibadette, günahtan kaçınmada ve imtihanlarda dayanıklı ve kararlı olmaktır. Kur'an, Allah'ın sabredenlerle beraber olduğunu bildirir (2:153).",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 2:153"
+   }
   },
   {
    "id": "arabic_shukr",
@@ -974,7 +1285,12 @@
     "Ümit"
    ],
    "answer": 0,
-   "info": "Şükür, Allah'a kalple, dille ve davranışla minnettarlık göstermektir. Allah şükredenlere daha fazlasını vereceğini vaat etmiştir (14:7)."
+   "info": "Şükür, Allah'a kalple, dille ve davranışla minnettarlık göstermektir. Allah şükredenlere daha fazlasını vereceğini vaat etmiştir (14:7).",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 14:7"
+   }
   },
   {
    "id": "arabic_niyyah",
@@ -987,7 +1303,12 @@
     "Sadaka"
    ],
    "answer": 0,
-   "info": "Buhârî ve Müslim'in rivayet ettiği meşhur hadis, amellerin niyetlere göre olduğunu bildirerek başlar. Güzel bir niyet sıradan bir işi ibadete dönüştürür."
+   "info": "Buhârî ve Müslim'in rivayet ettiği meşhur hadis, amellerin niyetlere göre olduğunu bildirerek başlar. Güzel bir niyet sıradan bir işi ibadete dönüştürür.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "Buhari ve Müslim (bankada numaralar belirtilmemiş)"
+   }
   },
   {
    "id": "arabic_barakah",
@@ -1000,7 +1321,11 @@
     "Zaman"
    ],
    "answer": 0,
-   "info": "Bereket, Allah'ın zamana, mala ve amellere koyduğu hayır ve faydadır. Bereketli az şey bile çok hayır getirir."
+   "info": "Bereket, Allah'ın zamana, mala ve amellere koyduğu hayır ve faydadır. Bereketli az şey bile çok hayır getirir.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "arabic_islam",
@@ -1013,7 +1338,11 @@
     "Yolculuk"
    ],
    "answer": 0,
-   "info": "İslam, tek olan Allah'a teslim olmak demektir. Kelime, barış anlamındaki “selâm” ile aynı köktendir."
+   "info": "İslam, tek olan Allah'a teslim olmak demektir. Kelime, barış anlamındaki “selâm” ile aynı köktendir.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "ayah_ikhlas",
@@ -1027,6 +1356,11 @@
    ],
    "answer": 0,
    "info": "İhlâs suresi, 1–2. ayetler. Samed, hiçbir şeye muhtaç olmayan, her şeyin O'na muhtaç olduğu demektir.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "İhlâs suresi, 1–2"
+   },
    "arabic": "قُلْ هُوَ اللَّهُ أَحَدٌ"
   },
   {
@@ -1041,6 +1375,11 @@
    ],
    "answer": 0,
    "info": "Fâtiha suresi, 2–3. ayetler. Rahmân ve Rahîm, Allah'ın rahmetini anlatan isimleridir.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "Fâtiha suresi, 2–3"
+   },
    "arabic": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ"
   },
   {
@@ -1055,6 +1394,11 @@
    ],
    "answer": 0,
    "info": "Fâtiha suresi, 5. ayet: yalnız Allah'a ibadet eder ve yalnız O'ndan yardım dileriz.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "Fâtiha suresi, 5"
+   },
    "arabic": "إِيَّاكَ نَعْبُدُ"
   },
   {
@@ -1069,6 +1413,11 @@
    ],
    "answer": 0,
    "info": "Asr suresi, 1–2. ayetler. İmam Şâfiî, insanlar yalnızca bu sure üzerinde düşünse bunun onlara yeteceğini söylemiştir.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "Asr suresi, 1–2"
+   },
    "arabic": "وَالْعَصْرِ"
   },
   {
@@ -1083,6 +1432,11 @@
    ],
    "answer": 0,
    "info": "Felak suresi, 1–2. ayetler. Nâs suresiyle birlikte bunlara “Muavvizeteyn”, yani Allah'a sığınma sureleri denir.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "Felak suresi, 1–2"
+   },
    "arabic": "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ"
   },
   {
@@ -1097,6 +1451,11 @@
    ],
    "answer": 0,
    "info": "Nâs suresi, 1–2. ayetler. Kur'an'ın son suresidir; Peygamberimiz ﷺ onu İhlâs ve Felak ile birlikte uyumadan önce okurdu.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "Nâs suresi, 1–2"
+   },
    "arabic": "قُلْ أَعُوذُ بِرَبِّ النَّاسِ"
   },
   {
@@ -1111,6 +1470,11 @@
    ],
    "answer": 0,
    "info": "Kevser suresi, 1–2. ayetler: verilen nimete şükür olarak Rabbin için namaz kıl ve kurban kes.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "Kevser suresi, 1–2"
+   },
    "arabic": "إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ"
   }
  ]

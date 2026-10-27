@@ -36,8 +36,8 @@ class LogicTest {
             UsageEventLite("tt", "X", false, 9500), // пауза без начала — пропускаем
             UsageEventLite("tt", "X", true, 10000),
         )
-        assertEquals(4000L + 1100L + 2000L + 2000L, UsageMath.foregroundMillis(ev, 0, 12000))
-        assertEquals(2000L + 1100L + 2000L + 2000L, UsageMath.foregroundMillis(ev, 3000, 12000))
+        assertEquals(4000L + 3000L + 2000L, UsageMath.foregroundMillis(ev, 0, 12000))
+        assertEquals(2000L + 3000L + 2000L, UsageMath.foregroundMillis(ev, 3000, 12000))
         assertEquals(mapOf("tt" to 10000L), UsageMath.openPackages(ev))
         assertTrue(UsageMath.openPackages(ev.take(2)).isEmpty())
     }

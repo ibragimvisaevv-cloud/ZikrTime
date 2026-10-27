@@ -5,6 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
+import android.app.KeyguardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ServiceInfo
@@ -21,6 +22,9 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.core.app.NotificationCompat
 import androidx.core.app.ServiceCompat
 import com.zikrtime.app.MainActivity
@@ -65,6 +69,7 @@ class GuardService : Service() {
             stopSelf()
             return START_NOT_STICKY
         }
+        running = true
         handler.removeCallbacks(tick)
         handler.post(tick)
         return START_STICKY
@@ -78,25 +83,32 @@ class GuardService : Service() {
             stopSelf()
             return CHECK_SCREEN_OFF_MS
         }
-        if (!getSystemService(PowerManager::class.java).isInteractive) return CHECK_SCREEN_OFF_MS
-
+        if (!getSystemService(PowerManager::class.java).isInteractive || getSystemService(KeyguardManager::class.java).isKeyguardLocked) {
+            PauseOverlay.hide(this)
+            hideOverlay(this)
+            return CHECK_SCREEN_OFF_MS
+        }
         val now = System.currentTimeMillis()
-        // Раз в минуту обновляем виджет «Экранное время».
         if (now - lastWidgetUpdate > 60_000) {
             lastWidgetUpdate = now
             runCatching { com.zikrtime.app.widget.Widgets.updateScreenTime(this) }
         }
-        val snapshot = ScreenTime.snapshot(this, now) ?: return CHECK_SCREEN_OFF_MS
-        // Запасной экран убираем, как только блокировка закончилась (намаз прошёл, проверка завершилась).
-        if (overlay != null && ScreenTime.evaluate(this, usedMillis = snapshot.usedMillis) is BlockReason.None) hideOverlay(this)
-        // Открытая соцсеть, которую мы ещё не закрывали после её последнего открытия.
-        val open = snapshot.openPackages.filter { (pkg, openedAt) -> openedAt > (lastBlocked[pkg] ?: 0L) }
-        if (open.isEmpty()) return CHECK_MS
-
+        val snapshot = ScreenTime.snapshot(this, now) ?: run {
+            PauseOverlay.hide(this); hideOverlay(this); return CHECK_SCREEN_OFF_MS
+        }
+        val open = snapshot.openPackages.filterKeys { ScreenTime.isSafeTarget(this,it) }.maxByOrNull { it.value }
+        if (open == null) { PauseOverlay.hide(this); hideOverlay(this); return CHECK_MS }
         val reason = ScreenTime.evaluate(this, usedMillis = snapshot.usedMillis)
         if (reason !is BlockReason.None) {
-            open.keys.forEach { lastBlocked[it] = now }
-            block(reason)
+            PauseOverlay.hide(this)
+            if (open.value > (lastBlocked[open.key] ?: 0L)) {
+                lastBlocked[open.key] = now
+                block(reason)
+            }
+        } else {
+            hideOverlay(this)
+            if (FocusPause.needsPause(this,open.key,open.value,reason)) PauseGate.show(this,open.key)
+            else PauseOverlay.hide(this)
         }
         return CHECK_MS
     }
@@ -108,7 +120,9 @@ class GuardService : Service() {
     private fun block(reason: BlockReason) {
         runCatching { startActivity(BlockActivity.intent(this, reason)) }
         handler.postDelayed({
-            if (!BlockActivity.visible) showOverlay(this, reason)
+            if (!BlockActivity.visible && ScreenTime.hasUsageAccess(this) &&
+                ScreenTime.snapshot(this)?.openPackages?.keys?.any { ScreenTime.isSafeTarget(this,it) } == true &&
+                ScreenTime.evaluate(this) !is BlockReason.None) showOverlay(this, reason)
         }, 1_200)
     }
 
@@ -122,7 +136,7 @@ class GuardService : Service() {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(res.getString(R.string.guard_title))
-            .setContentText(res.getString(R.string.guard_text, Store.dailyLimitMinutes))
+            .setContentText(if (Store.blockingEnabled) res.getString(R.string.guard_text, Store.dailyLimitMinutes) else res.getString(R.string.pause_title))
             .setOngoing(true)
             .setSilent(true)
             .setPriority(NotificationCompat.PRIORITY_MIN)
@@ -131,6 +145,8 @@ class GuardService : Service() {
     }
 
     override fun onDestroy() {
+        running = false
+        PauseOverlay.hide(this)
         handler.removeCallbacksAndMessages(null)
         hideOverlay(this)
         super.onDestroy()
@@ -139,6 +155,7 @@ class GuardService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     companion object {
+        var running by mutableStateOf(false); private set
         private const val CHANNEL_ID = "guard"
         private const val NOTIFICATION_ID = 7
         private const val CHECK_MS = 3_000L
@@ -222,8 +239,8 @@ class GuardService : Service() {
          * Если служба включена, она работает быстрее и надёжнее, и эта служба не нужна.
          */
         fun shouldRun(context: Context): Boolean =
-            Store.blockingEnabled &&
-                !ScreenTime.isAccessibilityEnabled(context) &&
+            (Store.blockingEnabled || FocusPause.enabled(context)) &&
+                !BlockerService.running &&
                 canDrawOverlays(context) &&
                 ScreenTime.hasUsageAccess(context)
 

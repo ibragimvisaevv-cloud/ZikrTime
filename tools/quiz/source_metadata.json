@@ -1,0 +1,382 @@
+{
+  "quran_suras": {
+    "contentVersion": 1
+  },
+  "quran_first_sura": {
+    "contentVersion": 1
+  },
+  "quran_longest": {
+    "contentVersion": 1,
+    "reference": "القرآن 2:282"
+  },
+  "quran_shortest": {
+    "contentVersion": 1
+  },
+  "quran_month": {
+    "contentVersion": 1,
+    "reference": "القرآن 2:185"
+  },
+  "quran_jibril": {
+    "contentVersion": 1,
+    "reference": "القرآن 26:193"
+  },
+  "quran_hira": {
+    "contentVersion": 1
+  },
+  "quran_iqra": {
+    "contentVersion": 1,
+    "reference": "القرآن 96:1–5"
+  },
+  "quran_kursi_sura": {
+    "contentVersion": 1,
+    "reference": {
+      "ru": "Аль-Бакара, аят 255",
+      "en": "Al-Baqarah, verse 255",
+      "uz": "Al-Baqara, 255-oyat",
+      "tg": "Ал-Бақара, ояти 255",
+      "kk": "Әл-Бақара, 255-аят",
+      "ky": "Аль-Бакара, 255-аят",
+      "az": "Əl-Bəqərə, 255-ci ayə",
+      "tr": "Bakara, 255. ayet"
+    }
+  },
+  "quran_greatest_ayah": {
+    "contentVersion": 1,
+    "reference": {
+      "ru": "Муслим; сообщение от Убайя ибн Кааба (номер в банке не указан)",
+      "en": "Muslim; narration from Ubayy ibn Kaab (number not provided in the bank)",
+      "uz": "Muslim; Ubayy ibn Kaabdan rivoyat (bankda raqami koʻrsatilmagan)",
+      "tg": "Муслим; ривоят аз Убай ибни Каъб (рақам дар бонк нест)",
+      "kk": "Муслим; Убай ибн Кағбтан риуаят (банкте нөмірі жоқ)",
+      "ky": "Муслим; Убай ибн Каабдан риваят (банкта номери жок)",
+      "az": "Müslim; Übey ibn Kəbdən rəvayət (bankda nömrəsi yoxdur)",
+      "tr": "Müslim; Übey bin Kab rivayeti (bankada numara belirtilmemiş)"
+    }
+  },
+  "quran_no_basmala": {
+    "contentVersion": 1
+  },
+  "quran_two_basmala": {
+    "contentVersion": 1
+  },
+  "quran_third": {
+    "contentVersion": 1,
+    "reference": {
+      "ru": "Аль-Бухари (номер в банке не указан)",
+      "en": "Al-Bukhari (number not provided in the bank)",
+      "uz": "Al-Buxoriy (bankda raqami koʻrsatilmagan)",
+      "tg": "Ал-Бухорӣ (рақам дар бонк нест)",
+      "kk": "Әл-Бұхари (банкте нөмірі жоқ)",
+      "ky": "Аль-Бухари (банкта номери жок)",
+      "az": "Əl-Buxari (bankda nömrəsi yoxdur)",
+      "tr": "Buhari (bankada numara belirtilmemiş)"
+    }
+  },
+  "quran_maryam": {
+    "contentVersion": 1
+  },
+  "quran_fatiha_ayat": {
+    "contentVersion": 1,
+    "reference": "القرآن 15:87"
+  },
+  "prophet_adam": {
+    "contentVersion": 1
+  },
+  "prophet_nuh": {
+    "contentVersion": 1
+  },
+  "prophet_kaaba": {
+    "contentVersion": 1,
+    "reference": "القرآن 2:127"
+  },
+  "prophet_yunus": {
+    "contentVersion": 1,
+    "reference": "القرآن 21:87"
+  },
+  "prophet_tawrat": {
+    "contentVersion": 1
+  },
+  "prophet_zabur": {
+    "contentVersion": 1
+  },
+  "prophet_injil": {
+    "contentVersion": 1
+  },
+  "prophet_suleyman": {
+    "contentVersion": 1
+  },
+  "prophet_ayyub": {
+    "contentVersion": 1
+  },
+  "prophet_yaqub": {
+    "contentVersion": 1
+  },
+  "prophet_yusuf_well": {
+    "contentVersion": 1,
+    "reference": "القرآن 12:3"
+  },
+  "prophet_harun": {
+    "contentVersion": 1,
+    "reference": "القرآن 20:29–36"
+  },
+  "prophet_yahya": {
+    "contentVersion": 1,
+    "reference": "القرآن 19:7"
+  },
+  "prophet_count": {
+    "contentVersion": 1,
+    "reference": "القرآن 40:78"
+  },
+  "prophet_last": {
+    "contentVersion": 1,
+    "reference": "القرآن 33:40"
+  },
+  "seerah_birthplace": {
+    "contentVersion": 1
+  },
+  "seerah_mother": {
+    "contentVersion": 1
+  },
+  "seerah_nurse": {
+    "contentVersion": 1
+  },
+  "seerah_khadija": {
+    "contentVersion": 1
+  },
+  "seerah_age40": {
+    "contentVersion": 1
+  },
+  "seerah_mission_years": {
+    "contentVersion": 1
+  },
+  "seerah_hijra": {
+    "contentVersion": 1
+  },
+  "seerah_calendar": {
+    "contentVersion": 1
+  },
+  "seerah_companion_hijra": {
+    "contentVersion": 1,
+    "reference": "القرآن 9:40"
+  },
+  "seerah_isra": {
+    "contentVersion": 1
+  },
+  "seerah_badr": {
+    "contentVersion": 1
+  },
+  "seerah_muezzin": {
+    "contentVersion": 1
+  },
+  "seerah_grave": {
+    "contentVersion": 1
+  },
+  "seerah_first_caliph": {
+    "contentVersion": 1
+  },
+  "fiqh_pillars_islam": {
+    "contentVersion": 1
+  },
+  "fiqh_pillars_iman": {
+    "contentVersion": 1
+  },
+  "fiqh_daily_prayers": {
+    "contentVersion": 1
+  },
+  "fiqh_fajr_rakats": {
+    "contentVersion": 1
+  },
+  "fiqh_maghrib_rakats": {
+    "contentVersion": 1
+  },
+  "fiqh_four_rakats": {
+    "contentVersion": 1
+  },
+  "fiqh_wudu": {
+    "contentVersion": 1,
+    "reference": "القرآن 5:6"
+  },
+  "fiqh_tayammum": {
+    "contentVersion": 1,
+    "reference": "القرآن 4:43, 5:6"
+  },
+  "fiqh_adhan": {
+    "contentVersion": 1
+  },
+  "fiqh_qibla": {
+    "contentVersion": 1
+  },
+  "fiqh_first_qibla": {
+    "contentVersion": 1,
+    "reference": "القرآن 2:144"
+  },
+  "fiqh_zakat": {
+    "contentVersion": 1
+  },
+  "fiqh_zakat_fitr": {
+    "contentVersion": 1
+  },
+  "fiqh_suhoor": {
+    "contentVersion": 1
+  },
+  "fiqh_jumuah": {
+    "contentVersion": 1
+  },
+  "fiqh_tawaf": {
+    "contentVersion": 1
+  },
+  "fiqh_sai": {
+    "contentVersion": 1,
+    "reference": "القرآن 2:158"
+  },
+  "fiqh_hajj_month": {
+    "contentVersion": 1
+  },
+  "fiqh_ramadan_number": {
+    "contentVersion": 1
+  },
+  "fiqh_qadr": {
+    "contentVersion": 1,
+    "reference": "القرآن 97:3"
+  },
+  "fiqh_eid_fitr": {
+    "contentVersion": 1
+  },
+  "fiqh_zamzam": {
+    "contentVersion": 1
+  },
+  "arabic_subhanallah": {
+    "contentVersion": 1
+  },
+  "arabic_alhamdulillah": {
+    "contentVersion": 1
+  },
+  "arabic_allahuakbar": {
+    "contentVersion": 1
+  },
+  "arabic_inshaallah": {
+    "contentVersion": 1,
+    "reference": "القرآن 18:23–24"
+  },
+  "arabic_astaghfirullah": {
+    "contentVersion": 1
+  },
+  "arabic_sabr": {
+    "contentVersion": 1,
+    "reference": "القرآن 2:153"
+  },
+  "arabic_shukr": {
+    "contentVersion": 1,
+    "reference": "القرآن 14:7"
+  },
+  "arabic_niyyah": {
+    "contentVersion": 1,
+    "reference": {
+      "ru": "Аль-Бухари и Муслим (номера в банке не указаны)",
+      "en": "Al-Bukhari and Muslim (numbers not provided in the bank)",
+      "uz": "Al-Buxoriy va Muslim (bankda raqamlari koʻrsatilmagan)",
+      "tg": "Ал-Бухорӣ ва Муслим (рақамҳо дар бонк нестанд)",
+      "kk": "Әл-Бұхари және Муслим (банкте нөмірлері жоқ)",
+      "ky": "Аль-Бухари жана Муслим (банкта номерлери жок)",
+      "az": "Əl-Buxari və Müslim (bankda nömrələri yoxdur)",
+      "tr": "Buhari ve Müslim (bankada numaralar belirtilmemiş)"
+    }
+  },
+  "arabic_barakah": {
+    "contentVersion": 1
+  },
+  "arabic_islam": {
+    "contentVersion": 1
+  },
+  "ayah_ikhlas": {
+    "contentVersion": 1,
+    "reference": {
+      "ru": "Сура «Аль-Ихлас», аяты 1–2",
+      "en": "Surah Al-Ikhlas, ayahs 1–2",
+      "uz": "«Ixlos» surasi, 1–2-oyatlar",
+      "tg": "Сураи «Ихлос», оятҳои 1–2",
+      "kk": "«Ықылас» сүресі, 1–2-аяттар",
+      "ky": "«Ихлас» сүрөсү, 1–2-аяттар",
+      "az": "«İxlas» surəsi, 1–2-ci ayələr",
+      "tr": "İhlâs suresi, 1–2"
+    }
+  },
+  "ayah_fatiha_2": {
+    "contentVersion": 1,
+    "reference": {
+      "ru": "Сура «Аль-Фатиха», аяты 2–3",
+      "en": "Surah Al-Fatiha, ayahs 2–3",
+      "uz": "«Fotiha» surasi, 2–3-oyatlar",
+      "tg": "Сураи «Фотиҳа», оятҳои 2–3",
+      "kk": "«Фатиха» сүресі, 2–3-аяттар",
+      "ky": "«Фатиха» сүрөсү, 2–3-аяттар",
+      "az": "«Fatihə» surəsi, 2–3-cü ayələr",
+      "tr": "Fâtiha suresi, 2–3"
+    }
+  },
+  "ayah_fatiha_5": {
+    "contentVersion": 1,
+    "reference": {
+      "ru": "Сура «Аль-Фатиха», аят 5",
+      "en": "Surah Al-Fatiha, ayah 5",
+      "uz": "«Fotiha» surasi, 5-oyat",
+      "tg": "Сураи «Фотиҳа», ояти 5",
+      "kk": "«Фатиха» сүресі, 5-аят",
+      "ky": "«Фатиха» сүрөсү, 5-аят",
+      "az": "«Fatihə» surəsi, 5-ci ayə",
+      "tr": "Fâtiha suresi, 5"
+    }
+  },
+  "ayah_asr": {
+    "contentVersion": 1,
+    "reference": {
+      "ru": "Сура «Аль-Аср», аяты 1–2",
+      "en": "Surah Al-Asr, ayahs 1–2",
+      "uz": "«Asr» surasi, 1–2-oyatlar",
+      "tg": "Сураи «Аср», оятҳои 1–2",
+      "kk": "«Аср» сүресі, 1–2-аяттар",
+      "ky": "«Аср» сүрөсү, 1–2-аяттар",
+      "az": "«Əsr» surəsi, 1–2-ci ayələr",
+      "tr": "Asr suresi, 1–2"
+    }
+  },
+  "ayah_falaq": {
+    "contentVersion": 1,
+    "reference": {
+      "ru": "Сура «Аль-Фаляк», аяты 1–2",
+      "en": "Surah Al-Falaq, ayahs 1–2",
+      "uz": "«Falaq» surasi, 1–2-oyatlar",
+      "tg": "Сураи «Фалақ», оятҳои 1–2",
+      "kk": "«Фалақ» сүресі, 1–2-аяттар",
+      "ky": "«Фалак» сүрөсү, 1–2-аяттар",
+      "az": "«Fələq» surəsi, 1–2-ci ayələr",
+      "tr": "Felak suresi, 1–2"
+    }
+  },
+  "ayah_nas": {
+    "contentVersion": 1,
+    "reference": {
+      "ru": "Сура «Ан-Нас», аяты 1–2",
+      "en": "Surah An-Nas, ayahs 1–2",
+      "uz": "«Nos» surasi, 1–2-oyatlar",
+      "tg": "Сураи «Нос», оятҳои 1–2",
+      "kk": "«Нас» сүресі, 1–2-аяттар",
+      "ky": "«Нас» сүрөсү, 1–2-аяттар",
+      "az": "«Nas» surəsi, 1–2-ci ayələr",
+      "tr": "Nâs suresi, 1–2"
+    }
+  },
+  "ayah_kawthar": {
+    "contentVersion": 1,
+    "reference": {
+      "ru": "Сура «Аль-Каусар», аяты 1–2",
+      "en": "Surah Al-Kawthar, ayahs 1–2",
+      "uz": "«Kavsar» surasi, 1–2-oyatlar",
+      "tg": "Сураи «Кавсар», оятҳои 1–2",
+      "kk": "«Кәусар» сүресі, 1–2-аяттар",
+      "ky": "«Кавсар» сүрөсү, 1–2-аяттар",
+      "az": "«Kövsər» surəsi, 1–2-ci ayələr",
+      "tr": "Kevser suresi, 1–2"
+    }
+  }
+}

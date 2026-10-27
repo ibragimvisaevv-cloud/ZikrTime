@@ -203,7 +203,11 @@ private fun AlarmScreen(test: Boolean, onStop: () -> Unit, onSnooze: () -> Unit)
                                 category = null,
                                 target = 1,
                                 finishText = stringResource(R.string.alarm_stop),
-                                onFinished = onStop,
+                                sessionScope = "alarm",
+                                onFinished = {
+                                    com.zikrtime.app.quiz.LearningStore.clearSession("alarm")
+                                    onStop()
+                                },
                                 modifier = Modifier.padding(20.dp),
                             )
                         }

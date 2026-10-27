@@ -86,7 +86,7 @@ object ScreenTime {
         val activities = pm.queryIntentActivities(intent, 0)
         return activities
             .map { it.activityInfo.packageName to it.loadLabel(pm).toString() }
-            .filter { it.first != context.packageName }
+            .filter { isSafeTarget(context, it.first) }
             .distinctBy { it.first }
             .map { AppInfo(it.first, it.second) }
             .sortedWith(compareByDescending<AppInfo> { it.packageName in KNOWN_SOCIAL }.thenBy { it.label.lowercase() })
@@ -111,24 +111,60 @@ object ScreenTime {
         if (packages.isEmpty()) return Snapshot(0L, emptyMap())
 
         val zone = ZoneId.systemDefault()
-        val startOfDay = LocalDate.now(zone).atStartOfDay(zone).toInstant().toEpochMilli()
+        val startOfDay = java.time.Instant.ofEpochMilli(now).atZone(zone).toLocalDate().atStartOfDay(zone).toInstant().toEpochMilli()
         // Берём с запасом в 3 часа до полуночи, чтобы правильно учесть окно, открытое ещё вчера.
         val queryFrom = startOfDay - 3 * 60 * 60 * 1000L
 
+        return usageWindow(context, startOfDay, now, packages, queryFrom)
+    }
+
+    /** Single foreground counter shared by daily limits and pause sessions. */
+    fun usageWindow(context: Context, from: Long, now: Long, packages: Set<String>, queryFrom: Long = from - 3 * 60 * 60 * 1000L): Snapshot? {
+        if (!hasUsageAccess(context)) return null
+        if (now < from) return Snapshot(0, emptyMap())
         val usm = context.getSystemService(UsageStatsManager::class.java)
-        val events = usm.queryEvents(queryFrom, now) ?: return Snapshot(0L, emptyMap())
+        val events = runCatching { usm.queryEvents(queryFrom.coerceAtLeast(0), now) }.getOrNull() ?: return null
         val list = ArrayList<UsageEventLite>()
+        val keyboards=context.getSystemService(android.view.inputmethod.InputMethodManager::class.java)
+            ?.enabledInputMethodList?.map { it.packageName }?.toSet().orEmpty()
         val e = UsageEvents.Event()
         while (events.hasNextEvent()) {
             events.getNextEvent(e)
+            // Numeric codes keep API 26 compatibility (screen/keyguard events arrived at API 28).
+            val state=when(e.eventType) {
+                15 -> UsageEventLite("","",false,e.timeStamp,screenOn=true)
+                16 -> UsageEventLite("","",false,e.timeStamp,screenOn=false)
+                17 -> UsageEventLite("","",false,e.timeStamp,unlocked=false)
+                18 -> UsageEventLite("","",false,e.timeStamp,unlocked=true)
+                26,27 -> UsageEventLite("","",false,e.timeStamp,reset=true)
+                else -> null
+            }
+            if(state!=null) { list.add(state); continue }
             val pkg = e.packageName ?: continue
-            if (pkg !in packages) continue
+            if (pkg !in packages) {
+                // A real foreground transition also closes stale intervals when a vendor omits PAUSED.
+                // The input method is part of the current app interaction, not a separate visit.
+                if(e.eventType==EVENT_RESUMED && pkg !in keyboards) list.add(UsageEventLite("","",false,e.timeStamp,reset=true))
+                continue
+            }
             when (e.eventType) {
                 EVENT_RESUMED -> list.add(UsageEventLite(pkg, e.className ?: "", true, e.timeStamp))
                 EVENT_PAUSED -> list.add(UsageEventLite(pkg, e.className ?: "", false, e.timeStamp))
             }
         }
-        return Snapshot(UsageMath.foregroundMillis(list, startOfDay, now), UsageMath.openPackages(list))
+        return Snapshot(UsageMath.foregroundMillis(list, from, now), UsageMath.openPackages(list))
+    }
+
+    /** Never intercept system UI, emergency/phone handlers, settings or this app. */
+    fun isSafeTarget(context: Context, pkg: String): Boolean {
+        if (pkg == context.packageName || pkg in setOf("android", "com.android.systemui", "com.android.settings")) return false
+        val pm = context.packageManager
+        val info = runCatching { pm.getApplicationInfo(pkg, 0) }.getOrNull() ?: return false
+        if (info.flags and android.content.pm.ApplicationInfo.FLAG_SYSTEM != 0 && pkg !in KNOWN_SOCIAL) return false
+        val protected = listOf(Intent(Settings.ACTION_SETTINGS), Intent(Intent.ACTION_DIAL),
+            Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME))
+            .mapNotNull { pm.resolveActivity(it, PackageManager.MATCH_DEFAULT_ONLY)?.activityInfo?.packageName }
+        return pkg !in protected && !pkg.contains("permissioncontroller") && !pkg.contains("emergency") && !pkg.contains("dialer")
     }
 
     /** Сколько миллисекунд выбранные приложения были открыты сегодня. null — нет доступа к статистике. */

@@ -8,6 +8,8 @@ import com.zikrtime.app.prayer.CalcMethod
 import com.zikrtime.app.prayer.Prayer
 import java.time.DayOfWeek
 import java.time.LocalDate
+import org.json.JSONObject
+import org.json.JSONArray
 
 /**
  * Все настройки и прогресс пользователя. Хранятся в SharedPreferences на телефоне
@@ -28,6 +30,7 @@ object Store {
         prefs = context.applicationContext.getSharedPreferences("zikrtime", Context.MODE_PRIVATE)
         cleanupOldDailyKeys()
         cache.putAll(prefs.all)
+        ProgressMigration.additions(prefs.all).forEach { (key, value) -> put(key, value) }
     }
 
     // ---------------- Общие ----------------
@@ -172,14 +175,6 @@ object Store {
 
     fun bonusMinutes(date: LocalDate = LocalDate.now()): Int = int(K_BONUS + date, 0)
 
-    /** Добавляет бонусные минуты за раунд викторины, но не больше дневного потолка. Возвращает, сколько добавлено. */
-    fun addBonus(date: LocalDate = LocalDate.now()): Int {
-        val current = bonusMinutes(date)
-        val added = (MAX_BONUS_MINUTES_PER_DAY - current).coerceIn(0, BONUS_MINUTES_PER_ROUND)
-        if (added > 0) put(K_BONUS + date, current + added)
-        return added
-    }
-
     fun allowedMinutes(date: LocalDate = LocalDate.now()): Int = dailyLimitMinutes + bonusMinutes(date)
 
     // ---------------- Намазы ----------------
@@ -191,6 +186,7 @@ object Store {
         val updated = prayedOn(date).toMutableSet().apply { if (done) add(prayer) else remove(prayer) }
         put(K_PRAYED + date, updated.map { it.name }.toSet())
 
+        if (!personalProgressEnabled) return
         // День засчитывается в серию, когда отмечены все пять намазов.
         val days = prayerDays.toMutableSet()
         if (updated.containsAll(Prayer.obligatory)) days.add(date) else days.remove(date)
@@ -223,16 +219,18 @@ object Store {
         get() = str(K_RECENT_Q, "").split(',').filter { it.isNotEmpty() }
 
     fun recordAnswer(questionId: String, category: String, correct: Boolean) {
-        put(K_TOTAL_ANSWERED, totalAnswered + 1)
-        if (correct) {
-            put(K_TOTAL_CORRECT, totalCorrect + 1)
-            put(K_CAT_CORRECT + category, categoryCorrect(category) + 1)
+        if (personalProgressEnabled) {
+            put(K_TOTAL_ANSWERED, totalAnswered + 1)
+            if (correct) {
+                put(K_TOTAL_CORRECT, totalCorrect + 1)
+                put(K_CAT_CORRECT + category, categoryCorrect(category) + 1)
+            }
         }
         put(K_RECENT_Q, (listOf(questionId) + recentQuestions.filter { it != questionId }).take(60).joinToString(","))
     }
 
     fun recordRoundCompleted(date: LocalDate = LocalDate.now()) {
-        put(K_QUIZ_DAYS, Streaks.trim(quizDays + date).map { it.toString() }.toSet())
+        if (personalProgressEnabled) put(K_QUIZ_DAYS, Streaks.trim(quizDays + date).map { it.toString() }.toSet())
     }
 
     // ---------------- Тасбих ----------------
@@ -263,7 +261,92 @@ object Store {
 
     fun addTasbih(date: LocalDate = LocalDate.now()) {
         tasbihCount += 1
-        put(K_TASBIH_DAY + date, tasbihToday(date) + 1)
+        if (personalProgressEnabled) put(K_TASBIH_DAY + date, tasbihToday(date) + 1)
+    }
+
+    // ---------------- Личный прогресс (отдельно от обучения и рабочих счётчиков) ----------------
+
+    var personalProgressEnabled: Boolean
+        get() = bool("personal_progress_enabled", true)
+        set(value) = put("personal_progress_enabled", value)
+
+    private fun progressLedger(): ProgressLedger = runCatching {
+        val data = JSONObject(getRaw("personal_progress_ledger") ?: "{}")
+        val events = data.optJSONArray("events") ?: JSONArray()
+        val seen = data.optJSONArray("seen") ?: JSONArray()
+        ProgressLedger((0 until events.length()).mapNotNull { i -> runCatching {
+            val e = events.getJSONObject(i)
+            ProgressEvent(e.getString("id"), LocalDate.parse(e.getString("day")), e.getString("kind"), e.optString("detail"))
+        }.getOrNull() }, (0 until seen.length()).map { seen.getString(it) }.toSet())
+    }.getOrDefault(ProgressLedger())
+
+    private fun saveProgress(ledger: ProgressLedger) {
+        val events = JSONArray()
+        ledger.events.forEach { e -> events.put(JSONObject().put("id", e.id).put("day", e.day.toString()).put("kind", e.kind).put("detail", e.detail)) }
+        putRaw("personal_progress_ledger", JSONObject().put("events", events).put("seen", JSONArray(ledger.seenIds.toList())).toString())
+    }
+
+    private fun recordProgress(event: ProgressEvent) {
+        if (!personalProgressEnabled) return
+        val old = progressLedger()
+        val updated = old.record(true, event)
+        if (updated != old) saveProgress(updated)
+    }
+
+    fun recordLearningCompleted(sessionId: String, category: String?, review: Boolean) {
+        recordProgress(ProgressEvent("complete:$sessionId", LocalDate.now(), if (review) "review_complete" else "complete", category.orEmpty()))
+    }
+
+    fun recordReviewedQuestion(eventId: String, questionId: String) {
+        recordProgress(ProgressEvent("review:$eventId", LocalDate.now(), "review", questionId))
+    }
+
+    fun recordMaterialCompleted(sessionId: String) {
+        recordProgress(ProgressEvent("material:$sessionId", LocalDate.now(), "material_complete"))
+    }
+
+    fun personalProgressSummary(today: LocalDate = LocalDate.now(), days: Int = 30): ProgressSummary = progressLedger().summary(today, days)
+
+    fun clearPersonalProgress() {
+        val ledger = progressLedger().clear()
+        val editor = prefs.edit()
+        cache.keys.toList().filter(ProgressMigration::isHistoricalKey).forEach { key -> editor.remove(key); cache.remove(key) }
+        editor.apply()
+        saveProgress(ledger)
+    }
+
+    /** Recover the receipt if the process stopped after awarding minutes but before saving RESULT. */
+    fun quizBonusForSession(sessionId: String): Int = runCatching {
+        JSONObject(getRaw("quiz_reward_guard_v1") ?: "{}").optJSONObject("awards")?.optInt(sessionId) ?: 0
+    }.getOrDefault(0)
+
+    /** Reward state is operational: never cleared or disabled by the personal-progress switch. */
+    fun awardQuizBonusOnce(sessionId: String, questionIds: Set<String>, date: LocalDate = LocalDate.now()): Int {
+        if (date != LocalDate.now()) return 0 // A session carried across midnight does not backdate another reward.
+        val data = runCatching { JSONObject(getRaw("quiz_reward_guard_v1") ?: "{}") }.getOrDefault(JSONObject())
+        val sessions = data.optJSONArray("sessions") ?: JSONArray()
+        val times = data.optJSONObject("questions") ?: JSONObject()
+        val ledger = QuizRewardLedger(
+            (0 until sessions.length()).map { sessions.getString(it) }.toSet(),
+            times.keys().asSequence().associateWith { times.optLong(it) },
+            data.optString("day").takeIf { it.isNotBlank() }?.let { runCatching { LocalDate.parse(it) }.getOrNull() },
+            data.optLong("time"),
+        )
+        val now = System.currentTimeMillis()
+        if (!ledger.eligible(sessionId, questionIds, date, now, CORRECT_ANSWERS_PER_ROUND)) return 0
+        val current = bonusMinutes(date)
+        val added = (MAX_BONUS_MINUTES_PER_DAY - current).coerceIn(0, BONUS_MINUTES_PER_ROUND)
+        if (added <= 0) return 0
+        val updated = ledger.awarded(sessionId, questionIds, date, now)
+        val receipts = data.optJSONObject("awards") ?: JSONObject()
+        receipts.put(sessionId, added)
+        val encoded = JSONObject().put("sessions", JSONArray(updated.sessions.toList())).put("questions", JSONObject(updated.questionTimes))
+            .put("day", updated.highWaterDay.toString()).put("time", updated.highWaterTime).put("awards", receipts).toString()
+        // One editor commits both reward and duplicate guard to the same preferences transaction.
+        prefs.edit().putInt(K_BONUS + date, current + added).putString("quiz_reward_guard_v1", encoded).apply()
+        cache[K_BONUS + date] = current + added
+        cache["quiz_reward_guard_v1"] = encoded
+        return added
     }
 
     // ---------------- Служебное ----------------
@@ -288,7 +371,8 @@ object Store {
         val cutoff = LocalDate.now().minusDays(7)
         val editor = prefs.edit()
         for (key in prefs.all.keys) {
-            val prefix = listOf(K_BONUS, K_PRAYED, K_LOCK_OFF, K_TASBIH_DAY).firstOrNull { key.startsWith(it) } ?: continue
+            // Personal history is only removed by the explicit statistics reset.
+            val prefix = listOf(K_BONUS, K_PRAYED, K_LOCK_OFF).firstOrNull { key.startsWith(it) } ?: continue
             val date = runCatching { LocalDate.parse(key.removePrefix(prefix)) }.getOrNull() ?: continue
             if (date.isBefore(cutoff)) editor.remove(key)
         }

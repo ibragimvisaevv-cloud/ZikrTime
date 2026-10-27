@@ -51,6 +51,7 @@ import com.zikrtime.app.data.Store
 import com.zikrtime.app.i18n.Lang
 import com.zikrtime.app.prayer.Prayer
 import com.zikrtime.app.quiz.QuestionBank
+import com.zikrtime.app.quiz.LearningStore
 import com.zikrtime.app.ui.GhostButton
 import com.zikrtime.app.ui.QuizRound
 import com.zikrtime.app.ui.StarPattern
@@ -196,8 +197,7 @@ private fun BlockScreen(reason: BlockReason, onClose: () -> Unit, onBackToApp: (
                             bank = remember { QuestionBank.load(context) },
                             category = null,
                             onFinished = {
-                                val added = Store.addBonus()
-                                Store.recordRoundCompleted()
+                                val added = LearningStore.completeCurrent("blocking")
                                 mode = BlockMode.Earned(added)
                             },
                             modifier = Modifier.padding(20.dp),
@@ -219,7 +219,10 @@ private fun BlockScreen(reason: BlockReason, onClose: () -> Unit, onBackToApp: (
                 }
 
                 BlockMode.Info -> when (reason) {
-                    is BlockReason.LimitReached -> LimitInfo(reason, onQuiz = { mode = BlockMode.Quiz }, onClose = onClose)
+                    is BlockReason.LimitReached -> LimitInfo(reason, onQuiz = {
+                        if (LearningStore.session("blocking")?.stage == "RESULT") LearningStore.clearSession("blocking")
+                        mode = BlockMode.Quiz
+                    }, onClose = onClose)
                     is BlockReason.PrayerTime -> PrayerInfo(reason, onClose = onClose)
                     BlockReason.None -> {
                         Spacer(Modifier.height(48.dp))

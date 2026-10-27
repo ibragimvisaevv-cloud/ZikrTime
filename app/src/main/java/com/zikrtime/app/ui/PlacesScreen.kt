@@ -22,7 +22,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,6 +42,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -95,6 +99,10 @@ fun PlacesScreen() {
     var here by remember { mutableStateOf<Pair<Double, Double>?>(null) }
     var focusMe by remember { mutableIntStateOf(0) }
     var locating by remember { mutableStateOf(false) }
+    var locationUnavailable by remember { mutableStateOf(false) }
+    val largeText = LocalDensity.current.fontScale >= 1.3f
+    var showMap by rememberSaveable { mutableStateOf(!largeText) }
+    LaunchedEffect(largeText) { if (largeText) showMap = false }
     fun locate() {
         locating = true
         LocationHelper.requestPrecise(context) { loc ->
@@ -102,11 +110,12 @@ fun PlacesScreen() {
             if (loc != null) {
                 here = loc.latitude to loc.longitude
                 focusMe++
-            }
+                locationUnavailable = false
+            } else locationUnavailable = true
         }
     }
     val locationPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { granted ->
-        if (granted.values.any { it }) locate()
+        if (granted.values.any { it }) locate() else locationUnavailable = true
     }
     fun whereAmI() {
         if (LocationHelper.hasPermission(context)) locate()
@@ -123,12 +132,17 @@ fun PlacesScreen() {
             else -> true
         }
     }
+    // Keep a selected distant map marker visible even outside the nearest 100.
+    val displayed = places.take(100).let { nearest ->
+        val picked = places.firstOrNull { it.id == selected }
+        if (picked != null && nearest.none { it.id == picked.id }) listOf(picked) + nearest else nearest
+    }
     val bot = Places.bot()
     val listState = rememberLazyListState()
 
     ScreenScaffold(title = stringResource(R.string.places_title), onBack = { nav.back() }, scrollable = false) {
-        if (hasYandexMap) {
-            Box(Modifier.fillMaxWidth().height(300.dp)) {
+        if (hasYandexMap && showMap) {
+            Box(Modifier.fillMaxWidth().height(220.dp)) {
                 YandexPlacesMap(
                     places = places,
                     selected = selected,
@@ -163,7 +177,9 @@ fun PlacesScreen() {
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.clickable(enabled = here == null) { whereAmI() },
         )
+        if (locationUnavailable) Text(stringResource(R.string.place_location_unavailable), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            if (hasYandexMap) FilterPill(stringResource(if (showMap) R.string.place_hide_map else R.string.place_show_map), showMap) { showMap = !showMap }
             FilterPill(stringResource(R.string.places_all), filter == "all") { filter = "all" }
             FilterPill(stringResource(R.string.places_mosques), filter == "mosque") { filter = "mosque" }
             FilterPill(stringResource(R.string.places_rooms), filter == "room") { filter = "room" }
@@ -174,6 +190,9 @@ fun PlacesScreen() {
             verticalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(bottom = 8.dp),
         ) {
+            if (Places.refreshFailed || Places.usingSavedCopy) {
+                item { Text(stringResource(if (Places.usingSavedCopy) R.string.place_saved_copy else R.string.place_load_failed), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
+            }
             if (places.isEmpty()) {
                 item {
                     ZCard {
@@ -182,7 +201,7 @@ fun PlacesScreen() {
                 }
             }
             // В списке — ближайшие 100, на карте — все (кластерами)
-            items(places.take(100), key = { it.id }) { p ->
+            items(displayed, key = { it.id }) { p ->
                 PlaceCard(
                     place = p,
                     distanceKm = Places.distanceKm(origin.first, origin.second, p.lat, p.lon),
@@ -217,8 +236,9 @@ fun PlacesScreen() {
     }
     // Выбрали метку на карте — прокручиваем список к этому месту.
     LaunchedEffect(selected) {
-        val i = places.indexOfFirst { it.id == selected }
-        if (i >= 0) listState.animateScrollToItem(i)
+        val i = displayed.indexOfFirst { it.id == selected }
+        val statusOffset = if (Places.refreshFailed || Places.usingSavedCopy) 1 else 0
+        if (i >= 0) listState.animateScrollToItem(i + statusOffset)
     }
 }
 
@@ -243,6 +263,10 @@ private fun FilterPill(text: String, selected: Boolean, onClick: () -> Unit) {
 @Composable
 private fun PlaceCard(place: Places.Place, distanceKm: Double, expanded: Boolean, onClick: () -> Unit) {
     val context = LocalContext.current
+    var correctionDialog by remember { mutableStateOf(false) }
+    val correctionUrl = Places.correctionUrl(place.id)
+    val unknown = stringResource(R.string.place_unknown)
+    fun status(value: Boolean?) = when (value) { true -> R.string.place_yes; false -> R.string.place_no; null -> R.string.place_unknown }
     ZCard(onClick = onClick, padding = PaddingValues(16.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconBadge(painterResource(kindIcon(place.kind)), container = if (place.kind == "mosque") Gold.copy(alpha = 0.45f) else MaterialTheme.colorScheme.primaryContainer)
@@ -266,25 +290,49 @@ private fun PlaceCard(place: Places.Place, distanceKm: Double, expanded: Boolean
                 )
             }
             Spacer(Modifier.height(10.dp))
-            if (place.address.isNotBlank()) InfoLine("📍", place.address)
-            if (place.hours.isNotBlank()) InfoLine("🕐", place.hours)
-            whoText(place.who)?.let { InfoLine("👥", stringResource(it)) }
-            place.wudu?.let { InfoLine("💧", stringResource(if (it) R.string.places_wudu_yes else R.string.places_wudu_no)) }
+            PlaceDetail(R.string.place_address, place.address.ifBlank { unknown })
+            PlaceDetail(R.string.place_access_hours, place.hours.ifBlank { unknown })
+            PlaceDetail(R.string.place_access_conditions, place.accessConditions.ifBlank { unknown })
+            PlaceDetail(R.string.place_entrance, place.entrance.ifBlank { unknown })
+            PlaceDetail(R.string.place_wudu, stringResource(status(place.wudu)))
+            PlaceDetail(R.string.place_women, stringResource(status(place.women)))
+            PlaceDetail(R.string.place_source, listOfNotNull(
+                if (place.source == "osm") "OpenStreetMap" else place.source.takeIf { it.isNotBlank() },
+                place.sourceDetails.takeIf { it.isNotBlank() },
+            ).joinToString(" · ").ifBlank { unknown })
+            PlaceDetail(R.string.place_confirmed, place.confirmedAt.ifBlank { unknown })
             if (place.note.isNotBlank()) InfoLine("ℹ️", place.note)
             Spacer(Modifier.height(12.dp))
             ShimmerButton(stringResource(R.string.places_route), onClick = { openRoute(context, place.lat, place.lon) })
+            TextButton(onClick = { correctionDialog = true }) { Text(stringResource(R.string.place_changed)) }
             Spacer(Modifier.height(16.dp))
             ReviewsBlock("place:${place.id}", inCard = false)
         }
     }
+    if (correctionDialog) AlertDialog(
+        onDismissRequest = { correctionDialog = false },
+        title = { Text(stringResource(R.string.place_changed)) },
+        text = { Text(stringResource(if (correctionUrl != null) R.string.place_correction_help else R.string.place_correction_unavailable), modifier = Modifier.verticalScroll(rememberScrollState())) },
+        confirmButton = {
+            if (correctionUrl != null) TextButton(onClick = {
+                correctionDialog = false
+                val web = Intent(Intent.ACTION_VIEW, Uri.parse(correctionUrl)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                val app = Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=${Places.bot()}&start=fix_${place.id}"))
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                runCatching { context.startActivity(app) }.recoverCatching { context.startActivity(web) }
+                    .onFailure { android.widget.Toast.makeText(context, context.getString(R.string.place_open_failed), android.widget.Toast.LENGTH_LONG).show() }
+            }) { Text(stringResource(R.string.place_open_bot)) }
+        },
+        dismissButton = { TextButton(onClick = { correctionDialog = false }) { Text(stringResource(R.string.place_close)) } },
+    )
 }
 
-private fun whoText(who: String): Int? = when (who) {
-    "all" -> R.string.places_who_all
-    "men" -> R.string.places_who_men
-    "women" -> R.string.places_who_women
-    "both" -> R.string.places_who_both
-    else -> null
+@Composable
+private fun PlaceDetail(label: Int, value: String) {
+    Column(Modifier.padding(vertical = 4.dp)) {
+        Text(stringResource(label), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(value, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+    }
 }
 
 @Composable

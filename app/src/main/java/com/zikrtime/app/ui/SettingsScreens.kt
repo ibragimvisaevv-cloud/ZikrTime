@@ -142,6 +142,12 @@ fun MoreScreen() {
                 onClick = { nav.open(Screen.ZAKAT) },
             )
         }
+        ZCard {
+            PersonalProgressSetting()
+            TextButton(onClick = { nav.open(Screen.PROGRESS) }) {
+                Text(stringResource(R.string.progress_settings))
+            }
+        }
         DonateCard()
         ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
             SettingRow(

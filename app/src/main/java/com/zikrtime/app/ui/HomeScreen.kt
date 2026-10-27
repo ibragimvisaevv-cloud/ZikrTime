@@ -46,7 +46,10 @@ import com.zikrtime.app.R
 import com.zikrtime.app.alarm.FajrAlarm
 import com.zikrtime.app.data.Cities
 import com.zikrtime.app.data.Store
-import com.zikrtime.app.data.Streaks
+import com.zikrtime.app.quiz.QuestionBank
+import com.zikrtime.app.quiz.LearningStore
+import com.zikrtime.app.data.AzkarStore
+import androidx.compose.material3.TextButton
 import com.zikrtime.app.prayer.OnlineTimes
 import com.zikrtime.app.prayer.Prayer
 import com.zikrtime.app.prayer.PrayerSchedule
@@ -102,12 +105,14 @@ fun HomeScreen() {
 
     TabColumn {
         NaturalSkyHero(now, next.first, next.second, times)
+        MyDayActions()
         ZCard(onClick = { nav.open(Screen.TASBIH) }) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 androidx.compose.foundation.Image(painterResource(R.drawable.stone_bead), null, Modifier.size(64.dp))
                 Column(Modifier.weight(1f)) {
                     Text(stringResource(R.string.tasbih_title), style = MaterialTheme.typography.titleLarge)
-                    Text(stringResource(R.string.tasbih_today, Store.tasbihToday(today)), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    if (Store.personalProgressEnabled) Text(stringResource(R.string.tasbih_today, Store.tasbihToday(today)), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    else Text(stringResource(R.string.tasbih_subtitle), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
                 Text("›", fontSize = 28.sp)
             }
@@ -159,7 +164,7 @@ fun HomeScreen() {
             ActionTile(
                 icon = R.drawable.ic_tasbih,
                 title = stringResource(R.string.tasbih_title),
-                value = Store.tasbihToday(today).toString(),
+                value = (if (Store.personalProgressEnabled) Store.tasbihToday(today) else Store.tasbihCount).toString(),
                 modifier = Modifier.weight(1f),
                 onClick = { nav.open(Screen.TASBIH) },
             )
@@ -181,19 +186,14 @@ fun HomeScreen() {
 
         FocusSummary(usedMillis = usedMillis, onOpen = { nav.tab = Tab.FOCUS }, onQuiz = { nav.startQuiz(null) })
 
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            StreakCard(
-                title = stringResource(R.string.streak_knowledge),
-                value = Streaks.current(Store.quizDays, today),
-                hint = stringResource(R.string.streak_knowledge_hint),
-                modifier = Modifier.weight(1f),
-            )
-            StreakCard(
-                title = stringResource(R.string.streak_prayers),
-                value = Streaks.current(Store.prayerDays, today),
-                hint = stringResource(R.string.streak_prayers_hint),
-                modifier = Modifier.weight(1f),
-            )
+        if (Store.personalProgressEnabled) {
+            val summary = Store.personalProgressSummary(today, 30)
+            if (summary.sessions > 0 || summary.reviewed > 0 || Store.totalAnswered > 0) {
+                ZCard(onClick = { nav.open(Screen.PROGRESS) }) {
+                    Text(stringResource(R.string.progress_title), style = MaterialTheme.typography.titleMedium)
+                    Text(stringResource(R.string.progress_home_summary, summary.sessions, summary.activeDays), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
         }
     }
 }
@@ -302,15 +302,6 @@ private fun FocusSummary(usedMillis: Long?, onOpen: () -> Unit, onQuiz: () -> Un
     }
 }
 
-@Composable
-private fun StreakCard(title: String, value: Int, hint: String, modifier: Modifier = Modifier) {
-    ZCard(modifier = modifier, color = MaterialTheme.colorScheme.secondaryContainer, padding = androidx.compose.foundation.layout.PaddingValues(16.dp)) {
-        Text(title, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondaryContainer)
-        Text(daysText(value), style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.onSecondaryContainer)
-        Text(hint, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.75f))
-    }
-}
-
 /** В пятницу — карточка с аятом или хадисом о пятнице (меняется каждые несколько часов). */
 @Composable
 private fun FridayCard(today: java.time.LocalDate) {
@@ -333,5 +324,33 @@ private fun FridayCard(today: java.time.LocalDate) {
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.primary,
         )
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun MyDayActions() {
+    val nav = LocalNav.current
+    val context = LocalContext.current
+    val bank = QuestionBank.load(context)
+    val pending = LearningStore.pendingSession(bank)
+    val due = LearningStore.dueCount(bank)
+    ZCard {
+        Text(stringResource(R.string.my_day_title), style = MaterialTheme.typography.titleMedium)
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            TextButton(onClick = { nav.openAzkar("morning") }) { Text(stringResource(R.string.my_day_morning)) }
+            TextButton(onClick = { nav.openAzkar("evening") }) { Text(stringResource(R.string.my_day_evening)) }
+        }
+        if (pending != null) {
+            TextButton(onClick = { nav.resumeLearning(context) }) { Text(stringResource(R.string.my_day_resume_learning)) }
+        } else {
+            TextButton(onClick = { nav.startQuiz(null) }) { Text(stringResource(R.string.my_day_start_learning)) }
+        }
+        if (AzkarStore.hasPending) {
+            TextButton(onClick = { nav.resumeAzkar() }) { Text(stringResource(R.string.my_day_resume_azkar)) }
+        }
+        if (due > 0) {
+            TextButton(onClick = { nav.startReview() }) { Text(stringResource(R.string.my_day_review, due)) }
+        }
     }
 }
