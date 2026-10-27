@@ -7,8 +7,6 @@ import androidx.compose.runtime.setValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
-import java.net.HttpURLConnection
-import java.net.URL
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
@@ -37,21 +35,32 @@ object Places {
         val wudu: Boolean?,
         val photo: String,
         val note: String,
-        /** "osm" — место из OpenStreetMap, иначе — предложено через бота и проверено. */
+        /** Источник записи; отсутствие источника не означает подтверждённую проверку. */
         val source: String = "",
+        val women: Boolean? = null,
+        val accessConditions: String = "",
+        val entrance: String = "",
+        val sourceDetails: String = "",
+        /** Explicit field only: never infer from created/updated/import time. */
+        val confirmedAt: String = "",
     )
 
-    class Data(val places: List<Place>, val sellerBot: String, val donateUrl: String)
+    class Data(val places: List<Place>, val sellerBot: String, val donateUrl: String, val correctionsEnabled: Boolean = false)
 
     var data by mutableStateOf<Data?>(null)
         private set
     var loading by mutableStateOf(false)
+        private set
+    var refreshFailed by mutableStateOf(false)
+        private set
+    var usingSavedCopy by mutableStateOf(false)
         private set
 
     fun load(): Data {
         data?.let { return it }
         val stored = Store.getRaw(KEY)?.let { runCatching { parse(it) }.getOrNull() } ?: Data(emptyList(), "", "")
         data = stored
+        usingSavedCopy = Store.getRaw(KEY) != null
         return stored
     }
 
@@ -59,17 +68,30 @@ object Places {
         load()
         val last = Store.getRaw(KEY_AT)?.toLongOrNull() ?: 0L
         if (!force && System.currentTimeMillis() - last < REFRESH_MS) return
+        if (loading) return
         loading = true
         val hasCopy = Store.getRaw(KEY) != null
         val etag = if (hasCopy) Store.getRaw(KEY_TAG) else null
-        val result = withContext(Dispatchers.IO) { runCatching { Net.getIfChanged(REMOTE, etag) } }
-        loading = false
+        val result = try {
+            withContext(Dispatchers.IO) { runCatching { Net.getIfChanged(REMOTE, etag) } }
+        } finally {
+            loading = false
+        }
         if (result.isSuccess && result.getOrNull() == null) {
+            refreshFailed = false
+            usingSavedCopy = false
             Store.putRaw(KEY_AT, System.currentTimeMillis().toString())
             return
         }
         val text = result.getOrNull()?.text
-        val parsed = text?.let { runCatching { parse(it) }.getOrNull() } ?: return
+        val parsed = text?.let { runCatching { parse(it) }.getOrNull() }
+        if (parsed == null) {
+            refreshFailed = true
+            usingSavedCopy = hasCopy
+            return
+        }
+        refreshFailed = false
+        usingSavedCopy = false
         Store.putRaw(KEY, text)
         Store.putRaw(KEY_TAG, result.getOrNull()?.etag.orEmpty())
         Store.putRaw(KEY_AT, System.currentTimeMillis().toString())
@@ -79,19 +101,43 @@ object Places {
     fun parse(json: String): Data {
         val root = JSONObject(json)
         val arr = root.getJSONArray("places")
-        val list = (0 until (arr?.length() ?: 0)).mapNotNull { i ->
-            val o = arr!!.getJSONObject(i)
+        val list = (0 until arr.length()).mapNotNull { i ->
+            val o = arr.optJSONObject(i) ?: return@mapNotNull null
+            if (o.text("id").isBlank() || o.text("name").isBlank()) return@mapNotNull null
             val lat = o.optDouble("lat")
             val lon = o.optDouble("lon")
             if (!lat.isFinite() || !lon.isFinite() || lat !in -90.0..90.0 || lon !in -180.0..180.0) return@mapNotNull null
             Place(
-                id = o.optString("id"), kind = o.optString("kind", "other"), name = o.optString("name"),
-                lat = lat, lon = lon, address = o.optString("address"), hours = o.optString("hours"),
-                who = o.optString("who"), wudu = if (o.has("wudu") && !o.isNull("wudu")) o.optBoolean("wudu") else null,
-                photo = o.optString("photo"), note = o.optString("note"), source = o.optString("src"),
+                id = o.text("id"), kind = o.text("kind", "other"), name = o.text("name"),
+                lat = lat, lon = lon, address = o.text("address"), hours = o.text("hours"),
+                who = o.text("who"), wudu = nullableBoolean(o.opt("wudu")),
+                photo = o.text("photo"), note = o.text("note"), source = o.text("src"),
+                women = if (o.has("women")) nullableBoolean(o.opt("women")) else when (o.text("who")) {
+                    "both", "women" -> true
+                    "men" -> false
+                    else -> null
+                },
+                accessConditions = o.text("access_conditions", ""), entrance = o.text("entrance", ""),
+                sourceDetails = o.text("source_details", ""), confirmedAt = confirmedDate(o.text("confirmed_at", "")),
             )
         }
-        return Data(list, root.optString("seller_bot").removePrefix("@"), root.optString("donate_url"))
+        return Data(list.distinctBy { it.id }, root.text("seller_bot").removePrefix("@"), root.text("donate_url"), root.opt("corrections_enabled") == true)
+    }
+
+    private fun JSONObject.text(key: String, fallback: String = ""): String = (opt(key) as? String)?.trim() ?: fallback
+
+    /** Strict tri-state: malformed strings/numbers must not become "нет". */
+    internal fun nullableBoolean(value: Any?): Boolean? = value as? Boolean
+
+    internal fun confirmedDate(value: String): String = if (Regex("\\d{4}-\\d{2}-\\d{2}").matches(value)) {
+        runCatching { java.time.LocalDate.parse(value).toString() }.getOrDefault("")
+    } else ""
+
+    fun correctionUrl(placeId: String): String? = if (data?.correctionsEnabled == true) correctionUrl(bot(), placeId) else null
+
+    internal fun correctionUrl(bot: String, placeId: String): String? {
+        if (!Regex("[A-Za-z0-9_]{5,32}").matches(bot) || !Regex("[A-Za-z0-9_-]{1,48}").matches(placeId)) return null
+        return "https://t.me/$bot?start=fix_$placeId"
     }
 
     /** Расстояние в километрах. */

@@ -81,6 +81,12 @@
 
         <!-- Экран, который появляется поверх соцсетей, когда лимит исчерпан или идёт время намаза -->
         <activity
+            android:name=".screentime.PauseActivity"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:excludeFromRecents="true"
+            android:taskAffinity="com.zikrtime.app.pause" />
+        <activity
             android:name=".screentime.BlockActivity"
             android:exported="false"
             android:excludeFromRecents="true"

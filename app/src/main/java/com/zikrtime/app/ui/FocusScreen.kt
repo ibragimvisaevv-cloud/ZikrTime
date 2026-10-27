@@ -24,6 +24,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -50,6 +51,8 @@ import androidx.core.graphics.drawable.toBitmap
 import com.zikrtime.app.R
 import com.zikrtime.app.data.Store
 import com.zikrtime.app.screentime.AppInfo
+import com.zikrtime.app.screentime.FocusPause
+import com.zikrtime.app.screentime.BlockerService
 import com.zikrtime.app.screentime.GuardService
 import com.zikrtime.app.screentime.ScreenTime
 import kotlinx.coroutines.Dispatchers
@@ -69,8 +72,15 @@ fun FocusScreen() {
     val hasService = remember(resume) { ScreenTime.isAccessibilityEnabled(context) }
     val hasOverlay = remember(resume) { GuardService.canDrawOverlays(context) }
     val canBlock = hasService || hasOverlay
+    val pauseRevision = FocusPause.version
+    val hasPauseNotifications = remember(resume,pauseRevision) { FocusPause.notificationsAvailable(context) }
+    val pauseEnabled = remember(pauseRevision) { FocusPause.enabled(context) }
+    val pauseStrict = remember(pauseRevision) { FocusPause.strict(context) }
+    val pausePhrase = remember(pauseRevision) { FocusPause.phrase(context) }
+    val running = BlockerService.running || GuardService.running
     var showDisclosure by remember { mutableStateOf(false) }
 
+    LaunchedEffect(resume, pauseEnabled) { GuardService.sync(context) }
     LaunchedEffect(Unit) {
         if (AppsCache.apps == null) {
             val loaded = withContext(Dispatchers.IO) { ScreenTime.launchableApps(context) }
@@ -124,12 +134,49 @@ fun FocusScreen() {
 
         ZCard {
             SwitchRow(
+                title = stringResource(R.string.pause_title),
+                subtitle = stringResource(R.string.pause_enable_hint),
+                checked = pauseEnabled,
+                onChange = { FocusPause.setEnabled(context,it) },
+            )
+            // Both modes are explained before opt-in, not after intercepting another app.
+            Text(stringResource(R.string.pause_soft_hint),style=MaterialTheme.typography.bodyMedium)
+            Spacer(Modifier.height(8.dp))
+            Text(stringResource(R.string.pause_strict_hint),style=MaterialTheme.typography.bodyMedium)
+            Spacer(Modifier.height(8.dp))
+            Text(
+                stringResource(when {
+                    !pauseEnabled -> R.string.pause_inactive
+                    !hasUsage || !running || FocusPause.deliveryFailed -> R.string.pause_unavailable
+                    else -> R.string.pause_running
+                }),
+                style=MaterialTheme.typography.bodySmall,
+                color=if(pauseEnabled && (!hasUsage || !running || FocusPause.deliveryFailed)) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            if (pauseEnabled) {
+                FilterChip(selected=!pauseStrict,onClick={FocusPause.setStrict(context,false)},label={Text(stringResource(R.string.pause_soft))})
+                FilterChip(selected=pauseStrict,onClick={FocusPause.setStrict(context,true)},label={Text(stringResource(R.string.pause_strict))})
+                Text(stringResource(R.string.pause_zikr),style=MaterialTheme.typography.titleSmall)
+                listOf(R.string.zikr_1_name,R.string.zikr_2_name,R.string.zikr_3_name).forEachIndexed { index,label ->
+                    FilterChip(selected=pausePhrase==index,onClick={FocusPause.setPhrase(context,index)},label={Text(stringResource(label))})
+                }
+                Text(stringResource(R.string.pause_foreground),style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant)
+                if (!hasPauseNotifications) {
+                    Text(stringResource(R.string.perm_notifications_off),style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.error)
+                    TextButton(onClick={context.startActivity(Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).putExtra(Settings.EXTRA_APP_PACKAGE,context.packageName))}) { Text(stringResource(R.string.pause_settings)) }
+                }
+            }
+        }
+
+        ZCard {
+            SwitchRow(
                 title = stringResource(R.string.focus_enable),
                 subtitle = stringResource(R.string.focus_enable_hint),
                 checked = Store.blockingEnabled,
                 onChange = {
                     Store.blockingEnabled = it
                     GuardService.sync(context)
+                    BlockerService.recheck()
                 },
             )
             if (Store.blockingEnabled && !(hasUsage && canBlock)) {
@@ -374,6 +421,9 @@ private fun AppRow(app: AppInfo) {
             .clip(RoundedCornerShape(14.dp))
             .clickable {
                 Store.blockedPackages = Store.blockedPackages.let { if (checked) it - app.packageName else it + app.packageName }
+                FocusPause.selectionChanged(context)
+                GuardService.sync(context)
+                BlockerService.recheck()
             }
             .padding(horizontal = 8.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,

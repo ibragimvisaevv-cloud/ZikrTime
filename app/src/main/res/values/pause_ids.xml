@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="pause_overlay_open" type="id" />
+    <item name="pause_exit" type="id" />
+    <item name="pause_settings" type="id" />
+    <item name="pause_disable" type="id" />
+</resources>

@@ -1,0 +1,147 @@
+name: Sign already checked Android APK
+on:
+  push:
+    branches: [codex/android-my-day-focus]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: sign-checked-android-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  sign-existing-apk:
+    if: ${{ contains(github.event.head_commit.message, '[sign-check]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Download the checked unsigned APK and verify its identity
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p sign-output
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/12751240494" > artifact-source.json
+          python3 - <<'PY'
+          import json, pathlib
+          artifact=json.loads(pathlib.Path('artifact-source.json').read_text())
+          assert artifact['id']==12751240494 and artifact['name']=='Android-features-build'
+          assert not artifact['expired'], 'Checked build artifact expired; no rebuild is permitted here'
+          assert artifact['workflow_run']['id']==40539273495
+          assert artifact['workflow_run']['head_sha']=='8580897f572a18c47dbf402295b628e4624c9f8b'
+          PY
+          gh run download 40539273495 -n Android-features-build -D checked-input
+          python3 - <<'PY'
+          import hashlib, json, pathlib
+          apk=pathlib.Path('checked-input/outputs/apk/release/app-release-unsigned.apk')
+          expected='c9996a257a9988291db3ea07abef400672ec1f1ec019896b8d8af7cb90ea60b5'
+          assert hashlib.sha256(apk.read_bytes()).hexdigest()==expected, 'Unsigned APK checksum mismatch'
+          metadata=json.loads((apk.parent/'output-metadata.json').read_text())
+          assert metadata['applicationId']=='com.zikrtime.app'
+          assert all(x['versionCode']==16 and x['versionName']=='0.8.4' for x in metadata['elements'])
+          PY
+      - name: Try the existing release password and verify the original certificate
+        env:
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          sign_key_dir="$(mktemp -d)"
+          trap 'rm -rf "$sign_key_dir"' EXIT
+          export ZIKRTIME_SIGN_KEY_DIR="$sign_key_dir"
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, re, subprocess, sys
+          out=pathlib.Path('sign-output')
+          out.mkdir(exist_ok=True)
+          apk=out/'ZikrTime-0.8.4.apk'
+          key=pathlib.Path(os.environ['ZIKRTIME_SIGN_KEY_DIR'])/'release.jks'
+          source=pathlib.Path('checked-input/outputs/apk/release/app-release-unsigned.apk')
+          expected_cert='7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf'
+          report={'source_commit':'8580897f572a18c47dbf402295b628e4624c9f8b',
+                  'source_run':40539273495,'source_artifact':12751240494,
+                  'unsigned_apk_sha256':'c9996a257a9988291db3ea07abef400672ec1f1ec019896b8d8af7cb90ea60b5',
+                  'rebuilt':False,'release_published':False,'sign_status':'unavailable','attempts':0}
+          def fail(reason):
+              key.unlink(missing_ok=True)
+              apk.unlink(missing_ok=True)
+              (out/'ZikrTime-0.8.4.apk.idsig').unlink(missing_ok=True)
+              report['reason']=reason
+              (out/'sign-report.json').write_text(json.dumps(report,indent=2))
+              print('::warning::Checked APK remains unavailable with the original release signature: '+reason)
+              sys.exit(1)
+          def run(args,env):
+              # Neither tool output nor argument/environment values enter logs/artifacts.
+              return subprocess.run(args,env=env,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=90)
+          password=os.environ.get('RELEASE_KEY_PASSWORD','')
+          if not password or not password.rstrip('\r\n'):
+              fail('empty')
+          token_like=password.startswith(('github_pat_','ghp_')) and len(password.rstrip('\r\n')) >= 30
+          candidates=[('exact',password)]
+          without_terminal_newlines=password.rstrip('\r\n')
+          if without_terminal_newlines!=password:
+              candidates.append(('terminal-crlf-removed',without_terminal_newlines))
+          signing_env=None
+          last_reason='decrypt-failed'
+          try:
+              for variant,candidate in candidates:
+                  report['attempts']+=1
+                  key.unlink(missing_ok=True)
+                  env=os.environ.copy()
+                  env['ZIKRTIME_SIGNING_PASSWORD']=candidate
+                  decoded=run(['openssl','enc','-d','-aes-256-cbc','-pbkdf2','-iter','300000',
+                               '-in','keystore/release.jks.enc','-out',str(key),'-pass','env:ZIKRTIME_SIGNING_PASSWORD'],env)
+                  if decoded.returncode:
+                      last_reason='decrypt-failed'
+                      continue
+                  usable=run(['keytool','-list','-keystore',str(key),'-storepass:env','ZIKRTIME_SIGNING_PASSWORD','-alias','zikrtime'],env)
+                  if usable.returncode:
+                      last_reason='key-validation-failed'
+                      continue
+                  certificate=run(['keytool','-exportcert','-keystore',str(key),'-storepass:env','ZIKRTIME_SIGNING_PASSWORD','-alias','zikrtime'],env)
+                  if certificate.returncode or hashlib.sha256(certificate.stdout).hexdigest()!=expected_cert:
+                      fail('certificate-mismatch')
+                  signing_env=env
+                  report['password_variant']=variant
+                  break
+              if signing_env is None:
+                  fail('wrong-secret-type' if token_like else last_reason)
+              def version(path):
+                  return tuple(int(x) for x in re.findall(r'\d+',path.parent.name))
+              signers=list((pathlib.Path(os.environ['ANDROID_HOME'])/'build-tools').glob('*/apksigner'))
+              if not signers:
+                  fail('signing-tool-unavailable')
+              signer=str(max(signers,key=version))
+              signed=run([signer,'sign','--ks',str(key),'--ks-key-alias','zikrtime',
+                          '--ks-pass','env:ZIKRTIME_SIGNING_PASSWORD','--key-pass','env:ZIKRTIME_SIGNING_PASSWORD',
+                          '--v1-signing-enabled','false','--v2-signing-enabled','true',
+                          '--v3-signing-enabled','false','--v4-signing-enabled','false',
+                          '--out',str(apk),str(source)],signing_env)
+              if signed.returncode:
+                  fail('apk-signing-failed')
+              verified=run([signer,'verify','--verbose','--print-certs',str(apk)],signing_env)
+              verification=verified.stdout.decode('utf-8','replace')
+              if verified.returncode or 'certificate SHA-256 digest: '+expected_cert not in verification:
+                  fail('apk-certificate-verification-failed')
+              if 'Verified using v2 scheme (APK Signature Scheme v2): true' not in verification:
+                  fail('apk-v2-verification-failed')
+              for line in verification.splitlines():
+                  if line.startswith('Verified using v') and not line.startswith('Verified using v2 ') and line.endswith(': true'):
+                      fail('unexpected-apk-signature-scheme')
+              digest=hashlib.sha256(apk.read_bytes()).hexdigest()
+              report.update(sign_status='signed',certificate_sha256=expected_cert,apk_sha256=digest,
+                            apk_bytes=apk.stat().st_size,signature_scheme='v2 only')
+              (out/'SHA256SUMS.txt').write_text(digest+'  '+apk.name+'\n')
+              (out/'sign-report.json').write_text(json.dumps(report,indent=2))
+              print('Original release certificate verified; signed APK saved as a workflow artifact. No release was published.')
+          except subprocess.TimeoutExpired:
+              fail('signing-tool-timeout')
+          finally:
+              key.unlink(missing_ok=True)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Android-sign-check
+          path: sign-output/
+          if-no-files-found: warn

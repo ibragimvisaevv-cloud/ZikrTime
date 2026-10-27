@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
+
 package com.zikrtime.app.ui
 
 import androidx.compose.animation.AnimatedVisibility
@@ -16,8 +18,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Info
@@ -26,14 +28,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.animation.core.animateFloat
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,7 +44,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zikrtime.app.R
 import com.zikrtime.app.data.Store
-import com.zikrtime.app.quiz.QuestionBank
+import com.zikrtime.app.quiz.LearningStore
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import com.zikrtime.app.quiz.QuizBank
 import com.zikrtime.app.quiz.hasArabic
 import com.zikrtime.app.ui.theme.ArabicStyle
@@ -66,31 +66,35 @@ fun QuizRound(
     finishText: String = stringResource(R.string.quiz_finish),
     /** Готовый порядок вопросов (например, после учебных карточек). */
     plannedOrder: List<com.zikrtime.app.quiz.Question>? = null,
+    sessionScope: String = "blocking",
+    reviewMode: Boolean = false,
 ) {
-    val order = remember(bank, category, plannedOrder) { plannedOrder ?: QuestionBank.roundOrder(bank, category, Store.recentQuestions) }
-    var index by remember { mutableIntStateOf(0) }
-    var correct by remember { mutableIntStateOf(0) }
-    var selected by remember { mutableStateOf<Int?>(null) }
-    var streak by remember { mutableIntStateOf(0) }
+    val persisted = LearningStore.session(sessionScope)
+    val initial = remember(bank, category, sessionScope) { LearningStore.begin(bank, category, sessionScope) }
+    val session = persisted ?: initial ?: return
+    if (session.stage == "RESULT") return
+    val question = bank.questions.firstOrNull { it.id == session.questionIds.getOrNull(session.index) } ?: return
+    val displayOrder = LearningStore.displayOrder(session, question)
+    val selected = session.selected?.let { displayOrder.indexOf(it) }
+    val correct = session.correctIds.size
     val view = androidx.compose.ui.platform.LocalView.current
-    val question = remember(order, index) { order[index % order.size].shuffled() }
     val scheme = MaterialTheme.colorScheme
 
-    Column(modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column(modifier.semantics { testTagsAsResourceId = true }, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         // Прогресс: точки правильных ответов
         Row(verticalAlignment = Alignment.CenterVertically) {
-            repeat(target) { i ->
+            repeat(if (reviewMode) session.questionIds.size else target) { i ->
                 Box(
                     Modifier
                         .padding(end = 6.dp)
                         .size(width = 28.dp, height = 8.dp)
                         .clip(RoundedCornerShape(4.dp))
-                        .background(if (i < correct) scheme.primary else scheme.surfaceVariant),
+                        .background(if (i < (if (reviewMode) session.index else correct)) scheme.primary else scheme.surfaceVariant),
                 )
             }
             Spacer(Modifier.weight(1f))
             Text(
-                stringResource(R.string.quiz_progress, correct, target),
+                stringResource(R.string.quiz_progress, if (reviewMode) session.index else correct, if (reviewMode) session.questionIds.size else target),
                 style = MaterialTheme.typography.labelLarge,
                 color = scheme.onSurfaceVariant,
             )
@@ -106,10 +110,10 @@ fun QuizRound(
                 )
             }
             Spacer(Modifier.weight(1f))
-            StreakFlame(streak)
+
         }
 
-        Text(question.text, style = MaterialTheme.typography.titleLarge)
+        Text(question.text, style = MaterialTheme.typography.titleLarge, modifier = Modifier.testTag("learning_question"))
 
         question.arabic?.let {
             Surface(shape = RoundedCornerShape(20.dp), color = scheme.primaryContainer.copy(alpha = 0.55f), modifier = Modifier.fillMaxWidth()) {
@@ -124,48 +128,44 @@ fun QuizRound(
         }
 
         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-            question.options.forEachIndexed { i, option ->
+            displayOrder.forEachIndexed { i, canonical ->
+                val option = question.options[canonical]
                 OptionCard(
-                    celebrate = selected == i && i == question.answerIndex,
+                    celebrate = Store.personalProgressEnabled && selected == i && canonical == question.answerIndex,
+                    modifier = Modifier.testTag("learning_answer_$i"),
                     letter = ('A' + i).toString(),
                     text = option,
                     state = when {
                         selected == null -> OptionState.Idle
-                        i == question.answerIndex -> OptionState.Correct
+                        canonical == question.answerIndex -> OptionState.Correct
                         i == selected -> OptionState.Wrong
                         else -> OptionState.Dimmed
                     },
                     onClick = {
                         if (selected == null) {
-                            selected = i
-                            val ok = i == question.answerIndex
-                            Store.recordAnswer(question.id, question.category, ok)
-                            if (ok) {
-                                correct++
-                                streak++
-                                view.performHapticFeedback(if (android.os.Build.VERSION.SDK_INT >= 30) android.view.HapticFeedbackConstants.CONFIRM else android.view.HapticFeedbackConstants.VIRTUAL_KEY)
-                            } else {
-                                streak = 0
-                                view.performHapticFeedback(if (android.os.Build.VERSION.SDK_INT >= 30) android.view.HapticFeedbackConstants.REJECT else android.view.HapticFeedbackConstants.LONG_PRESS)
-                            }
+                            val ok = canonical == question.answerIndex
+                            LearningStore.answer(sessionScope, question, canonical)
+                            view.performHapticFeedback(if (ok) android.view.HapticFeedbackConstants.VIRTUAL_KEY else android.view.HapticFeedbackConstants.LONG_PRESS)
                         }
                     },
                 )
             }
         }
 
-        AnimatedVisibility(visible = selected != null, enter = fadeIn() + expandVertically()) {
+        AnimatedVisibility(visible = selected != null, enter = fadeIn() + expandVertically(), modifier = Modifier.testTag("learning_feedback")) {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                val ok = selected == question.answerIndex
+                val ok = session.selected == question.answerIndex
                 InfoCard(ok = ok, correctAnswer = question.correctOption, info = question.info)
+                SourceDetails(question.source)
+                val finished = (if (reviewMode) false else correct >= target) || session.index >= session.questionIds.lastIndex
                 PrimaryButton(
-                    if (correct >= target) finishText else stringResource(R.string.quiz_next),
+                    if (finished) finishText else stringResource(R.string.quiz_next),
+                    modifier = Modifier.testTag(if (finished) "learning_finish" else "learning_next"),
                     onClick = {
-                        if (correct >= target) {
+                        if (finished) {
                             onFinished()
                         } else {
-                            index++
-                            selected = null
+                            LearningStore.update(session.copy(index=session.index+1, selected=null))
                         }
                     },
                 )
@@ -220,7 +220,7 @@ private fun InfoCard(ok: Boolean, correctAnswer: String, info: String) {
 private enum class OptionState { Idle, Correct, Wrong, Dimmed }
 
 @Composable
-private fun OptionCard(letter: String, text: String, state: OptionState, onClick: () -> Unit, celebrate: Boolean = false) {
+private fun OptionCard(letter: String, text: String, state: OptionState, onClick: () -> Unit, celebrate: Boolean = false, modifier: Modifier = Modifier) {
     val scheme = MaterialTheme.colorScheme
     // Верный ответ «подпрыгивает» и рассыпает искры, неверный — покачивается.
     val bump = remember { androidx.compose.animation.core.Animatable(1f) }
@@ -231,8 +231,8 @@ private fun OptionCard(letter: String, text: String, state: OptionState, onClick
         }
     }
     Box(
-        Modifier
-            .shake(state == OptionState.Wrong)
+        modifier
+            .shake(Store.personalProgressEnabled && state == OptionState.Wrong)
             .graphicsLayer {
                 scaleX = bump.value
                 scaleY = bump.value
@@ -298,47 +298,6 @@ private fun OptionSurface(letter: String, text: String, state: OptionState, onCl
                 textAlign = if (arabic) TextAlign.Center else TextAlign.Start,
                 color = if (state == OptionState.Dimmed) scheme.onSurfaceVariant.copy(alpha = 0.6f) else scheme.onSurface,
                 modifier = Modifier.weight(1f),
-            )
-        }
-    }
-}
-
-/** Серия верных ответов подряд: огонёк растёт с каждым ответом. */
-@Composable
-private fun StreakFlame(streak: Int) {
-    androidx.compose.animation.AnimatedVisibility(
-        visible = streak >= 2,
-        enter = fadeIn() + androidx.compose.animation.scaleIn(initialScale = 0.4f),
-        exit = androidx.compose.animation.fadeOut() + androidx.compose.animation.scaleOut(targetScale = 0.6f),
-    ) {
-        val grow = remember { androidx.compose.animation.core.Animatable(1f) }
-        LaunchedEffect(streak) {
-            grow.snapTo(1.35f)
-            grow.animateTo(1f, androidx.compose.animation.core.spring(dampingRatio = 0.4f, stiffness = 380f))
-        }
-        val flicker by androidx.compose.animation.core.rememberInfiniteTransition(label = "flame").animateFloat(
-            -6f, 6f,
-            androidx.compose.animation.core.infiniteRepeatable(androidx.compose.animation.core.tween(380), androidx.compose.animation.core.RepeatMode.Reverse),
-            label = "flame-r",
-        )
-        Row(
-            Modifier
-                .graphicsLayer {
-                    scaleX = grow.value
-                    scaleY = grow.value
-                }
-                .clip(RoundedCornerShape(50))
-                .background(androidx.compose.ui.graphics.Brush.horizontalGradient(listOf(Color(0xFFFF8A3D), Color(0xFFE2B659))))
-                .padding(horizontal = 12.dp, vertical = 5.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text("🔥", fontSize = (14 + minOf(streak, 8)).sp, modifier = Modifier.graphicsLayer { rotationZ = flicker })
-            Spacer(Modifier.width(4.dp))
-            Text(
-                stringResource(R.string.quiz_streak, streak),
-                style = MaterialTheme.typography.labelLarge,
-                color = Color(0xFF2B1400),
-                fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
             )
         }
     }

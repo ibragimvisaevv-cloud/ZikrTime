@@ -301,7 +301,7 @@ private fun polar(angle: Float, distance: Float): IntOffset {
 // ---------------- Тасбих ----------------
 
 /** Зикры: текст на арабском (одинаков для всех языков), название и смысл — в ресурсах. */
-private val TASBIH_ARABIC = listOf(
+internal val TASBIH_ARABIC = listOf(
     "سُبْحَانَ اللَّهِ",
     "الْحَمْدُ لِلَّهِ",
     "اللَّهُ أَكْبَرُ",
@@ -310,7 +310,7 @@ private val TASBIH_ARABIC = listOf(
     "اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ",
 )
 
-private val TASBIH_NAMES = listOf(
+internal val TASBIH_NAMES = listOf(
     R.string.zikr_1_name to R.string.zikr_1_meaning,
     R.string.zikr_2_name to R.string.zikr_2_meaning,
     R.string.zikr_3_name to R.string.zikr_3_meaning,
@@ -456,7 +456,7 @@ fun TasbihScreen() {
                 }
             }
             Spacer(Modifier.height(8.dp))
-            Text(
+            if (Store.personalProgressEnabled) Text(
                 stringResource(R.string.tasbih_today, Store.tasbihToday()),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,

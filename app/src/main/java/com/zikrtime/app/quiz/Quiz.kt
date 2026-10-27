@@ -2,6 +2,7 @@ package com.zikrtime.app.quiz
 
 import android.content.Context
 import com.zikrtime.app.i18n.Lang
+import com.zikrtime.app.data.SourceInfo
 import org.json.JSONObject
 import kotlin.random.Random
 
@@ -14,6 +15,8 @@ data class Question(
     val answerIndex: Int,
     /** Короткая справка по теме — показывается после ответа. */
     val info: String,
+    val contentVersion: Int = 1,
+    val source: SourceInfo = SourceInfo(),
 ) {
     val correctOption: String get() = options[answerIndex]
 
@@ -63,6 +66,8 @@ object QuestionBank {
                 options = (0 until opts.length()).map { opts.getString(it) },
                 answerIndex = o.optInt("answer", 0),
                 info = o.optString("info"),
+                contentVersion = o.optInt("contentVersion",1),
+                source = SourceInfo.fromJson(o.optJSONObject("source"), o.optInt("contentVersion",1)),
             )
         }
         return QuizBank(cats, questions)

@@ -26,6 +26,22 @@ def load(lang):
     spec = importlib.util.spec_from_file_location(f"strings_{lang}", path)
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
+    # Android feature modules stay separate from the untouched iOS translations.
+    for extra_path in sorted(path.parent.glob("*_extra.py")):
+        if extra_path.name == "ios_extra.py":
+            continue
+        extra_spec = importlib.util.spec_from_file_location(extra_path.stem, extra_path)
+        extra = importlib.util.module_from_spec(extra_spec)
+        extra_spec.loader.exec_module(extra)
+        values = extra.STRINGS.get(lang)
+        if values is None and all(isinstance(v, dict) and lang in v for v in extra.STRINGS.values()):
+            values = {key: translations[lang] for key, translations in extra.STRINGS.items()}
+        if values is None:
+            raise ValueError(f"{extra_path.name}: missing language {lang}")
+        duplicates = set(mod.STRINGS) & set(values)
+        if duplicates:
+            raise ValueError(f"{extra_path.name}: duplicate keys {sorted(duplicates)}")
+        mod.STRINGS.update(values)
     return mod
 
 

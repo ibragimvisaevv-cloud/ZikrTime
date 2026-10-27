@@ -38,7 +38,11 @@
     "112"
    ],
    "answer": 0,
-   "info": "The Quran has 114 surahs and more than 6,200 ayahs. Surahs are classed as Meccan or Medinan, by when and where they were revealed."
+   "info": "The Quran has 114 surahs and more than 6,200 ayahs. Surahs are classed as Meccan or Medinan, by when and where they were revealed.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "quran_first_sura",
@@ -51,7 +55,11 @@
     "An-Nas"
    ],
    "answer": 0,
-   "info": "Al-Fatiha means \"The Opening\". It is recited in every rak'ah of prayer, which is why it is also called Umm al-Kitab — \"the Mother of the Book\"."
+   "info": "Al-Fatiha means \"The Opening\". It is recited in every rak'ah of prayer, which is why it is also called Umm al-Kitab — \"the Mother of the Book\".",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "quran_longest",
@@ -64,7 +72,12 @@
     "Ya-Sin"
    ],
    "answer": 0,
-   "info": "Surah Al-Baqarah (\"The Cow\") has 286 ayahs. It contains Ayat al-Kursi and the longest ayah of the Quran, about recording debts (2:282)."
+   "info": "Surah Al-Baqarah (\"The Cow\") has 286 ayahs. It contains Ayat al-Kursi and the longest ayah of the Quran, about recording debts (2:282).",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 2:282"
+   }
   },
   {
    "id": "quran_shortest",
@@ -77,7 +90,11 @@
     "Al-Mulk"
    ],
    "answer": 0,
-   "info": "Surah Al-Kawthar has three short ayahs. Al-Kawthar is the name of a river in Paradise granted to the Prophet ﷺ."
+   "info": "Surah Al-Kawthar has three short ayahs. Al-Kawthar is the name of a river in Paradise granted to the Prophet ﷺ.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "quran_month",
@@ -90,7 +107,12 @@
     "Dhu al-Hijjah"
    ],
    "answer": 0,
-   "info": "This is stated in Surah Al-Baqarah (2:185). The revelation began on the Night of Decree and continued for about 23 years."
+   "info": "This is stated in Surah Al-Baqarah (2:185). The revelation began on the Night of Decree and continued for about 23 years.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 2:185"
+   }
   },
   {
    "id": "quran_jibril",
@@ -103,7 +125,12 @@
     "Malik"
    ],
    "answer": 0,
-   "info": "The angel Jibril (peace be upon him) conveyed revelation to the prophets. The Quran also calls him \"the Trustworthy Spirit\" (26:193)."
+   "info": "The angel Jibril (peace be upon him) conveyed revelation to the prophets. The Quran also calls him \"the Trustworthy Spirit\" (26:193).",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 26:193"
+   }
   },
   {
    "id": "quran_hira",
@@ -116,7 +143,11 @@
     "At the Kaaba"
    ],
    "answer": 0,
-   "info": "The cave of Hira is on Mount Nur near Makkah. The Prophet ﷺ used to retreat there for worship even before his prophethood."
+   "info": "The cave of Hira is on Mount Nur near Makkah. The Prophet ﷺ used to retreat there for worship even before his prophethood.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "quran_iqra",
@@ -129,7 +160,12 @@
     "\"By…\" (Wa)"
    ],
    "answer": 0,
-   "info": "The first verses revealed were the opening ayahs of Surah Al-Alaq (96:1–5) — about reading in the name of the Lord who created man."
+   "info": "The first verses revealed were the opening ayahs of Surah Al-Alaq (96:1–5) — about reading in the name of the Lord who created man.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 96:1–5"
+   }
   },
   {
    "id": "quran_kursi_sura",
@@ -142,7 +178,12 @@
     "Al-Mulk"
    ],
    "answer": 0,
-   "info": "Ayat al-Kursi is the 255th ayah of Surah Al-Baqarah. It speaks of Allah's greatness, His knowledge and His dominion over the heavens and the earth."
+   "info": "Ayat al-Kursi is the 255th ayah of Surah Al-Baqarah. It speaks of Allah's greatness, His knowledge and His dominion over the heavens and the earth.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "Al-Baqarah, verse 255"
+   }
   },
   {
    "id": "quran_greatest_ayah",
@@ -155,7 +196,12 @@
     "The first ayah of Al-Ikhlas"
    ],
    "answer": 0,
-   "info": "This is reported in a hadith from Ubayy ibn Ka'b, narrated by Muslim. Ayat al-Kursi is commonly recited after the obligatory prayers and before sleep."
+   "info": "This is reported in a hadith from Ubayy ibn Ka'b, narrated by Muslim. Ayat al-Kursi is commonly recited after the obligatory prayers and before sleep.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "Muslim; narration from Ubayy ibn Kaab (number not provided in the bank)"
+   }
   },
   {
    "id": "quran_no_basmala",
@@ -168,7 +214,11 @@
     "Al-Ikhlas"
    ],
    "answer": 0,
-   "info": "The ninth surah, At-Tawbah (\"Repentance\"), is the only one without the basmala at its start. It is also called Bara'ah (\"Disavowal\")."
+   "info": "The ninth surah, At-Tawbah (\"Repentance\"), is the only one without the basmala at its start. It is also called Bara'ah (\"Disavowal\").",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "quran_two_basmala",
@@ -181,7 +231,11 @@
     "Maryam"
    ],
    "answer": 0,
-   "info": "In Surah An-Naml the basmala appears at the start and in ayah 30 — in Prophet Sulayman's letter to the Queen of Sheba. So the Quran has 114 basmalas, one per surah."
+   "info": "In Surah An-Naml the basmala appears at the start and in ayah 30 — in Prophet Sulayman's letter to the Queen of Sheba. So the Quran has 114 basmalas, one per surah.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "quran_third",
@@ -194,7 +248,12 @@
     "Al-Mulk"
    ],
    "answer": 0,
-   "info": "This is reported in a hadith narrated by al-Bukhari. Surah Al-Ikhlas (\"Sincerity\") is devoted entirely to the oneness of Allah — tawhid."
+   "info": "This is reported in a hadith narrated by al-Bukhari. Surah Al-Ikhlas (\"Sincerity\") is devoted entirely to the oneness of Allah — tawhid.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "Al-Bukhari (number not provided in the bank)"
+   }
   },
   {
    "id": "quran_maryam",
@@ -207,7 +266,11 @@
     "Al-Ahzab"
    ],
    "answer": 0,
-   "info": "Maryam, the mother of Prophet Isa, is the only woman mentioned by name in the Quran. The 19th surah bears her name."
+   "info": "Maryam, the mother of Prophet Isa, is the only woman mentioned by name in the Quran. The 19th surah bears her name.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "quran_fatiha_ayat",
@@ -220,7 +283,12 @@
     "8"
    ],
    "answer": 0,
-   "info": "Al-Fatiha has seven ayahs. The Quran calls it \"the seven oft-repeated\" (15:87) because it is repeated in every rak'ah."
+   "info": "Al-Fatiha has seven ayahs. The Quran calls it \"the seven oft-repeated\" (15:87) because it is repeated in every rak'ah.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 15:87"
+   }
   },
   {
    "id": "prophet_adam",
@@ -233,7 +301,11 @@
     "Ibrahim"
    ],
    "answer": 0,
-   "info": "Adam (peace be upon him) was the first human created by Allah and the first prophet. All people descend from him and his wife Hawwa."
+   "info": "Adam (peace be upon him) was the first human created by Allah and the first prophet. All people descend from him and his wife Hawwa.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "prophet_nuh",
@@ -246,7 +318,11 @@
     "Hud"
    ],
    "answer": 0,
-   "info": "Prophet Nuh (peace be upon him) called his people to worship one God for many years. By Allah's command he built the ark and was saved from the flood with the believers."
+   "info": "Prophet Nuh (peace be upon him) called his people to worship one God for many years. By Allah's command he built the ark and was saved from the flood with the believers.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "prophet_kaaba",
@@ -259,7 +335,12 @@
     "Musa"
    ],
    "answer": 0,
-   "info": "This is mentioned in Surah Al-Baqarah (2:127). Ibrahim and Ismail (peace be upon them) raised the Kaaba and prayed that Allah would accept their work."
+   "info": "This is mentioned in Surah Al-Baqarah (2:127). Ibrahim and Ismail (peace be upon them) raised the Kaaba and prayed that Allah would accept their work.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 2:127"
+   }
   },
   {
    "id": "prophet_yunus",
@@ -272,7 +353,12 @@
     "Lut"
    ],
    "answer": 0,
-   "info": "From inside the fish, Prophet Yunus (peace be upon him) called on Allah, affirming His oneness and admitting his own mistake. His supplication (21:87) is still recited in hard times."
+   "info": "From inside the fish, Prophet Yunus (peace be upon him) called on Allah, affirming His oneness and admitting his own mistake. His supplication (21:87) is still recited in hard times.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 21:87"
+   }
   },
   {
    "id": "prophet_tawrat",
@@ -285,7 +371,11 @@
     "Ibrahim"
    ],
    "answer": 0,
-   "info": "The Tawrat (Torah) is the scripture revealed to Prophet Musa (peace be upon him). Belief in all the scriptures revealed by Allah is a pillar of faith."
+   "info": "The Tawrat (Torah) is the scripture revealed to Prophet Musa (peace be upon him). Belief in all the scriptures revealed by Allah is a pillar of faith.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "prophet_zabur",
@@ -298,7 +388,11 @@
     "Isa"
    ],
    "answer": 0,
-   "info": "The Zabur (Psalms) was revealed to Prophet Dawud (peace be upon him). Dawud was both a prophet and a ruler, and Allah gave him a beautiful voice."
+   "info": "The Zabur (Psalms) was revealed to Prophet Dawud (peace be upon him). Dawud was both a prophet and a ruler, and Allah gave him a beautiful voice.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "prophet_injil",
@@ -311,7 +405,11 @@
     "Zakariya"
    ],
    "answer": 0,
-   "info": "The Injil (Gospel) was revealed to Prophet Isa (peace be upon him), the son of Maryam. Muslims believe Isa is a messenger of Allah and that Allah raised him up."
+   "info": "The Injil (Gospel) was revealed to Prophet Isa (peace be upon him), the son of Maryam. Muslims believe Isa is a messenger of Allah and that Allah raised him up.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "prophet_suleyman",
@@ -324,7 +422,11 @@
     "Dhul-Kifl"
    ],
    "answer": 0,
-   "info": "Prophet Sulayman (peace be upon him) was given an unmatched kingdom: the wind and the jinn obeyed him, and he understood the speech of birds and ants."
+   "info": "Prophet Sulayman (peace be upon him) was given an unmatched kingdom: the wind and the jinn obeyed him, and he understood the speech of birds and ants.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "prophet_ayyub",
@@ -337,7 +439,11 @@
     "Nuh"
    ],
    "answer": 0,
-   "info": "Prophet Ayyub (peace be upon him) lost his health, wealth and children, yet never complained. Allah healed him and restored his blessings — his patience became an example for believers."
+   "info": "Prophet Ayyub (peace be upon him) lost his health, wealth and children, yet never complained. Allah healed him and restored his blessings — his patience became an example for believers.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "prophet_yaqub",
@@ -350,7 +456,11 @@
     "Ismail"
    ],
    "answer": 0,
-   "info": "Yusuf was the son of Prophet Yaqub, the grandson of Ishaq and the great-grandson of Ibrahim (peace be upon them all). Yaqub is also known as Israil."
+   "info": "Yusuf was the son of Prophet Yaqub, the grandson of Ishaq and the great-grandson of Ibrahim (peace be upon them all). Yaqub is also known as Israil.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "prophet_yusuf_well",
@@ -363,7 +473,12 @@
     "Ismail"
    ],
    "answer": 0,
-   "info": "The story of Yusuf is told in the 12th surah, which bears his name. The Quran calls it the best of stories (12:3)."
+   "info": "The story of Yusuf is told in the 12th surah, which bears his name. The Quran calls it the best of stories (12:3).",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 12:3"
+   }
   },
   {
    "id": "prophet_harun",
@@ -376,7 +491,12 @@
     "Hud"
    ],
    "answer": 0,
-   "info": "Musa asked Allah to make his brother Harun his helper, because Harun was more eloquent. Allah answered his prayer (20:29–36)."
+   "info": "Musa asked Allah to make his brother Harun his helper, because Harun was more eloquent. Allah answered his prayer (20:29–36).",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 20:29–36"
+   }
   },
   {
    "id": "prophet_yahya",
@@ -389,7 +509,12 @@
     "Harun"
    ],
    "answer": 0,
-   "info": "Allah gave Zakariya his son Yahya in old age, when his wife was barren. No one had borne that name before Yahya (19:7)."
+   "info": "Allah gave Zakariya his son Yahya in old age, when his wife was barren. No one had borne that name before Yahya (19:7).",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 19:7"
+   }
   },
   {
    "id": "prophet_count",
@@ -402,7 +527,12 @@
     "313"
    ],
    "answer": 0,
-   "info": "Usually 25 prophets are counted as named in the Quran. There were many more prophets — Allah did not tell us about all of them (40:78)."
+   "info": "Usually 25 prophets are counted as named in the Quran. There were many more prophets — Allah did not tell us about all of them (40:78).",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 40:78"
+   }
   },
   {
    "id": "prophet_last",
@@ -415,7 +545,12 @@
     "Yahya"
    ],
    "answer": 0,
-   "info": "The Quran calls Muhammad ﷺ \"the Seal of the Prophets\" (33:40). There will be no prophet after him, and the Quran is the final scripture."
+   "info": "The Quran calls Muhammad ﷺ \"the Seal of the Prophets\" (33:40). There will be no prophet after him, and the Quran is the final scripture.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 33:40"
+   }
   },
   {
    "id": "seerah_birthplace",
@@ -428,7 +563,11 @@
     "Jerusalem"
    ],
    "answer": 0,
-   "info": "The Prophet ﷺ was born in Makkah in the Year of the Elephant — around 570 CE. He was from the clan of Hashim of the Quraysh tribe."
+   "info": "The Prophet ﷺ was born in Makkah in the Year of the Elephant — around 570 CE. He was from the clan of Hashim of the Quraysh tribe.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "seerah_mother",
@@ -441,7 +580,11 @@
     "Fatimah"
    ],
    "answer": 0,
-   "info": "His mother was Aminah bint Wahb. She passed away when the Prophet ﷺ was about six; his father, Abdullah, had died before he was born."
+   "info": "His mother was Aminah bint Wahb. She passed away when the Prophet ﷺ was about six; his father, Abdullah, had died before he was born.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "seerah_nurse",
@@ -454,7 +597,11 @@
     "Fatimah"
    ],
    "answer": 0,
-   "info": "It was an Arab custom to send infants to wet nurses in the desert. The Prophet ﷺ spent his early childhood with Halimah of the Banu Sa'd tribe."
+   "info": "It was an Arab custom to send infants to wet nurses in the desert. The Prophet ﷺ spent his early childhood with Halimah of the Banu Sa'd tribe.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "seerah_khadija",
@@ -467,7 +614,11 @@
     "Sawdah"
    ],
    "answer": 0,
-   "info": "Khadijah (may Allah be pleased with her) was the first to believe in his prophethood and supported him through the hardest years."
+   "info": "Khadijah (may Allah be pleased with her) was the first to believe in his prophethood and supported him through the hardest years.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "seerah_age40",
@@ -480,7 +631,11 @@
     "50"
    ],
    "answer": 0,
-   "info": "The revelation began when the Prophet ﷺ was 40. Before that, people in Makkah called him al-Amin — \"the trustworthy\"."
+   "info": "The revelation began when the Prophet ﷺ was 40. Before that, people in Makkah called him al-Amin — \"the trustworthy\".",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "seerah_mission_years",
@@ -493,7 +648,11 @@
     "40 years"
    ],
    "answer": 0,
-   "info": "The Prophet ﷺ called people to Islam for about 13 years in Makkah and about 10 years in Madinah. He passed away in 11 AH at the age of 63."
+   "info": "The Prophet ﷺ called people to Islam for about 13 years in Makkah and about 10 years in Madinah. He passed away in 11 AH at the age of 63.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "seerah_hijra",
@@ -506,7 +665,11 @@
     "Isra"
    ],
    "answer": 0,
-   "info": "The Hijrah took place in 622 CE. In Madinah, then called Yathrib, the first Muslim community took shape."
+   "info": "The Hijrah took place in 622 CE. In Madinah, then called Yathrib, the first Muslim community took shape.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "seerah_calendar",
@@ -519,7 +682,11 @@
     "The conquest of Makkah"
    ],
    "answer": 0,
-   "info": "The Hijri calendar was introduced under Caliph Umar. It is lunar, so it shifts about 11 days each year relative to the solar calendar."
+   "info": "The Hijri calendar was introduced under Caliph Umar. It is lunar, so it shifts about 11 days each year relative to the solar calendar.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "seerah_companion_hijra",
@@ -532,7 +699,12 @@
     "Uthman"
    ],
    "answer": 0,
-   "info": "Abu Bakr (may Allah be pleased with him) hid with the Prophet ﷺ in the cave of Thawr for three days. This is mentioned in the Quran (9:40)."
+   "info": "Abu Bakr (may Allah be pleased with him) hid with the Prophet ﷺ in the cave of Thawr for three days. This is mentioned in the Quran (9:40).",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 9:40"
+   }
   },
   {
    "id": "seerah_isra",
@@ -545,7 +717,11 @@
     "Tawaf"
    ],
    "answer": 0,
-   "info": "Al-Isra is the night journey to Jerusalem, and al-Mi'raj is the ascension to the heavens. It was then that the five daily prayers were prescribed."
+   "info": "Al-Isra is the night journey to Jerusalem, and al-Mi'raj is the ascension to the heavens. It was then that the five daily prayers were prescribed.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "seerah_badr",
@@ -558,7 +734,11 @@
     "Hunayn"
    ],
    "answer": 0,
-   "info": "The Battle of Badr took place in Ramadan, 2 AH. About 313 Muslims defeated an army three times their size."
+   "info": "The Battle of Badr took place in Ramadan, 2 AH. About 313 Muslims defeated an army three times their size.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "seerah_muezzin",
@@ -571,7 +751,11 @@
     "Salman al-Farisi"
    ],
    "answer": 0,
-   "info": "Bilal was enslaved in Makkah and tortured for his faith until Abu Bakr freed him. The Prophet ﷺ chose him to call the adhan for his beautiful, strong voice."
+   "info": "Bilal was enslaved in Makkah and tortured for his faith until Abu Bakr freed him. The Prophet ﷺ chose him to call the adhan for his beautiful, strong voice.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "seerah_grave",
@@ -584,7 +768,11 @@
     "In Taif"
    ],
    "answer": 0,
-   "info": "The Prophet ﷺ is buried in Madinah, in Aishah's room, which is now inside the Prophet's Mosque. Abu Bakr and Umar are buried beside him."
+   "info": "The Prophet ﷺ is buried in Madinah, in Aishah's room, which is now inside the Prophet's Mosque. Abu Bakr and Umar are buried beside him.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "seerah_first_caliph",
@@ -597,7 +785,11 @@
     "Ali"
    ],
    "answer": 0,
-   "info": "After the Prophet ﷺ passed away, Abu Bakr as-Siddiq became the first caliph. There were four rightly guided caliphs: Abu Bakr, Umar, Uthman and Ali."
+   "info": "After the Prophet ﷺ passed away, Abu Bakr as-Siddiq became the first caliph. There were four rightly guided caliphs: Abu Bakr, Umar, Uthman and Ali.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_pillars_islam",
@@ -610,7 +802,11 @@
     "7"
    ],
    "answer": 0,
-   "info": "The five pillars of Islam: the shahadah, prayer, zakat, fasting in Ramadan, and Hajj for those who are able."
+   "info": "The five pillars of Islam: the shahadah, prayer, zakat, fasting in Ramadan, and Hajj for those who are able.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_pillars_iman",
@@ -623,7 +819,11 @@
     "4"
    ],
    "answer": 0,
-   "info": "Belief in Allah, His angels, His books, His messengers, the Last Day and divine decree. They are listed in the well-known hadith of Jibril."
+   "info": "Belief in Allah, His angels, His books, His messengers, the Last Day and divine decree. They are listed in the well-known hadith of Jibril.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_daily_prayers",
@@ -636,7 +836,11 @@
     "6"
    ],
    "answer": 0,
-   "info": "Fajr, Dhuhr, Asr, Maghrib and Isha. The five prayers were prescribed on the night of the Mi'raj."
+   "info": "Fajr, Dhuhr, Asr, Maghrib and Isha. The five prayers were prescribed on the night of the Mi'raj.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_fajr_rakats",
@@ -649,7 +853,11 @@
     "1"
    ],
    "answer": 0,
-   "info": "The obligatory part of Fajr is two rak'ahs. Two sunnah rak'ahs are prayed before it — the Prophet ﷺ almost never left them."
+   "info": "The obligatory part of Fajr is two rak'ahs. Two sunnah rak'ahs are prayed before it — the Prophet ﷺ almost never left them.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_maghrib_rakats",
@@ -662,7 +870,11 @@
     "5"
    ],
    "answer": 0,
-   "info": "Maghrib is the only obligatory prayer with three rak'ahs. It is prayed after sunset."
+   "info": "Maghrib is the only obligatory prayer with three rak'ahs. It is prayed after sunset.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_four_rakats",
@@ -675,7 +887,11 @@
     "6"
    ],
    "answer": 0,
-   "info": "Dhuhr, Asr and Isha have four rak'ahs each. A traveller may shorten them to two."
+   "info": "Dhuhr, Asr and Isha have four rak'ahs each. A traveller may shorten them to two.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_wudu",
@@ -688,7 +904,12 @@
     "Istinja"
    ],
    "answer": 0,
-   "info": "In wudu you wash the face, the arms to the elbows, wipe the head and wash the feet to the ankles (5:6). Ghusl is the full ablution of the whole body."
+   "info": "In wudu you wash the face, the arms to the elbows, wipe the head and wash the feet to the ankles (5:6). Ghusl is the full ablution of the whole body.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 5:6"
+   }
   },
   {
    "id": "fiqh_tayammum",
@@ -701,7 +922,12 @@
     "Suhur"
    ],
    "answer": 0,
-   "info": "Tayammum is purification with clean earth when there is no water or it cannot be used. It is mentioned in the Quran (4:43, 5:6)."
+   "info": "Tayammum is purification with clean earth when there is no water or it cannot be used. It is mentioned in the Quran (4:43, 5:6).",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 4:43, 5:6"
+   }
   },
   {
    "id": "fiqh_adhan",
@@ -714,7 +940,11 @@
     "Dua"
    ],
    "answer": 0,
-   "info": "The adhan calls people to prayer, and the iqamah is the second call right before it starts. In the Fajr adhan the words \"Prayer is better than sleep\" are added."
+   "info": "The adhan calls people to prayer, and the iqamah is the second call right before it starts. In the Fajr adhan the words \"Prayer is better than sleep\" are added.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_qibla",
@@ -727,7 +957,11 @@
     "East"
    ],
    "answer": 0,
-   "info": "The direction of the Kaaba is called the qibla. You can find it in the Qibla section of this app."
+   "info": "The direction of the Kaaba is called the qibla. You can find it in the Qibla section of this app.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_first_qibla",
@@ -740,7 +974,12 @@
     "Mount Arafat"
    ],
    "answer": 0,
-   "info": "For about 16–17 months after the Hijrah, Muslims prayed towards Al-Aqsa in Jerusalem. Then the qibla was changed to the Kaaba (2:144)."
+   "info": "For about 16–17 months after the Hijrah, Muslims prayed towards Al-Aqsa in Jerusalem. Then the qibla was changed to the Kaaba (2:144).",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 2:144"
+   }
   },
   {
    "id": "fiqh_zakat",
@@ -753,7 +992,11 @@
     "Fidyah"
    ],
    "answer": 0,
-   "info": "Zakat is one of the five pillars of Islam. It is usually 2.5% of savings that have reached the nisab and been held for a year."
+   "info": "Zakat is one of the five pillars of Islam. It is usually 2.5% of savings that have reached the nisab and been held for a year.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_zakat_fitr",
@@ -766,7 +1009,11 @@
     "Fidyah"
    ],
    "answer": 0,
-   "info": "Zakat al-Fitr is paid for oneself and one's family so that the poor can celebrate too. It must be given before the Eid prayer."
+   "info": "Zakat al-Fitr is paid for oneself and one's family so that the poor can celebrate too. It must be given before the Eid prayer.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_suhoor",
@@ -779,7 +1026,11 @@
     "Aqiqah"
    ],
    "answer": 0,
-   "info": "Suhur is the meal before dawn, and iftar is breaking the fast after sunset. The Prophet ﷺ said there is barakah in suhur."
+   "info": "Suhur is the meal before dawn, and iftar is breaking the fast after sunset. The Prophet ﷺ said there is barakah in suhur.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_jumuah",
@@ -792,7 +1043,11 @@
     "Monday"
    ],
    "answer": 0,
-   "info": "The Friday prayer replaces Dhuhr and is preceded by a sermon — the khutbah. Friday is the best day of the week for Muslims."
+   "info": "The Friday prayer replaces Dhuhr and is preceded by a sermon — the khutbah. Friday is the best day of the week for Muslims.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_tawaf",
@@ -805,7 +1060,11 @@
     "10"
    ],
    "answer": 0,
-   "info": "Tawaf is walking around the Kaaba seven times anticlockwise. It begins at the corner of the Black Stone."
+   "info": "Tawaf is walking around the Kaaba seven times anticlockwise. It begins at the corner of the Black Stone.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_sai",
@@ -818,7 +1077,12 @@
     "Mina and Arafat"
    ],
    "answer": 0,
-   "info": "Sa'i recalls Hajar, who searched for water for little Ismail, running seven times between the hills of Safa and Marwah (2:158)."
+   "info": "Sa'i recalls Hajar, who searched for water for little Ismail, running seven times between the hills of Safa and Marwah (2:158).",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 2:158"
+   }
   },
   {
    "id": "fiqh_hajj_month",
@@ -831,7 +1095,11 @@
     "Muharram"
    ],
    "answer": 0,
-   "info": "The main rites of Hajj take place from the 8th to the 13th of Dhu al-Hijjah. The Day of Arafah is the 9th of Dhu al-Hijjah."
+   "info": "The main rites of Hajj take place from the 8th to the 13th of Dhu al-Hijjah. The Day of Arafah is the 9th of Dhu al-Hijjah.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_ramadan_number",
@@ -844,7 +1112,11 @@
     "12th"
    ],
    "answer": 0,
-   "info": "Ramadan is the ninth month, followed by Shawwal. The Islamic calendar has 12 lunar months."
+   "info": "Ramadan is the ninth month, followed by Shawwal. The Islamic calendar has 12 lunar months.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_qadr",
@@ -857,7 +1129,12 @@
     "The first night of Muharram"
    ],
    "answer": 0,
-   "info": "This is stated in Surah Al-Qadr (97:3). It is sought in the last ten nights of Ramadan, especially the odd ones."
+   "info": "This is stated in Surah Al-Qadr (97:3). It is sought in the last ten nights of Ramadan, especially the odd ones.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 97:3"
+   }
   },
   {
    "id": "fiqh_eid_fitr",
@@ -870,7 +1147,11 @@
     "Ashura"
    ],
    "answer": 0,
-   "info": "Eid al-Fitr is celebrated on the 1st of Shawwal with the Eid prayer. The second holiday, Eid al-Adha, falls on the 10th of Dhu al-Hijjah."
+   "info": "Eid al-Fitr is celebrated on the 1st of Shawwal with the Eid prayer. The second holiday, Eid al-Adha, falls on the 10th of Dhu al-Hijjah.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "fiqh_zamzam",
@@ -883,7 +1164,11 @@
     "Tasnim"
    ],
    "answer": 0,
-   "info": "The spring of Zamzam appeared by Allah's mercy when Hajar was searching for water for her son Ismail. It has not dried up for thousands of years."
+   "info": "The spring of Zamzam appeared by Allah's mercy when Hajar was searching for water for her son Ismail. It has not dried up for thousands of years.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "arabic_subhanallah",
@@ -896,7 +1181,11 @@
     "I seek Allah's forgiveness"
    ],
    "answer": 0,
-   "info": "With these words we glorify Allah and declare Him free of any imperfection. After prayer it is customary to say it 33 times."
+   "info": "With these words we glorify Allah and declare Him free of any imperfection. After prayer it is customary to say it 33 times.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "arabic_alhamdulillah",
@@ -909,7 +1198,11 @@
     "Allah is the Greatest"
    ],
    "answer": 0,
-   "info": "Muslims thank Allah with these words in every situation — in joy and in hardship. They open Al-Fatiha after the basmala."
+   "info": "Muslims thank Allah with these words in every situation — in joy and in hardship. They open Al-Fatiha after the basmala.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "arabic_allahuakbar",
@@ -922,7 +1215,11 @@
     "Glory be to Allah"
    ],
    "answer": 0,
-   "info": "Every prayer begins with these words — the takbir. They are also said in the adhan and on the days of Eid."
+   "info": "Every prayer begins with these words — the takbir. They are also said in the adhan and on the days of Eid.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "arabic_inshaallah",
@@ -935,7 +1232,12 @@
     "In the name of Allah"
    ],
    "answer": 0,
-   "info": "When speaking about the future, Muslims add \"InshaAllah\" (18:23–24). \"MashaAllah\" — \"what Allah has willed\" — is said when admiring something."
+   "info": "When speaking about the future, Muslims add \"InshaAllah\" (18:23–24). \"MashaAllah\" — \"what Allah has willed\" — is said when admiring something.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 18:23–24"
+   }
   },
   {
    "id": "arabic_astaghfirullah",
@@ -948,7 +1250,11 @@
     "I rely on Allah"
    ],
    "answer": 0,
-   "info": "This is istighfar — asking for forgiveness. The Prophet ﷺ asked Allah for forgiveness more than seventy times a day."
+   "info": "This is istighfar — asking for forgiveness. The Prophet ﷺ asked Allah for forgiveness more than seventy times a day.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "arabic_sabr",
@@ -961,7 +1267,12 @@
     "Knowledge"
    ],
    "answer": 0,
-   "info": "Sabr is patience and steadfastness: in worship, in avoiding sin and in trials. The Quran says that Allah is with the patient (2:153)."
+   "info": "Sabr is patience and steadfastness: in worship, in avoiding sin and in trials. The Quran says that Allah is with the patient (2:153).",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 2:153"
+   }
   },
   {
    "id": "arabic_shukr",
@@ -974,7 +1285,12 @@
     "Hope"
    ],
    "answer": 0,
-   "info": "Shukr is gratitude to Allah with the heart, words and deeds. Allah promised to give more to those who are grateful (14:7)."
+   "info": "Shukr is gratitude to Allah with the heart, words and deeds. Allah promised to give more to those who are grateful (14:7).",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "القرآن 14:7"
+   }
   },
   {
    "id": "arabic_niyyah",
@@ -987,7 +1303,12 @@
     "Charity"
    ],
    "answer": 0,
-   "info": "A well-known hadith in al-Bukhari and Muslim begins by saying that deeds are judged by intentions. A good intention turns an ordinary act into worship."
+   "info": "A well-known hadith in al-Bukhari and Muslim begins by saying that deeds are judged by intentions. A good intention turns an ordinary act into worship.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "Al-Bukhari and Muslim (numbers not provided in the bank)"
+   }
   },
   {
    "id": "arabic_barakah",
@@ -1000,7 +1321,11 @@
     "Time"
    ],
    "answer": 0,
-   "info": "Barakah is the blessing and benefit Allah places in time, wealth and deeds. Even a little with barakah brings much good."
+   "info": "Barakah is the blessing and benefit Allah places in time, wealth and deeds. Even a little with barakah brings much good.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "arabic_islam",
@@ -1013,7 +1338,11 @@
     "Journey"
    ],
    "answer": 0,
-   "info": "Islam means submission to the one God. The word comes from the same root as \"salam\" — peace."
+   "info": "Islam means submission to the one God. The word comes from the same root as \"salam\" — peace.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1
+   }
   },
   {
    "id": "ayah_ikhlas",
@@ -1027,6 +1356,11 @@
    ],
    "answer": 0,
    "info": "Surah Al-Ikhlas, ayahs 1–2. As-Samad means the Self-Sufficient: everyone needs Him, and He needs no one.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "Surah Al-Ikhlas, ayahs 1–2"
+   },
    "arabic": "قُلْ هُوَ اللَّهُ أَحَدٌ"
   },
   {
@@ -1041,6 +1375,11 @@
    ],
    "answer": 0,
    "info": "Surah Al-Fatiha, ayahs 2–3. Ar-Rahman and Ar-Rahim are names of Allah that speak of His mercy.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "Surah Al-Fatiha, ayahs 2–3"
+   },
    "arabic": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ"
   },
   {
@@ -1055,6 +1394,11 @@
    ],
    "answer": 0,
    "info": "Surah Al-Fatiha, ayah 5: we worship Allah alone and ask for help from Him alone.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "Surah Al-Fatiha, ayah 5"
+   },
    "arabic": "إِيَّاكَ نَعْبُدُ"
   },
   {
@@ -1069,6 +1413,11 @@
    ],
    "answer": 0,
    "info": "Surah Al-Asr, ayahs 1–2. Imam ash-Shafi'i said that if people reflected only on this surah, it would be enough for them.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "Surah Al-Asr, ayahs 1–2"
+   },
    "arabic": "وَالْعَصْرِ"
   },
   {
@@ -1083,6 +1432,11 @@
    ],
    "answer": 0,
    "info": "Surah Al-Falaq, ayahs 1–2. Together with Surah An-Nas it is called al-Mu'awwidhatayn — the two surahs of seeking Allah's protection.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "Surah Al-Falaq, ayahs 1–2"
+   },
    "arabic": "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ"
   },
   {
@@ -1097,6 +1451,11 @@
    ],
    "answer": 0,
    "info": "Surah An-Nas, ayahs 1–2. It is the last surah of the Quran; the Prophet ﷺ recited it with Al-Ikhlas and Al-Falaq before sleep.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "Surah An-Nas, ayahs 1–2"
+   },
    "arabic": "قُلْ أَعُوذُ بِرَبِّ النَّاسِ"
   },
   {
@@ -1111,6 +1470,11 @@
    ],
    "answer": 0,
    "info": "Surah Al-Kawthar, ayahs 1–2: in gratitude for the blessing given — pray to your Lord and offer sacrifice for Him.",
+   "contentVersion": 1,
+   "source": {
+    "translationVersion": 1,
+    "reference": "Surah Al-Kawthar, ayahs 1–2"
+   },
    "arabic": "إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ"
   }
  ]

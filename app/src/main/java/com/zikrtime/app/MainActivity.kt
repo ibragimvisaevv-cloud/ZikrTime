@@ -96,7 +96,7 @@ class MainActivity : ComponentActivity() {
         val showSplash = savedInstanceState == null && com.zikrtime.app.ui.LiveFlags.splash &&
             (intent?.hasExtra("qa_screen") != true || intent?.getBooleanExtra("qa_splash", false) == true)
         setContent {
-            val natural = Store.onboarded && (nav.stack.lastOrNull() == Screen.TASBIH || (nav.stack.isEmpty() && nav.tab == Tab.PRAYER))
+            val natural = Store.onboarded && (nav.stack.lastOrNull() in setOf(Screen.TASBIH, Screen.AZKAR, Screen.PROGRESS, Screen.REVIEW) || (nav.stack.isEmpty() && nav.tab == Tab.PRAYER))
             ZikrTheme(natural = natural) {
                 val tilt = com.zikrtime.app.ui.rememberTilt(enabled = !natural)
                 var splash by androidx.compose.runtime.saveable.rememberSaveable { androidx.compose.runtime.mutableStateOf(showSplash) }
@@ -133,6 +133,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun handleOpen(intent: Intent?) {
+        if (intent?.getBooleanExtra("open_focus", false) == true) { nav.stack.clear(); nav.tab = Tab.FOCUS }
         when (intent?.getStringExtra(EXTRA_OPEN)) {
             "alarm" -> nav.open(Screen.ALARM)
             "focus" -> nav.tab = com.zikrtime.app.ui.Tab.FOCUS
@@ -198,6 +199,9 @@ private fun AppRoot() {
             Screen.QIBLA -> QiblaScreen()
             Screen.TASBIH -> TasbihScreen()
             Screen.QUIZ -> QuizScreen()
+            Screen.REVIEW -> com.zikrtime.app.ui.ReviewScreen()
+            Screen.PROGRESS -> com.zikrtime.app.ui.ProgressScreen()
+            Screen.AZKAR -> com.zikrtime.app.ui.AzkarScreen()
             Screen.APPS -> AppsScreen()
             Screen.ABOUT -> AboutScreen()
             Screen.SHOP_SELLER -> com.zikrtime.app.ui.SellerScreen()

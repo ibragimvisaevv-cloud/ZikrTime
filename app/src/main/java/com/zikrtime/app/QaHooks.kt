@@ -38,6 +38,7 @@ object QaHooks {
         com.zikrtime.app.ui.LiveFlags.splash = intent.getBooleanExtra("qa_splash", false)
         skyPreview = intent.getStringExtra("qa_period")?.let { runCatching { com.zikrtime.app.ui.NaturalPeriod.valueOf(it) }.getOrNull() }
         val screen = intent.getStringExtra("qa_screen") ?: return false
+        if (intent.getBooleanExtra("qa_onboarded", false)) Store.onboarded = true
         if (intent.getBooleanExtra("qa_demo", false)) seed(activity)
         when (screen) {
             "onboarding" -> Store.onboarded = false
@@ -65,6 +66,9 @@ object QaHooks {
             "tasbih" -> nav.open(Screen.TASBIH)
             "about" -> nav.open(Screen.ABOUT)
             "apps" -> nav.open(Screen.APPS)
+            "review" -> nav.startReview()
+            "progress" -> nav.open(Screen.PROGRESS)
+            "azkar" -> nav.openAzkar("morning")
             "quiz" -> nav.startQuiz(null)
             "quiz_cards" -> {
                 nav.quizStartWithCards = true

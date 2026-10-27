@@ -10,48 +10,49 @@ data class UsageEventLite(
     val className: String,
     val resumed: Boolean,
     val timestamp: Long,
+    val screenOn: Boolean? = null,
+    val unlocked: Boolean? = null,
+    val reset: Boolean = false,
 )
 
 /** Чистая логика без Android — её легко проверять тестами. */
 object UsageMath {
 
-    /**
-     * Сколько миллисекунд выбранные приложения были на экране начиная с [from].
-     * События должны идти по времени. Если окно ещё открыто — считаем до [now].
-     */
-    fun foregroundMillis(events: List<UsageEventLite>, from: Long, now: Long): Long {
-        val openSince = HashMap<String, Long>() // ключ: пакет/класс окна
-        var total = 0L
-        for (e in events) {
-            val key = e.packageName + "/" + e.className
-            if (e.resumed) {
-                openSince.putIfAbsent(key, e.timestamp)
-            } else {
-                val start = openSince.remove(key) ?: continue
-                total += overlap(start, e.timestamp, from, now)
+    private data class Result(val used: Long,val open: Map<String,Long>)
+
+    /** Union of resumed windows, gated by both interactive screen and unlocked keyguard. */
+    private fun measure(events: List<UsageEventLite>, from: Long, now: Long, count: Boolean): Result {
+        val open=LinkedHashMap<String,UsageEventLite>()
+        var interactive=true
+        var unlocked=true
+        var activeSince: Long?=null
+        var total=0L
+        for(e in events.sortedBy { it.timestamp }) {
+            if(e.timestamp>now) break
+            if(e.reset) open.clear()
+            e.screenOn?.let { interactive=it }
+            e.unlocked?.let { unlocked=it }
+            if(e.screenOn==null && e.unlocked==null && !e.reset) {
+                val key=e.packageName+"/"+e.className
+                if(e.resumed) open[key]=e else open.remove(key)
+            }
+            val active=open.isNotEmpty() && interactive && unlocked
+            if(active && activeSince==null) activeSince=e.timestamp
+            if(!active && activeSince!=null) {
+                if(count) total+=(minOf(e.timestamp,now)-maxOf(activeSince,from)).coerceAtLeast(0)
+                activeSince=null
             }
         }
-        for (start in openSince.values) total += overlap(start, now, from, now)
-        return total
+        if(count) activeSince?.let { total+=(now-maxOf(it,from)).coerceAtLeast(0) }
+        val packages=if(interactive && unlocked) open.values.groupBy { it.packageName }
+            .mapValues { (_,windows)->windows.maxOf { it.timestamp } } else emptyMap()
+        return Result(total,packages)
     }
+    fun foregroundMillis(events: List<UsageEventLite>,from: Long,now: Long): Long =
+        if(now<=from) 0 else measure(events,from,now,true).used
+    fun openPackages(events: List<UsageEventLite>): Map<String,Long> =
+        measure(events,0,Long.MAX_VALUE,false).open
 
-    /** Приложения, окно которых открыто прямо сейчас: пакет → когда окно стало активным. */
-    fun openPackages(events: List<UsageEventLite>): Map<String, Long> {
-        val open = LinkedHashMap<String, UsageEventLite>() // ключ окна -> событие открытия
-        for (e in events) {
-            val key = e.packageName + "/" + e.className
-            if (e.resumed) open[key] = e else open.remove(key)
-        }
-        val result = HashMap<String, Long>()
-        for (e in open.values) result[e.packageName] = maxOf(result[e.packageName] ?: 0L, e.timestamp)
-        return result
-    }
-
-    private fun overlap(start: Long, end: Long, from: Long, to: Long): Long {
-        val s = maxOf(start, from)
-        val e = minOf(end, to)
-        return if (e > s) e - s else 0L
-    }
 }
 
 /** Начало намаза: [date] — день, для которого он рассчитан (иша может прийтись на следующие сутки). */
