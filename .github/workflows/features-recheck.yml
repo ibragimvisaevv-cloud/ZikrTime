@@ -16,6 +16,7 @@ jobs:
     timeout-minutes: 25
     env:
       MAP_ONLY: ${{ contains(github.event.head_commit.message, '[map-check]') }}
+      FOCUS_ONLY: ${{ contains(github.event.head_commit.message, '[focus-check]') }}
     steps:
       - uses: actions/checkout@v4
       - name: Verify the reusable build source and unchanged Android inputs

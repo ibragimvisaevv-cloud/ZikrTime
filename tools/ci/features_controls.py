@@ -62,10 +62,24 @@ def locate_control(identifier, attribute='resource-id'):
     for attempt in range(7):
         root = ui()
         node = find_control(root, identifier, attribute)
-        if node is not None:
-            return node
         screen = next(root.iter('node'))
-        _, _, width, height = map(int, re.findall(r'\d+', screen.attrib['bounds']))
+        viewport_left, viewport_top, width, height = map(int, re.findall(r'-?\d+', screen.attrib['bounds']))
+        if node is not None:
+            left, top, right, bottom = map(int, re.findall(r'-?\d+', node.attrib['bounds']))
+            # Compose can expose a matching semantics node before it is scrolled
+            # into view. Its empty/clipped bounds are not a usable tap target.
+            left, top = max(left, viewport_left), max(top, viewport_top)
+            right, bottom = min(right, width), min(bottom, height)
+            parents = {child: parent for parent in root.iter() for child in parent}
+            parent = parents.get(node)
+            while parent is not None:
+                if parent.attrib.get('scrollable') == 'true':
+                    pl, pt, pr, pb = map(int, re.findall(r'-?\d+', parent.attrib['bounds']))
+                    left, top, right, bottom = max(left, pl), max(top, pt), min(right, pr), min(bottom, pb)
+                parent = parents.get(parent)
+            if right - left >= 12 and bottom - top >= 12:
+                node.set('bounds', f'[{left},{top}][{right},{bottom}]')
+                return node
         # Screen edge avoids the tasbih gesture detector and does not increment its count.
         shell('input', 'swipe', 5, int(height * .8), 5, int(height * .3), 350)
     raise AssertionError('UI control not found: ' + identifier)
@@ -359,6 +373,7 @@ elif mode == 'focus-visual':
         wait_pause()
         screenshot('focus-visual-dark-large-pause')
         locate_control('pause_done')
+        (OUT / 'focus-visual-pause-actions-ui.xml').write_bytes(ET.tostring(ui()))
         screenshot('focus-visual-dark-large-pause-actions')
         tap_control('pause_done')
         # Return to the top after replacing the longer prayer card with the intention form.
@@ -367,8 +382,11 @@ elif mode == 'focus-visual':
             bounds = next(tree.iter('node')).attrib['bounds']
             _, _, width, height = map(int, re.findall(r'\d+', bounds))
             shell('input', 'swipe', 5, int(height * .25), 5, int(height * .8), 350)
-        screenshot('focus-visual-dark-large-intention')
         strings = ET.parse('app/src/main/res/values/strings.xml').getroot()
+        intention_label = next(n.text for n in strings if n.attrib.get('name') == 'pause_intention')
+        locate_control(intention_label, 'text')
+        (OUT / 'focus-visual-intention-ui.xml').write_bytes(ET.tostring(ui()))
+        screenshot('focus-visual-dark-large-intention')
         custom_label = next(n.text for n in strings if n.attrib.get('name') == 'pause_custom')
         tap_control(custom_label, 'text')
         tap_control('android.widget.EditText', 'class')
