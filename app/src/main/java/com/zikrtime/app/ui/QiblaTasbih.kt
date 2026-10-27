@@ -413,7 +413,7 @@ fun TasbihScreen() {
                     while (dragged > 46.dp.toPx()) { dragged -= 46.dp.toPx(); addOne() }
                 })
             }
-            .clickable(role = androidx.compose.ui.semantics.Role.Button, onClickLabel = stringResource(R.string.tasbih_tap_hint)) { addOne() }
+            .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null, role = androidx.compose.ui.semantics.Role.Button, onClickLabel = stringResource(R.string.tasbih_tap_hint)) { addOne() }
             .semantics { contentDescription = counterLabel },
             contentAlignment = Alignment.Center) {
             Canvas(Modifier.fillMaxSize().padding(10.dp)) {

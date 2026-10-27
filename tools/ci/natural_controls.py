@@ -22,7 +22,7 @@ def scroll(up):
 if len(sys.argv)>1:
  # Warmed baseline/current on the same device, no concurrent video encoding.
  for label,apk in [('baseline',sys.argv[1]),('natural',sys.argv[2])]:
-  shell('am','force-stop',PKG);adb('install','-r','-g',apk);launch();n=ring();a,b,c,d=bounds(n);x,y=(a+c)//2,(b+d)//2
+  shell('am','force-stop',PKG);adb('uninstall',PKG);adb('install','-r','-g',apk);launch();n=ring();a,b,c,d=bounds(n);x,y=(a+c)//2,(b+d)//2
   shell(f'for n in $(seq 1 10); do input tap {x} {y}; done');time.sleep(1)
   shell('dumpsys','gfxinfo',PKG,'reset')
   before=count();shell(f'for n in $(seq 1 40); do input tap {x} {y}; done');time.sleep(1);after=count();assert after-before==40,(label,before,after)
