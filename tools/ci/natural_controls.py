@@ -8,7 +8,14 @@ def xml():
 def bounds(n): return list(map(int,re.findall(r'\d+',n.attrib['bounds'])))
 def tap(n):
  a,b,c,d=bounds(n);shell('input','tap',(a+c)//2,(b+d)//2)
-def named(text): return next(n for n in xml().iter('node') if n.attrib.get('text')==text)
+def named(text):
+ for attempt in range(5):
+  root=xml()
+  matches=[n for n in root.iter('node') if n.attrib.get('text')==text]
+  if matches:return matches[0]
+  (OUT/'controls-current.xml').write_text(E.tostring(root,encoding='unicode'))
+  scroll(text in ['99','100','∞','33'])
+ raise AssertionError('Control not found: '+text)
 def ring():
  nodes=[n for n in xml().iter('node') if n.attrib.get('clickable')=='true']
  return max(nodes,key=lambda n:(bounds(n)[2]-bounds(n)[0])*(bounds(n)[3]-bounds(n)[1]))
@@ -18,7 +25,7 @@ def count():return int(prefs()['tasbih_count'])
 def launch():
  shell('am','start','-S','-W','-n',PKG+'/.MainActivity','--es','qa_screen','tasbih','--es','qa_lang','ru','--ez','qa_demo','true');time.sleep(3)
 def scroll(up):
- a,b,c,d=bounds(next(xml().iter('node')));shell('input','swipe',c//2,int(d*(.8 if up else .3)),c//2,int(d*(.3 if up else .8)),350);time.sleep(.5)
+ a,b,c,d=bounds(next(xml().iter('node')));shell('input','swipe',5,int(d*(.8 if up else .3)),5,int(d*(.3 if up else .8)),350);time.sleep(.5)
 if len(sys.argv)>1:
  # Warmed baseline/current on the same device, no concurrent video encoding.
  for label,apk in [('baseline',sys.argv[1]),('natural',sys.argv[2])]:
@@ -31,7 +38,7 @@ if len(sys.argv)>1:
   shell('dumpsys','gfxinfo',PKG,'reset');time.sleep(5)
   (OUT/f'idle-{label}.txt').write_text(shell('dumpsys','gfxinfo',PKG))
 else:
- before=count();scroll(True)
+ before=count()
  for goal in ['99','100','∞','33']:
   tap(named(goal));assert count()==before,goal
  scroll(False);tap(named('Сбросить'));assert count()==0
