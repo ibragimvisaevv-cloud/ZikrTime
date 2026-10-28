@@ -250,7 +250,7 @@ private fun FilterPill(text: String, selected: Boolean, onClick: () -> Unit) {
         Modifier
             .pressScale(interaction)
             .then(
-                if (selected) Modifier.clip(shape).background(Brush.linearGradient(listOf(Color(0xFF1A7D63), EmeraldDeep)))
+                if (selected) Modifier.clip(shape).background(Brush.linearGradient(listOf(Color(0xFF456F96), EmeraldDeep)))
                 else Modifier.glass(shape, elevation = 3.dp),
             )
             .clickable(interactionSource = interaction, indication = null, onClick = onClick)

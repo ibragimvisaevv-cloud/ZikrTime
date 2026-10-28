@@ -77,8 +77,8 @@ object Widgets {
                 R.id.w_bg,
                 WidgetArt.sky(
                     context, size.first, size.second,
-                    intArrayOf(0xFF1A7D63.toInt(), 0xFF0F5C4A.toInt(), 0xFF04231C.toInt()),
-                    0x40FFE7A8, 0f, WidgetArt.Body.NONE, 41,
+                    intArrayOf(0xFF293E57.toInt(), 0xFF405A76.toInt()),
+                    0x40E6CBA6, 0f, WidgetArt.Body.NONE, 41,
                 ),
             )
             views.setImageViewBitmap(R.id.w_beads, WidgetArt.beads(context, minOf(size.first, size.second) - 12, count, target))
@@ -115,7 +115,11 @@ object Widgets {
         val times = PrayerSchedule.forDate(now.toLocalDate())
         val period = skyPeriod(now, times)
         val day = !now.isBefore(times[Prayer.SUNRISE]) && now.isBefore(times[Prayer.MAGHRIB])
-        val colors = skyColors(period).map { it.toArgb() }.toIntArray()
+        val colors = when (period) {
+            SkyPeriod.NIGHT -> intArrayOf(0xFF232D45.toInt(), 0xFF343B56.toInt())
+            SkyPeriod.DAWN, SkyPeriod.SUNSET -> intArrayOf(0xFF41465B.toInt(), 0xFF74645E.toInt())
+            else -> intArrayOf(0xFF213E5C.toInt(), 0xFF345B7B.toInt())
+        }
         val glow = when (period) {
             SkyPeriod.NIGHT -> 0x403A7BD5
             SkyPeriod.DAWN -> 0x80FFA477.toInt()
@@ -269,9 +273,9 @@ object Widgets {
                 }
                 // Прошедшие — приглушённо
                 !times[p].isAfter(now) -> {
-                    views.setTextColor(name, 0x80FFF6E0.toInt())
-                    views.setTextColor(time, 0x99FFF6E0.toInt())
-                    views.setInt(icons[i], "setColorFilter", 0x99E2B659.toInt())
+                    views.setTextColor(name, 0x80F7F2EA.toInt())
+                    views.setTextColor(time, 0x99F7F2EA.toInt())
+                    views.setInt(icons[i], "setColorFilter", 0x99D9B98C.toInt())
                 }
             }
         }
@@ -282,7 +286,7 @@ object Widgets {
         views.setChronometerCountDown(R.id.w_countdown, true)
         val soon = left < 15 * 60_000L
         views.setInt(R.id.w_countdown, "setBackgroundResource", if (soon) R.drawable.widget_pill_gold else R.drawable.widget_chip)
-        views.setTextColor(R.id.w_countdown, if (soon) 0xFF2B1E00.toInt() else 0xFFFFF6E0.toInt())
+        views.setTextColor(R.id.w_countdown, if (soon) 0xFF2B1E00.toInt() else 0xFFF7F2EA.toInt())
         // Подсказка, пока ничего не отмечено
         if (prayed.isEmpty() && Prayer.entries.any { it.isPrayer && !times[it].isAfter(now) }) {
             views.setTextViewText(R.id.w_subtitle, res.getString(R.string.widget_tap_to_mark))
@@ -328,14 +332,14 @@ object Widgets {
             // Фон «фокус»: ночная синева, переходящая в изумруд; кольцо меняет цвет, когда времени мало.
             val bg = WidgetArt.sky(
                 context, size.first, size.second,
-                intArrayOf(0xFF1A1C4A.toInt(), 0xFF173A5E.toInt(), 0xFF0B4A3D.toInt()),
-                0x553DDC97, 0.7f, WidgetArt.Body.MOON, 37,
+                intArrayOf(0xFF343750.toInt(), 0xFF575471.toInt()),
+                0x55343B56, 0.7f, WidgetArt.Body.MOON, 37,
             )
             views.setImageViewBitmap(R.id.w_bg, bg)
             views.setViewVisibility(R.id.w_star, android.view.View.GONE)
             val sweep = when {
-                used == null -> intArrayOf(0x66FFF6E0, 0x66FFF6E0)
-                fraction > 0.5f -> intArrayOf(0xFF2BB673.toInt(), 0xFF9BE15D.toInt(), 0xFF3DDC97.toInt())
+                used == null -> intArrayOf(0x66F7F2EA, 0x66F7F2EA)
+                fraction > 0.5f -> intArrayOf(0xFF9BBCE0.toInt(), 0xFFD3C3E4.toInt())
                 fraction > 0.2f -> intArrayOf(WidgetArt.GOLD_DARK, WidgetArt.GOLD_LIGHT, WidgetArt.GOLD)
                 else -> intArrayOf(0xFFE5484D.toInt(), 0xFFFFA36C.toInt(), 0xFFFF6B6B.toInt())
             }

@@ -175,7 +175,41 @@ def historical(values):
 
 
 mode = sys.argv[1]
-if mode == 'seed-upgrade':
+if mode == 'appearance':
+    # Drive visible controls, then restart and oppose system appearance.
+    from PIL import Image, ImageStat
+    def assert_theme(name, dark):
+        screenshot(name)
+        image = Image.open(OUT / 'screens' / (name + '.png')).convert('RGB')
+        median = sum(ImageStat.Stat(image).median) / 3
+        assert (median < 115) if dark else (median > 150), (name, median)
+    shell('cmd', 'uimode', 'night', 'no')
+    launch('more')
+    tap_control('appearance_dark')
+    assert prefs().get('appearance') == 'dark'
+    assert_theme('manual-dark', True)
+    launch('more')
+    assert prefs().get('appearance') == 'dark'
+    assert_theme('manual-dark-restarted', True)
+    tap_control('appearance_light')
+    shell('cmd', 'uimode', 'night', 'yes')
+    launch('more')
+    assert prefs().get('appearance') == 'light'
+    assert_theme('manual-light-system-dark', False)
+    launch('home')
+    tap_control('theme_quick_toggle')
+    assert prefs().get('appearance') == 'dark'
+    launch('more')
+    assert_theme('home-toggle-dark', True)
+    tap_control('appearance_system')
+    assert prefs().get('appearance') == 'system'
+    assert_theme('system-dark', True)
+    shell('cmd', 'uimode', 'night', 'no')
+    launch('more')
+    assert_theme('system-light', False)
+    (OUT / 'appearance-passed.json').write_text(json.dumps({'manual_light': True, 'manual_dark': True,
+        'persists_after_restart': True, 'overrides_system': True, 'home_toggle': True, 'system_option': True}))
+elif mode == 'seed-upgrade':
     root = prefs_tree()
     day = shell('date', '+%Y-%m-%d').strip()
     data = {

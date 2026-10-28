@@ -19,61 +19,61 @@ import androidx.compose.ui.unit.sp
 import com.zikrtime.app.R
 
 // Фирменные цвета: изумруд и золото тасбиха
-val Emerald = Color(0xFF0F5C4A)
-val EmeraldDeep = Color(0xFF083C30)
-val EmeraldNight = Color(0xFF04231C)
-val Gold = Color(0xFFE2B659)
-val GoldDeep = Color(0xFFB98A2E)
-val Cream = Color(0xFFFFF6E0)
+val Emerald = Color(0xFF345B80)
+val EmeraldDeep = Color(0xFF223E5B)
+val EmeraldNight = Color(0xFF14283D)
+val Gold = Color(0xFFD9B98C)
+val GoldDeep = Color(0xFFAA8151)
+val Cream = Color(0xFFF7F2EA)
 
 private val LightColors = lightColorScheme(
     primary = Emerald,
     onPrimary = Color.White,
-    primaryContainer = Color(0xFFD3EBE1),
-    onPrimaryContainer = Color(0xFF00201A),
+    primaryContainer = Color(0xFFDCE9F6),
+    onPrimaryContainer = Color(0xFF193550),
     secondary = Color(0xFF8A6414),
     onSecondary = Color.White,
     secondaryContainer = Color(0xFFF6E7C1),
     onSecondaryContainer = Color(0xFF2B1E00),
-    tertiary = Color(0xFF3F6374),
+    tertiary = Color(0xFF75658A),
     onTertiary = Color.White,
-    background = Color(0xFFE6EDF1),
-    onBackground = Color(0xFF101E2B),
-    surface = Color(0xFFE6EDF1),
-    onSurface = Color(0xFF101E2B),
-    surfaceVariant = Color(0xFFDCE6EB),
-    onSurfaceVariant = Color(0xFF435664),
+    background = Color(0xFFF6F3EE),
+    onBackground = Color(0xFF192C41),
+    surface = Color(0xFFF6F3EE),
+    onSurface = Color(0xFF192C41),
+    surfaceVariant = Color(0xFFE8E5E0),
+    onSurfaceVariant = Color(0xFF566273),
     surfaceContainerLowest = Color(0xFFFFFFFF),
     surfaceContainerLow = Color(0xFFFFFFFF),
-    surfaceContainer = Color(0xFFF6F8F9),
-    surfaceContainerHigh = Color(0xFFE8EFF3),
-    surfaceContainerHighest = Color(0xFFDCE6EB),
+    surfaceContainer = Color(0xFFFFFDF9),
+    surfaceContainerHigh = Color(0xFFF1EEE8),
+    surfaceContainerHighest = Color(0xFFE8E5E0),
     outline = Color(0xFF627582),
-    outlineVariant = Color(0xFFB9C9D3),
+    outlineVariant = Color(0xFFDADDDC),
 )
 
 private val DarkColors = darkColorScheme(
-    primary = Color(0xFF9DCBB9),
-    onPrimary = Color(0xFF003829),
-    primaryContainer = Color(0xFF115443),
-    onPrimaryContainer = Color(0xFFD3EBE1),
+    primary = Color(0xFFAECDEC),
+    onPrimary = Color(0xFF112D49),
+    primaryContainer = Color(0xFF294664),
+    onPrimaryContainer = Color(0xFFDCE9F6),
     secondary = Gold,
     onSecondary = Color(0xFF3F2E00),
     secondaryContainer = Color(0xFF4A3912),
     onSecondaryContainer = Color(0xFFF6E7C1),
-    tertiary = Color(0xFFA6CCE0),
-    onTertiary = Color(0xFF0B3443),
-    background = Color(0xFF101E2B),
+    tertiary = Color(0xFFCCBCE2),
+    onTertiary = Color(0xFF342640),
+    background = Color(0xFF192C41),
     onBackground = Color(0xFFF2F5F3),
-    surface = Color(0xFF101E2B),
+    surface = Color(0xFF192C41),
     onSurface = Color(0xFFF2F5F3),
-    surfaceVariant = Color(0xFF263A49),
+    surfaceVariant = Color(0xFF24364B),
     onSurfaceVariant = Color(0xFFC0CBD0),
-    surfaceContainerLowest = Color(0xFF0C1721),
-    surfaceContainerLow = Color(0xFF1B2C39),
-    surfaceContainer = Color(0xFF263A49),
-    surfaceContainerHigh = Color(0xFF2C4151),
-    surfaceContainerHighest = Color(0xFF344B5D),
+    surfaceContainerLowest = Color(0xFF101E2E),
+    surfaceContainerLow = Color(0xFF1D2D40),
+    surfaceContainer = Color(0xFF24364B),
+    surfaceContainerHigh = Color(0xFF2B3E54),
+    surfaceContainerHighest = Color(0xFF34495F),
     outline = Color(0xFF90A4B1),
     outlineVariant = Color(0xFF415666),
 )
@@ -133,15 +133,7 @@ fun ZikrTheme(natural: Boolean = false, content: @Composable () -> Unit) {
     }
     androidx.compose.runtime.CompositionLocalProvider(LocalDarkTheme provides dark, com.zikrtime.app.ui.LocalNatural provides natural) {
         val baseColors = if (dark) DarkColors else LightColors
-        val colors = if (!natural) baseColors else baseColors.copy(
-            background = if (dark) Color(0xFF101B29) else Color(0xFFE4EAF0),
-            surface = if (dark) Color(0xFF192635) else Color(0xFFF1F4F7),
-            surfaceContainer = if (dark) Color(0xFF213143) else Color(0xFFD9E3EB),
-            surfaceContainerHigh = if (dark) Color(0xFF293A4C) else Color(0xFFD3DEE8),
-            onSurfaceVariant = if (dark) Color(0xFFC3CEDA) else Color(0xFF47596A),
-            primary = if (dark) Color(0xFFA3CBB9) else Color(0xFF315E50),
-            primaryContainer = if (dark) Color(0xFF304D49) else Color(0xFFCCDED6),
-        )
+        val colors = baseColors
         MaterialTheme(colorScheme = colors, typography = AppTypography, shapes = AppShapes) {
             // Цвет текста по умолчанию — светлый в тёмной теме, тёмный в светлой (раньше его давал Surface).
             androidx.compose.runtime.CompositionLocalProvider(

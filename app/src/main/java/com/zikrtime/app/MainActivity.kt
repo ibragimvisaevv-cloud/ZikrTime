@@ -266,15 +266,16 @@ private fun Tabs() {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Icon(
                     painterResource(icon),
-                    contentDescription = null,
+                    contentDescription = stringResource(label),
                     tint = color,
                     modifier = Modifier.size(24.dp),
                 )
-                Text(
+                if (androidx.compose.ui.platform.LocalDensity.current.fontScale <= 1.3f || selected) Text(
                     stringResource(label),
                     style = MaterialTheme.typography.labelSmall,
                     color = color,
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
                 )
             }
         }

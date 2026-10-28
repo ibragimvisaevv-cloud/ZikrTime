@@ -59,28 +59,35 @@ fun KnowledgeScreen() {
     var clearLearning by remember { mutableStateOf(false) }
 
     TabColumn(title = stringResource(R.string.knowledge_title), subtitle = stringResource(R.string.knowledge_subtitle)) {
-        ZCard {
-            SettingRow(title = stringResource(R.string.azkar_morning), icon = painterResource(R.drawable.ic_prayer_fajr), onClick = { nav.openAzkar("morning") })
-            SettingRow(title = stringResource(R.string.azkar_evening), icon = painterResource(R.drawable.ic_prayer_isha), onClick = { nav.openAzkar("evening") })
-            if (com.zikrtime.app.data.AzkarStore.hasPending) {
-                TextButton(onClick = { nav.resumeAzkar() }) { Text(stringResource(R.string.my_day_resume_azkar)) }
+        androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxWidth()) {
+            val stacked = maxWidth < 330.dp || androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f
+            if (stacked) Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                EditorialTile(stringResource(R.string.azkar_morning), R.drawable.ic_prayer_fajr, true, Modifier.fillMaxWidth()) { nav.openAzkar("morning") }
+                EditorialTile(stringResource(R.string.azkar_evening), R.drawable.ic_prayer_isha, false, Modifier.fillMaxWidth()) { nav.openAzkar("evening") }
+            } else Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                EditorialTile(stringResource(R.string.azkar_morning), R.drawable.ic_prayer_fajr, true, Modifier.weight(1f)) { nav.openAzkar("morning") }
+                EditorialTile(stringResource(R.string.azkar_evening), R.drawable.ic_prayer_isha, false, Modifier.weight(1f)) { nav.openAzkar("evening") }
             }
+        }
+        if (com.zikrtime.app.data.AzkarStore.hasPending) {
+            TextButton(onClick = { nav.resumeAzkar() }) { Text(stringResource(R.string.my_day_resume_azkar)) }
         }
         LearningStore.pendingSession(bank)?.let {
             PrimaryButton(stringResource(R.string.learning_resume), onClick = { nav.resumeLearning(context) },
                 modifier = Modifier.testTag("learning_resume").semantics { testTagsAsResourceId = true })
         }
-        ZCard(color = MaterialTheme.colorScheme.primaryContainer) {
+        MotifPanel {
+          Column(Modifier.padding(22.dp)) {
             Text(
                 stringResource(R.string.knowledge_round_title, Store.CORRECT_ANSWERS_PER_ROUND, Store.BONUS_MINUTES_PER_ROUND),
                 style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                color = androidx.compose.ui.graphics.Color(0xFFF7F2EA),
             )
             Spacer(Modifier.height(6.dp))
             Text(
                 stringResource(R.string.learning_bonus_rule, Store.MAX_BONUS_MINUTES_PER_DAY),
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.85f),
+                color = androidx.compose.ui.graphics.Color(0xFFF7F2EA).copy(alpha = 0.85f),
             )
             Spacer(Modifier.height(14.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -94,18 +101,19 @@ fun KnowledgeScreen() {
                 Text(
                     stringResource(R.string.knowledge_bonus_today, bonus, Store.MAX_BONUS_MINUTES_PER_DAY),
                     style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    color = androidx.compose.ui.graphics.Color(0xFFF7F2EA),
                 )
             }
             Spacer(Modifier.height(16.dp))
-            PrimaryButton(stringResource(R.string.knowledge_start), onClick = { nav.startQuiz(null) })
+            GoldButton(stringResource(R.string.knowledge_start), onClick = { nav.startQuiz(null) })
+        }
         }
 
         ZCard {
             Text(stringResource(R.string.learning_review), style = MaterialTheme.typography.titleLarge)
             Text(stringResource(R.string.learning_review_hint), style = MaterialTheme.typography.bodyMedium)
             Spacer(Modifier.height(10.dp))
-            PrimaryButton(stringResource(R.string.learning_review), onClick = { nav.startReview() },
+            TonalButton(stringResource(R.string.learning_review), onClick = { nav.startReview() },
                 modifier = Modifier.testTag("learning_review_start").semantics { testTagsAsResourceId = true })
             TextButton(onClick = { clearLearning = true },
                 modifier = Modifier.testTag("learning_clear").semantics { testTagsAsResourceId = true }) {
@@ -229,7 +237,7 @@ private const val PREP_CARDS = 5
 private fun PrepOffer(onRead: () -> Unit, onSkip: () -> Unit) {
     GlassHero {
         Column(Modifier.padding(24.dp)) {
-            Text("📖", style = MaterialTheme.typography.displaySmall)
+            androidx.compose.material3.Icon(painterResource(R.drawable.ic_nav_knowledge), null, tint = com.zikrtime.app.ui.theme.Gold, modifier = Modifier.padding(bottom = 8.dp))
             Spacer(Modifier.height(12.dp))
             Text(stringResource(R.string.prep_title), style = MaterialTheme.typography.headlineSmall, color = com.zikrtime.app.ui.theme.Cream)
             Spacer(Modifier.height(6.dp))

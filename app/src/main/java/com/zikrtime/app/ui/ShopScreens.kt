@@ -73,7 +73,7 @@ fun shopIcon(name: String): Int = when (name) {
     else -> R.drawable.ic_shop_store
 }
 
-private fun accentOf(seller: Shop.Seller?): Color = seller?.accent?.let { Color(0xFF000000 or it) } ?: Color(0xFF0F5C4A)
+private fun accentOf(seller: Shop.Seller?): Color = seller?.accent?.let { Color(0xFF000000 or it) } ?: Color(0xFF345B80)
 
 // ---------------- Витрина ----------------
 
@@ -108,22 +108,6 @@ fun ShopScreen() {
             Text(stringResource(R.string.shop_offline), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
 
-        // Партнёры — закреплены наверху, по две карточки в ряд
-        if (partners.isNotEmpty() && query.isBlank() && category == null) {
-            SectionLabel(stringResource(R.string.shop_partners_title))
-            partners.chunked(2).forEach { pair ->
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    pair.forEach { p ->
-                        PartnerCard(p, lang, catalog, Modifier.weight(1f)) {
-                            nav.shopSeller = p.id
-                            nav.open(Screen.SHOP_SELLER)
-                        }
-                    }
-                    if (pair.size == 1) Spacer(Modifier.weight(1f))
-                }
-            }
-        }
-
         // Поиск
         Row(
             Modifier.fillMaxWidth().glass(RoundedCornerShape(20.dp), elevation = 4.dp).padding(horizontal = 16.dp, vertical = 14.dp),
@@ -151,6 +135,23 @@ fun ShopScreen() {
                 CategoryPill(c.name.get(lang), shopIcon(c.icon), category == c.id) { category = if (category == c.id) null else c.id }
             }
         }
+
+        // Партнёры — закреплены наверху, по две карточки в ряд
+        if (partners.isNotEmpty() && query.isBlank() && category == null) {
+            SectionLabel(stringResource(R.string.shop_partners_title))
+            partners.chunked(2).forEach { pair ->
+                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    pair.forEach { p ->
+                        PartnerCard(p, lang, catalog, Modifier.weight(1f)) {
+                            nav.shopSeller = p.id
+                            nav.open(Screen.SHOP_SELLER)
+                        }
+                    }
+                    if (pair.size == 1) Spacer(Modifier.weight(1f))
+                }
+            }
+        }
+
 
         // Кнопка для продавцов — на виду, сразу под категориями
         if (catalog.sellerBot.isNotBlank() && query.isBlank()) {
@@ -215,7 +216,7 @@ private fun CategoryPill(text: String, icon: Int, selected: Boolean, onClick: ()
         Modifier
             .pressScale(interaction)
             .then(
-                if (selected) Modifier.clip(shape).background(Brush.linearGradient(listOf(Color(0xFF1A7D63), EmeraldDeep)))
+                if (selected) Modifier.clip(shape).background(Brush.linearGradient(listOf(Color(0xFF456F96), EmeraldDeep)))
                 else Modifier.glass(shape, elevation = 3.dp),
             )
             .clickable(interactionSource = interaction, indication = null, onClick = onClick)

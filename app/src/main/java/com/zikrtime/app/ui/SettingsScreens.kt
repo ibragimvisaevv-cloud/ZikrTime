@@ -85,6 +85,7 @@ fun MoreScreen() {
     val languageName = Lang.supported.firstOrNull { it.code == current }?.nativeName ?: stringResource(R.string.language_system)
 
     TabColumn(title = stringResource(R.string.more_title)) {
+        AppearancePicker()
         SectionLabel(stringResource(R.string.group_practice))
         ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
             SettingRow(
@@ -145,17 +146,6 @@ fun MoreScreen() {
                 icon = painterResource(R.drawable.ic_alarm),
                 onClick = { nav.open(Screen.ALARM) },
             )
-        }
-        SectionLabel(stringResource(R.string.appearance_title))
-        ZCard(padding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)) {
-            listOf("system" to R.string.appearance_system, "light" to R.string.appearance_light,
-                "dark" to R.string.appearance_dark).forEach { (value, label) ->
-                Row(Modifier.fillMaxWidth().selectable(selected = Store.appearance == value, role = Role.RadioButton, onClick = { Store.appearance = value }).padding(vertical = 4.dp),
-                    verticalAlignment = Alignment.CenterVertically) {
-                    RadioButton(selected = Store.appearance == value, onClick = null)
-                    Text(stringResource(label), style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
-                }
-            }
         }
         SectionLabel(stringResource(R.string.group_data_help))
         ZCard {

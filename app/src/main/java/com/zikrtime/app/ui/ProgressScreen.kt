@@ -48,14 +48,23 @@ fun ProgressScreen() {
                 }
             }
             val summary = Store.personalProgressSummary(LocalDate.now(), days)
-            ZCard {
-                Text(stringResource(R.string.progress_sessions, summary.sessions))
-                Text(stringResource(R.string.progress_topics, summary.topics))
-                Text(stringResource(R.string.progress_reviewed, summary.reviewed))
-                Text(stringResource(R.string.progress_active_days, summary.activeDays))
-                Spacer(Modifier.height(8.dp))
-                Text(stringResource(R.string.progress_measurement_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            val metrics = listOf(
+                summary.sessions to stringResource(R.string.progress_sessions, summary.sessions),
+                summary.topics to stringResource(R.string.progress_topics, summary.topics),
+                summary.reviewed to stringResource(R.string.progress_reviewed, summary.reviewed),
+                summary.activeDays to stringResource(R.string.progress_active_days, summary.activeDays))
+            metrics.chunked(2).forEach { pair ->
+                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    pair.forEach { (value, label) ->
+                        ZCard(modifier = Modifier.weight(1f), padding = PaddingValues(16.dp)) {
+                            Text(value.toString(), style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.primary)
+                            Spacer(Modifier.height(8.dp))
+                            Text(label, style = MaterialTheme.typography.bodyMedium)
+                        }
+                    }
+                }
             }
+            Text(stringResource(R.string.progress_measurement_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             if (Store.totalAnswered > 0) {
                 ZCard {
                     Text(stringResource(R.string.progress_answers, Store.totalAnswered, Store.totalCorrect))

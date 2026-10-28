@@ -87,7 +87,7 @@ fun RamadanScreen() {
     val dateFmt = remember { DateTimeFormatter.ofPattern("d MMMM", com.zikrtime.app.i18n.Lang.locale(context)) }
 
     ScreenScaffold(title = stringResource(R.string.ramadan_title), onBack = { nav.back() }) {
-        SectionBackdrop {
+        SectionBackdrop(tone = SectionTone.Ink) {
             Column(Modifier.padding(22.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                 val day = period?.dayOf(today)
                 androidx.compose.material3.Icon(painterResource(R.drawable.ic_prayer_isha), null, tint = Gold)

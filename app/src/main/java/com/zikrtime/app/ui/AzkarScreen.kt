@@ -23,12 +23,18 @@ fun AzkarScreen() {
     val index = AzkarStore.pendingIndex
     ScreenScaffold(title = stringResource(if (period == "evening") R.string.azkar_evening else R.string.azkar_morning), onBack = { nav.back() }) {
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            TextButton(onClick = { nav.openAzkar("morning") }) { Text(stringResource(R.string.azkar_morning)) }
-            TextButton(onClick = { nav.openAzkar("evening") }) { Text(stringResource(R.string.azkar_evening)) }
+            FilterChip(selected = period == "morning", onClick = { nav.openAzkar("morning") }, label = { Text(stringResource(R.string.azkar_morning)) })
+            FilterChip(selected = period == "evening", onClick = { nav.openAzkar("evening") }, label = { Text(stringResource(R.string.azkar_evening)) })
         }
-        ZCard {
+        LinearProgressIndicator(progress = { (index + 1f) / TASBIH_ARABIC.size },
+            modifier = Modifier.fillMaxWidth().height(4.dp), drawStopIndicator = {})
+        ZCard(padding = PaddingValues(horizontal = 24.dp, vertical = 28.dp)) {
             Text(stringResource(R.string.azkar_position, index + 1, TASBIH_ARABIC.size), style = MaterialTheme.typography.labelLarge)
+            Spacer(Modifier.height(36.dp))
             Text(TASBIH_ARABIC[index], modifier = Modifier.fillMaxWidth(), style = ArabicStyle.copy(fontSize = 34.sp, textDirection = TextDirection.Rtl), textAlign = TextAlign.Center)
+            Spacer(Modifier.height(28.dp))
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+            Spacer(Modifier.height(20.dp))
             Text(stringResource(TASBIH_NAMES[index].second), style = MaterialTheme.typography.bodyLarge)
             SourceDetails(SourceInfo())
         }

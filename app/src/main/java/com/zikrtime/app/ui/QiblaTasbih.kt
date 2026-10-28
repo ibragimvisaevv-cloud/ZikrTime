@@ -432,7 +432,7 @@ fun TasbihScreen() {
                 val inner = radius - beadR * 1.8f
                 drawCircle(Color(0xFF20303E), inner)
                 drawCircle(Color(0xFF405060), inner, style = Stroke(1.dp.toPx()))
-                if (target > 0) drawArc(Color(0xFFA4CDB7), -90f, 360f * progress, false,
+                if (target > 0) drawArc(Color(0xFFAECDEC), -90f, 360f * progress, false,
                     Offset(center.x-inner+6.dp.toPx(), center.y-inner+6.dp.toPx()),
                     androidx.compose.ui.geometry.Size((inner-6.dp.toPx())*2, (inner-6.dp.toPx())*2),
                     style = Stroke(3.dp.toPx(), cap = StrokeCap.Round))
@@ -440,7 +440,7 @@ fun TasbihScreen() {
             Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth(0.48f)) {
                 Text((if (target > 0) count % target else count).toString(), fontSize = 56.sp, color = Color.White, style = Tabular, maxLines = 1)
                 if (target > 0) Text(stringResource(R.string.tasbih_of, target), color = Color(0xFFCAD5DE), textAlign = TextAlign.Center)
-                if (laps > 0) Text(stringResource(R.string.tasbih_laps, laps), color = Color(0xFFA4CDB7), textAlign = TextAlign.Center)
+                if (laps > 0) Text(stringResource(R.string.tasbih_laps, laps), color = Color(0xFFAECDEC), textAlign = TextAlign.Center)
             }
         }
         Text(stringResource(R.string.tasbih_tap_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())

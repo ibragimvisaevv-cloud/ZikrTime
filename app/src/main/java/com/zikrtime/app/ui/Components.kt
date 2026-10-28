@@ -155,6 +155,8 @@ fun TabColumn(title: String? = null, subtitle: String? = null, content: @Composa
         Spacer(Modifier.height(8.dp))
         if (title != null) {
             Column {
+                Box(Modifier.width(28.dp).height(3.dp).background(MaterialTheme.colorScheme.secondary, RoundedCornerShape(2.dp)))
+                Spacer(Modifier.height(12.dp))
                 Text(title, style = MaterialTheme.typography.headlineMedium)
                 if (subtitle != null) {
                     Text(subtitle, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -179,9 +181,9 @@ fun ZCard(
     val shape = RoundedCornerShape(24.dp)
     val base = if (color == Color.Unspecified) modifier.fillMaxWidth().glass(shape) else modifier
         .fillMaxWidth()
-        .shadow(8.dp, shape, ambientColor = color, spotColor = color)
+        .shadow(0.dp, shape)
         .clip(shape)
-        .background(Brush.verticalGradient(listOf(color, color.copy(alpha = 0.85f))))
+        .background(color)
         .border(glassBorder(), shape)
     if (onClick != null) {
         val interaction = remember { MutableInteractionSource() }
@@ -220,8 +222,7 @@ fun IconBadge(
         modifier
             .size(size)
             .clip(shape)
-            .background(Brush.linearGradient(listOf(container.copy(alpha = 0.55f), container)))
-            .border(1.dp, Brush.linearGradient(listOf(Color.White.copy(alpha = 0.6f), Color.Transparent)), shape),
+            .background(container),
         contentAlignment = Alignment.Center,
     ) {
         Icon(painter, contentDescription = null, tint = tint, modifier = Modifier.size(size * 0.55f))

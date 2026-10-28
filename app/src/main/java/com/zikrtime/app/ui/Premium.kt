@@ -55,7 +55,7 @@ import kotlin.math.sin
 
 // Премиальный стиль: «стекло» поверх мягко переливающегося фона, блик на кнопках, плавные нажатия.
 
-internal val EmeraldBright = Color(0xFF1A7D63)
+internal val EmeraldBright = Color(0xFF456F96)
 internal val GoldLight = Color(0xFFFFE7A8)
 internal val GoldDark = Color(0xFFC9962F)
 
@@ -114,20 +114,13 @@ fun Modifier.sheen(alpha: Float = 0.28f, periodMs: Int = 3_600): Modifier = this
 @Composable
 fun glassFill(): Brush {
     val dark = LocalDarkTheme.current
-    if (LocalNatural.current) return Brush.verticalGradient(if (dark) listOf(Color(0xF02B3B4D), Color(0xF01B2837)) else listOf(Color(0xF5F3F6F9), Color(0xE6D7E1EA)))
     val surface = MaterialTheme.colorScheme.surfaceContainer
     return Brush.verticalGradient(listOf(surface, surface))
 }
 
 @Composable
 fun glassBorder(): BorderStroke {
-    val dark = LocalDarkTheme.current
-    if (!LocalNatural.current) return BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
-    return BorderStroke(
-        1.dp,
-        if (dark) Brush.linearGradient(listOf(Color.White.copy(alpha = 0.20f), Color.White.copy(alpha = 0.05f), Gold.copy(alpha = 0.18f)))
-        else Brush.linearGradient(listOf(Color.White, Color.White.copy(alpha = 0.35f), Gold.copy(alpha = 0.25f))),
-    )
+    return BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
 }
 
 /** Стеклянная поверхность с мягкой тенью. */
@@ -137,7 +130,7 @@ fun Modifier.glass(shape: Shape = RoundedCornerShape(26.dp), elevation: Dp = 10.
     val border = glassBorder()
     val fill = glassFill()
     return this
-        .shadow(if (LocalNatural.current) elevation else 0.dp, shape, ambientColor = Emerald.copy(alpha = if (dark) 0.4f else 0.10f), spotColor = Emerald.copy(alpha = if (dark) 0.5f else 0.16f))
+        .shadow(if (dark) 0.dp else 2.dp, shape, ambientColor = Emerald.copy(alpha = if (dark) 0.4f else 0.10f), spotColor = Emerald.copy(alpha = if (dark) 0.5f else 0.16f))
         .clip(shape)
         .background(fill)
         .border(border, shape)
@@ -146,98 +139,27 @@ fun Modifier.glass(shape: Shape = RoundedCornerShape(26.dp), elevation: Dp = 10.
 /** Тёмно-изумрудный «премиальный» блок со звёздным узором, золотой рамкой и бликом. */
 @Composable
 fun GlassHero(modifier: Modifier = Modifier, content: @Composable BoxScope.() -> Unit) {
-    val shape = RoundedCornerShape(24.dp)
-    if (!LocalNatural.current) {
-        Box(modifier.fillMaxWidth().clip(shape).background(Color(0xFF263A49))
-            .border(1.dp, MaterialTheme.colorScheme.outlineVariant, shape), content = content)
-        return
-    }
-    val glow by rememberInfiniteTransition(label = "hero").animateFloat(
-        initialValue = 0.15f,
-        targetValue = 0.32f,
-        animationSpec = infiniteRepeatable(tween(4_000, easing = FastOutSlowInEasing), RepeatMode.Reverse),
-        label = "hero-glow",
-    )
-    Box(
-        modifier
-            .fillMaxWidth()
-            .shadow(18.dp, shape, ambientColor = Emerald, spotColor = EmeraldDeep)
-            .clip(shape)
-            .background(Brush.linearGradient(listOf(EmeraldBright, Emerald, EmeraldDeep, EmeraldNight)))
-            .border(BorderStroke(1.dp, Brush.linearGradient(listOf(GoldLight.copy(alpha = 0.7f), Gold.copy(alpha = 0.15f), GoldLight.copy(alpha = 0.45f)))), shape),
-    ) {
-        Canvas(Modifier.matchParentSize()) {
-            drawCircle(
-                Brush.radialGradient(listOf(Gold.copy(alpha = glow), Color.Transparent), center = Offset(size.width * 0.85f, 0f), radius = size.width * 0.7f),
-                radius = size.width * 0.7f,
-                center = Offset(size.width * 0.85f, 0f),
-            )
-        }
-        StarPattern(Modifier.matchParentSize().parallax(10.dp, overscan = true), color = Gold.copy(alpha = 0.11f))
-        Box(Modifier.matchParentSize().sheen(alpha = 0.10f, periodMs = 6_000))
-        content()
-    }
+    MotifPanel(modifier = modifier, tone = SectionTone.Ink, content = content)
 }
 
 /** Главная кнопка: изумрудный градиент, бегущий блик и мягкое нажатие. */
 @Composable
 fun ShimmerButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true) {
-    if (!LocalNatural.current) {
-        androidx.compose.material3.Button(onClick = onClick, enabled = enabled,
-            modifier = modifier.fillMaxWidth().heightIn(min = 56.dp), shape = RoundedCornerShape(16.dp)) {
-            Text(text, textAlign = TextAlign.Center, modifier = Modifier.padding(vertical = 8.dp))
-        }
-        return
-    }
-    val interaction = remember { MutableInteractionSource() }
-    val shape = RoundedCornerShape(18.dp)
-    Box(
-        modifier
-            .fillMaxWidth()
-            .heightIn(min = 56.dp)
-            .pressScale(interaction)
-            .shadow(if (enabled) 12.dp else 0.dp, shape, ambientColor = Emerald, spotColor = Emerald)
-            .clip(shape)
-            .background(Brush.linearGradient(if (enabled) listOf(EmeraldBright, Emerald, EmeraldDeep) else listOf(Color.Gray, Color.Gray)))
-            .border(BorderStroke(1.dp, Brush.verticalGradient(listOf(Color.White.copy(alpha = 0.35f), Color.Transparent))), shape)
-            .sheen()
-            .clickable(interactionSource = interaction, indication = null, enabled = enabled, onClick = onClick),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            text,
-            style = MaterialTheme.typography.titleSmall,
-            color = Color.White,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-        )
+    androidx.compose.material3.Button(onClick = onClick, enabled = enabled,
+        modifier = modifier.fillMaxWidth().heightIn(min = 54.dp), shape = RoundedCornerShape(18.dp)) {
+        Text(text, style = MaterialTheme.typography.titleSmall, textAlign = TextAlign.Center,
+            modifier = Modifier.padding(vertical = 7.dp))
     }
 }
 
 /** Золотая кнопка для тёмных блоков (будильник, знакомство, блокировка). */
 @Composable
 fun GoldButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
-    val interaction = remember { MutableInteractionSource() }
-    val shape = RoundedCornerShape(18.dp)
-    Box(
-        modifier
-            .fillMaxWidth()
-            .heightIn(min = 56.dp)
-            .pressScale(interaction)
-            .shadow(14.dp, shape, ambientColor = GoldDark, spotColor = GoldDark)
-            .clip(shape)
-            .background(Brush.linearGradient(listOf(GoldLight, Gold, GoldDark)))
-            .sheen(alpha = 0.45f)
-            .clickable(interactionSource = interaction, indication = null, onClick = onClick),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            text,
-            style = MaterialTheme.typography.titleSmall,
-            color = Color(0xFF2B1E00),
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-        )
+    androidx.compose.material3.Button(onClick = onClick,
+        modifier = modifier.fillMaxWidth().heightIn(min = 54.dp), shape = RoundedCornerShape(18.dp),
+        colors = androidx.compose.material3.ButtonDefaults.buttonColors(containerColor = Color(0xFFE6CBA6), contentColor = Color(0xFF352A20))) {
+        Text(text, style = MaterialTheme.typography.titleSmall, textAlign = TextAlign.Center,
+            modifier = Modifier.padding(vertical = 7.dp))
     }
 }
 
@@ -273,7 +195,7 @@ fun <T> GlassNavBar(
             .fillMaxWidth()
             .shadow(20.dp, shape, ambientColor = Emerald.copy(alpha = 0.3f), spotColor = Emerald.copy(alpha = 0.35f))
             .clip(shape)
-            .background(if (dark) Color(0xFF1B2C39) else Color(0xFFF6F8F9))
+            .background(if (dark) Color(0xFF1D2D40) else Color(0xFFFFFDF9))
             .border(glassBorder(), shape),
     ) {
         Canvas(Modifier.matchParentSize().padding(6.dp)) {
@@ -281,7 +203,7 @@ fun <T> GlassNavBar(
             val left = w * position
             drawRoundRect(
                 Brush.linearGradient(
-                    if (dark) listOf(Emerald.copy(alpha = 0.9f), EmeraldDeep) else listOf(Color(0xFFDFF1E9), Color(0xFFCBE8DC)),
+                    if (dark) listOf(Color(0xFF294664), Color(0xFF294664)) else listOf(Color(0xFFE1EBF5), Color(0xFFE1EBF5)),
                     start = Offset(left, 0f), end = Offset(left + w, size.height),
                 ),
                 topLeft = Offset(left, 0f),

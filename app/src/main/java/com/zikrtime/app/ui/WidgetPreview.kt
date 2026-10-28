@@ -1,6 +1,8 @@
 package com.zikrtime.app.ui
 
 import android.widget.FrameLayout
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,7 +27,7 @@ fun WidgetPreview() {
     val night = now.withHour(22).withMinute(40)
     val evening = now.withHour(17).withMinute(30)
     Column(
-        Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.statusBars).padding(12.dp),
+        Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.statusBars).verticalScroll(rememberScrollState()).padding(12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {

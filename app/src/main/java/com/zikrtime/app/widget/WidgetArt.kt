@@ -26,10 +26,10 @@ import kotlin.random.Random
  * небо по времени суток со звёздами, солнцем или полумесяцем; кольца прогресса; линия дня.
  */
 object WidgetArt {
-    const val GOLD = 0xFFE2B659.toInt()
-    const val GOLD_LIGHT = 0xFFFFE7A8.toInt()
-    const val GOLD_DARK = 0xFFC9962F.toInt()
-    const val CREAM = 0xFFFFF6E0.toInt()
+    const val GOLD = 0xFFD9B98C.toInt()
+    const val GOLD_LIGHT = 0xFFE6CBA6.toInt()
+    const val GOLD_DARK = 0xFFAA8151.toInt()
+    const val CREAM = 0xFFF7F2EA.toInt()
 
     enum class Body { SUN, MOON, NONE }
 
@@ -62,91 +62,21 @@ object WidgetArt {
         p.shader = LinearGradient(0f, 0f, w * 0.35f, h.toFloat(), colors, null, Shader.TileMode.CLAMP)
         c.drawRect(rect, p)
 
-        // Тёплое свечение там, где светило
-        val gx = w * 0.82f
-        val gy = h * 1.02f
-        val gr = max(w, h) * 0.9f
-        p.shader = RadialGradient(gx, gy, gr, intArrayOf(glow, alpha(glow, 0f)), null, Shader.TileMode.CLAMP)
-        c.drawRect(rect, p)
-        p.shader = RadialGradient(w * 0.1f, 0f, max(w, h) * 0.6f, intArrayOf(alpha(GOLD_LIGHT, 0.16f), 0), null, Shader.TileMode.CLAMP)
-        c.drawRect(rect, p)
+        // Quiet contour arcs: one restrained motif shared with the app's section panels.
         p.shader = null
-
-        // Звёзды
-        if (stars > 0f) {
-            val r = Random(seed)
-            val n = (wDp * hDp / 700).coerceIn(10, 70)
-            repeat(n) {
-                val x = r.nextFloat() * w
-                val y = r.nextFloat() * h * 0.8f
-                val big = r.nextFloat() < 0.12f
-                p.color = alpha(0xFFFFFFFF.toInt(), stars * (0.35f + r.nextFloat() * 0.6f))
-                if (big) {
-                    sparkle(c, x, y, 2.6f * s, p)
-                } else {
-                    c.drawCircle(x, y, (0.5f + r.nextFloat() * 1.1f) * s, p)
-                }
-            }
-        }
-
-        // Узор из восьмиконечных звёзд
         p.style = Paint.Style.STROKE
-        p.strokeWidth = 1f * s
-        p.color = alpha(GOLD, 0.10f)
-        val step = 54 * s
-        var y = 0f
-        var row = 0
-        while (y < h + step) {
-            var x = if (row % 2 == 0) 0f else step / 2
-            while (x < w + step) {
-                c.drawPath(octagram(x, y, step * 0.3f), p)
-                x += step
-            }
-            y += step * 0.75f
-            row++
-        }
+        p.strokeWidth = s
+        p.color = alpha(CREAM, .08f)
+        repeat(3) { i -> c.drawCircle(w * 1.04f, h * .92f, w * (.3f + .18f * i), p) }
         p.style = Paint.Style.FILL
-
-        // Светило в правом нижнем углу (частично за краем)
-        when (body) {
-            Body.SUN -> {
-                val cx = w - 30 * s
-                val cy = h - 26 * s
-                p.shader = RadialGradient(cx, cy, 70 * s, intArrayOf(alpha(GOLD_LIGHT, 0.7f), alpha(GOLD, 0.25f), 0), floatArrayOf(0f, 0.45f, 1f), Shader.TileMode.CLAMP)
-                c.drawCircle(cx, cy, 70 * s, p)
-                p.shader = null
-                p.color = alpha(GOLD_LIGHT, 0.75f)
-                p.strokeWidth = 2.2f * s
-                p.strokeCap = Paint.Cap.ROUND
-                for (i in 0 until 12) {
-                    val a = Math.toRadians(i * 30.0 + 8)
-                    val r1 = 25 * s
-                    val r2 = (if (i % 2 == 0) 36 else 31) * s
-                    c.drawLine(cx + r1 * cos(a).toFloat(), cy + r1 * sin(a).toFloat(), cx + r2 * cos(a).toFloat(), cy + r2 * sin(a).toFloat(), p)
-                }
-                p.shader = RadialGradient(cx - 5 * s, cy - 5 * s, 22 * s, intArrayOf(0xFFFFFFFF.toInt(), GOLD_LIGHT, GOLD), null, Shader.TileMode.CLAMP)
-                c.drawCircle(cx, cy, 19 * s, p)
-                p.shader = null
-            }
-            Body.MOON -> {
-                val cx = w - 34 * s
-                val cy = h - 30 * s
-                p.shader = RadialGradient(cx, cy, 64 * s, intArrayOf(alpha(CREAM, 0.35f), 0), null, Shader.TileMode.CLAMP)
-                c.drawCircle(cx, cy, 64 * s, p)
-                p.shader = LinearGradient(cx - 24 * s, cy - 24 * s, cx + 24 * s, cy + 24 * s, intArrayOf(0xFFFFFFFF.toInt(), GOLD_LIGHT, GOLD), null, Shader.TileMode.CLAMP)
-                c.drawPath(crescent(cx, cy, 24 * s), p)
-                p.shader = null
-                p.color = GOLD_LIGHT
-                sparkle(c, cx + 2 * s, cy - 10 * s, 4f * s, p)
-            }
-            Body.NONE -> Unit
-        }
-
-        // Тонкая золотая рамка
+        // A small flat day/night marker lives in the background, away from the values.
+        p.color = alpha(GOLD_LIGHT, .13f)
+        if (body == Body.SUN) c.drawCircle(w * .88f, h * .22f, 18 * s, p)
+        if (body == Body.MOON) c.drawPath(crescent(w * .88f, h * .22f, 18 * s), p)
         p.style = Paint.Style.STROKE
-        p.strokeWidth = 1.2f * s
-        p.shader = LinearGradient(0f, 0f, w.toFloat(), h.toFloat(), intArrayOf(alpha(GOLD_LIGHT, 0.75f), alpha(GOLD, 0.15f), alpha(GOLD_LIGHT, 0.5f)), null, Shader.TileMode.CLAMP)
-        val inset = 0.6f * s
+        p.strokeWidth = s
+        p.color = alpha(CREAM, .12f)
+        val inset = .5f * s
         c.drawRoundRect(RectF(inset, inset, w - inset, h - inset), radius, radius, p)
         return bmp
     }
@@ -167,14 +97,8 @@ object WidgetArt {
         val c = Canvas(bmp)
         val p = Paint(Paint.ANTI_ALIAS_FLAG)
         val cx = size / 2f
-        val stroke = size * 0.085f
+        val stroke = size * 0.055f
         val r = size / 2f - stroke - (if (glow) size * 0.08f else size * 0.03f)
-        if (glow) {
-            p.maskFilter = BlurMaskFilter(size * 0.08f, BlurMaskFilter.Blur.NORMAL)
-            p.color = alpha(sweep.last(), 0.8f)
-            c.drawCircle(cx, cx, r + stroke * 0.6f, p)
-            p.maskFilter = null
-        }
         p.color = 0x33000000
         c.drawCircle(cx, cx, r, p)
         p.style = Paint.Style.STROKE
@@ -373,25 +297,8 @@ object WidgetArt {
             val y = cx + ringR * sin(a).toFloat()
             val r = if (d == 0 && count > 0) beadR * 1.35f else beadR
             p.shader = null
-            if (on) {
-                // Золотая бусина с бликом
-                p.color = alpha(GOLD, 0.35f)
-                c.drawCircle(x, y, r * 1.45f, p)
-                p.color = GOLD_DARK
-                c.drawCircle(x, y, r, p)
-                p.color = GOLD
-                c.drawCircle(x - r * 0.12f, y - r * 0.12f, r * 0.82f, p)
-                p.color = alpha(0xFFFFFFFF.toInt(), 0.75f)
-                c.drawCircle(x - r * 0.38f, y - r * 0.38f, r * 0.28f, p)
-            } else {
-                p.color = alpha(CREAM, 0.16f)
-                c.drawCircle(x, y, r, p)
-                p.style = Paint.Style.STROKE
-                p.strokeWidth = 0.8f * s
-                p.color = alpha(CREAM, 0.3f)
-                c.drawCircle(x, y, r, p)
-                p.style = Paint.Style.FILL
-            }
+            p.color = if (on) GOLD_LIGHT else alpha(CREAM, .22f)
+            c.drawCircle(x, y, r, p)
         }
         p.shader = null
         // Прогресс к цели — тонкая дуга внутри

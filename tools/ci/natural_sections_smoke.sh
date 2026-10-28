@@ -40,7 +40,7 @@ capture current knowledge
 measure current
 for mode in no yes; do
   adb shell cmd uimode night "$mode" >/dev/null
-  for screen in knowledge focus shop shop_product shop_seller places more alarm ramadan zakat qibla progress review; do
+  for screen in home azkar tasbih widgets knowledge focus shop shop_product shop_seller places more alarm ramadan zakat qibla progress review; do
     capture "$screen-$mode" "$screen"
   done
  done
@@ -58,6 +58,7 @@ python3 tools/ci/features_controls.py progress
 capture progress-before-enable progress
 python3 tools/ci/features_controls.py enable-progress
 python3 tools/ci/features_controls.py learning
+python3 tools/ci/features_controls.py appearance
 adb logcat -d -b crash > ci-out/crashes.txt
 if grep -qE 'FATAL EXCEPTION|Fatal signal' ci-out/crashes.txt; then exit 1; fi
 printf '%s\n' 'Emulator-only UI capture and targeted assertions completed.' > ci-out/complete.txt
