@@ -426,6 +426,10 @@
     <string name="focus_test_running">Check is on for 1 minute — open a social app now. If it doesn\'t close, check the permissions above.</string>
     <string name="focus_test_button">Check (1 minute)</string>
     <string name="places_osm_credit">Some places are from OpenStreetMap (© OpenStreetMap contributors). Found a mistake or a closed place? Write to our bot.</string>
+    <string name="appearance_title">Appearance</string>
+    <string name="appearance_system">System</string>
+    <string name="appearance_light">Light</string>
+    <string name="appearance_dark">Dark</string>
     <string name="pause_title">Mindful pause</string>
     <string name="pause_enable_hint">Before selected apps: dhikr, intention and time. Enabled only when you choose.</string>
     <string name="pause_soft">Gentle mode</string>

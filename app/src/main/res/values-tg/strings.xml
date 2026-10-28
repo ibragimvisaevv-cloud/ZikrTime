@@ -426,6 +426,10 @@
     <string name="focus_test_running">Санҷиш 1 дақиқа давом мекунад — шабакаи иҷтимоиро кушоед. Агар баста нашавад, иҷозатҳои болоро санҷед.</string>
     <string name="focus_test_button">Санҷидан (1 дақиқа)</string>
     <string name="places_osm_credit">Қисми ҷойҳо аз OpenStreetMap (© иштирокчиёни OpenStreetMap). Хато ё ҷои басташуда ёфтед? Ба боти мо нависед.</string>
+    <string name="appearance_title">Намуди зоҳирӣ</string>
+    <string name="appearance_system">Системавӣ</string>
+    <string name="appearance_light">Равшан</string>
+    <string name="appearance_dark">Торик</string>
     <string name="pause_title">Таваққуфи огоҳона</string>
     <string name="pause_enable_hint">Пеш аз барномаҳои интихобшуда: зикр, ният ва вақт. Танҳо бо интихоби шумо фаъол мешавад.</string>
     <string name="pause_soft">Реҷаи мулоим</string>

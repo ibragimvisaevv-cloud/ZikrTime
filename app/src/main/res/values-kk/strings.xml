@@ -426,6 +426,10 @@
     <string name="focus_test_running">Тексеру 1 минут жүреді — әлеуметтік желіні ашыңыз. Жабылмаса, жоғарыдағы рұқсаттарды тексеріңіз.</string>
     <string name="focus_test_button">Тексеру (1 минут)</string>
     <string name="places_osm_credit">Орындардың бір бөлігі OpenStreetMap-тен (© OpenStreetMap қатысушылары). Қате не жабық орын таптыңыз ба? Ботымызға жазыңыз.</string>
+    <string name="appearance_title">Безендіру</string>
+    <string name="appearance_system">Жүйелік</string>
+    <string name="appearance_light">Ашық</string>
+    <string name="appearance_dark">Қараңғы</string>
     <string name="pause_title">Саналы үзіліс</string>
     <string name="pause_enable_hint">Таңдалған қолданбалар алдында: зікір, ниет және уақыт. Тек өз қалауыңызбен қосылады.</string>
     <string name="pause_soft">Жұмсақ режим</string>

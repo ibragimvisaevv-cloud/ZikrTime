@@ -37,23 +37,23 @@ private val LightColors = lightColorScheme(
     onSecondaryContainer = Color(0xFF2B1E00),
     tertiary = Color(0xFF3F6374),
     onTertiary = Color.White,
-    background = Color(0xFFF8F5EE),
-    onBackground = Color(0xFF1B1C18),
-    surface = Color(0xFFF8F5EE),
-    onSurface = Color(0xFF1B1C18),
-    surfaceVariant = Color(0xFFE9E3D6),
-    onSurfaceVariant = Color(0xFF4F4C44),
+    background = Color(0xFFE6EDF1),
+    onBackground = Color(0xFF101E2B),
+    surface = Color(0xFFE6EDF1),
+    onSurface = Color(0xFF101E2B),
+    surfaceVariant = Color(0xFFDCE6EB),
+    onSurfaceVariant = Color(0xFF435664),
     surfaceContainerLowest = Color(0xFFFFFFFF),
     surfaceContainerLow = Color(0xFFFFFFFF),
-    surfaceContainer = Color(0xFFF2EDE2),
-    surfaceContainerHigh = Color(0xFFECE6D9),
-    surfaceContainerHighest = Color(0xFFE5DECF),
-    outline = Color(0xFF7E7A70),
-    outlineVariant = Color(0xFFDCD5C6),
+    surfaceContainer = Color(0xFFF6F8F9),
+    surfaceContainerHigh = Color(0xFFE8EFF3),
+    surfaceContainerHighest = Color(0xFFDCE6EB),
+    outline = Color(0xFF627582),
+    outlineVariant = Color(0xFFB9C9D3),
 )
 
 private val DarkColors = darkColorScheme(
-    primary = Color(0xFF86D5B9),
+    primary = Color(0xFF9DCBB9),
     onPrimary = Color(0xFF003829),
     primaryContainer = Color(0xFF115443),
     onPrimaryContainer = Color(0xFFD3EBE1),
@@ -63,19 +63,19 @@ private val DarkColors = darkColorScheme(
     onSecondaryContainer = Color(0xFFF6E7C1),
     tertiary = Color(0xFFA6CCE0),
     onTertiary = Color(0xFF0B3443),
-    background = Color(0xFF0B1210),
-    onBackground = Color(0xFFF1F4F1),
-    surface = Color(0xFF0B1210),
-    onSurface = Color(0xFFF1F4F1),
-    surfaceVariant = Color(0xFF29322E),
-    onSurfaceVariant = Color(0xFFC6D2CC),
-    surfaceContainerLowest = Color(0xFF070D0B),
-    surfaceContainerLow = Color(0xFF131C19),
-    surfaceContainer = Color(0xFF17211E),
-    surfaceContainerHigh = Color(0xFF212B28),
-    surfaceContainerHighest = Color(0xFF2B3532),
-    outline = Color(0xFF88918D),
-    outlineVariant = Color(0xFF2E3835),
+    background = Color(0xFF101E2B),
+    onBackground = Color(0xFFF2F5F3),
+    surface = Color(0xFF101E2B),
+    onSurface = Color(0xFFF2F5F3),
+    surfaceVariant = Color(0xFF263A49),
+    onSurfaceVariant = Color(0xFFC0CBD0),
+    surfaceContainerLowest = Color(0xFF0C1721),
+    surfaceContainerLow = Color(0xFF1B2C39),
+    surfaceContainer = Color(0xFF263A49),
+    surfaceContainerHigh = Color(0xFF2C4151),
+    surfaceContainerHighest = Color(0xFF344B5D),
+    outline = Color(0xFF90A4B1),
+    outlineVariant = Color(0xFF415666),
 )
 
 private val base = Typography()
@@ -116,7 +116,11 @@ val LocalDarkTheme = staticCompositionLocalOf { false }
 
 @Composable
 fun ZikrTheme(natural: Boolean = false, content: @Composable () -> Unit) {
-    val dark = isSystemInDarkTheme()
+    val dark = when (com.zikrtime.app.data.Store.appearance) {
+        "light" -> false
+        "dark" -> true
+        else -> isSystemInDarkTheme()
+    }
     androidx.compose.runtime.CompositionLocalProvider(LocalDarkTheme provides dark, com.zikrtime.app.ui.LocalNatural provides natural) {
         val baseColors = if (dark) DarkColors else LightColors
         val colors = if (!natural) baseColors else baseColors.copy(

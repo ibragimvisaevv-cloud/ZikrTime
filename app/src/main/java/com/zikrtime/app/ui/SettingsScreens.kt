@@ -83,6 +83,17 @@ fun MoreScreen() {
     val languageName = Lang.supported.firstOrNull { it.code == current }?.nativeName ?: stringResource(R.string.language_system)
 
     TabColumn(title = stringResource(R.string.more_title)) {
+        SectionLabel(stringResource(R.string.appearance_title))
+        ZCard(padding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)) {
+            listOf("system" to R.string.appearance_system, "light" to R.string.appearance_light,
+                "dark" to R.string.appearance_dark).forEach { (value, label) ->
+                Row(Modifier.fillMaxWidth().clickable { Store.appearance = value }.padding(vertical = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically) {
+                    RadioButton(selected = Store.appearance == value, onClick = { Store.appearance = value })
+                    Text(stringResource(label), style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
+                }
+            }
+        }
         ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
             SettingRow(
                 title = stringResource(R.string.settings_language),

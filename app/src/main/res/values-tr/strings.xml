@@ -426,6 +426,10 @@
     <string name="focus_test_running">Test 1 dakika sürüyor — bir sosyal ağ açın. Kapanmazsa yukarıdaki izinleri kontrol edin.</string>
     <string name="focus_test_button">Test et (1 dakika)</string>
     <string name="places_osm_credit">Yerlerin bir kısmı OpenStreetMap\'ten (© OpenStreetMap katkıda bulunanlar). Hata veya kapalı bir yer mi buldunuz? Botumuza yazın.</string>
+    <string name="appearance_title">Görünüm</string>
+    <string name="appearance_system">Sistem</string>
+    <string name="appearance_light">Açık</string>
+    <string name="appearance_dark">Koyu</string>
     <string name="pause_title">Bilinçli mola</string>
     <string name="pause_enable_hint">Seçilen uygulamalardan önce: zikir, niyet ve süre. Yalnızca siz seçerseniz açılır.</string>
     <string name="pause_soft">Esnek mod</string>

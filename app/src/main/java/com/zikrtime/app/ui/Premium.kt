@@ -108,44 +108,21 @@ fun Modifier.pressScale(interaction: MutableInteractionSource, pressedScale: Flo
 }
 
 /** Бегущий блик, как по стеклу или золоту: проходит раз в несколько секунд. */
-fun Modifier.sheen(alpha: Float = 0.28f, periodMs: Int = 3_600): Modifier = composed {
-    if (LocalNatural.current) return@composed this
-    val x by rememberInfiniteTransition(label = "sheen").animateFloat(
-        initialValue = -1f,
-        targetValue = 2.2f,
-        animationSpec = infiniteRepeatable(tween(periodMs, delayMillis = 600, easing = FastOutSlowInEasing), RepeatMode.Restart),
-        label = "sheen-x",
-    )
-    drawWithContent {
-        drawContent()
-        val band = size.width * 0.35f
-        val start = x * size.width
-        drawRect(
-            Brush.linearGradient(
-                listOf(Color.Transparent, Color.White.copy(alpha = alpha), Color.Transparent),
-                start = Offset(start - band, 0f),
-                end = Offset(start, size.height),
-            ),
-        )
-    }
-}
+fun Modifier.sheen(alpha: Float = 0.28f, periodMs: Int = 3_600): Modifier = this
 
 /** Стеклянная заливка и рамка для карточек. */
 @Composable
 fun glassFill(): Brush {
     val dark = LocalDarkTheme.current
     if (LocalNatural.current) return Brush.verticalGradient(if (dark) listOf(Color(0xF02B3B4D), Color(0xF01B2837)) else listOf(Color(0xF5F3F6F9), Color(0xE6D7E1EA)))
-    return if (dark) {
-        // Тёмное «дымчатое» стекло: фон под ним приглушён, светлый текст хорошо читается.
-        Brush.verticalGradient(listOf(Color(0xFF16302A).copy(alpha = 0.86f), Color(0xFF0C1C18).copy(alpha = 0.80f)))
-    } else {
-        Brush.verticalGradient(listOf(Color.White.copy(alpha = 0.88f), Color.White.copy(alpha = 0.66f)))
-    }
+    val surface = MaterialTheme.colorScheme.surfaceContainer
+    return Brush.verticalGradient(listOf(surface, surface))
 }
 
 @Composable
 fun glassBorder(): BorderStroke {
     val dark = LocalDarkTheme.current
+    if (!LocalNatural.current) return BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
     return BorderStroke(
         1.dp,
         if (dark) Brush.linearGradient(listOf(Color.White.copy(alpha = 0.20f), Color.White.copy(alpha = 0.05f), Gold.copy(alpha = 0.18f)))
@@ -160,7 +137,7 @@ fun Modifier.glass(shape: Shape = RoundedCornerShape(26.dp), elevation: Dp = 10.
     val border = glassBorder()
     val fill = glassFill()
     return this
-        .shadow(elevation, shape, ambientColor = Emerald.copy(alpha = if (dark) 0.4f else 0.10f), spotColor = Emerald.copy(alpha = if (dark) 0.5f else 0.16f))
+        .shadow(if (LocalNatural.current) elevation else 0.dp, shape, ambientColor = Emerald.copy(alpha = if (dark) 0.4f else 0.10f), spotColor = Emerald.copy(alpha = if (dark) 0.5f else 0.16f))
         .clip(shape)
         .background(fill)
         .border(border, shape)
@@ -169,7 +146,12 @@ fun Modifier.glass(shape: Shape = RoundedCornerShape(26.dp), elevation: Dp = 10.
 /** Тёмно-изумрудный «премиальный» блок со звёздным узором, золотой рамкой и бликом. */
 @Composable
 fun GlassHero(modifier: Modifier = Modifier, content: @Composable BoxScope.() -> Unit) {
-    val shape = RoundedCornerShape(30.dp)
+    val shape = RoundedCornerShape(24.dp)
+    if (!LocalNatural.current) {
+        Box(modifier.fillMaxWidth().clip(shape).background(Color(0xFF263A49))
+            .border(1.dp, MaterialTheme.colorScheme.outlineVariant, shape), content = content)
+        return
+    }
     val glow by rememberInfiniteTransition(label = "hero").animateFloat(
         initialValue = 0.15f,
         targetValue = 0.32f,
@@ -200,6 +182,13 @@ fun GlassHero(modifier: Modifier = Modifier, content: @Composable BoxScope.() ->
 /** Главная кнопка: изумрудный градиент, бегущий блик и мягкое нажатие. */
 @Composable
 fun ShimmerButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true) {
+    if (!LocalNatural.current) {
+        androidx.compose.material3.Button(onClick = onClick, enabled = enabled,
+            modifier = modifier.fillMaxWidth().heightIn(min = 56.dp), shape = RoundedCornerShape(16.dp)) {
+            Text(text, textAlign = TextAlign.Center, modifier = Modifier.padding(vertical = 8.dp))
+        }
+        return
+    }
     val interaction = remember { MutableInteractionSource() }
     val shape = RoundedCornerShape(18.dp)
     Box(

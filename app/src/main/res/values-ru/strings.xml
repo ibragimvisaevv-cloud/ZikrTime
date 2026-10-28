@@ -426,6 +426,10 @@
     <string name="focus_test_running">Проверка идёт 1 минуту — откройте соцсеть. Если она не закрылась, проверьте разрешения выше.</string>
     <string name="focus_test_button">Проверить (1 минута)</string>
     <string name="places_osm_credit">Часть мест — из OpenStreetMap (© участники OpenStreetMap). Нашли ошибку или место закрыто? Напишите в наш бот.</string>
+    <string name="appearance_title">Оформление</string>
+    <string name="appearance_system">Системная</string>
+    <string name="appearance_light">Светлая</string>
+    <string name="appearance_dark">Тёмная</string>
     <string name="pause_title">Осмысленная пауза</string>
     <string name="pause_enable_hint">Перед выбранными приложениями: зикр, намерение и время. Включается только по вашему выбору.</string>
     <string name="pause_soft">Мягкий режим</string>

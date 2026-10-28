@@ -426,6 +426,10 @@
     <string name="focus_test_running">Текшерүү 1 мүнөт жүрөт — социалдык тармакты ачыңыз. Жабылбаса, жогорудагы уруксаттарды текшериңиз.</string>
     <string name="focus_test_button">Текшерүү (1 мүнөт)</string>
     <string name="places_osm_credit">Жайлардын бир бөлүгү OpenStreetMap’тен (© OpenStreetMap катышуучулары). Ката же жабык жай таптыңызбы? Ботубузга жазыңыз.</string>
+    <string name="appearance_title">Көрүнүш</string>
+    <string name="appearance_system">Системалык</string>
+    <string name="appearance_light">Жарык</string>
+    <string name="appearance_dark">Караңгы</string>
     <string name="pause_title">Аң-сезимдүү тыныгуу</string>
     <string name="pause_enable_hint">Тандалган колдонмолордун алдында: зикир, ниет жана убакыт. Өз каалооңуз менен гана күйгүзүлөт.</string>
     <string name="pause_soft">Жумшак режим</string>

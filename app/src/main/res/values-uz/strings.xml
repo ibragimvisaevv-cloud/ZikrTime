@@ -426,6 +426,10 @@
     <string name="focus_test_running">Tekshiruv 1 daqiqa davom etadi — ijtimoiy tarmoqni oching. Yopilmasa, yuqoridagi ruxsatlarni tekshiring.</string>
     <string name="focus_test_button">Tekshirish (1 daqiqa)</string>
     <string name="places_osm_credit">Joylarning bir qismi OpenStreetMap’dan (© OpenStreetMap ishtirokchilari). Xato yoki yopilgan joy topdingizmi? Botimizga yozing.</string>
+    <string name="appearance_title">Ko‘rinish</string>
+    <string name="appearance_system">Tizim</string>
+    <string name="appearance_light">Yorug‘</string>
+    <string name="appearance_dark">Qorong‘i</string>
     <string name="pause_title">Ongli tanaffus</string>
     <string name="pause_enable_hint">Tanlangan ilovalardan oldin: zikr, niyat va vaqt. Faqat siz tanlasangiz yoqiladi.</string>
     <string name="pause_soft">Yumshoq rejim</string>

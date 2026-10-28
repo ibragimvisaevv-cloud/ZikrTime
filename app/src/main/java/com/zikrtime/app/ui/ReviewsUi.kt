@@ -25,6 +25,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -79,7 +80,7 @@ fun ReviewsBlock(target: String, inCard: Boolean = true) {
     LaunchedEffect(Unit) { Reviews.refresh() }
     val summary = Reviews.data?.reviews?.get(target)
     var showAll by remember { mutableStateOf(false) }
-    var writing by remember { mutableStateOf(false) }
+    var writing by rememberSaveable { mutableStateOf(false) }
     var sent by remember(target) { mutableStateOf(Reviews.alreadySent(target)) }
     val content: @Composable () -> Unit = {
         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -148,9 +149,9 @@ private fun ReviewItem(item: Reviews.Item) {
 private fun ReviewDialog(target: String, onDismiss: () -> Unit, onSent: () -> Unit) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    var rating by remember { mutableIntStateOf(0) }
-    var name by remember { mutableStateOf("") }
-    var text by remember { mutableStateOf("") }
+    var rating by rememberSaveable { mutableIntStateOf(0) }
+    var name by rememberSaveable { mutableStateOf("") }
+    var text by rememberSaveable { mutableStateOf("") }
     var sending by remember { mutableStateOf(false) }
     val thanks = stringResource(R.string.reviews_thanks)
     val offline = stringResource(R.string.reviews_offline)
