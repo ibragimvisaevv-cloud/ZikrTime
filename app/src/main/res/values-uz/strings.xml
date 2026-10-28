@@ -430,6 +430,10 @@
     <string name="appearance_system">Tizim</string>
     <string name="appearance_light">Yorug‘</string>
     <string name="appearance_dark">Qorong‘i</string>
+    <string name="group_practice">Amaliyot</string>
+    <string name="group_application">Ilova</string>
+    <string name="group_data_help">Ma’lumotlar va yordam</string>
+    <string name="focus_remaining">Bugun mavjud</string>
     <string name="pause_title">Ongli tanaffus</string>
     <string name="pause_enable_hint">Tanlangan ilovalardan oldin: zikr, niyat va vaqt. Faqat siz tanlasangiz yoqiladi.</string>
     <string name="pause_soft">Yumshoq rejim</string>

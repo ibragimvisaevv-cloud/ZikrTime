@@ -272,7 +272,7 @@ private fun PlaceCard(place: Places.Place, distanceKm: Double, expanded: Boolean
             IconBadge(painterResource(kindIcon(place.kind)), container = if (place.kind == "mosque") Gold.copy(alpha = 0.45f) else MaterialTheme.colorScheme.primaryContainer)
             Spacer(Modifier.width(14.dp))
             Column(Modifier.weight(1f)) {
-                Text(place.name, style = MaterialTheme.typography.titleSmall, maxLines = if (expanded) 3 else 1, overflow = TextOverflow.Ellipsis)
+                Text(place.name, style = MaterialTheme.typography.titleMedium)
                 Text(
                     stringResource(kindName(place.kind)) + " · " + distanceText(distanceKm),
                     style = MaterialTheme.typography.bodySmall,

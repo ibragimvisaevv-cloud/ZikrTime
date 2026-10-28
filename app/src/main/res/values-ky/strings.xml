@@ -430,6 +430,10 @@
     <string name="appearance_system">Системалык</string>
     <string name="appearance_light">Жарык</string>
     <string name="appearance_dark">Караңгы</string>
+    <string name="group_practice">Практика</string>
+    <string name="group_application">Колдонмо</string>
+    <string name="group_data_help">Маалыматтар жана жардам</string>
+    <string name="focus_remaining">Бүгүн жеткиликтүү</string>
     <string name="pause_title">Аң-сезимдүү тыныгуу</string>
     <string name="pause_enable_hint">Тандалган колдонмолордун алдында: зикир, ниет жана убакыт. Өз каалооңуз менен гана күйгүзүлөт.</string>
     <string name="pause_soft">Жумшак режим</string>

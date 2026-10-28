@@ -10,6 +10,8 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.ui.semantics.Role
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -83,44 +85,7 @@ fun MoreScreen() {
     val languageName = Lang.supported.firstOrNull { it.code == current }?.nativeName ?: stringResource(R.string.language_system)
 
     TabColumn(title = stringResource(R.string.more_title)) {
-        SectionLabel(stringResource(R.string.appearance_title))
-        ZCard(padding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)) {
-            listOf("system" to R.string.appearance_system, "light" to R.string.appearance_light,
-                "dark" to R.string.appearance_dark).forEach { (value, label) ->
-                Row(Modifier.fillMaxWidth().clickable { Store.appearance = value }.padding(vertical = 4.dp),
-                    verticalAlignment = Alignment.CenterVertically) {
-                    RadioButton(selected = Store.appearance == value, onClick = { Store.appearance = value })
-                    Text(stringResource(label), style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
-                }
-            }
-        }
-        ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
-            SettingRow(
-                title = stringResource(R.string.settings_language),
-                subtitle = languageName,
-                icon = painterResource(R.drawable.ic_language),
-                onClick = { nav.open(Screen.LANGUAGE) },
-            )
-            SettingRow(
-                title = stringResource(R.string.settings_city),
-                subtitle = Cities.displayName(context, Store.location),
-                icon = rememberVectorPainter(Icons.Default.LocationOn),
-                onClick = { nav.open(Screen.CITY) },
-            )
-            SettingRow(
-                title = stringResource(R.string.settings_prayer_times),
-                subtitle = methodName(Store.method),
-                icon = painterResource(R.drawable.ic_calc),
-                onClick = { nav.open(Screen.PRAYER_SETTINGS) },
-            )
-            SettingRow(
-                title = stringResource(R.string.alarm_title),
-                subtitle = if (Store.alarmEnabled) stringResource(R.string.alarm_status_on, Store.alarmOffsetMinutes)
-                else stringResource(R.string.state_off),
-                icon = painterResource(R.drawable.ic_alarm),
-                onClick = { nav.open(Screen.ALARM) },
-            )
-        }
+        SectionLabel(stringResource(R.string.group_practice))
         ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
             SettingRow(
                 title = stringResource(R.string.qibla_title),
@@ -153,6 +118,46 @@ fun MoreScreen() {
                 onClick = { nav.open(Screen.ZAKAT) },
             )
         }
+        SectionLabel(stringResource(R.string.group_application))
+        ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
+            SettingRow(
+                title = stringResource(R.string.settings_language),
+                subtitle = languageName,
+                icon = painterResource(R.drawable.ic_language),
+                onClick = { nav.open(Screen.LANGUAGE) },
+            )
+            SettingRow(
+                title = stringResource(R.string.settings_city),
+                subtitle = Cities.displayName(context, Store.location),
+                icon = rememberVectorPainter(Icons.Default.LocationOn),
+                onClick = { nav.open(Screen.CITY) },
+            )
+            SettingRow(
+                title = stringResource(R.string.settings_prayer_times),
+                subtitle = methodName(Store.method),
+                icon = painterResource(R.drawable.ic_calc),
+                onClick = { nav.open(Screen.PRAYER_SETTINGS) },
+            )
+            SettingRow(
+                title = stringResource(R.string.alarm_title),
+                subtitle = if (Store.alarmEnabled) stringResource(R.string.alarm_status_on, Store.alarmOffsetMinutes)
+                else stringResource(R.string.state_off),
+                icon = painterResource(R.drawable.ic_alarm),
+                onClick = { nav.open(Screen.ALARM) },
+            )
+        }
+        SectionLabel(stringResource(R.string.appearance_title))
+        ZCard(padding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)) {
+            listOf("system" to R.string.appearance_system, "light" to R.string.appearance_light,
+                "dark" to R.string.appearance_dark).forEach { (value, label) ->
+                Row(Modifier.fillMaxWidth().selectable(selected = Store.appearance == value, role = Role.RadioButton, onClick = { Store.appearance = value }).padding(vertical = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically) {
+                    RadioButton(selected = Store.appearance == value, onClick = null)
+                    Text(stringResource(label), style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
+                }
+            }
+        }
+        SectionLabel(stringResource(R.string.group_data_help))
         ZCard {
             PersonalProgressSetting()
             TextButton(onClick = { nav.open(Screen.PROGRESS) }) {
@@ -208,11 +213,11 @@ fun RadioLine(text: String, selected: Boolean, subtitle: String? = null, onClick
         Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(14.dp))
-            .clickable(onClick = onClick)
+            .selectable(selected = selected, role = Role.RadioButton, onClick = onClick)
             .padding(vertical = 4.dp, horizontal = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        RadioButton(selected = selected, onClick = onClick)
+        RadioButton(selected = selected, onClick = null)
         Spacer(Modifier.width(4.dp))
         Column(Modifier.weight(1f)) {
             Text(text, style = MaterialTheme.typography.bodyLarge)

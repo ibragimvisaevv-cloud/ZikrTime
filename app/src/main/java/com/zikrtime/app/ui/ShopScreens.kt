@@ -357,7 +357,7 @@ private fun ProductGrid(products: List<Shop.Product>, catalog: Shop.Catalog, lan
 }
 
 @Composable
-private fun ProductImage(product: Shop.Product, catalog: Shop.Catalog, modifier: Modifier, iconSize: androidx.compose.ui.unit.Dp = 48.dp) {
+private fun ProductImage(product: Shop.Product, catalog: Shop.Catalog, modifier: Modifier, iconSize: androidx.compose.ui.unit.Dp = 48.dp, fit: Boolean = false) {
     val seller = catalog.seller(product.seller)
     val accent = accentOf(seller)
     val dark = LocalDarkTheme.current
@@ -371,7 +371,7 @@ private fun ProductImage(product: Shop.Product, catalog: Shop.Catalog, modifier:
     ) {
         val url = product.images.firstOrNull()?.let { Shop.imageUrl(it) }
         if (url != null) {
-            AsyncImage(model = url, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
+            AsyncImage(model = url, contentDescription = null, contentScale = if (fit) ContentScale.Fit else ContentScale.Crop, modifier = Modifier.fillMaxSize())
         } else {
             Icon(
                 painterResource(shopIcon(catalog.category(product.category)?.icon ?: "store")),
@@ -572,14 +572,14 @@ fun ProductScreen() {
     ScreenScaffold(title = product?.title?.get(lang).orEmpty(), onBack = { nav.back() }) {
         if (product == null) return@ScreenScaffold
         val seller = catalog.seller(product.seller)
-        ProductImage(product, catalog, Modifier.fillMaxWidth().aspectRatio(1.2f).clip(RoundedCornerShape(28.dp)), iconSize = 96.dp)
+        ProductImage(product, catalog, Modifier.fillMaxWidth().aspectRatio(1.2f).clip(RoundedCornerShape(28.dp)), iconSize = 96.dp, fit = true)
         if (product.images.size > 1) {
             Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 product.images.drop(1).forEach { img ->
                     AsyncImage(
                         model = Shop.imageUrl(img),
                         contentDescription = null,
-                        contentScale = ContentScale.Crop,
+                        contentScale = ContentScale.Fit,
                         modifier = Modifier.size(96.dp).clip(RoundedCornerShape(16.dp)),
                     )
                 }

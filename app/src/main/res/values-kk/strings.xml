@@ -430,6 +430,10 @@
     <string name="appearance_system">Жүйелік</string>
     <string name="appearance_light">Ашық</string>
     <string name="appearance_dark">Қараңғы</string>
+    <string name="group_practice">Тәжірибе</string>
+    <string name="group_application">Қолданба</string>
+    <string name="group_data_help">Деректер және көмек</string>
+    <string name="focus_remaining">Бүгін қолжетімді</string>
     <string name="pause_title">Саналы үзіліс</string>
     <string name="pause_enable_hint">Таңдалған қолданбалар алдында: зікір, ниет және уақыт. Тек өз қалауыңызбен қосылады.</string>
     <string name="pause_soft">Жұмсақ режим</string>

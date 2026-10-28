@@ -59,6 +59,10 @@ fun KnowledgeScreen() {
     var clearLearning by remember { mutableStateOf(false) }
 
     TabColumn(title = stringResource(R.string.knowledge_title), subtitle = stringResource(R.string.knowledge_subtitle)) {
+        LearningStore.pendingSession(bank)?.let {
+            PrimaryButton(stringResource(R.string.learning_resume), onClick = { nav.resumeLearning(context) },
+                modifier = Modifier.testTag("learning_resume").semantics { testTagsAsResourceId = true })
+        }
         ZCard(color = MaterialTheme.colorScheme.primaryContainer) {
             Text(
                 stringResource(R.string.knowledge_round_title, Store.CORRECT_ANSWERS_PER_ROUND, Store.BONUS_MINUTES_PER_ROUND),
@@ -90,10 +94,6 @@ fun KnowledgeScreen() {
             PrimaryButton(stringResource(R.string.knowledge_start), onClick = { nav.startQuiz(null) })
         }
 
-        LearningStore.pendingSession(bank)?.let {
-            PrimaryButton(stringResource(R.string.learning_resume), onClick = { nav.resumeLearning(context) },
-                modifier = Modifier.testTag("learning_resume").semantics { testTagsAsResourceId = true })
-        }
         ZCard {
             Text(stringResource(R.string.learning_review), style = MaterialTheme.typography.titleLarge)
             Text(stringResource(R.string.learning_review_hint), style = MaterialTheme.typography.bodyMedium)
@@ -106,21 +106,9 @@ fun KnowledgeScreen() {
             }
         }
         SectionLabel(stringResource(R.string.knowledge_topics))
-        bank.categories.chunked(2).forEach { pair ->
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                pair.forEach { (id, name) ->
-                    ZCard(
-                        modifier = Modifier.weight(1f),
-                        onClick = { nav.startQuiz(id) },
-                        padding = PaddingValues(16.dp),
-                    ) {
-                        IconBadge(painterResource(categoryIcon(id)), size = 36.dp)
-                        Spacer(Modifier.height(10.dp))
-                        Text(name, style = MaterialTheme.typography.titleSmall, maxLines = 2, overflow = TextOverflow.Ellipsis)
-
-                    }
-                }
-                if (pair.size == 1) Spacer(Modifier.weight(1f))
+        ZCard(padding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)) {
+            bank.categories.forEach { (id, name) ->
+                SettingRow(title = name, icon = painterResource(categoryIcon(id)), onClick = { nav.startQuiz(id) })
             }
         }
 

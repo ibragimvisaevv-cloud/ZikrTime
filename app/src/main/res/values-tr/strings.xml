@@ -430,6 +430,10 @@
     <string name="appearance_system">Sistem</string>
     <string name="appearance_light">Açık</string>
     <string name="appearance_dark">Koyu</string>
+    <string name="group_practice">İbadet</string>
+    <string name="group_application">Uygulama</string>
+    <string name="group_data_help">Veriler ve yardım</string>
+    <string name="focus_remaining">Bugün kullanılabilir</string>
     <string name="pause_title">Bilinçli mola</string>
     <string name="pause_enable_hint">Seçilen uygulamalardan önce: zikir, niyet ve süre. Yalnızca siz seçerseniz açılır.</string>
     <string name="pause_soft">Esnek mod</string>

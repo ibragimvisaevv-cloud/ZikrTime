@@ -430,6 +430,10 @@
     <string name="appearance_system">Системная</string>
     <string name="appearance_light">Светлая</string>
     <string name="appearance_dark">Тёмная</string>
+    <string name="group_practice">Практика</string>
+    <string name="group_application">Приложение</string>
+    <string name="group_data_help">Данные и помощь</string>
+    <string name="focus_remaining">Доступно сегодня</string>
     <string name="pause_title">Осмысленная пауза</string>
     <string name="pause_enable_hint">Перед выбранными приложениями: зикр, намерение и время. Включается только по вашему выбору.</string>
     <string name="pause_soft">Мягкий режим</string>

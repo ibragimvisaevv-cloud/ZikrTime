@@ -94,42 +94,30 @@ fun FocusScreen() {
     }
 
     TabColumn(title = stringResource(R.string.focus_title), subtitle = stringResource(R.string.focus_subtitle)) {
-        // Сегодня
-        ZCard {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+        SectionBackdrop {
+            Column(Modifier.fillMaxWidth().padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 val used = (usedMillis ?: 0L) / 60_000
                 val allowed = Store.allowedMinutes()
-                ProgressRing(
-                    progress = used.toFloat() / allowed.coerceAtLeast(1),
-                    modifier = Modifier.size(92.dp),
-                    stroke = 9.dp,
-                    color = if (used >= allowed) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
-                ) {
+                val remaining = (allowed - used).coerceAtLeast(0)
+                ProgressRing(progress = if (usedMillis == null) 0f else remaining.toFloat() / allowed.coerceAtLeast(1),
+                    modifier = Modifier.size(184.dp), stroke = 8.dp,
+                    color = androidx.compose.ui.graphics.Color(0xFF9DCBB9), track = androidx.compose.ui.graphics.Color(0xFF415666)) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(used.toString(), style = MaterialTheme.typography.titleLarge)
-                        Text(stringResource(R.string.unit_min), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(if (usedMillis == null) "—" else remaining.toString(), style = MaterialTheme.typography.displaySmall)
+                        Text(stringResource(R.string.unit_min), style = MaterialTheme.typography.bodyMedium)
                     }
                 }
-                Spacer(Modifier.width(18.dp))
-                Column(Modifier.weight(1f)) {
-                    Text(stringResource(R.string.focus_today), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    Text(
-                        if (usedMillis == null) stringResource(R.string.focus_no_access)
-                        else stringResource(R.string.focus_used_of, durationText(used), durationText(allowed.toLong())),
-                        style = MaterialTheme.typography.titleMedium,
-                    )
-                    val bonus = Store.bonusMinutes()
-                    Text(
-                        stringResource(R.string.focus_limit_bonus, durationText(Store.dailyLimitMinutes.toLong()), bonus),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
+                Text(if (usedMillis == null) stringResource(R.string.focus_no_access) else stringResource(R.string.focus_remaining),
+                    style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center)
+                if (usedMillis != null) Text(stringResource(R.string.focus_used_of, durationText(used), durationText(allowed.toLong())),
+                    style = MaterialTheme.typography.bodyMedium, textAlign = TextAlign.Center)
+                Text(stringResource(R.string.focus_limit_bonus, durationText(Store.dailyLimitMinutes.toLong()), Store.bonusMinutes()),
+                    style = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center)
             }
-            if (Store.bonusMinutes() < Store.MAX_BONUS_MINUTES_PER_DAY) {
-                Spacer(Modifier.height(16.dp))
-                TonalButton(stringResource(R.string.focus_earn_button, Store.BONUS_MINUTES_PER_ROUND), onClick = { nav.startQuiz(null) })
-            }
+        }
+        if (Store.bonusMinutes() < Store.MAX_BONUS_MINUTES_PER_DAY) {
+            TonalButton(stringResource(R.string.focus_earn_button, Store.BONUS_MINUTES_PER_ROUND), onClick = { nav.startQuiz(null) })
         }
 
         ZCard {

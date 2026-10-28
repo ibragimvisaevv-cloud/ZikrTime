@@ -430,6 +430,10 @@
     <string name="appearance_system">Sistem</string>
     <string name="appearance_light">Açıq</string>
     <string name="appearance_dark">Tünd</string>
+    <string name="group_practice">Praktika</string>
+    <string name="group_application">Tətbiq</string>
+    <string name="group_data_help">Məlumat və kömək</string>
+    <string name="focus_remaining">Bu gün mövcuddur</string>
     <string name="pause_title">Şüurlu fasilə</string>
     <string name="pause_enable_hint">Seçilmiş tətbiqlərdən əvvəl: zikr, niyyət və vaxt. Yalnız sizin seçiminizlə aktivləşir.</string>
     <string name="pause_soft">Yumşaq rejim</string>

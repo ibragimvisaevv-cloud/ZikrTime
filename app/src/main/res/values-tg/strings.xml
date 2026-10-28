@@ -430,6 +430,10 @@
     <string name="appearance_system">Системавӣ</string>
     <string name="appearance_light">Равшан</string>
     <string name="appearance_dark">Торик</string>
+    <string name="group_practice">Амалия</string>
+    <string name="group_application">Барнома</string>
+    <string name="group_data_help">Маълумот ва кӯмак</string>
+    <string name="focus_remaining">Имрӯз дастрас</string>
     <string name="pause_title">Таваққуфи огоҳона</string>
     <string name="pause_enable_hint">Пеш аз барномаҳои интихобшуда: зикр, ният ва вақт. Танҳо бо интихоби шумо фаъол мешавад.</string>
     <string name="pause_soft">Реҷаи мулоим</string>
