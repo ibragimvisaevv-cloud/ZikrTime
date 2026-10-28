@@ -22,7 +22,6 @@ fun AzkarScreen() {
     LaunchedEffect(period) { AzkarStore.start(period) }
     val index = AzkarStore.pendingIndex
     ScreenScaffold(title = stringResource(if (period == "evening") R.string.azkar_evening else R.string.azkar_morning), onBack = { nav.back() }) {
-        Text(stringResource(R.string.azkar_collection_note), style = MaterialTheme.typography.bodySmall)
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             TextButton(onClick = { nav.openAzkar("morning") }) { Text(stringResource(R.string.azkar_morning)) }
             TextButton(onClick = { nav.openAzkar("evening") }) { Text(stringResource(R.string.azkar_evening)) }

@@ -59,6 +59,13 @@ fun KnowledgeScreen() {
     var clearLearning by remember { mutableStateOf(false) }
 
     TabColumn(title = stringResource(R.string.knowledge_title), subtitle = stringResource(R.string.knowledge_subtitle)) {
+        ZCard {
+            SettingRow(title = stringResource(R.string.azkar_morning), icon = painterResource(R.drawable.ic_prayer_fajr), onClick = { nav.openAzkar("morning") })
+            SettingRow(title = stringResource(R.string.azkar_evening), icon = painterResource(R.drawable.ic_prayer_isha), onClick = { nav.openAzkar("evening") })
+            if (com.zikrtime.app.data.AzkarStore.hasPending) {
+                TextButton(onClick = { nav.resumeAzkar() }) { Text(stringResource(R.string.my_day_resume_azkar)) }
+            }
+        }
         LearningStore.pendingSession(bank)?.let {
             PrimaryButton(stringResource(R.string.learning_resume), onClick = { nav.resumeLearning(context) },
                 modifier = Modifier.testTag("learning_resume").semantics { testTagsAsResourceId = true })

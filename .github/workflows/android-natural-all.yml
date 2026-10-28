@@ -33,7 +33,7 @@ jobs:
             app/build/reports/
             app/build/test-results/
   screens:
-    if: ${{ always() && (needs.build.result == 'success' || contains(github.event.head_commit.message, '[ui-check]')) }}
+    if: ${{ !contains(github.event.head_commit.message, '[quick-ui]') && always() && (needs.build.result == 'success' || contains(github.event.head_commit.message, '[ui-check]')) }}
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 20

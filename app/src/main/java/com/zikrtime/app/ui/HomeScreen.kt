@@ -110,19 +110,6 @@ fun HomeScreen() {
 
     TabColumn {
         NaturalSkyHero(now, next.first, next.second, times)
-        MyDayActions()
-        ZCard(onClick = { nav.open(Screen.TASBIH) }) {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                androidx.compose.foundation.Image(painterResource(R.drawable.stone_bead), null, Modifier.size(64.dp))
-                Column(Modifier.weight(1f)) {
-                    Text(stringResource(R.string.tasbih_title), style = MaterialTheme.typography.titleLarge)
-                    if (Store.personalProgressEnabled) Text(stringResource(R.string.tasbih_today, Store.tasbihToday(today)), color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    else Text(stringResource(R.string.tasbih_subtitle), color = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
-                Text("›", fontSize = 28.sp)
-            }
-        }
-
         // Намазы на сегодня
         ZCard(padding = androidx.compose.foundation.layout.PaddingValues(horizontal = 12.dp, vertical = 12.dp)) {
             Text(
@@ -154,6 +141,19 @@ fun HomeScreen() {
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 8.dp, bottom = 4.dp),
             )
+        }
+
+        MyDayActions()
+        ZCard(onClick = { nav.open(Screen.TASBIH) }) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                androidx.compose.foundation.Image(painterResource(R.drawable.stone_bead), null, Modifier.size(64.dp))
+                Column(Modifier.weight(1f)) {
+                    Text(stringResource(R.string.tasbih_title), style = MaterialTheme.typography.titleLarge)
+                    if (Store.personalProgressEnabled) Text(stringResource(R.string.tasbih_today, Store.tasbihToday(today)), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    else Text(stringResource(R.string.tasbih_subtitle), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                Text("›", fontSize = 28.sp)
+            }
         }
 
         // Быстрые действия
@@ -342,17 +342,10 @@ private fun MyDayActions() {
     val due = LearningStore.dueCount(bank)
     ZCard {
         Text(stringResource(R.string.my_day_title), style = MaterialTheme.typography.titleMedium)
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            TextButton(onClick = { nav.openAzkar("morning") }) { Text(stringResource(R.string.my_day_morning)) }
-            TextButton(onClick = { nav.openAzkar("evening") }) { Text(stringResource(R.string.my_day_evening)) }
-        }
         if (pending != null) {
             TextButton(onClick = { nav.resumeLearning(context) }, modifier = Modifier.testTag("my_day_resume_learning").semantics { testTagsAsResourceId = true }) { Text(stringResource(R.string.my_day_resume_learning)) }
         } else {
             TextButton(onClick = { nav.startQuiz(null) }, modifier = Modifier.testTag("my_day_start_learning").semantics { testTagsAsResourceId = true }) { Text(stringResource(R.string.my_day_start_learning)) }
-        }
-        if (AzkarStore.hasPending) {
-            TextButton(onClick = { nav.resumeAzkar() }) { Text(stringResource(R.string.my_day_resume_azkar)) }
         }
         if (due > 0) {
             TextButton(onClick = { nav.startReview() }) { Text(stringResource(R.string.my_day_review, due)) }

@@ -435,7 +435,7 @@
     <string name="group_data_help">Данные и помощь</string>
     <string name="focus_remaining">Доступно сегодня</string>
     <string name="pause_title">Осмысленная пауза</string>
-    <string name="pause_enable_hint">Перед выбранными приложениями: зикр, намерение и время. Включается только по вашему выбору.</string>
+    <string name="pause_enable_hint">При открытии выбранного приложения появляется короткая пауза с одной фразой зикра. Затем вы выбираете намерение и время использования. Это не случайное напоминание в течение дня. Функция работает только после включения и выдачи разрешений.</string>
     <string name="pause_soft">Мягкий режим</string>
     <string name="pause_soft_hint">Паузу можно пропустить. По окончании времени — напоминание.</string>
     <string name="pause_strict">Строгий режим</string>
