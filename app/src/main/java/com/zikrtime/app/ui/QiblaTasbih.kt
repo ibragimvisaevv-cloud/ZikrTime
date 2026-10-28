@@ -134,7 +134,7 @@ fun QiblaScreen() {
         androidx.compose.animation.core.spring(dampingRatio = 0.85f, stiffness = 90f),
         label = "heading",
     )
-    val aligned = relative != null && abs(relative) < 5f
+    val aligned = relative != null && !lowAccuracy && abs(relative) < 5f
     var wasAligned by remember { mutableStateOf(false) }
     LaunchedEffect(aligned) {
         if (aligned && !wasAligned) view.performHapticFeedback(if (android.os.Build.VERSION.SDK_INT >= 30) HapticFeedbackConstants.CONFIRM else HapticFeedbackConstants.VIRTUAL_KEY)
@@ -148,6 +148,7 @@ fun QiblaScreen() {
         Text(
             when {
                 heading == null || relative == null -> stringResource(R.string.qibla_no_sensor)
+                lowAccuracy -> stringResource(R.string.qibla_calibrate)
                 aligned -> stringResource(R.string.qibla_aligned)
                 relative < 0 -> stringResource(R.string.qibla_turn_left, abs(relative).roundToInt())
                 else -> stringResource(R.string.qibla_turn_right, relative.roundToInt())

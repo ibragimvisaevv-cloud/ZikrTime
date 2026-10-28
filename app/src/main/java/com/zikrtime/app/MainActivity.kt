@@ -263,38 +263,18 @@ private fun Tabs() {
                 .padding(horizontal = 12.dp, vertical = 10.dp),
         ) { (_, icon, label), selected ->
             val color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
-            // Выбранная иконка «подпрыгивает» и покачивается
-            val bounce = remember { androidx.compose.animation.core.Animatable(1f) }
-            val wiggle = remember { androidx.compose.animation.core.Animatable(0f) }
-            LaunchedEffect(selected) {
-                if (selected) {
-                    launch {
-                        bounce.snapTo(0.7f)
-                        bounce.animateTo(1f, androidx.compose.animation.core.spring(dampingRatio = 0.32f, stiffness = 420f))
-                    }
-                    wiggle.snapTo(-14f)
-                    wiggle.animateTo(0f, androidx.compose.animation.core.spring(dampingRatio = 0.25f, stiffness = 300f))
-                }
-            }
-            val lift by androidx.compose.animation.core.animateFloatAsState(if (selected) -2f else 0f, label = "lift")
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Icon(
                     painterResource(icon),
                     contentDescription = null,
                     tint = color,
-                    modifier = Modifier.size(24.dp).graphicsLayer {
-                        scaleX = bounce.value
-                        scaleY = bounce.value
-                        rotationZ = wiggle.value
-                        translationY = lift * density
-                    },
+                    modifier = Modifier.size(24.dp),
                 )
                 Text(
                     stringResource(label),
                     style = MaterialTheme.typography.labelSmall,
                     color = color,
-                    maxLines = 1,
-                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                 )
             }
         }

@@ -121,6 +121,16 @@ fun ZikrTheme(natural: Boolean = false, content: @Composable () -> Unit) {
         "dark" -> true
         else -> isSystemInDarkTheme()
     }
+    val view = androidx.compose.ui.platform.LocalView.current
+    androidx.compose.runtime.SideEffect {
+        val activity = view.context as? android.app.Activity
+        if (activity != null) {
+            androidx.core.view.WindowCompat.getInsetsController(activity.window, view).apply {
+                isAppearanceLightStatusBars = !dark
+                isAppearanceLightNavigationBars = !dark
+            }
+        }
+    }
     androidx.compose.runtime.CompositionLocalProvider(LocalDarkTheme provides dark, com.zikrtime.app.ui.LocalNatural provides natural) {
         val baseColors = if (dark) DarkColors else LightColors
         val colors = if (!natural) baseColors else baseColors.copy(

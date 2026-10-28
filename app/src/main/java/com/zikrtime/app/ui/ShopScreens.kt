@@ -569,8 +569,15 @@ fun ProductScreen() {
     val lang = remember { Lang.content(context) }
     val catalog = Shop.catalog ?: remember { Shop.load(context) }
     val product = catalog.product(nav.shopProduct)
-    ScreenScaffold(title = product?.title?.get(lang).orEmpty(), onBack = { nav.back() }) {
-        if (product == null) return@ScreenScaffold
+    ScreenScaffold(title = product?.title?.get(lang) ?: stringResource(R.string.shop_products), onBack = { nav.back() }) {
+        if (product == null) {
+            ZCard {
+                Text(stringResource(R.string.shop_empty), style = MaterialTheme.typography.titleMedium)
+                Spacer(Modifier.height(16.dp))
+                PrimaryButton(stringResource(R.string.action_back), onClick = { nav.back() })
+            }
+            return@ScreenScaffold
+        }
         val seller = catalog.seller(product.seller)
         ProductImage(product, catalog, Modifier.fillMaxWidth().aspectRatio(1.2f).clip(RoundedCornerShape(28.dp)), iconSize = 96.dp, fit = true)
         if (product.images.size > 1) {

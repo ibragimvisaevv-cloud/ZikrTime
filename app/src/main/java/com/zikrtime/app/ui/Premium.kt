@@ -273,7 +273,7 @@ fun <T> GlassNavBar(
             .fillMaxWidth()
             .shadow(20.dp, shape, ambientColor = Emerald.copy(alpha = 0.3f), spotColor = Emerald.copy(alpha = 0.35f))
             .clip(shape)
-            .background(if (dark) Color(0xEE13201C) else Color(0xF2FFFFFF))
+            .background(if (dark) Color(0xFF1B2C39) else Color(0xFFF6F8F9))
             .border(glassBorder(), shape),
     ) {
         Canvas(Modifier.matchParentSize().padding(6.dp)) {
