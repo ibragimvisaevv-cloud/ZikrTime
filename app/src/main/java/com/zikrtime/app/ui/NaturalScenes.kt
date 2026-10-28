@@ -40,20 +40,38 @@ fun NaturalSkyHero(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times:
         }
         Box(Modifier.matchParentSize().background(Brush.horizontalGradient(listOf(Color(0xCF101C2D), Color(0x10101C2D)))))
         Box(Modifier.matchParentSize().background(Brush.verticalGradient(listOf(Color.Transparent, Color(0xAA101C2D)))))
-        Column(Modifier.padding(22.dp).heightIn(min = 280.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Column(Modifier.padding(20.dp).heightIn(min = 260.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Text(stringResource(R.string.app_name), style = MaterialTheme.typography.titleLarge, color = Color.White, modifier = Modifier.weight(1f))
                 ThemeQuickButton()
             }
-                Surface(onClick = { nav.open(Screen.CITY) }, color = Color(0x993A4D63), contentColor = Color.White, shape = RoundedCornerShape(24.dp), modifier = Modifier.widthIn(max = 220.dp)) {
-                    Text(Cities.displayName(context, Store.location), style = MaterialTheme.typography.labelLarge, maxLines = 2, modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp))
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) {
+                    Text(gregorianDate(now.toLocalDate()), color = Color(0xFFE1E8F0), style = MaterialTheme.typography.bodySmall)
+                    Text(hijriDate(now.toLocalDate()), color = Color(0xFFCFDAE7), style = MaterialTheme.typography.labelSmall)
                 }
-            Text(gregorianDate(now.toLocalDate()), color = Color(0xFFE1E8F0), style = MaterialTheme.typography.bodyMedium)
-            Text(hijriDate(now.toLocalDate()), color = Color(0xFFCFDAE7), style = MaterialTheme.typography.bodySmall)
-            Spacer(Modifier.height(4.dp))
-            Text(stringResource(R.string.home_next_prayer), color = Color(0xFFE1E8F0), style = MaterialTheme.typography.titleMedium)
-            Text(prayerName(prayer), color = Color.White, style = MaterialTheme.typography.headlineLarge)
-            BigClock(at, fontSize = 52.sp, color = Color.White)
+                Surface(onClick = { nav.open(Screen.CITY) }, color = Color(0x993A4D63), contentColor = Color.White,
+                    shape = RoundedCornerShape(24.dp), modifier = Modifier.widthIn(max = 130.dp)) {
+                    Text(Cities.displayName(context, Store.location), style = MaterialTheme.typography.labelLarge,
+                        maxLines = 2, modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp))
+                }
+            }
+            Spacer(Modifier.height(8.dp))
+            BoxWithConstraints(Modifier.fillMaxWidth()) {
+                if (maxWidth < 290.dp || androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) {
+                    Column {
+                        Text(stringResource(R.string.home_next_prayer), color = Color(0xFFE1E8F0), style = MaterialTheme.typography.bodyMedium)
+                        Text(prayerName(prayer), color = Color.White, style = MaterialTheme.typography.headlineMedium)
+                        BigClock(at, fontSize = 48.sp, color = Color.White)
+                    }
+                } else Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Column(Modifier.weight(1f)) {
+                        Text(stringResource(R.string.home_next_prayer), color = Color(0xFFE1E8F0), style = MaterialTheme.typography.bodySmall)
+                        Text(prayerName(prayer), color = Color.White, style = MaterialTheme.typography.headlineMedium)
+                    }
+                    BigClock(at, fontSize = 48.sp, color = Color.White)
+                }
+            }
             val mins = ((Duration.between(now, at).seconds.coerceAtLeast(0) + 59) / 60)
             Text(stringResource(R.string.home_in_time, durationText(mins)), color = Color.White,
                 modifier = Modifier.clip(RoundedCornerShape(20.dp)).background(Color(0xA62D3A4C)).padding(horizontal = 12.dp, vertical = 7.dp))
