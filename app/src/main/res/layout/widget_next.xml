@@ -26,8 +26,8 @@
     <!-- Кольцо: сколько прошло от прошлого намаза до следующего -->
     <ImageView
         android:id="@+id/w_ring"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_gravity="end|top"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
@@ -44,9 +44,9 @@
             android:id="@+id/w_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="0dp"
+            android:layout_marginEnd="42dp"
             android:ellipsize="end"
-            android:maxLines="1"
+            android:maxLines="2"
             android:textColor="#D9F7F2EA"
             android:textSize="12sp" />
 

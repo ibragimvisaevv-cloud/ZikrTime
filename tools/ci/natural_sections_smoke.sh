@@ -7,6 +7,8 @@ adb shell svc power stayon true
 adb shell input keyevent KEYCODE_WAKEUP
 adb shell wm dismiss-keyguard
 adb logcat -c
+adb shell wm size 1080x2400
+adb shell wm density 420
 cleanup() {
   adb logcat -d -b crash > ci-out/crashes.txt || true
   adb shell settings put system font_scale 1 >/dev/null || true
@@ -50,15 +52,15 @@ adb shell wm density 360
 adb shell settings put system font_scale 2
 for screen in knowledge more alarm focus zakat; do capture "$screen-large" "$screen"; done
 adb shell settings put system font_scale 1
-adb shell wm size reset
-adb shell wm density reset
+adb shell wm size 1080x2400
+adb shell wm density 420
 # Existing functional assertions, limited to UI affected by shared components.
 capture progress-before-toggle progress
+python3 tools/ci/features_controls.py appearance
 python3 tools/ci/features_controls.py progress
 capture progress-before-enable progress
 python3 tools/ci/features_controls.py enable-progress
 python3 tools/ci/features_controls.py learning
-python3 tools/ci/features_controls.py appearance
 adb logcat -d -b crash > ci-out/crashes.txt
 if grep -qE 'FATAL EXCEPTION|Fatal signal' ci-out/crashes.txt; then exit 1; fi
 printf '%s\n' 'Emulator-only UI capture and targeted assertions completed.' > ci-out/complete.txt

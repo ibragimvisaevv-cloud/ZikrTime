@@ -24,8 +24,17 @@ def shell(*args):
 
 
 def prefs_tree(name='zikrtime'):
-    time.sleep(.5)
-    return ET.fromstring(adb('exec-out', 'run-as', PKG, 'cat', f'shared_prefs/{name}.xml'))
+    # A concurrent SharedPreferences write / ADB transport can yield an incomplete read.
+    # Retry only parsing failures, preserve each raw read, and still fail if persistent.
+    for attempt in range(3):
+        time.sleep(.5)
+        raw = adb('exec-out', 'run-as', PKG, 'cat', f'shared_prefs/{name}.xml')
+        try:
+            return ET.fromstring(raw)
+        except ET.ParseError:
+            (OUT / f'pref-read-{name}-{attempt}.xml').write_text(raw)
+            if attempt == 2:
+                raise
 
 
 def prefs(name='zikrtime'):

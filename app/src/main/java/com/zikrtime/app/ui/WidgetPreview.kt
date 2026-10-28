@@ -4,6 +4,9 @@ import android.widget.FrameLayout
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -30,14 +33,20 @@ fun WidgetPreview() {
         Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.statusBars).verticalScroll(rememberScrollState()).padding(12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            Widget(0, day, 170, 170)
-            Widget(0, night, 170, 170)
-        }
-        Widget(1, evening, 350, 170)
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            Widget(2, day, 170, 170)
-            Widget(3, now, 170, 170)
+        BoxWithConstraints(Modifier.fillMaxWidth()) {
+            val width = maxWidth.value.toInt()
+            val tile = (width - 12) / 2
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Widget(0, day, tile, 180)
+                    Widget(0, night, tile, 180)
+                }
+                Widget(1, evening, width, 170)
+                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Widget(2, day, tile, 180)
+                    Widget(3, now, tile, 180)
+                }
+            }
         }
     }
 }

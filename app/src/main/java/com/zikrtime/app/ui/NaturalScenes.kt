@@ -58,7 +58,7 @@ fun NaturalSkyHero(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times:
             }
             Spacer(Modifier.height(8.dp))
             BoxWithConstraints(Modifier.fillMaxWidth()) {
-                if (maxWidth < 290.dp || androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) {
+                if (maxWidth < 250.dp || androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) {
                     Column {
                         Text(stringResource(R.string.home_next_prayer), color = Color(0xFFE1E8F0), style = MaterialTheme.typography.bodyMedium)
                         Text(prayerName(prayer), color = Color.White, style = MaterialTheme.typography.headlineMedium)
