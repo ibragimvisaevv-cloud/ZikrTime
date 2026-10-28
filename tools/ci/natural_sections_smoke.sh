@@ -53,7 +53,9 @@ adb shell settings put system font_scale 1
 adb shell wm size reset
 adb shell wm density reset
 # Existing functional assertions, limited to UI affected by shared components.
+capture progress-before-toggle progress
 python3 tools/ci/features_controls.py progress
+capture progress-before-enable progress
 python3 tools/ci/features_controls.py enable-progress
 python3 tools/ci/features_controls.py learning
 adb logcat -d -b crash > ci-out/crashes.txt
