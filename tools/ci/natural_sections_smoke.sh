@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
+if git log -1 --format=%B | grep -Fq '[bottom-ui]'; then
+  exec bash tools/ci/horizon_insets_smoke.sh
+fi
 if git log -1 --format=%B | grep -Fq '[horizon-ui]'; then
   exec bash tools/ci/horizon_final_smoke.sh
 fi

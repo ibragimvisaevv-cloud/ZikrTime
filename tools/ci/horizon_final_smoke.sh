@@ -40,7 +40,8 @@ done
 adb shell cmd uimode night no >/dev/null
 for screen in home knowledge shop; do
   capture "$screen-bottom-start" "$screen"
-  for gesture in 1 2 3 4 5 6; do adb shell input swipe 540 1700 540 400 700; done
+  read -r shot_width shot_height < <(python3 -c 'from PIL import Image; import sys; print(*Image.open(sys.argv[1]).size)' "ci-out/screens/$screen-bottom-start.png")
+  for gesture in 1 2 3 4 5 6; do adb shell input swipe "$((shot_width / 3))" "$((shot_height * 2 / 3))" "$((shot_width / 3))" "$((shot_height / 4))" 700; done
   adb exec-out screencap -p > "ci-out/screens/$screen-bottom.png"
 done
 adb shell wm size 720x1280
