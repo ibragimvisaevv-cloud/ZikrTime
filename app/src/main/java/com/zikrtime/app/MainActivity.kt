@@ -258,6 +258,10 @@ private fun Tabs() {
             onSelect = { nav.tab = it.first },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
+                .background(androidx.compose.ui.graphics.Brush.verticalGradient(
+                    0f to androidx.compose.ui.graphics.Color.Transparent,
+                    .35f to MaterialTheme.colorScheme.background.copy(alpha = .96f),
+                    1f to MaterialTheme.colorScheme.background))
                 .windowInsetsPadding(WindowInsets.navigationBars)
                 .padding(horizontal = 0.dp, vertical = 0.dp),
         ) { (_, icon, label), selected ->

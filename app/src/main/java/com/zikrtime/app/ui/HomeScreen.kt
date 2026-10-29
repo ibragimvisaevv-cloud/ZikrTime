@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
@@ -121,7 +122,7 @@ fun HomeScreen() {
                     modifier = Modifier.weight(1f))
                 androidx.compose.material3.IconButton(onClick = { nav.open(Screen.PRAYER_SETTINGS) },
                     modifier = Modifier.testTag("prayer_notification_settings").semantics { testTagsAsResourceId = true }) {
-                    Icon(painterResource(R.drawable.ic_notification), stringResource(R.string.prayer_notifications),
+                    Icon(Icons.Default.Notifications, stringResource(R.string.prayer_notifications),
                         tint = if (Store.prayerNotifications) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(24.dp).drawWithContent {
                             drawContent()

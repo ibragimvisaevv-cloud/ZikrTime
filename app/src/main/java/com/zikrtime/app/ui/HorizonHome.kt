@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.onSizeChanged
@@ -73,6 +74,8 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
             }
         }
 
+        val topScrim = remember { Brush.verticalGradient(0f to Color(0xB309242D), .44f to Color(0x2409242D), .66f to Color.Transparent) }
+        val sideScrim = remember { Brush.horizontalGradient(listOf(Color(0x4807242B), Color.Transparent)) }
         val imageId = if (period == NaturalPeriod.NIGHT) R.drawable.horizon_portrait_night else R.drawable.horizon_portrait_day
         Box(Modifier.matchParentSize().background(Color(0xFF34615D))) {
             if (!(com.zikrtime.app.BuildConfig.DEBUG && com.zikrtime.app.QaHooks.hideScene)) {
@@ -85,8 +88,8 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
             Box(Modifier.matchParentSize().drawBehind {
                 val p = (scroll.value / collapsePx).coerceIn(0f, 1f)
                 // Local protection for typography, leaving the mosque and warm light exposed.
-                drawRect(Brush.verticalGradient(0f to Color(0xB309242D), .44f to Color(0x2409242D), .66f to Color.Transparent))
-                drawRect(Brush.horizontalGradient(listOf(Color(0x4807242B), Color.Transparent)))
+                drawRect(topScrim)
+                drawRect(sideScrim)
                 val tint = when (period) {
                     NaturalPeriod.DAWN -> Color(0x12E6B18D)
                     NaturalPeriod.SUNSET -> Color(0x28C67A49)
@@ -101,7 +104,10 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
             .verticalScroll(scroll)) {
             Column(Modifier.fillMaxWidth().heightIn(min = revealHeight).onSizeChanged { measuredHero = it.height }.padding(horizontal = 24.dp)
                 .padding(top = status + 8.dp)
-                .graphicsLayer { alpha = (1f - (scroll.value / collapsePx) / .72f).coerceIn(0f, 1f) }
+                .graphicsLayer {
+                    compositingStrategy = CompositingStrategy.ModulateAlpha
+                    alpha = ((.72f - scroll.value / collapsePx) / .12f).coerceIn(0f, 1f)
+                }
                 .then(if (compact) Modifier.clearAndSetSemantics {} else Modifier),
                 verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
@@ -146,8 +152,8 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
             ((scroll.value / collapsePx - .72f) / .22f).coerceIn(0f, 1f)
         } }
         if (compactAlpha > 0f) {
-            Column(Modifier.fillMaxWidth().height(compactHeight).graphicsLayer { alpha = compactAlpha }
-                .background(scheme.background.copy(alpha = .98f))
+            Column(Modifier.fillMaxWidth().height(compactHeight).graphicsLayer { compositingStrategy = CompositingStrategy.ModulateAlpha; alpha = compactAlpha }
+                .background(scheme.background)
                 .padding(top = status).padding(horizontal = 20.dp)
                 .testTag("horizon_compact").semantics { testTagsAsResourceId = true },
                 verticalArrangement = Arrangement.Center) {
