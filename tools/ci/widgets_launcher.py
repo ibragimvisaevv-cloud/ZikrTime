@@ -12,7 +12,10 @@ def probe(action,provider='CompactPrayerWidget',**kwargs):
     for k,v in kwargs.items():args+=['--es',k,str(v)]
     shell(*args);time.sleep(2)
 
-def home():shell('input','keyevent','KEYCODE_HOME');time.sleep(2)
+def home():
+    resumed=[l for l in shell('dumpsys','activity','activities').splitlines() if 'mResumedActivity' in l]
+    if not any('launcher' in l.lower() for l in resumed):shell('input','keyevent','KEYCODE_HOME')
+    time.sleep(2)
 def capture(name):time.sleep(2);screenshot(name)
 def pin(provider):
     probe('pin',provider);capture('pin-'+provider)

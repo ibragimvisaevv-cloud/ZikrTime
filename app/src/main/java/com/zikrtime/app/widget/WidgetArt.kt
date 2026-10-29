@@ -28,7 +28,7 @@ import kotlin.random.Random
 object WidgetArt {
     /** Small, opaque architectural surface. No labels are rasterized. */
     fun horizon(context: Context, wDp: Int, hDp: Int, dark: Boolean, arch: Boolean): Bitmap {
-        val s = min(px(context), 2f)
+        val s = min(px(context), 1f)
         val w = wDp.coerceIn(80, 600) * s; val h = hDp.coerceIn(64, 600) * s
         val bitmap = Bitmap.createBitmap(w.toInt(), h.toInt(), Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap); val p = Paint(Paint.ANTI_ALIAS_FLAG)

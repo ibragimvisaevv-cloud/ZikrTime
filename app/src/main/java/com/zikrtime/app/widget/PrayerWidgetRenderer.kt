@@ -62,7 +62,7 @@ internal object PrayerWidgetRenderer {
         val v = RemoteViews(c.packageName, layout)
         v.setInt(R.id.widget_root, "setBackgroundResource", if (dark) R.drawable.widget_surface_dark else R.drawable.widget_surface_light)
         // Architecture is a separate non-text layer; fully opaque surfaces protect against busy wallpapers.
-        v.setImageViewBitmap(R.id.w_bg, WidgetArt.horizon(c, size.first, size.second, dark, type == PrayerWidgetModel.Layout.SQUARE))
+        v.setImageViewResource(R.id.w_bg, if (type == PrayerWidgetModel.Layout.SQUARE) { if (dark) R.drawable.widget_arch_dark else R.drawable.widget_arch_light } else { if (dark) R.drawable.widget_horizon_dark else R.drawable.widget_horizon_light })
         v.setOnClickPendingIntent(R.id.widget_root, open(c, if (hasData) "prayer" else "city"))
         if (!hasData) {
             v.setTextColor(R.id.w_empty_title, ink); v.setTextColor(R.id.w_empty_action, gold)

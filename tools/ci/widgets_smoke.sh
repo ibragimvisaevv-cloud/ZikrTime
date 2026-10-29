@@ -18,4 +18,5 @@ adb shell wm density 420
 adb install -r android-out/outputs/apk/debug/app-debug.apk
 python3 tools/ci/widgets_launcher.py
 adb logcat -d -b crash > ci-out/crashes.txt
-if grep -qE 'FATAL EXCEPTION|Fatal signal' ci-out/crashes.txt; then exit 1; fi
+adb logcat -d -s ZikrWidgets > ci-out/widget-errors.txt
+if grep -qE 'FATAL EXCEPTION|Fatal signal' ci-out/crashes.txt || grep -q 'Update failed' ci-out/widget-errors.txt; then exit 1; fi
