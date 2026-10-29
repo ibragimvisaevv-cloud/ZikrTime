@@ -546,6 +546,17 @@
     <string name="azkar_next">Keyingi</string>
     <string name="azkar_complete">O‘qishni tugatish</string>
     <string name="azkar_completion_note">O‘qish joyi saqlanadi. Tugatish ilovadagi harakatni qayd etadi, ibodatni tasdiqlamaydi.</string>
+    <string name="widget_compact_name">Keyingi namoz · 2×1</string>
+    <string name="widget_timeline_name">Vaqt chizig‘i · 4×1</string>
+    <string name="widget_square_name">Mening namozim · 2×2</string>
+    <string name="widget_day_name">Kun jadvali · 4×2</string>
+    <string name="widget_countdown_label">Boshlanishiga</string>
+    <string name="widget_setup_city">Shaharni tanlash →</string>
+    <string name="widget_refresh">Yangilash ↻</string>
+    <string name="widget_config_title">Sizning ufqingiz</string>
+    <string name="widget_config_hint">Vidjet ko‘rinishi. Shahar va namoz sozlamalari ZikrTime’dan olinadi.</string>
+    <string name="widget_theme_app">Ilovaga mos</string>
+    <string name="widget_hijri_option">Joy yetarli bo‘lsa hijriy sana</string>
     <plurals name="days">
         <item quantity="one">%d kun</item>
         <item quantity="other">%d kun</item>

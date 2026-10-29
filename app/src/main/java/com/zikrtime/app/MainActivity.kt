@@ -138,6 +138,8 @@ class MainActivity : ComponentActivity() {
     private fun handleOpen(intent: Intent?) {
         if (intent?.getBooleanExtra("open_focus", false) == true) { nav.stack.clear(); nav.tab = Tab.FOCUS }
         when (intent?.getStringExtra(EXTRA_OPEN)) {
+            "prayer" -> { nav.stack.clear(); nav.tab = Tab.PRAYER }
+            "city" -> { nav.stack.clear(); nav.tab = Tab.PRAYER; if (Store.onboarded) nav.open(Screen.CITY) }
             "alarm" -> nav.open(Screen.ALARM)
             "focus" -> nav.tab = com.zikrtime.app.ui.Tab.FOCUS
         }

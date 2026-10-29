@@ -546,6 +546,17 @@
     <string name="azkar_next">Баъдӣ</string>
     <string name="azkar_complete">Анҷоми хониш</string>
     <string name="azkar_completion_note">Ҷои хониш нигоҳ дошта мешавад. Анҷом амал дар барномаро сабт мекунад, на далели ибодатро.</string>
+    <string name="widget_compact_name">Намози навбатӣ · 2×1</string>
+    <string name="widget_timeline_name">Хатти вақт · 4×1</string>
+    <string name="widget_square_name">Намози ман · 2×2</string>
+    <string name="widget_day_name">Ҷадвали рӯз · 4×2</string>
+    <string name="widget_countdown_label">То оғоз</string>
+    <string name="widget_setup_city">Интихоби шаҳр →</string>
+    <string name="widget_refresh">Навсозӣ ↻</string>
+    <string name="widget_config_title">Уфуқи шумо</string>
+    <string name="widget_config_hint">Намуди виҷет. Шаҳр ва танзимоти намоз аз ZikrTime гирифта мешаванд.</string>
+    <string name="widget_theme_app">Мисли барнома</string>
+    <string name="widget_hijri_option">Санаи ҳиҷрӣ, агар ҷой бошад</string>
     <plurals name="days">
         <item quantity="one">%d рӯз</item>
         <item quantity="other">%d рӯз</item>

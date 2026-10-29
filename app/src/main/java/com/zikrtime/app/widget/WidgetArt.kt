@@ -26,6 +26,33 @@ import kotlin.random.Random
  * исламский горизонт по времени суток, матовые поверхности, кольца прогресса.
  */
 object WidgetArt {
+    /** Small, opaque architectural surface. No labels are rasterized. */
+    fun horizon(context: Context, wDp: Int, hDp: Int, dark: Boolean, arch: Boolean): Bitmap {
+        val s = min(px(context), 2f)
+        val w = wDp.coerceIn(80, 600) * s; val h = hDp.coerceIn(64, 600) * s
+        val bitmap = Bitmap.createBitmap(w.toInt(), h.toInt(), Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap); val p = Paint(Paint.ANTI_ALIAS_FLAG)
+        val r = 24 * s
+        canvas.clipPath(Path().apply { addRoundRect(RectF(0f,0f,w,h),r,r,Path.Direction.CW) })
+        val colors = if (dark) intArrayOf(0xFF1C4438.toInt(), 0xFF102C26.toInt()) else intArrayOf(0xFFFAF5E9.toInt(), 0xFFE9E2D1.toInt())
+        p.shader = LinearGradient(0f,0f,w,h,colors,null,Shader.TileMode.CLAMP)
+        canvas.drawRect(0f,0f,w,h,p)
+        p.shader = RadialGradient(w*.95f,h*.1f,w*.7f,if(dark)0x285FC397 else 0x55FFFFFF,0x00FFFFFF,Shader.TileMode.CLAMP)
+        canvas.drawRect(0f,0f,w,h,p); p.shader=null
+        val color = if (dark) 0xFFE8CB90.toInt() else 0xFF8D7648.toInt()
+        p.color = alpha(color, if (arch) .18f else .09f)
+        p.style = Paint.Style.STROKE; p.strokeWidth = 1.3f*s
+        if (arch) {
+            val x=w*.79f; val y=h*.40f; val ar=w*.26f
+            val path=Path().apply { moveTo(x-ar,h); lineTo(x-ar,y); cubicTo(x-ar,y-ar*.6f,x-ar*.4f,y-ar*.8f,x,y-ar*1.15f); cubicTo(x+ar*.4f,y-ar*.8f,x+ar,y-ar*.6f,x+ar,y); lineTo(x+ar,h) }
+            canvas.drawPath(path,p)
+        }
+        p.color=alpha(color,.16f)
+        canvas.drawPath(Path().apply { moveTo(w*.50f,h*.92f); cubicTo(w*.65f,h*.83f,w*.85f,h*.96f,w,h*.87f) },p)
+        p.color=alpha(color,.22f)
+        canvas.drawRoundRect(RectF(.5f*s,.5f*s,w-.5f*s,h-.5f*s),r,r,p)
+        return bitmap
+    }
     const val GOLD = 0xFFD9B77B.toInt()
     const val GOLD_LIGHT = 0xFFF0D5A4.toInt()
     const val GOLD_DARK = 0xFF956B3E.toInt()

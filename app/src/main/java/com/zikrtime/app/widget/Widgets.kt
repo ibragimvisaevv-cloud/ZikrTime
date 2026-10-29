@@ -47,11 +47,8 @@ object Widgets {
         runCatching {
             val manager = AppWidgetManager.getInstance(context)
             Store.init(context)
-            ids(context, manager, NextPrayerWidget::class.java).forEach {
-                manager.updateAppWidget(it, nextPrayer(context, size(manager, it, 160, 160)))
-            }
-            ids(context, manager, TodayWidget::class.java).forEach {
-                manager.updateAppWidget(it, today(context, size(manager, it, 320, 160)))
+            listOf(NextPrayerWidget::class.java to (160 to 180), CompactPrayerWidget::class.java to (160 to 84), TimelineWidget::class.java to (330 to 84), TodayWidget::class.java to (330 to 190)).forEach { (cls, fallback) ->
+                ids(context, manager, cls).forEach { id -> runCatching { PrayerWidgetRenderer.update(context, manager, id, fallback) }.onFailure { android.util.Log.e("ZikrWidgets", "Update failed: $id", it) } }
             }
             updateScreenTime(context, manager)
             updateTasbih(context, manager)
@@ -91,11 +88,7 @@ object Widgets {
         runCatching {
             views.setImageViewBitmap(
                 R.id.w_bg,
-                WidgetArt.sky(
-                    context, size.first, size.second,
-                    if (dark(context)) intArrayOf(0xFF173F32.toInt(), 0xFF0B2D24.toInt()) else intArrayOf(0xFFE1EBD6.toInt(), 0xFFC5D8BE.toInt()),
-                    0x40E6CBA6, 0f, WidgetArt.Body.NONE, 41, ink = ink(context),
-                ),
+                WidgetArt.horizon(context, size.first, size.second, dark(context), false),
             )
             views.setImageViewBitmap(R.id.w_beads, WidgetArt.beads(context, minOf(size.first, size.second) - 12, count, target, light = !dark(context)))
         }
@@ -161,7 +154,7 @@ object Widgets {
 
     private fun hasAny(context: Context): Boolean {
         val m = AppWidgetManager.getInstance(context)
-        return listOf(NextPrayerWidget::class.java, TodayWidget::class.java, ScreenTimeWidget::class.java)
+        return listOf(NextPrayerWidget::class.java, CompactPrayerWidget::class.java, TimelineWidget::class.java, TodayWidget::class.java, ScreenTimeWidget::class.java, TasbihWidget::class.java)
             .any { ids(context, m, it).isNotEmpty() }
     }
 
@@ -179,16 +172,18 @@ object Widgets {
         }
         val now = ZonedDateTime.now(com.zikrtime.app.ui.CityZones.forCity(Store.location.id))
         val nextPrayer = PrayerSchedule.next(now).second
-        val midnight = now.toLocalDate().plusDays(1).atStartOfDay(now.zone)
-        // Небо и кольца на виджетах меняются плавно — обновляем хотя бы раз в 20 минут.
-        val at = listOf(nextPrayer, midnight, now.plusMinutes(20)).min()
-        am.setAndAllowWhileIdle(AlarmManager.RTC, at.toInstant().toEpochMilli() + 2_000, pi)
+        val at = PrayerWidgetModel.nextRefresh(now, nextPrayer)
+        // A single event alarm updates name, time and timer atomically. Chronometer ticks in the host.
+        if (android.os.Build.VERSION.SDK_INT < 31 || am.canScheduleExactAlarms())
+            am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, at, pi)
+        else am.setAndAllowWhileIdle(AlarmManager.RTC, at, pi)
+
     }
 
     /** Для проверки на эмуляторе: виджет как на рабочем столе, на заданное время. */
     fun preview(context: Context, kind: Int, now: ZonedDateTime, size: Pair<Int, Int>): RemoteViews = when (kind) {
-        0 -> nextPrayer(context, size, now)
-        1 -> today(context, size, now)
+        0, 4, 5 -> PrayerWidgetRenderer.render(context, -1, size, now)
+        1 -> PrayerWidgetRenderer.render(context, -1, size, now)
         3 -> tasbih(context, size)
         else -> screenTime(context, size)
     }
@@ -218,116 +213,6 @@ object Widgets {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
 
-    private fun nextPrayer(context: Context, size: Pair<Int, Int>, now: ZonedDateTime = ZonedDateTime.now(com.zikrtime.app.ui.CityZones.forCity(Store.location.id))): RemoteViews {
-        val local = Lang.wrap(context)
-        val res = local.resources
-        val (prayer, at) = PrayerSchedule.next(now)
-        val views = RemoteViews(context.packageName, R.layout.widget_next)
-        views.setTextViewText(R.id.w_label, res.getString(R.string.home_next_prayer))
-        if (context.resources.configuration.fontScale > 1.3f) {
-            views.setViewVisibility(R.id.w_label, android.view.View.GONE)
-            views.setViewVisibility(R.id.w_countdown, android.view.View.GONE)
-        }
-        views.setContentDescription(R.id.widget_root, res.getString(R.string.home_next_prayer) + " " + prayerName(res, prayer) + " " + at.format(clockFormatter(local)))
-        views.setTextColor(R.id.w_label, WidgetArt.CREAM)
-        views.setTextColor(R.id.w_name, WidgetArt.CREAM)
-        views.setTextColor(R.id.w_time, WidgetArt.CREAM)
-        views.setTextColor(R.id.w_countdown, WidgetArt.GOLD_LIGHT)
-        runCatching {
-            val period = skyPeriod(now, PrayerSchedule.forDate(now.toLocalDate(), now.zone))
-            views.setImageViewBitmap(R.id.w_bg, WidgetArt.panorama(context, size.first, size.second,
-                night = period == SkyPeriod.NIGHT, warm = period == SkyPeriod.SUNSET, dim = dark(context)))
-            views.setViewVisibility(R.id.w_star, android.view.View.GONE)
-            val previous = PrayerSchedule.recentStarts(now).map { it.time }.filter { !it.isAfter(now.toInstant()) }.maxOrNull()
-            val progress = previous?.let {
-                val total = java.time.Duration.between(it, at.toInstant()).seconds.toFloat()
-                val passed = java.time.Duration.between(it, now.toInstant()).seconds.toFloat()
-                if (total > 0) passed / total else 0f
-            } ?: 0f
-            val soon = java.time.Duration.between(now, at).toMinutes() < 15
-            views.setImageViewBitmap(
-                R.id.w_ring,
-                WidgetArt.ring(
-                    context, 48, progress,
-                    intArrayOf(WidgetArt.GOLD_DARK, WidgetArt.GOLD_LIGHT, WidgetArt.GOLD),
-                    prayerIconRes(prayer), WidgetArt.GOLD_LIGHT, glow = soon,
-                ),
-            )
-        }.onFailure { views.setImageViewResource(R.id.w_ring, prayerIconRes(prayer)) }
-        views.setTextViewText(R.id.w_name, prayerName(res, prayer))
-        views.setTextViewText(R.id.w_time, at.format(clockFormatter(local)))
-        // Обратный отсчёт тикает сам, без обновлений виджета.
-        val left = at.toInstant().toEpochMilli() - now.toInstant().toEpochMilli()
-        val format = res.getString(R.string.home_in_time, "%s")
-        views.setChronometer(R.id.w_countdown, SystemClock.elapsedRealtime() + left, format, true)
-        views.setChronometerCountDown(R.id.w_countdown, true)
-        views.setOnClickPendingIntent(R.id.widget_root, openApp(context))
-        return views
-    }
-
-    private val columns = listOf(
-        Triple(R.id.w_col0, R.id.w_name0, R.id.w_time0),
-        Triple(R.id.w_col1, R.id.w_name1, R.id.w_time1),
-        Triple(R.id.w_col2, R.id.w_name2, R.id.w_time2),
-        Triple(R.id.w_col3, R.id.w_name3, R.id.w_time3),
-        Triple(R.id.w_col4, R.id.w_name4, R.id.w_time4),
-        Triple(R.id.w_col5, R.id.w_name5, R.id.w_time5),
-    )
-    private val icons = listOf(R.id.w_icon0, R.id.w_icon1, R.id.w_icon2, R.id.w_icon3, R.id.w_icon4, R.id.w_icon5)
-
-    private fun today(context: Context, size: Pair<Int, Int>, now: ZonedDateTime = ZonedDateTime.now(com.zikrtime.app.ui.CityZones.forCity(Store.location.id))): RemoteViews {
-        val local = Lang.wrap(context)
-        val res = local.resources
-        val date = now.toLocalDate()
-        val times = PrayerSchedule.forDate(date, now.zone)
-        val next = PrayerSchedule.next(now).first
-        val largeText = context.resources.configuration.fontScale > 1.3f
-        val views = RemoteViews(context.packageName, if (largeText) R.layout.widget_today_large else R.layout.widget_today)
-        if (largeText) {
-            views.setViewVisibility(R.id.w_subtitle, android.view.View.GONE)
-            views.setViewVisibility(R.id.w_countdown, android.view.View.GONE)
-        }
-        views.setTextViewText(R.id.w_title, Cities.displayName(local, Store.location))
-        views.setTextColor(R.id.w_title, ink(context))
-        views.setTextColor(R.id.w_subtitle, muted(context))
-        val pattern = DateTimeFormatter.ofPattern("EEEE, d MMMM", Lang.locale(local))
-        views.setTextViewText(R.id.w_subtitle, date.format(pattern).replaceFirstChar { it.uppercase(Lang.locale(local)) })
-        val fmt = clockFormatter(local)
-        val prayed = Store.prayedOn(date)
-        Prayer.entries.forEachIndexed { i, p ->
-            // Нажатие по намазу — отметить прочитанным; отмеченный показывает ✓ вместо иконки
-            if (p.isPrayer) views.setOnClickPendingIntent(columns[i].first, toggleAction(context, i))
-            val (col, name, time) = columns[i]
-            views.setTextViewText(name, prayerName(res, p))
-            views.setTextViewText(time, times[p].format(fmt))
-            views.setImageViewResource(icons[i], if (p in prayed) R.drawable.ic_check else prayerIconRes(p))
-            views.setInt(col, "setBackgroundResource", if (p == next) R.drawable.widget_pill_gold else 0)
-            val highlighted = p == next
-            views.setTextColor(name, if (highlighted) 0xFFFFF5E4.toInt() else muted(context))
-            views.setTextColor(time, if (highlighted) 0xFFFFF5E4.toInt() else ink(context))
-            views.setInt(icons[i], "setColorFilter", if (highlighted) WidgetArt.GOLD_LIGHT else accent(context))
-        }
-        // Живой отсчёт до следующего намаза
-        val (nextPrayer, nextAt) = PrayerSchedule.next(now)
-        val left = nextAt.toInstant().toEpochMilli() - now.toInstant().toEpochMilli()
-        views.setChronometer(R.id.w_countdown, SystemClock.elapsedRealtime() + left, res.getString(R.string.widget_next_in, prayerName(res, nextPrayer), "%s"), true)
-        views.setChronometerCountDown(R.id.w_countdown, true)
-        val soon = left < 15 * 60_000L
-        views.setInt(R.id.w_countdown, "setBackgroundResource", if (soon) R.drawable.widget_pill_gold else R.drawable.widget_chip)
-        views.setTextColor(R.id.w_countdown, if (soon) 0xFFFFF5E4.toInt() else ink(context))
-        // Подсказка, пока ничего не отмечено
-        if (prayed.isEmpty() && Prayer.entries.any { it.isPrayer && !times[it].isAfter(now) }) {
-            views.setTextViewText(R.id.w_subtitle, res.getString(R.string.widget_tap_to_mark))
-        }
-        runCatching {
-            views.setImageViewBitmap(R.id.w_bg, skyBitmap(context, size, now, 23, WidgetArt.Body.NONE))
-            views.setViewVisibility(R.id.w_star, android.view.View.GONE)
-            views.setViewVisibility(R.id.w_arc, android.view.View.GONE)
-        }
-        views.setOnClickPendingIntent(R.id.widget_root, openApp(context))
-        return views
-    }
-
     private fun screenTime(context: Context, size: Pair<Int, Int>): RemoteViews {
         val local = Lang.wrap(context)
         val res = local.resources
@@ -351,11 +236,7 @@ object Widgets {
         }
         runCatching {
             // Sage glass with a quiet horizon; the ring indicates remaining screen time.
-            val bg = WidgetArt.sky(
-                context, size.first, size.second,
-                if (dark(context)) intArrayOf(0xFF123B2E.toInt(), 0xFF255342.toInt()) else intArrayOf(0xFFE0EBD9.toInt(), 0xFFF1F4E8.toInt()),
-                0x556A4933, 0.7f, WidgetArt.Body.MOON, 37, ink = ink(context),
-            )
+            val bg = WidgetArt.horizon(context, size.first, size.second, dark(context), false)
             views.setImageViewBitmap(R.id.w_bg, bg)
             views.setViewVisibility(R.id.w_star, android.view.View.GONE)
             val sweep = when {
@@ -376,16 +257,25 @@ object Widgets {
 
 /** Общая часть: система просит обновить виджет — обновляем все. */
 abstract class BaseWidget : AppWidgetProvider() {
+    override fun onDeleted(context: Context, ids: IntArray) { ids.forEach { WidgetPreferences.remove(context, it) }; Widgets.updateAll(context) }
+    override fun onDisabled(context: Context) = Widgets.updateAll(context)
+    override fun onRestored(context: Context, oldWidgetIds: IntArray, newWidgetIds: IntArray) {
+        oldWidgetIds.zip(newWidgetIds).forEach { (old, new) -> WidgetPreferences.restore(context, old, new) }
+        Widgets.updateAll(context)
+    }
     override fun onUpdate(context: Context, manager: AppWidgetManager, ids: IntArray) = Widgets.updateAll(context)
     override fun onAppWidgetOptionsChanged(context: Context, manager: AppWidgetManager, id: Int, options: android.os.Bundle) =
         Widgets.updateAll(context)
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
-        if (intent.action == AppWidgetManager.ACTION_APPWIDGET_UPDATE) Widgets.updateAll(context)
+        if (intent.action == AppWidgetManager.ACTION_APPWIDGET_UPDATE && !intent.hasExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS)) Widgets.updateAll(context)
+        if (intent.action in setOf(Intent.ACTION_TIME_CHANGED, Intent.ACTION_TIMEZONE_CHANGED, Intent.ACTION_LOCALE_CHANGED, Intent.ACTION_MY_PACKAGE_REPLACED)) Widgets.updateAll(context)
     }
 }
 
 class NextPrayerWidget : BaseWidget()
+class CompactPrayerWidget : BaseWidget()
+class TimelineWidget : BaseWidget()
 /** Намазы на сегодня: нажатие по намазу — отметить прочитанным (или снять отметку). */
 class TodayWidget : BaseWidget() {
     override fun onReceive(context: Context, intent: Intent) {
@@ -394,6 +284,7 @@ class TodayWidget : BaseWidget() {
         val prayer = Prayer.entries.getOrNull(intent.getIntExtra(EXTRA_INDEX, -1)) ?: return
         val now = ZonedDateTime.now(com.zikrtime.app.ui.CityZones.forCity(Store.location.id))
         val today = now.toLocalDate()
+        if (intent.hasExtra("date") && intent.getStringExtra("date") != today.toString()) { Widgets.updateAll(context); return }
         val times = PrayerSchedule.forDate(today, now.zone)
         if (!prayer.isPrayer || times[prayer].isAfter(now)) return
         Store.setPrayed(today, prayer, prayer !in Store.prayedOn(today))

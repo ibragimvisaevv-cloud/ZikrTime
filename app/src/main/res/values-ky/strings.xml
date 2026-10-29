@@ -546,6 +546,17 @@
     <string name="azkar_next">Кийинки</string>
     <string name="azkar_complete">Окууну бүтүрүү</string>
     <string name="azkar_completion_note">Окуу орду сакталат. Аяктоо колдонмодогу аракетти каттайт, ибадаттын далили эмес.</string>
+    <string name="widget_compact_name">Кийинки намаз · 2×1</string>
+    <string name="widget_timeline_name">Убакыт тилкеси · 4×1</string>
+    <string name="widget_square_name">Менин намазым · 2×2</string>
+    <string name="widget_day_name">Күндүн жадыбалы · 4×2</string>
+    <string name="widget_countdown_label">Башталышына</string>
+    <string name="widget_setup_city">Шаарды тандоо →</string>
+    <string name="widget_refresh">Жаңыртуу ↻</string>
+    <string name="widget_config_title">Сиздин горизонтуңуз</string>
+    <string name="widget_config_hint">Виджеттин көрүнүшү. Шаар жана намаз жөндөөлөрү ZikrTime аркылуу алынат.</string>
+    <string name="widget_theme_app">Колдонмодогудай</string>
+    <string name="widget_hijri_option">Орун болсо хижра күнү</string>
     <plurals name="days">
         <item quantity="one">%d күн</item>
         <item quantity="other">%d күн</item>
