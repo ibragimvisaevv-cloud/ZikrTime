@@ -67,7 +67,7 @@ internal class HorizonOverlay(context: Context, title: String, subtitle: String?
                 target.setPadding(safe.left, safe.top, safe.right, safe.bottom)
                 insets
             }
-            addView(content, LayoutParams(-1, -2))
+            addView(content, FrameLayout.LayoutParams(-1, -2))
         }
         view.addView(scroll, FrameLayout.LayoutParams(-1, if (fullScreen) -1 else -2))
         content.addView(TextView(this.context).apply {

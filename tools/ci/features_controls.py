@@ -72,6 +72,17 @@ def ui():
             if next(root.iter('node'), None) is None:
                 raise ValueError('empty UI hierarchy')
             (OUT / 'last-ui.xml').write_text(ET.tostring(root, encoding='unicode'))
+            # The emulator launcher can ANR during cold boot. Record and dismiss
+            # only that named system app; never hide an ANR from ZikrTime.
+            titles=[n.get('text','') for n in root.iter('node') if n.get('resource-id')=='android:id/alertTitle']
+            if any('Pixel Launcher' in t and 'responding' in t for t in titles):
+                (OUT / 'emulator-launcher-anr.xml').write_text(ET.tostring(root,encoding='unicode'))
+                close=next((n for n in root.iter('node') if n.get('resource-id')=='android:id/aerr_close'),None)
+                if close is not None:
+                    l,t,r,b=map(int,re.findall(r'-?\d+',close.get('bounds')))
+                    shell('input','tap',(l+r)//2,(t+b)//2);time.sleep(1);continue
+            if any(n.get('resource-id')=='android:id/aerr_close' for n in root.iter('node')):
+                raise AssertionError('App error dialog present: '+str(titles))
             return root
         except (subprocess.CalledProcessError, ET.ParseError, ValueError) as error:
             (OUT / f'ui-dump-retry-{attempt}.txt').write_text(output + '\n' + str(error))
