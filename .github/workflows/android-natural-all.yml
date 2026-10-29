@@ -45,14 +45,14 @@ jobs:
       - name: Verify reused APK inputs
         if: contains(github.event.head_commit.message, '[ui-check]')
         run: |
-          git fetch --no-tags --depth=1 origin c303813eed57bbc3b35e8249a20ca807f4fba13d
-          git diff --exit-code c303813eed57bbc3b35e8249a20ca807f4fba13d HEAD -- app/ build.gradle.kts settings.gradle.kts gradle.properties gradle/ gradlew tools/i18n/
+          git fetch --no-tags --depth=1 origin d66ebdb382b00b8fe92f7578eac6b8d6fda74a83
+          git diff --exit-code d66ebdb382b00b8fe92f7578eac6b8d6fda74a83 HEAD -- app/ build.gradle.kts settings.gradle.kts gradle.properties gradle/ gradlew tools/i18n/
       - uses: actions/download-artifact@v4
         with:
           name: Android-natural-build
           path: android-out
           github-token: ${{ github.token }}
-          run-id: ${{ contains(github.event.head_commit.message, '[ui-check]') && '40653808632' || github.run_id }}
+          run-id: ${{ contains(github.event.head_commit.message, '[ui-check]') && '40837828698' || github.run_id }}
       - name: Retrieve verified 0.8.4 baseline
         env:
           GH_TOKEN: ${{ github.token }}
