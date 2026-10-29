@@ -39,6 +39,11 @@ def tree(name):
             raw = shell('cat', '/sdcard/horizon.xml')
             root = ET.fromstring(raw)
             (OUT / (name + '.xml')).write_bytes(raw)
+            if any('Pixel Launcher' in n.get('text','') and 'responding' in n.get('text','') for n in root.iter('node')):
+                close=next((n for n in root.iter('node') if n.get('resource-id')=='android:id/aerr_close'),None)
+                if close is not None:
+                    l,t,r,b=map(int,re.findall(r'-?\d+',close.get('bounds')))
+                    shell('input','tap',(l+r)//2,(t+b)//2);time.sleep(1);continue
             return root
         except (subprocess.CalledProcessError, ET.ParseError):
             if time.monotonic() > deadline:
@@ -64,8 +69,8 @@ shell('settings', 'put', 'global', 'animator_duration_scale', '1')
 for mode in ['light', 'dark']:
     shell('cmd', 'uimode', 'night', 'yes' if mode == 'dark' else 'no')
     launch()
-    w, h = shot('horizon-open-' + mode)
     initial = tree('horizon-open-' + mode)
+    w, h = shot('horizon-open-' + mode)
     initial_top = bounds(node(initial, 'horizon_panel'))[1]
     assert initial_top > h * .60, ('scene not open', initial_top, h)
     assert node(initial, 'theme_quick_toggle') is not None

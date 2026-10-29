@@ -96,8 +96,12 @@ fun ShopScreen() {
             (query.isBlank() || p.title.get(lang).contains(query.trim(), ignoreCase = true) ||
                 catalog.seller(p.seller)?.name?.contains(query.trim(), ignoreCase = true) == true)
     }
-    val sellers = Shop.rankSellers(catalog.sellers).filter { (category == null || category in it.categories) && !it.partner }
-    val partners = catalog.sellers.filter { it.partner }
+    val matchingSellers = Shop.rankSellers(catalog.sellers).filter {
+        (category == null || category in it.categories) &&
+            (query.isBlank() || it.name.contains(query.trim(), ignoreCase = true))
+    }
+    val sellers = matchingSellers.filter { !it.partner }
+    val partners = matchingSellers.filter { it.partner }
 
     TabColumn {
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
@@ -152,7 +156,7 @@ fun ShopScreen() {
         }
 
         // Партнёры — закреплены наверху, по две карточки в ряд
-        if (partners.isNotEmpty() && query.isBlank() && category == null) {
+        if (partners.isNotEmpty()) {
             SectionLabel(stringResource(R.string.shop_partners_title))
             val columns = if (partners.size == 1 || androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 1 else 2
             partners.chunked(columns).forEach { pair ->
@@ -169,7 +173,7 @@ fun ShopScreen() {
         }
 
 
-        if (sellers.isNotEmpty() && query.isBlank()) {
+        if (sellers.isNotEmpty()) {
             SectionLabel(stringResource(R.string.shop_sellers))
             Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 sellers.forEach { s ->

@@ -57,8 +57,9 @@ internal class HorizonOverlay(context: Context, title: String, subtitle: String?
         val scroll = object : ScrollView(this.context) {
             override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
                 val max = (resources.displayMetrics.heightPixels * .82f).toInt()
+                val available = View.MeasureSpec.getSize(heightMeasureSpec).takeIf { it > 0 } ?: max
                 super.onMeasure(widthMeasureSpec, if (fullScreen) heightMeasureSpec else
-                    View.MeasureSpec.makeMeasureSpec(minOf(View.MeasureSpec.getSize(heightMeasureSpec), max), View.MeasureSpec.AT_MOST))
+                    View.MeasureSpec.makeMeasureSpec(minOf(available, max), View.MeasureSpec.AT_MOST))
             }
         }.apply {
             isFillViewport = fullScreen

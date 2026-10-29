@@ -8,6 +8,7 @@ adb shell wm dismiss-keyguard
 adb logcat -c
 cleanup() {
   adb logcat -d -b crash > ci-out/crashes.txt || true
+  adb logcat -d -s ZikrOverlay > ci-out/overlay-log.txt || true
   adb shell dumpsys gfxinfo com.zikrtime.app > ci-out/gfx.txt || true
   adb shell settings put system font_scale 1 >/dev/null || true
   adb shell settings put global animator_duration_scale 1 >/dev/null || true

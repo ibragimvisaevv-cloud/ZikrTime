@@ -183,7 +183,7 @@ class GuardService : Service() {
             runCatching {
                 context.getSystemService(WindowManager::class.java).addView(panel.view, panel.params())
                 overlay = panel.view
-            }
+            }.onFailure { android.util.Log.w("ZikrOverlay", "Could not attach blocking window", it) }
         }
 
         fun hideOverlay(context: Context) {

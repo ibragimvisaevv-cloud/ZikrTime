@@ -28,6 +28,7 @@ object PauseOverlay {
         panel.button(res.getString(R.string.pause_disable),R.id.pause_disable) { FocusPause.setEnabled(context,false) }
         // The compact window keeps system gestures, calls and permission prompts available.
         runCatching { context.getSystemService(WindowManager::class.java).addView(panel.view,panel.params()); view=panel.view; target=pkg }
+            .onFailure { android.util.Log.w("ZikrOverlay", "Could not attach pause window", it) }
     }
     fun hide(context: Context) {
         val old=view ?: return
