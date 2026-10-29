@@ -124,7 +124,9 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
                 Text(prayerName(prayer), color = Porcelain, style = MaterialTheme.typography.headlineLarge,
                     fontSize = if (large) 28.sp else 36.sp)
                 BigClock(at, if (large) 44.sp else 68.sp, Porcelain, modifier = Modifier.testTag("horizon_time").semantics { testTagsAsResourceId = true }, weight = FontWeight.Normal)
-                Text(countdown, color = Sand, style = MaterialTheme.typography.labelLarge)
+                Text(countdown, color = Sand, style = MaterialTheme.typography.labelLarge,
+                    modifier = Modifier.clip(RoundedCornerShape(18.dp)).background(Color(0xB307252D))
+                        .padding(horizontal = 12.dp, vertical = 7.dp))
                 Spacer(Modifier.height(24.dp))
             }
             Column(Modifier.fillMaxWidth().testTag("horizon_panel").semantics { testTagsAsResourceId = true }

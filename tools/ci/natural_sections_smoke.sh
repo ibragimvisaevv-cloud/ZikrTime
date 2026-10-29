@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
+if git log -1 --format=%B | grep -Fq '[horizon-ui]'; then
+  exec bash tools/ci/horizon_final_smoke.sh
+fi
 pkg=com.zikrtime.app
 mkdir -p ci-out/screens
 adb wait-for-device
