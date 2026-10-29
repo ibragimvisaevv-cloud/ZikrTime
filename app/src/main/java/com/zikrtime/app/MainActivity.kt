@@ -258,6 +258,7 @@ private fun Tabs() {
             onSelect = { nav.tab = it.first },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
+                .background(MaterialTheme.colorScheme.surfaceContainer)
                 .windowInsetsPadding(WindowInsets.navigationBars)
                 .padding(horizontal = 0.dp, vertical = 0.dp),
         ) { (_, icon, label), selected ->

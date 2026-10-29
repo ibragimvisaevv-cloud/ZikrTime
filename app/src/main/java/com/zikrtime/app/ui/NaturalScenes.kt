@@ -37,20 +37,27 @@ fun NaturalSkyHero(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times:
                 ThemeQuickButton()
             }
         }
-        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            Column(Modifier.weight(1f)) {
-                Text(gregorianDate(now.toLocalDate()), style = MaterialTheme.typography.bodySmall, color = scheme.onSurfaceVariant)
-                Text(hijriDate(now.toLocalDate()), style = MaterialTheme.typography.labelSmall, color = scheme.secondary)
-            }
-            Surface(onClick = { nav.open(Screen.CITY) }, color = scheme.surfaceContainerHigh,
-                shape = RoundedCornerShape(14.dp), modifier = Modifier.widthIn(max = 142.dp)) {
+        val dateContent: @Composable () -> Unit = {
+            Text(gregorianDate(now.toLocalDate()), style = MaterialTheme.typography.bodySmall, color = scheme.onSurfaceVariant)
+            Text(hijriDate(now.toLocalDate()), style = MaterialTheme.typography.labelSmall, color = scheme.secondary)
+        }
+        val cityContent: @Composable () -> Unit = {
+            Surface(onClick = { nav.open(Screen.CITY) }, color = scheme.surfaceContainerHigh, shape = RoundedCornerShape(14.dp)) {
                 Row(Modifier.heightIn(min = 48.dp).padding(horizontal = 10.dp), verticalAlignment = Alignment.CenterVertically) {
-                    Icon(painterResource(R.drawable.ic_nav_prayer), null, tint = scheme.secondary, modifier = Modifier.size(16.dp))
+                    Icon(painterResource(R.drawable.ic_mosque), null, tint = scheme.secondary, modifier = Modifier.size(16.dp))
                     Spacer(Modifier.width(6.dp))
                     Text(Cities.displayName(context, Store.location), style = MaterialTheme.typography.labelMedium, maxLines = 2)
                 }
             }
         }
+        if (LocalDensity.current.fontScale > 1.3f) Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            dateContent()
+            cityContent()
+        } else Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(Modifier.weight(1f)) { dateContent() }
+            Box(Modifier.widthIn(max = 142.dp)) { cityContent() }
+        }
+
         CourtyardPanel(period) {
             Column(Modifier.fillMaxWidth().padding(horizontal = 18.dp, vertical = 14.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(stringResource(R.string.home_next_prayer), color = scheme.onSurfaceVariant, style = MaterialTheme.typography.labelMedium)

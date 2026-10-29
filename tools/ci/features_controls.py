@@ -192,26 +192,39 @@ if mode == 'appearance':
         image = Image.open(OUT / 'screens' / (name + '.png')).convert('RGB')
         median = sum(ImageStat.Stat(image).median) / 3
         assert (median < 115) if dark else (median > 150), (name, median)
+    def wait_appearance(value):
+        observed = []
+        for attempt in range(8):
+            current = prefs().get('appearance')
+            observed.append(current)
+            if current == value:
+                return
+            time.sleep(.3)
+        (OUT / ('appearance-failed-' + value + '.json')).write_text(json.dumps(observed))
+        screenshot('appearance-failed-' + value)
+        raise AssertionError(('appearance did not persist', value, observed))
     shell('cmd', 'uimode', 'night', 'no')
     launch('more')
     tap_control('appearance_dark')
-    assert prefs().get('appearance') == 'dark'
+    wait_appearance('dark')
     assert_theme('manual-dark', True)
     launch('more')
     assert prefs().get('appearance') == 'dark'
     assert_theme('manual-dark-restarted', True)
     tap_control('appearance_light')
+    wait_appearance('light')
+    assert_theme('manual-light-before-system-change', False)
     shell('cmd', 'uimode', 'night', 'yes')
     launch('more')
     assert prefs().get('appearance') == 'light'
     assert_theme('manual-light-system-dark', False)
     launch('home')
     tap_control('theme_quick_toggle')
-    assert prefs().get('appearance') == 'dark'
+    wait_appearance('dark')
     launch('more')
     assert_theme('home-toggle-dark', True)
     tap_control('appearance_system')
-    assert prefs().get('appearance') == 'system'
+    wait_appearance('system')
     assert_theme('system-dark', True)
     shell('cmd', 'uimode', 'night', 'no')
     launch('more')

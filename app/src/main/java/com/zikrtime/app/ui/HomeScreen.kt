@@ -124,6 +124,7 @@ fun HomeScreen() {
                     prayer = p,
                     time = clock(times[p]),
                     isCurrent = p == current,
+                    isNext = current == null && next.second.toLocalDate() == today && p == next.first,
                     started = !times[p].isAfter(now),
                     done = p in prayed,
                     onToggle = {
@@ -208,10 +209,11 @@ fun HomeScreen() {
 }
 
 @Composable
-private fun PrayerRow(prayer: Prayer, time: String, isCurrent: Boolean, started: Boolean, done: Boolean, onToggle: () -> Unit) {
+private fun PrayerRow(prayer: Prayer, time: String, isCurrent: Boolean, isNext: Boolean, started: Boolean, done: Boolean, onToggle: () -> Unit) {
     val scheme = MaterialTheme.colorScheme
+    val highlighted = isCurrent || isNext
     val accent = prayerAccent(prayer)
-    val ink = if (isCurrent) Porcelain else scheme.onSurface
+    val ink = if (highlighted) Porcelain else scheme.onSurface
     val line = scheme.outlineVariant
     Row(Modifier.fillMaxWidth()
         .drawBehind {
@@ -220,21 +222,21 @@ private fun PrayerRow(prayer: Prayer, time: String, isCurrent: Boolean, started:
                 androidx.compose.ui.geometry.Offset(x, if (prayer == Prayer.ISHA) size.height / 2 else size.height), 1.dp.toPx())
         }
         .clip(RoundedCornerShape(topStart = 10.dp, topEnd = 22.dp, bottomStart = 10.dp, bottomEnd = 10.dp))
-        .background(if (isCurrent) Olive else Color.Transparent)
+        .background(if (highlighted) Olive else Color.Transparent)
         .padding(start = 8.dp, top = 2.dp, bottom = 2.dp), verticalAlignment = Alignment.CenterVertically) {
-        IconBadge(painterResource(prayerIconRes(prayer)), tint = if (isCurrent) Sand else accent,
-            container = if (isCurrent) Color(0xFF526245) else scheme.surfaceContainerHigh, size = 32.dp)
+        IconBadge(painterResource(prayerIconRes(prayer)), tint = if (highlighted) Sand else accent,
+            container = if (highlighted) Color(0xFF526245) else scheme.surfaceContainerHigh, size = 32.dp)
         Spacer(Modifier.width(12.dp))
         Column(Modifier.weight(1f)) {
             Text(prayerName(prayer), style = MaterialTheme.typography.titleMedium,
-                color = ink, fontWeight = if (isCurrent) FontWeight.Bold else FontWeight.Medium)
-            if (isCurrent) Text(stringResource(R.string.home_now), style = MaterialTheme.typography.labelSmall, color = Sand)
+                color = ink, fontWeight = if (highlighted) FontWeight.Bold else FontWeight.Medium)
+            if (highlighted) Text(stringResource(if (isCurrent) R.string.home_now else R.string.home_next_prayer), style = MaterialTheme.typography.labelSmall, color = Sand)
         }
         Text(time, style = MaterialTheme.typography.titleLarge.merge(Tabular), color = ink,
             fontWeight = FontWeight.SemiBold)
         if (prayer.isPrayer) {
             CheckCircle(checked = done, enabled = started, onToggle = onToggle,
-                contentDescription = stringResource(R.string.home_mark_prayed), onDark = isCurrent)
+                contentDescription = stringResource(R.string.home_mark_prayed), onDark = highlighted)
         } else Spacer(Modifier.width(48.dp).height(48.dp))
     }
 }

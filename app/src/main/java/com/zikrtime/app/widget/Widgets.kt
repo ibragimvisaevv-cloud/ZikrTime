@@ -39,7 +39,7 @@ object Widgets {
         else -> context.resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK == android.content.res.Configuration.UI_MODE_NIGHT_YES
     }
     private fun ink(context: Context) = if (dark(context)) 0xFFF6ECD9.toInt() else 0xFF30271F.toInt()
-    private fun muted(context: Context) = if (dark(context)) 0xFFD2C2AD.toInt() else 0xFF736457.toInt()
+    private fun muted(context: Context) = if (dark(context)) 0xFFD2C2AD.toInt() else 0xFF5F503F.toInt()
     private fun accent(context: Context) = if (dark(context)) WidgetArt.GOLD_LIGHT else 0xFF3D5037.toInt()
 
 
@@ -82,6 +82,9 @@ object Widgets {
         val target = Store.tasbihTarget
         views.setTextViewText(R.id.w_count, (if (target > 0) count % target else count).toString())
         views.setTextViewText(R.id.w_name, res.getString(zikrNames[Store.tasbihPhrase.coerceIn(zikrNames.indices)]))
+        views.setContentDescription(R.id.widget_root, res.getString(zikrNames[Store.tasbihPhrase.coerceIn(zikrNames.indices)]) + " " + count)
+        views.setContentDescription(R.id.w_reset, res.getString(R.string.action_reset))
+        if (context.resources.configuration.fontScale > 1.3f && size.first < 200) views.setViewVisibility(R.id.w_name, android.view.View.GONE)
         runCatching {
             views.setImageViewBitmap(
                 R.id.w_bg,
@@ -218,6 +221,11 @@ object Widgets {
         val (prayer, at) = PrayerSchedule.next(now)
         val views = RemoteViews(context.packageName, R.layout.widget_next)
         views.setTextViewText(R.id.w_label, res.getString(R.string.home_next_prayer))
+        if (context.resources.configuration.fontScale > 1.3f && size.first < 200) {
+            views.setViewVisibility(R.id.w_label, android.view.View.GONE)
+            views.setViewVisibility(R.id.w_countdown, android.view.View.GONE)
+        }
+        views.setContentDescription(R.id.widget_root, res.getString(R.string.home_next_prayer) + " " + prayerName(res, prayer) + " " + at.format(clockFormatter(local)))
         views.setTextColor(R.id.w_label, muted(context))
         views.setTextColor(R.id.w_name, ink(context))
         views.setTextColor(R.id.w_time, ink(context))
@@ -268,7 +276,12 @@ object Widgets {
         val date = now.toLocalDate()
         val times = PrayerSchedule.forDate(date)
         val next = PrayerSchedule.next(now).first
-        val views = RemoteViews(context.packageName, R.layout.widget_today)
+        val largeText = context.resources.configuration.fontScale > 1.3f
+        val views = RemoteViews(context.packageName, if (largeText) R.layout.widget_today_large else R.layout.widget_today)
+        if (largeText) {
+            views.setViewVisibility(R.id.w_subtitle, android.view.View.GONE)
+            views.setViewVisibility(R.id.w_countdown, android.view.View.GONE)
+        }
         views.setTextViewText(R.id.w_title, Cities.displayName(local, Store.location))
         views.setTextColor(R.id.w_title, ink(context))
         views.setTextColor(R.id.w_subtitle, muted(context))
@@ -332,7 +345,7 @@ object Widgets {
             fraction = if (allowed > 0) left.toFloat() / allowed else 0f
         }
         runCatching {
-            // Фон «фокус»: ночная синева, переходящая в изумруд; кольцо меняет цвет, когда времени мало.
+            // Matte olive plaster; the ring still indicates remaining screen time.
             val bg = WidgetArt.sky(
                 context, size.first, size.second,
                 if (dark(context)) intArrayOf(0xFF303B2B.toInt(), 0xFF47513A.toInt()) else intArrayOf(0xFFE3E7D5.toInt(), 0xFFF2EBD8.toInt()),

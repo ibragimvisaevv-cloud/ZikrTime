@@ -37,14 +37,22 @@ fun WidgetPreview() {
             val width = maxWidth.value.toInt()
             val tile = (width - 12) / 2
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    Widget(0, day, tile, 180)
-                    Widget(0, night, tile, 180)
-                }
-                Widget(1, evening, width, 170)
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    Widget(2, day, tile, 180)
-                    Widget(3, now, tile, 180)
+                if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) {
+                    Widget(0, day, width, 180)
+                    Widget(0, night, width, 180)
+                    Widget(1, evening, width, 210)
+                    Widget(2, day, width, 180)
+                    Widget(3, now, width, 220)
+                } else {
+                    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                        Widget(0, day, tile, 180)
+                        Widget(0, night, tile, 180)
+                    }
+                    Widget(1, evening, width, 170)
+                    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                        Widget(2, day, tile, 180)
+                        Widget(3, now, tile, 180)
+                    }
                 }
             }
         }

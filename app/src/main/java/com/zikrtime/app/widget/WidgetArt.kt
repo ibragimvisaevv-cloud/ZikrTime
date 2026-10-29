@@ -23,7 +23,7 @@ import kotlin.random.Random
 
 /**
  * Картинки для виджетов (виджеты не умеют рисовать градиенты и кольца сами — рисуем их в Bitmap):
- * небо по времени суток со звёздами, солнцем или полумесяцем; кольца прогресса; линия дня.
+ * матовая архитектура по времени суток, геометрический орнамент, кольца прогресса.
  */
 object WidgetArt {
     const val GOLD = 0xFFD9B77B.toInt()
@@ -38,7 +38,7 @@ object WidgetArt {
 
     private fun alpha(color: Int, a: Float): Int = (color and 0x00FFFFFF) or ((a.coerceIn(0f, 1f) * 255).toInt() shl 24)
 
-    /** Фон виджета: градиент неба, свечение у горизонта, звёзды, узор и светило в углу. */
+    /** Plaster and carved arches, with a restrained day/night marker. */
     fun sky(
         context: Context,
         wDp: Int,

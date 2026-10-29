@@ -52,6 +52,10 @@ adb shell wm size 720x1600
 adb shell wm density 360
 adb shell settings put system font_scale 2
 for screen in home knowledge more alarm focus zakat widgets; do capture "$screen-large" "$screen"; done
+adb shell input swipe 5 1300 5 350 400
+adb shell input swipe 5 1300 5 350 400
+adb exec-out screencap -p > ci-out/screens/widgets-large-lower.png
+python3 tools/ci/check_screen.py ci-out/screens/widgets-large-lower.png
 adb shell settings put system font_scale 1
 adb shell wm size 1080x2400
 adb shell wm density 420
