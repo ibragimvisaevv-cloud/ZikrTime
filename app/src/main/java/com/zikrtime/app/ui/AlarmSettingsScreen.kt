@@ -82,7 +82,7 @@ fun AlarmSettingsScreen() {
         version++
     }
 
-    ScreenScaffold(title = stringResource(R.string.alarm_title), onBack = { nav.back() }) {
+    ScreenScaffold(title = stringResource(R.string.alarm_title), onBack = { nav.back() }, showHeading = false) {
         val next = remember(version, Store.alarmEnabled, Store.alarmOffsetMinutes, Store.alarmDays, Store.location, Store.method) {
             if (Store.alarmEnabled) FajrAlarm.nextTrigger(ZonedDateTime.now()) else null
         }
@@ -183,7 +183,7 @@ fun AlarmSettingsScreen() {
 /** Главная карточка: включатель и время следующего будильника крупно. */
 @Composable
 private fun AlarmHero(enabled: Boolean, next: ZonedDateTime?, onToggle: (Boolean) -> Unit) {
-    SectionBackdrop {
+    LandscapePanel(R.drawable.horizon_dawn) {
         Column(Modifier.padding(horizontal = 22.dp, vertical = 20.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(painterResource(R.drawable.ic_alarm), contentDescription = null, tint = Gold, modifier = Modifier.size(26.dp))

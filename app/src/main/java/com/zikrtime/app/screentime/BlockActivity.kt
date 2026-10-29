@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
@@ -180,7 +181,7 @@ private fun BlockScreen(reason: BlockReason, onClose: () -> Unit, onBackToApp: (
     var mode by remember(reason) { mutableStateOf<BlockMode>(BlockMode.Info) }
 
     Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Emerald, EmeraldDeep)))) {
-        StarPattern(Modifier.fillMaxSize(), color = Gold.copy(alpha = 0.09f), cell = 72f)
+        com.zikrtime.app.ui.SceneBackdrop(Modifier.fillMaxSize(), night = true)
         Column(
             Modifier
                 .fillMaxSize()
@@ -306,6 +307,6 @@ private fun GoldButton(text: String, onClick: () -> Unit) {
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(containerColor = Gold, contentColor = Color(0xFF2B1E00)),
         shape = RoundedCornerShape(18.dp),
-        modifier = Modifier.fillMaxWidth().height(56.dp),
+        modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
     ) { Text(text, textAlign = TextAlign.Center) }
 }

@@ -141,7 +141,8 @@ fun QiblaScreen() {
         wasAligned = aligned
     }
 
-    ScreenScaffold(title = stringResource(R.string.qibla_title), onBack = { nav.back() }) {
+    ScreenScaffold(title = stringResource(R.string.qibla_title), onBack = { nav.back() }, showHeading = false) {
+        PageHeading(stringResource(R.string.qibla_title), com.zikrtime.app.data.Cities.displayName(LocalContext.current, loc))
         Box(Modifier.fillMaxWidth().aspectRatio(1f).padding(8.dp), contentAlignment = Alignment.Center) {
             Compass(heading = shownHeading, qibla = qibla, aligned = aligned)
         }
@@ -320,12 +321,14 @@ internal val TASBIH_NAMES = listOf(
     R.string.zikr_6_name to R.string.zikr_6_meaning,
 )
 
-@OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
+@OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class, androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 @Composable
 fun TasbihScreen() {
     val nav = LocalNav.current
     val view = LocalView.current
     val phrase = Store.tasbihPhrase.coerceIn(TASBIH_ARABIC.indices)
+    var showPhrases by remember { mutableStateOf(false) }
+    var reset by remember { mutableStateOf(false) }
     val target = Store.tasbihTarget
     val count = Store.tasbihCount
     val progress = if (target > 0) (count % target).toFloat() / target else 0f
@@ -336,26 +339,11 @@ fun TasbihScreen() {
         onBack = { nav.back() },
         actions = {
             val ctx = LocalContext.current
-            TextButton(onClick = {
-                Store.tasbihCount = 0
-                com.zikrtime.app.widget.Widgets.updateTasbih(ctx)
-            }) { Text(stringResource(R.string.action_reset)) }
-        },
+            TextButton(onClick = { reset = true }) { Text(stringResource(R.string.action_reset)) }
+        }, showHeading = false,
     ) {
-        Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            TASBIH_NAMES.forEachIndexed { i, (name, _) ->
-                FilterChip(
-                    selected = i == phrase,
-                    onClick = {
-                        if (i != phrase) {
-                            Store.tasbihPhrase = i
-                            Store.tasbihCount = 0
-                        }
-                    },
-                    label = { Text(stringResource(name)) },
-                )
-            }
-        }
+        DestinationRow(stringResource(TASBIH_NAMES[phrase].first), R.drawable.ic_tasbih,
+            stringResource(R.string.pause_zikr)) { showPhrases = true }
         LandscapePanel(R.drawable.tasbih_still) {
             Column(Modifier.fillMaxWidth().padding(22.dp), horizontalAlignment = Alignment.Start) {
                 Text(TASBIH_ARABIC[phrase], style = ArabicStyle.copy(fontSize = 34.sp, textDirection = TextDirection.Rtl),
@@ -441,7 +429,7 @@ fun TasbihScreen() {
         ZCard {
             Text(stringResource(R.string.tasbih_target), style = MaterialTheme.typography.titleSmall)
             Spacer(Modifier.height(8.dp))
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            androidx.compose.foundation.layout.FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 listOf(33, 99, 100, 0).forEach { t ->
                     FilterChip(
                         selected = target == t,
@@ -458,4 +446,18 @@ fun TasbihScreen() {
             )
         }
     }
+    if (showPhrases) HorizonSheet(stringResource(R.string.pause_zikr), { showPhrases = false }) {
+        TASBIH_NAMES.forEachIndexed { i, (name, meaning) ->
+            RadioLine(stringResource(name), i == phrase, stringResource(meaning)) {
+                if (i != phrase) { Store.tasbihPhrase = i; Store.tasbihCount = 0 }
+                showPhrases = false
+            }
+        }
+    }
+    if (reset) HorizonDialog(onDismissRequest = { reset = false },
+        title = { Text(stringResource(R.string.action_reset)) },
+        text = { Text(stringResource(R.string.counter_reset_confirmation)) },
+        confirmButton = { TextButton(onClick = { Store.tasbihCount = 0; com.zikrtime.app.widget.Widgets.updateTasbih(view.context); reset = false }) { Text(stringResource(R.string.action_reset)) } },
+        dismissButton = { TextButton(onClick = { reset = false }) { Text(stringResource(R.string.action_close)) } })
+
 }

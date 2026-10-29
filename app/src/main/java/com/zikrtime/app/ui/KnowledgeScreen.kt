@@ -31,6 +31,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.zikrtime.app.R
 import com.zikrtime.app.data.Store
 import com.zikrtime.app.quiz.QuestionBank
@@ -144,7 +145,7 @@ fun KnowledgeScreen() {
         )
     }
     // Learning history is independent of personal statistics; clearing is always explicit.
-    if (clearLearning) AlertDialog(
+    if (clearLearning) HorizonDialog(
         onDismissRequest = { clearLearning = false },
         title = { Text(stringResource(R.string.learning_clear)) },
         text = { Text(stringResource(R.string.learning_clear_confirmation)) },
@@ -171,7 +172,10 @@ fun QuizScreen() {
     val bank = remember { QuestionBank.load(context) }
     val category = nav.quizCategory
     val title = category?.let { bank.categoryName(it) } ?: stringResource(R.string.knowledge_title)
-    ScreenScaffold(title = title, onBack = { nav.back() }) {
+    var readingScale by rememberReadingScale()
+    val sessionKey = LearningStore.session("normal")?.let { "${it.stage}-${it.index}-${it.cardIndex}" }
+    ScreenScaffold(title = title, onBack = { nav.back() }, showHeading = false, scrollKey = sessionKey,
+        actions = { ReadingTools(readingScale) { readingScale = it } }) {
         androidx.compose.runtime.key(nav.quizRound) {
             QuizFlow(
                 bank = bank,
@@ -214,12 +218,7 @@ fun ReviewScreen() {
     val session = LearningStore.session("review") ?: initial
     ScreenScaffold(title = stringResource(R.string.learning_review), onBack = { nav.back() }) {
         when {
-            session == null -> ZCard {
-                Text(stringResource(R.string.learning_none_due), style = MaterialTheme.typography.titleLarge)
-                Text(stringResource(R.string.learning_none_due_hint), style = MaterialTheme.typography.bodyLarge)
-                Spacer(Modifier.height(16.dp))
-                PrimaryButton(stringResource(R.string.knowledge_start), onClick = { nav.startQuiz(null) })
-            }
+            session == null -> StatePanel(stringResource(R.string.learning_none_due), stringResource(R.string.learning_none_due_hint), action = stringResource(R.string.knowledge_start), onAction = { nav.startQuiz(null) })
             session.stage == "RESULT" -> {
                 Text(stringResource(R.string.learning_complete), style = MaterialTheme.typography.headlineSmall)
                 Text(stringResource(R.string.learning_review_done), style = MaterialTheme.typography.bodyLarge)
@@ -236,7 +235,7 @@ private const val PREP_CARDS = 5
 /** «Хотите подготовиться?» — две кнопки. */
 @Composable
 private fun PrepOffer(onRead: () -> Unit, onSkip: () -> Unit) {
-    GlassHero {
+    LandscapePanel(R.drawable.azkar_morning) {
         Column(Modifier.padding(24.dp)) {
             androidx.compose.material3.Icon(painterResource(R.drawable.ic_nav_knowledge), null, tint = com.zikrtime.app.ui.theme.Gold, modifier = Modifier.padding(bottom = 8.dp))
             Spacer(Modifier.height(12.dp))
@@ -254,6 +253,7 @@ private fun PrepOffer(onRead: () -> Unit, onSkip: () -> Unit) {
 /** Учебные карточки: по одной справке на карточку, листаются кнопкой «Дальше». */
 @Composable
 private fun StudyCards(bank: QuizBank, cards: List<com.zikrtime.app.quiz.Question>, session: LearningSession, onReady: () -> Unit) {
+    val readingScale by rememberReadingScale()
     val index = session.cardIndex.coerceAtMost((cards.size - 1).coerceAtLeast(0))
     if (cards.isEmpty()) {
         androidx.compose.runtime.LaunchedEffect(Unit) { onReady() }
@@ -290,14 +290,14 @@ private fun StudyCards(bank: QuizBank, cards: List<com.zikrtime.app.quiz.Questio
             q.arabic?.let { arabic ->
                 Text(
                     arabic,
-                    style = com.zikrtime.app.ui.theme.ArabicStyle.copy(textDirection = androidx.compose.ui.text.style.TextDirection.Rtl),
+                    style = com.zikrtime.app.ui.theme.ArabicStyle.copy(fontSize = (30 * readingScale).sp, lineHeight = (52 * readingScale).sp, textDirection = androidx.compose.ui.text.style.TextDirection.Rtl),
                     color = MaterialTheme.colorScheme.primary,
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                     modifier = Modifier.fillMaxWidth(),
                 )
                 Spacer(Modifier.height(10.dp))
             }
-            Text(q.info, style = MaterialTheme.typography.titleMedium.copy(lineHeight = androidx.compose.ui.unit.TextUnit(26f, androidx.compose.ui.unit.TextUnitType.Sp)))
+            Text(q.info, style = MaterialTheme.typography.bodyLarge.copy(fontSize = (19 * readingScale).sp, lineHeight = (30 * readingScale).sp))
             Spacer(Modifier.height(12.dp))
             SourceDetails(q.source)
         }
@@ -312,10 +312,11 @@ private fun StudyCards(bank: QuizBank, cards: List<com.zikrtime.app.quiz.Questio
 
 @Composable
 fun RoundResult(addedMinutes: Int, onAgain: (() -> Unit)?, onDone: () -> Unit, doneText: String = stringResource(R.string.action_done)) {
-    Column(Modifier.fillMaxWidth().padding(top = 24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+    LandscapePanel(R.drawable.azkar_evening) {
+      Column(Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 36.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         IconBadge(painterResource(R.drawable.ic_check), size = 72.dp)
         Spacer(Modifier.height(16.dp))
-        Text(stringResource(R.string.learning_complete), style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.primary)
+        Text(stringResource(R.string.learning_complete), style = MaterialTheme.typography.headlineMedium, color = Porcelain)
         Spacer(Modifier.height(8.dp))
         Text(
             if (addedMinutes > 0) stringResource(R.string.quiz_result_added, addedMinutes)
@@ -323,6 +324,7 @@ fun RoundResult(addedMinutes: Int, onAgain: (() -> Unit)?, onDone: () -> Unit, d
             style = MaterialTheme.typography.bodyLarge,
             textAlign = androidx.compose.ui.text.style.TextAlign.Center,
         )
+    }
     }
     Spacer(Modifier.height(8.dp))
     if (onAgain != null) PrimaryButton(stringResource(R.string.quiz_again), onClick = onAgain)

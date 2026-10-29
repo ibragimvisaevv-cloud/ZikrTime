@@ -195,9 +195,7 @@ fun PlacesScreen() {
             }
             if (places.isEmpty()) {
                 item {
-                    ZCard {
-                        Text(stringResource(if (Places.loading) R.string.places_loading else R.string.places_empty), style = MaterialTheme.typography.bodyLarge)
-                    }
+                    StatePanel(stringResource(if (Places.loading) R.string.places_loading else R.string.places_empty), icon = R.drawable.ic_mosque)
                 }
             }
             // В списке — ближайшие 100, на карте — все (кластерами)
@@ -220,7 +218,7 @@ fun PlacesScreen() {
                 }
             }
             item {
-                GlassHero {
+                LandscapePanel(R.drawable.azkar_morning) {
                     Column(Modifier.padding(20.dp)) {
                         Text(stringResource(R.string.places_suggest_title), style = MaterialTheme.typography.titleMedium, color = Cream)
                         Spacer(Modifier.height(6.dp))
@@ -244,17 +242,17 @@ fun PlacesScreen() {
 
 @Composable
 private fun FilterPill(text: String, selected: Boolean, onClick: () -> Unit) {
-    val shape = RoundedCornerShape(50)
+    val shape = RoundedCornerShape(16.dp)
     val interaction = remember { MutableInteractionSource() }
     Box(
         Modifier
             .pressScale(interaction)
             .then(
-                if (selected) Modifier.clip(shape).background(Brush.linearGradient(listOf(Color(0xFF61734D), EmeraldDeep)))
+                if (selected) Modifier.clip(shape).background(Brush.linearGradient(listOf(Emerald, EmeraldDeep)))
                 else Modifier.glass(shape, elevation = 3.dp),
             )
             .clickable(interactionSource = interaction, indication = null, onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 9.dp),
+            .padding(horizontal = 16.dp, vertical = 14.dp),
     ) {
         Text(text, style = MaterialTheme.typography.labelLarge, color = if (selected) Color.White else MaterialTheme.colorScheme.onSurface)
     }
@@ -309,7 +307,7 @@ private fun PlaceCard(place: Places.Place, distanceKm: Double, expanded: Boolean
             ReviewsBlock("place:${place.id}", inCard = false)
         }
     }
-    if (correctionDialog) AlertDialog(
+    if (correctionDialog) HorizonDialog(
         onDismissRequest = { correctionDialog = false },
         title = { Text(stringResource(R.string.place_changed)) },
         text = { Text(stringResource(if (correctionUrl != null) R.string.place_correction_help else R.string.place_correction_unavailable), modifier = Modifier.verticalScroll(rememberScrollState())) },

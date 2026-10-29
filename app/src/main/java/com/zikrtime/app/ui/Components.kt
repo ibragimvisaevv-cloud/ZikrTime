@@ -110,37 +110,35 @@ fun ScreenScaffold(
     onBack: () -> Unit,
     actions: @Composable RowScope.() -> Unit = {},
     scrollable: Boolean = true,
+    scene: Int? = null,
+    showHeading: Boolean = true,
+    scrollKey: Any? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    Column(
-        Modifier
-            .fillMaxSize()
-            .windowInsetsPadding(WindowInsets.statusBars)
-            .imePadding(),
-    ) {
-        Row(
-            Modifier.fillMaxWidth().padding(start = 4.dp, end = 8.dp, top = 4.dp, bottom = 4.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            IconButton(onClick = onBack) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.action_back))
+    val scroll = rememberScrollState()
+    androidx.compose.runtime.LaunchedEffect(scrollKey) { if (scrollKey != null) scroll.scrollTo(0) }
+    Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
+        .windowInsetsPadding(WindowInsets.statusBars).imePadding()) {
+        Surface(color = MaterialTheme.colorScheme.surfaceContainerLow, tonalElevation = 0.dp) {
+            Row(Modifier.fillMaxWidth().heightIn(min = 64.dp).padding(horizontal = 12.dp, vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = onBack, modifier = Modifier.clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.surfaceContainerHigh)) {
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.action_back))
+                }
+                Spacer(Modifier.width(12.dp))
+                Text(title, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f),
+                    maxLines = 2, overflow = TextOverflow.Ellipsis)
+                actions()
             }
-            Text(
-                title,
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.weight(1f),
-            )
-            actions()
         }
-        val body = Modifier
-            .fillMaxWidth()
-            .weight(1f)
-            .let { if (scrollable) it.verticalScroll(rememberScrollState()) else it }
-            .padding(horizontal = 20.dp)
-        Column(body, verticalArrangement = Arrangement.spacedBy(16.dp)) {
-            Spacer(Modifier.height(4.dp))
+        val body = Modifier.fillMaxWidth().weight(1f)
+            .let { if (scrollable) it.verticalScroll(scroll) else it }.padding(horizontal = 20.dp)
+        Column(body, verticalArrangement = Arrangement.spacedBy(20.dp)) {
+            Spacer(Modifier.height(0.dp))
+            if (showHeading && scrollable) PageHeading(title, scene = scene)
             content()
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(12.dp))
             Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
         }
     }

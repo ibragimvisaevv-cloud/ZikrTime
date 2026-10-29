@@ -2,201 +2,116 @@ package com.zikrtime.app.ui
 
 import android.app.Activity
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.zikrtime.app.R
 import com.zikrtime.app.data.City
+import com.zikrtime.app.data.Cities
+import com.zikrtime.app.data.Store
 import com.zikrtime.app.i18n.Lang
-import com.zikrtime.app.ui.theme.Cream
-import com.zikrtime.app.ui.theme.Emerald
-import com.zikrtime.app.ui.theme.EmeraldDeep
-import com.zikrtime.app.ui.theme.EmeraldNight
-import com.zikrtime.app.ui.theme.Gold
 
-/** Первый запуск: язык → знакомство → разрешения → город. */
+/** One scene, a readable foreground and five short steps. Permissions always remain optional. */
 @Composable
 fun OnboardingScreen(onCityChosen: (City) -> Unit) {
-    // Шаг сохраняется при пересоздании экрана (после смены языка экран перезапускается).
     val nav = LocalNav.current
     var step by rememberSaveable { mutableIntStateOf(nav.onboardingStep) }
-    BackHandler(enabled = step > 0) { step-- }
-    when (step) {
-        0 -> LanguageStep(onNext = { step = 1 })
-        1 -> Welcome(onNext = { step = 2 })
-        2 -> PermissionsStep(onNext = { step = 3 })
-        else -> Column(
-            Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .windowInsetsPadding(WindowInsets.safeDrawing)
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            Spacer(Modifier.height(16.dp))
-            Text(stringResource(R.string.onboarding_city_title), style = MaterialTheme.typography.headlineMedium)
-            Text(stringResource(R.string.onboarding_city_text), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            CityPicker(onPicked = onCityChosen)
-            Spacer(Modifier.height(24.dp))
-        }
-    }
-}
-
-@Composable
-private fun LanguageStep(onNext: () -> Unit) {
     val context = LocalContext.current
     val activity = context as? Activity
     val current = Lang.saved(context)
-    // Кнопка «Продолжить» всегда видна внизу, список прокручивается над ней.
-    Column(
-        Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .windowInsetsPadding(WindowInsets.safeDrawing),
-    ) {
-        Column(
-            Modifier
-                .weight(1f)
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            Spacer(Modifier.height(24.dp))
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                AppIconImage(Modifier.size(56.dp))
-                Spacer(Modifier.width(14.dp))
-                Text(stringResource(R.string.app_name), style = MaterialTheme.typography.headlineSmall)
+    val motion = motionEnabled()
+    BackHandler(enabled = step > 0) { step-- }
+    val titles = listOf(R.string.app_name, R.string.onboarding_language_title, R.string.onboarding_city_title,
+        R.string.onboarding_perms_title, R.string.onboarding_ready_title)
+    Box(Modifier.fillMaxSize().testTag("onboarding_step_$step")) {
+        SceneBackdrop(Modifier.fillMaxSize())
+        Column(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.statusBars)) {
+            Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically) {
+                Text("ZikrTime", style = MaterialTheme.typography.titleLarge, color = Porcelain, modifier = Modifier.weight(1f))
+                ThemeQuickButton(compact = true, onLandscape = true)
             }
-            Text(stringResource(R.string.onboarding_language_title), style = MaterialTheme.typography.headlineMedium)
-            ZCard(padding = PaddingValues(vertical = 6.dp, horizontal = 8.dp)) {
-                LanguageList(current = current, onPick = { code -> if (code != current) activity?.let { Lang.set(it, code) } })
-            }
-            Spacer(Modifier.height(8.dp))
-        }
-        PrimaryButton(
-            stringResource(R.string.action_continue),
-            onClick = onNext,
-            modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp),
-        )
-    }
-}
-
-@Composable
-private fun Welcome(onNext: () -> Unit) {
-    Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Emerald, EmeraldDeep, EmeraldNight)))) {
-        StarPattern(Modifier.fillMaxSize(), color = Gold.copy(alpha = 0.09f), cell = 72f)
-        Column(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing)) {
-            Column(
-                Modifier
-                    .weight(1f)
-                    .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 28.dp, vertical = 24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Spacer(Modifier.height(16.dp))
-                AppIconImage(Modifier.size(120.dp))
-                Spacer(Modifier.height(20.dp))
-                Text(stringResource(R.string.app_name), fontSize = 36.sp, fontWeight = FontWeight.SemiBold, color = Cream, textAlign = TextAlign.Center)
-                Text(stringResource(R.string.slogan), style = MaterialTheme.typography.titleMedium, color = Gold, textAlign = TextAlign.Center)
-                Spacer(Modifier.height(32.dp))
-                Column(verticalArrangement = Arrangement.spacedBy(18.dp)) {
-                    Feature(R.drawable.ic_nav_prayer, stringResource(R.string.onboarding_feature_times))
-                    Feature(R.drawable.ic_alarm, stringResource(R.string.onboarding_feature_alarm))
-                    Feature(R.drawable.ic_nav_focus, stringResource(R.string.onboarding_feature_focus))
-                    Feature(R.drawable.ic_nav_knowledge, stringResource(R.string.onboarding_feature_quiz))
-                    Feature(R.drawable.ic_qibla, stringResource(R.string.onboarding_feature_tools))
+            // Leave the mosque and minarets visible; smaller viewports give space back to content.
+            Spacer(Modifier.height(if (LocalDensity.current.fontScale > 1.3f) 16.dp else if (step == 0) 112.dp else 32.dp))
+            Column(Modifier.weight(1f).fillMaxWidth().clip(RoundedCornerShape(topStart = 34.dp, topEnd = 34.dp))
+                .background(MaterialTheme.colorScheme.background).imePadding()) {
+                Row(Modifier.fillMaxWidth().padding(start = 24.dp, end = 12.dp, top = 14.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Text(stringResource(R.string.onboarding_steps, step + 1, 5), style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.secondary, modifier = Modifier.weight(1f))
+                    if (step > 0) TextButton(onClick = { step-- }, modifier = Modifier.testTag("onboarding_back")) { Text(stringResource(R.string.action_back)) }
                 }
+                Row(Modifier.padding(horizontal = 24.dp, vertical = 10.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                    repeat(5) { i -> Box(Modifier.weight(1f).height(3.dp).clip(CircleShape)
+                        .background(if (i <= step) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant)) }
+                }
+                AnimatedContent(targetState = step, transitionSpec = {
+                    fadeIn(tween(if (motion) 240 else 0)) togetherWith fadeOut(tween(if (motion) 120 else 0))
+                }, modifier = Modifier.weight(1f), label = "onboarding") { page ->
+                    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp),
+                        verticalArrangement = Arrangement.spacedBy(20.dp)) {
+                        Text(stringResource(titles[page]), style = MaterialTheme.typography.headlineLarge)
+                        when (page) {
+                            0 -> {
+                                Text(stringResource(R.string.slogan), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.secondary)
+                                listOf(R.drawable.ic_nav_prayer to R.string.onboarding_feature_times,
+                                    R.drawable.ic_alarm to R.string.onboarding_feature_alarm,
+                                    R.drawable.ic_nav_knowledge to R.string.onboarding_feature_quiz,
+                                    R.drawable.ic_nav_focus to R.string.onboarding_feature_focus,
+                                    R.drawable.ic_qibla to R.string.onboarding_feature_tools).forEach { (icon, label) ->
+                                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+                                        IconBadge(painterResource(icon)); Text(stringResource(label), style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
+                                    }
+                                }
+                            }
+                            1 -> LanguageList(current, onPick = { code -> if (code != current) activity?.let { Lang.set(it, code) } })
+                            2 -> {
+                                Text(stringResource(R.string.onboarding_city_text), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                CityPicker { city -> Store.setLocation(city); step = 3 }
+                            }
+                            3 -> {
+                                Text(stringResource(R.string.onboarding_perms_text), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                EssentialPermissions()
+                            }
+                            4 -> {
+                                IconBadge(painterResource(R.drawable.ic_check), size = 64.dp)
+                                Text(stringResource(R.string.onboarding_ready_text), style = MaterialTheme.typography.bodyLarge)
+                                ZCard {
+                                    Text(Cities.displayName(context, Store.location), style = MaterialTheme.typography.titleLarge)
+                                    Text(methodName(Store.method), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                }
+                                AppearancePicker()
+                            }
+                        }
+                    }
+                }
+                if (step != 2) PrimaryButton(stringResource(when (step) {
+                    0, 4 -> R.string.action_start
+                    3 -> if (Perms.allGranted(context).also { AppEvents.resumeCount }) R.string.action_continue else R.string.onboarding_perms_later
+                    else -> R.string.action_continue
+                }), onClick = { if (step == 4) onCityChosen(Store.location) else step++ },
+                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp).testTag("onboarding_next"))
+                Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
             }
-            Button(
-                onClick = onNext,
-                colors = ButtonDefaults.buttonColors(containerColor = Gold, contentColor = Color(0xFF2B1E00)),
-                shape = RoundedCornerShape(18.dp),
-                modifier = Modifier.padding(horizontal = 28.dp, vertical = 16.dp).fillMaxWidth().height(56.dp),
-            ) {
-                Text(stringResource(R.string.action_start), style = MaterialTheme.typography.titleMedium)
-            }
         }
-    }
-}
-
-@Composable
-private fun Feature(icon: Int, text: String) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Box(Modifier.size(42.dp).clip(CircleShape).background(Cream.copy(alpha = 0.1f)), contentAlignment = Alignment.Center) {
-            Icon(painterResource(icon), contentDescription = null, tint = Gold, modifier = Modifier.size(22.dp))
-        }
-        Spacer(Modifier.width(16.dp))
-        Text(text, style = MaterialTheme.typography.bodyLarge, color = Cream)
-    }
-}
-
-/** Сразу просим всё, что нужно для азана, будильника и блокировки, — чтобы потом ничего не «молчало». */
-@Composable
-private fun PermissionsStep(onNext: () -> Unit) {
-    Column(
-        Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .windowInsetsPadding(WindowInsets.safeDrawing),
-    ) {
-        Column(
-            Modifier
-                .weight(1f)
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            Spacer(Modifier.height(16.dp))
-            Text(stringResource(R.string.onboarding_perms_title), style = MaterialTheme.typography.headlineMedium)
-            Text(stringResource(R.string.onboarding_perms_text), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            ZCard { EssentialPermissions() }
-            Spacer(Modifier.height(8.dp))
-        }
-        val all = Perms.allGranted(LocalContext.current).also { AppEvents.resumeCount }
-        PrimaryButton(
-            stringResource(if (all) R.string.action_continue else R.string.onboarding_perms_later),
-            onClick = onNext,
-            modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp),
-        )
     }
 }

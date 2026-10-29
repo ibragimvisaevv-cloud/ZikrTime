@@ -466,6 +466,13 @@
     <string name="pause_pending">Molaya devam etmek için ZikrTime\'ı açın</string>
     <string name="pause_running">Denetim çalışıyor</string>
     <string name="pause_inactive">Mola kapalı</string>
+    <string name="reader_text_size">Metin boyutu</string>
+    <string name="onboarding_ready_title">Her şey hazır</string>
+    <string name="onboarding_ready_text">Namaz vakitleri, zikir ve bilgi — kendi hızınızda.</string>
+    <string name="onboarding_steps">%1$d / %2$d adım</string>
+    <string name="counter_reset_confirmation">Sayaç sıfırlansın mı? Günlük ilerlemeniz korunur.</string>
+    <string name="zakat_prices_failed">Fiyatlar yenilenemedi. Elle girin veya tekrar deneyin.</string>
+    <string name="photo_unavailable">Fotoğraf kullanılamıyor</string>
     <string name="learning_resume">Oturuma devam et</string>
     <string name="learning_review">Tekrar et</string>
     <string name="learning_review_hint">Tekrar zamanı gelen en fazla beş soru. Yanlışlar ertesi gün geri gelir. Tekrarlar bonus dakika kazandırmaz.</string>

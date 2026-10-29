@@ -70,6 +70,7 @@ private fun fastState(now: ZonedDateTime): FastState {
 }
 
 @Composable
+@OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 fun RamadanScreen() {
     val nav = LocalNav.current
     var now by remember { mutableStateOf(ZonedDateTime.now()) }
@@ -86,8 +87,8 @@ fun RamadanScreen() {
     val context = androidx.compose.ui.platform.LocalContext.current
     val dateFmt = remember { DateTimeFormatter.ofPattern("d MMMM", com.zikrtime.app.i18n.Lang.locale(context)) }
 
-    ScreenScaffold(title = stringResource(R.string.ramadan_title), onBack = { nav.back() }) {
-        SectionBackdrop(tone = SectionTone.Ink) {
+    ScreenScaffold(title = stringResource(R.string.ramadan_title), onBack = { nav.back() }, showHeading = false) {
+        LandscapePanel(R.drawable.horizon_night) {
             Column(Modifier.padding(22.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                 val day = period?.dayOf(today)
                 androidx.compose.material3.Icon(painterResource(R.drawable.ic_prayer_isha), null, tint = Gold)
@@ -139,7 +140,7 @@ fun RamadanScreen() {
                 Spacer(Modifier.height(4.dp))
                 Text(stringResource(R.string.ramadan_fasts_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(Modifier.height(12.dp))
-                (1..period.days).chunked(6).forEach { row ->
+                (1..period.days).chunked(if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 4 else 6).forEach { row ->
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         row.forEach { n ->
                             val date = period.start.plusDays(n - 1L)
@@ -173,7 +174,7 @@ fun RamadanScreen() {
                                 )
                             }
                         }
-                        repeat(6 - row.size) { Spacer(Modifier.weight(1f)) }
+                        repeat((if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 4 else 6) - row.size) { Spacer(Modifier.weight(1f)) }
                     }
                     Spacer(Modifier.height(8.dp))
                 }
@@ -183,7 +184,7 @@ fun RamadanScreen() {
         ZCard {
             Text(stringResource(R.string.ramadan_start_title), style = MaterialTheme.typography.titleSmall)
             Spacer(Modifier.height(8.dp))
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            androidx.compose.foundation.layout.FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 listOf(-1 to R.string.ramadan_shift_earlier, 0 to R.string.ramadan_shift_none, 1 to R.string.ramadan_shift_later).forEach { (v, label) ->
                     FilterChip(selected = shift == v, onClick = { Store.ramadanShift = v }, label = { Text(stringResource(label)) })
                 }

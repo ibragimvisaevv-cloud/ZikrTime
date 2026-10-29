@@ -88,6 +88,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Store.init(this)
+        nav.restore(savedInstanceState)
         // Названия каналов уведомлений — на текущем языке.
         PrayerAlarms.createChannels(this)
         if (BuildConfig.DEBUG && QaHooks.handle(this, intent, nav)) return
@@ -96,12 +97,12 @@ class MainActivity : ComponentActivity() {
         val showSplash = savedInstanceState == null && com.zikrtime.app.ui.LiveFlags.splash &&
             (intent?.hasExtra("qa_screen") != true || intent?.getBooleanExtra("qa_splash", false) == true)
         setContent {
-            val natural = Store.onboarded && (nav.stack.lastOrNull() in setOf(Screen.TASBIH, Screen.AZKAR, Screen.PROGRESS, Screen.REVIEW) || (nav.stack.isEmpty() && nav.tab == Tab.PRAYER))
+            val natural = Store.onboarded && (nav.stack.lastOrNull()?.screen in setOf(Screen.TASBIH, Screen.AZKAR, Screen.PROGRESS, Screen.REVIEW) || (nav.stack.isEmpty() && nav.tab == Tab.PRAYER))
             ZikrTheme(natural = natural) {
                 val tilt = com.zikrtime.app.ui.rememberTilt(enabled = false)
                 var splash by androidx.compose.runtime.saveable.rememberSaveable { androidx.compose.runtime.mutableStateOf(showSplash) }
                 LaunchedEffect(Unit) {
-                    kotlinx.coroutines.delay(1_150)
+                    kotlinx.coroutines.delay(650)
                     splash = false
                 }
                 CompositionLocalProvider(com.zikrtime.app.ui.LocalTilt provides tilt) {
@@ -137,6 +138,11 @@ class MainActivity : ComponentActivity() {
             "alarm" -> nav.open(Screen.ALARM)
             "focus" -> nav.tab = com.zikrtime.app.ui.Tab.FOCUS
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        nav.save(outState)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onResume() {
@@ -178,24 +184,27 @@ private fun AppRoot() {
             Store.onboarded = true
             PrayerAlarms.scheduleNext(context)
             scope.launch { if (OnlineTimes.refresh()) PrayerAlarms.scheduleNext(context) }
-            if (Build.VERSION.SDK_INT >= 33) notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
         })
         return
     }
 
+    val motion = com.zikrtime.app.ui.motionEnabled()
     val screensState = androidx.compose.runtime.saveable.rememberSaveableStateHolder()
     BackHandler(enabled = nav.stack.isNotEmpty()) { nav.back() }
     AnimatedContent(
         targetState = nav.stack.lastOrNull(),
-        transitionSpec = { fadeIn() togetherWith fadeOut() },
+        transitionSpec = {
+            val forward = (targetState?.id ?: 0) > (initialState?.id ?: 0)
+            val duration = if (motion) 280 else 0
+            (fadeIn(androidx.compose.animation.core.tween(duration)) +
+                androidx.compose.animation.slideInHorizontally(androidx.compose.animation.core.tween(duration)) { if (motion) it / (if (forward) 8 else -12) else 0 }) togetherWith
+                (fadeOut(androidx.compose.animation.core.tween(if (motion) 160 else 0)) +
+                    androidx.compose.animation.slideOutHorizontally(androidx.compose.animation.core.tween(duration)) { if (motion) it / (if (forward) -12 else 8) else 0 })
+        },
         label = "screens",
-    ) { screen ->
-        screensState.SaveableStateProvider(when (screen) {
-            Screen.QUIZ, Screen.REVIEW -> "${screen.name}-${nav.quizRound}"
-            Screen.SHOP_PRODUCT -> "product-${nav.shopProduct}"
-            Screen.SHOP_SELLER -> "seller-${nav.shopSeller}"
-            else -> screen?.name ?: "tabs"
-        }) {
+    ) { entry ->
+        val screen = entry?.screen
+        screensState.SaveableStateProvider(if (screen == Screen.QUIZ || screen == Screen.REVIEW) "${entry?.id}-${nav.quizRound}" else entry?.id?.toString() ?: "tabs") {
         when (screen) {
             null -> Tabs()
             Screen.LANGUAGE -> LanguageScreen()
@@ -210,8 +219,8 @@ private fun AppRoot() {
             Screen.AZKAR -> com.zikrtime.app.ui.AzkarScreen()
             Screen.APPS -> AppsScreen()
             Screen.ABOUT -> AboutScreen()
-            Screen.SHOP_SELLER -> com.zikrtime.app.ui.SellerScreen()
-            Screen.SHOP_PRODUCT -> com.zikrtime.app.ui.ProductScreen()
+            Screen.SHOP_SELLER -> com.zikrtime.app.ui.SellerScreen(entry?.seller)
+            Screen.SHOP_PRODUCT -> com.zikrtime.app.ui.ProductScreen(entry?.product)
             Screen.PLACES -> com.zikrtime.app.ui.PlacesScreen()
             Screen.RAMADAN -> com.zikrtime.app.ui.RamadanScreen()
             Screen.ZAKAT -> com.zikrtime.app.ui.ZakatScreen()
@@ -224,6 +233,7 @@ private fun AppRoot() {
 private fun Tabs() {
     val nav = LocalNav.current
     val tabState = androidx.compose.runtime.saveable.rememberSaveableStateHolder()
+    val motion = com.zikrtime.app.ui.motionEnabled()
     val items = listOf(
         Triple(Tab.PRAYER, R.drawable.ic_nav_prayer, R.string.tab_prayer),
         Triple(Tab.KNOWLEDGE, R.drawable.ic_nav_knowledge, R.string.tab_knowledge),
@@ -235,8 +245,8 @@ private fun Tabs() {
         AnimatedContent(
             targetState = nav.tab,
             transitionSpec = {
-                (fadeIn(androidx.compose.animation.core.tween(260)) + androidx.compose.animation.scaleIn(initialScale = 0.985f)) togetherWith
-                    fadeOut(androidx.compose.animation.core.tween(160))
+                (fadeIn(androidx.compose.animation.core.tween(if (motion) 260 else 0)) + androidx.compose.animation.scaleIn(initialScale = if (motion) 0.985f else 1f)) togetherWith
+                    fadeOut(androidx.compose.animation.core.tween(if (motion) 160 else 0))
             },
             label = "tabs",
         ) { tab ->

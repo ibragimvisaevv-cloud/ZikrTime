@@ -153,7 +153,7 @@ private fun AlarmScreen(test: Boolean, onStop: () -> Unit, onSnooze: () -> Unit)
             .fillMaxSize()
             .background(Brush.verticalGradient(listOf(EmeraldNight, EmeraldDeep, EmeraldNight))),
     ) {
-        StarPattern(Modifier.fillMaxSize(), color = Gold.copy(alpha = 0.07f), cell = 72f)
+        com.zikrtime.app.ui.SceneBackdrop(Modifier.fillMaxSize(), night = true)
         Column(
             Modifier
                 .fillMaxSize()
@@ -236,6 +236,6 @@ private fun AlarmButton(text: String, onClick: () -> Unit) {
         onClick = onClick,
         colors = androidx.compose.material3.ButtonDefaults.buttonColors(containerColor = Gold, contentColor = androidx.compose.ui.graphics.Color(0xFF2B1E00)),
         shape = RoundedCornerShape(20.dp),
-        modifier = Modifier.fillMaxWidth().height(64.dp),
+        modifier = Modifier.fillMaxWidth().heightIn(min = 64.dp),
     ) { Text(text, style = MaterialTheme.typography.titleMedium) }
 }

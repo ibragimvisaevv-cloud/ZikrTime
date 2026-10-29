@@ -466,6 +466,13 @@
     <string name="pause_pending">Tanaffusni davom ettirish uchun ZikrTime’ni oching</string>
     <string name="pause_running">Nazorat ishlayapti</string>
     <string name="pause_inactive">Tanaffus oʻchirilgan</string>
+    <string name="reader_text_size">Matn o‘lchami</string>
+    <string name="onboarding_ready_title">Hammasi tayyor</string>
+    <string name="onboarding_ready_text">Namoz vaqtlari, zikr va bilim — o‘z sur’atingizda.</string>
+    <string name="onboarding_steps">%2$d tadan %1$d-qadam</string>
+    <string name="counter_reset_confirmation">Bu hisoblagich nolga tushirilsinmi? Saqlangan kunlik natija qoladi.</string>
+    <string name="zakat_prices_failed">Narxlar yangilanmadi. Qo‘lda kiriting yoki qayta urining.</string>
+    <string name="photo_unavailable">Surat mavjud emas</string>
     <string name="learning_resume">Mashgʻulotni davom ettirish</string>
     <string name="learning_review">Takrorlash</string>
     <string name="learning_review_hint">Takrorlash vaqti kelgan beshtagacha savol. Xatolar keyingi kuni qaytadi. Takrorlash uchun bonus daqiqalar berilmaydi.</string>

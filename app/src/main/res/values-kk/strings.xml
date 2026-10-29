@@ -466,6 +466,13 @@
     <string name="pause_pending">Үзілісті жалғастыру үшін ZikrTime қолданбасын ашыңыз</string>
     <string name="pause_running">Бақылау жұмыс істеп тұр</string>
     <string name="pause_inactive">Үзіліс өшірулі</string>
+    <string name="reader_text_size">Мәтін өлшемі</string>
+    <string name="onboarding_ready_title">Бәрі дайын</string>
+    <string name="onboarding_ready_text">Намаз уақыты, зікір және білім — өз қарқыныңызбен.</string>
+    <string name="onboarding_steps">%2$d қадамның %1$d-і</string>
+    <string name="counter_reset_confirmation">Есептегіш нөлден басталсын ба? Күндік нәтиже сақталады.</string>
+    <string name="zakat_prices_failed">Бағалар жаңартылмады. Қолмен енгізіңіз немесе қайталаңыз.</string>
+    <string name="photo_unavailable">Фото қолжетімсіз</string>
     <string name="learning_resume">Сабақты жалғастыру</string>
     <string name="learning_review">Қайталау</string>
     <string name="learning_review_hint">Қайталау мерзімі келген бес сұраққа дейін. Қате жауаптар келесі күні қайталанады. Қайталауға қосымша минут берілмейді.</string>

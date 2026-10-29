@@ -13,10 +13,13 @@ enum class Screen { LANGUAGE, CITY, PRAYER_SETTINGS, ALARM, QIBLA, TASBIH, QUIZ,
 /** Вкладки нижней панели. */
 enum class Tab { PRAYER, KNOWLEDGE, SHOP, FOCUS, MORE }
 
+data class NavEntry(val screen: Screen, val id: Int, val seller: String? = null, val product: String? = null)
+
 /** Простая навигация: текущая вкладка и стопка открытых экранов. */
 class Nav {
     var tab by mutableStateOf(Tab.PRAYER)
-    val stack = mutableStateListOf<Screen>()
+    val stack = mutableStateListOf<NavEntry>()
+    private var nextEntry = 0
 
     /** Тема для раунда викторины (null — все темы). */
     var quizCategory by mutableStateOf<String?>(null)
@@ -35,7 +38,11 @@ class Nav {
     var onboardingStep by mutableIntStateOf(0)
 
     fun open(screen: Screen) {
-        if (stack.lastOrNull() != screen) stack.add(screen)
+        val old = stack.lastOrNull()
+        if (old?.screen != screen || (screen == Screen.SHOP_SELLER && old?.seller != shopSeller) ||
+            (screen == Screen.SHOP_PRODUCT && old?.product != shopProduct)) {
+            stack.add(NavEntry(screen, ++nextEntry, shopSeller, shopProduct))
+        }
     }
 
     fun startQuiz(category: String?) {
@@ -58,6 +65,25 @@ class Nav {
         open(Screen.AZKAR)
     }
     fun resumeAzkar() { com.zikrtime.app.data.AzkarStore.pendingPeriod?.let { openAzkar(it) } }
+
+    fun save(out: android.os.Bundle) {
+        out.putString("nav_tab", tab.name)
+        out.putStringArrayList("nav_routes", ArrayList(stack.map { "${it.screen.name}|${it.id}|${it.seller.orEmpty()}|${it.product.orEmpty()}" }))
+        out.putString("nav_category", quizCategory); out.putInt("nav_round", quizRound)
+        out.putString("nav_period", azkarPeriod)
+    }
+    fun restore(saved: android.os.Bundle?) {
+        if (saved == null) return
+        tab = runCatching { Tab.valueOf(saved.getString("nav_tab").orEmpty()) }.getOrDefault(Tab.PRAYER)
+        saved.getStringArrayList("nav_routes")?.forEach { raw ->
+            val fields = raw.split('|')
+            runCatching { NavEntry(Screen.valueOf(fields[0]), fields[1].toInt(), fields[2].ifBlank { null }, fields[3].ifBlank { null }) }
+                .getOrNull()?.let { stack.add(it); nextEntry = maxOf(nextEntry, it.id) }
+        }
+        quizCategory = saved.getString("nav_category"); quizRound = saved.getInt("nav_round")
+        azkarPeriod = saved.getString("nav_period") ?: "morning"
+        shopSeller = stack.lastOrNull()?.seller; shopProduct = stack.lastOrNull()?.product
+    }
 
     fun back(): Boolean {
         if (stack.isEmpty()) return false

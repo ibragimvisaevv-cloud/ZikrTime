@@ -123,19 +123,17 @@ private fun PauseContent(pkg: String,onOpen:(Int,String)->Unit,onExit:()->Unit,o
     Surface(Modifier.fillMaxSize().testTag("pause_screen").semantics { testTagsAsResourceId=true },color=MaterialTheme.colorScheme.background) {
         Column(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing).imePadding()
             .verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
-            Text(stringResource(R.string.pause_title),style=MaterialTheme.typography.headlineMedium)
-            Text(appLabel,style=MaterialTheme.typography.titleMedium,color=MaterialTheme.colorScheme.onSurfaceVariant)
+            com.zikrtime.app.ui.PageHeading(stringResource(R.string.pause_title), appLabel, R.drawable.focus_courtyard)
             if(!completed) {
                 ZCard {
                     Text(stringResource(R.string.pause_zikr),style=MaterialTheme.typography.titleMedium)
                     Text(stringResource(R.string.pause_zikr_hint),style=MaterialTheme.typography.bodyMedium)
                     Spacer(Modifier.height(20.dp))
-                    Text(arabic[phrase],Modifier.fillMaxWidth(),style=MaterialTheme.typography.headlineLarge.copy(textDirection=TextDirection.Rtl,lineHeight=48.sp),textAlign=TextAlign.Center)
+                    Text(arabic[phrase],Modifier.fillMaxWidth(),style=com.zikrtime.app.ui.theme.ArabicStyle.copy(textDirection=TextDirection.Rtl,lineHeight=56.sp),textAlign=TextAlign.Center)
                     Spacer(Modifier.height(16.dp))
                     Text(stringResource(names[phrase]),style=MaterialTheme.typography.titleMedium)
                     Text(stringResource(meanings[phrase]),style=MaterialTheme.typography.bodyLarge)
                     Spacer(Modifier.height(12.dp))
-                    Text(stringResource(R.string.pause_source),style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant)
                 }
                 Button(onClick={completed=true},modifier=Modifier.fillMaxWidth().testTag("pause_done")) { Text(stringResource(R.string.pause_done)) }
                 if(!strict) TextButton(onClick={completed=true},modifier=Modifier.fillMaxWidth().testTag("pause_skip")) { Text(stringResource(R.string.pause_skip)) }

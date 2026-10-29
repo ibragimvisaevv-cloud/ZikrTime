@@ -25,12 +25,15 @@ object PauseOverlay {
         val root=LinearLayout(wrapped).apply {
             orientation=LinearLayout.VERTICAL; gravity=Gravity.CENTER
             setPadding((24*dp).toInt(),(24*dp).toInt(),(24*dp).toInt(),(24*dp).toInt())
-            background=GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,intArrayOf(0xFF263648.toInt(),0xFF16212E.toInt()))
+            background=GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,intArrayOf(0xFF1D5143.toInt(),0xFF071F1B.toInt())).apply { cornerRadius=28*dp; setStroke((1*dp).toInt(),0xFFD9BE87.toInt()) }
         }
-        root.addView(TextView(wrapped).apply { setText(R.string.pause_title); textSize=26f; setTextColor(0xFFF0F4F8.toInt()); gravity=Gravity.CENTER })
+        root.addView(TextView(wrapped).apply { setText(R.string.pause_title); textSize=26f; setTextColor(0xFFFAF7EE.toInt()); gravity=Gravity.CENTER })
         fun button(label: Int,viewId: Int,action:()->Unit) {
             root.addView(Button(wrapped).apply {
                 setText(label); id=viewId; setOnClickListener { action() }
+                isAllCaps=false; minHeight=(52*dp).toInt(); setTextColor(0xFF102D26.toInt())
+                background=GradientDrawable().apply { setColor(0xFFFAF7EE.toInt()); cornerRadius=18*dp }
+                setPadding((16*dp).toInt(),(12*dp).toInt(),(16*dp).toInt(),(12*dp).toInt())
                 layoutParams=LinearLayout.LayoutParams(-1,-2).apply { topMargin=(12*dp).toInt() }
             })
         }

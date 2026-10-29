@@ -466,6 +466,13 @@
     <string name="pause_pending">Откройте ZikrTime, чтобы продолжить паузу</string>
     <string name="pause_running">Контроль работает</string>
     <string name="pause_inactive">Пауза выключена</string>
+    <string name="reader_text_size">Размер текста</string>
+    <string name="onboarding_ready_title">Всё готово</string>
+    <string name="onboarding_ready_text">Время намаза, зикр и знания — в вашем ритме.</string>
+    <string name="onboarding_steps">Шаг %1$d из %2$d</string>
+    <string name="counter_reset_confirmation">Обнулить этот счётчик? Сохранённый прогресс за день останется.</string>
+    <string name="zakat_prices_failed">Не удалось обновить цены. Введите их вручную или повторите попытку.</string>
+    <string name="photo_unavailable">Фото недоступно</string>
     <string name="learning_resume">Продолжить занятие</string>
     <string name="learning_review">Повторить</string>
     <string name="learning_review_hint">До пяти вопросов, срок повторения которых наступил. Ошибки возвращаются на следующий день. Бонусные минуты за повторение не начисляются.</string>

@@ -466,6 +466,13 @@
     <string name="pause_pending">Open ZikrTime to continue the pause</string>
     <string name="pause_running">Monitoring is running</string>
     <string name="pause_inactive">Pause is off</string>
+    <string name="reader_text_size">Reading size</string>
+    <string name="onboarding_ready_title">Your horizon is ready</string>
+    <string name="onboarding_ready_text">Prayer times, remembrance and learning — at your own pace.</string>
+    <string name="onboarding_steps">Step %1$d of %2$d</string>
+    <string name="counter_reset_confirmation">Reset this counter to zero? Your saved daily progress will remain.</string>
+    <string name="zakat_prices_failed">Prices could not be refreshed. Enter them manually or try again.</string>
+    <string name="photo_unavailable">Photo unavailable</string>
     <string name="learning_resume">Continue session</string>
     <string name="learning_review">Review</string>
     <string name="learning_review_hint">Up to five questions due for review. Mistakes return the next day. Reviews do not earn bonus minutes.</string>

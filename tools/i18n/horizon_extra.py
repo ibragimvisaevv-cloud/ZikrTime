@@ -1,0 +1,12 @@
+# Whole-app Horizon presentation strings. Keep every supported locale complete.
+LANGS = ['en','ru','uz','tg','kk','ky','az','tr']
+VALUES = {
+'reader_text_size': ['Reading size','Размер текста','Matn o‘lchami','Андозаи матн','Мәтін өлшемі','Тексттин өлчөмү','Mətn ölçüsü','Metin boyutu'],
+'onboarding_ready_title': ['Your horizon is ready','Всё готово','Hammasi tayyor','Ҳама чиз омода аст','Бәрі дайын','Баары даяр','Hər şey hazırdır','Her şey hazır'],
+'onboarding_ready_text': ['Prayer times, remembrance and learning — at your own pace.','Время намаза, зикр и знания — в вашем ритме.','Namoz vaqtlari, zikr va bilim — o‘z sur’atingizda.','Вақти намоз, зикр ва дониш — бо суръати шумо.','Намаз уақыты, зікір және білім — өз қарқыныңызбен.','Намаз убактысы, зикир жана билим — өз ыргагыңызда.','Namaz vaxtları, zikr və bilik — öz tempinizdə.','Namaz vakitleri, zikir ve bilgi — kendi hızınızda.'],
+'onboarding_steps': ['Step %1$d of %2$d','Шаг %1$d из %2$d','%2$d tadan %1$d-qadam','Қадами %1$d аз %2$d','%2$d қадамның %1$d-і','%2$d кадамдын %1$d-кадамы','%2$d addımdan %1$d','%1$d / %2$d adım'],
+'counter_reset_confirmation': ['Reset this counter to zero? Your saved daily progress will remain.','Обнулить этот счётчик? Сохранённый прогресс за день останется.','Bu hisoblagich nolga tushirilsinmi? Saqlangan kunlik natija qoladi.','Ин ҳисобкунак сифр шавад? Пешрафти рӯзона нигоҳ дошта мешавад.','Есептегіш нөлден басталсын ба? Күндік нәтиже сақталады.','Эсептегич нөлгө түшүрүлсүнбү? Күнүмдүк жыйынтык сакталат.','Sayğac sıfırlansın? Günlük nəticə saxlanacaq.','Sayaç sıfırlansın mı? Günlük ilerlemeniz korunur.'],
+'zakat_prices_failed': ['Prices could not be refreshed. Enter them manually or try again.','Не удалось обновить цены. Введите их вручную или повторите попытку.','Narxlar yangilanmadi. Qo‘lda kiriting yoki qayta urining.','Нархҳо нав нашуданд. Дастӣ ворид кунед ё такрор кунед.','Бағалар жаңартылмады. Қолмен енгізіңіз немесе қайталаңыз.','Баалар жаңырган жок. Кол менен киргизиңиз же кайталаңыз.','Qiymətlər yenilənmədi. Əl ilə daxil edin və ya yenidən cəhd edin.','Fiyatlar yenilenemedi. Elle girin veya tekrar deneyin.'],
+'photo_unavailable': ['Photo unavailable','Фото недоступно','Surat mavjud emas','Акс дастнорас аст','Фото қолжетімсіз','Сүрөт жеткиликсиз','Şəkil əlçatan deyil','Fotoğraf kullanılamıyor'],
+}
+STRINGS = {key: dict(zip(LANGS,values)) for key,values in VALUES.items()}

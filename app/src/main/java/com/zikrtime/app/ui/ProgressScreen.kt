@@ -39,7 +39,7 @@ fun ProgressScreen() {
     val nav = LocalNav.current
     var days by rememberSaveable { mutableIntStateOf(30) }
     var clear by remember { mutableStateOf(false) }
-    ScreenScaffold(title = stringResource(R.string.progress_title), onBack = { nav.back() }) {
+    ScreenScaffold(title = stringResource(R.string.progress_title), onBack = { nav.back() }, scene = R.drawable.focus_courtyard) {
         ZCard { PersonalProgressSetting() }
         if (Store.personalProgressEnabled) {
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -53,7 +53,7 @@ fun ProgressScreen() {
                 summary.topics to stringResource(R.string.progress_topics, summary.topics),
                 summary.reviewed to stringResource(R.string.progress_reviewed, summary.reviewed),
                 summary.activeDays to stringResource(R.string.progress_active_days, summary.activeDays))
-            metrics.chunked(2).forEach { pair ->
+            metrics.chunked(if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 1 else 2).forEach { pair ->
                 Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     pair.forEach { (value, label) ->
                         ZCard(modifier = Modifier.weight(1f), padding = PaddingValues(16.dp)) {
@@ -77,7 +77,7 @@ fun ProgressScreen() {
             Text(stringResource(R.string.progress_clear))
         }
     }
-    if (clear) AlertDialog(
+    if (clear) HorizonDialog(
         onDismissRequest = { clear = false },
         title = { Text(stringResource(R.string.progress_clear)) },
         text = { Text(stringResource(R.string.progress_clear_confirm)) },

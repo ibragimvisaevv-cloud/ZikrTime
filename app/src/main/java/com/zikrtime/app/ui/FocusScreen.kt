@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -101,7 +102,7 @@ fun FocusScreen() {
                 val allowed = Store.allowedMinutes()
                 val remaining = (allowed - used).coerceAtLeast(0)
                 ProgressRing(progress = if (usedMillis == null) 0f else remaining.toFloat() / allowed.coerceAtLeast(1),
-                    modifier = Modifier.size(164.dp), stroke = 5.dp,
+                    modifier = Modifier.size(if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 224.dp else 164.dp), stroke = 5.dp,
                     color = Sand, track = Porcelain.copy(alpha = .22f)) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(if (usedMillis == null) "—" else remaining.toString(), style = MaterialTheme.typography.displaySmall)
@@ -120,6 +121,7 @@ fun FocusScreen() {
             TonalButton(stringResource(R.string.focus_earn_button, Store.BONUS_MINUTES_PER_ROUND), onClick = { nav.startQuiz(null) })
         }
 
+        SectionLabel(stringResource(R.string.pause_title))
         ZCard {
             SwitchRow(
                 title = stringResource(R.string.pause_title),
@@ -177,6 +179,7 @@ fun FocusScreen() {
             }
         }
 
+        SectionLabel(stringResource(R.string.focus_daily_limit))
         ZCard {
             SliderRow(
                 title = stringResource(R.string.focus_daily_limit),
@@ -313,7 +316,7 @@ fun FocusScreen() {
     }
 
     if (showDisclosure) {
-        AlertDialog(
+        HorizonDialog(
             onDismissRequest = { showDisclosure = false },
             title = { Text(stringResource(R.string.disclosure_title)) },
             text = {
@@ -344,17 +347,13 @@ fun FocusScreen() {
 
 @Composable
 fun PermissionRow(title: String, text: String, granted: Boolean, onGrant: () -> Unit) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Column(Modifier.weight(1f)) {
-            Text(title, style = MaterialTheme.typography.titleSmall)
-            Text(text, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Text(title, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+            if (granted) Icon(Icons.Default.CheckCircle, contentDescription = stringResource(R.string.state_granted), tint = MaterialTheme.colorScheme.primary)
         }
-        Spacer(Modifier.width(12.dp))
-        if (granted) {
-            Icon(Icons.Default.CheckCircle, contentDescription = stringResource(R.string.state_granted), tint = MaterialTheme.colorScheme.primary)
-        } else {
-            FilledTonalButton(onClick = onGrant) { Text(stringResource(R.string.action_grant)) }
-        }
+        Text(text, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        if (!granted) FilledTonalButton(onClick = onGrant, modifier = Modifier.heightIn(min = 48.dp)) { Text(stringResource(R.string.action_grant)) }
     }
 }
 
@@ -363,7 +362,7 @@ fun PermissionRow(title: String, text: String, granted: Boolean, onGrant: () -> 
 fun AppsScreen() {
     val nav = LocalNav.current
     val context = LocalContext.current
-    var query by remember { mutableStateOf("") }
+    var query by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf("") }
     LaunchedEffect(Unit) {
         if (AppsCache.apps == null) {
             val loaded = withContext(Dispatchers.IO) { ScreenTime.launchableApps(context) }
@@ -387,7 +386,7 @@ fun AppsScreen() {
         } else {
             val filtered = apps.filter { query.isBlank() || it.label.contains(query.trim(), ignoreCase = true) }
             if (filtered.isEmpty()) {
-                Text(stringResource(R.string.search_nothing), modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+                StatePanel(stringResource(R.string.search_nothing), icon = R.drawable.ic_nav_focus, action = stringResource(R.string.action_reset), onAction = { query = "" })
             }
             ZCard(padding = androidx.compose.foundation.layout.PaddingValues(vertical = 6.dp, horizontal = 8.dp)) {
                 filtered.forEach { app -> AppRow(app) }
