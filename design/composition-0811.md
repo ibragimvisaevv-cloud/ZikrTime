@@ -13,6 +13,8 @@
 
 ## Проверка
 
+Ключевые композиции окончательной сборки, обе темы, панель Фокуса, сохранённый поиск и кадры 320 dp / 200% визуально просмотрены. Исправленное перекрытие системной строки проверено по окончательному кадру.
+
 - Android 0.8.11 / versionCode 23, Android 15 / API 35, эмулятор Google APIs x86_64.
 - Полный прогон [40919659229](https://github.com/ibragimvisaevv-cloud/ZikrTime/actions/runs/40919659229), код `675619b2b11b77d49ffcf5c8f25c89781bd3d67b`: build, composition, journeys, focus, accessibility — успешно.
 - После единственной дополнительной правки отрисовки у системной строки — [40922530810](https://github.com/ibragimvisaevv-cloud/ZikrTime/actions/runs/40922530810), код APK `c45fad473e3ab093d3c9bfb69afdb710813d42df`: повторные build и composition — успешно.

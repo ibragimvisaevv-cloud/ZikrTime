@@ -62,7 +62,7 @@ for name,title,routes in [
     board(name,title,items)
 board('night.jpg','Новая композиция в тёмной теме',[(NEW/(r+'-dark.png'),labels[r]) for r in ['knowledge','focus','more','shop']])
 board('scroll.jpg','Прокрутка, настройки и возвращение',[(NEW/n,l) for n,l in [
-    ('knowledge-scroll-light.png','Темы и компактная шапка'),('focus-settings-light.png','Панель настроек Фокуса'),
+    ('knowledge-scroll-light.png','Передняя панель в прокрутке'),('focus-settings-light.png','Панель настроек Фокуса'),
     ('shop-search-retained.png','Сохранённый поиск'),('more-without-art-scroll.png','Композиция без иллюстрации')]])
 board('large-text.jpg','Небольшой экран и текст 200%',[(NEW/(r+'-200-scroll.png'),labels[r]) for r in ['knowledge','focus','more','shop']])
 board('first-run.jpg','Первый запуск: проверено повторно',[(J/n,l) for n,l in [
