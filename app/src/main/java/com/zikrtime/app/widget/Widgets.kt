@@ -53,6 +53,21 @@ object Widgets {
             updateScreenTime(context, manager)
             updateTasbih(context, manager)
             scheduleNextUpdate(context)
+            updatePickerPreviews(context, manager)
+        }
+    }
+
+    private fun updatePickerPreviews(context: Context, manager: AppWidgetManager) {
+        if (android.os.Build.VERSION.SDK_INT < 35) return
+        val prefs = context.getSharedPreferences("widget_previews", Context.MODE_PRIVATE)
+        val now = ZonedDateTime.now(com.zikrtime.app.ui.CityZones.forCity(Store.location.id))
+        val signature = "${Store.onboarded}:${Store.location.id}:${Store.appearance}:${Lang.content(context)}:${now.toLocalDate()}"
+        listOf(CompactPrayerWidget::class.java to (160 to 90), TimelineWidget::class.java to (340 to 90), NextPrayerWidget::class.java to (160 to 190), TodayWidget::class.java to (340 to 190)).forEach { (cls, size) ->
+            val last = prefs.getLong(cls.name, 0)
+            if (System.currentTimeMillis() - last >= 3_600_000 || prefs.getString(cls.name + "_signature", "") != signature) runCatching {
+                if (manager.setWidgetPreview(ComponentName(context, cls), android.appwidget.AppWidgetProviderInfo.WIDGET_CATEGORY_HOME_SCREEN,
+                    PrayerWidgetRenderer.render(context, -1, size, now))) prefs.edit().putLong(cls.name, System.currentTimeMillis()).putString(cls.name + "_signature",signature).apply()
+            }
         }
     }
 

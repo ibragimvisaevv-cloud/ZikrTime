@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.SET_WALLPAPER" />
     <application>
         <activity android:name=".widget.WidgetProbeActivity" android:exported="true" android:theme="@android:style/Theme.Material.Light.NoActionBar" />
         <receiver android:name=".widget.WidgetProbeReceiver" android:exported="false" />

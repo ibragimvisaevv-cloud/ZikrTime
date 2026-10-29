@@ -69,8 +69,29 @@ internal object PrayerWidgetRenderer {
             v.setTextViewText(R.id.w_empty_action, res.getString(R.string.widget_setup_city))
             return v
         }
+        if (type == PrayerWidgetModel.Layout.COMPACT) {
+            // Fixed launcher cells cannot grow with font scaling. Keep all three essentials,
+            // cap only at available space (never below the normal readable sizes).
+            val textScale = minOf(c.resources.configuration.fontScale, (size.second - 16) / 71f, (size.first - 28) / 96f).coerceAtLeast(1f)
+            v.setTextViewTextSize(R.id.w_name, android.util.TypedValue.COMPLEX_UNIT_DIP, 14f * textScale)
+            v.setTextViewTextSize(R.id.w_time, android.util.TypedValue.COMPLEX_UNIT_DIP, 30f * textScale)
+            v.setTextViewTextSize(R.id.w_countdown, android.util.TypedValue.COMPLEX_UNIT_DIP, 13f * textScale)
+        }
         val (next, at) = PrayerSchedule.next(now)
+        if (com.zikrtime.app.BuildConfig.DEBUG && id >= 0) {
+            c.filesDir.resolve("widget-render-$id.json").writeText(org.json.JSONObject()
+                .put("next",next.name).put("at",at.toString()).put("now",now.toString())
+                .put("city",Store.location.id).put("date",now.toLocalDate().toString()).put("layout",type.name)
+                .put("width",size.first).put("height",size.second).put("dark",dark).toString())
+        }
         val name = prayerName(res, next)
+        val title = when (type) {
+            PrayerWidgetModel.Layout.COMPACT -> R.string.widget_compact_name
+            PrayerWidgetModel.Layout.WIDE -> R.string.widget_timeline_name
+            PrayerWidgetModel.Layout.SQUARE -> R.string.widget_square_name
+            PrayerWidgetModel.Layout.DAY -> R.string.widget_day_name
+        }
+        v.setContentDescription(R.id.widget_root, res.getString(title) + ", " + name + ", " + at.format(clockFormatter(local)))
         v.setTextViewText(R.id.w_name, name)
         v.setTextColor(R.id.w_name, ink)
         v.setTextViewText(R.id.w_time, at.format(clockFormatter(local)))

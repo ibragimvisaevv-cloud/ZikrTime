@@ -141,7 +141,7 @@ class MainActivity : ComponentActivity() {
             "prayer" -> { nav.stack.clear(); nav.tab = Tab.PRAYER }
             "city" -> { nav.stack.clear(); nav.tab = Tab.PRAYER; if (Store.onboarded) nav.open(Screen.CITY) }
             "alarm" -> nav.open(Screen.ALARM)
-            "focus" -> nav.tab = com.zikrtime.app.ui.Tab.FOCUS
+            "focus" -> { nav.stack.clear(); nav.tab = com.zikrtime.app.ui.Tab.FOCUS }
         }
     }
 

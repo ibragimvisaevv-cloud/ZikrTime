@@ -15,7 +15,7 @@ cleanup() {
 trap cleanup EXIT
 adb shell wm size 1080x1920
 adb shell wm density 420
-adb install -r android-out/outputs/apk/debug/app-debug.apk
+adb install -r fixtures/current.apk
 python3 tools/ci/widgets_launcher.py
 adb logcat -d -b crash > ci-out/crashes.txt
 adb logcat -d -s ZikrWidgets > ci-out/widget-errors.txt
