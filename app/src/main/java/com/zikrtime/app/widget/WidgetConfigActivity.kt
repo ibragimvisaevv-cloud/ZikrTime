@@ -68,7 +68,7 @@ class WidgetConfigActivity : ComponentActivity() {
                             Widgets.updateAll(this@WidgetConfigActivity)
                             setResult(Activity.RESULT_OK,Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,id)); finish()
                         },modifier=Modifier.fillMaxWidth().heightIn(min=52.dp)) { Text(stringResource(R.string.action_done)) }
-                        TextButton(onClick={finish()},modifier=Modifier.fillMaxWidth()) { Text(stringResource(R.string.action_cancel)) }
+                        TextButton(onClick={finish()},modifier=Modifier.fillMaxWidth()) { Text(stringResource(android.R.string.cancel)) }
                     }
                 }
             }
