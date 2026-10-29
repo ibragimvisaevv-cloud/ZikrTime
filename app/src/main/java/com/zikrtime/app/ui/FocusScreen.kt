@@ -94,7 +94,7 @@ fun FocusScreen() {
     }
 
     TabColumn(title = stringResource(R.string.focus_title), subtitle = stringResource(R.string.focus_subtitle)) {
-        SectionBackdrop(tone = SectionTone.Dusk) {
+        LandscapePanel(R.drawable.focus_courtyard) {
             Column(Modifier.fillMaxWidth().padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 val used = (usedMillis ?: 0L) / 60_000
@@ -102,7 +102,7 @@ fun FocusScreen() {
                 val remaining = (allowed - used).coerceAtLeast(0)
                 ProgressRing(progress = if (usedMillis == null) 0f else remaining.toFloat() / allowed.coerceAtLeast(1),
                     modifier = Modifier.size(164.dp), stroke = 5.dp,
-                    color = androidx.compose.ui.graphics.Color(0xFFE2BE82), track = androidx.compose.ui.graphics.Color(0xFF74614B)) {
+                    color = Sand, track = Porcelain.copy(alpha = .22f)) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(if (usedMillis == null) "—" else remaining.toString(), style = MaterialTheme.typography.displaySmall)
                         Text(stringResource(R.string.unit_min), style = MaterialTheme.typography.bodyMedium)

@@ -356,19 +356,13 @@ fun TasbihScreen() {
                 )
             }
         }
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                TASBIH_ARABIC[phrase],
-                style = ArabicStyle.copy(fontSize = 34.sp, textDirection = TextDirection.Rtl),
-                color = MaterialTheme.colorScheme.primary,
-                textAlign = TextAlign.Center,
-            )
-            Text(
-                stringResource(TASBIH_NAMES[phrase].second),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center,
-            )
+        LandscapePanel(R.drawable.tasbih_still) {
+            Column(Modifier.fillMaxWidth().padding(22.dp), horizontalAlignment = Alignment.Start) {
+                Text(TASBIH_ARABIC[phrase], style = ArabicStyle.copy(fontSize = 34.sp, textDirection = TextDirection.Rtl),
+                    color = Porcelain, textAlign = TextAlign.Start)
+                Text(stringResource(TASBIH_NAMES[phrase].second), style = MaterialTheme.typography.bodyMedium,
+                    color = Porcelain.copy(alpha = .9f))
+            }
         }
         val context = LocalContext.current
         val travel = remember { BeadTravel(count, phrase) }
@@ -405,7 +399,7 @@ fun TasbihScreen() {
         }
         Box(Modifier.fillMaxWidth().aspectRatio(1f)
             .clip(RoundedCornerShape(28.dp))
-            .background(Brush.radialGradient(listOf(Color(0xFF5A4837), Color(0xFF2B251E))))
+            .background(Brush.radialGradient(listOf(Color(0xFF245844), Color(0xFF082C23))))
             .pointerInput(Unit) {
                 var dragged = 0f
                 detectVerticalDragGestures(onDragStart = { dragged = 0f }, onVerticalDrag = { change, dy ->
@@ -430,9 +424,9 @@ fun TasbihScreen() {
                         dstSize = androidx.compose.ui.unit.IntSize((beadR*2).roundToInt(), (beadR*2).roundToInt()))
                 }
                 val inner = radius - beadR * 1.8f
-                drawCircle(Color(0xFF3D4C35), inner)
-                drawCircle(Color(0xFF78805C), inner, style = Stroke(1.dp.toPx()))
-                if (target > 0) drawArc(Color(0xFFE2BE82), -90f, 360f * progress, false,
+                drawCircle(Color(0xFF123B2E), inner)
+                drawCircle(Color(0xFF668D70), inner, style = Stroke(1.dp.toPx()))
+                if (target > 0) drawArc(Sand, -90f, 360f * progress, false,
                     Offset(center.x-inner+6.dp.toPx(), center.y-inner+6.dp.toPx()),
                     androidx.compose.ui.geometry.Size((inner-6.dp.toPx())*2, (inner-6.dp.toPx())*2),
                     style = Stroke(3.dp.toPx(), cap = StrokeCap.Round))
@@ -440,7 +434,7 @@ fun TasbihScreen() {
             Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth(0.48f)) {
                 Text((if (target > 0) count % target else count).toString(), fontSize = 56.sp, color = Color.White, style = Tabular, maxLines = 1)
                 if (target > 0) Text(stringResource(R.string.tasbih_of, target), color = Color(0xFFE5D7C2), textAlign = TextAlign.Center)
-                if (laps > 0) Text(stringResource(R.string.tasbih_laps, laps), color = Color(0xFFE2BE82), textAlign = TextAlign.Center)
+                if (laps > 0) Text(stringResource(R.string.tasbih_laps, laps), color = Sand, textAlign = TextAlign.Center)
             }
         }
         Text(stringResource(R.string.tasbih_tap_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())

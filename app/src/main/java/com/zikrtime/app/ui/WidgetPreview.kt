@@ -44,10 +44,8 @@ fun WidgetPreview() {
                     Widget(2, day, width, 180)
                     Widget(3, now, width, 220)
                 } else {
-                    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                        Widget(0, day, tile, 180)
-                        Widget(0, night, tile, 180)
-                    }
+                    Widget(0, day, width, 180)
+                    Widget(0, night, width, 180)
                     Widget(1, evening, width, 170)
                     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                         Widget(2, day, tile, 180)

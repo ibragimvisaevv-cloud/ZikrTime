@@ -17,13 +17,13 @@ enum class SectionTone { Ink, Dusk, Dawn }
 fun MotifPanel(modifier: Modifier = Modifier, tone: SectionTone = SectionTone.Ink,
     content: @Composable BoxScope.() -> Unit) {
     val colors = when (tone) {
-        SectionTone.Ink -> listOf(Color(0xFF33442F), Color(0xFF526143))
-        SectionTone.Dusk -> listOf(Color(0xFF3B3027), Color(0xFF64513A))
-        SectionTone.Dawn -> listOf(Color(0xFF85442F), Color(0xFFA85F40))
+        SectionTone.Ink -> listOf(Color(0xFF0C3B32), Color(0xFF24644D))
+        SectionTone.Dusk -> listOf(Color(0xFF142F3A), Color(0xFF315763))
+        SectionTone.Dawn -> listOf(Color(0xFF495B43), Color(0xFF746442))
     }
-    Box(modifier.fillMaxWidth().clip(RoundedCornerShape(topStart = 16.dp, topEnd = 40.dp, bottomStart = 16.dp, bottomEnd = 16.dp))
+    Box(modifier.fillMaxWidth().clip(RoundedCornerShape(26.dp))
         .background(Brush.linearGradient(colors))) {
-        ArchitectureArt(Modifier.matchParentSize(), color = Sand)
+        HorizonSilhouette(Modifier.matchParentSize(), color = Sand)
         CompositionLocalProvider(LocalContentColor provides Porcelain) { content() }
     }
 }

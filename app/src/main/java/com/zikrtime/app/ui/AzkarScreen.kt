@@ -26,8 +26,13 @@ fun AzkarScreen() {
             FilterChip(selected = period == "morning", onClick = { nav.openAzkar("morning") }, label = { Text(stringResource(R.string.azkar_morning)) })
             FilterChip(selected = period == "evening", onClick = { nav.openAzkar("evening") }, label = { Text(stringResource(R.string.azkar_evening)) })
         }
-        LinearProgressIndicator(progress = { (index + 1f) / TASBIH_ARABIC.size },
-            modifier = Modifier.fillMaxWidth().height(4.dp), drawStopIndicator = {})
+        LandscapePanel(if (period == "evening") R.drawable.azkar_evening else R.drawable.azkar_morning) {
+            Column(Modifier.fillMaxWidth().padding(20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                Text(stringResource(R.string.azkar_position, index + 1, TASBIH_ARABIC.size), style = MaterialTheme.typography.titleMedium)
+                LinearProgressIndicator(progress = { (index + 1f) / TASBIH_ARABIC.size },
+                    modifier = Modifier.fillMaxWidth().height(4.dp), color = Sand, trackColor = Porcelain.copy(alpha = .25f), drawStopIndicator = {})
+            }
+        }
         ZCard(padding = PaddingValues(horizontal = 24.dp, vertical = 28.dp)) {
             Text(stringResource(R.string.azkar_position, index + 1, TASBIH_ARABIC.size), style = MaterialTheme.typography.labelLarge)
             Spacer(Modifier.height(36.dp))
@@ -38,12 +43,12 @@ fun AzkarScreen() {
             Text(stringResource(TASBIH_NAMES[index].second), style = MaterialTheme.typography.bodyLarge)
             SourceDetails(SourceInfo())
         }
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            OutlinedButton(onClick = { AzkarStore.move(index - 1) }, enabled = index > 0) { Text(stringResource(R.string.azkar_previous)) }
-            Button(onClick = {
-                if (index < TASBIH_ARABIC.lastIndex) AzkarStore.move(index + 1)
-                else { AzkarStore.finish(); nav.back() }
-            }) { Text(stringResource(if (index < TASBIH_ARABIC.lastIndex) R.string.azkar_next else R.string.azkar_complete)) }
+        ShimmerButton(stringResource(if (index < TASBIH_ARABIC.lastIndex) R.string.azkar_next else R.string.azkar_complete), onClick = {
+            if (index < TASBIH_ARABIC.lastIndex) AzkarStore.move(index + 1)
+            else { AzkarStore.finish(); nav.back() }
+        })
+        OutlinedButton(onClick = { AzkarStore.move(index - 1) }, enabled = index > 0, modifier = Modifier.fillMaxWidth()) {
+            Text(stringResource(R.string.azkar_previous))
         }
         Text(stringResource(R.string.azkar_completion_note), style = MaterialTheme.typography.bodySmall)
     }

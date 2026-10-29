@@ -32,8 +32,8 @@ fun ThemeQuickButton() {
             listOf(false, true).forEach { option ->
                 val selected = dark == option
                 val label = stringResource(if (option) R.string.appearance_dark else R.string.appearance_light)
-                Surface(color = if (selected) scheme.secondary else Color.Transparent,
-                    contentColor = if (selected) scheme.onSecondary else scheme.onSurfaceVariant,
+                Surface(color = if (selected) scheme.primary else Color.Transparent,
+                    contentColor = if (selected) scheme.onPrimary else scheme.onSurfaceVariant,
                     shape = RoundedCornerShape(20.dp)) {
                     Row(Modifier.heightIn(min = 48.dp)
                         .then(if (!selected) Modifier.testTag("theme_quick_toggle").semantics { testTagsAsResourceId = true } else Modifier)

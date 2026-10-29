@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -73,7 +74,7 @@ fun shopIcon(name: String): Int = when (name) {
     else -> R.drawable.ic_shop_store
 }
 
-private fun accentOf(seller: Shop.Seller?): Color = seller?.accent?.let { Color(0xFF000000 or it) } ?: Color(0xFF3D5037)
+private fun accentOf(seller: Shop.Seller?): Color = seller?.accent?.let { Color(0xFF000000 or it) } ?: Color(0xFF124C40)
 
 // ---------------- Витрина ----------------
 
@@ -98,7 +99,15 @@ fun ShopScreen() {
     val sellers = Shop.rankSellers(catalog.sellers).filter { (category == null || category in it.categories) && !it.partner }
     val partners = catalog.sellers.filter { it.partner }
 
-    TabColumn(title = stringResource(R.string.shop_title), subtitle = stringResource(R.string.shop_subtitle)) {
+    TabColumn {
+        LandscapePanel(R.drawable.shop_market) {
+            Column(Modifier.fillMaxWidth().heightIn(min = 180.dp).padding(22.dp), verticalArrangement = Arrangement.Bottom) {
+                Icon(painterResource(R.drawable.ic_shop_store), null, tint = Sand, modifier = Modifier.size(26.dp))
+                Spacer(Modifier.height(12.dp))
+                Text(stringResource(R.string.shop_title), style = MaterialTheme.typography.headlineMedium)
+                Text(stringResource(R.string.shop_subtitle), style = MaterialTheme.typography.bodyMedium)
+            }
+        }
         if (catalog.demo) {
             ZCard(color = Gold.copy(alpha = 0.22f), padding = PaddingValues(16.dp)) {
                 Text(stringResource(R.string.shop_demo_note), style = MaterialTheme.typography.bodyMedium)

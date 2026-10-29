@@ -2,6 +2,7 @@
 
 package com.zikrtime.app.ui
 
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -59,15 +60,9 @@ fun KnowledgeScreen() {
     var clearLearning by remember { mutableStateOf(false) }
 
     TabColumn(title = stringResource(R.string.knowledge_title), subtitle = stringResource(R.string.knowledge_subtitle)) {
-        androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxWidth()) {
-            val stacked = maxWidth < 330.dp || androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f
-            if (stacked) Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                EditorialTile(stringResource(R.string.azkar_morning), R.drawable.ic_prayer_fajr, true, Modifier.fillMaxWidth()) { nav.openAzkar("morning") }
-                EditorialTile(stringResource(R.string.azkar_evening), R.drawable.ic_prayer_isha, false, Modifier.fillMaxWidth()) { nav.openAzkar("evening") }
-            } else Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                EditorialTile(stringResource(R.string.azkar_morning), R.drawable.ic_prayer_fajr, true, Modifier.weight(1f)) { nav.openAzkar("morning") }
-                EditorialTile(stringResource(R.string.azkar_evening), R.drawable.ic_prayer_isha, false, Modifier.weight(1f)) { nav.openAzkar("evening") }
-            }
+        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            EditorialTile(stringResource(R.string.azkar_morning), R.drawable.ic_prayer_fajr, true, Modifier.fillMaxWidth()) { nav.openAzkar("morning") }
+            EditorialTile(stringResource(R.string.azkar_evening), R.drawable.ic_prayer_isha, false, Modifier.fillMaxWidth()) { nav.openAzkar("evening") }
         }
         if (com.zikrtime.app.data.AzkarStore.hasPending) {
             TextButton(onClick = { nav.resumeAzkar() }) { Text(stringResource(R.string.my_day_resume_azkar)) }
@@ -76,6 +71,21 @@ fun KnowledgeScreen() {
             PrimaryButton(stringResource(R.string.learning_resume), onClick = { nav.resumeLearning(context) },
                 modifier = Modifier.testTag("learning_resume").semantics { testTagsAsResourceId = true })
         }
+        SectionLabel(stringResource(R.string.knowledge_topics))
+        BoxWithConstraints(Modifier.fillMaxWidth()) {
+            val columns = if (maxWidth < 300.dp || androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 1 else 2
+            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                bank.categories.toList().chunked(columns).forEach { pair ->
+                    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                        pair.forEach { (id, name) ->
+                            FeatureTile(name, categoryIcon(id), Modifier.weight(1f), onClick = { nav.startQuiz(id) })
+                        }
+                        if (pair.size < columns) Spacer(Modifier.weight(1f))
+                    }
+                }
+            }
+        }
+
         MotifPanel {
           Column(Modifier.padding(22.dp)) {
             Text(
@@ -120,13 +130,6 @@ fun KnowledgeScreen() {
                 Text(stringResource(R.string.learning_clear))
             }
         }
-        SectionLabel(stringResource(R.string.knowledge_topics))
-        ZCard(padding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)) {
-            bank.categories.forEach { (id, name) ->
-                SettingRow(title = name, icon = painterResource(categoryIcon(id)), onClick = { nav.startQuiz(id) })
-            }
-        }
-
         if (Store.personalProgressEnabled) {
             val summary = Store.personalProgressSummary()
             ZCard(onClick = { nav.open(Screen.PROGRESS) }) {

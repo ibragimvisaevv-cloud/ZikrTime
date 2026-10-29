@@ -38,9 +38,9 @@ object Widgets {
         "dark" -> true
         else -> context.resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK == android.content.res.Configuration.UI_MODE_NIGHT_YES
     }
-    private fun ink(context: Context) = if (dark(context)) 0xFFF6ECD9.toInt() else 0xFF30271F.toInt()
-    private fun muted(context: Context) = if (dark(context)) 0xFFD2C2AD.toInt() else 0xFF5F503F.toInt()
-    private fun accent(context: Context) = if (dark(context)) WidgetArt.GOLD_LIGHT else 0xFF3D5037.toInt()
+    private fun ink(context: Context) = if (dark(context)) 0xFFF0F4E9.toInt() else 0xFF102D26.toInt()
+    private fun muted(context: Context) = if (dark(context)) 0xFFB8CBBE.toInt() else 0xFF4C6258.toInt()
+    private fun accent(context: Context) = if (dark(context)) WidgetArt.GOLD_LIGHT else 0xFF124C40.toInt()
 
 
     fun updateAll(context: Context) {
@@ -78,6 +78,9 @@ object Widgets {
     private fun tasbih(context: Context, size: Pair<Int, Int>): RemoteViews {
         val res = Lang.wrap(context).resources
         val views = RemoteViews(context.packageName, R.layout.widget_tasbih)
+        views.setTextColor(R.id.w_count, ink(context))
+        views.setTextColor(R.id.w_name, muted(context))
+        views.setTextColor(R.id.w_reset, ink(context))
         val count = Store.tasbihCount
         val target = Store.tasbihTarget
         views.setTextViewText(R.id.w_count, (if (target > 0) count % target else count).toString())
@@ -90,11 +93,11 @@ object Widgets {
                 R.id.w_bg,
                 WidgetArt.sky(
                     context, size.first, size.second,
-                    if (dark(context)) intArrayOf(0xFF633B2C.toInt(), 0xFF483027.toInt()) else intArrayOf(0xFFAA5539.toInt(), 0xFF8C442F.toInt()),
-                    0x40E6CBA6, 0f, WidgetArt.Body.NONE, 41,
+                    if (dark(context)) intArrayOf(0xFF173F32.toInt(), 0xFF0B2D24.toInt()) else intArrayOf(0xFFE1EBD6.toInt(), 0xFFC5D8BE.toInt()),
+                    0x40E6CBA6, 0f, WidgetArt.Body.NONE, 41, ink = ink(context),
                 ),
             )
-            views.setImageViewBitmap(R.id.w_beads, WidgetArt.beads(context, minOf(size.first, size.second) - 12, count, target))
+            views.setImageViewBitmap(R.id.w_beads, WidgetArt.beads(context, minOf(size.first, size.second) - 12, count, target, light = !dark(context)))
         }
         views.setOnClickPendingIntent(R.id.widget_root, tasbihAction(context, TasbihWidget.ACTION_ADD))
         views.setOnClickPendingIntent(R.id.w_reset, tasbihAction(context, TasbihWidget.ACTION_RESET))
@@ -129,13 +132,13 @@ object Widgets {
         val period = skyPeriod(now, times)
         val day = !now.isBefore(times[Prayer.SUNRISE]) && now.isBefore(times[Prayer.MAGHRIB])
         val colors = if (dark(context)) when (period) {
-            SkyPeriod.NIGHT -> intArrayOf(0xFF292B23.toInt(), 0xFF3A402F.toInt())
-            SkyPeriod.DAWN, SkyPeriod.SUNSET -> intArrayOf(0xFF50382C.toInt(), 0xFF6A4933.toInt())
-            else -> intArrayOf(0xFF303B2B.toInt(), 0xFF47513A.toInt())
+            SkyPeriod.NIGHT -> intArrayOf(0xFF102B28.toInt(), 0xFF1C3E36.toInt())
+            SkyPeriod.DAWN, SkyPeriod.SUNSET -> intArrayOf(0xFF263D32.toInt(), 0xFF46553B.toInt())
+            else -> intArrayOf(0xFF123B2E.toInt(), 0xFF255342.toInt())
         } else when (period) {
-            SkyPeriod.NIGHT -> intArrayOf(0xFFE7E6D4.toInt(), 0xFFF6EEDC.toInt())
-            SkyPeriod.DAWN, SkyPeriod.SUNSET -> intArrayOf(0xFFF5DFC0.toInt(), 0xFFECC8A6.toInt())
-            else -> intArrayOf(0xFFFFF4E0.toInt(), 0xFFE9DABD.toInt())
+            SkyPeriod.NIGHT -> intArrayOf(0xFFE5ECE0.toInt(), 0xFFF2F4E9.toInt())
+            SkyPeriod.DAWN, SkyPeriod.SUNSET -> intArrayOf(0xFFF3EDDA.toInt(), 0xFFE5DBBE.toInt())
+            else -> intArrayOf(0xFFF6F7ED.toInt(), 0xFFDCE8D9.toInt())
         }
         val glow = when (period) {
             SkyPeriod.NIGHT -> 0x403A7BD5
@@ -221,17 +224,19 @@ object Widgets {
         val (prayer, at) = PrayerSchedule.next(now)
         val views = RemoteViews(context.packageName, R.layout.widget_next)
         views.setTextViewText(R.id.w_label, res.getString(R.string.home_next_prayer))
-        if (context.resources.configuration.fontScale > 1.3f && size.first < 200) {
+        if (context.resources.configuration.fontScale > 1.3f) {
             views.setViewVisibility(R.id.w_label, android.view.View.GONE)
             views.setViewVisibility(R.id.w_countdown, android.view.View.GONE)
         }
         views.setContentDescription(R.id.widget_root, res.getString(R.string.home_next_prayer) + " " + prayerName(res, prayer) + " " + at.format(clockFormatter(local)))
-        views.setTextColor(R.id.w_label, muted(context))
-        views.setTextColor(R.id.w_name, ink(context))
-        views.setTextColor(R.id.w_time, ink(context))
-        views.setTextColor(R.id.w_countdown, ink(context))
+        views.setTextColor(R.id.w_label, WidgetArt.CREAM)
+        views.setTextColor(R.id.w_name, WidgetArt.CREAM)
+        views.setTextColor(R.id.w_time, WidgetArt.CREAM)
+        views.setTextColor(R.id.w_countdown, WidgetArt.GOLD_LIGHT)
         runCatching {
-            views.setImageViewBitmap(R.id.w_bg, skyBitmap(context, size, now, 11))
+            val period = skyPeriod(now, PrayerSchedule.forDate(now.toLocalDate()))
+            views.setImageViewBitmap(R.id.w_bg, WidgetArt.panorama(context, size.first, size.second,
+                night = period == SkyPeriod.NIGHT, warm = period == SkyPeriod.SUNSET, dim = dark(context)))
             views.setViewVisibility(R.id.w_star, android.view.View.GONE)
             val previous = PrayerSchedule.recentStarts(now).map { it.time }.filter { !it.isAfter(now.toInstant()) }.maxOrNull()
             val progress = previous?.let {
@@ -245,7 +250,7 @@ object Widgets {
                 WidgetArt.ring(
                     context, 48, progress,
                     intArrayOf(WidgetArt.GOLD_DARK, WidgetArt.GOLD_LIGHT, WidgetArt.GOLD),
-                    prayerIconRes(prayer), accent(context), glow = soon,
+                    prayerIconRes(prayer), WidgetArt.GOLD_LIGHT, glow = soon,
                 ),
             )
         }.onFailure { views.setImageViewResource(R.id.w_ring, prayerIconRes(prayer)) }
@@ -345,17 +350,17 @@ object Widgets {
             fraction = if (allowed > 0) left.toFloat() / allowed else 0f
         }
         runCatching {
-            // Matte olive plaster; the ring still indicates remaining screen time.
+            // Sage glass with a quiet horizon; the ring indicates remaining screen time.
             val bg = WidgetArt.sky(
                 context, size.first, size.second,
-                if (dark(context)) intArrayOf(0xFF303B2B.toInt(), 0xFF47513A.toInt()) else intArrayOf(0xFFE3E7D5.toInt(), 0xFFF2EBD8.toInt()),
+                if (dark(context)) intArrayOf(0xFF123B2E.toInt(), 0xFF255342.toInt()) else intArrayOf(0xFFE0EBD9.toInt(), 0xFFF1F4E8.toInt()),
                 0x556A4933, 0.7f, WidgetArt.Body.MOON, 37, ink = ink(context),
             )
             views.setImageViewBitmap(R.id.w_bg, bg)
             views.setViewVisibility(R.id.w_star, android.view.View.GONE)
             val sweep = when {
                 used == null -> intArrayOf(0x66F7F2EA, 0x66F7F2EA)
-                fraction > 0.5f -> intArrayOf(0xFFBCCBA5.toInt(), 0xFFE2BE82.toInt())
+                fraction > 0.5f -> intArrayOf(0xFFA9D5B9.toInt(), 0xFFE2C58F.toInt())
                 fraction > 0.2f -> intArrayOf(WidgetArt.GOLD_DARK, WidgetArt.GOLD_LIGHT, WidgetArt.GOLD)
                 else -> intArrayOf(0xFFE5484D.toInt(), 0xFFFFA36C.toInt(), 0xFFFF6B6B.toInt())
             }

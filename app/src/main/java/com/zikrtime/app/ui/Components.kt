@@ -217,7 +217,7 @@ fun IconBadge(
     container: Color = MaterialTheme.colorScheme.primaryContainer,
     size: Dp = 40.dp,
 ) {
-    val shape = RoundedCornerShape(size * 0.34f)
+    val shape = RoundedCornerShape(size * 0.4f)
     Box(
         modifier
             .size(size)

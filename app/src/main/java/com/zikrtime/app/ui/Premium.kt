@@ -27,12 +27,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.zikrtime.app.ui.theme.*
 
-internal val EmeraldBright = Color(0xFF61734D)
+internal val EmeraldBright = Color(0xFF397C60)
 internal val GoldLight = Color(0xFFF0D5A4)
 internal val GoldDark = Color(0xFF956B3E)
 
 @Composable
-fun AuroraBackground(modifier: Modifier = Modifier) = ArchitectureBackground(modifier)
+fun AuroraBackground(modifier: Modifier = Modifier) = HorizonBackground(modifier)
 
 /** Small tactile feedback; Compose respects the system animation duration scale. */
 fun Modifier.pressScale(interaction: MutableInteractionSource, pressedScale: Float = 0.97f): Modifier = composed {
@@ -72,7 +72,7 @@ fun ShimmerButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifi
     val pressed by interaction.collectIsPressedAsState()
     val sheen by animateFloatAsState(if (pressed) 1f else 0f, tween(500), label = "button-light")
     val shape = RoundedCornerShape(16.dp)
-    val colors = if (enabled) listOf(Olive, Color(0xFF607147), Olive) else listOf(Color(0xFF7C8171), Color(0xFF7C8171))
+    val colors = if (enabled) listOf(Olive, Color(0xFF397C60), Olive) else listOf(Color(0xFF667E70), Color(0xFF667E70))
     Button(onClick = onClick, enabled = enabled, interactionSource = interaction,
         modifier = modifier.fillMaxWidth().heightIn(min = 54.dp).pressScale(interaction).clip(shape)
             .background(Brush.horizontalGradient(colors))
@@ -108,20 +108,20 @@ fun CategoryChip(text: String, modifier: Modifier = Modifier) {
     }
 }
 
-/** Anchored navigation with a sliding terracotta rule, like the chosen editorial concept. */
+/** Floating emerald dock and a sliding sage selection, matching the horizon concept. */
 @Composable
 fun <T> GlassNavBar(items: List<T>, selected: T, onSelect: (T) -> Unit, modifier: Modifier = Modifier,
     item: @Composable (T, Boolean) -> Unit) {
-    val scheme = MaterialTheme.colorScheme
     val position by animateFloatAsState(items.indexOf(selected).coerceAtLeast(0).toFloat(),
-        spring(dampingRatio = Spring.DampingRatioNoBouncy, stiffness = 420f), label = "nav-rule")
-    Box(modifier.fillMaxWidth().background(scheme.surfaceContainer)) {
+        spring(dampingRatio = Spring.DampingRatioNoBouncy, stiffness = 420f), label = "nav-selection")
+    Box(modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp).clip(RoundedCornerShape(30.dp))
+        .background(Brush.horizontalGradient(listOf(Color(0xFF092F28), Color(0xFF174B3C))))) {
         Canvas(Modifier.matchParentSize()) {
-            drawLine(scheme.outlineVariant, Offset.Zero, Offset(size.width, 0f), .8.dp.toPx())
-            val width = size.width / items.size
-            val x = (position + .5f) * width
-            drawLine(scheme.secondary, Offset(x - 15.dp.toPx(), 1.dp.toPx()), Offset(x + 15.dp.toPx(), 1.dp.toPx()),
-                3.dp.toPx(), cap = StrokeCap.Round)
+            val width = (size.width - 12.dp.toPx()) / items.size
+            drawRoundRect(Color(0xFFD1E3C5),
+                topLeft = Offset(6.dp.toPx() + position * width + 2.dp.toPx(), 7.dp.toPx()),
+                size = androidx.compose.ui.geometry.Size(width - 4.dp.toPx(), size.height - 14.dp.toPx()),
+                cornerRadius = androidx.compose.ui.geometry.CornerRadius(24.dp.toPx()))
         }
         Row(Modifier.fillMaxWidth().selectableGroup().padding(horizontal = 6.dp, vertical = 8.dp)) {
             items.forEach { value ->

@@ -46,9 +46,9 @@ private fun markerBitmap(selected: Boolean, density: Float): Bitmap {
     c.drawCircle(r, r + density, r - density, p)
     p.color = 0xFFE2B659.toInt()
     c.drawCircle(r, r, r - 1.5f * density, p)
-    p.color = if (selected) 0xFFFFE7A8.toInt() else 0xFF3D5037.toInt()
+    p.color = if (selected) 0xFFFFE7A8.toInt() else 0xFF124C40.toInt()
     c.drawCircle(r, r, r - 4.5f * density, p)
-    p.color = if (selected) 0xFF3D5037.toInt() else 0xFFFFF6E0.toInt()
+    p.color = if (selected) 0xFF124C40.toInt() else 0xFFFFF6E0.toInt()
     c.drawCircle(r, r, r * 0.28f, p)
     return bmp
 }
@@ -79,7 +79,7 @@ private fun clusterBitmap(count: Int, density: Float): Bitmap {
     val r = size / 2f
     p.color = 0xFFE2B659.toInt()
     c.drawCircle(r, r, r - density, p)
-    p.color = 0xFF3D5037.toInt()
+    p.color = 0xFF124C40.toInt()
     c.drawCircle(r, r, r - 3.5f * density, p)
     p.color = 0xFFFFF6E0.toInt()
     p.textSize = 13 * density

@@ -107,7 +107,7 @@ class MainActivity : ComponentActivity() {
                 CompositionLocalProvider(com.zikrtime.app.ui.LocalTilt provides tilt) {
                     Box(Modifier.fillMaxSize()) {
                         // Переливающийся фон под всеми экранами
-                        com.zikrtime.app.ui.ArchitectureBackground()
+                        com.zikrtime.app.ui.HorizonBackground()
                         CompositionLocalProvider(LocalNav provides nav) {
                             if (BuildConfig.DEBUG && QaHooks.widgetPreview) com.zikrtime.app.ui.WidgetPreview() else AppRoot()
                         }
@@ -262,7 +262,7 @@ private fun Tabs() {
                 .windowInsetsPadding(WindowInsets.navigationBars)
                 .padding(horizontal = 0.dp, vertical = 0.dp),
         ) { (_, icon, label), selected ->
-            val color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+            val color = if (selected) androidx.compose.ui.graphics.Color(0xFF103B2F) else androidx.compose.ui.graphics.Color(0xFFE5F0E2)
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Icon(
                     painterResource(icon),

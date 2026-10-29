@@ -3,6 +3,10 @@
 package com.zikrtime.app.ui
 
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -119,22 +123,34 @@ fun HomeScreen() {
                 modifier = Modifier.padding(start = 4.dp, top = 0.dp, bottom = 8.dp),
             )
             val prayed = Store.prayedOn(today)
-            Prayer.entries.forEach { p ->
-                PrayerRow(
-                    prayer = p,
-                    time = clock(times[p]),
-                    isCurrent = p == current,
-                    isNext = current == null && next.second.toLocalDate() == today && p == next.first,
-                    started = !times[p].isAfter(now),
-                    done = p in prayed,
-                    onToggle = {
-                        Store.setPrayed(today, p, p !in prayed)
-                        com.zikrtime.app.widget.Widgets.updateAll(context)
-                    },
-                )
-                if (p != Prayer.ISHA) androidx.compose.material3.HorizontalDivider(
-                    modifier = Modifier.padding(start = 52.dp, end = 8.dp),
-                    color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = .35f))
+            val toggle: (Prayer) -> Unit = { p ->
+                Store.setPrayed(today, p, p !in prayed)
+                com.zikrtime.app.widget.Widgets.updateAll(context)
+            }
+            BoxWithConstraints(Modifier.fillMaxWidth()) {
+                if (maxWidth < 300.dp || LocalDensity.current.fontScale > 1.3f) {
+                    Column {
+                        Prayer.entries.forEach { p ->
+                            PrayerRow(p, clock(times[p]), p == current,
+                                current == null && next.second.toLocalDate() == today && p == next.first,
+                                !times[p].isAfter(now), p in prayed, onToggle = { toggle(p) })
+                        }
+                    }
+                } else {
+                    Surface(color = MaterialTheme.colorScheme.surfaceContainer, shape = RoundedCornerShape(26.dp),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = .65f))) {
+                        Column(Modifier.padding(8.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                            Prayer.entries.chunked(3).forEach { row ->
+                                Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                                    row.forEach { p ->
+                                        PrayerCell(p, clock(times[p]), p == current || (current == null && next.second.toLocalDate() == today && p == next.first),
+                                            !times[p].isAfter(now), p in prayed, Modifier.weight(1f), onToggle = { toggle(p) })
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
             Text(
                 if (Store.method == com.zikrtime.app.prayer.CalcMethod.MOSCOW_CATHEDRAL) stringResource(R.string.home_source_dumrf)
@@ -149,15 +165,15 @@ fun HomeScreen() {
         }
 
         MyDayActions()
-        ZCard(onClick = { nav.open(Screen.TASBIH) }) {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                androidx.compose.foundation.Image(painterResource(R.drawable.stone_bead), null, Modifier.size(64.dp))
+        LandscapePanel(R.drawable.tasbih_still, Modifier.clickable { nav.open(Screen.TASBIH) }) {
+            Row(Modifier.fillMaxWidth().padding(22.dp), verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {
-                    Text(stringResource(R.string.tasbih_title), style = MaterialTheme.typography.titleLarge)
-                    if (Store.personalProgressEnabled) Text(stringResource(R.string.tasbih_today, Store.tasbihToday(today)), color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    else Text(stringResource(R.string.tasbih_subtitle), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(R.string.tasbih_title), style = MaterialTheme.typography.headlineSmall)
+                    Text(stringResource(R.string.tasbih_subtitle), style = MaterialTheme.typography.bodyMedium)
+                    Spacer(Modifier.height(16.dp))
+                    if (Store.personalProgressEnabled) Text(stringResource(R.string.tasbih_today, Store.tasbihToday(today)), color = Sand)
                 }
-                Text("›", fontSize = 28.sp)
+                Text("›", fontSize = 32.sp)
             }
         }
 
@@ -209,6 +225,27 @@ fun HomeScreen() {
 }
 
 @Composable
+private fun PrayerCell(prayer: Prayer, time: String, highlighted: Boolean, started: Boolean, done: Boolean,
+    modifier: Modifier = Modifier, onToggle: () -> Unit) {
+    val scheme = MaterialTheme.colorScheme
+    val ink = if (highlighted) Porcelain else scheme.onSurface
+    val shape = RoundedCornerShape(20.dp)
+    Column(modifier.clip(shape)
+        .background(if (highlighted) Brush.verticalGradient(listOf(Olive, Color(0xFF082E26)))
+            else Brush.verticalGradient(listOf(scheme.surfaceContainer, scheme.surfaceContainerHigh.copy(alpha = .45f))))
+        .then(if (prayer.isPrayer) Modifier.toggleable(value = done, enabled = started, role = Role.Checkbox, onValueChange = { onToggle() }) else Modifier)
+        .heightIn(min = 100.dp).padding(horizontal = 4.dp, vertical = 10.dp),
+        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+            Icon(painterResource(prayerIconRes(prayer)), null, tint = if (highlighted) Sand else prayerAccent(prayer), modifier = Modifier.size(22.dp))
+            if (done) Icon(painterResource(R.drawable.ic_check), stringResource(R.string.home_mark_prayed), tint = if (highlighted) Sand else scheme.primary, modifier = Modifier.size(14.dp))
+        }
+        Text(prayerName(prayer), color = ink, style = MaterialTheme.typography.labelMedium, maxLines = 1)
+        Text(time, color = ink, style = MaterialTheme.typography.titleLarge.merge(Tabular), fontSize = 24.sp, fontWeight = FontWeight.SemiBold, maxLines = 1)
+    }
+}
+
+@Composable
 private fun PrayerRow(prayer: Prayer, time: String, isCurrent: Boolean, isNext: Boolean, started: Boolean, done: Boolean, onToggle: () -> Unit) {
     val scheme = MaterialTheme.colorScheme
     val highlighted = isCurrent || isNext
@@ -225,7 +262,7 @@ private fun PrayerRow(prayer: Prayer, time: String, isCurrent: Boolean, isNext: 
         .background(if (highlighted) Olive else Color.Transparent)
         .padding(start = 8.dp, top = 2.dp, bottom = 2.dp), verticalAlignment = Alignment.CenterVertically) {
         IconBadge(painterResource(prayerIconRes(prayer)), tint = if (highlighted) Sand else accent,
-            container = if (highlighted) Color(0xFF526245) else scheme.surfaceContainerHigh, size = 32.dp)
+            container = if (highlighted) Color(0xFF2E6855) else scheme.surfaceContainerHigh, size = 32.dp)
         Spacer(Modifier.width(12.dp))
         Column(Modifier.weight(1f)) {
             Text(prayerName(prayer), style = MaterialTheme.typography.titleMedium,
@@ -353,7 +390,7 @@ private fun MyDayActions() {
 private fun prayerAccent(prayer: Prayer): Color {
     val dark = com.zikrtime.app.ui.theme.LocalDarkTheme.current
     return when (prayer) {
-        Prayer.FAJR, Prayer.ISHA -> if (dark) Color(0xFFBCCBA5) else Olive
+        Prayer.FAJR, Prayer.ISHA -> if (dark) Color(0xFFA9D5B9) else Olive
         Prayer.SUNRISE, Prayer.DHUHR -> if (dark) Sand else Color(0xFF98602E)
         Prayer.ASR, Prayer.MAGHRIB -> if (dark) Color(0xFFE6AC8B) else Clay
     }

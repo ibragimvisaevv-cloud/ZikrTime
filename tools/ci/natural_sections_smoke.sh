@@ -50,6 +50,11 @@ for mode in no yes; do
   adb shell cmd uimode night "$mode" >/dev/null
   for screen in home azkar tasbih widgets knowledge focus shop shop_product shop_seller places more alarm ramadan zakat qibla progress review; do
     capture "$screen-$mode" "$screen"
+    if [ "$screen" = widgets ]; then
+      adb shell input swipe 5 1900 5 600 400
+      adb exec-out screencap -p > "ci-out/screens/widgets-lower-$mode.png"
+      python3 tools/ci/check_screen.py "ci-out/screens/widgets-lower-$mode.png"
+    fi
   done
  done
 # 320dp and 200% text; each screen scrolls, titles must not be reduced to fit.
@@ -64,13 +69,13 @@ python3 tools/ci/check_screen.py ci-out/screens/widgets-large-lower.png
 adb shell settings put system font_scale 1
 adb shell wm size 1080x2400
 adb shell wm density 420
-# Architectural light across all four day periods, and a real short motion recording.
+# Living horizon across all four day periods, and a real short motion recording.
 adb shell cmd uimode night no >/dev/null
 for period in DAWN DAY SUNSET NIGHT; do
-  adb shell am start -S -W -n "$pkg/.MainActivity" --es qa_screen home --es qa_lang ru --ez qa_onboarded true --es qa_period "$period" > "ci-out/courtyard-$period-start.txt"
+  adb shell am start -S -W -n "$pkg/.MainActivity" --es qa_screen home --es qa_lang ru --ez qa_onboarded true --es qa_period "$period" > "ci-out/horizon-$period-start.txt"
   sleep 2
-  adb exec-out screencap -p > "ci-out/screens/courtyard-$period.png"
-  python3 tools/ci/check_screen.py "ci-out/screens/courtyard-$period.png"
+  adb exec-out screencap -p > "ci-out/screens/horizon-$period.png"
+  python3 tools/ci/check_screen.py "ci-out/screens/horizon-$period.png"
 done
 fi
 adb shell settings put system font_scale 1
@@ -87,9 +92,9 @@ adb shell settings put global animator_duration_scale 1
 adb shell am start -S -W -n "$pkg/.MainActivity" --es qa_screen home --es qa_lang ru --ez qa_onboarded true --es qa_period DAY > ci-out/motion-start.txt
 sleep 2
 adb exec-out screencap -p > ci-out/screens/motion-before.png
-if timeout 25 adb shell screenrecord --size 720x1280 --time-limit 8 --bit-rate 1000000 /sdcard/zikr-architecture.mp4 > ci-out/recording.txt 2>&1; then
+if timeout 25 adb shell screenrecord --size 720x1280 --time-limit 8 --bit-rate 1000000 /sdcard/zikr-horizon.mp4 > ci-out/recording.txt 2>&1; then
   adb wait-for-device
-  adb pull /sdcard/zikr-architecture.mp4 ci-out/architecture-motion.mp4
+  adb pull /sdcard/zikr-horizon.mp4 ci-out/horizon-motion.mp4
 else
   printf '%s\n' 'Video capture failed; functional UI results were collected before recording.' > ci-out/recording-unavailable.txt
   adb wait-for-device

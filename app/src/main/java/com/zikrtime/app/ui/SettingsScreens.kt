@@ -87,37 +87,25 @@ fun MoreScreen() {
     TabColumn(title = stringResource(R.string.more_title)) {
         AppearancePicker()
         SectionLabel(stringResource(R.string.group_practice))
-        ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
-            SettingRow(
-                title = stringResource(R.string.qibla_title),
-                subtitle = stringResource(R.string.qibla_subtitle),
-                icon = painterResource(R.drawable.ic_qibla),
-                onClick = { nav.open(Screen.QIBLA) },
+        androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxWidth()) {
+            val items = listOf(
+                Triple(R.string.qibla_title, R.drawable.ic_qibla, Screen.QIBLA),
+                Triple(R.string.tasbih_title, R.drawable.ic_tasbih, Screen.TASBIH),
+                Triple(R.string.places_title, R.drawable.ic_mosque, Screen.PLACES),
+                Triple(R.string.ramadan_title, R.drawable.ic_prayer_isha, Screen.RAMADAN),
+                Triple(R.string.zakat_title, R.drawable.ic_calc, Screen.ZAKAT),
             )
-            SettingRow(
-                title = stringResource(R.string.tasbih_title),
-                subtitle = stringResource(R.string.tasbih_subtitle),
-                icon = painterResource(R.drawable.ic_tasbih),
-                onClick = { nav.open(Screen.TASBIH) },
-            )
-            SettingRow(
-                title = stringResource(R.string.places_title),
-                subtitle = stringResource(R.string.places_entry_hint),
-                icon = painterResource(R.drawable.ic_mosque),
-                onClick = { nav.open(Screen.PLACES) },
-            )
-            SettingRow(
-                title = stringResource(R.string.ramadan_title),
-                subtitle = stringResource(R.string.ramadan_subtitle),
-                icon = painterResource(R.drawable.ic_prayer_isha),
-                onClick = { nav.open(Screen.RAMADAN) },
-            )
-            SettingRow(
-                title = stringResource(R.string.zakat_title),
-                subtitle = stringResource(R.string.zakat_subtitle),
-                icon = painterResource(R.drawable.ic_calc),
-                onClick = { nav.open(Screen.ZAKAT) },
-            )
+            val columns = if (maxWidth < 300.dp || androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 1 else 2
+            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                items.chunked(columns).forEach { row ->
+                    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                        row.forEach { (title, icon, screen) ->
+                            FeatureTile(stringResource(title), icon, Modifier.weight(1f)) { nav.open(screen) }
+                        }
+                        if (row.size < columns) Spacer(Modifier.weight(1f))
+                    }
+                }
+            }
         }
         SectionLabel(stringResource(R.string.group_application))
         ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
