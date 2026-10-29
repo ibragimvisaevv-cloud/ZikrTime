@@ -623,6 +623,7 @@ elif mode == 'clear-learning':
     assert prefs().get('personal_progress_enabled') == 'true'
     tap_control('personal_progress_toggle')
     assert prefs().get('personal_progress_enabled') == 'false'
+    screenshot('progress-disabled')
     launch('home')
     locate_control('my_day_resume_learning')
     screenshot('learning-clear-before-home')

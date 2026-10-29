@@ -40,7 +40,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        group: [tour, journeys, accessibility, focus, details, extras, actions]
+        group: ${{ fromJSON(contains(github.event.head_commit.message, '[actions-only]') && '["actions"]' || '["tour","journeys","accessibility","focus","details","extras","actions"]') }}
     permissions:
       contents: read
       actions: read
@@ -49,14 +49,14 @@ jobs:
       - name: Verify reused APK inputs
         if: contains(github.event.head_commit.message, '[ui-check]')
         run: |
-          git fetch --no-tags --depth=1 origin e8673d440254c8e50ae86b4ca490b41d512430b5
-          git diff --exit-code e8673d440254c8e50ae86b4ca490b41d512430b5 HEAD -- app/ build.gradle.kts settings.gradle.kts gradle.properties gradle/ gradlew tools/i18n/
+          git fetch --no-tags --depth=1 origin 09543f406b6bf3b2f8b5384d148312f581e5d486
+          git diff --exit-code 09543f406b6bf3b2f8b5384d148312f581e5d486 HEAD -- app/ build.gradle.kts settings.gradle.kts gradle.properties gradle/ gradlew tools/i18n/
       - uses: actions/download-artifact@v4
         with:
           name: Android-natural-build
           path: android-out
           github-token: ${{ github.token }}
-          run-id: ${{ contains(github.event.head_commit.message, '[ui-check]') && '40861857638' || github.run_id }}
+          run-id: ${{ contains(github.event.head_commit.message, '[ui-check]') && '40906009119' || github.run_id }}
       - name: Retrieve approved 0.8.9 baseline
         env:
           GH_TOKEN: ${{ github.token }}

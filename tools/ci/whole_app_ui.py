@@ -404,9 +404,36 @@ elif GROUP=='actions':
         start('alarm_ring');shot('alarm-snooze-available',['alarm_ring'])
         tap_control(label('alarm_snooze').replace('%1$d','5'),'text');shot('alarm-snoozed',['alarm_ring'])
         assert int(prefs().get('alarm_snooze_at','0'))>0
+        # A real AlarmReceiver consumes the scheduled snooze before opening the activity.
+        # This independent QA activity launch must model that precondition explicitly.
+        put_pref('alarm_snooze_at','long','0')
         start('alarm_ring');tap('alarm_awake');shot('alarm-awake',['alarm_ring'])
         assert prefs().get('alarm_snooze_at','0')=='0'
+        assert find_control(ui(),label('alarm_awake'),'text') is None
     case('alarm-buttons',alarm_buttons)
+    def bundled_products():
+        # Existing repository examples, visibly labelled as samples; never live offers.
+        previous=prefs().get('shop_catalog','')
+        fixture=json.loads(Path('app/src/main/assets/shop/catalog.json').read_text())
+        assert fixture['demo'] is True
+        shell('svc','wifi','disable');shell('svc','data','disable')
+        try:
+            put_pref('shop_catalog','string',json.dumps(fixture,ensure_ascii=False))
+            put_pref('shop_catalog_at','string','0')
+            for mode in ['light','dark']:
+                theme(mode);start('shop');time.sleep(12)
+                shot('bundled-catalog-'+mode,['shop_data'])
+                start('shop_product');shot('bundled-product-'+mode,['product'])
+                swipe(times=4);shot('bundled-product-bottom-'+mode,['product'])
+                tap_control(fixture['sellers'][0]['name'],'text')
+                shot('bundled-product-seller-'+mode,['seller','navigation'])
+                back();shot('bundled-product-return-'+mode,['product','navigation'])
+                assert find_control(ui(),fixture['products'][0]['title']['ru'],'text') is not None
+            (OUT/'bundled-products-passed.json').write_text(json.dumps({'source':'app/src/main/assets/shop/catalog.json','demo':True,'seller_count':len(fixture['sellers']),'product_count':len(fixture['products']),'themes':['light','dark'],'product_seller_back':True}))
+        finally:
+            put_pref('shop_catalog','string',previous);put_pref('shop_catalog_at','string','0')
+            shell('svc','wifi','enable');shell('svc','data','enable');theme('light')
+    case('bundled-products',bundled_products)
     def large_widgets():
         shell('wm','size','720x1280');shell('wm','density','360');shell('settings','put','system','font_scale','2')
         start('widgets');shot('widgets-large',['widgets','accessibility'],wait_hierarchy=False)
