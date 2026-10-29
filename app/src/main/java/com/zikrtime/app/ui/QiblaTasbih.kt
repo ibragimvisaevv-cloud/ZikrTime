@@ -273,7 +273,7 @@ private fun Compass(heading: Float, qibla: Float, aligned: Boolean) {
             Modifier
                 .offset { polar(qibla - heading, radius * 0.5f) }
                 .graphicsLayer {
-                    val sc = 1f + glowOn * (0.12f + 0.08f * pulse)
+                    val sc = 1f + glowOn * 0.12f
                     scaleX = sc
                     scaleY = sc
                 }

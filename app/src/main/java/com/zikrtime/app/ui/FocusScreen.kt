@@ -348,7 +348,7 @@ fun FocusScreen() {
 }
 
 @Composable
-fun PermissionRow(title: String, text: String, granted: Boolean, onGrant: () -> Unit, actionTag: String = "permission_grant") {
+fun PermissionRow(title: String, text: String, granted: Boolean, actionTag: String = "permission_grant", onGrant: () -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             Text(title, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
