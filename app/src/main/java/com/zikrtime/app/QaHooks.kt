@@ -95,6 +95,13 @@ object QaHooks {
                 nav.shopProduct = com.zikrtime.app.data.Shop.load(activity).products.firstOrNull()?.id ?: "p1"
                 nav.open(Screen.SHOP_PRODUCT)
             }
+            // Actual native windows on an isolated debug profile; never reached in release.
+            "pause_overlay" -> activity.window.decorView.postDelayed({
+                Store.blockedPackages.firstOrNull()?.let { com.zikrtime.app.screentime.PauseOverlay.show(activity, it) }
+            }, 800)
+            "block_overlay" -> activity.window.decorView.postDelayed({
+                com.zikrtime.app.screentime.GuardService.showOverlay(activity, BlockReason.LimitReached(42, 40))
+            }, 800)
             "block_limit" -> activity.startActivity(BlockActivity.intent(activity, BlockReason.LimitReached(42, 40)))
             "block_prayer" -> activity.startActivity(
                 BlockActivity.intent(activity, BlockReason.PrayerTime(Prayer.DHUHR, LocalDate.now(), Instant.now().plusSeconds(12 * 60))),

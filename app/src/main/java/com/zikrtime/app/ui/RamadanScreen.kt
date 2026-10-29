@@ -87,6 +87,8 @@ fun RamadanScreen() {
     val shift = Store.ramadanShift
     val period = remember(today, shift) { Ramadan.currentOrNext(today) }
     val state = fastState(now)
+    val stackTimes = androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f ||
+        androidx.compose.ui.platform.LocalConfiguration.current.screenWidthDp < 350
     val context = androidx.compose.ui.platform.LocalContext.current
     val dateFmt = remember { DateTimeFormatter.ofPattern("d MMMM", com.zikrtime.app.i18n.Lang.locale(context)) }
 
@@ -126,9 +128,16 @@ fun RamadanScreen() {
                     style = Tabular,
                 )
                 Spacer(Modifier.height(12.dp))
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                    TimeCell(stringResource(R.string.ramadan_suhur), clock(state.suhurEnd), R.drawable.ic_prayer_fajr)
-                    TimeCell(stringResource(R.string.ramadan_iftar), clock(state.iftar), R.drawable.ic_prayer_maghrib)
+                if (stackTimes) {
+                    Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(18.dp)) {
+                        TimeCell(stringResource(R.string.ramadan_suhur), clock(state.suhurEnd), R.drawable.ic_prayer_fajr)
+                        TimeCell(stringResource(R.string.ramadan_iftar), clock(state.iftar), R.drawable.ic_prayer_maghrib)
+                    }
+                } else {
+                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+                        TimeCell(stringResource(R.string.ramadan_suhur), clock(state.suhurEnd), R.drawable.ic_prayer_fajr)
+                        TimeCell(stringResource(R.string.ramadan_iftar), clock(state.iftar), R.drawable.ic_prayer_maghrib)
+                    }
                 }
             }
         }

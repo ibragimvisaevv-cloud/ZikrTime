@@ -82,10 +82,18 @@ def ui():
 
 
 def find_control(root, identifier, attribute='resource-id'):
-    return next((n for n in root.iter('node') if n.attrib.get(attribute) == identifier
-                 or (attribute == 'resource-id' and (
-                     n.attrib.get(attribute, '').endswith('/' + identifier)
-                     or n.attrib.get('content-desc') == identifier))), None)
+    matches=[n for n in root.iter('node') if n.attrib.get(attribute)==identifier
+        or (attribute=='resource-id' and (n.attrib.get(attribute,'').endswith('/'+identifier)
+        or n.attrib.get('content-desc')==identifier))]
+    parents={child:parent for parent in root.iter() for child in parent}
+    def rank(node):
+        if node.attrib.get('clickable')=='true': return 0
+        parent=parents.get(node)
+        while parent is not None:
+            if parent.attrib.get('clickable')=='true': return 1
+            parent=parents.get(parent)
+        return 2
+    return min(matches,key=rank) if matches else None
 
 
 def locate_control(identifier, attribute='resource-id'):
@@ -110,8 +118,19 @@ def locate_control(identifier, attribute='resource-id'):
             if right - left >= 12 and bottom - top >= 12:
                 node.set('bounds', f'[{left},{top}][{right},{bottom}]')
                 return node
-        # Screen edge avoids the tasbih gesture detector and does not increment its count.
-        shell('input', 'swipe', 5, int(height * .8), 5, int(height * .3), 350)
+        # Stay inside the actual scroll owner (a map list or sheet can be inset).
+        # Its leading edge also avoids the tasbih detector inside the padded content.
+        scrolls=[]
+        for candidate in root.iter('node'):
+            if candidate.attrib.get('scrollable') != 'true': continue
+            cl,ct,cr,cb=map(int,re.findall(r'-?\d+',candidate.attrib['bounds']))
+            cl,ct,cr,cb=max(cl,viewport_left),max(ct,viewport_top),min(cr,width),min(cb,height)
+            if cb-ct>max(120,(cr-cl)*.35): scrolls.append((cb-ct,cl,ct,cr,cb))
+        if scrolls:
+            _,cl,ct,cr,cb=max(scrolls)
+            shell('input','swipe',cl+5,int(ct+(cb-ct)*.8),cl+5,int(ct+(cb-ct)*.25),350)
+        else:
+            shell('input','swipe',5,int(height*.8),5,int(height*.3),350)
     raise AssertionError('UI control not found: ' + identifier)
 
 

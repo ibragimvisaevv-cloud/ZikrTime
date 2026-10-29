@@ -40,7 +40,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        group: [tour, journeys, accessibility, focus, details]
+        group: [tour, journeys, accessibility, focus, details, extras]
     permissions:
       contents: read
       actions: read

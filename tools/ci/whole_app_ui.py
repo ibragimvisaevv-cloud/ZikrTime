@@ -36,13 +36,21 @@ def type_query(text):
 def theme(value):
     put_pref('appearance','string',value)
 def record(name):
-    return subprocess.Popen(['adb','shell','screenrecord','--size','720x1280','--bit-rate','1500000','--time-limit','120','/sdcard/'+name+'.mp4'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+    with (OUT/(name+'-recording.log')).open('w') as log:
+        return subprocess.Popen(['adb','shell','screenrecord','--size','720x1280','--bit-rate','1500000','--time-limit','120','/sdcard/'+name+'.mp4'],stdout=log,stderr=subprocess.STDOUT)
 def finish_record(proc,name):
-    # Signal the device encoder so the original video gets a complete container.
-    shell('pkill','-2','screenrecord')
+    # A recorder/ADB failure must not discard the remaining independent UI checks.
+    if proc.poll() is None:
+        subprocess.run(['adb','shell','pkill','-2','screenrecord'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,timeout=20)
     try: proc.wait(timeout=15)
     except subprocess.TimeoutExpired: proc.terminate()
-    adb('pull','/sdcard/'+name+'.mp4',str(OUT/(name+'.mp4')))
+    for attempt in range(2):
+        pulled=subprocess.run(['adb','pull','/sdcard/'+name+'.mp4',str(OUT/(name+'.mp4'))],capture_output=True,text=True,timeout=45)
+        if pulled.returncode==0: return
+        (OUT/(name+'-recording-unavailable.txt')).write_text(pulled.stdout+'\n'+pulled.stderr)
+        subprocess.run(['adb','wait-for-device'],timeout=45,check=True)
+        time.sleep(2)
+    print('RECORDING UNAVAILABLE',name,flush=True)
 
 if GROUP=='tour':
     start('home'); theme('system')
@@ -160,6 +168,9 @@ elif GROUP=='details':
             try: shot(name+'-failure')
             except Exception: pass
             print('CASE FAILED',name,error,flush=True)
+        finally:
+            # Dismiss a pending platform prompt before the next independent route.
+            shell('input','keyevent','KEYCODE_BACK')
     start('home');theme('light')
     bank={q['id']:q for q in json.loads(Path('app/src/main/assets/quiz/ru.json').read_text())['questions']}
     def answer(scope, correct=True):
@@ -220,8 +231,13 @@ elif GROUP=='details':
         shot('location-native-permission',['onboarding_location'])
         tap_control('permission_deny_button');shot('onboarding-location-denied',['onboarding_location'])
         start('city');tap('city_locate')
-        root=ui()
-        if find_control(root,'permission_deny_button') is not None: tap_control('permission_deny_button')
+        for _ in range(8):
+            root=ui()
+            if find_control(root,'permission_deny_button') is not None:
+                tap_control('permission_deny_button');break
+            if find_control(root,label('city_locate_denied'),'text') is not None: break
+            time.sleep(.5)
+        locate_control(label('city_locate_denied'),'text')
         shot('city-location-denied',['city_denied'])
     case('location',denied)
     def places():
@@ -247,6 +263,80 @@ elif GROUP=='details':
             shell('svc','wifi','enable');shell('svc','data','enable')
     case('zakat',zakat)
     (OUT/'details-results.json').write_text(json.dumps({'failures':failures},ensure_ascii=False,indent=2))
+    if failures: raise AssertionError(str(failures))
+
+elif GROUP=='extras':
+    import traceback
+    failures=[]
+    def case(name, fn):
+        try: fn()
+        except Exception as error:
+            failures.append({'case':name,'error':str(error)})
+            (OUT/(name+'-failure.txt')).write_text(traceback.format_exc())
+            try: shot(name+'-failure')
+            except Exception: pass
+            print('CASE FAILED',name,error,flush=True)
+        finally: shell('input','keyevent','KEYCODE_BACK')
+    start('home');theme('system')
+    def home_motion():
+        subprocess.run([sys.executable,'tools/ci/horizon_interaction.py'],check=True)
+    case('home-motion',home_motion)
+    shell('wm','size','1080x1920');shell('wm','density','420')
+    shell('settings','put','system','font_scale','1')
+    shell('settings','put','global','animator_duration_scale','1')
+    shell('cmd','uimode','night','no')
+    def splash():
+        start('home');shell('am','force-stop',PKG)
+        proc=record('cold-start-route');time.sleep(1)
+        shell('am','start','-W','-n',PKG+'/.MainActivity','--es','qa_screen','home','--es','qa_lang','ru','--ez','qa_onboarded','true','--ez','qa_splash','true')
+        time.sleep(3);shot('cold-start-home',['splash']);finish_record(proc,'cold-start-route')
+    case('splash',splash)
+    def native_overlays():
+        # Real WindowManager components, presented by debug hooks on a synthetic profile.
+        # Their presentation is separate from the real background-trigger tests in focus.
+        shell('settings','put','secure','enabled_accessibility_services','null')
+        shell('settings','put','secure','accessibility_enabled','0')
+        put_pref('packages','set',[FOCUS_TARGET]);put_pref('apps_init','boolean','true')
+        put_pref('blocking','boolean','false')
+        root=ET.Element('map');ET.SubElement(root,'boolean',{'name':'enabled','value':'true'})
+        write_tree(root,'focus_pause_v1')
+        shell('appops','set',PKG,'GET_USAGE_STATS','deny')
+        shell('appops','set',PKG,'SYSTEM_ALERT_WINDOW','allow')
+        try:
+            for mode,scale in [('light','1'),('dark','2')]:
+                theme(mode);shell('settings','put','system','font_scale',scale)
+                start('pause_overlay');locate_control('pause_overlay_open')
+                shot('native-pause-'+mode,['pause_overlay'],True)
+                locate_control('pause_settings');shot('native-pause-actions-'+mode,['pause_overlay'])
+                tap_control('pause_settings');shot('native-pause-settings-'+mode,['navigation'])
+                start('block_overlay');shot('native-block-'+mode,['block_overlay'],True)
+                tap('block_open_app');shot('native-block-open-'+mode,['block_overlay','navigation'])
+        finally:
+            shell('am','force-stop',PKG);shell('settings','put','system','font_scale','1');theme('light')
+    case('native-overlays',native_overlays)
+    def prayer_states():
+        put_pref('online_times','boolean','false');start('prayer_settings')
+        locate_control(label('prayer_source_online'),'text');shot('prayer-source-off',['prayer_source'])
+        shell('svc','wifi','disable');shell('svc','data','disable')
+        try:
+            tap('prayer_source_online');time.sleep(25)
+            locate_control(label('prayer_source_failed'),'text');shot('prayer-source-offline',['prayer_source'])
+        finally:
+            shell('svc','wifi','enable');shell('svc','data','enable')
+        put_pref('notify','boolean','true');put_pref('notify_adhan','boolean','true');start('prayer_settings')
+        locate_control(label('prayer_notify_voice'),'text');shot('prayer-voices',['prayer_notifications'])
+        tap('prayer_notify');shot('prayer-notifications-off',['prayer_notifications'])
+        assert prefs()['notify']=='false'
+        locate_control('+','text');tap_control('+','text');shot('prayer-adjusted',['prayer_adjustments'])
+        assert prefs()['adj_FAJR']=='1'
+        put_pref('blocking','boolean','true');start('focus');tap('focus_test_button')
+        locate_control(label('focus_test_running'),'text');shot('focus-test-running',['focus_test'])
+        assert int(prefs()['test_lock_until'])>0
+    case('prayer-states',prayer_states)
+    def place_fixture():
+        subprocess.run([sys.executable,'tools/ci/features_places.py'],check=True)
+    case('places-offline-fixture',place_fixture)
+    (OUT/'extras-results.json').write_text(json.dumps({'failures':failures},ensure_ascii=False,indent=2))
     if failures: raise AssertionError(str(failures))
 
 elif GROUP=='focus':
