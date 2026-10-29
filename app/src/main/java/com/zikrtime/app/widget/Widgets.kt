@@ -128,7 +128,7 @@ object Widgets {
 
     /** Небо для фона виджета — как в приложении: по времени суток. */
     private fun skyBitmap(context: Context, size: Pair<Int, Int>, now: ZonedDateTime, seed: Int, body: WidgetArt.Body? = null): android.graphics.Bitmap {
-        val times = PrayerSchedule.forDate(now.toLocalDate())
+        val times = PrayerSchedule.forDate(now.toLocalDate(), now.zone)
         val period = skyPeriod(now, times)
         val day = !now.isBefore(times[Prayer.SUNRISE]) && now.isBefore(times[Prayer.MAGHRIB])
         val colors = if (dark(context)) when (period) {
@@ -177,7 +177,7 @@ object Widgets {
             am.cancel(pi)
             return
         }
-        val now = ZonedDateTime.now()
+        val now = ZonedDateTime.now(com.zikrtime.app.ui.CityZones.forCity(Store.location.id))
         val nextPrayer = PrayerSchedule.next(now).second
         val midnight = now.toLocalDate().plusDays(1).atStartOfDay(now.zone)
         // Небо и кольца на виджетах меняются плавно — обновляем хотя бы раз в 20 минут.
@@ -218,7 +218,7 @@ object Widgets {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
 
-    private fun nextPrayer(context: Context, size: Pair<Int, Int>, now: ZonedDateTime = ZonedDateTime.now()): RemoteViews {
+    private fun nextPrayer(context: Context, size: Pair<Int, Int>, now: ZonedDateTime = ZonedDateTime.now(com.zikrtime.app.ui.CityZones.forCity(Store.location.id))): RemoteViews {
         val local = Lang.wrap(context)
         val res = local.resources
         val (prayer, at) = PrayerSchedule.next(now)
@@ -234,7 +234,7 @@ object Widgets {
         views.setTextColor(R.id.w_time, WidgetArt.CREAM)
         views.setTextColor(R.id.w_countdown, WidgetArt.GOLD_LIGHT)
         runCatching {
-            val period = skyPeriod(now, PrayerSchedule.forDate(now.toLocalDate()))
+            val period = skyPeriod(now, PrayerSchedule.forDate(now.toLocalDate(), now.zone))
             views.setImageViewBitmap(R.id.w_bg, WidgetArt.panorama(context, size.first, size.second,
                 night = period == SkyPeriod.NIGHT, warm = period == SkyPeriod.SUNSET, dim = dark(context)))
             views.setViewVisibility(R.id.w_star, android.view.View.GONE)
@@ -275,11 +275,11 @@ object Widgets {
     )
     private val icons = listOf(R.id.w_icon0, R.id.w_icon1, R.id.w_icon2, R.id.w_icon3, R.id.w_icon4, R.id.w_icon5)
 
-    private fun today(context: Context, size: Pair<Int, Int>, now: ZonedDateTime = ZonedDateTime.now()): RemoteViews {
+    private fun today(context: Context, size: Pair<Int, Int>, now: ZonedDateTime = ZonedDateTime.now(com.zikrtime.app.ui.CityZones.forCity(Store.location.id))): RemoteViews {
         val local = Lang.wrap(context)
         val res = local.resources
         val date = now.toLocalDate()
-        val times = PrayerSchedule.forDate(date)
+        val times = PrayerSchedule.forDate(date, now.zone)
         val next = PrayerSchedule.next(now).first
         val largeText = context.resources.configuration.fontScale > 1.3f
         val views = RemoteViews(context.packageName, if (largeText) R.layout.widget_today_large else R.layout.widget_today)
@@ -392,9 +392,9 @@ class TodayWidget : BaseWidget() {
         if (intent.action != ACTION_TOGGLE) return super.onReceive(context, intent)
         Store.init(context)
         val prayer = Prayer.entries.getOrNull(intent.getIntExtra(EXTRA_INDEX, -1)) ?: return
-        val now = ZonedDateTime.now()
+        val now = ZonedDateTime.now(com.zikrtime.app.ui.CityZones.forCity(Store.location.id))
         val today = now.toLocalDate()
-        val times = PrayerSchedule.forDate(today)
+        val times = PrayerSchedule.forDate(today, now.zone)
         if (!prayer.isPrayer || times[prayer].isAfter(now)) return
         Store.setPrayed(today, prayer, prayer !in Store.prayedOn(today))
         com.zikrtime.app.ui.Haptics.tick(context)

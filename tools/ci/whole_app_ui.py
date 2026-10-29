@@ -14,8 +14,11 @@ def start(screen, lang='ru', onboarded=True):
     time.sleep(2)
 
 def shot(name, ids=(), hierarchy=False):
+    # Wait for the real composed state after an interaction, not only the updated preference.
+    time.sleep(1.5)
+    settled = ui()
     screenshot(name)
-    if hierarchy: (OUT/(name+'.xml')).write_bytes(ET.tostring(ui()))
+    if hierarchy: (OUT/(name+'.xml')).write_bytes(ET.tostring(settled))
     records.append({'image':name+'.png','scenarios':list(ids),'captured':True,'visually_reviewed':False})
     (OUT/'capture-index.json').write_text(json.dumps(records,ensure_ascii=False,indent=2))
 
@@ -43,6 +46,8 @@ def finish_record(proc,name):
 
 if GROUP=='tour':
     start('home'); theme('system')
+    put_pref('alarm_on','boolean','true')
+    put_pref('blocking','boolean','true')
     routes=['home','knowledge','shop','focus','more','language','city','prayer_settings','alarm','qibla','tasbih',
             'about','apps','review','progress','azkar','quiz','quiz_cards','shop_seller','shop_product','places','ramadan','zakat','widgets','block_limit','block_prayer','alarm_ring']
     mapping={'home':['home'],'quiz':['quiz_intro'],'quiz_cards':['study'],'review':['review_empty'],
@@ -55,6 +60,8 @@ if GROUP=='tour':
         shell('cmd','uimode','night',mode)
         for route in routes:
             start(route)
+            if route in ['shop','places']: time.sleep(14)
+            if route == 'quiz_cards' and find_control(ui(), 'learning_read') is not None: tap_control('learning_read')
             shot(route+'-'+mode,mapping.get(route,[route]))
             if route in ['prayer_settings','alarm','focus','more','about','zakat','places','ramadan','shop_seller']:
                 swipe(times=8)
@@ -100,7 +107,7 @@ elif GROUP=='journeys':
     back();shot('knowledge-return',['knowledge','navigation'])
     finish_record(proc,'reading-route')
     start('azkar');tap('azkar_evening');shot('reading-evening',['azkar_evening'])
-    start('tasbih');tap('action_reset');shot('counter-confirm',['tasbih_reset'],True);tap('action_close')
+    start('tasbih');tap_control(label('action_reset'),'content-desc');shot('counter-confirm',['tasbih_reset'],True);tap('action_close')
     tap_control(label('zikr_1_name'),'text');shot('counter-phrases',['tasbih_phrase'],True);back()
     swipe(times=2);shot('counter-goals',['tasbih_goal'])
     # Search states and keyboard use actual input components.
@@ -131,7 +138,7 @@ elif GROUP=='accessibility':
     for route in ['home','knowledge','shop','focus','more','city','prayer_settings','alarm','tasbih','qibla','azkar','quiz_cards','places','ramadan','zakat','progress','about','onboarding_welcome','onboarding_perms']:
         start(route);shot(route+'-large',['accessibility'])
         if route in ['prayer_settings','alarm','tasbih','focus','ramadan','more','onboarding_perms']:
-            swipe(times=8);shot(route+'-large-bottom',['accessibility'])
+            swipe(times=18);shot(route+'-large-bottom',['accessibility'])
     shell('settings','put','system','font_scale','1.3')
     for route,lang in [('language','az'),('prayer_settings','tr'),('shop_seller','az'),('onboarding_city','tr')]:
         start(route,lang);shot(route+'-long-'+lang,['accessibility'])
@@ -141,11 +148,113 @@ elif GROUP=='accessibility':
     start('quiz_cards');shot('reduced-motion-study',['motion','study'])
     shell('settings','put','global','animator_duration_scale','1')
 
+elif GROUP=='details':
+    # Independent subroutes keep collecting evidence if one external service is unavailable.
+    import traceback
+    failures=[]
+    def case(name, fn):
+        try: fn()
+        except Exception as error:
+            failures.append({'case':name,'error':str(error)})
+            (OUT/(name+'-failure.txt')).write_text(traceback.format_exc())
+            try: shot(name+'-failure')
+            except Exception: pass
+            print('CASE FAILED',name,error,flush=True)
+    start('home');theme('light')
+    bank={q['id']:q for q in json.loads(Path('app/src/main/assets/quiz/ru.json').read_text())['questions']}
+    def answer(scope, correct=True):
+        session=learning()['sessions'][scope];q=bank[session['ids'][session['index']]]
+        canonical=q['answer'] if correct else (q['answer']+1)%len(q['options'])
+        tap_control(q['options'][canonical],'text')
+        return q
+    def quiz():
+        put_pref('learning_state_v1','string','{}');start('quiz')
+        proc=record('quiz-route')
+        try:
+            tap_control('learning_skip');shot('quiz-question',['quiz_question'])
+            answer('normal',False);swipe();shot('quiz-wrong',['quiz_feedback','source'])
+            tap_control('learning_next')
+            for i in range(3):
+                answer('normal');swipe();shot('quiz-correct-'+str(i),['quiz_feedback'])
+                tap_control('learning_finish' if i==2 else 'learning_next')
+            assert learning()['sessions']['normal']['stage']=='RESULT'
+            shot('quiz-result',['quiz_result']);tap('quiz_again');shot('quiz-again',['quiz_result'])
+            back();shot('quiz-return',['navigation'])
+        finally: finish_record(proc,'quiz-route')
+    case('quiz',quiz)
+    def azkar():
+        put_pref('azkar_reading_v1','string','{}');start('azkar')
+        for i in range(5): tap('azkar_next')
+        shot('azkar-last',['azkar_navigation']);tap('azkar_complete')
+        assert json.loads(prefs()['azkar_reading_v1'])['morning']['complete'] is True
+        shot('azkar-finished',['azkar_navigation'])
+    case('azkar',azkar)
+    def counter():
+        put_pref('tasbih_count','int','32');put_pref('tasbih_target','int','33');start('tasbih')
+        tap_control(label('tasbih_title'),'content-desc')
+        assert prefs()['tasbih_count']=='33'
+        shot('counter-complete',['tasbih','tasbih_goal'])
+        tap_control(label('action_reset'),'content-desc');tap('action_reset')
+        assert prefs()['tasbih_count']=='0'
+        shot('counter-reset',['tasbih_reset'])
+    case('counter',counter)
+    def alarm():
+        put_pref('alarm_on','boolean','false');start('alarm');shot('alarm-disabled',['alarm'])
+        put_pref('alarm_wake_check','boolean','true');start('alarm_ring');tap('alarm_answer_to_stop')
+        shot('alarm-question',['alarm_quiz']);answer('alarm');swipe();shot('alarm-answer',['alarm_quiz'])
+        tap_control('learning_finish');shot('alarm-stopped',['alarm_quiz','navigation'])
+    case('alarm',alarm)
+    def blocked():
+        start('block_limit')
+        tap_control(label('block_quiz_button').replace('%1$d','3').replace('%2$d','10'),'text')
+        shot('block-question',['block_quiz'])
+        for i in range(3):
+            swipe(up=False,times=5);answer('blocking');tap_control('learning_finish' if i==2 else 'learning_next')
+        shot('block-result',['block_quiz'])
+        tap('action_done')
+    case('block',blocked)
+    def denied():
+        shell('pm','revoke',PKG,'android.permission.ACCESS_COARSE_LOCATION')
+        shell('pm','clear-permission-flags',PKG,'android.permission.ACCESS_COARSE_LOCATION','user-set','user-fixed')
+        start('onboarding_city',onboarded=False);tap('city_locate')
+        shot('location-native-permission',['onboarding_location'])
+        tap_control('permission_deny_button');shot('onboarding-location-denied',['onboarding_location'])
+        start('city');tap('city_locate')
+        root=ui()
+        if find_control(root,'permission_deny_button') is not None: tap_control('permission_deny_button')
+        shot('city-location-denied',['city_denied'])
+    case('location',denied)
+    def places():
+        start('places');time.sleep(14);tap('place_hide_map')
+        tap_control('place_card');shot('place-expanded',['place_detail'])
+        tap('place_changed');shot('place-correction',['place_correction']);tap('place_close')
+        tap('places_rooms');shot('place-filtered',['places']);back();shot('places-back',['navigation'])
+    case('places',places)
+    def disclosure():
+        start('focus');tap_control('focus_accessibility_disclosure')
+        shot('focus-disclosure',['focus_disclosure']);back()
+    case('disclosure',disclosure)
+    def zakat():
+        put_pref('zakat_inputs','string','{"cash":"","gold_price":"10000","silver_price":"100"}')
+        start('zakat');type_query('1000000');shot('zakat-keyboard',['zakat','accessibility']);back()
+        assert json.loads(prefs()['zakat_inputs'])['cash']=='1000000'
+        swipe(up=False,times=5);shot('zakat-calculated',['zakat'])
+        shell('svc','wifi','disable');shell('svc','data','disable')
+        try:
+            tap('zakat_update_prices');time.sleep(28);swipe(times=8);shot('zakat-offline',['zakat_prices'])
+            locate_control(label('zakat_prices_failed'),'text')
+        finally:
+            shell('svc','wifi','enable');shell('svc','data','enable')
+    case('zakat',zakat)
+    (OUT/'details-results.json').write_text(json.dumps({'failures':failures},ensure_ascii=False,indent=2))
+    if failures: raise AssertionError(str(failures))
+
 elif GROUP=='focus':
     start('home')
     theme('system')
+    shell('pm','grant',PKG,'android.permission.POST_NOTIFICATIONS')
     subprocess.run([sys.executable,'tools/ci/features_controls.py','focus'],check=True)
     subprocess.run([sys.executable,'tools/ci/features_controls.py','focus-visual'],check=True)
     subprocess.run([sys.executable,'tools/ci/features_controls.py','focus-notifications-denied'],check=True)
 
-(OUT/'complete-'+GROUP+'.txt').write_text('Real Android UI script completed. Images still require visual review.\n')
+(OUT/('complete-'+GROUP+'.txt')).write_text('Real Android UI script completed. Images still require visual review.\n')

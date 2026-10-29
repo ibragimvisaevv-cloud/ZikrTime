@@ -2,10 +2,13 @@ package com.zikrtime.app.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.ui.semantics.Role
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -56,14 +59,14 @@ private fun hms(d: Duration): String {
 private class FastState(val iftarNext: Boolean, val target: ZonedDateTime, val suhurEnd: ZonedDateTime, val iftar: ZonedDateTime)
 
 private fun fastState(now: ZonedDateTime): FastState {
-    val today = PrayerSchedule.forDate(now.toLocalDate())
+    val today = PrayerSchedule.forDate(now.toLocalDate(), now.zone)
     val fajr = today[Prayer.FAJR]
     val maghrib = today[Prayer.MAGHRIB]
     return when {
         now.isBefore(fajr) -> FastState(false, fajr, fajr, maghrib)
         now.isBefore(maghrib) -> FastState(true, maghrib, fajr, maghrib)
         else -> {
-            val tomorrow = PrayerSchedule.forDate(now.toLocalDate().plusDays(1))
+            val tomorrow = PrayerSchedule.forDate(now.toLocalDate().plusDays(1), now.zone)
             FastState(false, tomorrow[Prayer.FAJR], tomorrow[Prayer.FAJR], tomorrow[Prayer.MAGHRIB])
         }
     }
@@ -73,11 +76,11 @@ private fun fastState(now: ZonedDateTime): FastState {
 @OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 fun RamadanScreen() {
     val nav = LocalNav.current
-    var now by remember { mutableStateOf(ZonedDateTime.now()) }
+    var now by remember { mutableStateOf(ZonedDateTime.now(CityZones.forCity(Store.location.id))) }
     LaunchedEffect(Unit) {
         while (true) {
             delay(1000 - System.currentTimeMillis() % 1000)
-            now = ZonedDateTime.now()
+            now = ZonedDateTime.now(CityZones.forCity(Store.location.id))
         }
     }
     val today = now.toLocalDate()
@@ -132,6 +135,7 @@ fun RamadanScreen() {
 
         if (period != null) {
             val fasted = period.let { p -> (0 until p.days).count { Ramadan.fasted(p.start.plusDays(it.toLong())) } }
+            val calendarColumns = if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f || androidx.compose.ui.platform.LocalConfiguration.current.screenWidthDp < 380) 4 else 6
             ZCard {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(stringResource(R.string.ramadan_fasts_title), style = MaterialTheme.typography.titleSmall, modifier = Modifier.weight(1f))
@@ -140,7 +144,7 @@ fun RamadanScreen() {
                 Spacer(Modifier.height(4.dp))
                 Text(stringResource(R.string.ramadan_fasts_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(Modifier.height(12.dp))
-                (1..period.days).chunked(if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 4 else 6).forEach { row ->
+                (1..period.days).chunked(calendarColumns).forEach { row ->
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         row.forEach { n ->
                             val date = period.start.plusDays(n - 1L)
@@ -160,9 +164,11 @@ fun RamadanScreen() {
                                         },
                                     )
                                     .then(if (isToday) Modifier.border(2.dp, MaterialTheme.colorScheme.primary, CircleShape) else Modifier)
-                                    .clickable(enabled = canMark) { Ramadan.toggle(date) },
+                                    .toggleable(value = done, enabled = canMark, role = Role.Checkbox, onValueChange = { Ramadan.toggle(date) }),
                                 contentAlignment = Alignment.Center,
                             ) {
+                                if (done) androidx.compose.material3.Icon(painterResource(R.drawable.ic_check), null,
+                                    tint = Color(0xFF2B1E00), modifier = Modifier.align(Alignment.BottomEnd).size(14.dp))
                                 Text(
                                     n.toString(),
                                     style = MaterialTheme.typography.labelLarge,
@@ -174,7 +180,7 @@ fun RamadanScreen() {
                                 )
                             }
                         }
-                        repeat((if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 4 else 6) - row.size) { Spacer(Modifier.weight(1f)) }
+                        repeat(calendarColumns - row.size) { Spacer(Modifier.weight(1f)) }
                     }
                     Spacer(Modifier.height(8.dp))
                 }

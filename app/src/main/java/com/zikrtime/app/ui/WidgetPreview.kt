@@ -25,7 +25,8 @@ import java.time.ZonedDateTime
 /** Только для проверки: виджеты рабочего стола в разное время суток. */
 @Composable
 fun WidgetPreview() {
-    val now = ZonedDateTime.now()
+    StandardSystemBars()
+    val now = ZonedDateTime.now(CityZones.forCity(com.zikrtime.app.data.Store.location.id))
     val day = now.withHour(13).withMinute(5)
     val night = now.withHour(22).withMinute(40)
     val evening = now.withHour(17).withMinute(30)

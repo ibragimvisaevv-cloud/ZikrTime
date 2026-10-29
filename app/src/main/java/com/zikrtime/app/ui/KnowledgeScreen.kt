@@ -216,7 +216,7 @@ fun ReviewScreen() {
     val bank = remember { QuestionBank.load(context) }
     val initial = remember(bank) { LearningStore.begin(bank, null, scope = "review") }
     val session = LearningStore.session("review") ?: initial
-    ScreenScaffold(title = stringResource(R.string.learning_review), onBack = { nav.back() }) {
+    ScreenScaffold(title = stringResource(R.string.learning_review), onBack = { nav.back() }, scrollKey = "${session?.stage}-${session?.index}") {
         when {
             session == null -> StatePanel(stringResource(R.string.learning_none_due), stringResource(R.string.learning_none_due_hint), action = stringResource(R.string.knowledge_start), onAction = { nav.startQuiz(null) })
             session.stage == "RESULT" -> {

@@ -466,6 +466,8 @@
     <string name="pause_pending">Барои идомаи таваққуф ZikrTime-ро кушоед</string>
     <string name="pause_running">Назорат фаъол аст</string>
     <string name="pause_inactive">Таваққуф хомӯш аст</string>
+    <string name="pause_action_hint">Зикри интихобшударо бигӯед ва вақте омода шудед, идома диҳед.</string>
+    <string name="map_slow">Харита дертар бор мешавад. Рӯйхати ҷойҳо дар поён дастрас аст.</string>
     <string name="reader_text_size">Андозаи матн</string>
     <string name="onboarding_ready_title">Ҳама чиз омода аст</string>
     <string name="onboarding_ready_text">Вақти намоз, зикр ва дониш — бо суръати шумо.</string>

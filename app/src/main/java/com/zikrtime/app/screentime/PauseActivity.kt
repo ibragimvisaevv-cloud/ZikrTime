@@ -106,6 +106,7 @@ class PauseActivity : ComponentActivity() {
 @OptIn(ExperimentalLayoutApi::class, androidx.compose.ui.ExperimentalComposeUiApi::class)
 @Composable
 private fun PauseContent(pkg: String,onOpen:(Int,String)->Unit,onExit:()->Unit,onSettings:()->Unit,onDisable:()->Unit) {
+    com.zikrtime.app.ui.StandardSystemBars()
     val context=androidx.compose.ui.platform.LocalContext.current
     val revision=FocusPause.version
     val strict=remember(revision) { FocusPause.strict(context) }
@@ -127,7 +128,7 @@ private fun PauseContent(pkg: String,onOpen:(Int,String)->Unit,onExit:()->Unit,o
             if(!completed) {
                 ZCard {
                     Text(stringResource(R.string.pause_zikr),style=MaterialTheme.typography.titleMedium)
-                    Text(stringResource(R.string.pause_zikr_hint),style=MaterialTheme.typography.bodyMedium)
+                    Text(stringResource(R.string.pause_action_hint),style=MaterialTheme.typography.bodyMedium)
                     Spacer(Modifier.height(20.dp))
                     Text(arabic[phrase],Modifier.fillMaxWidth(),style=com.zikrtime.app.ui.theme.ArabicStyle.copy(textDirection=TextDirection.Rtl,lineHeight=56.sp),textAlign=TextAlign.Center)
                     Spacer(Modifier.height(16.dp))

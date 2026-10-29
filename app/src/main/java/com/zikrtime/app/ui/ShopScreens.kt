@@ -120,7 +120,7 @@ fun ShopScreen() {
             }
         }
         if (Shop.offline) {
-            Text(stringResource(R.string.shop_offline), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            StatusLine(stringResource(R.string.shop_offline))
         }
 
         // Поиск
@@ -481,8 +481,8 @@ fun SellerScreen(sellerId: String? = null) {
             Row(Modifier.align(Alignment.BottomStart).padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                 SellerLogo(seller, 60.dp)
                 Spacer(Modifier.width(14.dp))
-                Column {
-                    Text(seller.name, style = MaterialTheme.typography.titleLarge, color = Cream)
+                Column(Modifier.weight(1f)) {
+                    Text(seller.name, style = MaterialTheme.typography.titleMedium, color = Cream)
                     Text(seller.city.get(lang), style = MaterialTheme.typography.bodyMedium, color = Cream.copy(alpha = 0.85f))
                 }
             }
@@ -536,7 +536,7 @@ private fun ContactButtons(seller: Shop.Seller) {
         ShimmerButton(stringResource(first.second), onClick = first.third)
     }
     val rest = if (seller.telegram.isNotBlank()) items.drop(1) else items
-    val columns = if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 1 else 2
+    val columns = if (androidx.compose.ui.platform.LocalDensity.current.fontScale >= 1.3f || androidx.compose.ui.platform.LocalConfiguration.current.screenWidthDp < 360) 1 else 2
     rest.chunked(columns).forEach { row ->
         Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             row.forEach { (icon, label, action) ->

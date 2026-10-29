@@ -62,6 +62,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -115,6 +116,7 @@ fun ScreenScaffold(
     scrollKey: Any? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
+    StandardSystemBars()
     val scroll = rememberScrollState()
     androidx.compose.runtime.LaunchedEffect(scrollKey) { if (scrollKey != null) scroll.scrollTo(0) }
     Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
@@ -147,6 +149,7 @@ fun ScreenScaffold(
 /** Содержимое вкладки: заголовок крупно и прокрутка. */
 @Composable
 fun TabColumn(title: String? = null, subtitle: String? = null, spacing: Dp = 16.dp, content: @Composable ColumnScope.() -> Unit) {
+    StandardSystemBars()
     Column(
         Modifier
             .fillMaxSize()
@@ -328,6 +331,7 @@ fun TonalButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier
         modifier
             .fillMaxWidth()
             .heightIn(min = 52.dp)
+            .alpha(if (enabled) 1f else .55f)
             .pressScale(interaction)
             .glass(shape, elevation = 4.dp)
             .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.45f))

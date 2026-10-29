@@ -466,6 +466,8 @@
     <string name="pause_pending">Tanaffusni davom ettirish uchun ZikrTime’ni oching</string>
     <string name="pause_running">Nazorat ishlayapti</string>
     <string name="pause_inactive">Tanaffus oʻchirilgan</string>
+    <string name="pause_action_hint">Tanlangan zikrni ayting va tayyor bo‘lganingizda davom eting.</string>
+    <string name="map_slow">Xarita uzoqroq yuklanmoqda. Joylar ro‘yxati quyida mavjud.</string>
     <string name="reader_text_size">Matn o‘lchami</string>
     <string name="onboarding_ready_title">Hammasi tayyor</string>
     <string name="onboarding_ready_text">Namoz vaqtlari, zikr va bilim — o‘z sur’atingizda.</string>

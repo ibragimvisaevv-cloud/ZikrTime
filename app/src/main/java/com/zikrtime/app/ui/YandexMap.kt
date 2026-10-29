@@ -102,6 +102,7 @@ fun YandexPlacesMap(
     /** Где сейчас человек (если известно) и счётчик нажатий «Где я» — по нему камера летит к нему. */
     me: Pair<Double, Double>? = null,
     focusMe: Int = 0,
+    onLoaded: () -> Unit = {},
 ) {
     val context = LocalContext.current
     val density = context.resources.displayMetrics.density
@@ -113,6 +114,12 @@ fun YandexPlacesMap(
         MapView(context).also {
             it.mapWindow.map.move(CameraPosition(Point(centerLat, centerLon), 11.5f, 0f, 0f))
         }
+    }
+    val currentOnLoaded = androidx.compose.runtime.rememberUpdatedState(onLoaded)
+    val loadedListener = remember { com.yandex.mapkit.map.MapLoadedListener { currentOnLoaded.value() } }
+    DisposableEffect(mapView) {
+        mapView.mapWindow.map.setMapLoadedListener(java.lang.ref.WeakReference(loadedListener))
+        onDispose { mapView.mapWindow.map.setMapLoadedListener(null) }
     }
     // Слушатель нужно держать в памяти — MapKit хранит слабую ссылку.
     val tap = remember {

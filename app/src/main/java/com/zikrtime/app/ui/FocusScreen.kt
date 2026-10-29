@@ -45,6 +45,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -258,6 +259,7 @@ fun FocusScreen() {
                 text = stringResource(R.string.perm_service_text),
                 granted = hasService,
                 onGrant = { showDisclosure = true },
+                actionTag = "focus_accessibility_disclosure",
             )
             HorizontalDivider(Modifier.padding(vertical = 14.dp), color = MaterialTheme.colorScheme.outlineVariant)
             // Экономия батареи останавливает защиту — просим разрешить работу в фоне.
@@ -346,14 +348,14 @@ fun FocusScreen() {
 }
 
 @Composable
-fun PermissionRow(title: String, text: String, granted: Boolean, onGrant: () -> Unit) {
+fun PermissionRow(title: String, text: String, granted: Boolean, onGrant: () -> Unit, actionTag: String = "permission_grant") {
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             Text(title, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
             if (granted) Icon(Icons.Default.CheckCircle, contentDescription = stringResource(R.string.state_granted), tint = MaterialTheme.colorScheme.primary)
         }
         Text(text, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        if (!granted) FilledTonalButton(onClick = onGrant, modifier = Modifier.heightIn(min = 48.dp)) { Text(stringResource(R.string.action_grant)) }
+        if (!granted) FilledTonalButton(onClick = onGrant, modifier = Modifier.heightIn(min = 48.dp).testTag(actionTag)) { Text(stringResource(R.string.action_grant)) }
     }
 }
 

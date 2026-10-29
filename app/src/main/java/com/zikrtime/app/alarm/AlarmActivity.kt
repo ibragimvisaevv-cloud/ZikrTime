@@ -133,19 +133,22 @@ class AlarmActivity : ComponentActivity() {
 @Composable
 private fun AlarmScreen(test: Boolean, onStop: () -> Unit, onSnooze: () -> Unit) {
     val context = LocalContext.current
-    var now by remember { mutableStateOf(ZonedDateTime.now()) }
+    var now by remember { mutableStateOf(ZonedDateTime.now(com.zikrtime.app.ui.CityZones.forCity(Store.location.id))) }
     LaunchedEffect(Unit) {
         while (true) {
             delay(1000)
-            now = ZonedDateTime.now()
+            now = ZonedDateTime.now(com.zikrtime.app.ui.CityZones.forCity(Store.location.id))
         }
     }
     val fajr = remember {
-        val n = ZonedDateTime.now()
-        val today = PrayerSchedule.forDate(n.toLocalDate())[Prayer.FAJR]
-        if (today.isBefore(n.minusHours(3))) PrayerSchedule.forDate(n.toLocalDate().plusDays(1))[Prayer.FAJR] else today
+        val n = ZonedDateTime.now(com.zikrtime.app.ui.CityZones.forCity(Store.location.id))
+        val today = PrayerSchedule.forDate(n.toLocalDate(), n.zone)[Prayer.FAJR]
+        if (today.isBefore(n.minusHours(3))) PrayerSchedule.forDate(n.toLocalDate().plusDays(1), n.zone)[Prayer.FAJR] else today
     }
     var checking by remember { mutableStateOf(false) }
+    val scroll = rememberScrollState()
+    val questionIndex = com.zikrtime.app.quiz.LearningStore.session("alarm")?.index
+    LaunchedEffect(checking, questionIndex) { scroll.scrollTo(0) }
     val bank = remember { QuestionBank.load(context) }
 
     Box(
@@ -169,7 +172,7 @@ private fun AlarmScreen(test: Boolean, onStop: () -> Unit, onSnooze: () -> Unit)
                 Column(
                     Modifier
                         .fillMaxWidth()
-                        .verticalScroll(rememberScrollState())
+                        .verticalScroll(scroll)
                         .heightIn(min = maxHeight),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(14.dp, Alignment.CenterVertically),

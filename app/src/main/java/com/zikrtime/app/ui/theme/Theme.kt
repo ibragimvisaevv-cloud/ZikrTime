@@ -126,7 +126,6 @@ fun ZikrTheme(natural: Boolean = false, content: @Composable () -> Unit) {
         val activity = view.context as? android.app.Activity
         if (activity != null) {
             androidx.core.view.WindowCompat.getInsetsController(activity.window, view).apply {
-                isAppearanceLightStatusBars = !dark
                 isAppearanceLightNavigationBars = !dark
             }
         }

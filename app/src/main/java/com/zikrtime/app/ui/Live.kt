@@ -579,7 +579,7 @@ fun Modifier.shake(trigger: Boolean): Modifier = composed {
 @Composable
 fun CrescentSplash(modifier: Modifier = Modifier) {
     Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        SceneBackdrop(Modifier.fillMaxSize())
+        SceneBackdrop(Modifier.fillMaxSize(), controlBars = false)
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Icon(painterResource(R.drawable.ic_mosque), null, tint = Gold, modifier = Modifier.size(64.dp))
             Text(stringResource(R.string.app_name), color = Cream, style = MaterialTheme.typography.headlineLarge)

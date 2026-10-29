@@ -36,6 +36,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
@@ -103,6 +104,15 @@ fun PlacesScreen() {
     var locationUnavailable by remember { mutableStateOf(false) }
     val largeText = LocalDensity.current.fontScale >= 1.3f
     var showMap by rememberSaveable { mutableStateOf(!largeText) }
+    var tilesLoaded by remember { mutableStateOf(false) }
+    var slowMap by remember { mutableStateOf(false) }
+    LaunchedEffect(showMap) {
+        if (showMap) {
+            tilesLoaded = false; slowMap = false
+            kotlinx.coroutines.delay(12_000)
+            if (!tilesLoaded) slowMap = true
+        }
+    }
     LaunchedEffect(largeText) { if (largeText) showMap = false }
     fun locate() {
         locating = true
@@ -156,7 +166,15 @@ fun PlacesScreen() {
                     modifier = Modifier.fillMaxSize().clip(RoundedCornerShape(26.dp)),
                     me = here,
                     focusMe = focusMe,
+                    onLoaded = { tilesLoaded = true; slowMap = false },
                 )
+                if (!tilesLoaded) {
+                    androidx.compose.material3.Surface(color = MaterialTheme.colorScheme.surfaceContainerLow.copy(alpha = .96f),
+                        shape = RoundedCornerShape(16.dp), modifier = Modifier.align(Alignment.TopCenter).padding(12.dp)) {
+                        Text(stringResource(if (slowMap) R.string.map_slow else R.string.places_loading),
+                            style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(12.dp))
+                    }
+                }
                 // «Где я»: показать себя на карте и ближайшие места
                 androidx.compose.material3.SmallFloatingActionButton(
                     onClick = { whereAmI() },
@@ -178,7 +196,7 @@ fun PlacesScreen() {
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.clickable(enabled = here == null) { whereAmI() },
         )
-        if (locationUnavailable) Text(stringResource(R.string.place_location_unavailable), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        if (locationUnavailable) StatusLine(stringResource(R.string.place_location_unavailable))
         Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             if (hasYandexMap) FilterPill(stringResource(if (showMap) R.string.place_hide_map else R.string.place_show_map), showMap) { showMap = !showMap }
             FilterPill(stringResource(R.string.places_all), filter == "all") { filter = "all" }
@@ -192,7 +210,7 @@ fun PlacesScreen() {
             contentPadding = PaddingValues(bottom = 8.dp),
         ) {
             if (Places.refreshFailed || Places.usingSavedCopy) {
-                item { Text(stringResource(if (Places.usingSavedCopy) R.string.place_saved_copy else R.string.place_load_failed), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
+                item { StatusLine(stringResource(if (Places.usingSavedCopy) R.string.place_saved_copy else R.string.place_load_failed)) }
             }
             if (places.isEmpty()) {
                 item {
@@ -266,7 +284,7 @@ private fun PlaceCard(place: Places.Place, distanceKm: Double, expanded: Boolean
     val correctionUrl = Places.correctionUrl(place.id)
     val unknown = stringResource(R.string.place_unknown)
     fun status(value: Boolean?) = when (value) { true -> R.string.place_yes; false -> R.string.place_no; null -> R.string.place_unknown }
-    ZCard(onClick = onClick, padding = PaddingValues(16.dp)) {
+    ZCard(onClick = onClick, modifier = Modifier.testTag("place_card"), padding = PaddingValues(16.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconBadge(painterResource(kindIcon(place.kind)), container = if (place.kind == "mosque") Gold.copy(alpha = 0.45f) else MaterialTheme.colorScheme.primaryContainer)
             Spacer(Modifier.width(14.dp))

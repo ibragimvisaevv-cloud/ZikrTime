@@ -179,6 +179,9 @@ private sealed class BlockMode {
 private fun BlockScreen(reason: BlockReason, onClose: () -> Unit, onBackToApp: () -> Unit) {
     val context = LocalContext.current
     var mode by remember(reason) { mutableStateOf<BlockMode>(BlockMode.Info) }
+    val scroll = rememberScrollState()
+    val questionIndex = LearningStore.session("blocking")?.index
+    LaunchedEffect(mode, questionIndex) { scroll.scrollTo(0) }
 
     Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Emerald, EmeraldDeep)))) {
         com.zikrtime.app.ui.SceneBackdrop(Modifier.fillMaxSize(), night = true)
@@ -186,7 +189,7 @@ private fun BlockScreen(reason: BlockReason, onClose: () -> Unit, onBackToApp: (
             Modifier
                 .fillMaxSize()
                 .windowInsetsPadding(WindowInsets.safeDrawing)
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(scroll)
                 .padding(24.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {

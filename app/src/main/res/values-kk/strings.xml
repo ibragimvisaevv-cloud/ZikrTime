@@ -466,6 +466,8 @@
     <string name="pause_pending">Үзілісті жалғастыру үшін ZikrTime қолданбасын ашыңыз</string>
     <string name="pause_running">Бақылау жұмыс істеп тұр</string>
     <string name="pause_inactive">Үзіліс өшірулі</string>
+    <string name="pause_action_hint">Таңдалған зікірді айтып, дайын болғанда жалғастырыңыз.</string>
+    <string name="map_slow">Карта ұзақ жүктелуде. Орындар тізімі төменде қолжетімді.</string>
     <string name="reader_text_size">Мәтін өлшемі</string>
     <string name="onboarding_ready_title">Бәрі дайын</string>
     <string name="onboarding_ready_text">Намаз уақыты, зікір және білім — өз қарқыныңызбен.</string>

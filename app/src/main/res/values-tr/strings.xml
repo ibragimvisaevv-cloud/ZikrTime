@@ -466,6 +466,8 @@
     <string name="pause_pending">Molaya devam etmek için ZikrTime\'ı açın</string>
     <string name="pause_running">Denetim çalışıyor</string>
     <string name="pause_inactive">Mola kapalı</string>
+    <string name="pause_action_hint">Seçtiğiniz zikri okuyun ve hazır olduğunuzda devam edin.</string>
+    <string name="map_slow">Harita yavaş yükleniyor. Yer listesi aşağıda kullanılabilir.</string>
     <string name="reader_text_size">Metin boyutu</string>
     <string name="onboarding_ready_title">Her şey hazır</string>
     <string name="onboarding_ready_text">Namaz vakitleri, zikir ve bilgi — kendi hızınızda.</string>

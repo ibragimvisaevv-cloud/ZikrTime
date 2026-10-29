@@ -466,6 +466,8 @@
     <string name="pause_pending">Тыныгууну улантуу үчүн ZikrTime колдонмосун ачыңыз</string>
     <string name="pause_running">Көзөмөл иштеп жатат</string>
     <string name="pause_inactive">Тыныгуу өчүрүлгөн</string>
+    <string name="pause_action_hint">Тандалган зикирди айтып, даяр болгондо улантыңыз.</string>
+    <string name="map_slow">Карта жай жүктөлүүдө. Жерлердин тизмеси төмөндө.</string>
     <string name="reader_text_size">Тексттин өлчөмү</string>
     <string name="onboarding_ready_title">Баары даяр</string>
     <string name="onboarding_ready_text">Намаз убактысы, зикир жана билим — өз ыргагыңызда.</string>

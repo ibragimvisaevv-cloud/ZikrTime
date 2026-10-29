@@ -466,6 +466,8 @@
     <string name="pause_pending">Open ZikrTime to continue the pause</string>
     <string name="pause_running">Monitoring is running</string>
     <string name="pause_inactive">Pause is off</string>
+    <string name="pause_action_hint">Recite your chosen dhikr and continue when you are ready.</string>
+    <string name="map_slow">The map is taking longer to load. The list of places is available below.</string>
     <string name="reader_text_size">Reading size</string>
     <string name="onboarding_ready_title">Your horizon is ready</string>
     <string name="onboarding_ready_text">Prayer times, remembrance and learning — at your own pace.</string>

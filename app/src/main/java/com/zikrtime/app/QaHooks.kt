@@ -40,6 +40,8 @@ object QaHooks {
         hideScene = intent.getBooleanExtra("qa_hide_scene", false)
         skyPreview = intent.getStringExtra("qa_period")?.let { runCatching { com.zikrtime.app.ui.NaturalPeriod.valueOf(it) }.getOrNull() }
         val screen = intent.getStringExtra("qa_screen") ?: return false
+        nav.stack.clear()
+        nav.onboardingStep = 0
         if (intent.getBooleanExtra("qa_onboarded", false)) Store.onboarded = true
         if (intent.getBooleanExtra("qa_demo", false)) seed(activity)
         when (screen) {

@@ -36,6 +36,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.animation.core.animateFloat
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -189,18 +191,13 @@ private fun Compass(heading: Float, qibla: Float, aligned: Boolean) {
         stringResource(R.string.compass_s), stringResource(R.string.compass_w),
     )
     val glowOn by androidx.compose.animation.core.animateFloatAsState(if (aligned) 1f else 0f, androidx.compose.animation.core.tween(450), label = "qibla-glow")
-    val pulse by androidx.compose.animation.core.rememberInfiniteTransition(label = "qibla").animateFloat(
-        0f, 1f,
-        androidx.compose.animation.core.infiniteRepeatable(androidx.compose.animation.core.tween(1100), androidx.compose.animation.core.RepeatMode.Reverse),
-        label = "qibla-pulse",
-    )
     BoxWithConstraints(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         val radius = with(LocalDensity.current) { (minOf(maxWidth, maxHeight) / 2).toPx() }
         Canvas(Modifier.fillMaxSize()) {
             val r = size.minDimension / 2
             if (glowOn > 0f) {
                 // Золотое сияние вокруг компаса, когда телефон смотрит на Каабу
-                val g = r * (1.08f + 0.05f * pulse)
+                val g = r * 1.10f
                 drawCircle(
                     Brush.radialGradient(
                         0.78f to Color.Transparent,
@@ -339,7 +336,9 @@ fun TasbihScreen() {
         onBack = { nav.back() },
         actions = {
             val ctx = LocalContext.current
-            TextButton(onClick = { reset = true }) { Text(stringResource(R.string.action_reset)) }
+            androidx.compose.material3.IconButton(onClick = { reset = true }) {
+                androidx.compose.material3.Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.action_reset))
+            }
         }, showHeading = false,
     ) {
         DestinationRow(stringResource(TASBIH_NAMES[phrase].first), R.drawable.ic_tasbih,

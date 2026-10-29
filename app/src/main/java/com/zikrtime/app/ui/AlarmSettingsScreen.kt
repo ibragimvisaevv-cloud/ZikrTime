@@ -82,20 +82,25 @@ fun AlarmSettingsScreen() {
         version++
     }
 
+    fun toggleAlarm(enabled: Boolean) {
+        Store.alarmEnabled = enabled
+        if (enabled && Build.VERSION.SDK_INT >= 33 && !notificationsAllowed) notifPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+        changed()
+    }
     ScreenScaffold(title = stringResource(R.string.alarm_title), onBack = { nav.back() }, showHeading = false) {
         val next = remember(version, Store.alarmEnabled, Store.alarmOffsetMinutes, Store.alarmDays, Store.location, Store.method) {
-            if (Store.alarmEnabled) FajrAlarm.nextTrigger(ZonedDateTime.now()) else null
+            if (Store.alarmEnabled) FajrAlarm.nextTrigger(ZonedDateTime.now()).withCityZone() else null
         }
         AlarmHero(
             enabled = Store.alarmEnabled,
             next = next,
-            onToggle = {
-                Store.alarmEnabled = it
-                if (it && Build.VERSION.SDK_INT >= 33 && !notificationsAllowed) notifPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
-                changed()
-            },
+            onToggle = ::toggleAlarm,
         )
 
+        if (!Store.alarmEnabled) {
+            StatePanel(stringResource(R.string.state_off), stringResource(R.string.alarm_note), icon = R.drawable.ic_alarm,
+                action = stringResource(R.string.alarm_enable), onAction = { toggleAlarm(true) })
+        }
         if (Store.alarmEnabled) {
             ZCard {
                 val offset = Store.alarmOffsetMinutes
@@ -246,3 +251,5 @@ private fun DayToggle(label: String, selected: Boolean, modifier: Modifier = Mod
         )
     }
 }
+
+private fun ZonedDateTime?.withCityZone(): ZonedDateTime? = this?.withZoneSameInstant(CityZones.forCity(Store.location.id))

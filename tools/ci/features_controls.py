@@ -89,7 +89,7 @@ def find_control(root, identifier, attribute='resource-id'):
 
 
 def locate_control(identifier, attribute='resource-id'):
-    for attempt in range(7):
+    for attempt in range(12):
         root = ui()
         node = find_control(root, identifier, attribute)
         screen = next(root.iter('node'))

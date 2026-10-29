@@ -8,6 +8,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,9 +34,24 @@ fun motionEnabled(): Boolean {
         android.provider.Settings.Global.ANIMATOR_DURATION_SCALE, 1f) != 0f }
 }
 
+@Composable
+fun StandardSystemBars() {
+    val view = androidx.compose.ui.platform.LocalView.current
+    val dark = LocalDarkTheme.current
+    SideEffect { (view.context as? android.app.Activity)?.let {
+        androidx.core.view.WindowCompat.getInsetsController(it.window, view).isAppearanceLightStatusBars = !dark
+    } }
+}
+
 /** The approved home scene also connects onboarding, ringing and interruption screens. */
 @Composable
-fun SceneBackdrop(modifier: Modifier = Modifier, night: Boolean = LocalDarkTheme.current) {
+fun SceneBackdrop(modifier: Modifier = Modifier, night: Boolean = LocalDarkTheme.current, controlBars: Boolean = true) {
+    val view = androidx.compose.ui.platform.LocalView.current
+    if (controlBars) SideEffect {
+        (view.context as? android.app.Activity)?.let {
+            androidx.core.view.WindowCompat.getInsetsController(it.window, view).isAppearanceLightStatusBars = false
+        }
+    }
     Box(modifier) {
         Image(painterResource(if (night) R.drawable.horizon_portrait_night else R.drawable.horizon_portrait_day),
             contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
@@ -45,16 +62,18 @@ fun SceneBackdrop(modifier: Modifier = Modifier, night: Boolean = LocalDarkTheme
 
 @Composable
 fun PageHeading(title: String, subtitle: String? = null, scene: Int? = null) {
+    val type = (if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) MaterialTheme.typography.headlineMedium
+        else MaterialTheme.typography.headlineLarge).copy(hyphens = androidx.compose.ui.text.style.Hyphens.Auto)
     if (scene == null) {
         Column(Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 8.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Box(Modifier.width(30.dp).height(3.dp).background(MaterialTheme.colorScheme.secondary, RoundedCornerShape(4.dp)))
-            Text(title, style = MaterialTheme.typography.headlineLarge)
+            Text(title, style = type)
             if (subtitle != null) Text(subtitle, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     } else {
         LandscapePanel(scene) {
             Column(Modifier.fillMaxWidth().heightIn(min = 168.dp).padding(24.dp), verticalArrangement = Arrangement.Bottom) {
-                Text(title, style = MaterialTheme.typography.headlineLarge, color = Porcelain)
+                Text(title, style = type, color = Porcelain)
                 if (subtitle != null) Text(subtitle, style = MaterialTheme.typography.bodyMedium, color = Porcelain.copy(alpha = .88f))
             }
         }
@@ -86,12 +105,12 @@ fun HorizonDialog(onDismissRequest: () -> Unit, confirmButton: @Composable () ->
         containerColor = MaterialTheme.colorScheme.surfaceContainerLow, tonalElevation = 0.dp)
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, androidx.compose.ui.ExperimentalComposeUiApi::class)
 @Composable
 fun HorizonSheet(title: String, onDismiss: () -> Unit, content: @Composable ColumnScope.() -> Unit) {
     ModalBottomSheet(onDismissRequest = onDismiss, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
         containerColor = MaterialTheme.colorScheme.surfaceContainerLow, shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp)) {
-        Column(Modifier.fillMaxWidth().imePadding().verticalScroll(rememberScrollState()).padding(horizontal = 24.dp)
+        Column(Modifier.fillMaxWidth().semantics { testTagsAsResourceId = true }.imePadding().verticalScroll(rememberScrollState()).padding(horizontal = 24.dp)
             .padding(bottom = 24.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
             Text(title, style = MaterialTheme.typography.headlineSmall)
             content()
@@ -124,5 +143,17 @@ fun ReadingTools(scale: Float, onScale: (Float) -> Unit) {
             Text("150%", style = MaterialTheme.typography.labelMedium)
         }
         PrimaryButton(stringResource(R.string.action_done), onClick = { open = false })
+    }
+}
+
+/** Compact status for content-heavy screens such as map and calculation settings. */
+@Composable
+fun StatusLine(text: String, error: Boolean = false) {
+    Surface(shape = RoundedCornerShape(16.dp), color = if (error) MaterialTheme.colorScheme.errorContainer.copy(alpha = .5f)
+        else MaterialTheme.colorScheme.secondaryContainer.copy(alpha = .5f), modifier = Modifier.fillMaxWidth()) {
+        Row(Modifier.padding(14.dp), horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
+            Icon(painterResource(R.drawable.ic_pin), null, tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(20.dp))
+            Text(text, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
+        }
     }
 }
