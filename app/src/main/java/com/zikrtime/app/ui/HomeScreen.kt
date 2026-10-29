@@ -38,6 +38,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -121,7 +122,13 @@ fun HomeScreen() {
                 androidx.compose.material3.IconButton(onClick = { nav.open(Screen.PRAYER_SETTINGS) },
                     modifier = Modifier.testTag("prayer_notification_settings").semantics { testTagsAsResourceId = true }) {
                     Icon(painterResource(R.drawable.ic_notification), stringResource(R.string.prayer_notifications),
-                        tint = if (Store.prayerNotifications) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant)
+                        tint = if (Store.prayerNotifications) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.size(24.dp).drawWithContent {
+                            drawContent()
+                            if (!Store.prayerNotifications) drawLine(Color(0xFFA8754E),
+                                androidx.compose.ui.geometry.Offset(size.width * .15f, size.height * .15f),
+                                androidx.compose.ui.geometry.Offset(size.width * .85f, size.height * .85f), 2.dp.toPx(), StrokeCap.Round)
+                        })
                 }
             }
             Spacer(Modifier.height(12.dp))

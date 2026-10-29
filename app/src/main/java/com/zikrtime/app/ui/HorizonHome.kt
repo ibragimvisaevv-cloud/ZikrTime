@@ -18,6 +18,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.*
 import androidx.compose.ui.res.*
@@ -58,7 +59,9 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
         val status = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
         val compactHeight = status + if (large) 112.dp else 76.dp
         val revealHeight = maxOf(maxHeight * .72f, status + if (large) 510.dp else 410.dp)
-        val collapsePx = with(density) { (revealHeight - compactHeight).toPx() }.coerceAtLeast(1f)
+        var measuredHero by remember { mutableIntStateOf(0) }
+        val collapsePx = (if (measuredHero > 0) measuredHero - with(density) { compactHeight.toPx() }
+            else with(density) { (revealHeight - compactHeight).toPx() }).coerceAtLeast(1f)
         val compact by remember(collapsePx) { derivedStateOf { scroll.value / collapsePx >= .86f } }
         // A light sheet uses dark status icons only once it reaches the system bar.
         SideEffect {
@@ -96,7 +99,7 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
 
         Column(Modifier.fillMaxSize().testTag("horizon_scroll").semantics { testTagsAsResourceId = true }
             .verticalScroll(scroll)) {
-            Column(Modifier.fillMaxWidth().height(revealHeight).padding(horizontal = 24.dp)
+            Column(Modifier.fillMaxWidth().heightIn(min = revealHeight).onSizeChanged { measuredHero = it.height }.padding(horizontal = 24.dp)
                 .padding(top = status + 8.dp)
                 .graphicsLayer { alpha = (1f - (scroll.value / collapsePx) / .72f).coerceIn(0f, 1f) }
                 .then(if (compact) Modifier.clearAndSetSemantics {} else Modifier),
@@ -122,6 +125,7 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
                     fontSize = if (large) 28.sp else 36.sp)
                 BigClock(at, if (large) 44.sp else 68.sp, Porcelain, modifier = Modifier.testTag("horizon_time").semantics { testTagsAsResourceId = true }, weight = FontWeight.Normal)
                 Text(countdown, color = Sand, style = MaterialTheme.typography.labelLarge)
+                Spacer(Modifier.height(24.dp))
             }
             Column(Modifier.fillMaxWidth().testTag("horizon_panel").semantics { testTagsAsResourceId = true }
                 .clip(RoundedCornerShape(topStart = 34.dp, topEnd = 34.dp))
