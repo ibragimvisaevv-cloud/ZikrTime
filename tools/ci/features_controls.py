@@ -24,16 +24,22 @@ def shell(*args):
 
 
 def prefs_tree(name='zikrtime'):
-    # A concurrent SharedPreferences write / ADB transport can yield an incomplete read.
-    # Retry only parsing failures, preserve each raw read, and still fail if persistent.
-    for attempt in range(3):
+    # SharedPreferences writes the large public places cache into the same XML.
+    # Read only complete snapshots; a mid-write file is not evidence of corruption.
+    # The bounded deadline still fails a persistently invalid file and keeps diagnostics.
+    deadline = time.monotonic() + 45
+    attempt = 0
+    while True:
         time.sleep(.5)
         raw = adb('exec-out', 'run-as', PKG, 'cat', f'shared_prefs/{name}.xml')
         try:
             return ET.fromstring(raw)
         except ET.ParseError:
-            (OUT / f'pref-read-{name}-{attempt}.xml').write_text(raw)
-            if attempt == 2:
+            if attempt == 0:
+                (OUT / f'pref-read-{name}-first.xml').write_text(raw)
+            (OUT / f'pref-read-{name}-latest.xml').write_text(raw)
+            attempt += 1
+            if time.monotonic() >= deadline:
                 raise
 
 

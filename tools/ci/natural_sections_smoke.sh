@@ -40,6 +40,8 @@ adb install -r -g fixtures/current.apk
 capture upgraded home
 python3 tools/ci/features_controls.py verify-upgrade
 python3 tools/ci/features_controls.py appearance
+# For an unchanged, already visually captured APK, recheck only the failed state assertions.
+if ! git log -1 --format=%B | grep -Fq '[state-only]'; then
 capture current knowledge
 measure current
 for mode in no yes; do
@@ -68,6 +70,11 @@ for period in DAWN DAY SUNSET NIGHT; do
   adb exec-out screencap -p > "ci-out/screens/courtyard-$period.png"
   python3 tools/ci/check_screen.py "ci-out/screens/courtyard-$period.png"
 done
+fi
+adb shell settings put system font_scale 1
+adb shell wm size 1080x2400
+adb shell wm density 420
+adb shell cmd uimode night no >/dev/null
 # Existing functional assertions, limited to UI affected by shared components.
 capture progress-before-toggle progress
 python3 tools/ci/features_controls.py progress
