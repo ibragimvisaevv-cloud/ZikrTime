@@ -65,7 +65,7 @@
             android:id="@+id/w_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
+            android:fontFamily="serif"
             android:maxLines="1"
             android:textColor="#E6CBA6"
             android:textSize="36sp" />

@@ -18,75 +18,75 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zikrtime.app.R
 
-// Фирменные цвета: изумруд и золото тасбиха
-val Emerald = Color(0xFF345B80)
-val EmeraldDeep = Color(0xFF223E5B)
-val EmeraldNight = Color(0xFF14283D)
-val Gold = Color(0xFFD9B98C)
-val GoldDeep = Color(0xFFAA8151)
-val Cream = Color(0xFFF7F2EA)
+// Warm Architecture: matte olive, terracotta and illuminated plaster. Legacy names keep callers consistent.
+val Emerald = Color(0xFF3D5037)
+val EmeraldDeep = Color(0xFF2C3D29)
+val EmeraldNight = Color(0xFF1E2B1E)
+val Gold = Color(0xFFD9B77B)
+val GoldDeep = Color(0xFF956B3E)
+val Cream = Color(0xFFFFF3DF)
 
 private val LightColors = lightColorScheme(
     primary = Emerald,
     onPrimary = Color.White,
-    primaryContainer = Color(0xFFDCE9F6),
-    onPrimaryContainer = Color(0xFF193550),
-    secondary = Color(0xFF8A6414),
+    primaryContainer = Color(0xFFDCE3CF),
+    onPrimaryContainer = Color(0xFF273620),
+    secondary = Color(0xFFA54E35),
     onSecondary = Color.White,
-    secondaryContainer = Color(0xFFF6E7C1),
-    onSecondaryContainer = Color(0xFF2B1E00),
-    tertiary = Color(0xFF75658A),
+    secondaryContainer = Color(0xFFF6D7C6),
+    onSecondaryContainer = Color(0xFF402014),
+    tertiary = Color(0xFF82613E),
     onTertiary = Color.White,
-    background = Color(0xFFF6F3EE),
-    onBackground = Color(0xFF192C41),
-    surface = Color(0xFFF6F3EE),
-    onSurface = Color(0xFF192C41),
-    surfaceVariant = Color(0xFFE8E5E0),
-    onSurfaceVariant = Color(0xFF566273),
-    surfaceContainerLowest = Color(0xFFFFFFFF),
-    surfaceContainerLow = Color(0xFFFFFFFF),
-    surfaceContainer = Color(0xFFFFFDF9),
-    surfaceContainerHigh = Color(0xFFF1EEE8),
-    surfaceContainerHighest = Color(0xFFE8E5E0),
-    outline = Color(0xFF627582),
-    outlineVariant = Color(0xFFDADDDC),
+    background = Color(0xFFF9F0E0),
+    onBackground = Color(0xFF30271F),
+    surface = Color(0xFFF9F0E0),
+    onSurface = Color(0xFF30271F),
+    surfaceVariant = Color(0xFFEBDFCD),
+    onSurfaceVariant = Color(0xFF736457),
+    surfaceContainerLowest = Color(0xFFFFF8EE),
+    surfaceContainerLow = Color(0xFFFFF8EE),
+    surfaceContainer = Color(0xFFFFF8EE),
+    surfaceContainerHigh = Color(0xFFF0E5D3),
+    surfaceContainerHighest = Color(0xFFEBDFCD),
+    outline = Color(0xFF897768),
+    outlineVariant = Color(0xFFDDCFB9),
 )
 
 private val DarkColors = darkColorScheme(
-    primary = Color(0xFFAECDEC),
-    onPrimary = Color(0xFF112D49),
-    primaryContainer = Color(0xFF294664),
-    onPrimaryContainer = Color(0xFFDCE9F6),
+    primary = Color(0xFFBCCBA5),
+    onPrimary = Color(0xFF23301E),
+    primaryContainer = Color(0xFF3D4C35),
+    onPrimaryContainer = Color(0xFFDCE3CF),
     secondary = Gold,
-    onSecondary = Color(0xFF3F2E00),
-    secondaryContainer = Color(0xFF4A3912),
-    onSecondaryContainer = Color(0xFFF6E7C1),
-    tertiary = Color(0xFFCCBCE2),
-    onTertiary = Color(0xFF342640),
-    background = Color(0xFF192C41),
-    onBackground = Color(0xFFF2F5F3),
-    surface = Color(0xFF192C41),
-    onSurface = Color(0xFFF2F5F3),
-    surfaceVariant = Color(0xFF24364B),
-    onSurfaceVariant = Color(0xFFC0CBD0),
-    surfaceContainerLowest = Color(0xFF101E2E),
-    surfaceContainerLow = Color(0xFF1D2D40),
-    surfaceContainer = Color(0xFF24364B),
-    surfaceContainerHigh = Color(0xFF2B3E54),
-    surfaceContainerHighest = Color(0xFF34495F),
-    outline = Color(0xFF90A4B1),
-    outlineVariant = Color(0xFF415666),
+    onSecondary = Color(0xFF382818),
+    secondaryContainer = Color(0xFF633C2C),
+    onSecondaryContainer = Color(0xFFF6D7C6),
+    tertiary = Color(0xFFDDC39B),
+    onTertiary = Color(0xFF382A18),
+    background = Color(0xFF27221C),
+    onBackground = Color(0xFFF6ECD9),
+    surface = Color(0xFF27221C),
+    onSurface = Color(0xFFF6ECD9),
+    surfaceVariant = Color(0xFF342D25),
+    onSurfaceVariant = Color(0xFFD2C2AD),
+    surfaceContainerLowest = Color(0xFF211D18),
+    surfaceContainerLow = Color(0xFF2B251F),
+    surfaceContainer = Color(0xFF342D25),
+    surfaceContainerHigh = Color(0xFF40372D),
+    surfaceContainerHighest = Color(0xFF4B4135),
+    outline = Color(0xFFA99580),
+    outlineVariant = Color(0xFF5A4B3D),
 )
 
 private val base = Typography()
 
 // Заголовки плотнее и с чуть сжатым трекингом, основной текст — чуть крупнее и с воздухом между строк.
 private val AppTypography = base.copy(
-    displaySmall = base.displaySmall.copy(fontWeight = FontWeight.Bold, letterSpacing = (-0.5).sp),
-    headlineLarge = base.headlineLarge.copy(fontWeight = FontWeight.Bold, letterSpacing = (-0.5).sp),
-    headlineMedium = base.headlineMedium.copy(fontWeight = FontWeight.Bold, letterSpacing = (-0.4).sp),
-    headlineSmall = base.headlineSmall.copy(fontWeight = FontWeight.Bold, letterSpacing = (-0.3).sp),
-    titleLarge = base.titleLarge.copy(fontWeight = FontWeight.SemiBold, letterSpacing = (-0.2).sp),
+    displaySmall = base.displaySmall.copy(fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold, letterSpacing = (-0.5).sp),
+    headlineLarge = base.headlineLarge.copy(fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold, letterSpacing = (-0.5).sp),
+    headlineMedium = base.headlineMedium.copy(fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold, letterSpacing = (-0.4).sp),
+    headlineSmall = base.headlineSmall.copy(fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold, letterSpacing = (-0.3).sp),
+    titleLarge = base.titleLarge.copy(fontFamily = FontFamily.Serif, fontWeight = FontWeight.SemiBold, letterSpacing = (-0.2).sp),
     titleMedium = base.titleMedium.copy(fontWeight = FontWeight.SemiBold, fontSize = 17.sp, letterSpacing = 0.sp),
     titleSmall = base.titleSmall.copy(fontWeight = FontWeight.SemiBold, fontSize = 15.sp, letterSpacing = 0.sp),
     bodyLarge = base.bodyLarge.copy(fontWeight = FontWeight.Medium, lineHeight = 25.sp, letterSpacing = 0.2.sp),

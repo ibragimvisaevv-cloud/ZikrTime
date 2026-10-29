@@ -109,17 +109,15 @@ fun HomeScreen() {
         usedMillis = withContext(Dispatchers.IO) { ScreenTime.usedTodayMillis(context) }
     }
 
-    TabColumn {
+    TabColumn(spacing = 10.dp) {
         NaturalSkyHero(now, next.first, next.second, times)
         // Намазы на сегодня
-        ZCard(padding = androidx.compose.foundation.layout.PaddingValues(horizontal = 12.dp, vertical = 12.dp)) {
+        Column(Modifier.fillMaxWidth()) {
             Text(
                 stringResource(R.string.home_today),
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(start = 8.dp, top = 4.dp, bottom = 8.dp),
+                modifier = Modifier.padding(start = 4.dp, top = 0.dp, bottom = 8.dp),
             )
-            PrayerDayRibbon()
-            Spacer(Modifier.height(8.dp))
             val prayed = Store.prayedOn(today)
             Prayer.entries.forEach { p ->
                 PrayerRow(
@@ -134,7 +132,7 @@ fun HomeScreen() {
                     },
                 )
                 if (p != Prayer.ISHA) androidx.compose.material3.HorizontalDivider(
-                    modifier = Modifier.padding(start = 60.dp, end = 12.dp),
+                    modifier = Modifier.padding(start = 52.dp, end = 8.dp),
                     color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = .35f))
             }
             Text(
@@ -213,48 +211,31 @@ fun HomeScreen() {
 private fun PrayerRow(prayer: Prayer, time: String, isCurrent: Boolean, started: Boolean, done: Boolean, onToggle: () -> Unit) {
     val scheme = MaterialTheme.colorScheme
     val accent = prayerAccent(prayer)
-    Row(
-        Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp))
-            .background(if (isCurrent) scheme.primaryContainer.copy(alpha = .7f) else Color.Transparent)
-            .drawBehind {
-                if (isCurrent) drawRoundRect(accent, topLeft = androidx.compose.ui.geometry.Offset(0f, 10.dp.toPx()),
-                    size = androidx.compose.ui.geometry.Size(3.dp.toPx(), size.height - 20.dp.toPx()),
-                    cornerRadius = androidx.compose.ui.geometry.CornerRadius(2.dp.toPx()))
-            }
-            .padding(start = 8.dp, end = 0.dp, top = 2.dp, bottom = 2.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        IconBadge(
-            painterResource(prayerIconRes(prayer)),
-            tint = accent,
-            container = accent.copy(alpha = .10f),
-            size = 38.dp,
-        )
-        Spacer(Modifier.width(14.dp))
+    val ink = if (isCurrent) Porcelain else scheme.onSurface
+    val line = scheme.outlineVariant
+    Row(Modifier.fillMaxWidth()
+        .drawBehind {
+            val x = 24.dp.toPx()
+            drawLine(line, androidx.compose.ui.geometry.Offset(x, if (prayer == Prayer.FAJR) size.height / 2 else 0f),
+                androidx.compose.ui.geometry.Offset(x, if (prayer == Prayer.ISHA) size.height / 2 else size.height), 1.dp.toPx())
+        }
+        .clip(RoundedCornerShape(topStart = 10.dp, topEnd = 22.dp, bottomStart = 10.dp, bottomEnd = 10.dp))
+        .background(if (isCurrent) Olive else Color.Transparent)
+        .padding(start = 8.dp, top = 2.dp, bottom = 2.dp), verticalAlignment = Alignment.CenterVertically) {
+        IconBadge(painterResource(prayerIconRes(prayer)), tint = if (isCurrent) Sand else accent,
+            container = if (isCurrent) Color(0xFF526245) else scheme.surfaceContainerHigh, size = 32.dp)
+        Spacer(Modifier.width(12.dp))
         Column(Modifier.weight(1f)) {
-            Text(
-                prayerName(prayer),
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = if (isCurrent) FontWeight.SemiBold else FontWeight.Normal,
-                color = if (prayer.isPrayer) scheme.onSurface else scheme.onSurfaceVariant,
-            )
-            if (isCurrent) {
-                Text(stringResource(R.string.home_now), style = MaterialTheme.typography.labelSmall, color = scheme.primary)
-            }
+            Text(prayerName(prayer), style = MaterialTheme.typography.titleMedium,
+                color = ink, fontWeight = if (isCurrent) FontWeight.Bold else FontWeight.Medium)
+            if (isCurrent) Text(stringResource(R.string.home_now), style = MaterialTheme.typography.labelSmall, color = Sand)
         }
-        Text(
-            time,
-            style = MaterialTheme.typography.titleLarge.merge(Tabular),
-            fontWeight = if (isCurrent) FontWeight.SemiBold else FontWeight.Medium,
-            color = if (isCurrent) scheme.primary else scheme.onSurface,
-        )
+        Text(time, style = MaterialTheme.typography.titleLarge.merge(Tabular), color = ink,
+            fontWeight = FontWeight.SemiBold)
         if (prayer.isPrayer) {
-            CheckCircle(checked = done, enabled = started, onToggle = onToggle, contentDescription = stringResource(R.string.home_mark_prayed))
-        } else {
-            Spacer(Modifier.width(48.dp))
-        }
+            CheckCircle(checked = done, enabled = started, onToggle = onToggle,
+                contentDescription = stringResource(R.string.home_mark_prayed), onDark = isCurrent)
+        } else Spacer(Modifier.width(48.dp).height(48.dp))
     }
 }
 
@@ -366,33 +347,12 @@ private fun MyDayActions() {
     }
 }
 
-/** A restrained sunrise-to-night signature above the timetable; decorative, never a second clock. */
-@Composable
-private fun PrayerDayRibbon() {
-    val colors = Prayer.entries.map { prayerAccent(it) }
-    androidx.compose.foundation.Canvas(Modifier.fillMaxWidth().height(24.dp).padding(horizontal = 20.dp)) {
-        val path = androidx.compose.ui.graphics.Path().apply {
-            moveTo(0f, size.height * .8f)
-            cubicTo(size.width * .25f, -size.height * .2f, size.width * .65f, -size.height * .2f, size.width, size.height * .8f)
-        }
-        drawPath(path, Brush.horizontalGradient(colors.map { it.copy(alpha = .3f) }),
-            style = androidx.compose.ui.graphics.drawscope.Stroke(1.dp.toPx()))
-        colors.forEachIndexed { i, color ->
-            val t = i / 5f
-            val y = size.height * (.8f - 3f * t * (1f - t))
-            drawCircle(color.copy(alpha = .8f), if (i == 1 || i == 4) 3.dp.toPx() else 2.dp.toPx(),
-                androidx.compose.ui.geometry.Offset(size.width * t, y))
-        }
-    }
-}
-
 @Composable
 private fun prayerAccent(prayer: Prayer): Color {
     val dark = com.zikrtime.app.ui.theme.LocalDarkTheme.current
     return when (prayer) {
-        Prayer.FAJR -> if (dark) Color(0xFFC6B8DD) else Color(0xFF75658A)
-        Prayer.SUNRISE, Prayer.MAGHRIB -> if (dark) Color(0xFFE0BF93) else Color(0xFF916437)
-        Prayer.DHUHR, Prayer.ASR -> MaterialTheme.colorScheme.primary
-        Prayer.ISHA -> if (dark) Color(0xFFADBCE5) else Color(0xFF586C9A)
+        Prayer.FAJR, Prayer.ISHA -> if (dark) Color(0xFFBCCBA5) else Olive
+        Prayer.SUNRISE, Prayer.DHUHR -> if (dark) Sand else Color(0xFF98602E)
+        Prayer.ASR, Prayer.MAGHRIB -> if (dark) Color(0xFFE6AC8B) else Clay
     }
 }

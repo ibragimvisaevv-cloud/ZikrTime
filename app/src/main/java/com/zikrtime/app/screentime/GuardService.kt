@@ -182,7 +182,7 @@ class GuardService : Service() {
                 orientation = LinearLayout.VERTICAL
                 gravity = Gravity.CENTER
                 setPadding((32 * dp).toInt(), 0, (32 * dp).toInt(), 0)
-                background = GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(0xFF345B80.toInt(), 0xFF14283D.toInt()))
+                background = GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(0xFF3D5037.toInt(), 0xFF1E2B1E.toInt()))
                 isClickable = true
             }
             fun text(value: String, size: Float, color: Int, bold: Boolean = false) = TextView(context).apply {

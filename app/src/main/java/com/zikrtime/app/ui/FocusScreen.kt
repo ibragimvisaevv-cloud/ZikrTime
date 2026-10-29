@@ -102,7 +102,7 @@ fun FocusScreen() {
                 val remaining = (allowed - used).coerceAtLeast(0)
                 ProgressRing(progress = if (usedMillis == null) 0f else remaining.toFloat() / allowed.coerceAtLeast(1),
                     modifier = Modifier.size(164.dp), stroke = 5.dp,
-                    color = androidx.compose.ui.graphics.Color(0xFFD3C3E4), track = androidx.compose.ui.graphics.Color(0xFF415666)) {
+                    color = androidx.compose.ui.graphics.Color(0xFFE2BE82), track = androidx.compose.ui.graphics.Color(0xFF74614B)) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(if (usedMillis == null) "—" else remaining.toString(), style = MaterialTheme.typography.displaySmall)
                         Text(stringResource(R.string.unit_min), style = MaterialTheme.typography.bodyMedium)

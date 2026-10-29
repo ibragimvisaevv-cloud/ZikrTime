@@ -12,6 +12,7 @@ adb shell wm density 420
 cleanup() {
   adb logcat -d -b crash > ci-out/crashes.txt || true
   adb shell settings put system font_scale 1 >/dev/null || true
+  adb shell settings put global animator_duration_scale 1 >/dev/null || true
   adb shell wm size reset >/dev/null || true
   adb shell wm density reset >/dev/null || true
 }
@@ -50,10 +51,27 @@ for mode in no yes; do
 adb shell wm size 720x1600
 adb shell wm density 360
 adb shell settings put system font_scale 2
-for screen in knowledge more alarm focus zakat; do capture "$screen-large" "$screen"; done
+for screen in home knowledge more alarm focus zakat widgets; do capture "$screen-large" "$screen"; done
 adb shell settings put system font_scale 1
 adb shell wm size 1080x2400
 adb shell wm density 420
+# Architectural light across all four day periods, and a real short motion recording.
+adb shell cmd uimode night no >/dev/null
+for period in DAWN DAY SUNSET NIGHT; do
+  adb shell am start -S -W -n "$pkg/.MainActivity" --es qa_screen home --es qa_lang ru --ez qa_onboarded true --es qa_period "$period" > "ci-out/courtyard-$period-start.txt"
+  sleep 2
+  adb exec-out screencap -p > "ci-out/screens/courtyard-$period.png"
+  python3 tools/ci/check_screen.py "ci-out/screens/courtyard-$period.png"
+done
+adb shell am start -S -W -n "$pkg/.MainActivity" --es qa_screen home --es qa_lang ru --ez qa_onboarded true --es qa_period DAY > ci-out/motion-start.txt
+sleep 2
+adb exec-out screencap -p > ci-out/screens/motion-before.png
+adb shell screenrecord --time-limit 8 --bit-rate 2000000 /sdcard/zikr-architecture.mp4
+adb pull /sdcard/zikr-architecture.mp4 ci-out/architecture-motion.mp4
+adb exec-out screencap -p > ci-out/screens/motion-after.png
+adb shell settings put global animator_duration_scale 0
+capture motion-disabled home
+adb shell settings put global animator_duration_scale 1
 # Existing functional assertions, limited to UI affected by shared components.
 capture progress-before-toggle progress
 python3 tools/ci/features_controls.py appearance

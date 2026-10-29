@@ -24,22 +24,34 @@ import com.zikrtime.app.ui.theme.LocalDarkTheme
 /** Visible manual switch on Home; writes the same persisted preference as Settings. */
 @Composable
 fun ThemeQuickButton() {
+    val context = androidx.compose.ui.platform.LocalContext.current
     val dark = LocalDarkTheme.current
-    val label = stringResource(if (dark) R.string.appearance_light else R.string.appearance_dark)
-    Surface(onClick = { Store.appearance = if (dark) "light" else "dark" },
-        color = Color(0xCC263C54), contentColor = Color.White, shape = RoundedCornerShape(24.dp),
-        modifier = Modifier.testTag("theme_quick_toggle").semantics { testTagsAsResourceId = true }) {
-        Row(Modifier.heightIn(min = 48.dp).padding(horizontal = 12.dp),
-            verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            Icon(painterResource(if (dark) R.drawable.ic_prayer_sunrise else R.drawable.ic_prayer_isha),
-                null, modifier = Modifier.size(20.dp))
-            Text(label, style = MaterialTheme.typography.labelLarge)
+    val scheme = MaterialTheme.colorScheme
+    Surface(color = scheme.surfaceContainerHigh, shape = RoundedCornerShape(24.dp)) {
+        Row(Modifier.selectableGroup().padding(3.dp), verticalAlignment = Alignment.CenterVertically) {
+            listOf(false, true).forEach { option ->
+                val selected = dark == option
+                val label = stringResource(if (option) R.string.appearance_dark else R.string.appearance_light)
+                Surface(color = if (selected) scheme.secondary else Color.Transparent,
+                    contentColor = if (selected) scheme.onSecondary else scheme.onSurfaceVariant,
+                    shape = RoundedCornerShape(20.dp)) {
+                    Row(Modifier.heightIn(min = 48.dp)
+                        .then(if (!selected) Modifier.testTag("theme_quick_toggle").semantics { testTagsAsResourceId = true } else Modifier)
+                        .selectable(selected = selected, role = Role.RadioButton, onClick = { Store.appearance = if (option) "dark" else "light"; com.zikrtime.app.widget.Widgets.updateAll(context) })
+                        .padding(horizontal = 9.dp),
+                        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Icon(painterResource(if (option) R.drawable.ic_prayer_isha else R.drawable.ic_prayer_sunrise), null, modifier = Modifier.size(15.dp))
+                        Text(label, style = MaterialTheme.typography.labelSmall)
+                    }
+                }
+            }
         }
     }
 }
 
 @Composable
 fun AppearancePicker() {
+    val context = androidx.compose.ui.platform.LocalContext.current
     ZCard(padding = PaddingValues(horizontal = 16.dp, vertical = 12.dp)) {
         Text(stringResource(R.string.appearance_title), style = MaterialTheme.typography.titleMedium)
         Spacer(Modifier.height(8.dp))
@@ -49,7 +61,7 @@ fun AppearancePicker() {
                 Row(Modifier.fillMaxWidth().heightIn(min = 48.dp)
                     .testTag("appearance_$value").semantics { testTagsAsResourceId = true }
                     .selectable(selected = Store.appearance == value, role = Role.RadioButton,
-                        onClick = { Store.appearance = value }), verticalAlignment = Alignment.CenterVertically) {
+                        onClick = { Store.appearance = value; com.zikrtime.app.widget.Widgets.updateAll(context) }), verticalAlignment = Alignment.CenterVertically) {
                     RadioButton(selected = Store.appearance == value, onClick = null)
                     Text(stringResource(label), style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
                     if (value != "system") Icon(painterResource(if (value == "light") R.drawable.ic_prayer_sunrise else R.drawable.ic_prayer_isha),

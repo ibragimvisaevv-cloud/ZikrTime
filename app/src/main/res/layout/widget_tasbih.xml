@@ -32,7 +32,7 @@
             android:id="@+id/w_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
+            android:fontFamily="serif"
             android:maxLines="1"
             android:textColor="#F7F2EA"
             android:textSize="40sp" />

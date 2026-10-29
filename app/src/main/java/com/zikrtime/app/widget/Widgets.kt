@@ -33,6 +33,16 @@ import java.time.format.DateTimeFormatter
 object Widgets {
     private const val UPDATE_REQUEST = 4001
 
+    private fun dark(context: Context): Boolean = when (Store.appearance) {
+        "light" -> false
+        "dark" -> true
+        else -> context.resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK == android.content.res.Configuration.UI_MODE_NIGHT_YES
+    }
+    private fun ink(context: Context) = if (dark(context)) 0xFFF6ECD9.toInt() else 0xFF30271F.toInt()
+    private fun muted(context: Context) = if (dark(context)) 0xFFD2C2AD.toInt() else 0xFF736457.toInt()
+    private fun accent(context: Context) = if (dark(context)) WidgetArt.GOLD_LIGHT else 0xFF3D5037.toInt()
+
+
     fun updateAll(context: Context) {
         runCatching {
             val manager = AppWidgetManager.getInstance(context)
@@ -77,7 +87,7 @@ object Widgets {
                 R.id.w_bg,
                 WidgetArt.sky(
                     context, size.first, size.second,
-                    intArrayOf(0xFF293E57.toInt(), 0xFF405A76.toInt()),
+                    if (dark(context)) intArrayOf(0xFF633B2C.toInt(), 0xFF483027.toInt()) else intArrayOf(0xFFAA5539.toInt(), 0xFF8C442F.toInt()),
                     0x40E6CBA6, 0f, WidgetArt.Body.NONE, 41,
                 ),
             )
@@ -115,10 +125,14 @@ object Widgets {
         val times = PrayerSchedule.forDate(now.toLocalDate())
         val period = skyPeriod(now, times)
         val day = !now.isBefore(times[Prayer.SUNRISE]) && now.isBefore(times[Prayer.MAGHRIB])
-        val colors = when (period) {
-            SkyPeriod.NIGHT -> intArrayOf(0xFF232D45.toInt(), 0xFF343B56.toInt())
-            SkyPeriod.DAWN, SkyPeriod.SUNSET -> intArrayOf(0xFF41465B.toInt(), 0xFF74645E.toInt())
-            else -> intArrayOf(0xFF213E5C.toInt(), 0xFF345B7B.toInt())
+        val colors = if (dark(context)) when (period) {
+            SkyPeriod.NIGHT -> intArrayOf(0xFF292B23.toInt(), 0xFF3A402F.toInt())
+            SkyPeriod.DAWN, SkyPeriod.SUNSET -> intArrayOf(0xFF50382C.toInt(), 0xFF6A4933.toInt())
+            else -> intArrayOf(0xFF303B2B.toInt(), 0xFF47513A.toInt())
+        } else when (period) {
+            SkyPeriod.NIGHT -> intArrayOf(0xFFE7E6D4.toInt(), 0xFFF6EEDC.toInt())
+            SkyPeriod.DAWN, SkyPeriod.SUNSET -> intArrayOf(0xFFF5DFC0.toInt(), 0xFFECC8A6.toInt())
+            else -> intArrayOf(0xFFFFF4E0.toInt(), 0xFFE9DABD.toInt())
         }
         val glow = when (period) {
             SkyPeriod.NIGHT -> 0x403A7BD5
@@ -133,7 +147,7 @@ object Widgets {
             SkyPeriod.DAWN, SkyPeriod.SUNSET -> 0.5f
             else -> 0f
         }
-        return WidgetArt.sky(context, size.first, size.second, colors, glow, stars, body ?: if (day) WidgetArt.Body.SUN else WidgetArt.Body.MOON, seed)
+        return WidgetArt.sky(context, size.first, size.second, colors, glow, stars, body ?: if (day) WidgetArt.Body.SUN else WidgetArt.Body.MOON, seed, ink = ink(context))
     }
 
     private fun ids(context: Context, manager: AppWidgetManager, cls: Class<*>): IntArray =
@@ -204,6 +218,10 @@ object Widgets {
         val (prayer, at) = PrayerSchedule.next(now)
         val views = RemoteViews(context.packageName, R.layout.widget_next)
         views.setTextViewText(R.id.w_label, res.getString(R.string.home_next_prayer))
+        views.setTextColor(R.id.w_label, muted(context))
+        views.setTextColor(R.id.w_name, ink(context))
+        views.setTextColor(R.id.w_time, ink(context))
+        views.setTextColor(R.id.w_countdown, ink(context))
         runCatching {
             views.setImageViewBitmap(R.id.w_bg, skyBitmap(context, size, now, 11))
             views.setViewVisibility(R.id.w_star, android.view.View.GONE)
@@ -219,7 +237,7 @@ object Widgets {
                 WidgetArt.ring(
                     context, 48, progress,
                     intArrayOf(WidgetArt.GOLD_DARK, WidgetArt.GOLD_LIGHT, WidgetArt.GOLD),
-                    prayerIconRes(prayer), WidgetArt.GOLD_LIGHT, glow = soon,
+                    prayerIconRes(prayer), accent(context), glow = soon,
                 ),
             )
         }.onFailure { views.setImageViewResource(R.id.w_ring, prayerIconRes(prayer)) }
@@ -252,6 +270,8 @@ object Widgets {
         val next = PrayerSchedule.next(now).first
         val views = RemoteViews(context.packageName, R.layout.widget_today)
         views.setTextViewText(R.id.w_title, Cities.displayName(local, Store.location))
+        views.setTextColor(R.id.w_title, ink(context))
+        views.setTextColor(R.id.w_subtitle, muted(context))
         val pattern = DateTimeFormatter.ofPattern("EEEE, d MMMM", Lang.locale(local))
         views.setTextViewText(R.id.w_subtitle, date.format(pattern).replaceFirstChar { it.uppercase(Lang.locale(local)) })
         val fmt = clockFormatter(local)
@@ -264,20 +284,10 @@ object Widgets {
             views.setTextViewText(time, times[p].format(fmt))
             views.setImageViewResource(icons[i], if (p in prayed) R.drawable.ic_check else prayerIconRes(p))
             views.setInt(col, "setBackgroundResource", if (p == next) R.drawable.widget_pill_gold else 0)
-            when {
-                // Следующий намаз — на золотой плашке тёмным текстом
-                p == next -> {
-                    views.setTextColor(name, 0xCC2B1E00.toInt())
-                    views.setTextColor(time, 0xFF2B1E00.toInt())
-                    views.setInt(icons[i], "setColorFilter", 0xFF2B1E00.toInt())
-                }
-                // Прошедшие — приглушённо
-                !times[p].isAfter(now) -> {
-                    views.setTextColor(name, 0x80F7F2EA.toInt())
-                    views.setTextColor(time, 0x99F7F2EA.toInt())
-                    views.setInt(icons[i], "setColorFilter", 0x99D9B98C.toInt())
-                }
-            }
+            val highlighted = p == next
+            views.setTextColor(name, if (highlighted) 0xFFFFF5E4.toInt() else muted(context))
+            views.setTextColor(time, if (highlighted) 0xFFFFF5E4.toInt() else ink(context))
+            views.setInt(icons[i], "setColorFilter", if (highlighted) WidgetArt.GOLD_LIGHT else accent(context))
         }
         // Живой отсчёт до следующего намаза
         val (nextPrayer, nextAt) = PrayerSchedule.next(now)
@@ -286,7 +296,7 @@ object Widgets {
         views.setChronometerCountDown(R.id.w_countdown, true)
         val soon = left < 15 * 60_000L
         views.setInt(R.id.w_countdown, "setBackgroundResource", if (soon) R.drawable.widget_pill_gold else R.drawable.widget_chip)
-        views.setTextColor(R.id.w_countdown, if (soon) 0xFF2B1E00.toInt() else 0xFFF7F2EA.toInt())
+        views.setTextColor(R.id.w_countdown, if (soon) 0xFFFFF5E4.toInt() else ink(context))
         // Подсказка, пока ничего не отмечено
         if (prayed.isEmpty() && Prayer.entries.any { it.isPrayer && !times[it].isAfter(now) }) {
             views.setTextViewText(R.id.w_subtitle, res.getString(R.string.widget_tap_to_mark))
@@ -294,17 +304,7 @@ object Widgets {
         runCatching {
             views.setImageViewBitmap(R.id.w_bg, skyBitmap(context, size, now, 23, WidgetArt.Body.NONE))
             views.setViewVisibility(R.id.w_star, android.view.View.GONE)
-            if (size.second >= 140) {
-                val midnight = date.atStartOfDay(now.zone)
-                fun frac(t: ZonedDateTime) = (java.time.Duration.between(midnight, t).seconds / 86_400f).coerceIn(0f, 0.999f)
-                views.setViewVisibility(R.id.w_arc, android.view.View.VISIBLE)
-                views.setImageViewBitmap(
-                    R.id.w_arc,
-                    WidgetArt.dayArc(context, size.first - 28, 40, Prayer.entries.map { frac(times[it]) }, frac(now), Prayer.entries.indexOf(next)),
-                )
-            } else {
-                views.setViewVisibility(R.id.w_arc, android.view.View.GONE)
-            }
+            views.setViewVisibility(R.id.w_arc, android.view.View.GONE)
         }
         views.setOnClickPendingIntent(R.id.widget_root, openApp(context))
         return views
@@ -315,6 +315,9 @@ object Widgets {
         val res = local.resources
         val views = RemoteViews(context.packageName, R.layout.widget_screen)
         views.setTextViewText(R.id.w_label, res.getString(R.string.widget_screen_name))
+        views.setTextColor(R.id.w_label, muted(context))
+        views.setTextColor(R.id.w_value, ink(context))
+        views.setTextColor(R.id.w_hint, muted(context))
         val used = if (Store.blockingEnabled) ScreenTime.usedTodayMillis(context) else null
         var fraction = 0f
         if (used == null) {
@@ -332,20 +335,20 @@ object Widgets {
             // Фон «фокус»: ночная синева, переходящая в изумруд; кольцо меняет цвет, когда времени мало.
             val bg = WidgetArt.sky(
                 context, size.first, size.second,
-                intArrayOf(0xFF343750.toInt(), 0xFF575471.toInt()),
-                0x55343B56, 0.7f, WidgetArt.Body.MOON, 37,
+                if (dark(context)) intArrayOf(0xFF303B2B.toInt(), 0xFF47513A.toInt()) else intArrayOf(0xFFE3E7D5.toInt(), 0xFFF2EBD8.toInt()),
+                0x556A4933, 0.7f, WidgetArt.Body.MOON, 37, ink = ink(context),
             )
             views.setImageViewBitmap(R.id.w_bg, bg)
             views.setViewVisibility(R.id.w_star, android.view.View.GONE)
             val sweep = when {
                 used == null -> intArrayOf(0x66F7F2EA, 0x66F7F2EA)
-                fraction > 0.5f -> intArrayOf(0xFF9BBCE0.toInt(), 0xFFD3C3E4.toInt())
+                fraction > 0.5f -> intArrayOf(0xFFBCCBA5.toInt(), 0xFFE2BE82.toInt())
                 fraction > 0.2f -> intArrayOf(WidgetArt.GOLD_DARK, WidgetArt.GOLD_LIGHT, WidgetArt.GOLD)
                 else -> intArrayOf(0xFFE5484D.toInt(), 0xFFFFA36C.toInt(), 0xFFFF6B6B.toInt())
             }
             views.setImageViewBitmap(
                 R.id.w_ring,
-                WidgetArt.ring(context, 60, if (used == null) 0f else fraction, sweep, R.drawable.ic_nav_focus, WidgetArt.GOLD_LIGHT, glow = used != null && fraction <= 0.2f),
+                WidgetArt.ring(context, 60, if (used == null) 0f else fraction, sweep, R.drawable.ic_nav_focus, accent(context), glow = used != null && fraction <= 0.2f),
             )
         }
         views.setOnClickPendingIntent(R.id.widget_root, openApp(context, "focus"))

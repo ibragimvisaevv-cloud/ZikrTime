@@ -26,9 +26,9 @@ import kotlin.random.Random
  * небо по времени суток со звёздами, солнцем или полумесяцем; кольца прогресса; линия дня.
  */
 object WidgetArt {
-    const val GOLD = 0xFFD9B98C.toInt()
-    const val GOLD_LIGHT = 0xFFE6CBA6.toInt()
-    const val GOLD_DARK = 0xFFAA8151.toInt()
+    const val GOLD = 0xFFD9B77B.toInt()
+    const val GOLD_LIGHT = 0xFFF0D5A4.toInt()
+    const val GOLD_DARK = 0xFF956B3E.toInt()
     const val CREAM = 0xFFF7F2EA.toInt()
 
     enum class Body { SUN, MOON, NONE }
@@ -48,6 +48,7 @@ object WidgetArt {
         stars: Float,
         body: Body,
         seed: Int,
+        ink: Int = CREAM,
     ): Bitmap {
         val s = px(context)
         val w = max(1, (wDp * s).toInt())
@@ -62,20 +63,42 @@ object WidgetArt {
         p.shader = LinearGradient(0f, 0f, w * 0.35f, h.toFloat(), colors, null, Shader.TileMode.CLAMP)
         c.drawRect(rect, p)
 
-        // Quiet contour arcs: one restrained motif shared with the app's section panels.
+        // Recessed pointed arches carved into matte plaster, with no botanical art.
         p.shader = null
-        p.style = Paint.Style.STROKE
-        p.strokeWidth = s
-        p.color = alpha(CREAM, .08f)
-        repeat(3) { i -> c.drawCircle(w * 1.04f, h * .92f, w * (.3f + .18f * i), p) }
+        fun arch(cx: Float, top: Float, width: Float): Path {
+            val r = width / 2f
+            return Path().apply {
+                moveTo(cx - r, h.toFloat()); lineTo(cx - r, top + r * 1.5f)
+                cubicTo(cx - r, top + r * .6f, cx - r * .32f, top + r * .35f, cx, top)
+                cubicTo(cx + r * .32f, top + r * .35f, cx + r, top + r * .6f, cx + r, top + r * 1.5f)
+                lineTo(cx + r, h.toFloat()); close()
+            }
+        }
+        repeat(3) { i ->
+            val path = arch(w * .91f, h * (-.1f + .13f * i), w * (.56f - .1f * i))
+            p.style = Paint.Style.FILL
+            p.color = alpha(ink, .035f)
+            c.drawPath(path, p)
+            p.style = Paint.Style.STROKE; p.strokeWidth = .8f * s
+            p.color = alpha(ink, .13f)
+            c.drawPath(path, p)
+        }
+        var y = 12f * s
+        while (y < h) {
+            p.color = alpha(ink, .12f); p.strokeWidth = .6f * s
+            c.drawPath(octagram(w - 12f * s, y, 8f * s), p)
+            y += 24f * s
+        }
+        // Deterministic fine plaster grain, not a large photographic bitmap.
         p.style = Paint.Style.FILL
-        // A small flat day/night marker lives in the background, away from the values.
-        p.color = alpha(GOLD_LIGHT, .13f)
-        if (body == Body.SUN) c.drawCircle(w * .88f, h * .22f, 18 * s, p)
-        if (body == Body.MOON) c.drawPath(crescent(w * .88f, h * .22f, 18 * s), p)
-        p.style = Paint.Style.STROKE
-        p.strokeWidth = s
-        p.color = alpha(CREAM, .12f)
+        val grain = Random(seed)
+        p.color = alpha(ink, .035f)
+        repeat(320) { c.drawCircle(grain.nextFloat() * w, grain.nextFloat() * h, .45f * s, p) }
+        p.color = alpha(ink, .12f)
+        if (body == Body.SUN) c.drawCircle(w * .84f, h * .2f, 14 * s, p)
+        if (body == Body.MOON) c.drawPath(crescent(w * .84f, h * .2f, 14 * s), p)
+        p.style = Paint.Style.STROKE; p.strokeWidth = s
+        p.color = alpha(ink, .14f)
         val inset = .5f * s
         c.drawRoundRect(RectF(inset, inset, w - inset, h - inset), radius, radius, p)
         return bmp
@@ -99,11 +122,11 @@ object WidgetArt {
         val cx = size / 2f
         val stroke = size * 0.055f
         val r = size / 2f - stroke - (if (glow) size * 0.08f else size * 0.03f)
-        p.color = 0x33000000
+        p.color = alpha(iconTint, .035f)
         c.drawCircle(cx, cx, r, p)
         p.style = Paint.Style.STROKE
         p.strokeWidth = stroke
-        p.color = alpha(CREAM, 0.20f)
+        p.color = alpha(iconTint, 0.20f)
         c.drawCircle(cx, cx, r, p)
         val shader = SweepGradient(cx, cx, sweep + sweep.first(), null)
         shader.setLocalMatrix(Matrix().apply { postRotate(-90f, cx, cx) })

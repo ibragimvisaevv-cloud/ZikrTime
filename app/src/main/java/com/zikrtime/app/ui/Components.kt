@@ -144,13 +144,13 @@ fun ScreenScaffold(
 
 /** Содержимое вкладки: заголовок крупно и прокрутка. */
 @Composable
-fun TabColumn(title: String? = null, subtitle: String? = null, content: @Composable ColumnScope.() -> Unit) {
+fun TabColumn(title: String? = null, subtitle: String? = null, spacing: Dp = 16.dp, content: @Composable ColumnScope.() -> Unit) {
     Column(
         Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(spacing),
     ) {
         Spacer(Modifier.height(8.dp))
         if (title != null) {
@@ -422,7 +422,7 @@ private fun star(c: Offset, r: Float): Path {
 
 /** Круглая отметка «сделано». */
 @Composable
-fun CheckCircle(checked: Boolean, enabled: Boolean, onToggle: () -> Unit, contentDescription: String) {
+fun CheckCircle(checked: Boolean, enabled: Boolean, onToggle: () -> Unit, contentDescription: String, onDark: Boolean = false) {
     val scheme = MaterialTheme.colorScheme
     Box(
         Modifier
@@ -435,15 +435,15 @@ fun CheckCircle(checked: Boolean, enabled: Boolean, onToggle: () -> Unit, conten
             Modifier
                 .size(26.dp)
                 .clip(CircleShape)
-                .background(if (checked) scheme.primary else Color.Transparent),
+                .background(if (checked) { if (onDark) Sand else scheme.primary } else Color.Transparent),
             contentAlignment = Alignment.Center,
         ) {
             if (checked) {
-                Icon(painterResource(R.drawable.ic_check), contentDescription, tint = scheme.onPrimary, modifier = Modifier.size(16.dp))
+                Icon(painterResource(R.drawable.ic_check), contentDescription, tint = if (onDark) Olive else scheme.onPrimary, modifier = Modifier.size(16.dp))
             } else {
                 Canvas(Modifier.fillMaxSize()) {
                     drawCircle(
-                        color = scheme.outline.copy(alpha = if (enabled) 0.9f else 0.3f),
+                        color = (if (onDark) Porcelain else scheme.outline).copy(alpha = if (enabled) 0.9f else 0.3f),
                         radius = size.minDimension / 2 - 1.dp.toPx(),
                         style = Stroke(1.8.dp.toPx()),
                     )
@@ -546,7 +546,7 @@ fun BigClock(time: ZonedDateTime, fontSize: TextUnit, color: Color, modifier: Mo
     val h24 = android.text.format.DateFormat.is24HourFormat(context)
     val digits = time.format(DateTimeFormatter.ofPattern(if (h24) "HH:mm" else "h:mm", locale))
     Row(modifier, verticalAlignment = Alignment.Bottom) {
-        Text(digits, fontSize = fontSize, fontWeight = weight, color = color, style = Tabular, maxLines = 1, softWrap = false)
+        Text(digits, fontSize = fontSize, fontWeight = weight, color = color, style = Tabular, fontFamily = androidx.compose.ui.text.font.FontFamily.Serif, maxLines = 1, softWrap = false)
         if (!h24) {
             Spacer(Modifier.width(6.dp))
             Text(

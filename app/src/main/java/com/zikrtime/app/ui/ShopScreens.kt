@@ -73,7 +73,7 @@ fun shopIcon(name: String): Int = when (name) {
     else -> R.drawable.ic_shop_store
 }
 
-private fun accentOf(seller: Shop.Seller?): Color = seller?.accent?.let { Color(0xFF000000 or it) } ?: Color(0xFF345B80)
+private fun accentOf(seller: Shop.Seller?): Color = seller?.accent?.let { Color(0xFF000000 or it) } ?: Color(0xFF3D5037)
 
 // ---------------- Витрина ----------------
 
@@ -216,7 +216,7 @@ private fun CategoryPill(text: String, icon: Int, selected: Boolean, onClick: ()
         Modifier
             .pressScale(interaction)
             .then(
-                if (selected) Modifier.clip(shape).background(Brush.linearGradient(listOf(Color(0xFF456F96), EmeraldDeep)))
+                if (selected) Modifier.clip(shape).background(Brush.linearGradient(listOf(Color(0xFF61734D), EmeraldDeep)))
                 else Modifier.glass(shape, elevation = 3.dp),
             )
             .clickable(interactionSource = interaction, indication = null, onClick = onClick)
