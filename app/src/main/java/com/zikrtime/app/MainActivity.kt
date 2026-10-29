@@ -1,5 +1,9 @@
+@file:OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
+
 package com.zikrtime.app
 
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.foundation.background
 import android.Manifest
 import android.content.Context
@@ -106,7 +110,7 @@ class MainActivity : ComponentActivity() {
                     splash = false
                 }
                 CompositionLocalProvider(com.zikrtime.app.ui.LocalTilt provides tilt) {
-                    Box(Modifier.fillMaxSize()) {
+                    Box(Modifier.fillMaxSize().semantics { testTagsAsResourceId = true }) {
                         // Переливающийся фон под всеми экранами
                         com.zikrtime.app.ui.HorizonBackground()
                         CompositionLocalProvider(LocalNav provides nav) {

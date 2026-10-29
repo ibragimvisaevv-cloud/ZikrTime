@@ -44,15 +44,16 @@ fun OnboardingScreen(onCityChosen: (City) -> Unit) {
     BackHandler(enabled = step > 0) { step-- }
     val titles = listOf(R.string.app_name, R.string.onboarding_language_title, R.string.onboarding_city_title,
         R.string.onboarding_perms_title, R.string.onboarding_ready_title)
-    Box(Modifier.fillMaxSize().testTag("onboarding_step_$step")) {
-        SceneBackdrop(Modifier.fillMaxSize())
+    BoxWithConstraints(Modifier.fillMaxSize().testTag("onboarding_step_$step")) {
+        val reveal = if (LocalDensity.current.fontScale > 1.3f) 80.dp else if (step == 0) maxHeight * .40f else 112.dp
+        SceneBackdrop(Modifier.fillMaxWidth().height(reveal + 200.dp))
         Column(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.statusBars)) {
             Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically) {
                 Text("ZikrTime", style = MaterialTheme.typography.titleLarge, color = Porcelain, modifier = Modifier.weight(1f))
                 ThemeQuickButton(compact = true, onLandscape = true)
             }
             // Leave the mosque and minarets visible; smaller viewports give space back to content.
-            Spacer(Modifier.height(if (LocalDensity.current.fontScale > 1.3f) 16.dp else if (step == 0) 112.dp else 32.dp))
+            Spacer(Modifier.height((reveal - 72.dp).coerceAtLeast(8.dp)))
             Column(Modifier.weight(1f).fillMaxWidth().clip(RoundedCornerShape(topStart = 34.dp, topEnd = 34.dp))
                 .background(MaterialTheme.colorScheme.background).imePadding()) {
                 Row(Modifier.fillMaxWidth().padding(start = 24.dp, end = 12.dp, top = 14.dp), verticalAlignment = Alignment.CenterVertically) {

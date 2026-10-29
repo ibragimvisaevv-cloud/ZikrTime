@@ -52,6 +52,7 @@ import com.zikrtime.app.R
 import com.zikrtime.app.data.Places
 import com.zikrtime.app.data.Store
 import com.zikrtime.app.ui.theme.Cream
+import com.zikrtime.app.ui.theme.Emerald
 import com.zikrtime.app.ui.theme.EmeraldDeep
 import com.zikrtime.app.ui.theme.Gold
 import com.zikrtime.app.ui.theme.LocalDarkTheme

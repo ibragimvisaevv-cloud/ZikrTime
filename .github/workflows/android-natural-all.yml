@@ -36,7 +36,11 @@ jobs:
     if: ${{ !contains(github.event.head_commit.message, '[quick-ui]') && always() && (needs.build.result == 'success' || contains(github.event.head_commit.message, '[ui-check]')) }}
     needs: build
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        group: [tour, journeys, accessibility, focus]
     permissions:
       contents: read
       actions: read
@@ -53,10 +57,10 @@ jobs:
           path: android-out
           github-token: ${{ github.token }}
           run-id: ${{ contains(github.event.head_commit.message, '[ui-check]') && '40861857638' || github.run_id }}
-      - name: Retrieve verified 0.8.4 baseline
+      - name: Retrieve approved 0.8.9 baseline
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh run download 40539273495 -n Android-features-build -D previous-out
+        run: gh run download 40861857638 -n Android-natural-build -D previous-out
       - name: Prepare disposable upgrade fixtures
         run: |
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'platforms;android-35' 'build-tools;35.0.0' >/dev/null
@@ -66,6 +70,7 @@ jobs:
           "$SIGNER" sign --ks fixtures/test.jks --ks-key-alias test --ks-pass pass:android --key-pass pass:android --out fixtures/previous.apk previous-out/outputs/apk/debug/app-debug.apk
           "$SIGNER" sign --ks fixtures/test.jks --ks-key-alias test --ks-pass pass:android --key-pass pass:android --out fixtures/current.apk android-out/outputs/apk/debug/app-debug.apk
           wc -c fixtures/previous.apk fixtures/current.apk > fixtures/apk-sizes.txt
+          bash tools/ci/build_focus_fixture.sh fixtures/test.jks fixtures/focus-target.apk
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-natural.rules
@@ -79,11 +84,11 @@ jobs:
           arch: x86_64
           disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: bash tools/ci/natural_sections_smoke.sh
+          script: bash tools/ci/whole_app_smoke.sh ${{ matrix.group }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: Android-natural-screens
+          name: Android-whole-${{ matrix.group }}
           path: |
             ci-out/
             fixtures/apk-sizes.txt
