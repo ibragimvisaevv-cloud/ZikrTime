@@ -60,10 +60,25 @@ def launch(screen):
 
 
 def ui():
-    shell('uiautomator', 'dump', '/sdcard/features.xml')
-    root = ET.fromstring(shell('cat', '/sdcard/features.xml'))
-    (OUT / 'last-ui.xml').write_text(ET.tostring(root, encoding='unicode'))
-    return root
+    # UiAutomator can return exit 0 with a null root while a window is attaching.
+    # Never reuse an old dump: that can tap coordinates from the previous screen.
+    deadline = time.monotonic() + 30
+    attempt = 0
+    while True:
+        shell('rm', '-f', '/sdcard/features.xml')
+        output = shell('uiautomator', 'dump', '/sdcard/features.xml')
+        try:
+            root = ET.fromstring(shell('cat', '/sdcard/features.xml'))
+            if next(root.iter('node'), None) is None:
+                raise ValueError('empty UI hierarchy')
+            (OUT / 'last-ui.xml').write_text(ET.tostring(root, encoding='unicode'))
+            return root
+        except (subprocess.CalledProcessError, ET.ParseError, ValueError) as error:
+            (OUT / f'ui-dump-retry-{attempt}.txt').write_text(output + '\n' + str(error))
+            attempt += 1
+            if time.monotonic() >= deadline:
+                raise
+            time.sleep(1)
 
 
 def find_control(root, identifier, attribute='resource-id'):

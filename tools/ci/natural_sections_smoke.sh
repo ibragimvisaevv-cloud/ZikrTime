@@ -39,9 +39,11 @@ python3 tools/ci/features_controls.py seed-upgrade
 adb install -r -g fixtures/current.apk
 capture upgraded home
 python3 tools/ci/features_controls.py verify-upgrade
+adb shell settings put global animator_duration_scale 0
 python3 tools/ci/features_controls.py appearance
 # For an unchanged, already visually captured APK, recheck only the failed state assertions.
 if ! git log -1 --format=%B | grep -Fq '[state-only]'; then
+adb shell settings put global animator_duration_scale 1
 capture current knowledge
 measure current
 for mode in no yes; do
@@ -81,6 +83,7 @@ python3 tools/ci/features_controls.py progress
 capture progress-before-enable progress
 python3 tools/ci/features_controls.py enable-progress
 python3 tools/ci/features_controls.py learning
+adb shell settings put global animator_duration_scale 1
 adb shell am start -S -W -n "$pkg/.MainActivity" --es qa_screen home --es qa_lang ru --ez qa_onboarded true --es qa_period DAY > ci-out/motion-start.txt
 sleep 2
 adb exec-out screencap -p > ci-out/screens/motion-before.png
