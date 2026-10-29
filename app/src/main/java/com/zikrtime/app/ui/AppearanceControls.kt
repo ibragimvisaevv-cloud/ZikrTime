@@ -23,10 +23,22 @@ import com.zikrtime.app.ui.theme.LocalDarkTheme
 
 /** Visible manual switch on Home; writes the same persisted preference as Settings. */
 @Composable
-fun ThemeQuickButton() {
+fun ThemeQuickButton(compact: Boolean = false, onLandscape: Boolean = false) {
     val context = androidx.compose.ui.platform.LocalContext.current
     val dark = LocalDarkTheme.current
     val scheme = MaterialTheme.colorScheme
+    if (compact) {
+        val label = stringResource(if (dark) R.string.appearance_light else R.string.appearance_dark)
+        IconButton(onClick = {
+            Store.appearance = if (dark) "light" else "dark"
+            com.zikrtime.app.widget.Widgets.updateAll(context)
+        }, modifier = Modifier.size(48.dp).testTag("theme_quick_toggle").semantics { testTagsAsResourceId = true }) {
+            Icon(painterResource(if (dark) R.drawable.ic_prayer_sunrise else R.drawable.ic_prayer_isha),
+                contentDescription = label, tint = if (onLandscape) Porcelain else scheme.onSurface,
+                modifier = Modifier.size(22.dp))
+        }
+        return
+    }
     Surface(color = scheme.surfaceContainerHigh, shape = RoundedCornerShape(24.dp)) {
         Row(Modifier.selectableGroup().padding(3.dp), verticalAlignment = Alignment.CenterVertically) {
             listOf(false, true).forEach { option ->

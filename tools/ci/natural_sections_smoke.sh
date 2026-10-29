@@ -41,6 +41,7 @@ capture upgraded home
 python3 tools/ci/features_controls.py verify-upgrade
 adb shell settings put global animator_duration_scale 0
 python3 tools/ci/features_controls.py appearance
+python3 tools/ci/horizon_interaction.py
 # For an unchanged, already visually captured APK, recheck only the failed state assertions.
 if ! git log -1 --format=%B | grep -Fq '[state-only]'; then
 adb shell settings put global animator_duration_scale 1

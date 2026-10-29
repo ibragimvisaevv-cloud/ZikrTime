@@ -60,10 +60,6 @@ fun KnowledgeScreen() {
     var clearLearning by remember { mutableStateOf(false) }
 
     TabColumn(title = stringResource(R.string.knowledge_title), subtitle = stringResource(R.string.knowledge_subtitle)) {
-        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            EditorialTile(stringResource(R.string.azkar_morning), R.drawable.ic_prayer_fajr, true, Modifier.fillMaxWidth()) { nav.openAzkar("morning") }
-            EditorialTile(stringResource(R.string.azkar_evening), R.drawable.ic_prayer_isha, false, Modifier.fillMaxWidth()) { nav.openAzkar("evening") }
-        }
         if (com.zikrtime.app.data.AzkarStore.hasPending) {
             TextButton(onClick = { nav.resumeAzkar() }) { Text(stringResource(R.string.my_day_resume_azkar)) }
         }
@@ -71,18 +67,20 @@ fun KnowledgeScreen() {
             PrimaryButton(stringResource(R.string.learning_resume), onClick = { nav.resumeLearning(context) },
                 modifier = Modifier.testTag("learning_resume").semantics { testTagsAsResourceId = true })
         }
+        val zone = CityZones.forCity(Store.location.id, java.time.ZoneId.systemDefault())
+        val hour = java.time.ZonedDateTime.now(zone).hour
+        val morning = hour < 15
+        EditorialTile(stringResource(if (morning) R.string.azkar_morning else R.string.azkar_evening),
+            if (morning) R.drawable.ic_prayer_fajr else R.drawable.ic_prayer_isha, morning,
+            Modifier.fillMaxWidth(), prominent = true) { nav.openAzkar(if (morning) "morning" else "evening") }
+        ReadingRow(stringResource(if (morning) R.string.azkar_evening else R.string.azkar_morning),
+            if (morning) R.drawable.azkar_evening else R.drawable.azkar_morning) {
+            nav.openAzkar(if (morning) "evening" else "morning")
+        }
         SectionLabel(stringResource(R.string.knowledge_topics))
-        BoxWithConstraints(Modifier.fillMaxWidth()) {
-            val columns = if (maxWidth < 300.dp || androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 1 else 2
-            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                bank.categories.toList().chunked(columns).forEach { pair ->
-                    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                        pair.forEach { (id, name) ->
-                            FeatureTile(name, categoryIcon(id), Modifier.weight(1f), onClick = { nav.startQuiz(id) })
-                        }
-                        if (pair.size < columns) Spacer(Modifier.weight(1f))
-                    }
-                }
+        Column {
+            bank.categories.toList().forEach { (id, name) ->
+                DestinationRow(name, categoryIcon(id), onClick = { nav.startQuiz(id) })
             }
         }
 

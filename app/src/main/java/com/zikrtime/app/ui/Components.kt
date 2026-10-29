@@ -11,6 +11,10 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.remember
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.Role
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -164,7 +168,8 @@ fun TabColumn(title: String? = null, subtitle: String? = null, spacing: Dp = 16.
             }
         }
         content()
-        Spacer(Modifier.height(112.dp))
+        Spacer(Modifier.height(96.dp))
+        Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
     }
 }
 
@@ -428,7 +433,8 @@ fun CheckCircle(checked: Boolean, enabled: Boolean, onToggle: () -> Unit, conten
         Modifier
             .size(48.dp)
             .clip(CircleShape)
-            .clickable(enabled = enabled, onClick = onToggle),
+            .semantics { this.contentDescription = contentDescription }
+            .toggleable(value = checked, enabled = enabled, role = Role.Checkbox, onValueChange = { onToggle() }),
         contentAlignment = Alignment.Center,
     ) {
         Box(
@@ -439,7 +445,7 @@ fun CheckCircle(checked: Boolean, enabled: Boolean, onToggle: () -> Unit, conten
             contentAlignment = Alignment.Center,
         ) {
             if (checked) {
-                Icon(painterResource(R.drawable.ic_check), contentDescription, tint = if (onDark) Olive else scheme.onPrimary, modifier = Modifier.size(16.dp))
+                Icon(painterResource(R.drawable.ic_check), null, tint = if (onDark) Olive else scheme.onPrimary, modifier = Modifier.size(16.dp))
             } else {
                 Canvas(Modifier.fillMaxSize()) {
                     drawCircle(

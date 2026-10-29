@@ -114,11 +114,15 @@ fun <T> GlassNavBar(items: List<T>, selected: T, onSelect: (T) -> Unit, modifier
     item: @Composable (T, Boolean) -> Unit) {
     val position by animateFloatAsState(items.indexOf(selected).coerceAtLeast(0).toFloat(),
         spring(dampingRatio = Spring.DampingRatioNoBouncy, stiffness = 420f), label = "nav-selection")
-    Box(modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp).clip(RoundedCornerShape(30.dp))
-        .background(Brush.horizontalGradient(listOf(Color(0xFF092F28), Color(0xFF174B3C))))) {
+    val scheme = MaterialTheme.colorScheme
+    Box(modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp)
+        .shadow(12.dp, RoundedCornerShape(28.dp), ambientColor = Color.Black.copy(alpha = .12f), spotColor = Color.Black.copy(alpha = .12f))
+        .clip(RoundedCornerShape(28.dp))
+        .background(scheme.surfaceContainerLow.copy(alpha = .97f))
+        .border(1.dp, scheme.outlineVariant.copy(alpha = .6f), RoundedCornerShape(28.dp))) {
         Canvas(Modifier.matchParentSize()) {
             val width = (size.width - 12.dp.toPx()) / items.size
-            drawRoundRect(Color(0xFFD1E3C5),
+            drawRoundRect(scheme.primaryContainer,
                 topLeft = Offset(6.dp.toPx() + position * width + 2.dp.toPx(), 7.dp.toPx()),
                 size = androidx.compose.ui.geometry.Size(width - 4.dp.toPx(), size.height - 14.dp.toPx()),
                 cornerRadius = androidx.compose.ui.geometry.CornerRadius(24.dp.toPx()))

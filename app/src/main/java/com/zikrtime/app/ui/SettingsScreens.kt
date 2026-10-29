@@ -87,24 +87,15 @@ fun MoreScreen() {
     TabColumn(title = stringResource(R.string.more_title)) {
         AppearancePicker()
         SectionLabel(stringResource(R.string.group_practice))
-        androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxWidth()) {
-            val items = listOf(
+        Column {
+            listOf(
                 Triple(R.string.qibla_title, R.drawable.ic_qibla, Screen.QIBLA),
                 Triple(R.string.tasbih_title, R.drawable.ic_tasbih, Screen.TASBIH),
                 Triple(R.string.places_title, R.drawable.ic_mosque, Screen.PLACES),
                 Triple(R.string.ramadan_title, R.drawable.ic_prayer_isha, Screen.RAMADAN),
                 Triple(R.string.zakat_title, R.drawable.ic_calc, Screen.ZAKAT),
-            )
-            val columns = if (maxWidth < 300.dp || androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 1 else 2
-            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                items.chunked(columns).forEach { row ->
-                    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                        row.forEach { (title, icon, screen) ->
-                            FeatureTile(stringResource(title), icon, Modifier.weight(1f)) { nav.open(screen) }
-                        }
-                        if (row.size < columns) Spacer(Modifier.weight(1f))
-                    }
-                }
+            ).forEach { (title, icon, screen) ->
+                DestinationRow(stringResource(title), icon) { nav.open(screen) }
             }
         }
         SectionLabel(stringResource(R.string.group_application))

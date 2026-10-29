@@ -23,6 +23,7 @@ object QaHooks {
 
     /** Возвращает true, если экран будет пересоздан (смена языка) и дальше идти не нужно. */
     /** Показать виджеты рабочего стола вместо приложения (для снимков на эмуляторе). */
+    var hideScene = false
     var widgetPreview = false
     var skyPreview: com.zikrtime.app.ui.NaturalPeriod? = null
 
@@ -36,6 +37,7 @@ object QaHooks {
         com.zikrtime.app.ui.LiveFlags.tilt = intent.getBooleanExtra("qa_tilt", true)
         com.zikrtime.app.ui.LiveFlags.parallax = intent.getBooleanExtra("qa_parallax", true)
         com.zikrtime.app.ui.LiveFlags.splash = intent.getBooleanExtra("qa_splash", false)
+        hideScene = intent.getBooleanExtra("qa_hide_scene", false)
         skyPreview = intent.getStringExtra("qa_period")?.let { runCatching { com.zikrtime.app.ui.NaturalPeriod.valueOf(it) }.getOrNull() }
         val screen = intent.getStringExtra("qa_screen") ?: return false
         if (intent.getBooleanExtra("qa_onboarded", false)) Store.onboarded = true

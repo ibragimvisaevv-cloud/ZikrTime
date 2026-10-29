@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 
 /** Wide photographic morning/evening journeys, with an Islamic horizon. */
 @Composable
-fun EditorialTile(title: String, icon: Int, warm: Boolean, modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun EditorialTile(title: String, icon: Int, warm: Boolean, modifier: Modifier = Modifier, prominent: Boolean = false, onClick: () -> Unit) {
     val interaction = remember { MutableInteractionSource() }
     Box(modifier.pressScale(interaction).clip(RoundedCornerShape(26.dp))
         .clickable(interactionSource = interaction, indication = ripple(), onClick = onClick)) {
@@ -26,7 +26,7 @@ fun EditorialTile(title: String, icon: Int, warm: Boolean, modifier: Modifier = 
             null, Modifier.matchParentSize(), contentScale = androidx.compose.ui.layout.ContentScale.Crop)
         Box(Modifier.matchParentSize().background(androidx.compose.ui.graphics.Brush.verticalGradient(listOf(
             androidx.compose.ui.graphics.Color(0x22051D18), androidx.compose.ui.graphics.Color(0xDD051D18)))))
-        Column(Modifier.fillMaxWidth().heightIn(min = 154.dp).padding(18.dp), verticalArrangement = Arrangement.spacedBy(24.dp)) {
+        Column(Modifier.fillMaxWidth().heightIn(min = if (prominent) 232.dp else 154.dp).padding(18.dp), verticalArrangement = Arrangement.SpaceBetween) {
             Icon(painterResource(icon), null, tint = Sand, modifier = Modifier.size(24.dp))
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(title, color = Porcelain, style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))

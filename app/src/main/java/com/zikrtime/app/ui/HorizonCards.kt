@@ -50,3 +50,33 @@ fun FeatureTile(title: String, icon: Int, modifier: Modifier = Modifier, detail:
         if (detail != null) Text(detail, style = MaterialTheme.typography.bodySmall, color = scheme.onSurfaceVariant)
     }
 }
+
+
+/** Open rows alternate with photographic content; no tile grid for every destination. */
+@Composable
+fun DestinationRow(title: String, icon: Int, detail: String? = null, onClick: () -> Unit) {
+    val scheme = MaterialTheme.colorScheme
+    Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).clickable(onClick = onClick)
+        .heightIn(min = 68.dp).padding(vertical = 12.dp, horizontal = 4.dp),
+        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+        IconBadge(painterResource(icon), size = 38.dp, container = scheme.secondaryContainer, tint = scheme.secondary)
+        Column(Modifier.weight(1f)) {
+            Text(title, style = MaterialTheme.typography.titleMedium)
+            if (detail != null) Text(detail, style = MaterialTheme.typography.bodySmall, color = scheme.onSurfaceVariant)
+        }
+        Text("›", style = MaterialTheme.typography.headlineSmall, color = scheme.onSurfaceVariant)
+    }
+    HorizontalDivider(color = scheme.outlineVariant.copy(alpha = .5f))
+}
+
+@Composable
+fun ReadingRow(title: String, art: Int, onClick: () -> Unit) {
+    val scheme = MaterialTheme.colorScheme
+    Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(18.dp)).clickable(onClick = onClick)
+        .padding(vertical = 6.dp), verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+        Image(painterResource(art), null, Modifier.size(78.dp).clip(RoundedCornerShape(14.dp)), contentScale = ContentScale.Crop)
+        Text(title, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+        Text("›", style = MaterialTheme.typography.headlineSmall, color = scheme.onSurfaceVariant, modifier = Modifier.padding(end = 8.dp))
+    }
+}

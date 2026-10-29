@@ -241,7 +241,7 @@ private fun Tabs() {
             label = "tabs",
         ) { tab ->
             tabState.SaveableStateProvider(tab.name) {
-            Box(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.statusBars)) {
+            Box(Modifier.fillMaxSize().then(if (tab == Tab.PRAYER) Modifier else Modifier.windowInsetsPadding(WindowInsets.statusBars))) {
                 when (tab) {
                     Tab.PRAYER -> HomeScreen()
                     Tab.KNOWLEDGE -> KnowledgeScreen()
@@ -258,11 +258,10 @@ private fun Tabs() {
             onSelect = { nav.tab = it.first },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .background(MaterialTheme.colorScheme.surfaceContainer)
                 .windowInsetsPadding(WindowInsets.navigationBars)
                 .padding(horizontal = 0.dp, vertical = 0.dp),
         ) { (_, icon, label), selected ->
-            val color = if (selected) androidx.compose.ui.graphics.Color(0xFF103B2F) else androidx.compose.ui.graphics.Color(0xFFE5F0E2)
+            val color = if (selected) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Icon(
                     painterResource(icon),
@@ -270,7 +269,7 @@ private fun Tabs() {
                     tint = color,
                     modifier = Modifier.size(24.dp),
                 )
-                if (androidx.compose.ui.platform.LocalDensity.current.fontScale <= 1.3f || selected) Text(
+                if (androidx.compose.ui.platform.LocalDensity.current.fontScale <= 1.3f) Text(
                     stringResource(label),
                     style = MaterialTheme.typography.labelSmall,
                     color = color,
