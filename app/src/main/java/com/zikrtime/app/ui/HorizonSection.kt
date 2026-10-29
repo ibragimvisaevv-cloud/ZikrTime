@@ -16,9 +16,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.*
@@ -62,7 +64,10 @@ fun HorizonSection(title: String, subtitle: String? = null, image: Int, heroHeig
             Box(Modifier.matchParentSize().background(Brush.verticalGradient(listOf(
                 Color(0x9E062B2A), Color(0x29072E2C), Color(0xDB071F1B)))))
         }
-        Column(Modifier.fillMaxSize().testTag("section_scroll").semantics { testTagsAsResourceId = true }.verticalScroll(scroll)) {
+        Column(Modifier.fillMaxSize().drawWithContent {
+            // Only the landscape reaches behind system icons; scrolling labels stop below them.
+            clipRect(top = status.toPx()) { this@drawWithContent.drawContent() }
+        }.testTag("section_scroll").semantics { testTagsAsResourceId = true }.verticalScroll(scroll)) {
             CompositionLocalProvider(LocalContentColor provides Porcelain) {
                 Column(Modifier.fillMaxWidth().heightIn(min = heroHeight + status).onSizeChanged { heroPx = it.height }
                     .padding(horizontal = 24.dp).padding(top = status + 8.dp, bottom = 30.dp),
