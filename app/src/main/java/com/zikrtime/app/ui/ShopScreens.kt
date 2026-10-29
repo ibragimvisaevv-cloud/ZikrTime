@@ -103,30 +103,8 @@ fun ShopScreen() {
     val sellers = matchingSellers.filter { !it.partner }
     val partners = matchingSellers.filter { it.partner }
 
-    TabColumn {
-        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            Column(Modifier.weight(1f)) {
-                Text(stringResource(R.string.shop_title), style = MaterialTheme.typography.headlineLarge)
-                Spacer(Modifier.height(8.dp))
-                Text(stringResource(R.string.shop_subtitle), style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant)
-            }
-            if (androidx.compose.ui.platform.LocalDensity.current.fontScale <= 1.3f) {
-                androidx.compose.foundation.Image(painterResource(R.drawable.shop_market), null,
-                    Modifier.width(90.dp).height(142.dp).clip(RoundedCornerShape(topStart = 46.dp, topEnd = 46.dp, bottomStart = 12.dp, bottomEnd = 12.dp)),
-                    contentScale = ContentScale.Crop)
-            }
-        }
-        if (catalog.demo) {
-            ZCard(color = Gold.copy(alpha = 0.22f), padding = PaddingValues(16.dp)) {
-                Text(stringResource(R.string.shop_demo_note), style = MaterialTheme.typography.bodyMedium)
-            }
-        }
-        if (Shop.offline) {
-            StatusLine(stringResource(R.string.shop_offline))
-        }
-
+    HorizonSection(title = stringResource(R.string.shop_title), subtitle = stringResource(R.string.shop_subtitle),
+        image = R.drawable.shop_market, heroHeight = 224.dp) {
         // Поиск
         Row(
             Modifier.fillMaxWidth().glass(RoundedCornerShape(20.dp), elevation = 4.dp).padding(horizontal = 16.dp, vertical = 14.dp),
@@ -154,6 +132,9 @@ fun ShopScreen() {
                 CategoryPill(c.name.get(lang), shopIcon(c.icon), category == c.id) { category = if (category == c.id) null else c.id }
             }
         }
+
+        if (catalog.demo) StatusLine(stringResource(R.string.shop_demo_note))
+        if (Shop.offline) StatusLine(stringResource(R.string.shop_offline))
 
         // Партнёры — закреплены наверху, по две карточки в ряд
         if (partners.isNotEmpty()) {

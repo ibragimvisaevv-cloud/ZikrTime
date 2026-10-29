@@ -254,7 +254,7 @@ private fun Tabs() {
             label = "tabs",
         ) { tab ->
             tabState.SaveableStateProvider(tab.name) {
-            Box(Modifier.fillMaxSize().then(if (tab == Tab.PRAYER) Modifier else Modifier.windowInsetsPadding(WindowInsets.statusBars))) {
+            Box(Modifier.fillMaxSize()) {
                 when (tab) {
                     Tab.PRAYER -> HomeScreen()
                     Tab.KNOWLEDGE -> KnowledgeScreen()

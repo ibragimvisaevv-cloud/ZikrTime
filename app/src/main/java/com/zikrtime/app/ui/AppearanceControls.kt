@@ -83,3 +83,31 @@ fun AppearancePicker() {
         }
     }
 }
+
+/** All three persisted appearance modes in a compact control, available at the top of More. */
+@Composable
+fun AppearanceSegments() {
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val large = androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f
+    val options = listOf("light" to R.string.appearance_light, "dark" to R.string.appearance_dark, "system" to R.string.appearance_system)
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text(stringResource(R.string.appearance_title), color = Porcelain, style = MaterialTheme.typography.labelLarge)
+        val option: @Composable (String, Int, Modifier) -> Unit = { value, label, modifier ->
+            val selected = Store.appearance == value
+            Surface(color = if (selected) Sand else Color(0xB31A3933),
+                contentColor = if (selected) Color(0xFF173B30) else Porcelain, shape = RoundedCornerShape(16.dp), modifier = modifier) {
+                Box(Modifier.heightIn(min = 52.dp).testTag("appearance_$value").semantics { testTagsAsResourceId = true }
+                    .selectable(selected = selected, role = Role.RadioButton, onClick = {
+                        Store.appearance = value; com.zikrtime.app.widget.Widgets.updateAll(context)
+                    }).padding(horizontal = 12.dp, vertical = 12.dp), contentAlignment = Alignment.Center) {
+                    Text(stringResource(label), style = MaterialTheme.typography.labelLarge)
+                }
+            }
+        }
+        if (large) Column(Modifier.selectableGroup(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            options.forEach { (v, l) -> option(v, l, Modifier.fillMaxWidth()) }
+        } else Row(Modifier.fillMaxWidth().selectableGroup(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            options.forEach { (v, l) -> option(v, l, Modifier.weight(1f)) }
+        }
+    }
+}

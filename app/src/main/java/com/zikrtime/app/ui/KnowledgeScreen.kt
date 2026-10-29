@@ -60,7 +60,19 @@ fun KnowledgeScreen() {
     val bonus = Store.bonusMinutes()
     var clearLearning by remember { mutableStateOf(false) }
 
-    TabColumn(title = stringResource(R.string.knowledge_title), subtitle = stringResource(R.string.knowledge_subtitle)) {
+    val zone = CityZones.forCity(Store.location.id, java.time.ZoneId.systemDefault())
+    val morning = java.time.ZonedDateTime.now(zone).hour < 15
+    HorizonSection(title = stringResource(R.string.knowledge_title),
+        subtitle = stringResource(R.string.knowledge_subtitle),
+        image = if (morning) R.drawable.azkar_morning else R.drawable.azkar_evening,
+        heroHeight = 370.dp,
+        hero = {
+            Spacer(Modifier.height(56.dp))
+            HorizonFeature(stringResource(if (morning) R.string.azkar_morning else R.string.azkar_evening),
+                if (morning) R.drawable.ic_prayer_fajr else R.drawable.ic_prayer_isha) {
+                nav.openAzkar(if (morning) "morning" else "evening")
+            }
+        }) {
         if (com.zikrtime.app.data.AzkarStore.hasPending) {
             TextButton(onClick = { nav.resumeAzkar() }) { Text(stringResource(R.string.my_day_resume_azkar)) }
         }
@@ -68,20 +80,17 @@ fun KnowledgeScreen() {
             PrimaryButton(stringResource(R.string.learning_resume), onClick = { nav.resumeLearning(context) },
                 modifier = Modifier.testTag("learning_resume").semantics { testTagsAsResourceId = true })
         }
-        val zone = CityZones.forCity(Store.location.id, java.time.ZoneId.systemDefault())
-        val hour = java.time.ZonedDateTime.now(zone).hour
-        val morning = hour < 15
-        EditorialTile(stringResource(if (morning) R.string.azkar_morning else R.string.azkar_evening),
-            if (morning) R.drawable.ic_prayer_fajr else R.drawable.ic_prayer_isha, morning,
-            Modifier.fillMaxWidth(), prominent = true) { nav.openAzkar(if (morning) "morning" else "evening") }
-        ReadingRow(stringResource(if (morning) R.string.azkar_evening else R.string.azkar_morning),
-            if (morning) R.drawable.azkar_evening else R.drawable.azkar_morning) {
+        DestinationRow(stringResource(if (morning) R.string.azkar_evening else R.string.azkar_morning),
+            if (morning) R.drawable.ic_prayer_isha else R.drawable.ic_prayer_fajr) {
             nav.openAzkar(if (morning) "evening" else "morning")
         }
-        SectionLabel(stringResource(R.string.knowledge_topics))
-        Column {
-            bank.categories.toList().forEach { (id, name) ->
-                DestinationRow(name, categoryIcon(id), onClick = { nav.startQuiz(id) })
+        Text(stringResource(R.string.knowledge_topics), style = MaterialTheme.typography.headlineSmall)
+        val columns = if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 1 else 2
+        bank.categories.toList().chunked(columns).forEach { pair ->
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                pair.forEach { (id, name) ->
+                    HorizonDestination(name, categoryIcon(id), Modifier.weight(1f), prominent = id == "quran") { nav.startQuiz(id) }
+                }
             }
         }
 

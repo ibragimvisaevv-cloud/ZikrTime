@@ -87,18 +87,28 @@ fun MoreScreen() {
     val current = Lang.saved(context)
     val languageName = Lang.supported.firstOrNull { it.code == current }?.nativeName ?: stringResource(R.string.language_system)
 
-    TabColumn(title = stringResource(R.string.more_title)) {
-        AppearancePicker()
-        SectionLabel(stringResource(R.string.group_practice))
-        Column {
-            listOf(
-                Triple(R.string.qibla_title, R.drawable.ic_qibla, Screen.QIBLA),
-                Triple(R.string.tasbih_title, R.drawable.ic_tasbih, Screen.TASBIH),
-                Triple(R.string.places_title, R.drawable.ic_mosque, Screen.PLACES),
-                Triple(R.string.ramadan_title, R.drawable.ic_prayer_isha, Screen.RAMADAN),
-                Triple(R.string.zakat_title, R.drawable.ic_calc, Screen.ZAKAT),
-            ).forEach { (title, icon, screen) ->
-                DestinationRow(stringResource(title), icon) { nav.open(screen) }
+    HorizonSection(title = stringResource(R.string.more_title),
+        subtitle = stringResource(R.string.app_name) + " · " + BuildConfig.VERSION_NAME,
+        image = R.drawable.horizon_portrait_day, heroHeight = 260.dp,
+        hero = {
+            Spacer(Modifier.height(8.dp))
+            AppearanceSegments()
+        }) {
+        Text(stringResource(R.string.group_practice), style = MaterialTheme.typography.headlineSmall)
+        val destinations = listOf(
+            Triple(R.string.tasbih_title, R.drawable.ic_tasbih, Screen.TASBIH),
+            Triple(R.string.qibla_title, R.drawable.ic_qibla, Screen.QIBLA),
+            Triple(R.string.places_title, R.drawable.ic_mosque, Screen.PLACES),
+            Triple(R.string.ramadan_title, R.drawable.ic_prayer_isha, Screen.RAMADAN),
+            Triple(R.string.zakat_title, R.drawable.ic_calc, Screen.ZAKAT),
+            Triple(R.string.progress_title, R.drawable.ic_nav_knowledge, Screen.PROGRESS),
+        )
+        val columns = if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 1 else 2
+        destinations.chunked(columns).forEach { pair ->
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                pair.forEach { (title, icon, screen) ->
+                    HorizonDestination(stringResource(title), icon, Modifier.weight(1f), prominent = screen == Screen.TASBIH) { nav.open(screen) }
+                }
             }
         }
         SectionLabel(stringResource(R.string.group_application))

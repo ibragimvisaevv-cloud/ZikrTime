@@ -549,6 +549,7 @@ elif mode == 'focus-notifications-denied':
         assert re.search(r'android\.permission\.POST_NOTIFICATIONS:\s+granted=false', permission)
         strings = ET.parse('app/src/main/res/values/strings.xml').getroot()
         warning = next(n.text for n in strings if n.attrib.get('name') == 'perm_notifications_off')
+        tap_control('focus_settings_open')
         locate_control(warning, 'text')
         screenshot('focus-notifications-disabled-warning')
         open_focus_target()

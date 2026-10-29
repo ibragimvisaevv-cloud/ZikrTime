@@ -40,7 +40,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        group: ${{ fromJSON(contains(github.event.head_commit.message, '[actions-only]') && '["actions"]' || '["tour","journeys","accessibility","focus","details","extras","actions"]') }}
+        group: ${{ fromJSON(contains(github.event.head_commit.message, '[composition]') && '["composition","journeys","focus","accessibility"]' || contains(github.event.head_commit.message, '[actions-only]') && '["actions"]' || '["tour","journeys","accessibility","focus","details","extras","actions"]') }}
     permissions:
       contents: read
       actions: read

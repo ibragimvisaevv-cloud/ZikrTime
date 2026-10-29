@@ -72,6 +72,7 @@ if GROUP=='tour':
             if route == 'quiz_cards' and find_control(ui(), 'learning_read') is not None: tap_control('learning_read')
             shot(route+'-'+mode,mapping.get(route,[route]),wait_hierarchy=route!='widgets')
             if route in ['prayer_settings','alarm','focus','more','about','zakat','places','ramadan','shop_seller']:
+                if route == 'focus': tap_control('focus_settings_open')
                 swipe(times=8)
                 shot(route+'-bottom-'+mode,{
                     'prayer_settings':['prayer_adjustments','prayer_notifications','prayer_source'],
@@ -79,6 +80,44 @@ if GROUP=='tour':
                     'more':['donate'],'about':['about'],'zakat':['zakat_prices'],
                     'places':['places_status'],'ramadan':['ramadan_settings'],'shop_seller':['reviews','shop_contacts']}.get(route,[]))
     shell('cmd','uimode','night','no')
+
+elif GROUP=='composition':
+    shell('pm','clear',PKG);start('home');theme('light')
+    put_pref('online_times','boolean','false')
+    for mode in ['light','dark']:
+        theme(mode)
+        for route in ['knowledge','focus','shop','more']:
+            start(route)
+            if route=='shop':time.sleep(16)
+            shot(route+'-'+mode, hierarchy=True)
+            swipe();shot(route+'-scroll-'+mode)
+        start('focus');tap_control('focus_settings_open');shot('focus-settings-'+mode)
+        back();shot('focus-settings-return-'+mode)
+        assert find_control(ui(),'focus_settings_open') is not None
+    theme('light');start('knowledge');proc=record('knowledge-0811-route')
+    tap('azkar_morning');shot('knowledge-reading');back();shot('knowledge-reading-return')
+    tap_control('Коран','text');shot('knowledge-topic');back();shot('knowledge-topic-return')
+    finish_record(proc,'knowledge-0811-route')
+    start('more');tap('tasbih_title');shot('more-tasbih');back();shot('more-tasbih-return')
+    start('focus');tap_control('focus_settings_open');tap_control('focus_accessibility_disclosure');shot('focus-disclosure');back();back()
+    start('shop');time.sleep(12);type_query('ALI');back();shot('shop-search')
+    seller=next((x for x in json.loads(prefs()['shop_catalog'])['sellers'] if 'ALI' in x['name'].upper()),None)
+    assert seller is not None
+    tap_control(seller['name'],'text');shot('shop-company');back();shot('shop-search-return')
+    assert find_control(ui(),'ALI','text') is not None
+    start('shop');type_query('zzzzzzzz');shot('shop-keyboard');back();shot('shop-empty')
+    shell('wm','size','720x1280');shell('wm','density','360');shell('settings','put','system','font_scale','2')
+    for route in ['knowledge','focus','shop','more']:
+        start(route);shot(route+'-200-top');swipe(times=2);shot(route+'-200-scroll')
+    start('focus');tap_control('focus_settings_open');shot('focus-settings-200')
+    back();shell('settings','put','system','font_scale','1');shell('wm','size','1080x1920');shell('wm','density','420')
+    shell('settings','put','global','animator_duration_scale','0')
+    start('knowledge');swipe(times=2);shot('knowledge-reduced-motion')
+    shell('settings','put','global','animator_duration_scale','1')
+    shell('am','start','-S','-W','-n',PKG+'/.MainActivity','--es','qa_screen','more','--ez','qa_hide_scene','true','--ez','qa_onboarded','true')
+    time.sleep(2);shot('more-without-art');swipe();shot('more-without-art-scroll')
+    start('home');shot('home-regression')
+    (OUT/'composition-passed.json').write_text(json.dumps({'themes':['light','dark'],'screens':['knowledge','focus','shop','more'],'reading_and_topic_return':True,'focus_settings_and_disclosure':True,'company_search_return':True,'font_scale':2,'small_width_dp':320,'reduced_motion':True,'without_art':True}))
 
 elif GROUP=='journeys':
     # Real clean first run; preserve a complete recording of the route to Home.
@@ -146,6 +185,7 @@ elif GROUP=='accessibility':
     for route in ['home','knowledge','shop','focus','more','city','prayer_settings','alarm','tasbih','qibla','azkar','quiz_cards','places','ramadan','zakat','progress','about','onboarding_welcome','onboarding_perms']:
         start(route);shot(route+'-large',['accessibility'])
         if route in ['prayer_settings','alarm','tasbih','focus','ramadan','more','onboarding_perms']:
+            if route == 'focus': tap_control('focus_settings_open')
             swipe(times=18);shot(route+'-large-bottom',['accessibility'])
     shell('settings','put','system','font_scale','1.3')
     for route,lang in [('language','az'),('prayer_settings','tr'),('shop_seller','az'),('onboarding_city','tr')]:
@@ -248,7 +288,7 @@ elif GROUP=='details':
         tap('places_rooms');shot('place-filtered',['places']);back();shot('places-back',['navigation'])
     case('places',places)
     def disclosure():
-        start('focus');tap_control('focus_accessibility_disclosure')
+        start('focus');tap_control('focus_settings_open');tap_control('focus_accessibility_disclosure')
         shot('focus-disclosure',['focus_disclosure']);back()
     case('disclosure',disclosure)
     def zakat():
@@ -341,7 +381,7 @@ elif GROUP=='extras':
         assert prefs()['notify']=='false'
         locate_control('+','text');tap_control('+','text');shot('prayer-adjusted',['prayer_adjustments'])
         assert prefs()['adj_FAJR']=='1'
-        put_pref('blocking','boolean','true');start('focus');tap('focus_test_button')
+        put_pref('blocking','boolean','true');start('focus');tap_control('focus_settings_open');tap('focus_test_button')
         locate_control(label('focus_test_running'),'text');shot('focus-test-running',['focus_test'])
         assert int(prefs()['test_lock_until'])>0
     case('prayer-states',prayer_states)
