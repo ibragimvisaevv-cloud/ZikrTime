@@ -33,15 +33,23 @@ jobs:
             app/build/reports/
             app/build/test-results/
   launcher:
+    if: ${{ always() && (needs.build.result == 'success' || contains(github.event.head_commit.message, '[widget-check]')) }}
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
+      - name: Verify reused application inputs
+        if: contains(github.event.head_commit.message, '[widget-check]')
+        run: |
+          git fetch --no-tags --depth=1 origin 6572ab1def4c34502917a2e83cc271257fe609b3
+          git diff --exit-code 6572ab1def4c34502917a2e83cc271257fe609b3 HEAD -- app/ build.gradle.kts settings.gradle.kts gradle.properties gradle/ gradlew tools/i18n/
       - uses: actions/download-artifact@v4
         with:
           name: Android-widgets-build
           path: android-out
+          github-token: ${{ github.token }}
+          run-id: ${{ contains(github.event.head_commit.message, '[widget-check]') && '40960346592' || github.run_id }}
       - name: Prepare upgrade fixture with disposable signing
         env:
           GH_TOKEN: ${{ github.token }}
@@ -52,6 +60,10 @@ jobs:
           SIGNER=$(find "$ANDROID_HOME/build-tools" -name apksigner | sort -V | tail -1)
           "$SIGNER" sign --ks fixtures/test.jks --ks-key-alias test --ks-pass pass:android --key-pass pass:android --out fixtures/previous.apk previous-out/outputs/apk/debug/app-debug.apk
           "$SIGNER" sign --ks fixtures/test.jks --ks-key-alias test --ks-pass pass:android --key-pass pass:android --out fixtures/current.apk android-out/outputs/apk/debug/app-debug.apk
+      - name: Build non-idle UI snapshot fixture
+        run: |
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'platforms;android-35' 'build-tools;35.0.0' >/dev/null
+          bash tools/ci/build_widget_ui.sh
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-widgets.rules

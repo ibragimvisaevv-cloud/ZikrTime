@@ -1,6 +1,12 @@
 """Place real AppWidgets in the stock launcher. Never substitute in-app preview screenshots."""
 exec(compile(open('tools/ci/features_controls.py').read().split('mode = sys.argv[1]')[0], 'helpers', 'exec'))
 OUT.mkdir(exist_ok=True);(OUT/'screens').mkdir(exist_ok=True)
+def ui():
+    result=shell('am','instrument','-w','com.zikrtime.widgetprobe/.DumpInstrumentation')
+    if 'snapshot saved' not in result:raise AssertionError(result)
+    root=ET.fromstring(adb('exec-out','run-as','com.zikrtime.widgetprobe','cat','files/window.xml'))
+    (OUT/'last-ui.xml').write_bytes(ET.tostring(root))
+    return root
 checks=[]
 def check(name,value):
     checks.append({'name':name,'passed':bool(value)})
@@ -37,6 +43,15 @@ def pin(provider):
     if not candidates:candidates=[n for n in root.iter('node') if n.get('resource-id','').endswith('/add_button')]
     check('pin confirmation '+provider,bool(candidates))
     n=candidates[-1];l,t,r,b=map(int,re.findall(r'\d+',n.get('bounds')));shell('input','tap',(l+r)//2,(t+b)//2);time.sleep(3)
+    capture(provider+'-after-confirm')
+    confirm=ui()
+    if any(n.get('text') in ['Your horizon','Ваш горизонт'] for n in confirm.iter('node')):
+        done=next((n.get('text') for n in confirm.iter('node') if n.get('text') in ['Done','Готово']),None)
+        if done is None:
+            # The primary action is below the preview on smaller screens.
+            tap_control('Готово' if any(n.get('text')=='Ваш горизонт' for n in confirm.iter('node')) else 'Done','text')
+        else:tap_control(done,'text')
+        time.sleep(3)
     show_provider(provider);capture(provider+'-default')
     probe('inspect',provider)
     data=json.loads(adb('exec-out','run-as',PKG,'cat','files/widget-probe.json'))
@@ -52,8 +67,13 @@ put_pref('online_times','boolean','false');put_pref('appearance','string','light
 probe('refresh');show_provider('CompactPrayerWidget');capture('A-compact-light')
 for provider,label in [('TimelineWidget','B-timeline'),('NextPrayerWidget','C-square'),('TodayWidget','D-day'),('TasbihWidget','E-tasbih'),('ScreenTimeWidget','F-focus')]:
     pin(provider);show_provider(provider);capture(label+'-light')
-    probe('theme',provider,theme='dark');show_provider(provider);capture(label+'-dark')
-    probe('theme',provider,theme='app')
+    if provider in ['TasbihWidget','ScreenTimeWidget']:
+        put_pref('appearance','string','dark');probe('refresh')
+    else:probe('theme',provider,theme='dark')
+    show_provider(provider);capture(label+'-dark')
+    if provider in ['TasbihWidget','ScreenTimeWidget']:
+        put_pref('appearance','string','light');probe('refresh')
+    else:probe('theme',provider,theme='app')
 probe('refresh');show_provider('CompactPrayerWidget')
 # A real native Chronometer changes while ZikrTime has no foreground Activity.
 rec=subprocess.Popen(['adb','shell','screenrecord','--size','720x1280','--bit-rate','1800000','--time-limit','14','/sdcard/widgets.mp4'])
