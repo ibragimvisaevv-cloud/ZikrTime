@@ -89,7 +89,8 @@ fun MoreScreen() {
 
     HorizonSection(title = stringResource(R.string.more_title),
         subtitle = stringResource(R.string.app_name) + " · " + BuildConfig.VERSION_NAME,
-        image = R.drawable.horizon_portrait_day, heroHeight = 260.dp,
+        image = if (com.zikrtime.app.ui.theme.LocalDarkTheme.current) R.drawable.horizon_portrait_night else R.drawable.horizon_portrait_day,
+        heroHeight = 260.dp,
         hero = {
             Spacer(Modifier.height(8.dp))
             AppearanceSegments()

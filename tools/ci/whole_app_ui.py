@@ -91,9 +91,9 @@ elif GROUP=='composition':
             if route=='shop':time.sleep(16)
             shot(route+'-'+mode, hierarchy=True)
             swipe();shot(route+'-scroll-'+mode)
-        start('focus');tap_control('focus_settings_open');shot('focus-settings-'+mode)
+        start('focus');tap_control('focus_setup' if find_control(ui(),'focus_setup') is not None else 'focus_settings_open');shot('focus-settings-'+mode)
         back();shot('focus-settings-return-'+mode)
-        assert find_control(ui(),'focus_settings_open') is not None
+        assert find_control(ui(),'focus_settings_open') is not None or find_control(ui(),'focus_setup') is not None
     theme('light');start('knowledge');proc=record('knowledge-0811-route')
     tap('azkar_morning');shot('knowledge-reading');back();shot('knowledge-reading-return')
     tap_control('Коран','text');shot('knowledge-topic');back();shot('knowledge-topic-return')
@@ -104,6 +104,8 @@ elif GROUP=='composition':
     seller=next((x for x in json.loads(prefs()['shop_catalog'])['sellers'] if 'ALI' in x['name'].upper()),None)
     assert seller is not None
     tap_control(seller['name'],'text');shot('shop-company');back();shot('shop-search-return')
+    # Return deliberately restores the seller's scroll position; the search field is above it.
+    swipe(up=False,times=3);shot('shop-search-retained')
     assert find_control(ui(),'ALI','text') is not None
     start('shop');type_query('zzzzzzzz');shot('shop-keyboard');back();shot('shop-empty')
     shell('wm','size','720x1280');shell('wm','density','360');shell('settings','put','system','font_scale','2')

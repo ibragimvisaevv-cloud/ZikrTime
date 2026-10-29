@@ -48,6 +48,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -110,15 +111,19 @@ fun FocusScreen() {
             ProgressRing(progress = if (usedMillis == null) 0f else remaining.toFloat() / allowed.coerceAtLeast(1),
                 modifier = Modifier.align(Alignment.CenterHorizontally).size(if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 246.dp else 188.dp),
                 stroke = 3.dp, color = Sand, track = Porcelain.copy(alpha = .24f)) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                if (!hasUsage) Icon(painterResource(R.drawable.ic_nav_focus), null,
+                    tint = Sand, modifier = Modifier.size(52.dp))
+                else Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(if (usedMillis == null) "—" else remaining.toString(), color = Porcelain,
                         style = MaterialTheme.typography.displayLarge, fontSize = 64.sp)
                     Text(stringResource(R.string.unit_min), color = Sand, style = MaterialTheme.typography.titleMedium)
                 }
             }
-            Text(if (usedMillis == null) stringResource(R.string.focus_no_access) else stringResource(R.string.focus_remaining),
+            Text(if (!hasUsage || usedMillis == null) stringResource(R.string.focus_no_access) else stringResource(R.string.focus_remaining),
                 style = MaterialTheme.typography.titleMedium, color = Porcelain,
                 textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+            if (!hasUsage) GoldButton(stringResource(R.string.pause_settings), onClick = { showSettings = true },
+                modifier = Modifier.testTag("focus_setup").semantics { testTagsAsResourceId = true })
         }) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             Column(Modifier.weight(1f)) {
@@ -130,6 +135,9 @@ fun FocusScreen() {
                 Text(if (usedMillis == null) "—" else durationText(used), style = MaterialTheme.typography.headlineSmall)
             }
         }
+        if (Store.bonusMinutes() > 0) Text(
+            stringResource(R.string.focus_limit_bonus, durationText(Store.dailyLimitMinutes.toLong()), Store.bonusMinutes()),
+            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
         SwitchRow(title = stringResource(R.string.pause_title),
             subtitle = stringResource(if (pauseStrict) R.string.pause_strict else R.string.pause_soft),
@@ -149,6 +157,11 @@ fun FocusScreen() {
         }
     }
     if (showSettings) HorizonSheet(stringResource(R.string.pause_settings), { showSettings = false }) {
+        if (!hasUsage) ZCard {
+            PermissionRow(title = stringResource(R.string.perm_usage_title),
+                text = stringResource(R.string.perm_usage_text), granted = false,
+                onGrant = { ScreenTime.openUsageAccessSettings(context) })
+        }
         SectionLabel(stringResource(R.string.pause_title))
         ZCard {
             SwitchRow(
@@ -260,7 +273,7 @@ fun FocusScreen() {
 
         SectionLabel(stringResource(R.string.focus_permissions))
         ZCard {
-            PermissionRow(
+            if (hasUsage) PermissionRow(
                 title = stringResource(R.string.perm_usage_title),
                 text = stringResource(R.string.perm_usage_text),
                 granted = hasUsage,

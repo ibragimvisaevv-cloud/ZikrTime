@@ -41,10 +41,15 @@ fun HorizonSection(title: String, subtitle: String? = null, image: Int, heroHeig
     var heroPx by remember { mutableIntStateOf(0) }
     val status = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
     val compactPx = with(density) { (status + 60.dp).toPx() }
+    val transitionPx = with(density) { 64.dp.toPx() }
     val collapsed by remember(compactPx) { derivedStateOf { heroPx > 0 && scroll.value >= heroPx - compactPx } }
+    val headerProgress by remember(compactPx, transitionPx, motion) { derivedStateOf {
+        if (heroPx == 0) 0f else if (!motion) { if (collapsed) 1f else 0f }
+        else ((scroll.value - (heroPx - compactPx - transitionPx)) / transitionPx).coerceIn(0f, 1f)
+    } }
     SideEffect { (view.context as? android.app.Activity)?.let {
         androidx.core.view.WindowCompat.getInsetsController(it.window, view).apply {
-            isAppearanceLightStatusBars = collapsed && !dark
+            isAppearanceLightStatusBars = headerProgress > .6f && !dark
             isAppearanceLightNavigationBars = !dark
         }
     } }
@@ -81,7 +86,8 @@ fun HorizonSection(title: String, subtitle: String? = null, image: Int, heroHeig
                 Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
             }
         }
-        if (collapsed) Surface(color = scheme.background, modifier = Modifier.fillMaxWidth()) {
+        if (headerProgress > 0f) Surface(color = scheme.background, modifier = Modifier.fillMaxWidth()
+            .graphicsLayer { alpha = headerProgress }) {
             Row(Modifier.padding(top = status).heightIn(min = 60.dp).padding(horizontal = 24.dp),
                 verticalAlignment = Alignment.CenterVertically) {
                 Text(title, style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f),
