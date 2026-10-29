@@ -51,7 +51,10 @@ for mode in no yes; do
   for screen in home azkar tasbih widgets knowledge focus shop shop_product shop_seller places more alarm ramadan zakat qibla progress review; do
     capture "$screen-$mode" "$screen"
     if [ "$screen" = widgets ]; then
-      adb shell input swipe 5 1900 5 600 400
+      # Use the captured display size: the appearance test may resize the emulator.
+      # Starting near the bottom system gesture area opens Overview instead of scrolling.
+      read -r shot_width shot_height < <(python3 -c 'from PIL import Image; import sys; print(*Image.open(sys.argv[1]).size)' "ci-out/screens/$screen-$mode.png")
+      adb shell input swipe "$((shot_width / 2))" "$((shot_height * 3 / 4))" "$((shot_width / 2))" "$((shot_height / 3))" 400
       adb exec-out screencap -p > "ci-out/screens/widgets-lower-$mode.png"
       python3 tools/ci/check_screen.py "ci-out/screens/widgets-lower-$mode.png"
     fi
