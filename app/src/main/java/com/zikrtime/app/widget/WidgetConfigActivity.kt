@@ -34,6 +34,11 @@ class WidgetConfigActivity : ComponentActivity() {
         val id = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
         setResult(Activity.RESULT_CANCELED)
         if (id == AppWidgetManager.INVALID_APPWIDGET_ID || AppWidgetManager.getInstance(this).getAppWidgetInfo(id)?.provider?.packageName != packageName) { finish(); return }
+        val options = AppWidgetManager.getInstance(this).getAppWidgetOptions(id)
+        val previewWidth = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, 160).coerceAtLeast(130)
+        val previewHeight = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT, 184).coerceAtLeast(64)
+        val supportsDates = PrayerWidgetModel.layout(previewWidth, previewHeight, resources.configuration.fontScale) in
+            listOf(PrayerWidgetModel.Layout.SQUARE, PrayerWidgetModel.Layout.DAY)
         enableEdgeToEdge()
         setContent {
             ZikrTheme(natural=true) {
@@ -45,11 +50,13 @@ class WidgetConfigActivity : ComponentActivity() {
                         Text(stringResource(R.string.widget_config_hint),style=MaterialTheme.typography.bodyMedium)
                         // Real native widget, with current data. The setting is committed only by Done.
                         key(theme, dates) {
+                            Box(Modifier.fillMaxWidth(),contentAlignment=androidx.compose.ui.Alignment.Center) {
                             AndroidView(factory={ c -> FrameLayout(c).apply {
                                 val systemDark = c.resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK == android.content.res.Configuration.UI_MODE_NIGHT_YES
                                 val dark = when (if (theme == "app") Store.appearance else theme) { "light" -> false; "dark" -> true; else -> systemDark }
-                                addView(PrayerWidgetRenderer.render(c,id,300 to 190,ZonedDateTime.now(CityZones.forCity(Store.location.id)),dark,dates).apply(c,this))
-                            } },modifier=Modifier.fillMaxWidth().height(190.dp))
+                                addView(PrayerWidgetRenderer.render(c,id,previewWidth to previewHeight,ZonedDateTime.now(CityZones.forCity(Store.location.id)),dark,dates).apply(c,this))
+                            } },modifier=Modifier.widthIn(max=previewWidth.dp).fillMaxWidth().height(previewHeight.dp))
+                            }
                         }
                         listOf("app" to R.string.widget_theme_app, "system" to R.string.appearance_system, "light" to R.string.appearance_light, "dark" to R.string.appearance_dark).forEach { (value,label) ->
                             Surface(onClick={theme=value}, shape=MaterialTheme.shapes.large, color=if(theme==value) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceVariant) {
@@ -59,7 +66,7 @@ class WidgetConfigActivity : ComponentActivity() {
                                 }
                             }
                         }
-                        Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween) {
+                        if (supportsDates) Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween) {
                             Text(stringResource(R.string.widget_hijri_option),Modifier.weight(1f).padding(top=12.dp))
                             Switch(dates,{dates=it})
                         }

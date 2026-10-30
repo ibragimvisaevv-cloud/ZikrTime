@@ -101,10 +101,8 @@ object Widgets {
         views.setContentDescription(R.id.w_reset, res.getString(R.string.action_reset))
         if (context.resources.configuration.fontScale > 1.3f && size.first < 200) views.setViewVisibility(R.id.w_name, android.view.View.GONE)
         runCatching {
-            views.setImageViewBitmap(
-                R.id.w_bg,
-                WidgetArt.horizon(context, size.first, size.second, dark(context), false),
-            )
+            views.setInt(R.id.widget_root, "setBackgroundResource", if (dark(context)) R.drawable.widget_surface_dark else R.drawable.widget_surface_light)
+            views.setImageViewResource(R.id.w_bg, if (dark(context)) R.drawable.widget_horizon_dark else R.drawable.widget_horizon_light)
             views.setImageViewBitmap(R.id.w_beads, WidgetArt.beads(context, minOf(size.first, size.second) - 12, count, target, light = !dark(context)))
         }
         views.setOnClickPendingIntent(R.id.widget_root, tasbihAction(context, TasbihWidget.ACTION_ADD))
@@ -251,8 +249,8 @@ object Widgets {
         }
         runCatching {
             // Sage glass with a quiet horizon; the ring indicates remaining screen time.
-            val bg = WidgetArt.horizon(context, size.first, size.second, dark(context), false)
-            views.setImageViewBitmap(R.id.w_bg, bg)
+            views.setInt(R.id.widget_root, "setBackgroundResource", if (dark(context)) R.drawable.widget_surface_dark else R.drawable.widget_surface_light)
+            views.setImageViewResource(R.id.w_bg, if (dark(context)) R.drawable.widget_horizon_dark else R.drawable.widget_horizon_light)
             views.setViewVisibility(R.id.w_star, android.view.View.GONE)
             val sweep = when {
                 used == null -> intArrayOf(0x66F7F2EA, 0x66F7F2EA)
