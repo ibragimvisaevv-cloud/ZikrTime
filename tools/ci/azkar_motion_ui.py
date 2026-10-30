@@ -16,7 +16,7 @@ def center(identifier):
 start('home');put_pref('online_times','boolean','false');put_pref('appearance','string','light')
 legacy=json.dumps({'last':'morning','morning':{'index':5,'complete':False,'sessionId':'legacy-test'}})
 put_pref('azkar_reading_v1','string',legacy)
-put_pref('total_answered','int',37)
+put_pref('total_answered','int','37')
 start('azkar');shot('azkar-morning-light')
 assert state()['morning']['index']==0
 morning_text=ET.tostring(ui(),encoding='unicode')
