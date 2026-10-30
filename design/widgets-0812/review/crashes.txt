@@ -1,0 +1,38 @@
+--------- beginning of crash
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: FATAL EXCEPTION: main
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: Process: com.zikrtime.app, PID: 4524
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: java.lang.RuntimeException: Unable to start activity ComponentInfo{com.zikrtime.app/com.zikrtime.app.widget.WidgetProbeActivity}: java.lang.IllegalStateException: Calling application must have a foreground activity or a foreground service
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:4048)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:4235)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:112)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at android.app.servertransaction.TransactionExecutor.executeNonLifecycleItem(TransactionExecutor.java:174)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at android.app.servertransaction.TransactionExecutor.executeTransactionItems(TransactionExecutor.java:109)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:81)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2636)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:107)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:232)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:317)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:8705)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: Caused by: java.lang.IllegalStateException: Calling application must have a foreground activity or a foreground service
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3250)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at android.os.Parcel.createException(Parcel.java:3226)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at android.os.Parcel.readException(Parcel.java:3209)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at android.os.Parcel.readException(Parcel.java:3151)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at com.android.internal.appwidget.IAppWidgetService$Stub$Proxy.requestPinAppWidget(IAppWidgetService.java:1226)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at android.appwidget.AppWidgetManager.requestPinAppWidget(AppWidgetManager.java:1404)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at com.zikrtime.app.widget.WidgetProbeActivity.onCreate(WidgetProbeActivity.kt:41)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at android.app.Activity.performCreate(Activity.java:9002)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at android.app.Activity.performCreate(Activity.java:8980)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1526)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:4030)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	... 13 more
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: Caused by: android.os.RemoteException: Remote stack trace:
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at com.android.internal.util.Preconditions.checkState(Preconditions.java:222)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at com.android.server.pm.ShortcutService.requestPinItem(ShortcutService.java:2354)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at com.android.server.pm.ShortcutService.requestPinItem(ShortcutService.java:2336)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at com.android.server.pm.ShortcutService.-$$Nest$mrequestPinItem(ShortcutService.java:0)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 	at com.android.server.pm.ShortcutService$LocalService.requestPinAppWidget(ShortcutService.java:3704)
+10-30 08:40:35.631  4524  4524 E AndroidRuntime: 
