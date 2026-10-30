@@ -84,6 +84,7 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
 
     private val nav = Nav()
+    private var qaHandled = false
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(Lang.wrap(newBase))
@@ -95,7 +96,13 @@ class MainActivity : ComponentActivity() {
         nav.restore(savedInstanceState)
         // Названия каналов уведомлений — на текущем языке.
         PrayerAlarms.createChannels(this)
-        if (BuildConfig.DEBUG && savedInstanceState == null && QaHooks.handle(this, intent, nav)) return
+        qaHandled = savedInstanceState?.getBoolean("qa_handled") ?: false
+        if (BuildConfig.DEBUG && !qaHandled) {
+            // Language selection recreates before applying the requested QA route.
+            // Rotation after that must preserve the reader instead of reopening its index.
+            if (QaHooks.handle(this, intent, nav)) return
+            qaHandled = true
+        }
         handleOpen(intent)
         enableEdgeToEdge()
         val showSplash = savedInstanceState == null && com.zikrtime.app.ui.LiveFlags.splash &&
@@ -148,6 +155,7 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
+        outState.putBoolean("qa_handled", qaHandled)
         nav.save(outState)
         super.onSaveInstanceState(outState)
     }
