@@ -42,14 +42,14 @@ jobs:
       - name: Verify reused application inputs
         if: contains(github.event.head_commit.message, '[widget-check]')
         run: |
-          git fetch --no-tags --depth=1 origin 6572ab1def4c34502917a2e83cc271257fe609b3
-          git diff --exit-code 6572ab1def4c34502917a2e83cc271257fe609b3 HEAD -- app/ build.gradle.kts settings.gradle.kts gradle.properties gradle/ gradlew tools/i18n/
+          git fetch --no-tags --depth=1 origin e06eeac24b1c806d2242fcdbecc56f1d63a25411
+          git diff --exit-code e06eeac24b1c806d2242fcdbecc56f1d63a25411 HEAD -- app/ build.gradle.kts settings.gradle.kts gradle.properties gradle/ gradlew tools/i18n/
       - uses: actions/download-artifact@v4
         with:
           name: Android-widgets-build
           path: android-out
           github-token: ${{ github.token }}
-          run-id: ${{ contains(github.event.head_commit.message, '[widget-check]') && '40960346592' || github.run_id }}
+          run-id: ${{ contains(github.event.head_commit.message, '[widget-check]') && '41024626556' || github.run_id }}
       - name: Prepare upgrade fixture with disposable signing
         env:
           GH_TOKEN: ${{ github.token }}

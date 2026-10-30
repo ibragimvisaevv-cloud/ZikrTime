@@ -28,6 +28,8 @@ def show_provider(provider):
     # HOME preserves the last workspace page. Move to the first page before scanning.
     for _ in range(6):
         shell('input','swipe',130,1000,950,1000,220);time.sleep(.25)
+    if any('googlequicksearchbox' in n.get('package','') for n in ui().iter('node')):
+        shell('input','keyevent','KEYCODE_BACK');time.sleep(1)
     marker={'CompactPrayerWidget':'2×1','TimelineWidget':'4×1','NextPrayerWidget':'2×2','TodayWidget':'4×2'}.get(provider)
     for page in range(6):
         root=ui()
