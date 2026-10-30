@@ -190,7 +190,7 @@ put_pref('online_times', 'boolean', 'false')
 put_pref('appearance', 'string', 'light')
 
 
-if mode in ('all', 'layout'):
+if mode == 'layout':
     shell('svc', 'wifi', 'disable')
     shell('svc', 'data', 'disable')
     start('quran')

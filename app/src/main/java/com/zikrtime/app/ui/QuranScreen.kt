@@ -162,7 +162,7 @@ private fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: Fl
     var bookmarks by remember { mutableStateOf(progress.bookmarks(book)) }
     var jump by rememberSaveable { mutableStateOf(firstAyah.toString()) }
     var invalid by rememberSaveable { mutableStateOf(false) }
-    LaunchedEffect(list, surahId, wholeSurah) {
+    LaunchedEffect(list, surahId, wholeSurah, blocks) {
         snapshotFlow { list.isScrollInProgress to list.firstVisibleItemIndex }.distinctUntilChanged().collect { (scrolling, index) ->
             if (scrolling) {
                 val number = if (wholeSurah) blocks[index.coerceIn(blocks.indices)].firstAyah else index + 1
