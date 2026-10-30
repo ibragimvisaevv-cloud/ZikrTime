@@ -18,6 +18,8 @@
 Владелец назначается командой /owner <код>; код печатается при развёртывании (GitHub Actions).
 Обновления от Telegram идут по одному (setWebhook max_connections=1), поэтому база — один файл.
 """
+from feedback import FeedbackMixin
+
 import base64
 import hashlib
 import html
@@ -831,7 +833,7 @@ class PromoMixin:
         self.send(uid, "✅ Ссылка для оплаты продвижения: " + (url or "как у кнопки «Поддержать проект»"))
 
 
-class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
+class Bot(FeedbackMixin, PlacesMixin, ReviewsMixin, PromoMixin):
     def __init__(self, storage, tg, token=None, data=None):
         self.st = storage
         # Закрытое хранилище для базы; в тестах — то же, что и публичное
@@ -1018,6 +1020,8 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
             arg = text[6:].strip()
             u["state"] = None
             self.dirty = True
+            if arg == "feedback" or arg.startswith("feedback_"):
+                return self.feedback_home(uid, arg[9:])
             if arg.startswith("inv_"):
                 return self.claim_invite(uid, arg[4:])
             if arg == "add":
@@ -1037,6 +1041,8 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
             return self.set_donate(uid, text[7:])
         if text.startswith("/admin ") and uid == self.db["owner"]:
             return self.add_admin(uid, text[7:].strip())
+        if text == "/feedback":
+            return self.feedback_home(uid)
         if text == "/help":
             return self.help(uid)
         if text == "/reviews" and self.is_admin(uid):
@@ -1076,7 +1082,11 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
             rv = len(self.db.get("reviews_pending", {}))
             pr = sum(1 for r in self.db.get("promo_requests", {}).values() if r["status"] == "claimed")
             rows.append([btn(f"⭐ Отзывы ({rv})", "rv_pending"), btn(f"💰 Продвижение ({pr})", "pr_pending")])
-        rows.insert(0, [{"text": "📱 Открыть кабинет", "web_app": {"url": MINIAPP_URL}}])
+        rows.insert(0, [btn("💬 Предложения и ошибки", "fb:home")])
+        if self.feedback_owner(uid):
+            count = sum(t["status"] not in ("closed", "rejected") for t in self.db.get("feedback_tickets", {}).values())
+            rows.insert(1, [btn(f"📥 Обращения ({count})", "fb:list:inbox:0")])
+        rows.append([{"text": "📱 Открыть кабинет", "web_app": {"url": MINIAPP_URL}}])
         rows.append([btn("❓ Как это работает", "help")])
         if mine:
             text = "Ваши компании в магазине <b>Зикр-тайм</b>. Выберите, что изменить:"
@@ -1212,6 +1222,8 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
     def on_input(self, uid, u, st, m):
         text = (m.get("text") or "").strip()
         flow = st["flow"]
+        if flow in ("feedback", "feedback_reply"):
+            return self.feedback_input(uid, st, m)
         if flow == "add":
             return self.add_input(uid, st, m, text)
         if flow == "place":
@@ -1592,6 +1604,8 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
         if frm.get("username") and u.get("username") != frm["username"]:
             u["username"] = frm["username"]
             self.dirty = True
+        if data.startswith("fb:"):
+            return self.feedback_callback(uid, data)
         parts = data.split(":")
         act = parts[0]
         st = u.get("state") or {}
