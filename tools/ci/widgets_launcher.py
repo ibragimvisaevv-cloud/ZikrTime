@@ -2,7 +2,8 @@
 exec(compile(open('tools/ci/features_controls.py').read().split('mode = sys.argv[1]')[0], 'helpers', 'exec'))
 OUT.mkdir(exist_ok=True);(OUT/'screens').mkdir(exist_ok=True)
 import os
-remaining_only=os.environ.get('WIDGET_CHECK_SCOPE')=='remaining'
+scope=os.environ.get('WIDGET_CHECK_SCOPE','full')
+remaining_only=scope in ['remaining','lifecycle']
 def ui():
     result=shell('am','instrument','-w','com.zikrtime.widgetprobe/.DumpInstrumentation')
     if 'snapshot saved' not in result:raise AssertionError(result)
@@ -80,11 +81,12 @@ shell('am','start','-S','-W','-n',PKG+'/.MainActivity','--es','qa_screen','home'
 time.sleep(3)
 put_pref('online_times','boolean','false');put_pref('appearance','string','light')
 probe('refresh');show_provider('CompactPrayerWidget');capture('A-compact-light')
-probe('theme','CompactPrayerWidget',theme='dark');show_provider('CompactPrayerWidget');capture('A-compact-dark')
-probe('theme','CompactPrayerWidget',theme='app')
+if scope!='lifecycle':
+    probe('theme','CompactPrayerWidget',theme='dark');show_provider('CompactPrayerWidget');capture('A-compact-dark')
+    probe('theme','CompactPrayerWidget',theme='app')
 for provider,label in [('TimelineWidget','B-timeline'),('NextPrayerWidget','C-square'),('TodayWidget','D-day'),('TasbihWidget','E-tasbih'),('ScreenTimeWidget','F-focus')]:
     pin(provider);show_provider(provider);capture(label+'-light')
-    if remaining_only and provider not in ['TasbihWidget','ScreenTimeWidget']:continue
+    if scope=='lifecycle' or (remaining_only and provider not in ['TasbihWidget','ScreenTimeWidget']):continue
     if provider in ['TasbihWidget','ScreenTimeWidget']:
         put_pref('appearance','string','dark');probe('refresh')
     else:probe('theme',provider,theme='dark')
@@ -94,9 +96,10 @@ for provider,label in [('TimelineWidget','B-timeline'),('NextPrayerWidget','C-sq
     else:probe('theme',provider,theme='app')
 probe('refresh');show_provider('CompactPrayerWidget')
 # A real native Chronometer changes while ZikrTime has no foreground Activity.
-rec=subprocess.Popen(['adb','shell','screenrecord','--size','720x1280','--bit-rate','1800000','--time-limit','14','/sdcard/widgets.mp4'])
-time.sleep(14);rec.wait(timeout=15)
-subprocess.run(['adb','pull','/sdcard/widgets.mp4',str(OUT/'widgets.mp4')],check=True)
+if scope!='lifecycle':
+    rec=subprocess.Popen(['adb','shell','screenrecord','--size','720x1280','--bit-rate','1800000','--time-limit','14','/sdcard/widgets.mp4'])
+    time.sleep(14);rec.wait(timeout=15)
+    subprocess.run(['adb','pull','/sdcard/widgets.mp4',str(OUT/'widgets.mp4')],check=True)
 (OUT/'completed.txt').write_text('Launcher placement and themes completed. Additional scenarios require their own evidence.\n')
 
 if remaining_only:
@@ -105,6 +108,7 @@ if remaining_only:
     content=open('tools/ci/widgets_events.py').read()
     exec(compile(content.split('state=data();ids=')[0], 'event_helpers', 'exec'))
     n=rendered(ids['TodayWidget'])
-    exec(compile(content[content.index('# Tap opens prayer tab'):], 'remaining_events', 'exec'))
+    start='# Real launcher resize gesture' if scope=='lifecycle' else '# Tap opens prayer tab'
+    exec(compile(content[content.index(start):], 'remaining_events', 'exec'))
 else:
     exec(compile(open('tools/ci/widgets_events.py').read(),'widget_events','exec'))

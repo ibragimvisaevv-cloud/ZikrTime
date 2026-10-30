@@ -93,17 +93,27 @@ tap_control('w_reset');check('tasbih reset preserved',int(prefs().get('tasbih_co
 show_provider('ScreenTimeWidget');tap_control('w_value');capture('widget-opens-focus')
 shell('input','keyevent','KEYCODE_HOME')
 # Real launcher resize gesture, with before/after options from the bound provider.
-root=show_provider('CompactPrayerWidget')
-node=next(n for n in root.iter('node') if '2×1' in n.get('content-desc',''))
-l,t,r,b=map(int,re.findall(r'\d+',node.get('bounds')))
 width_before=next(w['minWidth'] for w in data()['widgets'] if w['provider']=='CompactPrayerWidget')
-show_provider('CompactPrayerWidget')
-shell('input','swipe',(l+r)//2,(t+b)//2,(l+r)//2,(t+b)//2,1000);time.sleep(1);capture('resize-handles')
-shell('input','swipe',r,(t+b)//2,1010,(t+b)//2,1000);time.sleep(1)
-shell('input','tap',540,150);time.sleep(1);capture('resized-wide')
-width_after=next(w['minWidth'] for w in data()['widgets'] if w['provider']=='CompactPrayerWidget')
-check('launcher resize changes bound widget width',width_after>width_before+40)
-check('resized compact reflows to horizontal composition',rendered(ids['CompactPrayerWidget'])['layout']=='WIDE')
+resize_states=[]
+for attempt,offset in enumerate([12,-12,4]):
+    root=show_provider('CompactPrayerWidget')
+    node=next(node for node in root.iter('node') if '2×1' in node.get('content-desc',''))
+    l,t,r,b=map(int,re.findall(r'\d+',node.get('bounds')))
+    shell('input','swipe',(l+r)//2,(t+b)//2,(l+r)//2,(t+b)//2,1000);time.sleep(1)
+    handles=ui();(OUT/f'resize-ui-{attempt}.xml').write_bytes(ET.tostring(handles))
+    capture('resize-handles-'+str(attempt))
+    # Pixel Launcher draws its handle just outside the widget content bounds.
+    shell('input','swipe',r+offset,(t+b)//2,824,(t+b)//2,1200);time.sleep(2)
+    capture('resize-drag-'+str(attempt))
+    shell('input','tap',950,1250);time.sleep(1);capture('resized-wide-'+str(attempt))
+    resized=data();resize_states.append(resized)
+    width_after=next(w['minWidth'] for w in resized['widgets'] if w['provider']=='CompactPrayerWidget')
+    if width_after>width_before+40:break
+(OUT/'resize-states.json').write_text(json.dumps(resize_states,indent=2))
+# Continue independent upgrade/reboot checks even if the launcher gesture failed.
+checks.extend([{'name':'launcher resize changes bound widget width','passed':width_after>width_before+40},
+               {'name':'resized compact reflows to horizontal composition','passed':rendered(ids['CompactPrayerWidget'])['layout']=='WIDE'}])
+(OUT/'widget-checks.json').write_text(json.dumps(checks,indent=2))
 
 # Update already placed legacy providers with identical disposable signing key.
 state=data();legacy={p:ids[p] for p in ['NextPrayerWidget','TodayWidget','TasbihWidget','ScreenTimeWidget']};saved=prefs()
@@ -124,4 +134,5 @@ while shell('getprop','sys.boot_completed').strip()!='1':
 shell('input','keyevent','KEYCODE_WAKEUP');shell('wm','dismiss-keyguard');time.sleep(8)
 capture('widgets-after-reboot')
 check('reboot refreshes existing schedule widget',parse_time(rendered(ids['TodayWidget'])['now'])>=parse_time(n['now']))
-(OUT/'events-completed.txt').write_text('Boundary, midnight, settings, upgrade and reboot checks completed on disposable profile.\n')
+(OUT/'events-completed.txt').write_text('Executed scope: '+scope+'. See widget-checks.json for individual outcomes.\n')
+assert all(item['passed'] for item in checks),'One or more launcher checks failed; see widget-checks.json'
