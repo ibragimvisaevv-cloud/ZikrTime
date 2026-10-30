@@ -2,7 +2,7 @@
 
 Реальные снимки Android 15 / API 35, stock launcher, 1080×1920, 420 dpi.
 
-Сборка: f8faca1c89b653860898abca00ed3ec2e87edc0c; [прогон 40958497215](https://github.com/ibragimvisaevv-cloud/ZikrTime/actions/runs/40958497215), статус: success.
+Сборка: 8e7963002df5b14436c70e2d3f7bea01c22fb39f; [прогон 40962100669](https://github.com/ibragimvisaevv-cloud/ZikrTime/actions/runs/40962100669), статус: failure.
 
 ![Светлые](launcher-light.jpg)
 
