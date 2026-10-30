@@ -49,7 +49,10 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
       - name: Quran and adhan journeys on Android 15
+        timeout-minutes: 18
         uses: reactivecircus/android-emulator-runner@v2
+        env:
+          QURAN_QA_MODE: ${{ contains(github.event.head_commit.message, '[quran-tail]') && 'navigation-adhan' || 'all' }}
         with:
           api-level: 35
           target: google_apis
