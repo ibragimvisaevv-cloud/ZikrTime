@@ -1,6 +1,8 @@
 """Place real AppWidgets in the stock launcher. Never substitute in-app preview screenshots."""
 exec(compile(open('tools/ci/features_controls.py').read().split('mode = sys.argv[1]')[0], 'helpers', 'exec'))
 OUT.mkdir(exist_ok=True);(OUT/'screens').mkdir(exist_ok=True)
+import os
+remaining_only=os.environ.get('WIDGET_CHECK_SCOPE')=='remaining'
 def ui():
     result=shell('am','instrument','-w','com.zikrtime.widgetprobe/.DumpInstrumentation')
     if 'snapshot saved' not in result:raise AssertionError(result)
@@ -14,7 +16,7 @@ def check(name,value):
     assert value,name
 
 def probe(action,provider='CompactPrayerWidget',**kwargs):
-    args=['am','start','-n',PKG+'/.widget.WidgetProbeActivity','--es','action',action,'--es','provider',provider]
+    args=['am','start','-W','-n',PKG+'/.widget.WidgetProbeActivity','--es','action',action,'--es','provider',provider]
     for k,v in kwargs.items():args+=['--es',k,str(v)]
     shell(*args);time.sleep(2)
 
@@ -82,6 +84,7 @@ probe('theme','CompactPrayerWidget',theme='dark');show_provider('CompactPrayerWi
 probe('theme','CompactPrayerWidget',theme='app')
 for provider,label in [('TimelineWidget','B-timeline'),('NextPrayerWidget','C-square'),('TodayWidget','D-day'),('TasbihWidget','E-tasbih'),('ScreenTimeWidget','F-focus')]:
     pin(provider);show_provider(provider);capture(label+'-light')
+    if remaining_only and provider not in ['TasbihWidget','ScreenTimeWidget']:continue
     if provider in ['TasbihWidget','ScreenTimeWidget']:
         put_pref('appearance','string','dark');probe('refresh')
     else:probe('theme',provider,theme='dark')
@@ -96,4 +99,12 @@ time.sleep(14);rec.wait(timeout=15)
 subprocess.run(['adb','pull','/sdcard/widgets.mp4',str(OUT/'widgets.mp4')],check=True)
 (OUT/'completed.txt').write_text('Launcher placement and themes completed. Additional scenarios require their own evidence.\n')
 
-exec(compile(open('tools/ci/widgets_events.py').read(),'widget_events','exec'))
+if remaining_only:
+    probe('inspect');state=json.loads(adb('exec-out','run-as',PKG,'cat','files/widget-probe.json'))
+    ids={w['provider']:w['id'] for w in state['widgets']}
+    content=open('tools/ci/widgets_events.py').read()
+    exec(compile(content.split('state=data();ids=')[0], 'event_helpers', 'exec'))
+    n=rendered(ids['TodayWidget'])
+    exec(compile(content[content.index('# Tap opens prayer tab'):], 'remaining_events', 'exec'))
+else:
+    exec(compile(open('tools/ci/widgets_events.py').read(),'widget_events','exec'))
