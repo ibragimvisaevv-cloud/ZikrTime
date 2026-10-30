@@ -3,8 +3,8 @@ import json,subprocess,shutil,io,zipfile
 from pathlib import Path
 from PIL import Image,ImageDraw,ImageFont
 import cairosvg
-RUN=41025914614
-SHA="b1873848de9c09b226c30ed5a7ef2090746c2f99"
+RUN=41027601199
+SHA="c38e8045865a49df67c2cc0511a8ae6e299f4cf9"
 repo="ibragimvisaevv-cloud/ZikrTime"
 run=json.loads(subprocess.check_output(["gh","api",f"repos/{repo}/actions/runs/{RUN}"],text=True))
 assert run["head_sha"]==SHA
@@ -88,4 +88,8 @@ for concept in json.loads((icons/"concepts.json").read_text()):
 with zipfile.ZipFile(out/"ZikrTime-icon-concepts.zip","w",zipfile.ZIP_DEFLATED) as z:
     for p in icons.rglob("*"):
         if p.is_file():z.write(p,p.relative_to(icons))
+with zipfile.ZipFile(out/"ZikrTime-approved-dome-icon.zip","w",zipfile.ZIP_DEFLATED) as z:
+    for p in (icons/"02-dome").iterdir():
+        if p.is_file():z.write(p,p.name)
+    z.writestr("README.txt","Approved by the user: Купол и горизонт, 2026-10-30.\nAndroid application layers use these VectorDrawable sources. SVG files remain editable.\n")
 (out/"README.md").write_text(f"# Виджеты ZikrTime — проверка\n\nРеальные снимки Android 15 / API 35, stock launcher, 1080×1920, 420 dpi.\n\nСборка: {SHA}; [прогон {RUN}](https://github.com/{repo}/actions/runs/{RUN}), статус: {run['conclusion']}.\n\n![Светлые](launcher-light.jpg)\n\n![Тёмные](launcher-dark.jpg)\n\n[Запись](widgets.mp4). [Иконки и исходники](ZikrTime-icon-concepts.zip).\n\nЭто этап проверки. Результаты дополнительных сценариев будут отмечены отдельно. Утверждённый «Купол и горизонт» внедрён в APK. Концептуальные макеты находятся в ../icons; фотографии рабочего стола выше получены в эмуляторе.\n")
