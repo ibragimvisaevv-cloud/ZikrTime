@@ -84,12 +84,15 @@ fun KnowledgeScreen() {
             if (morning) R.drawable.ic_prayer_isha else R.drawable.ic_prayer_fajr) {
             nav.openAzkar(if (morning) "evening" else "morning")
         }
+        HorizonDestination(stringResource(R.string.quran_title), R.drawable.ic_nav_knowledge,
+            Modifier.fillMaxWidth().testTag("quran_open"), prominent = true) { nav.open(Screen.QURAN) }
         Text(stringResource(R.string.knowledge_topics), style = MaterialTheme.typography.headlineSmall)
         val columns = if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 1 else 2
         bank.categories.toList().chunked(columns).forEach { pair ->
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 pair.forEach { (id, name) ->
-                    HorizonDestination(name, categoryIcon(id), Modifier.weight(1f), prominent = id == "quran") { nav.startQuiz(id) }
+                    HorizonDestination(if (id == "quran") stringResource(R.string.quran_quiz) else name,
+                        categoryIcon(id), Modifier.weight(1f)) { nav.startQuiz(id) }
                 }
             }
         }

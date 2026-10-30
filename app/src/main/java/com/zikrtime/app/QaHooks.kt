@@ -75,6 +75,7 @@ object QaHooks {
             "review" -> nav.startReview()
             "progress" -> nav.open(Screen.PROGRESS)
             "azkar" -> nav.openAzkar("morning")
+            "quran" -> nav.open(Screen.QURAN)
             "quiz" -> nav.startQuiz(null)
             "quiz_cards" -> {
                 nav.quizStartWithCards = true

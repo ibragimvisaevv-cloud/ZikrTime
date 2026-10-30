@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="adhan_name_original">Adam-synagda</string>
+    <string name="adhan_name_andrewler">Andrewler</string>
+    <string name="adhan_name_aaqib">Акиб Азиз</string>
+    <string name="adhan_name_madinah">Медина · Мечеть Пророка</string>
+    <string name="adhan_name_makkah">Мекка · Аль-Харам</string>
+    <string name="adhan_name_fajr">Бесим Аземи · Фаджр</string>
+    <string name="adhan_fajr_only">Для будильника фаджра</string>
+    <string name="adhan_recording_source">Источник записи</string>
+    <string name="adhan_open_recording_source">Открыть оригинальную запись</string>
+    <string name="adhan_open_license">Лицензия</string>
+    <string name="adhan_close_source">Закрыть</string>
+    <string name="adhan_recording_processing">Запись подготовлена для приложения: выровнена громкость, звук преобразован в Ogg Vorbis. Указаны автор записи или источник; имя исполнителя приведено, только если оно есть у источника.</string>
+    <string name="adhan_link_failed">Не удалось открыть ссылку.</string>
+    <string name="adhan_stop_preview">Остановить прослушивание</string>
+    <string name="adhan_preview_failed">Не удалось воспроизвести запись. Попробуйте другой азан.</string>
+    <string name="adhan_preview_volume">Громкость прослушивания регулируется кнопками телефона.</string>
+</resources>

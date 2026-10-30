@@ -44,10 +44,10 @@ object PrayerAlarms {
                 .apply { description = res.getString(R.string.channel_prayer_desc) },
         )
         // Отдельный канал на каждую запись азана (звук канала нельзя поменять после создания).
-        for (voice in AdhanSound.voices) {
+        for (voice in AdhanSound.eligibleVoices(forFajrAlarm = false)) {
             val uri = AdhanSound.uri(context, voice.id) ?: continue
             nm.createNotificationChannel(
-                NotificationChannel(adhanChannel(voice.id), res.getString(R.string.channel_prayer_adhan) + " · " + res.getString(R.string.adhan_voice, voice.number), NotificationManager.IMPORTANCE_HIGH).apply {
+                NotificationChannel(adhanChannel(voice.id), res.getString(R.string.channel_prayer_adhan) + " · " + res.getString(voice.titleRes), NotificationManager.IMPORTANCE_HIGH).apply {
                     description = res.getString(R.string.channel_prayer_desc)
                     setSound(
                         uri,
@@ -141,7 +141,7 @@ object PrayerAlarms {
                 append(res.getString(R.string.notify_prayer_lock, Store.prayerLockMinutes))
             }
         }
-        val voice = Store.notificationVoice
+        val voice = AdhanSound.notificationVoice(Store.notificationVoice).id
         val channel = if (Store.notificationAdhan && AdhanSound.available(context, voice)) adhanChannel(voice) else CHANNEL_ID
         val notification = NotificationCompat.Builder(context, channel)
             .setSmallIcon(R.drawable.ic_notification)

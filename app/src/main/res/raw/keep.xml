@@ -1,3 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Азан загружается по имени (AdhanSound), поэтому явно запрещаем его удалять при сжатии ресурсов -->
-<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@raw/adhan,@raw/adhan_2,@raw/adhan_3" />
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@raw/adhan,@raw/adhan_2,@raw/adhan_3,@raw/adhan_madinah,@raw/adhan_makkah,@raw/adhan_fajr" />

@@ -97,6 +97,7 @@ fun MoreScreen() {
         }) {
         Text(stringResource(R.string.group_practice), style = MaterialTheme.typography.headlineSmall)
         val destinations = listOf(
+            Triple(R.string.quran_title, R.drawable.ic_nav_knowledge, Screen.QURAN),
             Triple(R.string.tasbih_title, R.drawable.ic_tasbih, Screen.TASBIH),
             Triple(R.string.qibla_title, R.drawable.ic_qibla, Screen.QIBLA),
             Triple(R.string.places_title, R.drawable.ic_mosque, Screen.PLACES),

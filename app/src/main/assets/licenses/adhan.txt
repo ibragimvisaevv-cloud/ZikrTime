@@ -8,3 +8,38 @@ Adhan recordings (Wikimedia Commons). Processing: silence trimmed, loudness norm
    https://commons.wikimedia.org/wiki/File:The_Adhan_-_Muslim_Call_to_Prayer_-_Aaqib_Azeez.mp3
 
 CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/ — the processed versions 2 and 3 are shared under the same license.
+
+Added recordings (Android, complete audio; no video is packaged):
+
+4. adhan_madinah.ogg
+   Title: "33937 ejaz215 call-to-prayer-from-the-prophet-s-mo"
+   Recording credited to ejaz215; the source does not reliably identify the muezzin.
+   Location: the Prophet's Mosque, Madinah.
+   https://commons.wikimedia.org/wiki/File:33937_ejaz215_call-to-prayer-from-the-prophet-s-mo.ogg
+   Original source linked by Commons: https://freesound.org/people/ejaz215/sounds/33937/
+   License: CC BY 3.0, https://creativecommons.org/licenses/by/3.0/
+   Original SHA-1: 4aa432b9e44804e7d72af4429bd743aa5fa9e3a4
+
+5. adhan_makkah.ogg
+   Title: "Adhan, Great Mosque of Mecca - Jan 21, 2013"
+   Author of recording: Seyfula Islam. Muezzin not identified by the source.
+   https://commons.wikimedia.org/wiki/File:Adhan,_Great_Mosque_of_Mecca_-_Jan_21,_2013.webm
+   License: CC BY 3.0, https://creativecommons.org/licenses/by/3.0/
+   Commons records a license review on 19 July 2018.
+   Original SHA-1: 818becd553dde887095641bd1c86549db44060bc
+
+6. adhan_fajr.ogg
+   Title: "Eid al-Fitr Fajr azan at Malmö Mosque - 19 August 2012"
+   Author: Islamic Center Malmö. Muezzin: Besim Azemi.
+   https://commons.wikimedia.org/wiki/File:Eid_al-Fitr_Fajr_azan_at_Malm%C3%B6_Mosque_-_19_August_2012.webm
+   License: CC BY 3.0, https://creativecommons.org/licenses/by/3.0/
+   Commons records a YouTube license review on 12 February 2020.
+   Original SHA-1: bc75d5cee271efb67f03d3f35474a9362fce103f
+   Offered only for the Fajr alarm, because the source is a Fajr call.
+
+Changes to recordings 4–6: extracted the complete audio track, converted to
+mono 44.1 kHz Ogg Vorbis, and adjusted loudness in two passes to -16 LUFS
+with a -2 dBTP target. No words or pauses removed and no pitch/time changes.
+The app's media volume follows the device setting. No endorsement is implied.
+Reproduction script and byte hashes: tools/audio/download_adhan.py and
+tools/audio/adhan_manifest.json in the source repository.
