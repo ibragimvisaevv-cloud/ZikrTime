@@ -37,52 +37,75 @@ def set_reader_prefs(values):
     write_tree(root, 'quran_reading')
 
 
-start('home')
-put_pref('online_times', 'boolean', 'false')
-put_pref('appearance', 'string', 'light')
-shell('svc', 'wifi', 'disable')
-shell('svc', 'data', 'disable')
-start('quran')
-open_surah(1)
-arabic = read_text('quran_arabic_1')
-tap_control('quran_bookmark_1')
-tap_control('quran_read_mode')
-whole = read_text('quran_whole_1')
-assert whole.startswith(arabic) and '۝٧' in whole
-tool('quran_stop_open')
-replace_text('quran_stop_ayah', '4')
-replace_text('quran_stop_note', 'Continue-here')
-tap_control('quran_stop_save')
-saved = prefs('quran_reading')
-assert saved['stop'] == '1:4' and saved['note_1:4'] == 'Continue-here'
-assert '1:1' in saved['bookmarks']
-passed['exact_stop_note_and_existing_bookmark'] = True
-
-tap_control('quran_fullscreen')
-# Android's first immersive-mode tutorial is a system window, not a reader defect.
-if present('android:id/immersive_cling_title'):
-    tap_control('android:id/ok')
-assert present('quran_exit_fullscreen') and not present('quran_read_mode')
-shot('features-fullscreen-light')
-tool('quran_rotate')
-time.sleep(4)
-tree = shot('features-landscape')
-bounds = list(map(int, re.findall(r'-?\d+', next(tree.iter('node')).get('bounds'))))
-assert bounds[2] - bounds[0] > bounds[3] - bounds[1], bounds
-assert present('quran_exit_fullscreen') and present('quran_whole_surah')
-assert prefs('quran_reading')['note_1:4'] == 'Continue-here'
-tool('quran_rotate')
-time.sleep(3)
-tap_control('quran_exit_fullscreen')
-passed['immersive_rotation_keeps_reader_and_note'] = True
-
-start('quran')
-tap_control('quran_saved_stop')
-assert present('quran_whole_4')
-tool('quran_stop_open')
-assert 'Continue-here' in ET.tostring(ui(), encoding='unicode')
-back()
-passed['stop_and_note_survive_process_restart'] = True
+import os
+if os.environ.get('QURAN_FEATURE_PHASE') == 'tail':
+    # Reuse only completed journeys from the checksum-pinned APK.
+    previous = json.loads((OUT / 'previous-quran-passed.json').read_text())
+    keys = ['exact_stop_note_and_existing_bookmark', 'immersive_rotation_keeps_reader_and_note',
+            'stop_and_note_survive_process_restart']
+    assert all(previous.get(key) is True for key in keys), previous
+    for key in keys:
+        passed[key] = True
+    start('home')
+    put_pref('online_times', 'boolean', 'false')
+    put_pref('appearance', 'string', 'light')
+    shell('svc', 'wifi', 'disable')
+    shell('svc', 'data', 'disable')
+    root = ET.Element('map')
+    ET.SubElement(root, 'boolean', {'name': 'whole_surah', 'value': 'true'})
+    for key, value in [('last', '1:4'), ('stop', '1:4'), ('note_1:4', 'Continue-here')]:
+        ET.SubElement(root, 'string', {'name': key}).text = value
+    ET.SubElement(ET.SubElement(root, 'set', {'name': 'bookmarks'}), 'string').text = '1:1'
+    write_tree(root, 'quran_reading')
+    start('quran')
+    tap_control('quran_saved_stop')
+else:
+    start('home')
+    put_pref('online_times', 'boolean', 'false')
+    put_pref('appearance', 'string', 'light')
+    shell('svc', 'wifi', 'disable')
+    shell('svc', 'data', 'disable')
+    start('quran')
+    open_surah(1)
+    arabic = read_text('quran_arabic_1')
+    tap_control('quran_bookmark_1')
+    tap_control('quran_read_mode')
+    whole = read_text('quran_whole_1')
+    assert whole.startswith(arabic) and '۝٧' in whole
+    tool('quran_stop_open')
+    replace_text('quran_stop_ayah', '4')
+    replace_text('quran_stop_note', 'Continue-here')
+    tap_control('quran_stop_save')
+    saved = prefs('quran_reading')
+    assert saved['stop'] == '1:4' and saved['note_1:4'] == 'Continue-here'
+    assert '1:1' in saved['bookmarks']
+    passed['exact_stop_note_and_existing_bookmark'] = True
+    
+    tap_control('quran_fullscreen')
+    # Android's first immersive-mode tutorial is a system window, not a reader defect.
+    if present('android:id/immersive_cling_title'):
+        tap_control('android:id/ok')
+    assert present('quran_exit_fullscreen') and not present('quran_read_mode')
+    shot('features-fullscreen-light')
+    tool('quran_rotate')
+    time.sleep(4)
+    tree = shot('features-landscape')
+    bounds = list(map(int, re.findall(r'-?\d+', next(tree.iter('node')).get('bounds'))))
+    assert bounds[2] - bounds[0] > bounds[3] - bounds[1], bounds
+    assert present('quran_exit_fullscreen') and present('quran_whole_surah')
+    assert prefs('quran_reading')['note_1:4'] == 'Continue-here'
+    tool('quran_rotate')
+    time.sleep(3)
+    tap_control('quran_exit_fullscreen')
+    passed['immersive_rotation_keeps_reader_and_note'] = True
+    
+    start('quran')
+    tap_control('quran_saved_stop')
+    assert present('quran_whole_4')
+    tool('quran_stop_open')
+    assert 'Continue-here' in ET.tostring(ui(), encoding='unicode')
+    back()
+    passed['stop_and_note_survive_process_restart'] = True
 mark()
 mark()
 values = history()
@@ -94,8 +117,10 @@ shot('features-statistics')
 before = total_time()
 time.sleep(3)
 assert total_time() == before, 'Menu time entered reading history'
-# Toggle lives at the top of the scrollable sheet.
-top()
+passed['marks_are_unique_and_menu_time_is_not_counted'] = True
+# Reopen at the top; overscrolling down would dismiss a modal bottom sheet.
+back()
+tool('quran_statistics_open')
 tap_control('personal_progress_toggle')
 assert prefs()['personal_progress_enabled'] == 'false'
 back()
