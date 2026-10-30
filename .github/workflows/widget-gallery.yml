@@ -17,7 +17,7 @@ jobs:
       - name: Wait for the exact launcher check
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh run watch 41030076563 --exit-status || true
+        run: gh run watch 41031874367 --exit-status || true
       - name: Build review artifacts
         env:
           GH_TOKEN: ${{ github.token }}
@@ -29,7 +29,6 @@ jobs:
           git add design/widgets-0812
           if ! git diff --cached --quiet; then
             git commit -m 'docs: preserve widget launcher evidence and icon concepts'
-            git pull --rebase --autostash origin codex/android-natural-all
             git push origin HEAD:codex/android-natural-all
           fi
       - uses: actions/upload-artifact@v4

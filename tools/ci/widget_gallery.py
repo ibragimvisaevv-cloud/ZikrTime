@@ -12,10 +12,11 @@ subprocess.run(["gh","run","download",str(RUN),"-n","Android-widgets-launcher","
 evidence=Path("widget-evidence")
 # Each group keeps exact provenance; appearance and data checks were independent runs.
 sources={"lifecycle":{"run":RUN,"commit":SHA,"app_commit":"b1873848de9c09b226c30ed5a7ef2090746c2f99"},
+         "boot":{"run":41031874367,"commit":"bc43eb19a68a882e7b2aece55fa8276968c81c1e","app_commit":"b1873848de9c09b226c30ed5a7ef2090746c2f99"},
          "actions":{"run":41028419737,"commit":"77473b1119f037dbb86fdfc1c69528b6126adc9e","app_commit":"b1873848de9c09b226c30ed5a7ef2090746c2f99"},
          "appearance":{"run":41025914614,"commit":"b1873848de9c09b226c30ed5a7ef2090746c2f99","app_commit":"b1873848de9c09b226c30ed5a7ef2090746c2f99"},
          "data":{"run":41025421561,"commit":"f0c8d585fd27e4de5c8657430f371f4b74f8913a","app_commit":"e06eeac24b1c806d2242fcdbecc56f1d63a25411"}}
-for group in ["appearance","data","actions"]:
+for group in ["appearance","data","actions","boot"]:
     spec=sources[group]
     actual=json.loads(subprocess.check_output(["gh","api",f"repos/{repo}/actions/runs/{spec['run']}"],text=True))
     assert actual['head_sha']==spec['commit']
@@ -40,7 +41,7 @@ for name in [p.name for p in evidence.iterdir() if p.is_file() and p.suffix in [
 # Separate original screenshots are convenient for close inspection (JPEG compression only).
 for p in (evidence/"screens").glob("*.png"):
     Image.open(p).convert("RGB").save(out/(p.stem+".jpg"),quality=91)
-for group in ["appearance","data","actions"]:
+for group in ["appearance","data","actions","boot"]:
     folder=out/group;folder.mkdir()
     for p in (evidence/group).iterdir():
         if p.is_file() and p.suffix in [".json",".txt",".mp4"]:shutil.copy2(p,folder/p.name)
@@ -112,3 +113,9 @@ with zipfile.ZipFile(out/"ZikrTime-approved-dome-icon.zip","w",zipfile.ZIP_DEFLA
         if p.is_file():z.write(p,p.name)
     z.writestr("README.txt","Approved by the user: Купол и горизонт, 2026-10-30.\nAndroid application layers use these VectorDrawable sources. SVG files remain editable.\n")
 (out/"README.md").write_text(f"# Виджеты ZikrTime — проверка\n\nРеальные снимки Android 15 / API 35, stock launcher, 1080×1920, 420 dpi.\n\nКод приложения: b1873848de9c09b226c30ed5a7ef2090746c2f99; версия проверочного сценария: {SHA}; [прогон {RUN}](https://github.com/{repo}/actions/runs/{RUN}), статус: {run['conclusion']}.\n\n![Светлые](launcher-light.jpg)\n\n![Тёмные](launcher-dark.jpg)\n\n[Запись](widgets.mp4). [Иконки и исходники](ZikrTime-icon-concepts.zip).\n\nОформление, данные и оставшиеся действия проверялись отдельными прогонами. Точные исходные сборки указаны в provenance.json. Журнал основных проверок данных: data/widget-checks.json; нажатия и тасбих: actions/widget-checks.json; изменение размера, обновление и перезагрузка: widget-checks.json. Запись перехода к следующему намазу: data/prayer-boundary.mp4. Общая сводка находится в ../README.md. Утверждённый «Купол и горизонт» внедрён в APK. Концептуальные макеты находятся в ../icons; фотографии рабочего стола выше получены в эмуляторе.\n")
+
+boot_checks=json.loads((evidence/"boot"/"widget-checks.json").read_text())
+boot_ok=any(x["name"]=="schedule remains visible after reboot" and x["passed"] for x in boot_checks) and all(x["passed"] for x in boot_checks)
+summary=Path("design/widgets-0812/README.md")
+text=summary.read_text().replace("Проверка перезагрузки уточняется", "Свежая отрисовка и видимый виджет подтверждены" if boot_ok else "Свежая отрисовка после загрузки не подтверждена")
+summary.write_text(text)
