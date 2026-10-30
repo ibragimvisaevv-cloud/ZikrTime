@@ -3,20 +3,30 @@ import json,subprocess,shutil,io,zipfile
 from pathlib import Path
 from PIL import Image,ImageDraw,ImageFont
 import cairosvg
-RUN=41027601199
-SHA="c38e8045865a49df67c2cc0511a8ae6e299f4cf9"
+RUN=41028419737
+SHA="77473b1119f037dbb86fdfc1c69528b6126adc9e"
 repo="ibragimvisaevv-cloud/ZikrTime"
 run=json.loads(subprocess.check_output(["gh","api",f"repos/{repo}/actions/runs/{RUN}"],text=True))
 assert run["head_sha"]==SHA
 subprocess.run(["gh","run","download",str(RUN),"-n","Android-widgets-launcher","-D","widget-evidence"],check=True)
 evidence=Path("widget-evidence")
+# Each group keeps exact provenance; appearance and data checks were independent runs.
+sources={"remaining":{"run":RUN,"commit":SHA,"app_commit":"b1873848de9c09b226c30ed5a7ef2090746c2f99"},
+         "appearance":{"run":41025914614,"commit":"b1873848de9c09b226c30ed5a7ef2090746c2f99","app_commit":"b1873848de9c09b226c30ed5a7ef2090746c2f99"},
+         "data":{"run":41025421561,"commit":"f0c8d585fd27e4de5c8657430f371f4b74f8913a","app_commit":"e06eeac24b1c806d2242fcdbecc56f1d63a25411"}}
+for group in ["appearance","data"]:
+    spec=sources[group]
+    actual=json.loads(subprocess.check_output(["gh","api",f"repos/{repo}/actions/runs/{spec['run']}"],text=True))
+    assert actual['head_sha']==spec['commit']
+    subprocess.run(["gh","run","download",str(spec['run']),"-n","Android-widgets-launcher","-D",str(evidence/group)],check=True)
+appearance=evidence/"appearance"
 out=Path("design/widgets-0812/review");shutil.rmtree(out,ignore_errors=True);out.mkdir(parents=True,exist_ok=True)
 def font(n,b=False):return ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans"+("-Bold" if b else "")+".ttf",n)
 def board(name,items,title):
     page=Image.new("RGB",(960,1770),"#EEECE2");d=ImageDraw.Draw(page)
     d.text((28,24),title,font=font(25,True),fill="#173F34")
     for i,(file,label) in enumerate(items):
-        p=evidence/"screens"/(file+".png")
+        p=appearance/"screens"/(file+".png")
         if not p.exists():continue
         im=Image.open(p).convert("RGB");im.thumbnail((430,780))
         x=28+(i%2)*480;y=100+(i//2)*820
@@ -29,6 +39,13 @@ for name in [p.name for p in evidence.iterdir() if p.is_file() and p.suffix in [
 # Separate original screenshots are convenient for close inspection (JPEG compression only).
 for p in (evidence/"screens").glob("*.png"):
     Image.open(p).convert("RGB").save(out/(p.stem+".jpg"),quality=91)
+for group in ["appearance","data"]:
+    folder=out/group;folder.mkdir()
+    for p in (evidence/group).iterdir():
+        if p.is_file() and p.suffix in [".json",".txt",".mp4"]:shutil.copy2(p,folder/p.name)
+    for p in (evidence/group/"screens").glob("*.png"):
+        Image.open(p).convert("RGB").save(folder/(p.stem+".jpg"),quality=91)
+(out/"provenance.json").write_text(json.dumps(sources,indent=2))
 (out/"source.json").write_text(json.dumps({"run":RUN,"commit":SHA,"conclusion":run["conclusion"]},indent=2))
 icons=Path("design/widgets-0812/icons")
 def render(path,n=1024):
@@ -92,4 +109,4 @@ with zipfile.ZipFile(out/"ZikrTime-approved-dome-icon.zip","w",zipfile.ZIP_DEFLA
     for p in (icons/"02-dome").iterdir():
         if p.is_file():z.write(p,p.name)
     z.writestr("README.txt","Approved by the user: Купол и горизонт, 2026-10-30.\nAndroid application layers use these VectorDrawable sources. SVG files remain editable.\n")
-(out/"README.md").write_text(f"# Виджеты ZikrTime — проверка\n\nРеальные снимки Android 15 / API 35, stock launcher, 1080×1920, 420 dpi.\n\nСборка: {SHA}; [прогон {RUN}](https://github.com/{repo}/actions/runs/{RUN}), статус: {run['conclusion']}.\n\n![Светлые](launcher-light.jpg)\n\n![Тёмные](launcher-dark.jpg)\n\n[Запись](widgets.mp4). [Иконки и исходники](ZikrTime-icon-concepts.zip).\n\nЭто этап проверки. Результаты дополнительных сценариев будут отмечены отдельно. Утверждённый «Купол и горизонт» внедрён в APK. Концептуальные макеты находятся в ../icons; фотографии рабочего стола выше получены в эмуляторе.\n")
+(out/"README.md").write_text(f"# Виджеты ZikrTime — проверка\n\nРеальные снимки Android 15 / API 35, stock launcher, 1080×1920, 420 dpi.\n\nСборка: {SHA}; [прогон {RUN}](https://github.com/{repo}/actions/runs/{RUN}), статус: {run['conclusion']}.\n\n![Светлые](launcher-light.jpg)\n\n![Тёмные](launcher-dark.jpg)\n\n[Запись](widgets.mp4). [Иконки и исходники](ZikrTime-icon-concepts.zip).\n\nОформление, данные и оставшиеся действия проверялись отдельными прогонами. Точные исходные сборки указаны в provenance.json. Журнал основных проверок данных: data/widget-checks.json; оставшиеся действия: widget-checks.json. Запись перехода к следующему намазу: data/prayer-boundary.mp4. Общая сводка находится в ../README.md. Утверждённый «Купол и горизонт» внедрён в APK. Концептуальные макеты находятся в ../icons; фотографии рабочего стола выше получены в эмуляторе.\n")
