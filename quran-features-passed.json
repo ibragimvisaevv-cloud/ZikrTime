@@ -1,0 +1,12 @@
+{
+  "exact_stop_note_and_existing_bookmark": true,
+  "immersive_rotation_keeps_reader_and_note": true,
+  "stop_and_note_survive_process_restart": true,
+  "marks_are_unique_and_menu_time_is_not_counted": true,
+  "timer_foreground_background_screen_off_pause_and_stats_opt_out": true,
+  "timer_completes_and_continues_without_restart_loop": true,
+  "clear_statistics_preserves_reading_preferences_and_notes": true,
+  "whole_long_surah_bounds_and_controls_320dp_150_percent": true,
+  "existing_support_and_feedback_entry_visible": true,
+  "english_last_surah": true
+}
