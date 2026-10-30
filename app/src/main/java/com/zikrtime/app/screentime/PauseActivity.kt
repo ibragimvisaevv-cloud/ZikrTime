@@ -130,7 +130,7 @@ private fun PauseContent(pkg: String,onOpen:(Int,String)->Unit,onExit:()->Unit,o
                     Text(stringResource(R.string.pause_zikr),style=MaterialTheme.typography.titleMedium)
                     Text(stringResource(R.string.pause_action_hint),style=MaterialTheme.typography.bodyMedium)
                     Spacer(Modifier.height(20.dp))
-                    Text(arabic[phrase],Modifier.fillMaxWidth(),style=com.zikrtime.app.ui.theme.ArabicStyle.copy(textDirection=TextDirection.Rtl,lineHeight=56.sp),textAlign=TextAlign.Center)
+                    Text(arabic[phrase],Modifier.fillMaxWidth(),style=com.zikrtime.app.ui.theme.ArabicStyle.copy(textDirection=TextDirection.Rtl),textAlign=TextAlign.Center)
                     Spacer(Modifier.height(16.dp))
                     Text(stringResource(names[phrase]),style=MaterialTheme.typography.titleMedium)
                     Text(stringResource(meanings[phrase]),style=MaterialTheme.typography.bodyLarge)

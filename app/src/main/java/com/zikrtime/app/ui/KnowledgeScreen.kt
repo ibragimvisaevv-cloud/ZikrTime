@@ -302,7 +302,7 @@ private fun StudyCards(bank: QuizBank, cards: List<com.zikrtime.app.quiz.Questio
             q.arabic?.let { arabic ->
                 Text(
                     arabic,
-                    style = com.zikrtime.app.ui.theme.ArabicStyle.copy(fontSize = (30 * readingScale).sp, lineHeight = (52 * readingScale).sp, textDirection = androidx.compose.ui.text.style.TextDirection.Rtl),
+                    style = com.zikrtime.app.ui.theme.ArabicStyle.copy(fontSize = (30 * readingScale).sp, textDirection = androidx.compose.ui.text.style.TextDirection.Rtl),
                     color = MaterialTheme.colorScheme.primary,
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                     modifier = Modifier.fillMaxWidth(),

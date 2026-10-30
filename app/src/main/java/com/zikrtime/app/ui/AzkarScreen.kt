@@ -60,7 +60,7 @@ fun AzkarScreen() {
             Text(stringResource(R.string.source_translation, "English"), style = MaterialTheme.typography.labelMedium)
         Column(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp), verticalArrangement = Arrangement.spacedBy(22.dp)) {
             Text(item.arabic, modifier = Modifier.fillMaxWidth().testTag("azkar_arabic"),
-                style = ArabicStyle.copy(fontSize = (32 * scale).sp, lineHeight = (55 * scale).sp, textDirection = TextDirection.Rtl),
+                style = ArabicStyle.copy(fontSize = (32 * scale).sp, textDirection = TextDirection.Rtl),
                 textAlign = TextAlign.Center, color = MaterialTheme.colorScheme.primary)
             HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
             Text(if (ru) item.transliterationRu else item.transliterationEn,

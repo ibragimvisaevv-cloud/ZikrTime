@@ -183,11 +183,101 @@ class Checkpoints(dict):
 
 
 mode = sys.argv[1] if len(sys.argv) > 1 else 'all'
-assert mode in ('all', 'reading', 'navigation-adhan'), mode
+assert mode in ('all', 'reading', 'navigation-adhan', 'layout'), mode
 passed = Checkpoints()
 start('home')
 put_pref('online_times', 'boolean', 'false')
 put_pref('appearance', 'string', 'light')
+
+
+if mode in ('all', 'layout'):
+    shell('svc', 'wifi', 'disable')
+    shell('svc', 'data', 'disable')
+    start('quran')
+    open_surah(1)
+    first_arabic = read_text('quran_arabic_1')
+    shot('reading-verse-light')
+    tap_control('quran_read_mode')
+    whole = read_text('quran_whole_1')
+    assert whole.startswith(first_arabic)
+    assert '۝١' in whole and '۝٧' in whole, 'Whole Al-Fatiha is incomplete'
+    assert not present('quran_translation_1'), 'Translation interrupts whole-surah mode'
+    shot('reading-whole-fatiha-light')
+    passed['whole_surah_without_cards_or_interleaved_translation'] = True
+    start('quran')
+    tap_control('quran_continue')
+    assert present('quran_whole_surah')
+    assert read_text('quran_whole_1') == whole
+    passed['mode_and_text_survive_process_restart'] = True
+
+    # Both directions and a long surah: scroll/jump must use verse numbers,
+    # not layout-block indexes, and still allow bookmarking in verse mode.
+    tap_control('quran_read_mode')
+    assert read_text('quran_arabic_1') == first_arabic
+    tap_control('quran_bookmark_1')
+    open_surah(2)
+    jump(255)
+    shot('reading-ayat-kursi-spaced')
+    tap_control('quran_read_mode')
+    assert present('quran_whole_surah')
+    jump(286)
+    end = read_text('quran_whole_281')
+    assert '۝٢٨٦' in end, 'Last verse of Al-Baqarah missing'
+    assert prefs('quran_reading')['last'] == '2:286'
+    shot('reading-whole-baqarah-end')
+    start('quran')
+    tap_control('quran_continue')
+    assert present('quran_whole_281')
+    assert prefs('quran_reading')['last'] == '2:286'
+    tap_control('quran_read_mode')
+    jump(286)
+    read_text('quran_translation_286')
+    jump(287)
+    assert present('quran_jump_error')
+    passed['long_surah_end_resume_translation_and_bounds'] = True
+
+    put_pref('appearance', 'string', 'dark')
+    start('quran')
+    open_surah(114)
+    tap_control('quran_read_mode')
+    last_surah = read_text('quran_whole_1')
+    assert '۝٦' in last_surah
+    shot('reading-whole-nas-dark')
+    passed['last_surah_dark_theme'] = True
+
+    shell('wm', 'size', '720x1280')
+    shell('wm', 'density', '360')
+    shell('settings', 'put', 'system', 'font_scale', '1.5')
+    start('quran')
+    open_surah(1)
+    read_text('quran_whole_1')
+    shot('reading-whole-320dp-150')
+    tap_control('quran_read_mode')
+    read_text('quran_arabic_1')
+    shot('reading-verse-320dp-150')
+    locate_control('quran_go')
+    locate_control('quran_read_mode')
+    passed['both_modes_320dp_150_percent_text'] = True
+    shell('settings', 'put', 'system', 'font_scale', '1')
+    shell('wm', 'size', '1080x1920')
+    shell('wm', 'density', '420')
+
+    for theme in ['light', 'dark']:
+        put_pref('appearance', 'string', theme)
+        start('azkar')
+        read_text('azkar_arabic')
+        shot('reading-azkar-' + theme)
+    # Shared Arabic typography: a small representative smoke, not a full audit.
+    for route in ['tasbih', 'quiz']:
+        start(route)
+        shot('reading-' + route)
+    start('quran', 'en')
+    open_surah(1)
+    tap_control('quran_read_mode')
+    read_text('quran_whole_1')
+    shot('reading-whole-english')
+    passed['azkar_and_shared_arabic_smoke'] = True
+
 
 if mode in ('all', 'reading'):
     # Offline from the first reader launch: the packaged text must be sufficient.

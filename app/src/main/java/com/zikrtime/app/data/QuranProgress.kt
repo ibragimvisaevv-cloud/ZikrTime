@@ -10,6 +10,10 @@ class QuranProgress(context: Context) {
         val key: String get() = "$surah:$ayah"
     }
 
+    var wholeSurah: Boolean
+        get() = prefs.getBoolean("whole_surah", false)
+        set(value) { prefs.edit().putBoolean("whole_surah", value).apply() }
+
     fun last(book: QuranBook): Location? = parse(prefs.getString("last", null), book)
 
     fun save(location: Location) {
