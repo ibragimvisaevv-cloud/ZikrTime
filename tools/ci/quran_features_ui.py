@@ -44,17 +44,27 @@ def set_reader_prefs(values):
 
 
 import os
-if os.environ.get('QURAN_FEATURE_PHASE') == 'tail':
+phase = os.environ.get('QURAN_FEATURE_PHASE', 'all')
+if phase in ('tail', 'finish'):
     # Reuse only completed journeys from the checksum-pinned APK.
     previous = json.loads((OUT / 'previous-quran-passed.json').read_text())
     keys = ['exact_stop_note_and_existing_bookmark', 'immersive_rotation_keeps_reader_and_note',
             'stop_and_note_survive_process_restart']
+    if phase == 'finish':
+        keys += ['marks_are_unique_and_menu_time_is_not_counted',
+                 'timer_foreground_background_screen_off_pause_and_stats_opt_out']
     assert all(previous.get(key) is True for key in keys), previous
     for key in keys:
         passed[key] = True
     start('home')
     put_pref('online_times', 'boolean', 'false')
     put_pref('appearance', 'string', 'light')
+    if phase == 'finish':
+        put_pref('personal_progress_enabled', 'boolean', 'false')
+        day = shell('date', '+%Y-%m-%d').strip()
+        put_pref('quran_statistics_v1', 'string', json.dumps({
+            day: {'ms': 12000, 'verses': ['1:' + str(n) for n in range(1, 8)]}
+        }))
     shell('svc', 'wifi', 'disable')
     shell('svc', 'data', 'disable')
     root = ET.Element('map')
@@ -109,70 +119,80 @@ else:
     assert 'Continue-here' in ET.tostring(ui(), encoding='unicode')
     back()
     passed['stop_and_note_survive_process_restart'] = True
-mark()
-mark()
-values = history()
-unique = {v for day in values.values() for v in day['verses']}
-assert unique == {'1:' + str(n) for n in range(1, 8)}, unique
-tool('quran_statistics_open')
-locate_control('quran_stats_unique')
-shot('features-statistics')
-before = total_time()
-time.sleep(3)
-assert total_time() == before, 'Menu time entered reading history'
-passed['marks_are_unique_and_menu_time_is_not_counted'] = True
-# Reopen at the top; overscrolling down would dismiss a modal bottom sheet.
-back()
-tool('quran_statistics_open')
-tap_control('personal_progress_toggle')
-assert prefs()['personal_progress_enabled'] == 'false'
-back()
-time.sleep(4)
-tool('quran_timer_open')
-before_disabled = total_time()
-replace_text('quran_timer_minutes', '3')
-tap_control('quran_timer_start')
-time.sleep(6)
-shell('input', 'keyevent', 'KEYCODE_HOME')
-time.sleep(1)
-remaining = int(prefs('quran_reading')['timer_remaining'])
-assert 0 < remaining < 180000, remaining
-time.sleep(3)
-assert int(prefs('quran_reading')['timer_remaining']) == remaining
-shell('am', 'start', '-W', '-n', PKG + '/.MainActivity')
-time.sleep(4)
-shell('input', 'keyevent', 'KEYCODE_SLEEP')
-time.sleep(1)
-asleep = int(prefs('quran_reading')['timer_remaining'])
-time.sleep(3)
-assert int(prefs('quran_reading')['timer_remaining']) == asleep
-assert asleep < remaining, (asleep, remaining)
-shell('input', 'keyevent', 'KEYCODE_WAKEUP')
-shell('wm', 'dismiss-keyguard')
-time.sleep(2)
-tool('quran_timer_open')
-tap_control('quran_timer_pause')
-paused = int(prefs('quran_reading')['timer_remaining'])
-time.sleep(3)
-assert int(prefs('quran_reading')['timer_remaining']) == paused
-assert total_time() == before_disabled
-passed['timer_foreground_background_screen_off_pause_and_stats_opt_out'] = True
+if phase != 'finish':
+    mark()
+    mark()
+    values = history()
+    unique = {v for day in values.values() for v in day['verses']}
+    assert unique == {'1:' + str(n) for n in range(1, 8)}, unique
+    tool('quran_statistics_open')
+    locate_control('quran_stats_unique')
+    shot('features-statistics')
+    before = total_time()
+    time.sleep(3)
+    assert total_time() == before, 'Menu time entered reading history'
+    passed['marks_are_unique_and_menu_time_is_not_counted'] = True
+    # Reopen at the top; overscrolling down would dismiss a modal bottom sheet.
+    back()
+    tool('quran_statistics_open')
+    tap_control('personal_progress_toggle')
+    assert prefs()['personal_progress_enabled'] == 'false'
+    back()
+    time.sleep(4)
+    tool('quran_timer_open')
+    before_disabled = total_time()
+    replace_text('quran_timer_minutes', '3')
+    tap_control('quran_timer_start')
+    time.sleep(6)
+    shell('input', 'keyevent', 'KEYCODE_HOME')
+    time.sleep(1)
+    remaining = int(prefs('quran_reading')['timer_remaining'])
+    assert 0 < remaining < 180000, remaining
+    time.sleep(3)
+    assert int(prefs('quran_reading')['timer_remaining']) == remaining
+    shell('am', 'start', '-W', '-n', PKG + '/.MainActivity')
+    time.sleep(4)
+    shell('input', 'keyevent', 'KEYCODE_SLEEP')
+    time.sleep(1)
+    asleep = int(prefs('quran_reading')['timer_remaining'])
+    time.sleep(3)
+    assert int(prefs('quran_reading')['timer_remaining']) == asleep
+    assert asleep < remaining, (asleep, remaining)
+    shell('input', 'keyevent', 'KEYCODE_WAKEUP')
+    shell('wm', 'dismiss-keyguard')
+    time.sleep(2)
+    tool('quran_timer_open')
+    tap_control('quran_timer_pause')
+    paused = int(prefs('quran_reading')['timer_remaining'])
+    time.sleep(3)
+    assert int(prefs('quran_reading')['timer_remaining']) == paused
+    assert total_time() == before_disabled
+    passed['timer_foreground_background_screen_off_pause_and_stats_opt_out'] = True
 
 # Near completion fixture: same persisted production fields, no test-only app behavior.
 set_reader_prefs({'timer_remaining': ('long', 2500), 'timer_paused': ('boolean', False),
                   'timer_finished': ('boolean', False)})
 start('quran')
 tap_control('quran_continue')
-time.sleep(5)
-locate_control('quran_timer_continue')
+for _ in range(10):
+    if prefs('quran_reading')['timer_finished'] == 'true':
+        break
+    time.sleep(1)
 assert prefs('quran_reading')['timer_finished'] == 'true'
-shot('features-timer-complete')
-tap_control('quran_timer_continue')
+# AlertDialog has a separate semantics root; use the visible user-facing text.
+# Searching for an unexported test tag would swipe outside and dismiss the dialog.
+tree = shot('features-timer-complete')
+assert any(n.get('text') == 'Время чтения завершено' for n in tree.iter('node'))
+assert any(n.get('text') == 'Продолжить чтение' for n in tree.iter('node'))
+tap_control('Продолжить чтение', 'text')
 assert prefs('quran_reading')['timer_finished'] == 'false'
+time.sleep(3)
+assert not any(n.get('text') == 'Время чтения завершено' for n in ui().iter('node'))
 passed['timer_completes_and_continues_without_restart_loop'] = True
 
 # Re-enable and clear through the real global control; bookmarks/notes must remain.
 start('progress')
+assert history(), 'Clear scenario requires existing statistics'
 tap_control('personal_progress_toggle')
 tap_control('personal_progress_clear')
 tap_control('personal_progress_clear_confirm')

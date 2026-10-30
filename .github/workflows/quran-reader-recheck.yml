@@ -34,7 +34,10 @@ jobs:
           git diff --exit-code "$BUILD_SOURCE_SHA" HEAD -- app/ tools/i18n/ tools/quiz/ tools/quran/ tools/audio/ build.gradle.kts settings.gradle.kts gradle.properties gradle/ gradlew gradlew.bat .gitattributes
           printf '%s\n' "$BUILD_SOURCE_SHA" > ci-out/reused-build-source.txt
           gh run download 41126993813 -n ZikrTime-0.8.16-check -D reused-check
-          cp reused-check/ci-out/quran-passed.json ci-out/previous-quran-passed.json
+          git fetch --no-tags --depth=1 origin 61c10827e621008188ca2816c289246a4244a446
+          git show 61c10827e621008188ca2816c289246a4244a446:quran-passed.json > ci-out/previous-quran-passed.json
+          git show 61c10827e621008188ca2816c289246a4244a446:delivery.json > ci-out/previous-delivery.json
+          python3 -m py_compile tools/ci/quran_features_ui.py
           mkdir -p app/build
           cp -R reused-check/app/build/outputs reused-check/app/build/reports reused-check/app/build/test-results app/build/
           sha256sum app/build/outputs/apk/debug/app-debug.apk > ci-out/reused-apk-sha256.txt
@@ -43,6 +46,9 @@ jobs:
           apk = pathlib.Path('app/build/outputs/apk/debug/app-debug.apk')
           digest = hashlib.sha256(apk.read_bytes()).hexdigest()
           assert digest == 'c8dc1028f6bbbf4d520ec06ab0cf5d077a9587c44ae3d5328c3082151e8dd3d2', 'APK differs from the checked build'
+          previous = json.loads(pathlib.Path('ci-out/previous-delivery.json').read_text())
+          assert previous['apk_sha256'] == digest and previous['run'] == 41128524222
+          assert previous['source_sha'] == '5d2f8ae6933858b099095a829a110d1c19aef732'
           tests = [ET.parse(p).getroot() for p in pathlib.Path('app/build/test-results/testDebugUnitTest').glob('TEST-*.xml')]
           count = sum(int(t.get('tests', 0)) for t in tests)
           assert count == 86, 'Expected complete unit-test reports from the pinned build'
@@ -53,6 +59,8 @@ jobs:
               'run_id': 41126993813, 'artifact_id': 13010634339,
               'source_sha': os.environ['BUILD_SOURCE_SHA'], 'apk_sha256': digest,
               'passed_unit_tests': count, 'lint_errors': 0,
+              'previous_journeys_run': 41128524222,
+              'previous_evidence_commit': '61c10827e621008188ca2816c289246a4244a446',
           }, indent=2))
           PY
       - run: python3 -m pip install 'Pillow>=11,<13'
@@ -66,7 +74,7 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         env:
           QURAN_QA_MODE: features
-          QURAN_FEATURE_PHASE: tail
+          QURAN_FEATURE_PHASE: finish
         with:
           api-level: 35
           target: google_apis
