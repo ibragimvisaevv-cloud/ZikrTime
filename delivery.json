@@ -1,0 +1,11 @@
+{
+  "source_run": 41124763642,
+  "source_sha": "8f009ca321af76bcdfff87e92fa4caa52513d4b8",
+  "unit_tests": 86,
+  "lint_errors": 0,
+  "ui_result": "failure",
+  "apk_size": 101913630,
+  "apk_sha256": "4eb6a62d38bfa501995fcdff584b54b44f66971b4ebe61055cf3a9f018bfe81c",
+  "rebuilt": false,
+  "ready": false
+}
