@@ -4,89 +4,28 @@ on:
     branches: [codex/feedback-0816]
     paths: ['.github/workflows/deliver-checked-reader.yml']
 permissions:
-  contents: write
+  contents: read
   actions: read
 jobs:
   deliver:
     if: ${{ contains(github.event.head_commit.message, '[reader-file]') }}
     runs-on: ubuntu-latest
-    timeout-minutes: 8
-    env:
-      SOURCE_RUN: '41124763642'
-      SOURCE_SHA: '8f009ca321af76bcdfff87e92fa4caa52513d4b8'
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-      - name: Fetch existing build and reports
+      - name: Verify the actual artifact download endpoint returns APK bytes
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$SOURCE_RUN" > source-run.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/13012532970/zip" > ZikrTime-0.8.16-test.apk
           python3 - <<'PY'
-          import json, os
-          run = json.load(open('source-run.json'))
-          assert run['head_sha'] == os.environ['SOURCE_SHA']
-          assert run['status'] == 'completed'
+          import hashlib, json, pathlib, zipfile
+          apk = pathlib.Path('ZikrTime-0.8.16-test.apk')
+          digest = hashlib.sha256(apk.read_bytes()).hexdigest()
+          assert apk.stat().st_size == 101913630, apk.stat().st_size
+          assert digest == 'c8dc1028f6bbbf4d520ec06ab0cf5d077a9587c44ae3d5328c3082151e8dd3d2', digest
+          with zipfile.ZipFile(apk) as z:
+              names = set(z.namelist())
+              assert 'AndroidManifest.xml' in names and 'classes.dex' in names
+          print(json.dumps({'artifact': 13012532970, 'download_is_apk': True,
+                            'size': apk.stat().st_size, 'sha256': digest, 'rebuilt': False}))
           PY
-          gh run download "$SOURCE_RUN" -n ZikrTime-0.8.16-check -D checked
-      - name: Validate original bytes and collect focused evidence
-        id: verify
-        run: |
-          python3 - <<'PY'
-          import hashlib, json, os, pathlib, shutil, xml.etree.ElementTree as ET
-          root = pathlib.Path('checked')
-          apk = root / 'app/build/outputs/apk/debug/app-debug.apk'
-          tests = [ET.parse(p).getroot() for p in (root/'app/build/test-results/testDebugUnitTest').glob('TEST-*.xml')]
-          count = sum(int(t.get('tests', 0)) for t in tests)
-          assert count == 86, count
-          assert all(int(t.get(k, 0)) == 0 for t in tests for k in ['failures', 'errors', 'skipped'])
-          assert not any(i.get('severity') in ['Error', 'Fatal'] for i in ET.parse(root/'app/build/reports/lint-results-debug.xml').iter('issue'))
-          metadata = json.loads((apk.parent/'output-metadata.json').read_text())
-          assert all(e['versionName'] == '0.8.16' and e['versionCode'] == 28 for e in metadata['elements'])
-          run = json.load(open('source-run.json'))
-          ready = run['conclusion'] == 'success'
-          report = {'source_run': int(os.environ['SOURCE_RUN']), 'source_sha': os.environ['SOURCE_SHA'],
-                    'unit_tests': count, 'lint_errors': 0, 'ui_result': run['conclusion'],
-                    'apk_size': apk.stat().st_size, 'apk_sha256': hashlib.sha256(apk.read_bytes()).hexdigest(),
-                    'rebuilt': False, 'ready': ready}
-          evidence = pathlib.Path('reader-evidence')
-          evidence.mkdir()
-          (evidence/'delivery.json').write_text(json.dumps(report, indent=2))
-          for name in ['quran-failure.txt', 'quran-passed.json', 'quran-features-passed.json', 'crashes.txt', 'last-ui.xml']:
-              source = root/'ci-out'/name
-              if source.exists():
-                  shutil.copyfile(source, evidence/name)
-          screens = root/'ci-out/screens'
-          for source in screens.glob('features-*.png'):
-              shutil.copyfile(source, evidence/source.name)
-          failure = screens/'quran-failure.png'
-          if failure.exists():
-              shutil.copyfile(failure, evidence/failure.name)
-          if ready:
-              assert (root/'ci-out/quran-features-passed.json').exists()
-              shutil.copyfile(apk, 'ZikrTime-0.8.16-test.apk')
-          with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
-              out.write('ready=' + str(ready).lower() + '\n')
-          print(json.dumps(report))
-          PY
-      - name: Keep emulator evidence available for review
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          python3 - <<'PY'
-          import os, subprocess
-          branch = 'ci-reader-0816-' + os.environ['GITHUB_RUN_ID']
-          def git(*args):
-              subprocess.run(['git', *args], cwd='reader-evidence', check=True, stdout=subprocess.DEVNULL)
-          git('init', '-q')
-          git('add', '.')
-          git('-c', 'user.name=ci', '-c', 'user.email=ci@local', 'commit', '-qm', 'Quran 0.8.16 emulator evidence [skip ci]')
-          git('push', '-q', 'https://x-access-token:' + os.environ['GH_TOKEN'] + '@github.com/' + os.environ['GITHUB_REPOSITORY'] + '.git',
-              'HEAD:refs/heads/' + branch)
-          print('Evidence branch: ' + branch)
-          PY
-      - uses: actions/upload-artifact@v7.0.2
-        if: steps.verify.outputs.ready == 'true'
-        with:
-          path: ZikrTime-0.8.16-test.apk
-          archive: false
-          if-no-files-found: error
