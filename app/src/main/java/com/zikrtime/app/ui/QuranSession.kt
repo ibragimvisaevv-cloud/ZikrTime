@@ -34,6 +34,8 @@ internal class QuranSession(private val progress: QuranProgress) {
         val now = SystemClock.elapsedRealtime()
         val delta = now - lastTick
         lastTick = now
+        // Do not join two separate time intervals across a suspended main thread.
+        if (delta > 5000) flush()
         val counted = timer.readingMillis(delta, active && wasActive)
         wasActive = active
         if (counted > 0) {

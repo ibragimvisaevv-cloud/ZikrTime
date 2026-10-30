@@ -227,7 +227,8 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
             ReaderAction(R.string.quran_sources, "quran_sources") { sheet = "sources" }
         }
         "jump" -> QuranJumpSheet(surah.ayahCount, currentAyah, { sheet = "" }, jumpTo)
-        "stop" -> QuranStopSheet(book, surahId, currentAyah, progress) { sheet = "" }
+        "stop" -> QuranStopSheet(book, surahId,
+            progress.last(book)?.takeIf { it.surah == surahId }?.ayah ?: currentAyah, progress) { sheet = "" }
         "mark" -> QuranMarkSheet(surahId, currentAyah, surah.ayahCount) { sheet = "" }
         "timer" -> QuranTimerSheet(progress, session) { sheet = "" }
         "statistics" -> HorizonSheet(stringResource(R.string.qf_statistics), { sheet = "" }) {
