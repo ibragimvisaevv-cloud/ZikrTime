@@ -14,6 +14,35 @@ class QuranProgress(context: Context) {
         get() = prefs.getBoolean("whole_surah", false)
         set(value) { prefs.edit().putBoolean("whole_surah", value).apply() }
 
+    var timer: QuranReadingTimer
+        get() = QuranReadingTimer(prefs.getLong("timer_remaining", 0).coerceAtLeast(0),
+            prefs.getBoolean("timer_paused", false), prefs.getBoolean("timer_finished", false))
+        set(value) {
+            prefs.edit().putLong("timer_remaining", value.remaining).putBoolean("timer_paused", value.paused)
+                .putBoolean("timer_finished", value.finished).apply()
+        }
+
+    var dailyGoalMinutes: Int
+        get() = prefs.getInt("daily_goal_minutes", 10).coerceIn(1, 180)
+        set(value) { prefs.edit().putInt("daily_goal_minutes", value.coerceIn(1, 180)).apply() }
+
+    var keepAwake: Boolean
+        get() = prefs.getBoolean("keep_awake", true)
+        set(value) { prefs.edit().putBoolean("keep_awake", value).apply() }
+
+    fun stop(book: QuranBook): Location? = parse(prefs.getString("stop", null), book)
+    fun note(location: Location): String = prefs.getString("note_" + location.key, "").orEmpty()
+
+    fun saveStop(location: Location, note: String) {
+        val editor = prefs.edit().putString("stop", location.key).putString("last", location.key)
+        if (note.isBlank()) editor.remove("note_" + location.key)
+        else editor.putString("note_" + location.key, note.take(2000))
+        editor.apply()
+    }
+
+    fun notes(book: QuranBook): List<Location> = prefs.all.keys.filter { it.startsWith("note_") }
+        .mapNotNull { parse(it.removePrefix("note_"), book) }.sortedWith(compareBy({ it.surah }, { it.ayah }))
+
     fun last(book: QuranBook): Location? = parse(prefs.getString("last", null), book)
 
     fun save(location: Location) {

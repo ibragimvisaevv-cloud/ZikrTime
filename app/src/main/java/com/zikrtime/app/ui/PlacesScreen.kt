@@ -367,17 +367,18 @@ private fun distanceText(km: Double): String =
 
 /** Маленькая кнопка «Поддержать проект» (ссылку задаёт владелец в боте командой /donate). */
 @Composable
-fun DonateCard(modifier: Modifier = Modifier) {
+fun DonateCard(modifier: Modifier = Modifier, prominent: Boolean = false) {
     val context = LocalContext.current
     val url = Places.donateUrl()
     if (url.isBlank()) return
-    ZCard(modifier = modifier, onClick = { openUrl(context, url) }, padding = PaddingValues(horizontal = 16.dp, vertical = 12.dp)) {
+    ZCard(modifier = modifier.testTag("project_support"), onClick = { openUrl(context, url) }, padding = PaddingValues(horizontal = 20.dp, vertical = if (prominent) 20.dp else 12.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("🤲", style = MaterialTheme.typography.titleLarge)
+            IconBadge(painterResource(R.drawable.ic_prayer_isha), container = MaterialTheme.colorScheme.secondaryContainer)
             Spacer(Modifier.width(12.dp))
             Column(Modifier.weight(1f)) {
-                Text(stringResource(R.string.donate_title), style = MaterialTheme.typography.titleSmall)
-                Text(stringResource(R.string.donate_text), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(if (prominent) R.string.qf_support_title else R.string.donate_title), style = MaterialTheme.typography.titleMedium)
+                Text(stringResource(if (prominent) R.string.qf_support_text else R.string.donate_text), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                if (prominent) Text(stringResource(R.string.donate_title) + " →", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(top = 8.dp))
             }
         }
     }

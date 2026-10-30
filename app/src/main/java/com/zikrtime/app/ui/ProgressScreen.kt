@@ -72,6 +72,7 @@ fun ProgressScreen() {
                 }
             }
         }
+        QuranStatisticsCard()
         // Clearing is separate from disabling and remains available even with the switch off.
         TextButton(onClick = { clear = true }, modifier = Modifier.testTag("personal_progress_clear").semantics { testTagsAsResourceId = true }) {
             Text(stringResource(R.string.progress_clear))

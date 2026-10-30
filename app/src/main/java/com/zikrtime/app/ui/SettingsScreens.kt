@@ -113,6 +113,8 @@ fun MoreScreen() {
                 }
             }
         }
+        DonateCard(prominent = true)
+        FeedbackButton("app")
         SectionLabel(stringResource(R.string.group_application))
         ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
             SettingRow(
@@ -148,7 +150,6 @@ fun MoreScreen() {
                 Text(stringResource(R.string.progress_settings))
             }
         }
-        DonateCard()
         ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
             SettingRow(
                 title = stringResource(R.string.about_title),

@@ -95,7 +95,7 @@ class MainActivity : ComponentActivity() {
         nav.restore(savedInstanceState)
         // Названия каналов уведомлений — на текущем языке.
         PrayerAlarms.createChannels(this)
-        if (BuildConfig.DEBUG && QaHooks.handle(this, intent, nav)) return
+        if (BuildConfig.DEBUG && savedInstanceState == null && QaHooks.handle(this, intent, nav)) return
         handleOpen(intent)
         enableEdgeToEdge()
         val showSplash = savedInstanceState == null && com.zikrtime.app.ui.LiveFlags.splash &&

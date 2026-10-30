@@ -318,6 +318,7 @@ object Store {
         cache.keys.toList().filter(ProgressMigration::isHistoricalKey).forEach { key -> editor.remove(key); cache.remove(key) }
         editor.apply()
         saveProgress(ledger)
+        QuranStatistics.clear()
     }
 
     /** Recover the receipt if the process stopped after awarding minutes but before saving RESULT. */

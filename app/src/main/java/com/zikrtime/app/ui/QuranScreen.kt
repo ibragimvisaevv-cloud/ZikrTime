@@ -40,7 +40,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun QuranScreen() {
     val context = LocalContext.current
-    val compactHeader = LocalConfiguration.current.let { it.screenWidthDp < 360 || it.fontScale > 1.3f }
     val nav = LocalNav.current
     val progress = remember { QuranProgress(context) }
     var book by remember { mutableStateOf<QuranBook?>(null) }
@@ -57,30 +56,20 @@ fun QuranScreen() {
         catch (_: Exception) { failed = true }
     }
     BackHandler(surahId != 0) { surahId = 0 }
-    ScreenScaffold(stringResource(R.string.quran_title),
-        onBack = { if (surahId != 0) surahId = 0 else nav.back() },
+    val content = book
+    if (content != null && surahId != 0) {
+        key(surahId) { QuranReader(content, surahId, startAyah, scale, { scale = it }, progress, { surahId = 0 }) }
+    } else ScreenScaffold(stringResource(R.string.quran_title), onBack = { nav.back() },
         scrollable = false, showHeading = false,
         actions = {
-            if (surahId != 0) ReadingTools(scale) { scale = it }
-            if (compactHeader) {
-                IconButton(onClick = { sources = true }, modifier = Modifier.testTag("quran_sources")) {
-                    Icon(Icons.Filled.Info, contentDescription = stringResource(R.string.quran_sources), tint = MaterialTheme.colorScheme.primary)
-                }
-            } else {
-                TextButton(onClick = { sources = true }, modifier = Modifier.testTag("quran_sources")) {
-                    Text(stringResource(R.string.quran_sources))
-                }
+            IconButton(onClick = { sources = true }, modifier = Modifier.testTag("quran_sources")) {
+                Icon(Icons.Filled.Info, stringResource(R.string.quran_sources))
             }
         }) {
-        val content = book
         when {
-            content != null -> {
-                val open: (QuranProgress.Location) -> Unit = { startAyah = it.ayah; surahId = it.surah; progress.save(it) }
-                if (surahId == 0) QuranIndex(content, progress, open, Modifier.weight(1f))
-                else key(surahId) {
-                    QuranReader(content, surahId, startAyah, scale, progress, { surahId = 0 }, Modifier.weight(1f))
-                }
-            }
+            content != null -> QuranIndex(content, progress, {
+                startAyah = it.ayah; surahId = it.surah; progress.save(it)
+            }, Modifier.weight(1f))
             failed -> Column(Modifier.weight(1f), verticalArrangement = Arrangement.Center) {
                 Text(stringResource(R.string.quran_load_error))
                 TextButton(onClick = { attempt++ }) { Text(stringResource(R.string.quran_retry)) }
@@ -91,11 +80,16 @@ fun QuranScreen() {
     if (sources) QuranSources { sources = false }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun QuranIndex(book: QuranBook, progress: QuranProgress, open: (QuranProgress.Location) -> Unit, modifier: Modifier) {
     val ru = Lang.content(LocalContext.current) == "ru"
     var query by rememberSaveable { mutableStateOf("") }
-    var showBookmarks by rememberSaveable { mutableStateOf(false) }
+    var tab by rememberSaveable { mutableIntStateOf(0) }
+    val showBookmarks = tab == 1
+    var statistics by remember { mutableStateOf(false) }
+    val stop = remember(book) { progress.stop(book) }
+    val notes = remember(book) { progress.notes(book) }
     val bookmarks = remember(book) { progress.bookmarks(book).sortedWith(compareBy({ it.surah }, { it.ayah })) }
     val last = remember(book) { progress.last(book) }
     val filtered = remember(book, query) {
@@ -103,21 +97,42 @@ private fun QuranIndex(book: QuranBook, progress: QuranProgress, open: (QuranPro
             it.nameRu.contains(query.trim(), true) || it.nameLatin.contains(query.trim(), true) || it.nameArabic.contains(query.trim()) }
     }
     Column(modifier, verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            FilterChip(!showBookmarks, { showBookmarks = false }, label = { Text(stringResource(R.string.quran_surahs)) }, modifier = Modifier.testTag("quran_surahs"))
-            FilterChip(showBookmarks, { showBookmarks = true }, label = { Text(stringResource(R.string.quran_bookmarks)) }, modifier = Modifier.testTag("quran_bookmarks"))
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            FilterChip(tab == 0, { tab = 0 }, label = { Text(stringResource(R.string.quran_surahs)) }, modifier = Modifier.testTag("quran_surahs"))
+            FilterChip(showBookmarks, { tab = 1 }, label = { Text(stringResource(R.string.quran_bookmarks)) }, modifier = Modifier.testTag("quran_bookmarks"))
+            FilterChip(tab == 2, { tab = 2 }, label = { Text(stringResource(R.string.qf_notes)) }, modifier = Modifier.testTag("quran_personal_notes"))
         }
-        if (!showBookmarks) OutlinedTextField(query, { query = it }, singleLine = true,
+        if (tab == 0) OutlinedTextField(query, { query = it }, singleLine = true,
             label = { Text(stringResource(R.string.quran_search)) }, modifier = Modifier.fillMaxWidth().testTag("quran_search"))
         LazyColumn(Modifier.fillMaxWidth().weight(1f), verticalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(bottom = 12.dp)) {
-            if (!showBookmarks && last != null) item("continue") {
+            item("statistics") {
+                OutlinedButton(onClick = { statistics = true }, modifier = Modifier.fillMaxWidth().testTag("quran_statistics_open")) {
+                    Text(stringResource(R.string.qf_statistics))
+                }
+            }
+            if (stop != null && tab != 1) item("stop") {
+                ZCard(onClick = { open(stop) }, modifier = Modifier.testTag("quran_saved_stop")) {
+                    Text(stringResource(R.string.qf_saved_stop), style = MaterialTheme.typography.titleMedium)
+                    Text(stop.key + " · " + book.surahs.first { it.id == stop.surah }.let { if (ru) it.nameRu else it.nameLatin })
+                    if (progress.note(stop).isNotBlank()) Text(progress.note(stop), maxLines = 3)
+                }
+            }
+            if (tab == 0 && last != null) item("continue") {
                 ZCard(modifier = Modifier.testTag("quran_continue"), onClick = { open(last) }) {
                     Text(stringResource(R.string.quran_continue), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
                     val surah = book.surahs.first { it.id == last.surah }
                     Text("${if (ru) surah.nameRu else surah.nameLatin} · ${last.surah}:${last.ayah}", style = MaterialTheme.typography.titleMedium)
                 }
             }
-            if (showBookmarks) {
+            if (tab == 2) {
+                if (notes.isEmpty()) item { Text(stringResource(R.string.qf_no_notes)) }
+                items(notes, key = { "note_" + it.key }) { location ->
+                    ZCard(onClick = { open(location) }, modifier = Modifier.testTag("quran_note_" + location.surah + "_" + location.ayah)) {
+                        Text(location.key, style = MaterialTheme.typography.titleMedium)
+                        Text(progress.note(location), maxLines = 4)
+                    }
+                }
+            } else if (showBookmarks) {
                 if (bookmarks.isEmpty()) item { Text(stringResource(R.string.quran_no_bookmarks), modifier = Modifier.padding(vertical = 24.dp)) }
                 items(bookmarks, key = { it.key }) { location ->
                     val surah = book.surahs.first { it.id == location.surah }
@@ -143,134 +158,14 @@ private fun QuranIndex(book: QuranBook, progress: QuranProgress, open: (QuranPro
             }
         }
     }
-}
-
-@Composable
-private fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: Float,
-    progress: QuranProgress, showIndex: () -> Unit, modifier: Modifier) {
-    val ru = Lang.content(LocalContext.current) == "ru"
-    val surah = remember(book, surahId) { book.surahs.first { it.id == surahId } }
-    val verses = remember(book, surahId) { book.verses(surahId) }
-    var blockAnchor by rememberSaveable { mutableIntStateOf(firstAyah) }
-    val blocks = remember(verses, blockAnchor) { QuranReading.blocks(verses, blockAnchor) }
-    var wholeSurah by rememberSaveable { mutableStateOf(progress.wholeSurah) }
-    val verseList = rememberLazyListState((firstAyah - 1).coerceIn(verses.indices))
-    val wholeList = rememberLazyListState(QuranReading.blockIndex(blocks, firstAyah))
-    val list = if (wholeSurah) wholeList else verseList
-    val focus = LocalFocusManager.current
-    val scope = rememberCoroutineScope()
-    var bookmarks by remember { mutableStateOf(progress.bookmarks(book)) }
-    var jump by rememberSaveable { mutableStateOf(firstAyah.toString()) }
-    var invalid by rememberSaveable { mutableStateOf(false) }
-    LaunchedEffect(list, surahId, wholeSurah, blocks) {
-        snapshotFlow { list.isScrollInProgress to list.firstVisibleItemIndex }.distinctUntilChanged().collect { (scrolling, index) ->
-            if (scrolling) {
-                val number = if (wholeSurah) blocks[index.coerceIn(blocks.indices)].firstAyah else index + 1
-                progress.save(QuranProgress.Location(surahId, number))
-            }
-        }
-    }
-    Column(modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            Column(Modifier.weight(1f)) {
-                Text(if (ru) surah.nameRu else surah.nameLatin, style = MaterialTheme.typography.titleLarge)
-                Text(stringResource(R.string.quran_ayah_count, surah.ayahCount), style = MaterialTheme.typography.labelMedium)
-            }
-            TextButton(onClick = showIndex, modifier = Modifier.testTag("quran_surahs")) { Text(stringResource(R.string.quran_surahs)) }
-        }
-        FilledTonalButton(
-            onClick = {
-                val number = if (wholeSurah) blocks[wholeList.firstVisibleItemIndex.coerceIn(blocks.indices)].firstAyah
-                    else verseList.firstVisibleItemIndex + 1
-                val nextMode = !wholeSurah
-                if (nextMode) {
-                    blockAnchor = number
-                    wholeList.requestScrollToItem(QuranReading.blockIndex(QuranReading.blocks(verses, number), number))
-                } else verseList.requestScrollToItem(number - 1)
-                progress.wholeSurah = nextMode
-                wholeSurah = nextMode
-                focus.clearFocus()
-                progress.save(QuranProgress.Location(surahId, number))
-            },
-            modifier = Modifier.fillMaxWidth().testTag("quran_read_mode"),
-        ) {
-            Text(stringResource(if (wholeSurah) R.string.quran_read_with_translation else R.string.quran_read_whole))
-        }
-        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            OutlinedTextField(jump, { jump = it; invalid = false }, singleLine = true, isError = invalid,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                label = { Text(stringResource(R.string.quran_ayah)) }, modifier = Modifier.weight(1f).testTag("quran_ayah_input"))
-            FilledTonalButton(onClick = {
-                val number = jump.toIntOrNull()
-                if (number == null || number !in 1..surah.ayahCount) invalid = true
-                else scope.launch {
-                    focus.clearFocus()
-                    if (wholeSurah) {
-                        blockAnchor = number
-                        wholeList.requestScrollToItem(QuranReading.blockIndex(QuranReading.blocks(verses, number), number))
-                    } else verseList.scrollToItem(number - 1)
-                    // A short final verse may share the viewport with the preceding verse.
-                    progress.save(QuranProgress.Location(surahId, number))
-                }
-            }, modifier = Modifier.testTag("quran_go")) { Text(stringResource(R.string.quran_go)) }
-        }
-        if (invalid) Text(stringResource(R.string.quran_jump_error, surah.ayahCount), color = MaterialTheme.colorScheme.error, modifier = Modifier.testTag("quran_jump_error"))
-        if (wholeSurah) {
-            // One uninterrupted reading surface; no cards, translations or next-page controls.
-            LazyColumn(
-                modifier = Modifier.fillMaxWidth().weight(1f)
-                    .clip(RoundedCornerShape(24.dp))
-                    .background(MaterialTheme.colorScheme.surfaceContainerLow)
-                    .testTag("quran_whole_surah"),
-                state = wholeList,
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 20.dp),
-            ) {
-                items(blocks, key = { it.firstAyah }) { block ->
-                    SelectionContainer {
-                        Text(block.text,
-                            modifier = Modifier.fillMaxWidth().testTag("quran_whole_" + block.firstAyah),
-                            style = ArabicStyle.copy(fontSize = (30 * scale).sp, textDirection = TextDirection.Rtl),
-                            textAlign = TextAlign.Right, color = MaterialTheme.colorScheme.primary)
-                    }
-                }
-            }
-        } else LazyColumn(Modifier.fillMaxWidth().weight(1f), state = verseList, verticalArrangement = Arrangement.spacedBy(16.dp), contentPadding = PaddingValues(vertical = 12.dp)) {
-            items(verses, key = { it.number }) { ayah ->
-                val location = QuranProgress.Location(surahId, ayah.number)
-                var notes by rememberSaveable { mutableStateOf(false) }
-                ZCard(modifier = Modifier.testTag("quran_ayah_${ayah.number}")) {
-                    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                        Text("$surahId:${ayah.number}", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.weight(1f))
-                        TextButton(onClick = { bookmarks = progress.toggle(location, book) }, modifier = Modifier.testTag("quran_bookmark_${ayah.number}")) {
-                            Text(stringResource(if (location in bookmarks) R.string.quran_saved else R.string.quran_save))
-                        }
-                    }
-                    SelectionContainer {
-                        Column(verticalArrangement = Arrangement.spacedBy(18.dp)) {
-                            Text(ayah.arabic, modifier = Modifier.fillMaxWidth().testTag("quran_arabic_${ayah.number}"),
-                                style = ArabicStyle.copy(fontSize = (30 * scale).sp, textDirection = TextDirection.Rtl),
-                                textAlign = TextAlign.Right, color = MaterialTheme.colorScheme.primary)
-                            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-                            Text(stringResource(R.string.quran_translation_label), style = MaterialTheme.typography.labelMedium,
-                                color = MaterialTheme.colorScheme.secondary)
-                            Text(ayah.translation, modifier = Modifier.testTag("quran_translation_${ayah.number}"),
-                                style = MaterialTheme.typography.bodyLarge.copy(fontSize = (18 * scale).sp, lineHeight = (30 * scale).sp))
-                        }
-                    }
-                    if (ayah.footnotes.isNotBlank()) {
-                        TextButton(onClick = { notes = !notes }) { Text(stringResource(R.string.quran_notes)) }
-                        if (notes) SelectionContainer {
-                            Text(ayah.footnotes, style = MaterialTheme.typography.bodyMedium)
-                        }
-                    }
-                }
-            }
-        }
+    if (statistics) HorizonSheet(stringResource(R.string.qf_statistics), { statistics = false }) {
+        PersonalProgressSetting()
+        QuranStatisticsCard(book)
     }
 }
 
 @Composable
-private fun QuranSources(close: () -> Unit) {
+internal fun QuranSources(close: () -> Unit) {
     val uri = LocalUriHandler.current
     HorizonSheet(stringResource(R.string.quran_sources), close) {
         Text(stringResource(R.string.quran_source_arabic), style = MaterialTheme.typography.bodyLarge)
