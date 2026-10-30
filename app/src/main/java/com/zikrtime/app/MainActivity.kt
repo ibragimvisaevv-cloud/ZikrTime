@@ -122,7 +122,7 @@ class MainActivity : ComponentActivity() {
                             enter = fadeIn(androidx.compose.animation.core.tween(0)),
                             exit = fadeOut(androidx.compose.animation.core.tween(if (com.zikrtime.app.ui.motionEnabled()) 380 else 0)),
                         ) {
-                            com.zikrtime.app.ui.CrescentSplash()
+                            com.zikrtime.app.ui.HorizonSplash()
                         }
                     }
                 }

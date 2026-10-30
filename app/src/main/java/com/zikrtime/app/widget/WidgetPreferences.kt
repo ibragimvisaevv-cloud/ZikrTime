@@ -13,6 +13,7 @@ object WidgetPreferences {
     }
     fun remove(c: Context, id: Int) { prefs(c).edit().remove("theme_$id").remove("dates_$id").apply() }
     fun restore(c: Context, old: Int, new: Int) { save(c, new, theme(c, old), dates(c, old)); remove(c, old) }
+    fun followsSystem(c: Context, id: Int): Boolean = theme(c,id) == "system" || (theme(c,id) == "app" && Store.appearance !in listOf("light", "dark"))
     fun dark(c: Context, id: Int): Boolean = when (val mode = theme(c, id)) {
         "light" -> false
         "dark" -> true

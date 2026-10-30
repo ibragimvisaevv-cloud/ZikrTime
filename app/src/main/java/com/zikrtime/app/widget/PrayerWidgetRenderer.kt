@@ -47,10 +47,21 @@ internal object PrayerWidgetRenderer {
         val local = Lang.wrap(c)
         val res = local.resources
         val dark = darkOverride ?: WidgetPreferences.dark(c, id)
+        val automatic = darkOverride == null && Build.VERSION.SDK_INT >= 31 && WidgetPreferences.followsSystem(c,id)
         val showDates = datesOverride ?: WidgetPreferences.dates(c,id)
         val ink = if (dark) 0xFFF8F1E3.toInt() else 0xFF173E34.toInt()
         val secondary = if (dark) 0xFFC3CFC1.toInt() else 0xFF526157.toInt()
         val gold = if (dark) 0xFFE3C58C.toInt() else 0xFF77572C.toInt()
+        fun paint(view: RemoteViews, viewId: Int, color: Int) {
+            if (automatic && Build.VERSION.SDK_INT >= 31) {
+                val pair = when (color) {
+                    ink -> 0xFF173E34.toInt() to 0xFFF8F1E3.toInt()
+                    gold -> 0xFF77572C.toInt() to 0xFFE3C58C.toInt()
+                    else -> 0xFF526157.toInt() to 0xFFC3CFC1.toInt()
+                }
+                view.setColorInt(viewId, "setTextColor", pair.first, pair.second)
+            } else view.setTextColor(viewId, color)
+        }
         val type = PrayerWidgetModel.layout(size.first, size.second, c.resources.configuration.fontScale)
         val hasData = Store.onboarded && Store.location.latitude.isFinite() && Store.location.longitude.isFinite()
         val layout = if (!hasData) R.layout.widget_prayer_empty else when (type) {
@@ -60,12 +71,12 @@ internal object PrayerWidgetRenderer {
             PrayerWidgetModel.Layout.DAY -> R.layout.widget_prayer_day
         }
         val v = RemoteViews(c.packageName, layout)
-        v.setInt(R.id.widget_root, "setBackgroundResource", if (dark) R.drawable.widget_surface_dark else R.drawable.widget_surface_light)
+        v.setInt(R.id.widget_root, "setBackgroundResource", if (automatic) R.drawable.widget_surface_auto else if (dark) R.drawable.widget_surface_dark else R.drawable.widget_surface_light)
         // Architecture is a separate non-text layer; fully opaque surfaces protect against busy wallpapers.
-        v.setImageViewResource(R.id.w_bg, if (type == PrayerWidgetModel.Layout.SQUARE) { if (dark) R.drawable.widget_arch_dark else R.drawable.widget_arch_light } else { if (dark) R.drawable.widget_horizon_dark else R.drawable.widget_horizon_light })
+        v.setImageViewResource(R.id.w_bg, if (type == PrayerWidgetModel.Layout.SQUARE) { if (automatic) R.drawable.widget_arch_auto else if (dark) R.drawable.widget_arch_dark else R.drawable.widget_arch_light } else { if (automatic) R.drawable.widget_horizon_auto else if (dark) R.drawable.widget_horizon_dark else R.drawable.widget_horizon_light })
         v.setOnClickPendingIntent(R.id.widget_root, open(c, if (hasData) "prayer" else "city"))
         if (!hasData) {
-            v.setTextColor(R.id.w_empty_title, ink); v.setTextColor(R.id.w_empty_action, gold)
+            paint(v, R.id.w_empty_title, ink); paint(v, R.id.w_empty_action, gold)
             v.setTextViewText(R.id.w_empty_action, res.getString(R.string.widget_setup_city))
             return v
         }
@@ -84,19 +95,27 @@ internal object PrayerWidgetRenderer {
                 .put("city",Store.location.id).put("date",now.toLocalDate().toString()).put("layout",type.name)
                 .put("width",size.first).put("height",size.second).put("dark",dark).toString())
         }
-        val name = prayerName(res, next)
+        val name = prayerName(res, next) + if (at.toLocalDate() != now.toLocalDate())
+            " · " + at.format(DateTimeFormatter.ofPattern("d MMM", Lang.locale(local))) else ""
         val title = when (type) {
             PrayerWidgetModel.Layout.COMPACT -> R.string.widget_compact_name
             PrayerWidgetModel.Layout.WIDE -> R.string.widget_timeline_name
             PrayerWidgetModel.Layout.SQUARE -> R.string.widget_square_name
             PrayerWidgetModel.Layout.DAY -> R.string.widget_day_name
         }
-        v.setContentDescription(R.id.widget_root, res.getString(title) + ", " + name + ", " + at.format(clockFormatter(local)))
+        val providerTitle = when (AppWidgetManager.getInstance(c).getAppWidgetInfo(id)?.provider?.shortClassName?.substringAfterLast('.')) {
+            "CompactPrayerWidget" -> R.string.widget_compact_name
+            "TimelineWidget" -> R.string.widget_timeline_name
+            "NextPrayerWidget" -> R.string.widget_square_name
+            "TodayWidget" -> R.string.widget_day_name
+            else -> title
+        }
+        v.setContentDescription(R.id.widget_root, res.getString(providerTitle) + ", " + name + ", " + at.format(clockFormatter(local)))
         v.setTextViewText(R.id.w_name, name)
-        v.setTextColor(R.id.w_name, ink)
+        paint(v, R.id.w_name, ink)
         v.setTextViewText(R.id.w_time, at.format(clockFormatter(local)))
-        v.setTextColor(R.id.w_time, ink)
-        v.setTextColor(R.id.w_countdown, gold)
+        paint(v, R.id.w_time, ink)
+        paint(v, R.id.w_countdown, gold)
         val exact = Build.VERSION.SDK_INT < 31 || c.getSystemService(AlarmManager::class.java).canScheduleExactAlarms()
         if (exact) {
             v.setChronometer(R.id.w_countdown, PrayerWidgetModel.countdownBase(SystemClock.elapsedRealtime(), now.toInstant().toEpochMilli(), at.toInstant().toEpochMilli()),
@@ -115,19 +134,19 @@ internal object PrayerWidgetRenderer {
         val gregorian = date.format(DateTimeFormatter.ofPattern(if (type == PrayerWidgetModel.Layout.DAY) "EEE, d MMM" else "d MMM · EEE", locale))
         val hijri = runCatching {
             val h = HijrahDate.from(date)
-            "${h.get(ChronoField.DAY_OF_MONTH)} ${res.getStringArray(R.array.hijri_months)[h.get(ChronoField.MONTH_OF_YEAR)-1]}"
+            "${h.get(ChronoField.DAY_OF_MONTH)} ${res.getStringArray(R.array.hijri_months)[h.get(ChronoField.MONTH_OF_YEAR)-1]}" + if (type == PrayerWidgetModel.Layout.DAY) " ${h.get(ChronoField.YEAR_OF_ERA)}" else ""
         }.getOrDefault("")
         if (type == PrayerWidgetModel.Layout.WIDE || type == PrayerWidgetModel.Layout.DAY) {
-            v.setTextViewText(R.id.w_city, Cities.displayName(local, Store.location)); v.setTextColor(R.id.w_city, secondary)
+            v.setTextViewText(R.id.w_city, Cities.displayName(local, Store.location)); paint(v, R.id.w_city, secondary)
         }
-        if (type == PrayerWidgetModel.Layout.WIDE) { v.setTextColor(R.id.w_until, secondary); v.setTextViewText(R.id.w_until, res.getString(R.string.widget_countdown_label)) }
+        if (type == PrayerWidgetModel.Layout.WIDE) { paint(v, R.id.w_until, secondary); v.setTextViewText(R.id.w_until, res.getString(R.string.widget_countdown_label)) }
         if (type == PrayerWidgetModel.Layout.SQUARE || type == PrayerWidgetModel.Layout.DAY) {
             v.setTextViewText(R.id.w_date, if (type == PrayerWidgetModel.Layout.DAY && showDates) "$gregorian · $hijri" else gregorian)
-            v.setTextColor(R.id.w_date, secondary)
+            paint(v, R.id.w_date, secondary)
         }
         if (type == PrayerWidgetModel.Layout.SQUARE) {
-            v.setTextViewText(R.id.w_label, res.getString(R.string.home_next_prayer)); v.setTextColor(R.id.w_label, secondary)
-            v.setTextViewText(R.id.w_hijri, hijri); v.setTextColor(R.id.w_hijri, secondary)
+            v.setTextViewText(R.id.w_label, res.getString(R.string.home_next_prayer)); paint(v, R.id.w_label, secondary)
+            v.setTextViewText(R.id.w_hijri, hijri); paint(v, R.id.w_hijri, secondary)
             v.setViewVisibility(R.id.w_hijri, if (showDates) View.VISIBLE else View.GONE)
         }
         if (type == PrayerWidgetModel.Layout.DAY) {
@@ -142,14 +161,15 @@ internal object PrayerWidgetRenderer {
                     val mark = if (prayer in prayed) "✓ " else if (!prayer.isPrayer) "☀ " else if (active) "› " else ""
                     cell.setTextViewText(R.id.w_cell_name, mark + prayerName(res, prayer))
                     cell.setTextViewText(R.id.w_cell_time, times[prayer].format(clockFormatter(local)))
-                    cell.setTextColor(R.id.w_cell_name, if (active) gold else secondary)
-                    cell.setTextColor(R.id.w_cell_time, if (active) gold else ink)
+                    paint(cell, R.id.w_cell_name, if (active) gold else secondary)
+                    paint(cell, R.id.w_cell_time, if (active) gold else ink)
                     val available = prayer.isPrayer && !times[prayer].isAfter(now)
                     val description = prayerName(res,prayer) + " " + times[prayer].format(clockFormatter(local)) +
                         if (available) ", " + res.getString(R.string.widget_tap_to_mark) else ""
                     cell.setContentDescription(R.id.w_cell, description)
                     if (available) cell.setOnClickPendingIntent(R.id.w_cell, PendingIntent.getBroadcast(c, 200 + prayer.ordinal,
-                        Intent(c, TodayWidget::class.java).setAction(TodayWidget.ACTION_TOGGLE).putExtra(TodayWidget.EXTRA_INDEX, prayer.ordinal)
+                        Intent(c, TodayWidget::class.java).setAction(TodayWidget.ACTION_TOGGLE)
+                            .setData(android.net.Uri.parse("zikrtime://widget/prayed/$date/${prayer.ordinal}")).putExtra(TodayWidget.EXTRA_INDEX, prayer.ordinal)
                             .putExtra("date", date.toString()), PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
                     else cell.setOnClickPendingIntent(R.id.w_cell, open(c, "prayer"))
                     row.addView(R.id.w_row, cell)

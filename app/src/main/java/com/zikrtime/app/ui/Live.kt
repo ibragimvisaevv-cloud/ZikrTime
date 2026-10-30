@@ -575,13 +575,13 @@ fun Modifier.shake(trigger: Boolean): Modifier = composed {
 
 // ---------------- Заставка ----------------
 
-/** Заставка при запуске: золотой полумесяц со звездой на изумрудном фоне. */
+/** Утверждённый знак «Купол и горизонт» на общей пейзажной сцене. */
 @Composable
-fun CrescentSplash(modifier: Modifier = Modifier) {
+fun HorizonSplash(modifier: Modifier = Modifier) {
     Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         SceneBackdrop(Modifier.fillMaxSize(), controlBars = false)
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            Icon(painterResource(R.drawable.ic_mosque), null, tint = Gold, modifier = Modifier.size(64.dp))
+            AppIconImage(Modifier.size(88.dp))
             Text(stringResource(R.string.app_name), color = Cream, style = MaterialTheme.typography.headlineLarge)
             Text(stringResource(R.string.slogan), color = Cream, style = MaterialTheme.typography.bodyLarge)
         }

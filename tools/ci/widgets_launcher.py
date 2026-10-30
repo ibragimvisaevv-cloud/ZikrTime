@@ -25,6 +25,9 @@ def home():
 def capture(name):time.sleep(2);screenshot(name)
 def show_provider(provider):
     shell('input','keyevent','KEYCODE_HOME');time.sleep(1)
+    # HOME preserves the last workspace page. Move to the first page before scanning.
+    for _ in range(6):
+        shell('input','swipe',130,1000,950,1000,220);time.sleep(.25)
     marker={'CompactPrayerWidget':'2×1','TimelineWidget':'4×1','NextPrayerWidget':'2×2','TodayWidget':'4×2'}.get(provider)
     for page in range(6):
         root=ui()
@@ -65,6 +68,8 @@ shell('am','start','-S','-W','-n',PKG+'/.MainActivity','--es','qa_screen','home'
 time.sleep(3)
 put_pref('online_times','boolean','false');put_pref('appearance','string','light')
 probe('refresh');show_provider('CompactPrayerWidget');capture('A-compact-light')
+probe('theme','CompactPrayerWidget',theme='dark');show_provider('CompactPrayerWidget');capture('A-compact-dark')
+probe('theme','CompactPrayerWidget',theme='app')
 for provider,label in [('TimelineWidget','B-timeline'),('NextPrayerWidget','C-square'),('TodayWidget','D-day'),('TasbihWidget','E-tasbih'),('ScreenTimeWidget','F-focus')]:
     pin(provider);show_provider(provider);capture(label+'-light')
     if provider in ['TasbihWidget','ScreenTimeWidget']:
