@@ -1,0 +1,68 @@
+name: Quran reader UI recheck
+on:
+  push:
+    branches: [codex/quran-reader-0814]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: quran-ui-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  emulator:
+    if: ${{ contains(github.event.head_commit.message, '[quran-ui]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify unchanged Android inputs and retrieve the tested APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BUILD_SOURCE_SHA: 006df31ce4a455d5f265e78d3150f5e9537f424a
+        run: |
+          mkdir -p ci-out
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/12999130395" > ci-out/reused-artifact.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/41098466568/jobs" > ci-out/reused-build-jobs.json
+          python3 - <<'PY'
+          import json, os, pathlib
+          artifact = json.loads(pathlib.Path('ci-out/reused-artifact.json').read_text())
+          assert artifact['id'] == 12999130395 and artifact['name'] == 'ZikrTime-0.8.14-check'
+          assert not artifact['expired'], 'Tested build artifact has expired'
+          assert artifact['workflow_run']['id'] == 41098466568
+          assert artifact['workflow_run']['head_sha'] == os.environ['BUILD_SOURCE_SHA']
+          jobs = json.loads(pathlib.Path('ci-out/reused-build-jobs.json').read_text())['jobs']
+          build = next(step for job in jobs for step in job['steps']
+                       if step['name'] == 'Unit tests, lint and debug APK')
+          assert build['conclusion'] == 'success', 'Reused build did not pass tests and lint'
+          PY
+          git fetch --no-tags --depth=1 origin "$BUILD_SOURCE_SHA"
+          git diff --exit-code "$BUILD_SOURCE_SHA" HEAD -- app/ tools/i18n/ tools/quiz/ tools/quran/ tools/audio/ build.gradle.kts settings.gradle.kts gradle.properties gradle/ gradlew gradlew.bat .gitattributes
+          printf '%s\n' "$BUILD_SOURCE_SHA" > ci-out/reused-build-source.txt
+          gh run download 41098466568 -n ZikrTime-0.8.14-check -D reused-check
+          mkdir -p app/build
+          cp -R reused-check/app/build/outputs reused-check/app/build/reports reused-check/app/build/test-results app/build/
+          sha256sum app/build/outputs/apk/debug/app-debug.apk > ci-out/reused-apk-sha256.txt
+      - run: python3 -m pip install 'Pillow>=11,<13'
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-quran.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Quran and adhan journeys on Android 15
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: bash tools/ci/quran_reader_smoke.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ZikrTime-0.8.14-UI-check
+          path: |
+            app/build/outputs/apk/debug/
+            app/build/reports/
+            app/build/test-results/
+            ci-out/

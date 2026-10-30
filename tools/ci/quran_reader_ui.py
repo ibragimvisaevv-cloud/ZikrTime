@@ -22,10 +22,29 @@ sys.excepthook = record_failure
 
 
 def start(route, lang='ru'):
+    started = time.monotonic()
     shell('am', 'start', '-S', '-W', '-n', PKG + '/.MainActivity',
           '--es', 'qa_screen', route, '--es', 'qa_lang', lang,
           '--ez', 'qa_onboarded', 'true')
     time.sleep(2)
+    if route == 'quran':
+        # A cold process verifies and parses all bundled source bytes. Capture
+        # the completed reader, not its legitimate loading indicator.
+        deadline = time.monotonic() + 30
+        while True:
+            root = ui()
+            if any('Не удалось проверить' in node.get('text', '')
+                   or 'Unable to verify' in node.get('text', '') for node in root.iter('node')):
+                raise AssertionError('Quran source integrity error is visible on screen')
+            if find_control(root, 'quran_search') is not None:
+                break
+            if time.monotonic() >= deadline:
+                raise AssertionError('Quran index did not finish loading within 30 seconds')
+            time.sleep(.5)
+        timing = OUT / 'quran-launch-times.json'
+        measurements = json.loads(timing.read_text()) if timing.exists() else []
+        measurements.append({'process_launch_to_ready_seconds': round(time.monotonic() - started, 2)})
+        timing.write_text(json.dumps(measurements, indent=2))
 
 
 def shot(name):
