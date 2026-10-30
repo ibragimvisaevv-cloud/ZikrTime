@@ -3,8 +3,8 @@ import json,subprocess,shutil,io,zipfile
 from pathlib import Path
 from PIL import Image,ImageDraw,ImageFont
 import cairosvg
-RUN=40962100669
-SHA="8e7963002df5b14436c70e2d3f7bea01c22fb39f"
+RUN=41024626556
+SHA="e06eeac24b1c806d2242fcdbecc56f1d63a25411"
 repo="ibragimvisaevv-cloud/ZikrTime"
 run=json.loads(subprocess.check_output(["gh","api",f"repos/{repo}/actions/runs/{RUN}"],text=True))
 assert run["head_sha"]==SHA
@@ -23,7 +23,7 @@ def board(name,items,title):
         d.text((x,y-30),label,font=font(17),fill="#314B3E");page.paste(im,(x,y))
     page.save(out/name,quality=90)
 board("launcher-light.jpg",[("A-compact-light","A · Ближайший намаз"),("B-timeline-light","B · Линия времени"),("C-square-light","C · Мой намаз"),("D-day-light","D · Расписание дня")],"ZikrTime · реальные снимки Android 15")
-board("launcher-dark.jpg",[("B-timeline-dark","B · тёмное оформление"),("C-square-dark","C · тёмное оформление"),("D-day-dark","D · тёмное оформление"),("E-tasbih-light","Тасбих · рабочие действия")],"Темы и дополнительные виджеты")
+board("launcher-dark.jpg",[("A-compact-dark","A · тёмное оформление"),("B-timeline-dark","B · тёмное оформление"),("C-square-dark","C · тёмное оформление"),("D-day-dark","D · тёмное оформление")],"Темы и дополнительные виджеты")
 for name in [p.name for p in evidence.iterdir() if p.is_file() and p.suffix in [".json",".xml",".txt",".mp4"]]:
     if (evidence/name).exists():shutil.copy2(evidence/name,out/name)
 # Separate original screenshots are convenient for close inspection (JPEG compression only).
@@ -83,9 +83,9 @@ for concept in json.loads((icons/"concepts.json").read_text()):
         b=Image.new("RGBA",(144,144),bg);b.alpha_composite(im);b=masked(b,82);page.paste(b,(x,913),b)
     for x,dark in [(740,False),(1120,True)]:
         page.paste(desktop(icon,dark),(x,240));d.text((x,795),"Тёмные обои" if dark else "Светлые обои",font=font(16),fill="#536358")
-    d.text((740,868),"Макет рабочего стола · значок ещё не внедрён",font=font(15),fill="#536358")
+    d.text((740,868),"Дизайнерский макет рабочего стола",font=font(15),fill="#536358")
     page.save(icons/(slug+"-preview.jpg"),quality=92)
 with zipfile.ZipFile(out/"ZikrTime-icon-concepts.zip","w",zipfile.ZIP_DEFLATED) as z:
     for p in icons.rglob("*"):
         if p.is_file():z.write(p,p.relative_to(icons))
-(out/"README.md").write_text(f"# Виджеты ZikrTime — проверка\n\nРеальные снимки Android 15 / API 35, stock launcher, 1080×1920, 420 dpi.\n\nСборка: {SHA}; [прогон {RUN}](https://github.com/{repo}/actions/runs/{RUN}), статус: {run['conclusion']}.\n\n![Светлые](launcher-light.jpg)\n\n![Тёмные](launcher-dark.jpg)\n\n[Запись](widgets.mp4). [Иконки и исходники](ZikrTime-icon-concepts.zip).\n\nЭто этап проверки. Результаты дополнительных сценариев будут отмечены отдельно. Макеты иконок находятся в ../icons; новая иконка в APK не внедрена.\n")
+(out/"README.md").write_text(f"# Виджеты ZikrTime — проверка\n\nРеальные снимки Android 15 / API 35, stock launcher, 1080×1920, 420 dpi.\n\nСборка: {SHA}; [прогон {RUN}](https://github.com/{repo}/actions/runs/{RUN}), статус: {run['conclusion']}.\n\n![Светлые](launcher-light.jpg)\n\n![Тёмные](launcher-dark.jpg)\n\n[Запись](widgets.mp4). [Иконки и исходники](ZikrTime-icon-concepts.zip).\n\nЭто этап проверки. Результаты дополнительных сценариев будут отмечены отдельно. Утверждённый «Купол и горизонт» внедрён в APK. Концептуальные макеты находятся в ../icons; фотографии рабочего стола выше получены в эмуляторе.\n")
