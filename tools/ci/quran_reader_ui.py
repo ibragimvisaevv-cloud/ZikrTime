@@ -281,19 +281,27 @@ if mode in ('all', 'navigation-adhan'):
 
 
     def select_voice(identifier):
-        for _ in range(4):
+        for _ in range(8):
             row = locate_control('adhan_select_' + identifier)
             radio = next((node for node in row.iter('node') if node.get('class') == 'android.widget.RadioButton'
                           or node.get('checkable') == 'true'), None)
-            assert radio is not None, 'Missing voice selection control: ' + identifier
-            left, upper, right, bottom = map(int, re.findall(r'-?\d+', radio.get('bounds')))
-            rl, rt, rr, rb = map(int, re.findall(r'-?\d+', row.get('bounds')))
-            left, upper, right, bottom = max(left, rl), max(upper, rt), min(right, rr), min(bottom, rb)
-            if right - left >= 12 and bottom - upper >= 12:
-                shell('input', 'tap', (left + right) // 2, (upper + bottom) // 2)
-                time.sleep(.5)
-                return
-            shell('input', 'swipe', rl + 6, rb - 20, rl + 6, max(rt, rb - 300), 180)
+            if radio is not None:
+                left, upper, right, bottom = map(int, re.findall(r'-?\d+', radio.get('bounds')))
+                rl, rt, rr, rb = map(int, re.findall(r'-?\d+', row.get('bounds')))
+                left, upper, right, bottom = max(left, rl), max(upper, rt), min(right, rr), min(bottom, rb)
+                if right - left >= 40 and bottom - upper >= 40:
+                    shell('input', 'tap', (left + right) // 2, (upper + bottom) // 2)
+                    time.sleep(.5)
+                    return
+            # A visible sliver of a row does not yet expose its radio child.
+            # Scroll inside the screen's owner, away from the system gesture bar.
+            tree = ui()
+            owners = [node for node in tree.iter('node') if node.get('scrollable') == 'true']
+            assert owners, 'Voice row is clipped without a scroll owner: ' + identifier
+            bounds = [tuple(map(int, re.findall(r'-?\d+', node.get('bounds')))) for node in owners]
+            left, upper, right, bottom = max(bounds, key=lambda b: b[3] - b[1])
+            shell('input', 'swipe', left + 6, int(upper + (bottom - upper) * .8),
+                  left + 6, int(upper + (bottom - upper) * .3), 250)
         raise AssertionError('Voice radio button remains clipped: ' + identifier)
 
 
@@ -315,6 +323,7 @@ if mode in ('all', 'navigation-adhan'):
         shot(voice + '-playing')
         tap_control(preview_id)
         assert locate_control(preview_id).get('content-desc') == stopped_description
+        passed['audio_preview_' + voice] = True
     start('alarm')
     assert prefs()['alarm_sound'] == 'adhan_fajr'
     tap_control('adhan_preview_adhan_madinah')

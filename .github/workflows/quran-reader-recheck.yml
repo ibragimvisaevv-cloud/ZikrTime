@@ -18,17 +18,17 @@ jobs:
       - name: Verify unchanged Android inputs and retrieve the tested APK
         env:
           GH_TOKEN: ${{ github.token }}
-          BUILD_SOURCE_SHA: 006df31ce4a455d5f265e78d3150f5e9537f424a
+          BUILD_SOURCE_SHA: 8e37ce2ff975566a33c119d01c8087af448fd4e9
         run: |
           mkdir -p ci-out
-          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/12999130395" > ci-out/reused-artifact.json
-          gh api "repos/$GITHUB_REPOSITORY/actions/runs/41098466568/jobs" > ci-out/reused-build-jobs.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/13001256142" > ci-out/reused-artifact.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/41103686197/jobs" > ci-out/reused-build-jobs.json
           python3 - <<'PY'
           import json, os, pathlib
           artifact = json.loads(pathlib.Path('ci-out/reused-artifact.json').read_text())
-          assert artifact['id'] == 12999130395 and artifact['name'] == 'ZikrTime-0.8.14-check'
+          assert artifact['id'] == 13001256142 and artifact['name'] == 'ZikrTime-0.8.14-check'
           assert not artifact['expired'], 'Tested build artifact has expired'
-          assert artifact['workflow_run']['id'] == 41098466568
+          assert artifact['workflow_run']['id'] == 41103686197
           assert artifact['workflow_run']['head_sha'] == os.environ['BUILD_SOURCE_SHA']
           jobs = json.loads(pathlib.Path('ci-out/reused-build-jobs.json').read_text())['jobs']
           build = next(step for job in jobs for step in job['steps']
@@ -38,7 +38,7 @@ jobs:
           git fetch --no-tags --depth=1 origin "$BUILD_SOURCE_SHA"
           git diff --exit-code "$BUILD_SOURCE_SHA" HEAD -- app/ tools/i18n/ tools/quiz/ tools/quran/ tools/audio/ build.gradle.kts settings.gradle.kts gradle.properties gradle/ gradlew gradlew.bat .gitattributes
           printf '%s\n' "$BUILD_SOURCE_SHA" > ci-out/reused-build-source.txt
-          gh run download 41098466568 -n ZikrTime-0.8.14-check -D reused-check
+          gh run download 41103686197 -n ZikrTime-0.8.14-check -D reused-check
           mkdir -p app/build
           cp -R reused-check/app/build/outputs reused-check/app/build/reports reused-check/app/build/test-results app/build/
           sha256sum app/build/outputs/apk/debug/app-debug.apk > ci-out/reused-apk-sha256.txt
