@@ -434,6 +434,13 @@
     <string name="group_application">Колдонмо</string>
     <string name="group_data_help">Маалыматтар жана жардам</string>
     <string name="focus_remaining">Бүгүн жеткиликтүү</string>
+    <string name="azkar_source_button">Булак</string>
+    <string name="azkar_repetitions">Кайталоо: %1$d / %2$d</string>
+    <string name="azkar_mark_read">Окулду деп белгилөө</string>
+    <string name="azkar_read_done">Окулду</string>
+    <string name="azkar_sources_note">Эртең мененки жана кечки зикирлердин тандалган жыйнагы, толук тизме эмес. Айрым тексттер эки убакта тең окулат. Текст жана кайталоолор көрсөтүлгөн риваятка негизделген.</string>
+    <string name="azkar_single_read_note">Баскыч бир окууну белгилейт; кошумча кайталоо санын белгилебейт.</string>
+    <string name="azkar_translation_note">Орусча жана англисче тексттер — бул жыйнак үчүн маанилик котормо. Транскрипция арабча айтылышты алмаштырбайт.</string>
     <string name="pause_title">Аң-сезимдүү тыныгуу</string>
     <string name="pause_enable_hint">Тандалган колдонмолордун алдында: зикир, ниет жана убакыт. Өз каалооңуз менен гана күйгүзүлөт.</string>
     <string name="pause_soft">Жумшак режим</string>

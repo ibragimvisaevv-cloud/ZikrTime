@@ -102,27 +102,29 @@ class MainActivity : ComponentActivity() {
             (intent?.hasExtra("qa_screen") != true || intent?.getBooleanExtra("qa_splash", false) == true)
         setContent {
             val natural = Store.onboarded && (nav.stack.lastOrNull()?.screen in setOf(Screen.TASBIH, Screen.AZKAR, Screen.PROGRESS, Screen.REVIEW) || (nav.stack.isEmpty() && nav.tab == Tab.PRAYER))
-            ZikrTheme(natural = natural) {
-                val tilt = com.zikrtime.app.ui.rememberTilt(enabled = false)
-                var splash by androidx.compose.runtime.saveable.rememberSaveable { androidx.compose.runtime.mutableStateOf(showSplash) }
-                LaunchedEffect(Unit) {
-                    kotlinx.coroutines.delay(650)
-                    splash = false
-                }
-                CompositionLocalProvider(com.zikrtime.app.ui.LocalTilt provides tilt) {
-                    Box(Modifier.fillMaxSize().semantics { testTagsAsResourceId = true }) {
-                        // Переливающийся фон под всеми экранами
-                        com.zikrtime.app.ui.HorizonBackground()
-                        CompositionLocalProvider(LocalNav provides nav) {
-                            if (BuildConfig.DEBUG && QaHooks.widgetPreview) com.zikrtime.app.ui.WidgetPreview() else AppRoot()
-                        }
-                        // Заставка: полумесяц со звездой
-                        androidx.compose.animation.AnimatedVisibility(
-                            visible = splash,
-                            enter = fadeIn(androidx.compose.animation.core.tween(0)),
-                            exit = fadeOut(androidx.compose.animation.core.tween(if (com.zikrtime.app.ui.motionEnabled()) 380 else 0)),
-                        ) {
-                            com.zikrtime.app.ui.HorizonSplash()
+            com.zikrtime.app.ui.ThemeRevealHost {
+                ZikrTheme(natural = natural) {
+                    val tilt = com.zikrtime.app.ui.rememberTilt(enabled = false)
+                    var splash by androidx.compose.runtime.saveable.rememberSaveable { androidx.compose.runtime.mutableStateOf(showSplash) }
+                    LaunchedEffect(Unit) {
+                        kotlinx.coroutines.delay(650)
+                        splash = false
+                    }
+                    CompositionLocalProvider(com.zikrtime.app.ui.LocalTilt provides tilt) {
+                        Box(Modifier.fillMaxSize().semantics { testTagsAsResourceId = true }) {
+                            // Переливающийся фон под всеми экранами
+                            com.zikrtime.app.ui.HorizonBackground()
+                            CompositionLocalProvider(LocalNav provides nav) {
+                                if (BuildConfig.DEBUG && QaHooks.widgetPreview) com.zikrtime.app.ui.WidgetPreview() else AppRoot()
+                            }
+                            // Заставка: полумесяц со звездой
+                            androidx.compose.animation.AnimatedVisibility(
+                                visible = splash,
+                                enter = fadeIn(androidx.compose.animation.core.tween(0)),
+                                exit = fadeOut(androidx.compose.animation.core.tween(if (com.zikrtime.app.ui.motionEnabled()) 380 else 0)),
+                            ) {
+                                com.zikrtime.app.ui.HorizonSplash()
+                            }
                         }
                     }
                 }

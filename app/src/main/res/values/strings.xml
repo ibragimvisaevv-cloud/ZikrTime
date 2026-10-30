@@ -434,6 +434,13 @@
     <string name="group_application">Application</string>
     <string name="group_data_help">Data and help</string>
     <string name="focus_remaining">Available today</string>
+    <string name="azkar_source_button">Source</string>
+    <string name="azkar_repetitions">Repetitions: %1$d / %2$d</string>
+    <string name="azkar_mark_read">Mark as read</string>
+    <string name="azkar_read_done">Read</string>
+    <string name="azkar_sources_note">A selected morning and evening collection, not an exhaustive list. Some texts are read in both periods. The wording and repetitions are linked to the cited narration.</string>
+    <string name="azkar_single_read_note">The button records one reading; it does not prescribe an additional repetition count.</string>
+    <string name="azkar_translation_note">Russian and English are meaning-based translations prepared for this collection. Transliteration is a reading aid, not a replacement for Arabic pronunciation.</string>
     <string name="pause_title">Mindful pause</string>
     <string name="pause_enable_hint">Before selected apps: dhikr, intention and time. Enabled only when you choose.</string>
     <string name="pause_soft">Gentle mode</string>

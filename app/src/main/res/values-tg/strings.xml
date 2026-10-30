@@ -434,6 +434,13 @@
     <string name="group_application">Барнома</string>
     <string name="group_data_help">Маълумот ва кӯмак</string>
     <string name="focus_remaining">Имрӯз дастрас</string>
+    <string name="azkar_source_button">Манбаъ</string>
+    <string name="azkar_repetitions">Такрор: %1$d / %2$d</string>
+    <string name="azkar_mark_read">Хондашуда қайд кардан</string>
+    <string name="azkar_read_done">Хонда шуд</string>
+    <string name="azkar_sources_note">Маҷмӯаи интихобшудаи азкори субҳу шом, на рӯйхати пурра. Баъзе матнҳо дар ҳар ду вақт хонда мешаванд. Матн ва такрорҳо ба ривояти зикршуда асос меёбанд.</string>
+    <string name="azkar_single_read_note">Тугма як хонданро қайд мекунад; шумораи иловагии такрорро муқаррар намекунад.</string>
+    <string name="azkar_translation_note">Матнҳои русӣ ва англисӣ тарҷумаи маъно барои ин маҷмӯаанд. Транскрипсия ҷойгузини талаффузи арабӣ нест.</string>
     <string name="pause_title">Таваққуфи огоҳона</string>
     <string name="pause_enable_hint">Пеш аз барномаҳои интихобшуда: зикр, ният ва вақт. Танҳо бо интихоби шумо фаъол мешавад.</string>
     <string name="pause_soft">Реҷаи мулоим</string>

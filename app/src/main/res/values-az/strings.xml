@@ -434,6 +434,13 @@
     <string name="group_application">Tətbiq</string>
     <string name="group_data_help">Məlumat və kömək</string>
     <string name="focus_remaining">Bu gün mövcuddur</string>
+    <string name="azkar_source_button">Mənbə</string>
+    <string name="azkar_repetitions">Təkrar: %1$d / %2$d</string>
+    <string name="azkar_mark_read">Oxundu kimi qeyd et</string>
+    <string name="azkar_read_done">Oxundu</string>
+    <string name="azkar_sources_note">Səhər və axşam zikrlərindən seçmə toplusu, tam siyahı deyil. Bəzi mətnlər hər iki vaxtda oxunur. Mətn və təkrar sayı göstərilən rəvayətə əsaslanır.</string>
+    <string name="azkar_single_read_note">Düymə bir oxunuşu qeyd edir; əlavə təkrar sayı təyin etmir.</string>
+    <string name="azkar_translation_note">Rus və ingilis mətnləri bu toplu üçün məna tərcüməsidir. Transkripsiya ərəb tələffüzünü əvəz etmir.</string>
     <string name="pause_title">Şüurlu fasilə</string>
     <string name="pause_enable_hint">Seçilmiş tətbiqlərdən əvvəl: zikr, niyyət və vaxt. Yalnız sizin seçiminizlə aktivləşir.</string>
     <string name="pause_soft">Yumşaq rejim</string>

@@ -434,6 +434,13 @@
     <string name="group_application">Ilova</string>
     <string name="group_data_help">Ma’lumotlar va yordam</string>
     <string name="focus_remaining">Bugun mavjud</string>
+    <string name="azkar_source_button">Manba</string>
+    <string name="azkar_repetitions">Takror: %1$d / %2$d</string>
+    <string name="azkar_mark_read">O‘qilgan deb belgilash</string>
+    <string name="azkar_read_done">O‘qildi</string>
+    <string name="azkar_sources_note">Tonggi va kechki azkorlarning tanlangan to‘plami, to‘liq ro‘yxat emas. Ayrim matnlar ikkala vaqtda ham o‘qiladi. Matn va takrorlar ko‘rsatilgan rivoyatga asoslangan.</string>
+    <string name="azkar_single_read_note">Tugma bir o‘qishni qayd etadi; alohida takror sonini belgilamaydi.</string>
+    <string name="azkar_translation_note">Ruscha va inglizcha matnlar ushbu to‘plam uchun ma’no tarjimasidir. Transkripsiya arabcha talaffuz o‘rnini bosmaydi.</string>
     <string name="pause_title">Ongli tanaffus</string>
     <string name="pause_enable_hint">Tanlangan ilovalardan oldin: zikr, niyat va vaqt. Faqat siz tanlasangiz yoqiladi.</string>
     <string name="pause_soft">Yumshoq rejim</string>

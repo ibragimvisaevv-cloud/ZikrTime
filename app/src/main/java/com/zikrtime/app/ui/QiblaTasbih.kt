@@ -7,6 +7,7 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.view.HapticFeedbackConstants
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -47,6 +48,8 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.contentDescription
@@ -145,7 +148,7 @@ fun QiblaScreen() {
 
     ScreenScaffold(title = stringResource(R.string.qibla_title), onBack = { nav.back() }, showHeading = false) {
         PageHeading(stringResource(R.string.qibla_title), com.zikrtime.app.data.Cities.displayName(LocalContext.current, loc))
-        Box(Modifier.fillMaxWidth().aspectRatio(1f).padding(8.dp), contentAlignment = Alignment.Center) {
+        Box(Modifier.fillMaxWidth().aspectRatio(1f).testTag("tasbih_counter").padding(8.dp), contentAlignment = Alignment.Center) {
             Compass(heading = shownHeading, qibla = qibla, aligned = aligned)
         }
         Text(
@@ -354,6 +357,9 @@ fun TasbihScreen() {
         val context = LocalContext.current
         val travel = remember { BeadTravel(count, phrase) }
         val turn = remember { androidx.compose.animation.core.Animatable(0f) }
+        val pulse = remember { androidx.compose.animation.core.Animatable(0f) }
+        val dark = com.zikrtime.app.ui.theme.LocalDarkTheme.current
+        var previousCount by remember { mutableIntStateOf(count) }
         val resume = AppEvents.resumeCount
         val motionEnabled = remember(resume) {
             android.provider.Settings.Global.getFloat(context.contentResolver, android.provider.Settings.Global.ANIMATOR_DURATION_SCALE, 1f) != 0f
@@ -363,6 +369,14 @@ fun TasbihScreen() {
             val destination = -travel.steps * (360f / 24f)
             if (reset || !motionEnabled) turn.snapTo(destination)
             else turn.animateTo(destination, androidx.compose.animation.core.tween(230, easing = androidx.compose.animation.core.FastOutSlowInEasing))
+        }
+        LaunchedEffect(count, phrase, motionEnabled) {
+            val tapped = count > previousCount
+            previousCount = count
+            if (tapped && motionEnabled) {
+                pulse.snapTo(1f)
+                pulse.animateTo(0f, androidx.compose.animation.core.tween(360))
+            } else pulse.snapTo(0f)
         }
         // Persist the count immediately; coalesce expensive widget redraws after a burst.
         LaunchedEffect(count) {
@@ -384,7 +398,7 @@ fun TasbihScreen() {
                 else -> Haptics.tick(context)
             }
         }
-        Box(Modifier.fillMaxWidth().aspectRatio(1f)
+        Box(Modifier.fillMaxWidth().aspectRatio(1f).testTag("tasbih_counter")
             .clip(RoundedCornerShape(28.dp))
             .background(Brush.radialGradient(listOf(Color(0xFF245844), Color(0xFF082C23))))
             .pointerInput(Unit) {
@@ -398,10 +412,20 @@ fun TasbihScreen() {
             .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null, role = androidx.compose.ui.semantics.Role.Button, onClickLabel = stringResource(R.string.tasbih_tap_hint)) { addOne() }
             .semantics { contentDescription = counterLabel },
             contentAlignment = Alignment.Center) {
+            Image(painterResource(R.drawable.tasbih_still), contentDescription = null,
+                contentScale = ContentScale.Crop, alignment = Alignment.TopEnd,
+                modifier = Modifier.fillMaxSize())
+            Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(
+                Color(0xFF072C23).copy(alpha = if (dark) .48f else .18f),
+                Color(0xFF092E25).copy(alpha = if (dark) .72f else .48f)))))
             Canvas(Modifier.fillMaxSize().padding(10.dp)) {
                 val radius = size.minDimension * 0.405f
                 val beadR = radius * 0.135f
-                drawCircle(Color(0xFF59625B), radius, style = Stroke(2.dp.toPx()))
+                drawCircle(Sand.copy(alpha = .45f), radius, style = Stroke(1.dp.toPx()))
+                if (pulse.value > 0f) {
+                    drawCircle(Sand.copy(alpha = pulse.value * .32f),
+                        radius * (1f + (1f - pulse.value) * .14f), style = Stroke(2.dp.toPx()))
+                }
                 for (k in 0 until 24) {
                     val angle = Math.toRadians(k * 15.0 + turn.value - 90)
                     val x = center.x + radius * cos(angle).toFloat()
@@ -411,15 +435,19 @@ fun TasbihScreen() {
                         dstSize = androidx.compose.ui.unit.IntSize((beadR*2).roundToInt(), (beadR*2).roundToInt()))
                 }
                 val inner = radius - beadR * 1.8f
-                drawCircle(Color(0xFF123B2E), inner)
+                drawCircle(Brush.radialGradient(listOf(
+                    Color(0xFF244B3D).copy(alpha = .97f), Color(0xFF092B23).copy(alpha = .95f)),
+                    center = center, radius = inner), inner)
+                drawCircle(Sand.copy(alpha = pulse.value * .08f), inner)
                 drawCircle(Color(0xFF668D70), inner, style = Stroke(1.dp.toPx()))
                 if (target > 0) drawArc(Sand, -90f, 360f * progress, false,
                     Offset(center.x-inner+6.dp.toPx(), center.y-inner+6.dp.toPx()),
                     androidx.compose.ui.geometry.Size((inner-6.dp.toPx())*2, (inner-6.dp.toPx())*2),
                     style = Stroke(3.dp.toPx(), cap = StrokeCap.Round))
             }
-            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth(0.48f)) {
-                Text((if (target > 0) count % target else count).toString(), fontSize = 56.sp, color = Color.White, style = Tabular, maxLines = 1)
+            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth(0.48f)
+                .graphicsLayer { scaleX = 1f + pulse.value * .035f; scaleY = scaleX }) {
+                Text((if (target > 0) count % target else count).toString(), fontSize = (if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 38 else 56).sp, color = Color.White, style = Tabular, maxLines = 1)
                 if (target > 0) Text(stringResource(R.string.tasbih_of, target), color = Color(0xFFE5D7C2), textAlign = TextAlign.Center)
                 if (laps > 0) Text(stringResource(R.string.tasbih_laps, laps), color = Sand, textAlign = TextAlign.Center)
             }

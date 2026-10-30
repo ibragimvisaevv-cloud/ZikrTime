@@ -434,6 +434,13 @@
     <string name="group_application">Uygulama</string>
     <string name="group_data_help">Veriler ve yardım</string>
     <string name="focus_remaining">Bugün kullanılabilir</string>
+    <string name="azkar_source_button">Kaynak</string>
+    <string name="azkar_repetitions">Tekrar: %1$d / %2$d</string>
+    <string name="azkar_mark_read">Okundu olarak işaretle</string>
+    <string name="azkar_read_done">Okundu</string>
+    <string name="azkar_sources_note">Sabah ve akşam zikirlerinden seçilmiş bir derleme; kapsamlı bir liste değildir. Bazı metinler her iki vakitte okunur. Metin ve tekrar sayısı belirtilen rivayete dayanır.</string>
+    <string name="azkar_single_read_note">Düğme bir okumayı kaydeder; ek bir tekrar sayısı belirlemez.</string>
+    <string name="azkar_translation_note">Rusça ve İngilizce metinler bu derleme için hazırlanmış anlam çevirileridir. Transkripsiyon Arapça telaffuzun yerini tutmaz.</string>
     <string name="pause_title">Bilinçli mola</string>
     <string name="pause_enable_hint">Seçilen uygulamalardan önce: zikir, niyet ve süre. Yalnızca siz seçerseniz açılır.</string>
     <string name="pause_soft">Esnek mod</string>
