@@ -23,7 +23,7 @@ def all_pages(name):
     first_page()
     for page in range(3):
         capture(name+'-'+str(page))
-        shell('input','swipe',950,1050,150,1050,350);time.sleep(1)
+        page_swipe()
 
 state=data();ids={w['provider']:w['id'] for w in state['widgets']};first_page()
 # Native clock changes without an app Activity or ticking app process.
@@ -66,20 +66,25 @@ tap_control('Тёмная','text');tap_control('Готово','text');time.sleep
 check('per-instance theme saved',prefs('widget_appearance').get('theme_'+str(ids['NextPrayerWidget']))=='dark')
 check('per-instance dark appearance rendered',rendered(ids['NextPrayerWidget'])['dark'])
 all_pages('mixed-themes')
+probe('theme','CompactPrayerWidget',theme='system')
+shell('cmd','uimode','night','yes');time.sleep(2);first_page();capture('system-theme-dark')
+shell('cmd','uimode','night','no');time.sleep(2);first_page();capture('system-theme-light')
+probe('theme','CompactPrayerWidget',theme='app')
 # Wallpaper readability: actual system wallpaper changes, no screenshot compositing.
 for background in ['light','dark','busy']:
     probe('wallpaper',theme=background);all_pages('wallpaper-'+background)
 # Large text and narrow phone: real system configuration changes and real host reflow.
 shell('settings','put','system','font_scale','2.0');time.sleep(3);probe('refresh');all_pages('font-200')
 shell('settings','put','system','font_scale','1.0');shell('wm','size','720x1280');shell('wm','density','320');time.sleep(3);probe('refresh')
-shell('input','keyevent','KEYCODE_HOME');capture('small-phone')
+all_pages('small-phone')
 shell('wm','size','1080x1920');shell('wm','density','420');time.sleep(3);probe('refresh')
 # Tap opens prayer tab, including when coming from another in-app screen.
 first_page()
 root=ui();node=find_control(root,'w_time')
 check('visible prayer time tap target',node is not None)
 l,t,r,b=map(int,re.findall(r'\d+',node.get('bounds')));shell('input','tap',(l+r)//2,(t+b)//2);time.sleep(2);capture('widget-opens-prayer')
-check('widget opens ZikrTime',PKG in shell('dumpsys','activity','activities').split('mResumedActivity:')[-1].split('\n')[0])
+opened=ui()
+check('widget opens prayer screen',next(opened.iter('node')).get('package')==PKG and any(n.get('text')=='Намазы сегодня' for n in opened.iter('node')))
 
 # Preserved tasbih actions and focus deep link.
 show_provider('TasbihWidget');old_count=int(prefs().get('tasbih_count','0'));tap_control('w_count')

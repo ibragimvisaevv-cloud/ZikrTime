@@ -14,7 +14,7 @@ def check(name,value):
     assert value,name
 
 def probe(action,provider='CompactPrayerWidget',**kwargs):
-    args=['am','start','-W','-n',PKG+'/.widget.WidgetProbeActivity','--es','action',action,'--es','provider',provider]
+    args=['am','start','-n',PKG+'/.widget.WidgetProbeActivity','--es','action',action,'--es','provider',provider]
     for k,v in kwargs.items():args+=['--es',k,str(v)]
     shell(*args);time.sleep(2)
 
@@ -23,23 +23,31 @@ def home():
     if not any('launcher' in l.lower() for l in resumed):shell('input','keyevent','KEYCODE_HOME')
     time.sleep(2)
 def capture(name):time.sleep(2);screenshot(name)
+def page_swipe(right=False):
+    width,height=map(int,re.findall(r'(\d+)x(\d+)',shell('wm','size'))[-1])
+    x1,x2=(.12,.88) if right else (.88,.12)
+    shell('input','swipe',int(width*x1),int(height*.52),int(width*x2),int(height*.52),250);time.sleep(.6)
 def show_provider(provider):
-    shell('input','keyevent','KEYCODE_HOME');time.sleep(1)
-    # HOME preserves the last workspace page. Move to the first page before scanning.
-    for _ in range(6):
-        shell('input','swipe',130,1000,950,1000,220);time.sleep(.25)
-    if any('googlequicksearchbox' in n.get('package','') for n in ui().iter('node')):
-        shell('input','keyevent','KEYCODE_BACK');time.sleep(1)
+    shell('input','keyevent','KEYCODE_HOME');time.sleep(.7)
     marker={'CompactPrayerWidget':'2×1','TimelineWidget':'4×1','NextPrayerWidget':'2×2','TodayWidget':'4×2'}.get(provider)
-    for page in range(6):
-        root=ui()
+    def matches(root):
         if marker:
             found=any(marker in n.get('content-desc','') for n in root.iter('node'))
-            if provider=='CompactPrayerWidget':found=found or find_control(root,'w_empty_action') is not None
-        else:found=find_control(root,'w_count' if provider=='TasbihWidget' else 'w_value') is not None
-        if found:return root
-        capture('page-search-'+provider+'-'+str(page))
-        shell('input','swipe',950,1000,130,1000,350);time.sleep(1)
+            return found or (provider=='CompactPrayerWidget' and find_control(root,'w_empty_action') is not None)
+        return find_control(root,'w_count' if provider=='TasbihWidget' else 'w_value') is not None
+    root=ui()
+    if matches(root):return root
+    for _ in range(6):page_swipe(right=True)
+    for page in range(9):
+        root=ui()
+        if any('googlequicksearchbox' in n.get('package','') for n in root.iter('node')):
+            shell('input','keyevent','KEYCODE_BACK');shell('input','keyevent','KEYCODE_HOME');time.sleep(2)
+            continue
+        if matches(root):return root
+        page_swipe()
+    # Keep diagnostics without treating an unrelated blank Discover page as an app render failure.
+    with (OUT/'screens'/('missing-'+provider+'.png')).open('wb') as handle:
+        subprocess.run(['adb','exec-out','screencap','-p'],stdout=handle,check=True)
     raise AssertionError('Bound widget is not visible on launcher pages: '+provider)
 def pin(provider):
     probe('pin',provider);capture('pin-'+provider)
