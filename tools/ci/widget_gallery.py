@@ -3,8 +3,8 @@ import json,subprocess,shutil,io,zipfile
 from pathlib import Path
 from PIL import Image,ImageDraw,ImageFont
 import cairosvg
-RUN=41024626556
-SHA="e06eeac24b1c806d2242fcdbecc56f1d63a25411"
+RUN=41025914614
+SHA="b1873848de9c09b226c30ed5a7ef2090746c2f99"
 repo="ibragimvisaevv-cloud/ZikrTime"
 run=json.loads(subprocess.check_output(["gh","api",f"repos/{repo}/actions/runs/{RUN}"],text=True))
 assert run["head_sha"]==SHA
