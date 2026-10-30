@@ -17,7 +17,11 @@ adb shell wm size 1080x1920
 adb shell wm density 420
 adb install -r fixtures/current.apk
 adb install -r fixtures/widget-ui.apk
-python3 tools/ci/widgets_launcher.py
+if [ "${WIDGET_CHECK_SCOPE:-full}" = boot ]; then
+  python3 tools/ci/widgets_boot.py
+else
+  python3 tools/ci/widgets_launcher.py
+fi
 adb logcat -d -b crash > ci-out/crashes.txt
 adb logcat -d -s ZikrWidgets > ci-out/widget-errors.txt
 if grep -qE 'FATAL EXCEPTION|Fatal signal' ci-out/crashes.txt || grep -q 'Update failed' ci-out/widget-errors.txt; then exit 1; fi
