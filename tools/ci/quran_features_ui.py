@@ -59,6 +59,9 @@ assert '1:1' in saved['bookmarks']
 passed['exact_stop_note_and_existing_bookmark'] = True
 
 tap_control('quran_fullscreen')
+# Android's first immersive-mode tutorial is a system window, not a reader defect.
+if present('android:id/immersive_cling_title'):
+    tap_control('android:id/ok')
 assert present('quran_exit_fullscreen') and not present('quran_read_mode')
 shot('features-fullscreen-light')
 tool('quran_rotate')
@@ -99,13 +102,13 @@ back()
 time.sleep(4)
 tool('quran_timer_open')
 before_disabled = total_time()
-replace_text('quran_timer_minutes', '1')
+replace_text('quran_timer_minutes', '3')
 tap_control('quran_timer_start')
 time.sleep(6)
 shell('input', 'keyevent', 'KEYCODE_HOME')
 time.sleep(1)
 remaining = int(prefs('quran_reading')['timer_remaining'])
-assert 0 < remaining < 60000, remaining
+assert 0 < remaining < 180000, remaining
 time.sleep(3)
 assert int(prefs('quran_reading')['timer_remaining']) == remaining
 shell('am', 'start', '-W', '-n', PKG + '/.MainActivity')

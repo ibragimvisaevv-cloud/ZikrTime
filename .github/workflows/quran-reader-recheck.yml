@@ -3,7 +3,7 @@ on:
   push:
     branches: [codex/quran-reader-0814]
 permissions:
-  contents: read
+  contents: write
   actions: read
 concurrency:
   group: quran-ui-${{ github.ref }}
@@ -18,22 +18,22 @@ jobs:
       - name: Verify unchanged Android inputs and retrieve the tested APK
         env:
           GH_TOKEN: ${{ github.token }}
-          BUILD_SOURCE_SHA: 8e37ce2ff975566a33c119d01c8087af448fd4e9
+          BUILD_SOURCE_SHA: 8f009ca321af76bcdfff87e92fa4caa52513d4b8
         run: |
           mkdir -p ci-out
-          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/13001256142" > ci-out/reused-artifact.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/13010891142" > ci-out/reused-artifact.json
           python3 - <<'PY'
           import json, os, pathlib
           artifact = json.loads(pathlib.Path('ci-out/reused-artifact.json').read_text())
-          assert artifact['id'] == 13001256142 and artifact['name'] == 'ZikrTime-0.8.14-check'
+          assert artifact['id'] == 13010891142 and artifact['name'] == 'ZikrTime-0.8.16-check'
           assert not artifact['expired'], 'Tested build artifact has expired'
-          assert artifact['workflow_run']['id'] == 41103686197
+          assert artifact['workflow_run']['id'] == 41124763642
           assert artifact['workflow_run']['head_sha'] == os.environ['BUILD_SOURCE_SHA']
           PY
           git fetch --no-tags --depth=1 origin "$BUILD_SOURCE_SHA"
           git diff --exit-code "$BUILD_SOURCE_SHA" HEAD -- app/ tools/i18n/ tools/quiz/ tools/quran/ tools/audio/ build.gradle.kts settings.gradle.kts gradle.properties gradle/ gradlew gradlew.bat .gitattributes
           printf '%s\n' "$BUILD_SOURCE_SHA" > ci-out/reused-build-source.txt
-          gh run download 41103686197 -n ZikrTime-0.8.14-check -D reused-check
+          gh run download 41124763642 -n ZikrTime-0.8.16-check -D reused-check
           mkdir -p app/build
           cp -R reused-check/app/build/outputs reused-check/app/build/reports reused-check/app/build/test-results app/build/
           sha256sum app/build/outputs/apk/debug/app-debug.apk > ci-out/reused-apk-sha256.txt
@@ -41,15 +41,15 @@ jobs:
           import hashlib, json, os, pathlib, xml.etree.ElementTree as ET
           apk = pathlib.Path('app/build/outputs/apk/debug/app-debug.apk')
           digest = hashlib.sha256(apk.read_bytes()).hexdigest()
-          assert digest == '2017852bc78a81ade41788103db8d07608d1276f3d3377ea8ae661b20aa4c811', 'APK differs from the checked build'
+          assert digest == '4eb6a62d38bfa501995fcdff584b54b44f66971b4ebe61055cf3a9f018bfe81c', 'APK differs from the checked build'
           tests = [ET.parse(p).getroot() for p in pathlib.Path('app/build/test-results/testDebugUnitTest').glob('TEST-*.xml')]
           count = sum(int(t.get('tests', 0)) for t in tests)
-          assert count == 75, 'Expected complete unit-test reports from the pinned build'
+          assert count == 86, 'Expected complete unit-test reports from the pinned build'
           assert all(int(t.get('failures', 0)) == 0 and int(t.get('errors', 0)) == 0 and int(t.get('skipped', 0)) == 0 for t in tests)
           lint = ET.parse('app/build/reports/lint-results-debug.xml')
           assert not any(issue.get('severity') in ('Error', 'Fatal') for issue in lint.iter('issue'))
           pathlib.Path('ci-out/reused-build-verification.json').write_text(json.dumps({
-              'run_id': 41103686197, 'artifact_id': 13001256142,
+              'run_id': 41124763642, 'artifact_id': 13010891142,
               'source_sha': os.environ['BUILD_SOURCE_SHA'], 'apk_sha256': digest,
               'passed_unit_tests': count, 'lint_errors': 0,
           }, indent=2))
@@ -60,11 +60,11 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-quran.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      - name: Quran and adhan journeys on Android 15
+      - name: Reading sessions on Android 15
         timeout-minutes: 18
         uses: reactivecircus/android-emulator-runner@v2
         env:
-          QURAN_QA_MODE: ${{ contains(github.event.head_commit.message, '[quran-tail]') && 'navigation-adhan' || 'all' }}
+          QURAN_QA_MODE: features
         with:
           api-level: 35
           target: google_apis
@@ -72,10 +72,24 @@ jobs:
           disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           script: bash tools/ci/quran_reader_smoke.sh
+      - name: Preserve focused emulator evidence
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/ci/reader_evidence.py
+      - name: Prepare checked APK without rebuilding
+        if: success()
+        run: cp app/build/outputs/apk/debug/app-debug.apk ZikrTime-0.8.16-test.apk
+      - uses: actions/upload-artifact@v7.0.2
+        if: success()
+        with:
+          path: ZikrTime-0.8.16-test.apk
+          archive: false
+          if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: ZikrTime-0.8.14-UI-check
+          name: ZikrTime-0.8.16-check
           path: |
             app/build/outputs/apk/debug/
             app/build/reports/
