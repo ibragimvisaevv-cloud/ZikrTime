@@ -151,7 +151,8 @@ private fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: Fl
     val ru = Lang.content(LocalContext.current) == "ru"
     val surah = remember(book, surahId) { book.surahs.first { it.id == surahId } }
     val verses = remember(book, surahId) { book.verses(surahId) }
-    val blocks = remember(verses) { QuranReading.blocks(verses) }
+    var blockAnchor by rememberSaveable { mutableIntStateOf(firstAyah) }
+    val blocks = remember(verses, blockAnchor) { QuranReading.blocks(verses, blockAnchor) }
     var wholeSurah by rememberSaveable { mutableStateOf(progress.wholeSurah) }
     val verseList = rememberLazyListState((firstAyah - 1).coerceIn(verses.indices))
     val wholeList = rememberLazyListState(QuranReading.blockIndex(blocks, firstAyah))
@@ -182,14 +183,14 @@ private fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: Fl
                 val number = if (wholeSurah) blocks[wholeList.firstVisibleItemIndex.coerceIn(blocks.indices)].firstAyah
                     else verseList.firstVisibleItemIndex + 1
                 val nextMode = !wholeSurah
+                if (nextMode) {
+                    blockAnchor = number
+                    wholeList.requestScrollToItem(QuranReading.blockIndex(QuranReading.blocks(verses, number), number))
+                } else verseList.requestScrollToItem(number - 1)
                 progress.wholeSurah = nextMode
                 wholeSurah = nextMode
                 focus.clearFocus()
-                scope.launch {
-                    val target = if (nextMode) wholeList else verseList
-                    target.scrollToItem(if (nextMode) QuranReading.blockIndex(blocks, number) else number - 1)
-                    progress.save(QuranProgress.Location(surahId, number))
-                }
+                progress.save(QuranProgress.Location(surahId, number))
             },
             modifier = Modifier.fillMaxWidth().testTag("quran_read_mode"),
         ) {
@@ -204,7 +205,10 @@ private fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: Fl
                 if (number == null || number !in 1..surah.ayahCount) invalid = true
                 else scope.launch {
                     focus.clearFocus()
-                    list.scrollToItem(if (wholeSurah) QuranReading.blockIndex(blocks, number) else number - 1)
+                    if (wholeSurah) {
+                        blockAnchor = number
+                        wholeList.requestScrollToItem(QuranReading.blockIndex(QuranReading.blocks(verses, number), number))
+                    } else verseList.scrollToItem(number - 1)
                     // A short final verse may share the viewport with the preceding verse.
                     progress.save(QuranProgress.Location(surahId, number))
                 }

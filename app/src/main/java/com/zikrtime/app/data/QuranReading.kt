@@ -14,8 +14,12 @@ data class QuranReadingBlock(val verses: List<QuranAyah>) {
 }
 
 object QuranReading {
-    fun blocks(verses: List<QuranAyah>): List<QuranReadingBlock> =
-        verses.chunked(8).map(::QuranReadingBlock)
+    fun blocks(verses: List<QuranAyah>, anchor: Int = 1): List<QuranReadingBlock> {
+        // Make the requested verse a block boundary so jumping/resuming never
+        // lands several verses before it. All preceding verses remain available.
+        val split = verses.indexOfFirst { it.number == anchor }.coerceAtLeast(0)
+        return (verses.take(split).chunked(8) + verses.drop(split).chunked(8)).map(::QuranReadingBlock)
+    }
 
     fun blockIndex(blocks: List<QuranReadingBlock>, ayah: Int): Int =
         blocks.indexOfFirst { ayah in it.firstAyah..it.lastAyah }.coerceAtLeast(0)

@@ -49,5 +49,14 @@ class QuranReadingTest {
         assertEquals(original + "  ۝١", block.text)
         assertTrue(QuranReading.blocks(emptyList()).isEmpty())
     }
+
+    @Test fun jumpAnchorsKeepAllVersesAndStartExactlyAtTheRequestedAyah() {
+        val verses = book().verses(2)
+        for (number in listOf(1, 8, 9, 255, 281, 286)) {
+            val blocks = QuranReading.blocks(verses, number)
+            assertEquals(verses, blocks.flatMap { it.verses })
+            assertEquals(number, blocks[QuranReading.blockIndex(blocks, number)].firstAyah)
+        }
+    }
 }
 

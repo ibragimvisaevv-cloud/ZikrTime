@@ -221,13 +221,13 @@ if mode in ('all', 'layout'):
     tap_control('quran_read_mode')
     assert present('quran_whole_surah')
     jump(286)
-    end = read_text('quran_whole_281')
+    end = read_text('quran_whole_286')
     assert '۝٢٨٦' in end, 'Last verse of Al-Baqarah missing'
     assert prefs('quran_reading')['last'] == '2:286'
     shot('reading-whole-baqarah-end')
     start('quran')
     tap_control('quran_continue')
-    assert present('quran_whole_281')
+    assert present('quran_whole_286')
     assert prefs('quran_reading')['last'] == '2:286'
     tap_control('quran_read_mode')
     jump(286)
