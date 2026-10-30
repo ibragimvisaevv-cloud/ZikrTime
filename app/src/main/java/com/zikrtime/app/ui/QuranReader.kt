@@ -243,12 +243,12 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
         "sources" -> QuranSources { sheet = "" }
     }
     if (session.timer.finished && sheet.isEmpty()) HorizonDialog(
-        onDismissRequest = { session.setTimer(QuranReadingTimer()) },
+        onDismissRequest = { session.changeTimer(QuranReadingTimer()) },
         title = { Text(stringResource(R.string.qf_timer_finished)) },
         text = { Text(stringResource(R.string.qf_timer_finished_text)) },
-        confirmButton = { TextButton(onClick = { session.setTimer(QuranReadingTimer()) }, modifier = Modifier.testTag("quran_timer_continue")) {
+        confirmButton = { TextButton(onClick = { session.changeTimer(QuranReadingTimer()) }, modifier = Modifier.testTag("quran_timer_continue")) {
             Text(stringResource(R.string.qf_keep_reading)) } },
-        dismissButton = { TextButton(onClick = { session.setTimer(QuranReadingTimer()); showIndex() }) { Text(stringResource(R.string.action_done)) } })
+        dismissButton = { TextButton(onClick = { session.changeTimer(QuranReadingTimer()); showIndex() }) { Text(stringResource(R.string.action_done)) } })
 }
 
 private fun Modifier.semanticsDescription(description: String): Modifier = semantics { contentDescription = description }

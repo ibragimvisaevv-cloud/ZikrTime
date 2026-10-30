@@ -64,7 +64,7 @@ def main():
 
     buf = io.BytesIO()
     with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
-        for f in ("index.py", "miniapi.py", "place_corrections.py"):
+        for f in ("index.py", "miniapi.py", "place_corrections.py", "feedback.py"):
             z.write(os.path.join(os.path.dirname(__file__), f), f)
     env = {k: os.environ[k] for k in ("BOT_TOKEN", "BUCKET", "DATA_BUCKET", "S3_KEY_ID", "S3_SECRET")}
     wait(call("POST", f"{API}/versions", {

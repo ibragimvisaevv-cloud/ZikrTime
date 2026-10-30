@@ -110,12 +110,12 @@ internal fun QuranTimerSheet(progress: QuranProgress, session: QuranSession, clo
         PrimaryButton(stringResource(R.string.qf_timer_start), modifier = Modifier.testTag("quran_timer_start"), onClick = {
             val count = minutes.toIntOrNull()
             if (count == null || count !in 1..180) invalid = true
-            else { session.setTimer(QuranReadingTimer(count * 60_000L)); close() }
+            else { session.changeTimer(QuranReadingTimer(count * 60_000L)); close() }
         })
         if (session.timer.remaining > 0 || session.timer.paused) ReaderAction(
             if (session.timer.paused) R.string.qf_resume else R.string.qf_pause, "quran_timer_pause") {
-            session.setTimer(session.timer.copy(paused = !session.timer.paused)); close()
+            session.changeTimer(session.timer.copy(paused = !session.timer.paused)); close()
         }
-        ReaderAction(R.string.qf_timer_cancel, "quran_timer_cancel") { session.setTimer(QuranReadingTimer()); close() }
+        ReaderAction(R.string.qf_timer_cancel, "quran_timer_cancel") { session.changeTimer(QuranReadingTimer()); close() }
     }
 }

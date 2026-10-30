@@ -52,7 +52,7 @@ internal class QuranSession(private val progress: QuranProgress) {
         progress.timer = timer
     }
 
-    fun setTimer(next: QuranReadingTimer) {
+    fun changeTimer(next: QuranReadingTimer) {
         tick(false)
         timer = next
         progress.timer = next

@@ -1862,6 +1862,14 @@ def handler(event, context):
         body = base64.b64decode(body).decode()
     update = json.loads(body)
     token = (getattr(context, "token", None) or {}).get("access_token", "")
+    if update.get("feedback_probe"):
+        # Authenticated, read-only deployment check: no messages and no database writes.
+        raw = make_storage(token, DATA_BUCKET).get(DB_KEY)
+        db = json.loads(raw) if raw else {}
+        return {"statusCode": 200, "body": json.dumps({
+            "feature": "feedback_v1", "owner_configured": bool(db.get("owner")),
+            "private_database": DATA_BUCKET != BUCKET and bool(raw),
+        })}
     if update.get("probe"):
         return {"statusCode": 200, "body": json.dumps(probe(token), ensure_ascii=False)}
     tg = Telegram(BOT_TOKEN)

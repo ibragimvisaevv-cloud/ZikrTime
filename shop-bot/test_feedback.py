@@ -164,6 +164,18 @@ class FeedbackTests(unittest.TestCase):
         self.update(callback="fb:send:" + nonce)
         self.assertEqual(len(self.bot().db["feedback_tickets"]), 5)
 
+    def test_authenticated_probe_reads_without_messages_or_writes(self):
+        event = {"headers": {}, "body": json.dumps({"feedback_probe": True})}
+        self.assertEqual(index.handler(event, None)["statusCode"], 403)
+        event["headers"]["X-Telegram-Bot-Api-Secret-Token"] = index.webhook_secret()
+        with patch.object(index, "make_storage", return_value=self.private), \
+             patch.object(index, "DATA_BUCKET", "test-private"), patch.object(index, "BUCKET", "test-public"):
+            result = index.handler(event, None)
+        self.assertEqual(json.loads(result["body"]), {
+            "feature": "feedback_v1", "owner_configured": True, "private_database": True})
+        self.assertEqual(self.tg.sent, [])
+        self.assertEqual(len(self.private.files), 1)
+
     def test_feedback_entry_and_malformed_actions(self):
         b = self.update(text="/feedback")
         self.assertIsNone(b.user(2)["state"])
