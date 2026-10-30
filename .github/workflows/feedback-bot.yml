@@ -1,7 +1,7 @@
 name: Deploy private feedback bot
 on:
   push:
-    branches: [codex/quran-reader-0814]
+    branches: [codex/feedback-0816]
     paths: ['shop-bot/**', '.github/workflows/feedback-bot.yml']
 permissions:
   contents: read
