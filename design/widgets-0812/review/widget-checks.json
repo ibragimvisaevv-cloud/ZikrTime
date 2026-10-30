@@ -6,45 +6,5 @@
   {
     "name": "bound in real launcher CompactPrayerWidget",
     "passed": true
-  },
-  {
-    "name": "pin confirmation TimelineWidget",
-    "passed": true
-  },
-  {
-    "name": "bound in real launcher TimelineWidget",
-    "passed": true
-  },
-  {
-    "name": "pin confirmation NextPrayerWidget",
-    "passed": true
-  },
-  {
-    "name": "bound in real launcher NextPrayerWidget",
-    "passed": true
-  },
-  {
-    "name": "pin confirmation TodayWidget",
-    "passed": true
-  },
-  {
-    "name": "bound in real launcher TodayWidget",
-    "passed": true
-  },
-  {
-    "name": "pin confirmation TasbihWidget",
-    "passed": true
-  },
-  {
-    "name": "bound in real launcher TasbihWidget",
-    "passed": true
-  },
-  {
-    "name": "pin confirmation ScreenTimeWidget",
-    "passed": true
-  },
-  {
-    "name": "bound in real launcher ScreenTimeWidget",
-    "passed": true
   }
 ]

@@ -1,14 +1,14 @@
 {
-  "now": "2026-10-30T01:00:29.422137+03:00[Europe/Moscow]",
-  "next": "FAJR",
-  "at": "2026-10-30T05:40+03:00[Europe/Moscow]",
+  "now": "2026-10-30T11:14:31.893271+03:00[Europe/Moscow]",
+  "next": "DHUHR",
+  "at": "2026-10-30T12:13+03:00[Europe/Moscow]",
   "widgets": [
     {
       "provider": "CompactPrayerWidget",
       "id": 2,
       "minWidth": 140,
-      "maxHeight": 184,
-      "options": "Bundle[{appWidgetMaxHeight=184, appWidgetCategory=1, appWidgetMaxWidth=211, appWidgetMinHeight=139, appWidgetMinWidth=140, appWidgetSizes=Supplier{VAL_LIST@288+60}}]"
+      "maxHeight": 84,
+      "options": "Bundle[{appWidgetMaxHeight=84, appWidgetCategory=1, appWidgetMaxWidth=211, appWidgetMinHeight=64, appWidgetMinWidth=140, appWidgetSizes=Supplier{VAL_LIST@288+60}}]"
     }
   ],
   "isha": "2026-10-30T18:38+03:00[Europe/Moscow]",
