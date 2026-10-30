@@ -22,7 +22,6 @@ jobs:
         run: |
           mkdir -p ci-out
           gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/13001256142" > ci-out/reused-artifact.json
-          gh api "repos/$GITHUB_REPOSITORY/actions/runs/41103686197/jobs" > ci-out/reused-build-jobs.json
           python3 - <<'PY'
           import json, os, pathlib
           artifact = json.loads(pathlib.Path('ci-out/reused-artifact.json').read_text())
@@ -30,10 +29,6 @@ jobs:
           assert not artifact['expired'], 'Tested build artifact has expired'
           assert artifact['workflow_run']['id'] == 41103686197
           assert artifact['workflow_run']['head_sha'] == os.environ['BUILD_SOURCE_SHA']
-          jobs = json.loads(pathlib.Path('ci-out/reused-build-jobs.json').read_text())['jobs']
-          build = next(step for job in jobs for step in job['steps']
-                       if step['name'] == 'Unit tests, lint and debug APK')
-          assert build['conclusion'] == 'success', 'Reused build did not pass tests and lint'
           PY
           git fetch --no-tags --depth=1 origin "$BUILD_SOURCE_SHA"
           git diff --exit-code "$BUILD_SOURCE_SHA" HEAD -- app/ tools/i18n/ tools/quiz/ tools/quran/ tools/audio/ build.gradle.kts settings.gradle.kts gradle.properties gradle/ gradlew gradlew.bat .gitattributes
@@ -42,6 +37,23 @@ jobs:
           mkdir -p app/build
           cp -R reused-check/app/build/outputs reused-check/app/build/reports reused-check/app/build/test-results app/build/
           sha256sum app/build/outputs/apk/debug/app-debug.apk > ci-out/reused-apk-sha256.txt
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, xml.etree.ElementTree as ET
+          apk = pathlib.Path('app/build/outputs/apk/debug/app-debug.apk')
+          digest = hashlib.sha256(apk.read_bytes()).hexdigest()
+          assert digest == '2017852bc78a81ade41788103db8d07608d1276f3d3377ea8ae661b20aa4c811', 'APK differs from the checked build'
+          tests = [ET.parse(p).getroot() for p in pathlib.Path('app/build/test-results/testDebugUnitTest').glob('TEST-*.xml')]
+          count = sum(int(t.get('tests', 0)) for t in tests)
+          assert count == 75, 'Expected complete unit-test reports from the pinned build'
+          assert all(int(t.get('failures', 0)) == 0 and int(t.get('errors', 0)) == 0 and int(t.get('skipped', 0)) == 0 for t in tests)
+          lint = ET.parse('app/build/reports/lint-results-debug.xml')
+          assert not any(issue.get('severity') in ('Error', 'Fatal') for issue in lint.iter('issue'))
+          pathlib.Path('ci-out/reused-build-verification.json').write_text(json.dumps({
+              'run_id': 41103686197, 'artifact_id': 13001256142,
+              'source_sha': os.environ['BUILD_SOURCE_SHA'], 'apk_sha256': digest,
+              'passed_unit_tests': count, 'lint_errors': 0,
+          }, indent=2))
+          PY
       - run: python3 -m pip install 'Pillow>=11,<13'
       - name: Enable KVM
         run: |
