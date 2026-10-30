@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/runner/work/ZikrTime/ZikrTime/tools/ci/quran_features_ui.py", line 99, in <module>
+    tap_control('personal_progress_toggle')
+  File "helpers", line 149, in tap_control
+    tap_control('personal_progress_clear')
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "helpers", line 145, in locate_control
+AssertionError: UI control not found: personal_progress_toggle
