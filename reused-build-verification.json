@@ -1,0 +1,8 @@
+{
+  "run_id": 41124763642,
+  "artifact_id": 13010891142,
+  "source_sha": "8f009ca321af76bcdfff87e92fa4caa52513d4b8",
+  "apk_sha256": "4eb6a62d38bfa501995fcdff584b54b44f66971b4ebe61055cf3a9f018bfe81c",
+  "passed_unit_tests": 86,
+  "lint_errors": 0
+}
