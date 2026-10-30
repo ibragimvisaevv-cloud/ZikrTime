@@ -1,0 +1,7 @@
+{
+  "exact_stop_note_and_existing_bookmark": true,
+  "immersive_rotation_keeps_reader_and_note": true,
+  "stop_and_note_survive_process_restart": true,
+  "marks_are_unique_and_menu_time_is_not_counted": true,
+  "timer_foreground_background_screen_off_pause_and_stats_opt_out": true
+}

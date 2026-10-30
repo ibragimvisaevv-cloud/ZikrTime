@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/home/runner/work/ZikrTime/ZikrTime/tools/ci/quran_features_ui.py", line 167, in <module>
+    locate_control('quran_timer_continue')
+  File "helpers", line 145, in locate_control
+    time.sleep(1)
+        ^^^^^^^^^^
+AssertionError: UI control not found: quran_timer_continue
