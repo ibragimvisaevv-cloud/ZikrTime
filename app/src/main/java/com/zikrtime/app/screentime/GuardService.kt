@@ -15,13 +15,8 @@ import android.os.IBinder
 import android.os.Looper
 import android.os.PowerManager
 import android.provider.Settings
-import android.graphics.PixelFormat
-import android.graphics.drawable.GradientDrawable
-import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -171,62 +166,24 @@ class GuardService : Service() {
         fun showOverlay(context: Context, reason: BlockReason) {
             if (overlay != null || !canDrawOverlays(context)) return
             val res = com.zikrtime.app.i18n.Lang.wrap(context).resources
-            val dp = context.resources.displayMetrics.density
-            val wm = context.getSystemService(WindowManager::class.java)
             val title = when (reason) {
                 is BlockReason.PrayerTime -> res.getString(R.string.block_prayer_label)
                 is BlockReason.LimitReached -> res.getString(R.string.block_limit_title)
                 BlockReason.None -> return
             }
-            val root = LinearLayout(context).apply {
-                orientation = LinearLayout.VERTICAL
-                gravity = Gravity.CENTER
-                setPadding((32 * dp).toInt(), 0, (32 * dp).toInt(), 0)
-                background = GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(0xFF0F5C4A.toInt(), 0xFF04231C.toInt()))
-                isClickable = true
-            }
-            fun text(value: String, size: Float, color: Int, bold: Boolean = false) = TextView(context).apply {
-                text = value
-                textSize = size
-                setTextColor(color)
-                gravity = Gravity.CENTER
-                if (bold) setTypeface(typeface, android.graphics.Typeface.BOLD)
-                setPadding(0, (8 * dp).toInt(), 0, (8 * dp).toInt())
-            }
-            fun button(value: String, fill: Int, textColor: Int, onClick: () -> Unit) = TextView(context).apply {
-                text = value
-                textSize = 17f
-                setTextColor(textColor)
-                gravity = Gravity.CENTER
-                setTypeface(typeface, android.graphics.Typeface.BOLD)
-                background = GradientDrawable().apply { setColor(fill); cornerRadius = 18 * dp }
-                setPadding(0, (16 * dp).toInt(), 0, (16 * dp).toInt())
-                setOnClickListener { onClick() }
-                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                    .apply { topMargin = (14 * dp).toInt() }
-            }
-            root.addView(text("☪", 44f, 0xFFE2B659.toInt()))
-            root.addView(text(title, 26f, 0xFFFFF6E0.toInt(), bold = true))
-            root.addView(text(res.getString(R.string.slogan), 16f, 0xFFE2B659.toInt()))
-            root.addView(button(res.getString(R.string.block_open_app), 0xFFE2B659.toInt(), 0xFF2B1E00.toInt()) {
+            val panel = HorizonOverlay(context, title, res.getString(R.string.slogan), fullScreen = true)
+            panel.button(res.getString(R.string.block_open_app), primary = true) {
                 hideOverlay(context)
                 context.startActivity(BlockActivity.intent(context, reason))
-            })
-            root.addView(button(res.getString(R.string.block_go_home), 0x33FFFFFF, 0xFFFFF6E0.toInt()) {
+            }
+            panel.button(res.getString(R.string.block_go_home)) {
                 hideOverlay(context)
                 context.startActivity(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-            })
-            val params = WindowManager.LayoutParams(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
-                PixelFormat.TRANSLUCENT,
-            )
-            runCatching {
-                wm.addView(root, params)
-                overlay = root
             }
+            runCatching {
+                context.getSystemService(WindowManager::class.java).addView(panel.view, panel.params())
+                overlay = panel.view
+            }.onFailure { android.util.Log.w("ZikrOverlay", "Could not attach blocking window", it) }
         }
 
         fun hideOverlay(context: Context) {

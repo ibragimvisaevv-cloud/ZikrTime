@@ -7,6 +7,7 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.view.HapticFeedbackConstants
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -36,6 +37,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.animation.core.animateFloat
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -45,6 +48,8 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.contentDescription
@@ -134,20 +139,22 @@ fun QiblaScreen() {
         androidx.compose.animation.core.spring(dampingRatio = 0.85f, stiffness = 90f),
         label = "heading",
     )
-    val aligned = relative != null && abs(relative) < 5f
+    val aligned = relative != null && !lowAccuracy && abs(relative) < 5f
     var wasAligned by remember { mutableStateOf(false) }
     LaunchedEffect(aligned) {
         if (aligned && !wasAligned) view.performHapticFeedback(if (android.os.Build.VERSION.SDK_INT >= 30) HapticFeedbackConstants.CONFIRM else HapticFeedbackConstants.VIRTUAL_KEY)
         wasAligned = aligned
     }
 
-    ScreenScaffold(title = stringResource(R.string.qibla_title), onBack = { nav.back() }) {
-        Box(Modifier.fillMaxWidth().aspectRatio(1f).padding(8.dp), contentAlignment = Alignment.Center) {
+    ScreenScaffold(title = stringResource(R.string.qibla_title), onBack = { nav.back() }, showHeading = false) {
+        PageHeading(stringResource(R.string.qibla_title), com.zikrtime.app.data.Cities.displayName(LocalContext.current, loc))
+        Box(Modifier.fillMaxWidth().aspectRatio(1f).testTag("tasbih_counter").padding(8.dp), contentAlignment = Alignment.Center) {
             Compass(heading = shownHeading, qibla = qibla, aligned = aligned)
         }
         Text(
             when {
                 heading == null || relative == null -> stringResource(R.string.qibla_no_sensor)
+                lowAccuracy -> stringResource(R.string.qibla_calibrate)
                 aligned -> stringResource(R.string.qibla_aligned)
                 relative < 0 -> stringResource(R.string.qibla_turn_left, abs(relative).roundToInt())
                 else -> stringResource(R.string.qibla_turn_right, relative.roundToInt())
@@ -187,18 +194,13 @@ private fun Compass(heading: Float, qibla: Float, aligned: Boolean) {
         stringResource(R.string.compass_s), stringResource(R.string.compass_w),
     )
     val glowOn by androidx.compose.animation.core.animateFloatAsState(if (aligned) 1f else 0f, androidx.compose.animation.core.tween(450), label = "qibla-glow")
-    val pulse by androidx.compose.animation.core.rememberInfiniteTransition(label = "qibla").animateFloat(
-        0f, 1f,
-        androidx.compose.animation.core.infiniteRepeatable(androidx.compose.animation.core.tween(1100), androidx.compose.animation.core.RepeatMode.Reverse),
-        label = "qibla-pulse",
-    )
     BoxWithConstraints(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         val radius = with(LocalDensity.current) { (minOf(maxWidth, maxHeight) / 2).toPx() }
         Canvas(Modifier.fillMaxSize()) {
             val r = size.minDimension / 2
             if (glowOn > 0f) {
                 // Золотое сияние вокруг компаса, когда телефон смотрит на Каабу
-                val g = r * (1.08f + 0.05f * pulse)
+                val g = r * 1.10f
                 drawCircle(
                     Brush.radialGradient(
                         0.78f to Color.Transparent,
@@ -274,7 +276,7 @@ private fun Compass(heading: Float, qibla: Float, aligned: Boolean) {
             Modifier
                 .offset { polar(qibla - heading, radius * 0.5f) }
                 .graphicsLayer {
-                    val sc = 1f + glowOn * (0.12f + 0.08f * pulse)
+                    val sc = 1f + glowOn * 0.12f
                     scaleX = sc
                     scaleY = sc
                 }
@@ -319,12 +321,14 @@ internal val TASBIH_NAMES = listOf(
     R.string.zikr_6_name to R.string.zikr_6_meaning,
 )
 
-@OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
+@OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class, androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 @Composable
 fun TasbihScreen() {
     val nav = LocalNav.current
     val view = LocalView.current
     val phrase = Store.tasbihPhrase.coerceIn(TASBIH_ARABIC.indices)
+    var showPhrases by remember { mutableStateOf(false) }
+    var reset by remember { mutableStateOf(false) }
     val target = Store.tasbihTarget
     val count = Store.tasbihCount
     val progress = if (target > 0) (count % target).toFloat() / target else 0f
@@ -335,43 +339,27 @@ fun TasbihScreen() {
         onBack = { nav.back() },
         actions = {
             val ctx = LocalContext.current
-            TextButton(onClick = {
-                Store.tasbihCount = 0
-                com.zikrtime.app.widget.Widgets.updateTasbih(ctx)
-            }) { Text(stringResource(R.string.action_reset)) }
-        },
-    ) {
-        Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            TASBIH_NAMES.forEachIndexed { i, (name, _) ->
-                FilterChip(
-                    selected = i == phrase,
-                    onClick = {
-                        if (i != phrase) {
-                            Store.tasbihPhrase = i
-                            Store.tasbihCount = 0
-                        }
-                    },
-                    label = { Text(stringResource(name)) },
-                )
+            androidx.compose.material3.IconButton(onClick = { reset = true }) {
+                androidx.compose.material3.Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.action_reset))
             }
-        }
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                TASBIH_ARABIC[phrase],
-                style = ArabicStyle.copy(fontSize = 34.sp, textDirection = TextDirection.Rtl),
-                color = MaterialTheme.colorScheme.primary,
-                textAlign = TextAlign.Center,
-            )
-            Text(
-                stringResource(TASBIH_NAMES[phrase].second),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center,
-            )
+        }, showHeading = false,
+    ) {
+        DestinationRow(stringResource(TASBIH_NAMES[phrase].first), R.drawable.ic_tasbih,
+            stringResource(R.string.pause_zikr)) { showPhrases = true }
+        LandscapePanel(R.drawable.tasbih_still) {
+            Column(Modifier.fillMaxWidth().padding(22.dp), horizontalAlignment = Alignment.Start) {
+                Text(TASBIH_ARABIC[phrase], style = ArabicStyle.copy(fontSize = 34.sp, textDirection = TextDirection.Rtl),
+                    color = Porcelain, textAlign = TextAlign.Start)
+                Text(stringResource(TASBIH_NAMES[phrase].second), style = MaterialTheme.typography.bodyMedium,
+                    color = Porcelain.copy(alpha = .9f))
+            }
         }
         val context = LocalContext.current
         val travel = remember { BeadTravel(count, phrase) }
         val turn = remember { androidx.compose.animation.core.Animatable(0f) }
+        val pulse = remember { androidx.compose.animation.core.Animatable(0f) }
+        val dark = com.zikrtime.app.ui.theme.LocalDarkTheme.current
+        var previousCount by remember { mutableIntStateOf(count) }
         val resume = AppEvents.resumeCount
         val motionEnabled = remember(resume) {
             android.provider.Settings.Global.getFloat(context.contentResolver, android.provider.Settings.Global.ANIMATOR_DURATION_SCALE, 1f) != 0f
@@ -381,6 +369,14 @@ fun TasbihScreen() {
             val destination = -travel.steps * (360f / 24f)
             if (reset || !motionEnabled) turn.snapTo(destination)
             else turn.animateTo(destination, androidx.compose.animation.core.tween(230, easing = androidx.compose.animation.core.FastOutSlowInEasing))
+        }
+        LaunchedEffect(count, phrase, motionEnabled) {
+            val tapped = count > previousCount
+            previousCount = count
+            if (tapped && motionEnabled) {
+                pulse.snapTo(1f)
+                pulse.animateTo(0f, androidx.compose.animation.core.tween(360))
+            } else pulse.snapTo(0f)
         }
         // Persist the count immediately; coalesce expensive widget redraws after a burst.
         LaunchedEffect(count) {
@@ -402,9 +398,9 @@ fun TasbihScreen() {
                 else -> Haptics.tick(context)
             }
         }
-        Box(Modifier.fillMaxWidth().aspectRatio(1f)
+        Box(Modifier.fillMaxWidth().aspectRatio(1f).testTag("tasbih_counter")
             .clip(RoundedCornerShape(28.dp))
-            .background(Brush.radialGradient(listOf(Color(0xFF304151), Color(0xFF111D2A))))
+            .background(Brush.radialGradient(listOf(Color(0xFF245844), Color(0xFF082C23))))
             .pointerInput(Unit) {
                 var dragged = 0f
                 detectVerticalDragGestures(onDragStart = { dragged = 0f }, onVerticalDrag = { change, dy ->
@@ -416,10 +412,20 @@ fun TasbihScreen() {
             .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null, role = androidx.compose.ui.semantics.Role.Button, onClickLabel = stringResource(R.string.tasbih_tap_hint)) { addOne() }
             .semantics { contentDescription = counterLabel },
             contentAlignment = Alignment.Center) {
+            Image(painterResource(R.drawable.tasbih_still), contentDescription = null,
+                contentScale = ContentScale.Crop, alignment = Alignment.TopEnd,
+                modifier = Modifier.fillMaxSize())
+            Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(
+                Color(0xFF072C23).copy(alpha = if (dark) .48f else .18f),
+                Color(0xFF092E25).copy(alpha = if (dark) .72f else .48f)))))
             Canvas(Modifier.fillMaxSize().padding(10.dp)) {
                 val radius = size.minDimension * 0.405f
                 val beadR = radius * 0.135f
-                drawCircle(Color(0xFF59625B), radius, style = Stroke(2.dp.toPx()))
+                drawCircle(Sand.copy(alpha = .45f), radius, style = Stroke(1.dp.toPx()))
+                if (pulse.value > 0f) {
+                    drawCircle(Sand.copy(alpha = pulse.value * .32f),
+                        radius * (1f + (1f - pulse.value) * .14f), style = Stroke(2.dp.toPx()))
+                }
                 for (k in 0 until 24) {
                     val angle = Math.toRadians(k * 15.0 + turn.value - 90)
                     val x = center.x + radius * cos(angle).toFloat()
@@ -429,24 +435,28 @@ fun TasbihScreen() {
                         dstSize = androidx.compose.ui.unit.IntSize((beadR*2).roundToInt(), (beadR*2).roundToInt()))
                 }
                 val inner = radius - beadR * 1.8f
-                drawCircle(Color(0xFF20303E), inner)
-                drawCircle(Color(0xFF405060), inner, style = Stroke(1.dp.toPx()))
-                if (target > 0) drawArc(Color(0xFFA4CDB7), -90f, 360f * progress, false,
+                drawCircle(Brush.radialGradient(listOf(
+                    Color(0xFF244B3D).copy(alpha = .97f), Color(0xFF092B23).copy(alpha = .95f)),
+                    center = center, radius = inner), inner)
+                drawCircle(Sand.copy(alpha = pulse.value * .08f), inner)
+                drawCircle(Color(0xFF668D70), inner, style = Stroke(1.dp.toPx()))
+                if (target > 0) drawArc(Sand, -90f, 360f * progress, false,
                     Offset(center.x-inner+6.dp.toPx(), center.y-inner+6.dp.toPx()),
                     androidx.compose.ui.geometry.Size((inner-6.dp.toPx())*2, (inner-6.dp.toPx())*2),
                     style = Stroke(3.dp.toPx(), cap = StrokeCap.Round))
             }
-            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth(0.48f)) {
-                Text((if (target > 0) count % target else count).toString(), fontSize = 56.sp, color = Color.White, style = Tabular, maxLines = 1)
-                if (target > 0) Text(stringResource(R.string.tasbih_of, target), color = Color(0xFFCAD5DE), textAlign = TextAlign.Center)
-                if (laps > 0) Text(stringResource(R.string.tasbih_laps, laps), color = Color(0xFFA4CDB7), textAlign = TextAlign.Center)
+            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth(0.48f)
+                .graphicsLayer { scaleX = 1f + pulse.value * .035f; scaleY = scaleX }) {
+                Text((if (target > 0) count % target else count).toString(), fontSize = (if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 38 else 56).sp, color = Color.White, style = Tabular, maxLines = 1)
+                if (target > 0) Text(stringResource(R.string.tasbih_of, target), color = Color(0xFFE5D7C2), textAlign = TextAlign.Center)
+                if (laps > 0) Text(stringResource(R.string.tasbih_laps, laps), color = Sand, textAlign = TextAlign.Center)
             }
         }
         Text(stringResource(R.string.tasbih_tap_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
         ZCard {
             Text(stringResource(R.string.tasbih_target), style = MaterialTheme.typography.titleSmall)
             Spacer(Modifier.height(8.dp))
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            androidx.compose.foundation.layout.FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 listOf(33, 99, 100, 0).forEach { t ->
                     FilterChip(
                         selected = target == t,
@@ -463,4 +473,18 @@ fun TasbihScreen() {
             )
         }
     }
+    if (showPhrases) HorizonSheet(stringResource(R.string.pause_zikr), { showPhrases = false }) {
+        TASBIH_NAMES.forEachIndexed { i, (name, meaning) ->
+            RadioLine(stringResource(name), i == phrase, stringResource(meaning)) {
+                if (i != phrase) { Store.tasbihPhrase = i; Store.tasbihCount = 0 }
+                showPhrases = false
+            }
+        }
+    }
+    if (reset) HorizonDialog(onDismissRequest = { reset = false },
+        title = { Text(stringResource(R.string.action_reset)) },
+        text = { Text(stringResource(R.string.counter_reset_confirmation)) },
+        confirmButton = { TextButton(onClick = { Store.tasbihCount = 0; com.zikrtime.app.widget.Widgets.updateTasbih(view.context); reset = false }) { Text(stringResource(R.string.action_reset)) } },
+        dismissButton = { TextButton(onClick = { reset = false }) { Text(stringResource(R.string.action_close)) } })
+
 }

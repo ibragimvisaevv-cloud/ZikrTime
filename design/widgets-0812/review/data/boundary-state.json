@@ -1,0 +1,70 @@
+{
+  "before": {
+    "next": "DHUHR",
+    "at": "2026-10-30T12:13+03:00[Europe/Moscow]",
+    "now": "2026-10-30T12:12:45.540084+03:00[Europe/Moscow]",
+    "city": "moscow",
+    "date": "2026-10-30",
+    "layout": "COMPACT",
+    "width": 211,
+    "height": 64,
+    "dark": false
+  },
+  "after": {
+    "next": "ASR",
+    "at": "2026-10-30T14:24+03:00[Europe/Moscow]",
+    "now": "2026-10-30T12:13:00.213184+03:00[Europe/Moscow]",
+    "city": "moscow",
+    "date": "2026-10-30",
+    "layout": "COMPACT",
+    "width": 211,
+    "height": 64,
+    "dark": false
+  },
+  "all": [
+    {
+      "next": "ASR",
+      "at": "2026-10-30T14:24+03:00[Europe/Moscow]",
+      "now": "2026-10-30T12:13:00.213184+03:00[Europe/Moscow]",
+      "city": "moscow",
+      "date": "2026-10-30",
+      "layout": "COMPACT",
+      "width": 211,
+      "height": 64,
+      "dark": false
+    },
+    {
+      "next": "ASR",
+      "at": "2026-10-30T14:24+03:00[Europe/Moscow]",
+      "now": "2026-10-30T12:13:00.261029+03:00[Europe/Moscow]",
+      "city": "moscow",
+      "date": "2026-10-30",
+      "layout": "WIDE",
+      "width": 434,
+      "height": 64,
+      "dark": false
+    },
+    {
+      "next": "ASR",
+      "at": "2026-10-30T14:24+03:00[Europe/Moscow]",
+      "now": "2026-10-30T12:13:00.202954+03:00[Europe/Moscow]",
+      "city": "moscow",
+      "date": "2026-10-30",
+      "layout": "COMPACT",
+      "width": 211,
+      "height": 139,
+      "dark": false
+    },
+    {
+      "next": "ASR",
+      "at": "2026-10-30T14:24+03:00[Europe/Moscow]",
+      "now": "2026-10-30T12:13:00.267021+03:00[Europe/Moscow]",
+      "city": "moscow",
+      "date": "2026-10-30",
+      "layout": "WIDE",
+      "width": 434,
+      "height": 139,
+      "dark": false
+    }
+  ]
+}

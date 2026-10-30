@@ -575,46 +575,15 @@ fun Modifier.shake(trigger: Boolean): Modifier = composed {
 
 // ---------------- Заставка ----------------
 
-/** Заставка при запуске: золотой полумесяц со звездой на изумрудном фоне. */
+/** Утверждённый знак «Купол и горизонт» на общей пейзажной сцене. */
 @Composable
-fun CrescentSplash(modifier: Modifier = Modifier) {
-    val grow = remember { Animatable(0.55f) }
-    val turn = remember { Animatable(-35f) }
-    val star = remember { Animatable(0f) }
-    LaunchedEffect(Unit) {
-        launch { grow.animateTo(1f, spring(dampingRatio = 0.5f, stiffness = 160f)) }
-        launch { turn.animateTo(0f, spring(dampingRatio = 0.6f, stiffness = 120f)) }
-        delay(300)
-        star.animateTo(1f, tween(450))
-    }
-    val glow by rememberInfiniteTransition(label = "splash").animateFloat(
-        0.3f, 0.6f, infiniteRepeatable(tween(900), RepeatMode.Reverse), label = "splash-glow",
-    )
-    Box(
-        modifier.fillMaxSize().background(Brush.radialGradient(listOf(EmeraldBright, Emerald, EmeraldDeep, EmeraldNight))),
-        contentAlignment = Alignment.Center,
-    ) {
-        StarPattern(Modifier.fillMaxSize(), color = Gold.copy(alpha = 0.08f))
-        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-            Canvas(Modifier.size(150.dp)) {
-                val r = size.minDimension * 0.30f * grow.value
-                val c = center
-                drawCircle(Brush.radialGradient(listOf(Gold.copy(alpha = glow), Color.Transparent), c, r * 2.2f), r * 2.2f, c)
-                rotate(turn.value, c) {
-                    drawPath(crescent(c, r), Brush.linearGradient(listOf(GoldLight, Gold, GoldDark), Offset(c.x - r, c.y - r), Offset(c.x + r, c.y + r)))
-                    if (star.value > 0f) {
-                        val sc = Offset(c.x + r * 0.62f, c.y - r * 0.05f)
-                        sparkle(sc, r * 0.13f * star.value, GoldLight.copy(alpha = star.value))
-                    }
-                }
-            }
-            Spacer(Modifier.height(10.dp))
-            Text(
-                stringResource(R.string.app_name),
-                color = Cream.copy(alpha = star.value),
-                fontSize = 26.sp,
-                fontWeight = FontWeight.SemiBold,
-            )
+fun HorizonSplash(modifier: Modifier = Modifier) {
+    Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        SceneBackdrop(Modifier.fillMaxSize(), controlBars = false)
+        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            AppIconImage(Modifier.size(88.dp))
+            Text(stringResource(R.string.app_name), color = Cream, style = MaterialTheme.typography.headlineLarge)
+            Text(stringResource(R.string.slogan), color = Cream, style = MaterialTheme.typography.bodyLarge)
         }
     }
 }

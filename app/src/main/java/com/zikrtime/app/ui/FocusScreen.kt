@@ -1,3 +1,4 @@
+@file:OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
 package com.zikrtime.app.ui
 
 import android.content.Intent
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -44,9 +46,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.core.graphics.drawable.toBitmap
 import com.zikrtime.app.R
 import com.zikrtime.app.data.Store
@@ -79,6 +86,7 @@ fun FocusScreen() {
     val pausePhrase = remember(pauseRevision) { FocusPause.phrase(context) }
     val running = BlockerService.running || GuardService.running
     var showDisclosure by remember { mutableStateOf(false) }
+    var showSettings by remember { mutableStateOf(false) }
 
     LaunchedEffect(resume, pauseEnabled) { GuardService.sync(context) }
     LaunchedEffect(Unit) {
@@ -93,45 +101,68 @@ fun FocusScreen() {
         usedMillis = withContext(Dispatchers.IO) { ScreenTime.usedTodayMillis(context) }
     }
 
-    TabColumn(title = stringResource(R.string.focus_title), subtitle = stringResource(R.string.focus_subtitle)) {
-        // Сегодня
-        ZCard {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                val used = (usedMillis ?: 0L) / 60_000
-                val allowed = Store.allowedMinutes()
-                ProgressRing(
-                    progress = used.toFloat() / allowed.coerceAtLeast(1),
-                    modifier = Modifier.size(92.dp),
-                    stroke = 9.dp,
-                    color = if (used >= allowed) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
-                ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(used.toString(), style = MaterialTheme.typography.titleLarge)
-                        Text(stringResource(R.string.unit_min), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    }
-                }
-                Spacer(Modifier.width(18.dp))
-                Column(Modifier.weight(1f)) {
-                    Text(stringResource(R.string.focus_today), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    Text(
-                        if (usedMillis == null) stringResource(R.string.focus_no_access)
-                        else stringResource(R.string.focus_used_of, durationText(used), durationText(allowed.toLong())),
-                        style = MaterialTheme.typography.titleMedium,
-                    )
-                    val bonus = Store.bonusMinutes()
-                    Text(
-                        stringResource(R.string.focus_limit_bonus, durationText(Store.dailyLimitMinutes.toLong()), bonus),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
+    val used = (usedMillis ?: 0L) / 60_000
+    val allowed = Store.allowedMinutes()
+    val remaining = (allowed - used).coerceAtLeast(0)
+    HorizonSection(title = stringResource(R.string.focus_title), subtitle = stringResource(R.string.focus_subtitle),
+        image = R.drawable.focus_courtyard, heroHeight = 390.dp,
+        hero = {
+            Spacer(Modifier.height(8.dp))
+            ProgressRing(progress = if (usedMillis == null) 0f else remaining.toFloat() / allowed.coerceAtLeast(1),
+                modifier = Modifier.align(Alignment.CenterHorizontally).size(if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 246.dp else 188.dp),
+                stroke = 3.dp, color = Sand, track = Porcelain.copy(alpha = .24f)) {
+                if (!hasUsage) Icon(painterResource(R.drawable.ic_nav_focus), null,
+                    tint = Sand, modifier = Modifier.size(52.dp))
+                else Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(if (usedMillis == null) "—" else remaining.toString(), color = Porcelain,
+                        style = MaterialTheme.typography.displayLarge, fontSize = 64.sp)
+                    Text(stringResource(R.string.unit_min), color = Sand, style = MaterialTheme.typography.titleMedium)
                 }
             }
-            if (Store.bonusMinutes() < Store.MAX_BONUS_MINUTES_PER_DAY) {
-                Spacer(Modifier.height(16.dp))
-                TonalButton(stringResource(R.string.focus_earn_button, Store.BONUS_MINUTES_PER_ROUND), onClick = { nav.startQuiz(null) })
+            Text(if (!hasUsage || usedMillis == null) stringResource(R.string.focus_no_access) else stringResource(R.string.focus_remaining),
+                style = MaterialTheme.typography.titleMedium, color = Porcelain,
+                textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+            if (!hasUsage) GoldButton(stringResource(R.string.pause_settings), onClick = { showSettings = true },
+                modifier = Modifier.testTag("focus_setup").semantics { testTagsAsResourceId = true })
+        }) {
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(Modifier.weight(1f)) {
+                Text(stringResource(R.string.focus_daily_limit), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(durationText(Store.dailyLimitMinutes.toLong()), style = MaterialTheme.typography.headlineSmall)
+            }
+            Column(Modifier.weight(1f)) {
+                Text(stringResource(R.string.focus_today), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(if (usedMillis == null) "—" else durationText(used), style = MaterialTheme.typography.headlineSmall)
             }
         }
-
+        if (Store.bonusMinutes() > 0) Text(
+            stringResource(R.string.focus_limit_bonus, durationText(Store.dailyLimitMinutes.toLong()), Store.bonusMinutes()),
+            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+        SwitchRow(title = stringResource(R.string.pause_title),
+            subtitle = stringResource(if (pauseStrict) R.string.pause_strict else R.string.pause_soft),
+            checked = pauseEnabled, onChange = { FocusPause.setEnabled(context, it) })
+        SwitchRow(title = stringResource(R.string.focus_enable), subtitle = stringResource(R.string.focus_enable_hint),
+            checked = Store.blockingEnabled, onChange = {
+                Store.blockingEnabled = it; GuardService.sync(context); BlockerService.recheck()
+            })
+        if (!hasUsage || !canBlock) StatusLine(stringResource(R.string.focus_need_permissions))
+        PrimaryButton(stringResource(R.string.pause_settings), onClick = { showSettings = true },
+            modifier = Modifier.testTag("focus_settings_open").semantics { testTagsAsResourceId = true })
+        DestinationRow(stringResource(R.string.focus_apps), R.drawable.ic_nav_more,
+            AppsCache.apps?.filter { it.packageName in Store.blockedPackages }?.joinToString { it.label }
+                ?.takeIf { it.isNotBlank() } ?: stringResource(R.string.focus_apps_none)) { nav.open(Screen.APPS) }
+        if (Store.bonusMinutes() < Store.MAX_BONUS_MINUTES_PER_DAY) {
+            TonalButton(stringResource(R.string.focus_earn_button, Store.BONUS_MINUTES_PER_ROUND), onClick = { nav.startQuiz(null) })
+        }
+    }
+    if (showSettings) HorizonSheet(stringResource(R.string.pause_settings), { showSettings = false }) {
+        if (!hasUsage) ZCard {
+            PermissionRow(title = stringResource(R.string.perm_usage_title),
+                text = stringResource(R.string.perm_usage_text), granted = false,
+                onGrant = { ScreenTime.openUsageAccessSettings(context) })
+        }
+        SectionLabel(stringResource(R.string.pause_title))
         ZCard {
             SwitchRow(
                 title = stringResource(R.string.pause_title),
@@ -189,6 +220,7 @@ fun FocusScreen() {
             }
         }
 
+        SectionLabel(stringResource(R.string.focus_daily_limit))
         ZCard {
             SliderRow(
                 title = stringResource(R.string.focus_daily_limit),
@@ -235,13 +267,13 @@ fun FocusScreen() {
                     else -> apps.filter { it.packageName in selected }.joinToString { it.label }
                 },
                 icon = androidx.compose.ui.res.painterResource(R.drawable.ic_nav_more),
-                onClick = { nav.open(Screen.APPS) },
+                onClick = { showSettings = false; nav.open(Screen.APPS) },
             )
         }
 
         SectionLabel(stringResource(R.string.focus_permissions))
         ZCard {
-            PermissionRow(
+            if (hasUsage) PermissionRow(
                 title = stringResource(R.string.perm_usage_title),
                 text = stringResource(R.string.perm_usage_text),
                 granted = hasUsage,
@@ -267,6 +299,7 @@ fun FocusScreen() {
                 text = stringResource(R.string.perm_service_text),
                 granted = hasService,
                 onGrant = { showDisclosure = true },
+                actionTag = "focus_accessibility_disclosure",
             )
             HorizontalDivider(Modifier.padding(vertical = 14.dp), color = MaterialTheme.colorScheme.outlineVariant)
             // Экономия батареи останавливает защиту — просим разрешить работу в фоне.
@@ -325,7 +358,7 @@ fun FocusScreen() {
     }
 
     if (showDisclosure) {
-        AlertDialog(
+        HorizonDialog(
             onDismissRequest = { showDisclosure = false },
             title = { Text(stringResource(R.string.disclosure_title)) },
             text = {
@@ -355,18 +388,14 @@ fun FocusScreen() {
 }
 
 @Composable
-fun PermissionRow(title: String, text: String, granted: Boolean, onGrant: () -> Unit) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Column(Modifier.weight(1f)) {
-            Text(title, style = MaterialTheme.typography.titleSmall)
-            Text(text, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+fun PermissionRow(title: String, text: String, granted: Boolean, actionTag: String = "permission_grant", onGrant: () -> Unit) {
+    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Text(title, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+            if (granted) Icon(Icons.Default.CheckCircle, contentDescription = stringResource(R.string.state_granted), tint = MaterialTheme.colorScheme.primary)
         }
-        Spacer(Modifier.width(12.dp))
-        if (granted) {
-            Icon(Icons.Default.CheckCircle, contentDescription = stringResource(R.string.state_granted), tint = MaterialTheme.colorScheme.primary)
-        } else {
-            FilledTonalButton(onClick = onGrant) { Text(stringResource(R.string.action_grant)) }
-        }
+        Text(text, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        if (!granted) FilledTonalButton(onClick = onGrant, modifier = Modifier.heightIn(min = 48.dp).testTag(actionTag)) { Text(stringResource(R.string.action_grant)) }
     }
 }
 
@@ -375,7 +404,7 @@ fun PermissionRow(title: String, text: String, granted: Boolean, onGrant: () -> 
 fun AppsScreen() {
     val nav = LocalNav.current
     val context = LocalContext.current
-    var query by remember { mutableStateOf("") }
+    var query by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf("") }
     LaunchedEffect(Unit) {
         if (AppsCache.apps == null) {
             val loaded = withContext(Dispatchers.IO) { ScreenTime.launchableApps(context) }
@@ -399,7 +428,7 @@ fun AppsScreen() {
         } else {
             val filtered = apps.filter { query.isBlank() || it.label.contains(query.trim(), ignoreCase = true) }
             if (filtered.isEmpty()) {
-                Text(stringResource(R.string.search_nothing), modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+                StatePanel(stringResource(R.string.search_nothing), icon = R.drawable.ic_nav_focus, action = stringResource(R.string.action_reset), onAction = { query = "" })
             }
             ZCard(padding = androidx.compose.foundation.layout.PaddingValues(vertical = 6.dp, horizontal = 8.dp)) {
                 filtered.forEach { app -> AppRow(app) }

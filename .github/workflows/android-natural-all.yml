@@ -1,0 +1,94 @@
+name: Android natural interface
+on:
+  push:
+    branches: [codex/android-natural-all]
+    paths-ignore: ["**.md", "design/**"]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: natural-all-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    if: ${{ !contains(github.event.head_commit.message, '[ui-check]') && !contains(github.event.head_commit.message, '[widgets]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - run: python3 tools/i18n/build_strings.py && python3 tools/ci/check_strings.py
+      - run: git diff --exit-code -- app/src/main/res
+      - run: chmod +x gradlew && ./gradlew testDebugUnitTest lintDebug assembleDebug --console=plain
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Android-natural-build
+          path: |
+            app/build/outputs/apk/debug/
+            app/build/reports/
+            app/build/test-results/
+  screens:
+    if: ${{ !contains(github.event.head_commit.message, '[quick-ui]') && always() && (needs.build.result == 'success' || contains(github.event.head_commit.message, '[ui-check]')) }}
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        group: ${{ fromJSON(contains(github.event.head_commit.message, '[composition-only]') && '["composition"]' || contains(github.event.head_commit.message, '[composition]') && '["composition","journeys","focus","accessibility"]' || contains(github.event.head_commit.message, '[actions-only]') && '["actions"]' || '["tour","journeys","accessibility","focus","details","extras","actions"]') }}
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify reused APK inputs
+        if: contains(github.event.head_commit.message, '[ui-check]')
+        run: |
+          git fetch --no-tags --depth=1 origin 09543f406b6bf3b2f8b5384d148312f581e5d486
+          git diff --exit-code 09543f406b6bf3b2f8b5384d148312f581e5d486 HEAD -- app/ build.gradle.kts settings.gradle.kts gradle.properties gradle/ gradlew tools/i18n/
+      - uses: actions/download-artifact@v4
+        with:
+          name: Android-natural-build
+          path: android-out
+          github-token: ${{ github.token }}
+          run-id: ${{ contains(github.event.head_commit.message, '[ui-check]') && '40906009119' || github.run_id }}
+      - name: Retrieve approved 0.8.9 baseline
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download 40861857638 -n Android-natural-build -D previous-out
+      - name: Prepare disposable upgrade fixtures
+        run: |
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'platforms;android-35' 'build-tools;35.0.0' >/dev/null
+          mkdir -p fixtures
+          keytool -genkeypair -keystore fixtures/test.jks -storepass android -keypass android -alias test -dname 'CN=Disposable UI Test' -keyalg RSA -keysize 2048 -validity 2
+          SIGNER=$(find "$ANDROID_HOME/build-tools" -name apksigner | sort -V | tail -1)
+          "$SIGNER" sign --ks fixtures/test.jks --ks-key-alias test --ks-pass pass:android --key-pass pass:android --out fixtures/previous.apk previous-out/outputs/apk/debug/app-debug.apk
+          "$SIGNER" sign --ks fixtures/test.jks --ks-key-alias test --ks-pass pass:android --key-pass pass:android --out fixtures/current.apk android-out/outputs/apk/debug/app-debug.apk
+          wc -c fixtures/previous.apk fixtures/current.apk > fixtures/apk-sizes.txt
+          bash tools/ci/build_focus_fixture.sh fixtures/test.jks fixtures/focus-target.apk
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-natural.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - run: python3 -m pip install 'Pillow>=11,<13'
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: bash tools/ci/whole_app_smoke.sh ${{ matrix.group }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Android-whole-${{ matrix.group }}
+          path: |
+            ci-out/
+            fixtures/apk-sizes.txt

@@ -24,8 +24,23 @@ def shell(*args):
 
 
 def prefs_tree(name='zikrtime'):
-    time.sleep(.5)
-    return ET.fromstring(adb('exec-out', 'run-as', PKG, 'cat', f'shared_prefs/{name}.xml'))
+    # SharedPreferences writes the large public places cache into the same XML.
+    # Read only complete snapshots; a mid-write file is not evidence of corruption.
+    # The bounded deadline still fails a persistently invalid file and keeps diagnostics.
+    deadline = time.monotonic() + 45
+    attempt = 0
+    while True:
+        time.sleep(.5)
+        raw = adb('exec-out', 'run-as', PKG, 'cat', f'shared_prefs/{name}.xml')
+        try:
+            return ET.fromstring(raw)
+        except ET.ParseError:
+            if attempt == 0:
+                (OUT / f'pref-read-{name}-first.xml').write_text(raw)
+            (OUT / f'pref-read-{name}-latest.xml').write_text(raw)
+            attempt += 1
+            if time.monotonic() >= deadline:
+                raise
 
 
 def prefs(name='zikrtime'):
@@ -45,21 +60,55 @@ def launch(screen):
 
 
 def ui():
-    shell('uiautomator', 'dump', '/sdcard/features.xml')
-    root = ET.fromstring(shell('cat', '/sdcard/features.xml'))
-    (OUT / 'last-ui.xml').write_text(ET.tostring(root, encoding='unicode'))
-    return root
+    # UiAutomator can return exit 0 with a null root while a window is attaching.
+    # Never reuse an old dump: that can tap coordinates from the previous screen.
+    deadline = time.monotonic() + 30
+    attempt = 0
+    while True:
+        shell('rm', '-f', '/sdcard/features.xml')
+        output = shell('uiautomator', 'dump', '/sdcard/features.xml')
+        try:
+            root = ET.fromstring(shell('cat', '/sdcard/features.xml'))
+            if next(root.iter('node'), None) is None:
+                raise ValueError('empty UI hierarchy')
+            (OUT / 'last-ui.xml').write_text(ET.tostring(root, encoding='unicode'))
+            # The emulator launcher can ANR during cold boot. Record and dismiss
+            # only that named system app; never hide an ANR from ZikrTime.
+            titles=[n.get('text','') for n in root.iter('node') if n.get('resource-id')=='android:id/alertTitle']
+            if any('Pixel Launcher' in t and 'responding' in t for t in titles):
+                (OUT / 'emulator-launcher-anr.xml').write_text(ET.tostring(root,encoding='unicode'))
+                close=next((n for n in root.iter('node') if n.get('resource-id')=='android:id/aerr_close'),None)
+                if close is not None:
+                    l,t,r,b=map(int,re.findall(r'-?\d+',close.get('bounds')))
+                    shell('input','tap',(l+r)//2,(t+b)//2);time.sleep(1);continue
+            if any(n.get('resource-id')=='android:id/aerr_close' for n in root.iter('node')):
+                raise AssertionError('App error dialog present: '+str(titles))
+            return root
+        except (subprocess.CalledProcessError, ET.ParseError, ValueError) as error:
+            (OUT / f'ui-dump-retry-{attempt}.txt').write_text(output + '\n' + str(error))
+            attempt += 1
+            if time.monotonic() >= deadline:
+                raise
+            time.sleep(1)
 
 
 def find_control(root, identifier, attribute='resource-id'):
-    return next((n for n in root.iter('node') if n.attrib.get(attribute) == identifier
-                 or (attribute == 'resource-id' and (
-                     n.attrib.get(attribute, '').endswith('/' + identifier)
-                     or n.attrib.get('content-desc') == identifier))), None)
+    matches=[n for n in root.iter('node') if n.attrib.get(attribute)==identifier
+        or (attribute=='resource-id' and (n.attrib.get(attribute,'').endswith('/'+identifier)
+        or n.attrib.get('content-desc')==identifier))]
+    parents={child:parent for parent in root.iter() for child in parent}
+    def rank(node):
+        if node.attrib.get('clickable')=='true': return 0
+        parent=parents.get(node)
+        while parent is not None:
+            if parent.attrib.get('clickable')=='true': return 1
+            parent=parents.get(parent)
+        return 2
+    return min(matches,key=rank) if matches else None
 
 
 def locate_control(identifier, attribute='resource-id'):
-    for attempt in range(7):
+    for attempt in range(12):
         root = ui()
         node = find_control(root, identifier, attribute)
         screen = next(root.iter('node'))
@@ -80,8 +129,19 @@ def locate_control(identifier, attribute='resource-id'):
             if right - left >= 12 and bottom - top >= 12:
                 node.set('bounds', f'[{left},{top}][{right},{bottom}]')
                 return node
-        # Screen edge avoids the tasbih gesture detector and does not increment its count.
-        shell('input', 'swipe', 5, int(height * .8), 5, int(height * .3), 350)
+        # Stay inside the actual scroll owner (a map list or sheet can be inset).
+        # Its leading edge also avoids the tasbih detector inside the padded content.
+        scrolls=[]
+        for candidate in root.iter('node'):
+            if candidate.attrib.get('scrollable') != 'true': continue
+            cl,ct,cr,cb=map(int,re.findall(r'-?\d+',candidate.attrib['bounds']))
+            cl,ct,cr,cb=max(cl,viewport_left),max(ct,viewport_top),min(cr,width),min(cb,height)
+            if cb-ct>max(120,(cr-cl)*.35): scrolls.append((cb-ct,cl,ct,cr,cb))
+        if scrolls:
+            _,cl,ct,cr,cb=max(scrolls)
+            shell('input','swipe',cl+5,int(ct+(cb-ct)*.8),cl+5,int(ct+(cb-ct)*.25),350)
+        else:
+            shell('input','swipe',5,int(height*.8),5,int(height*.3),350)
     raise AssertionError('UI control not found: ' + identifier)
 
 
@@ -175,7 +235,54 @@ def historical(values):
 
 
 mode = sys.argv[1]
-if mode == 'seed-upgrade':
+if mode == 'appearance':
+    # Drive visible controls, then restart and oppose system appearance.
+    from PIL import Image, ImageStat
+    def assert_theme(name, dark):
+        screenshot(name)
+        image = Image.open(OUT / 'screens' / (name + '.png')).convert('RGB')
+        median = sum(ImageStat.Stat(image).median) / 3
+        assert (median < 115) if dark else (median > 150), (name, median)
+    def wait_appearance(value):
+        observed = []
+        for attempt in range(8):
+            current = prefs().get('appearance')
+            observed.append(current)
+            if current == value:
+                return
+            time.sleep(.3)
+        (OUT / ('appearance-failed-' + value + '.json')).write_text(json.dumps(observed))
+        screenshot('appearance-failed-' + value)
+        raise AssertionError(('appearance did not persist', value, observed))
+    shell('cmd', 'uimode', 'night', 'no')
+    launch('more')
+    tap_control('appearance_dark')
+    wait_appearance('dark')
+    assert_theme('manual-dark', True)
+    launch('more')
+    assert prefs().get('appearance') == 'dark'
+    assert_theme('manual-dark-restarted', True)
+    tap_control('appearance_light')
+    wait_appearance('light')
+    assert_theme('manual-light-before-system-change', False)
+    shell('cmd', 'uimode', 'night', 'yes')
+    launch('more')
+    assert prefs().get('appearance') == 'light'
+    assert_theme('manual-light-system-dark', False)
+    launch('home')
+    tap_control('theme_quick_toggle')
+    wait_appearance('dark')
+    launch('more')
+    assert_theme('home-toggle-dark', True)
+    tap_control('appearance_system')
+    wait_appearance('system')
+    assert_theme('system-dark', True)
+    shell('cmd', 'uimode', 'night', 'no')
+    launch('more')
+    assert_theme('system-light', False)
+    (OUT / 'appearance-passed.json').write_text(json.dumps({'manual_light': True, 'manual_dark': True,
+        'persists_after_restart': True, 'overrides_system': True, 'home_toggle': True, 'system_option': True}))
+elif mode == 'seed-upgrade':
     root = prefs_tree()
     day = shell('date', '+%Y-%m-%d').strip()
     data = {
@@ -442,6 +549,7 @@ elif mode == 'focus-notifications-denied':
         assert re.search(r'android\.permission\.POST_NOTIFICATIONS:\s+granted=false', permission)
         strings = ET.parse('app/src/main/res/values/strings.xml').getroot()
         warning = next(n.text for n in strings if n.attrib.get('name') == 'perm_notifications_off')
+        tap_control('focus_settings_open')
         locate_control(warning, 'text')
         screenshot('focus-notifications-disabled-warning')
         open_focus_target()
@@ -516,6 +624,7 @@ elif mode == 'clear-learning':
     assert prefs().get('personal_progress_enabled') == 'true'
     tap_control('personal_progress_toggle')
     assert prefs().get('personal_progress_enabled') == 'false'
+    screenshot('progress-disabled')
     launch('home')
     locate_control('my_day_resume_learning')
     screenshot('learning-clear-before-home')

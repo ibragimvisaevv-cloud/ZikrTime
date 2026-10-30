@@ -25,9 +25,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -79,7 +82,7 @@ fun ReviewsBlock(target: String, inCard: Boolean = true) {
     LaunchedEffect(Unit) { Reviews.refresh() }
     val summary = Reviews.data?.reviews?.get(target)
     var showAll by remember { mutableStateOf(false) }
-    var writing by remember { mutableStateOf(false) }
+    var writing by rememberSaveable { mutableStateOf(false) }
     var sent by remember(target) { mutableStateOf(Reviews.alreadySent(target)) }
     val content: @Composable () -> Unit = {
         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -148,71 +151,45 @@ private fun ReviewItem(item: Reviews.Item) {
 private fun ReviewDialog(target: String, onDismiss: () -> Unit, onSent: () -> Unit) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    var rating by remember { mutableIntStateOf(0) }
-    var name by remember { mutableStateOf("") }
-    var text by remember { mutableStateOf("") }
+    var rating by rememberSaveable { mutableIntStateOf(0) }
+    var name by rememberSaveable { mutableStateOf("") }
+    var text by rememberSaveable { mutableStateOf("") }
     var sending by remember { mutableStateOf(false) }
     val thanks = stringResource(R.string.reviews_thanks)
     val offline = stringResource(R.string.reviews_offline)
     val error = stringResource(R.string.reviews_error)
-    AlertDialog(
-        onDismissRequest = { if (!sending) onDismiss() },
-        title = { Text(stringResource(R.string.reviews_dialog_title)) },
-        text = {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Text(stringResource(R.string.reviews_rate), style = MaterialTheme.typography.bodyMedium)
-                Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                    for (i in 1..5) {
-                        val pop = remember { Animatable(1f) }
-                        LaunchedEffect(rating) {
-                            if (rating == i) {
-                                pop.snapTo(1.4f)
-                                pop.animateTo(1f, spring(dampingRatio = 0.35f, stiffness = 400f))
-                            }
-                        }
-                        Text(
-                            "★",
-                            fontSize = 36.sp,
-                            color = if (i <= rating) Gold else StarOff,
-                            modifier = Modifier
-                                .graphicsLayer {
-                                    scaleX = pop.value
-                                    scaleY = pop.value
-                                }
-                                .clickable { rating = i },
-                        )
-                    }
+    var sendError by remember { mutableStateOf<String?>(null) }
+    HorizonSheet(stringResource(R.string.reviews_dialog_title), { if (!sending) onDismiss() }) {
+        Text(stringResource(R.string.reviews_rate), style = MaterialTheme.typography.bodyMedium)
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            for (i in 1..5) {
+                androidx.compose.material3.IconButton(onClick = { rating = i }, enabled = !sending) {
+                    Text(if (i <= rating) "★" else "☆", fontSize = 28.sp,
+                        color = if (i <= rating) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.semantics { contentDescription = "$i / 5" })
                 }
-                OutlinedTextField(
-                    value = name, onValueChange = { name = it.take(40) }, singleLine = true,
-                    label = { Text(stringResource(R.string.reviews_name_hint)) },
-                    shape = RoundedCornerShape(14.dp), modifier = Modifier.fillMaxWidth(),
-                )
-                OutlinedTextField(
-                    value = text, onValueChange = { text = it.take(600) }, minLines = 3, maxLines = 6,
-                    label = { Text(stringResource(R.string.reviews_text_hint)) },
-                    shape = RoundedCornerShape(14.dp), modifier = Modifier.fillMaxWidth(),
-                )
-                Text(stringResource(R.string.reviews_rules), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
-        },
-        confirmButton = {
-            Button(enabled = rating > 0 && !sending, onClick = {
-                sending = true
-                scope.launch {
-                    val r = Reviews.send(target, rating, text, name)
-                    sending = false
-                    when (r) {
-                        Reviews.SendResult.OK -> {
-                            Toast.makeText(context, thanks, Toast.LENGTH_LONG).show()
-                            onSent()
-                        }
-                        Reviews.SendResult.OFFLINE -> Toast.makeText(context, offline, Toast.LENGTH_LONG).show()
-                        Reviews.SendResult.ERROR -> Toast.makeText(context, error, Toast.LENGTH_LONG).show()
-                    }
+        }
+        OutlinedTextField(value = name, onValueChange = { name = it.take(40) }, singleLine = true,
+            label = { Text(stringResource(R.string.reviews_name_hint)) }, enabled = !sending,
+            shape = RoundedCornerShape(18.dp), modifier = Modifier.fillMaxWidth())
+        OutlinedTextField(value = text, onValueChange = { text = it.take(600) }, minLines = 3, maxLines = 6,
+            label = { Text(stringResource(R.string.reviews_text_hint)) }, enabled = !sending,
+            shape = RoundedCornerShape(18.dp), modifier = Modifier.fillMaxWidth())
+        Text(stringResource(R.string.reviews_rules), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        sendError?.let { StatePanel(it, error = true) }
+        PrimaryButton(stringResource(R.string.reviews_send), enabled = rating > 0 && !sending, onClick = {
+            sending = true; sendError = null
+            scope.launch {
+                val result = Reviews.send(target, rating, text, name)
+                sending = false
+                when (result) {
+                    Reviews.SendResult.OK -> { Toast.makeText(context, thanks, Toast.LENGTH_LONG).show(); onSent() }
+                    Reviews.SendResult.OFFLINE -> sendError = offline
+                    Reviews.SendResult.ERROR -> sendError = error
                 }
-            }) { Text(stringResource(R.string.reviews_send)) }
-        },
-        dismissButton = { TextButton(onClick = onDismiss, enabled = !sending) { Text(stringResource(android.R.string.cancel)) } },
-    )
+            }
+        })
+        TextButton(onClick = onDismiss, enabled = !sending, modifier = Modifier.fillMaxWidth()) { Text(stringResource(android.R.string.cancel)) }
+    }
 }

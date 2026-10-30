@@ -35,6 +35,11 @@ object Store {
 
     // ---------------- Общие ----------------
 
+    /** Additive setting: older installs retain system appearance and all existing data. */
+    var appearance: String
+        get() = str("appearance", "system").takeIf { it in setOf("system", "light", "dark") } ?: "system"
+        set(v) = put("appearance", v.takeIf { it in setOf("system", "light", "dark") } ?: "system")
+
     var onboarded: Boolean
         get() = bool(K_ONBOARDED, false)
         set(v) = put(K_ONBOARDED, v)

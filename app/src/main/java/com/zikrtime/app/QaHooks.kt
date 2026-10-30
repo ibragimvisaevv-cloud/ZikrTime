@@ -23,6 +23,7 @@ object QaHooks {
 
     /** Возвращает true, если экран будет пересоздан (смена языка) и дальше идти не нужно. */
     /** Показать виджеты рабочего стола вместо приложения (для снимков на эмуляторе). */
+    var hideScene = false
     var widgetPreview = false
     var skyPreview: com.zikrtime.app.ui.NaturalPeriod? = null
 
@@ -36,24 +37,29 @@ object QaHooks {
         com.zikrtime.app.ui.LiveFlags.tilt = intent.getBooleanExtra("qa_tilt", true)
         com.zikrtime.app.ui.LiveFlags.parallax = intent.getBooleanExtra("qa_parallax", true)
         com.zikrtime.app.ui.LiveFlags.splash = intent.getBooleanExtra("qa_splash", false)
+        hideScene = intent.getBooleanExtra("qa_hide_scene", false)
         skyPreview = intent.getStringExtra("qa_period")?.let { runCatching { com.zikrtime.app.ui.NaturalPeriod.valueOf(it) }.getOrNull() }
         val screen = intent.getStringExtra("qa_screen") ?: return false
+        nav.stack.clear()
+        nav.onboardingStep = 0
         if (intent.getBooleanExtra("qa_onboarded", false)) Store.onboarded = true
         if (intent.getBooleanExtra("qa_demo", false)) seed(activity)
         when (screen) {
             "onboarding" -> Store.onboarded = false
             "onboarding_welcome" -> {
                 Store.onboarded = false
-                nav.onboardingStep = 1
+                nav.onboardingStep = 0
             }
             "onboarding_perms" -> {
                 Store.onboarded = false
-                nav.onboardingStep = 2
+                nav.onboardingStep = 3
             }
             "onboarding_city" -> {
                 Store.onboarded = false
-                nav.onboardingStep = 3
+                nav.onboardingStep = 2
             }
+            "onboarding_language" -> { Store.onboarded = false; nav.onboardingStep = 1 }
+            "onboarding_finish" -> { Store.onboarded = false; nav.onboardingStep = 4 }
             "home" -> nav.tab = Tab.PRAYER
             "knowledge" -> nav.tab = Tab.KNOWLEDGE
             "focus" -> nav.tab = Tab.FOCUS
@@ -89,6 +95,13 @@ object QaHooks {
                 nav.shopProduct = com.zikrtime.app.data.Shop.load(activity).products.firstOrNull()?.id ?: "p1"
                 nav.open(Screen.SHOP_PRODUCT)
             }
+            // Actual native windows on an isolated debug profile; never reached in release.
+            "pause_overlay" -> activity.window.decorView.postDelayed({
+                Store.blockedPackages.firstOrNull()?.let { com.zikrtime.app.screentime.PauseOverlay.show(activity, it) }
+            }, 800)
+            "block_overlay" -> activity.window.decorView.postDelayed({
+                com.zikrtime.app.screentime.GuardService.showOverlay(activity, BlockReason.LimitReached(42, 40))
+            }, 800)
             "block_limit" -> activity.startActivity(BlockActivity.intent(activity, BlockReason.LimitReached(42, 40)))
             "block_prayer" -> activity.startActivity(
                 BlockActivity.intent(activity, BlockReason.PrayerTime(Prayer.DHUHR, LocalDate.now(), Instant.now().plusSeconds(12 * 60))),

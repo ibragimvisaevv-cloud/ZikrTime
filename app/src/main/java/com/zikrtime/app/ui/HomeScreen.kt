@@ -3,6 +3,10 @@
 package com.zikrtime.app.ui
 
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +23,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
@@ -34,6 +39,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
@@ -108,41 +115,32 @@ fun HomeScreen() {
         usedMillis = withContext(Dispatchers.IO) { ScreenTime.usedTodayMillis(context) }
     }
 
-    TabColumn {
-        NaturalSkyHero(now, next.first, next.second, times)
-        MyDayActions()
-        ZCard(onClick = { nav.open(Screen.TASBIH) }) {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                androidx.compose.foundation.Image(painterResource(R.drawable.stone_bead), null, Modifier.size(64.dp))
-                Column(Modifier.weight(1f)) {
-                    Text(stringResource(R.string.tasbih_title), style = MaterialTheme.typography.titleLarge)
-                    if (Store.personalProgressEnabled) Text(stringResource(R.string.tasbih_today, Store.tasbihToday(today)), color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    else Text(stringResource(R.string.tasbih_subtitle), color = MaterialTheme.colorScheme.onSurfaceVariant)
+    HorizonHome(now, next.first, next.second, times) {
+        Column(Modifier.fillMaxWidth()) {
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                Text(stringResource(R.string.home_today), style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier.weight(1f))
+                androidx.compose.material3.IconButton(onClick = { nav.open(Screen.PRAYER_SETTINGS) },
+                    modifier = Modifier.testTag("prayer_notification_settings").semantics { testTagsAsResourceId = true }) {
+                    Icon(Icons.Default.Notifications, stringResource(R.string.prayer_notifications),
+                        tint = if (Store.prayerNotifications) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.size(24.dp).drawWithContent {
+                            drawContent()
+                            if (!Store.prayerNotifications) drawLine(Color(0xFFA8754E),
+                                androidx.compose.ui.geometry.Offset(size.width * .15f, size.height * .15f),
+                                androidx.compose.ui.geometry.Offset(size.width * .85f, size.height * .85f), 2.dp.toPx(), StrokeCap.Round)
+                        })
                 }
-                Text("›", fontSize = 28.sp)
             }
-        }
-
-        // Намазы на сегодня
-        ZCard(padding = androidx.compose.foundation.layout.PaddingValues(horizontal = 12.dp, vertical = 12.dp)) {
-            Text(
-                stringResource(R.string.home_today),
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(start = 8.dp, top = 4.dp, bottom = 8.dp),
-            )
+            Spacer(Modifier.height(12.dp))
             val prayed = Store.prayedOn(today)
             Prayer.entries.forEach { p ->
-                PrayerRow(
-                    prayer = p,
-                    time = clock(times[p]),
-                    isCurrent = p == current,
-                    started = !times[p].isAfter(now),
-                    done = p in prayed,
-                    onToggle = {
+                PrayerRow(p, clock(times[p]), p == current,
+                    next.second.toLocalDate() == today && p == next.first,
+                    !times[p].isAfter(now), p in prayed, onToggle = {
                         Store.setPrayed(today, p, p !in prayed)
                         com.zikrtime.app.widget.Widgets.updateAll(context)
-                    },
-                )
+                    })
             }
             Text(
                 if (Store.method == com.zikrtime.app.prayer.CalcMethod.MOSCOW_CATHEDRAL) stringResource(R.string.home_source_dumrf)
@@ -156,31 +154,26 @@ fun HomeScreen() {
             )
         }
 
+        MyDayActions()
+        LandscapePanel(R.drawable.tasbih_still, Modifier.clickable { nav.open(Screen.TASBIH) }) {
+            Row(Modifier.fillMaxWidth().padding(22.dp), verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) {
+                    Text(stringResource(R.string.tasbih_title), style = MaterialTheme.typography.headlineSmall)
+                    Text(stringResource(R.string.tasbih_subtitle), style = MaterialTheme.typography.bodyMedium)
+                    Spacer(Modifier.height(16.dp))
+                    if (Store.personalProgressEnabled) Text(stringResource(R.string.tasbih_today, Store.tasbihToday(today)), color = Sand)
+                }
+                Text("›", fontSize = 32.sp)
+            }
+        }
+
         // Быстрые действия
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Column {
             val qibla = Qibla.bearing(Store.location.latitude, Store.location.longitude).roundToInt()
-            ActionTile(
-                icon = R.drawable.ic_qibla,
-                title = stringResource(R.string.qibla_title),
-                value = "$qibla°",
-                modifier = Modifier.weight(1f),
-                onClick = { nav.open(Screen.QIBLA) },
-            )
-            ActionTile(
-                icon = R.drawable.ic_tasbih,
-                title = stringResource(R.string.tasbih_title),
-                value = (if (Store.personalProgressEnabled) Store.tasbihToday(today) else Store.tasbihCount).toString(),
-                modifier = Modifier.weight(1f),
-                onClick = { nav.open(Screen.TASBIH) },
-            )
+            DestinationRow(stringResource(R.string.qibla_title), R.drawable.ic_qibla, "$qibla°") { nav.open(Screen.QIBLA) }
             val alarmAt = if (Store.alarmEnabled) FajrAlarm.nextTrigger(now) else null
-            ActionTile(
-                icon = R.drawable.ic_alarm,
-                title = stringResource(R.string.alarm_short),
-                value = alarmAt?.let { clock(it) } ?: stringResource(R.string.state_off),
-                modifier = Modifier.weight(1f),
-                onClick = { nav.open(Screen.ALARM) },
-            )
+            DestinationRow(stringResource(R.string.alarm_short), R.drawable.ic_alarm,
+                alarmAt?.let { clock(it) } ?: stringResource(R.string.state_off)) { nav.open(Screen.ALARM) }
         }
 
         RamadanHomeCard(now, onOpen = { nav.open(Screen.RAMADAN) })
@@ -204,45 +197,32 @@ fun HomeScreen() {
 }
 
 @Composable
-private fun PrayerRow(prayer: Prayer, time: String, isCurrent: Boolean, started: Boolean, done: Boolean, onToggle: () -> Unit) {
+private fun PrayerRow(prayer: Prayer, time: String, isCurrent: Boolean, isNext: Boolean, started: Boolean, done: Boolean, onToggle: () -> Unit) {
     val scheme = MaterialTheme.colorScheme
-    Row(
-        Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp))
-            .background(if (isCurrent) scheme.primaryContainer else androidx.compose.ui.graphics.Color.Transparent)
-            .padding(start = 8.dp, end = 0.dp, top = 2.dp, bottom = 2.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        IconBadge(
-            painterResource(prayerIconRes(prayer)),
-            tint = if (prayer.isPrayer) scheme.primary else scheme.onSurfaceVariant,
-            container = if (isCurrent) scheme.surfaceContainerLowest else scheme.surfaceContainer,
-            size = 38.dp,
-        )
-        Spacer(Modifier.width(14.dp))
+    val large = LocalDensity.current.fontScale > 1.3f
+    val shape = RoundedCornerShape(18.dp)
+    val fill = when { isCurrent -> scheme.primaryContainer; isNext -> scheme.secondaryContainer.copy(alpha = .65f); else -> Color.Transparent }
+    val line = scheme.outlineVariant.copy(alpha = .45f)
+    Row(Modifier.fillMaxWidth().padding(vertical = 3.dp).clip(shape).background(fill)
+        .then(if (isNext) Modifier.then(Modifier.drawBehind {
+            drawLine(Clay, androidx.compose.ui.geometry.Offset(2.dp.toPx(), 14.dp.toPx()),
+                androidx.compose.ui.geometry.Offset(2.dp.toPx(), size.height - 14.dp.toPx()), 3.dp.toPx(), StrokeCap.Round)
+        }) else Modifier)
+        .padding(horizontal = 10.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        if (!large) Icon(painterResource(prayerIconRes(prayer)), null, tint = prayerAccent(prayer), modifier = Modifier.size(24.dp))
         Column(Modifier.weight(1f)) {
-            Text(
-                prayerName(prayer),
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = if (isCurrent) FontWeight.SemiBold else FontWeight.Normal,
-                color = if (prayer.isPrayer) scheme.onSurface else scheme.onSurfaceVariant,
-            )
-            if (isCurrent) {
-                Text(stringResource(R.string.home_now), style = MaterialTheme.typography.labelSmall, color = scheme.primary)
-            }
+            Text(prayerName(prayer), style = MaterialTheme.typography.titleMedium)
+            if (isCurrent || isNext) Text(stringResource(if (isCurrent) R.string.home_now else R.string.home_next_prayer),
+                style = MaterialTheme.typography.labelSmall, color = scheme.onSurfaceVariant)
+            if (large) Text(time, style = MaterialTheme.typography.titleLarge.merge(Tabular))
         }
-        Text(
-            time,
-            style = MaterialTheme.typography.titleMedium.merge(Tabular),
-            color = if (prayer.isPrayer) scheme.onSurface else scheme.onSurfaceVariant,
-        )
-        if (prayer.isPrayer) {
-            CheckCircle(checked = done, enabled = started, onToggle = onToggle, contentDescription = stringResource(R.string.home_mark_prayed))
-        } else {
-            Spacer(Modifier.width(48.dp))
-        }
+        if (!large) Text(time, style = MaterialTheme.typography.titleLarge.merge(Tabular), fontWeight = FontWeight.Medium)
+        if (prayer.isPrayer) CheckCircle(checked = done, enabled = started, onToggle = onToggle,
+            contentDescription = prayerName(prayer) + ": " + stringResource(R.string.home_mark_prayed))
+        else Spacer(Modifier.size(48.dp))
     }
+    if (!isCurrent && !isNext && prayer != Prayer.ISHA) androidx.compose.material3.HorizontalDivider(color = line)
 }
 
 @Composable
@@ -340,22 +320,25 @@ private fun MyDayActions() {
     val bank = QuestionBank.load(context)
     val pending = LearningStore.pendingSession(bank)
     val due = LearningStore.dueCount(bank)
-    ZCard {
+    Column(Modifier.fillMaxWidth().padding(vertical = 8.dp)) {
         Text(stringResource(R.string.my_day_title), style = MaterialTheme.typography.titleMedium)
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            TextButton(onClick = { nav.openAzkar("morning") }) { Text(stringResource(R.string.my_day_morning)) }
-            TextButton(onClick = { nav.openAzkar("evening") }) { Text(stringResource(R.string.my_day_evening)) }
-        }
         if (pending != null) {
             TextButton(onClick = { nav.resumeLearning(context) }, modifier = Modifier.testTag("my_day_resume_learning").semantics { testTagsAsResourceId = true }) { Text(stringResource(R.string.my_day_resume_learning)) }
         } else {
             TextButton(onClick = { nav.startQuiz(null) }, modifier = Modifier.testTag("my_day_start_learning").semantics { testTagsAsResourceId = true }) { Text(stringResource(R.string.my_day_start_learning)) }
         }
-        if (AzkarStore.hasPending) {
-            TextButton(onClick = { nav.resumeAzkar() }) { Text(stringResource(R.string.my_day_resume_azkar)) }
-        }
         if (due > 0) {
             TextButton(onClick = { nav.startReview() }) { Text(stringResource(R.string.my_day_review, due)) }
         }
+    }
+}
+
+@Composable
+private fun prayerAccent(prayer: Prayer): Color {
+    val dark = com.zikrtime.app.ui.theme.LocalDarkTheme.current
+    return when (prayer) {
+        Prayer.FAJR, Prayer.ISHA -> if (dark) Color(0xFFA9D5B9) else Olive
+        Prayer.SUNRISE, Prayer.DHUHR -> if (dark) Sand else Color(0xFF98602E)
+        Prayer.ASR, Prayer.MAGHRIB -> if (dark) Color(0xFFE6AC8B) else Clay
     }
 }

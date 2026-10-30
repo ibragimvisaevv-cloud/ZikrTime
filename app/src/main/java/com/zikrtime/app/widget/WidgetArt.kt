@@ -23,13 +23,40 @@ import kotlin.random.Random
 
 /**
  * Картинки для виджетов (виджеты не умеют рисовать градиенты и кольца сами — рисуем их в Bitmap):
- * небо по времени суток со звёздами, солнцем или полумесяцем; кольца прогресса; линия дня.
+ * исламский горизонт по времени суток, матовые поверхности, кольца прогресса.
  */
 object WidgetArt {
-    const val GOLD = 0xFFE2B659.toInt()
-    const val GOLD_LIGHT = 0xFFFFE7A8.toInt()
-    const val GOLD_DARK = 0xFFC9962F.toInt()
-    const val CREAM = 0xFFFFF6E0.toInt()
+    /** Small, opaque architectural surface. No labels are rasterized. */
+    fun horizon(context: Context, wDp: Int, hDp: Int, dark: Boolean, arch: Boolean): Bitmap {
+        val s = min(px(context), 1f)
+        val w = wDp.coerceIn(80, 600) * s; val h = hDp.coerceIn(64, 600) * s
+        val bitmap = Bitmap.createBitmap(w.toInt(), h.toInt(), Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap); val p = Paint(Paint.ANTI_ALIAS_FLAG)
+        val r = 24 * s
+        canvas.clipPath(Path().apply { addRoundRect(RectF(0f,0f,w,h),r,r,Path.Direction.CW) })
+        val colors = if (dark) intArrayOf(0xFF1C4438.toInt(), 0xFF102C26.toInt()) else intArrayOf(0xFFFAF5E9.toInt(), 0xFFE9E2D1.toInt())
+        p.shader = LinearGradient(0f,0f,w,h,colors,null,Shader.TileMode.CLAMP)
+        canvas.drawRect(0f,0f,w,h,p)
+        p.shader = RadialGradient(w*.95f,h*.1f,w*.7f,if(dark)0x285FC397 else 0x55FFFFFF,0x00FFFFFF,Shader.TileMode.CLAMP)
+        canvas.drawRect(0f,0f,w,h,p); p.shader=null
+        val color = if (dark) 0xFFE8CB90.toInt() else 0xFF8D7648.toInt()
+        p.color = alpha(color, if (arch) .18f else .09f)
+        p.style = Paint.Style.STROKE; p.strokeWidth = 1.3f*s
+        if (arch) {
+            val x=w*.79f; val y=h*.40f; val ar=w*.26f
+            val path=Path().apply { moveTo(x-ar,h); lineTo(x-ar,y); cubicTo(x-ar,y-ar*.6f,x-ar*.4f,y-ar*.8f,x,y-ar*1.15f); cubicTo(x+ar*.4f,y-ar*.8f,x+ar,y-ar*.6f,x+ar,y); lineTo(x+ar,h) }
+            canvas.drawPath(path,p)
+        }
+        p.color=alpha(color,.16f)
+        canvas.drawPath(Path().apply { moveTo(w*.50f,h*.92f); cubicTo(w*.65f,h*.83f,w*.85f,h*.96f,w,h*.87f) },p)
+        p.color=alpha(color,.22f)
+        canvas.drawRoundRect(RectF(.5f*s,.5f*s,w-.5f*s,h-.5f*s),r,r,p)
+        return bitmap
+    }
+    const val GOLD = 0xFFD9B77B.toInt()
+    const val GOLD_LIGHT = 0xFFF0D5A4.toInt()
+    const val GOLD_DARK = 0xFF956B3E.toInt()
+    const val CREAM = 0xFFF7F2EA.toInt()
 
     enum class Body { SUN, MOON, NONE }
 
@@ -38,7 +65,7 @@ object WidgetArt {
 
     private fun alpha(color: Int, a: Float): Int = (color and 0x00FFFFFF) or ((a.coerceIn(0f, 1f) * 255).toInt() shl 24)
 
-    /** Фон виджета: градиент неба, свечение у горизонта, звёзды, узор и светило в углу. */
+    /** Matte layered horizon for secondary widgets. */
     fun sky(
         context: Context,
         wDp: Int,
@@ -48,6 +75,7 @@ object WidgetArt {
         stars: Float,
         body: Body,
         seed: Int,
+        ink: Int = CREAM,
     ): Bitmap {
         val s = px(context)
         val w = max(1, (wDp * s).toInt())
@@ -62,92 +90,53 @@ object WidgetArt {
         p.shader = LinearGradient(0f, 0f, w * 0.35f, h.toFloat(), colors, null, Shader.TileMode.CLAMP)
         c.drawRect(rect, p)
 
-        // Тёплое свечение там, где светило
-        val gx = w * 0.82f
-        val gy = h * 1.02f
-        val gr = max(w, h) * 0.9f
-        p.shader = RadialGradient(gx, gy, gr, intArrayOf(glow, alpha(glow, 0f)), null, Shader.TileMode.CLAMP)
-        c.drawRect(rect, p)
-        p.shader = RadialGradient(w * 0.1f, 0f, max(w, h) * 0.6f, intArrayOf(alpha(GOLD_LIGHT, 0.16f), 0), null, Shader.TileMode.CLAMP)
-        c.drawRect(rect, p)
         p.shader = null
-
-        // Звёзды
-        if (stars > 0f) {
-            val r = Random(seed)
-            val n = (wDp * hDp / 700).coerceIn(10, 70)
-            repeat(n) {
-                val x = r.nextFloat() * w
-                val y = r.nextFloat() * h * 0.8f
-                val big = r.nextFloat() < 0.12f
-                p.color = alpha(0xFFFFFFFF.toInt(), stars * (0.35f + r.nextFloat() * 0.6f))
-                if (big) {
-                    sparkle(c, x, y, 2.6f * s, p)
-                } else {
-                    c.drawCircle(x, y, (0.5f + r.nextFloat() * 1.1f) * s, p)
-                }
+        // Soft layers and a distant dome keep the timetable calm and readable.
+        for (layer in 0..2) {
+            val hill = Path().apply {
+                moveTo(0f, h * (.72f + layer * .08f))
+                cubicTo(w * .32f, h * (.5f + layer * .1f), w * .55f, h * (.95f - layer * .06f), w.toFloat(), h * (.6f + layer * .12f))
+                lineTo(w.toFloat(), h.toFloat()); lineTo(0f, h.toFloat()); close()
             }
+            p.color = alpha(ink, .025f + layer * .008f)
+            c.drawPath(hill, p)
         }
-
-        // Узор из восьмиконечных звёзд
-        p.style = Paint.Style.STROKE
-        p.strokeWidth = 1f * s
-        p.color = alpha(GOLD, 0.10f)
-        val step = 54 * s
-        var y = 0f
-        var row = 0
-        while (y < h + step) {
-            var x = if (row % 2 == 0) 0f else step / 2
-            while (x < w + step) {
-                c.drawPath(octagram(x, y, step * 0.3f), p)
-                x += step
-            }
-            y += step * 0.75f
-            row++
+        p.color = alpha(ink, .07f)
+        val cx = w * .87f; val r = min(w * .12f, h * .22f); val base = h * .98f
+        val dome = Path().apply {
+            moveTo(cx - r, base); lineTo(cx - r, base - r * .6f)
+            cubicTo(cx - r, base - r * 1.3f, cx - r * .25f, base - r * 1.3f, cx, base - r * 1.65f)
+            cubicTo(cx + r * .25f, base - r * 1.3f, cx + r, base - r * 1.3f, cx + r, base - r * .6f)
+            lineTo(cx + r, base); close()
         }
-        p.style = Paint.Style.FILL
-
-        // Светило в правом нижнем углу (частично за краем)
-        when (body) {
-            Body.SUN -> {
-                val cx = w - 30 * s
-                val cy = h - 26 * s
-                p.shader = RadialGradient(cx, cy, 70 * s, intArrayOf(alpha(GOLD_LIGHT, 0.7f), alpha(GOLD, 0.25f), 0), floatArrayOf(0f, 0.45f, 1f), Shader.TileMode.CLAMP)
-                c.drawCircle(cx, cy, 70 * s, p)
-                p.shader = null
-                p.color = alpha(GOLD_LIGHT, 0.75f)
-                p.strokeWidth = 2.2f * s
-                p.strokeCap = Paint.Cap.ROUND
-                for (i in 0 until 12) {
-                    val a = Math.toRadians(i * 30.0 + 8)
-                    val r1 = 25 * s
-                    val r2 = (if (i % 2 == 0) 36 else 31) * s
-                    c.drawLine(cx + r1 * cos(a).toFloat(), cy + r1 * sin(a).toFloat(), cx + r2 * cos(a).toFloat(), cy + r2 * sin(a).toFloat(), p)
-                }
-                p.shader = RadialGradient(cx - 5 * s, cy - 5 * s, 22 * s, intArrayOf(0xFFFFFFFF.toInt(), GOLD_LIGHT, GOLD), null, Shader.TileMode.CLAMP)
-                c.drawCircle(cx, cy, 19 * s, p)
-                p.shader = null
-            }
-            Body.MOON -> {
-                val cx = w - 34 * s
-                val cy = h - 30 * s
-                p.shader = RadialGradient(cx, cy, 64 * s, intArrayOf(alpha(CREAM, 0.35f), 0), null, Shader.TileMode.CLAMP)
-                c.drawCircle(cx, cy, 64 * s, p)
-                p.shader = LinearGradient(cx - 24 * s, cy - 24 * s, cx + 24 * s, cy + 24 * s, intArrayOf(0xFFFFFFFF.toInt(), GOLD_LIGHT, GOLD), null, Shader.TileMode.CLAMP)
-                c.drawPath(crescent(cx, cy, 24 * s), p)
-                p.shader = null
-                p.color = GOLD_LIGHT
-                sparkle(c, cx + 2 * s, cy - 10 * s, 4f * s, p)
-            }
-            Body.NONE -> Unit
-        }
-
-        // Тонкая золотая рамка
-        p.style = Paint.Style.STROKE
-        p.strokeWidth = 1.2f * s
-        p.shader = LinearGradient(0f, 0f, w.toFloat(), h.toFloat(), intArrayOf(alpha(GOLD_LIGHT, 0.75f), alpha(GOLD, 0.15f), alpha(GOLD_LIGHT, 0.5f)), null, Shader.TileMode.CLAMP)
-        val inset = 0.6f * s
+        c.drawPath(dome, p)
+        c.drawRect(cx - r * 1.4f, base - r * 1.8f, cx - r * 1.25f, base, p)
+        p.style = Paint.Style.STROKE; p.strokeWidth = s
+        p.color = alpha(ink, .14f)
+        val inset = .5f * s
         c.drawRoundRect(RectF(inset, inset, w - inset, h - inset), radius, radius, p)
+        return bmp
+    }
+
+    /** A locally bundled mosque panorama; fixed scrims keep all labels readable. */
+    fun panorama(context: Context, wDp: Int, hDp: Int, night: Boolean, warm: Boolean, dim: Boolean): Bitmap {
+        val s = px(context)
+        val w = max(1, (wDp * s).toInt()); val h = max(1, (hDp * s).toInt())
+        val bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
+        val c = Canvas(bmp); val p = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
+        val rect = RectF(0f, 0f, w.toFloat(), h.toFloat())
+        c.clipPath(Path().apply { addRoundRect(rect, 24 * s, 24 * s, Path.Direction.CW) })
+        val source = android.graphics.BitmapFactory.decodeResource(context.resources,
+            if (night) com.zikrtime.app.R.drawable.horizon_night else com.zikrtime.app.R.drawable.horizon_dawn,
+            android.graphics.BitmapFactory.Options().apply { inSampleSize = 2 })
+        val scale = max(w.toFloat() / source.width, h.toFloat() / source.height)
+        val dw = source.width * scale; val dh = source.height * scale
+        c.drawBitmap(source, null, RectF((w - dw) / 2f, (h - dh) / 2f, (w + dw) / 2f, (h + dh) / 2f), p)
+        source.recycle()
+        if (warm) { p.color = 0x33B36443; c.drawRect(rect, p) }
+        if (dim) { p.color = 0x30051D18; c.drawRect(rect, p) }
+        p.shader = LinearGradient(0f, 0f, 0f, h.toFloat(), intArrayOf(0x33051D18, 0x77051D18, 0xEE051D18.toInt()), null, Shader.TileMode.CLAMP)
+        c.drawRect(rect, p)
         return bmp
     }
 
@@ -167,19 +156,13 @@ object WidgetArt {
         val c = Canvas(bmp)
         val p = Paint(Paint.ANTI_ALIAS_FLAG)
         val cx = size / 2f
-        val stroke = size * 0.085f
+        val stroke = size * 0.055f
         val r = size / 2f - stroke - (if (glow) size * 0.08f else size * 0.03f)
-        if (glow) {
-            p.maskFilter = BlurMaskFilter(size * 0.08f, BlurMaskFilter.Blur.NORMAL)
-            p.color = alpha(sweep.last(), 0.8f)
-            c.drawCircle(cx, cx, r + stroke * 0.6f, p)
-            p.maskFilter = null
-        }
-        p.color = 0x33000000
+        p.color = alpha(iconTint, .035f)
         c.drawCircle(cx, cx, r, p)
         p.style = Paint.Style.STROKE
         p.strokeWidth = stroke
-        p.color = alpha(CREAM, 0.20f)
+        p.color = alpha(iconTint, 0.20f)
         c.drawCircle(cx, cx, r, p)
         val shader = SweepGradient(cx, cx, sweep + sweep.first(), null)
         shader.setLocalMatrix(Matrix().apply { postRotate(-90f, cx, cx) })
@@ -348,7 +331,9 @@ object WidgetArt {
     }
 
     /** Чётки для виджета тасбиха: 33 бусины по кругу, отсчитанные — золотые, текущая — крупнее. */
-    fun beads(context: Context, sizeDp: Int, count: Int, target: Int): Bitmap {
+    fun beads(context: Context, sizeDp: Int, count: Int, target: Int, light: Boolean = false): Bitmap {
+        val beadInk = if (light) 0xFF124C40.toInt() else CREAM
+        val beadLit = if (light) 0xFF124C40.toInt() else GOLD_LIGHT
         val s = px(context)
         val size = max(1, (sizeDp * s).toInt())
         val bmp = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
@@ -359,7 +344,7 @@ object WidgetArt {
         val beadR = (ringR * kotlin.math.sin(Math.PI / 33).toFloat() * 0.86f)
         p.style = Paint.Style.STROKE
         p.strokeWidth = 1.2f * s
-        p.color = alpha(CREAM, 0.2f)
+        p.color = alpha(beadInk, 0.2f)
         c.drawCircle(cx, cx, ringR, p)
         p.style = Paint.Style.FILL
         val lap = count % 33
@@ -373,25 +358,8 @@ object WidgetArt {
             val y = cx + ringR * sin(a).toFloat()
             val r = if (d == 0 && count > 0) beadR * 1.35f else beadR
             p.shader = null
-            if (on) {
-                // Золотая бусина с бликом
-                p.color = alpha(GOLD, 0.35f)
-                c.drawCircle(x, y, r * 1.45f, p)
-                p.color = GOLD_DARK
-                c.drawCircle(x, y, r, p)
-                p.color = GOLD
-                c.drawCircle(x - r * 0.12f, y - r * 0.12f, r * 0.82f, p)
-                p.color = alpha(0xFFFFFFFF.toInt(), 0.75f)
-                c.drawCircle(x - r * 0.38f, y - r * 0.38f, r * 0.28f, p)
-            } else {
-                p.color = alpha(CREAM, 0.16f)
-                c.drawCircle(x, y, r, p)
-                p.style = Paint.Style.STROKE
-                p.strokeWidth = 0.8f * s
-                p.color = alpha(CREAM, 0.3f)
-                c.drawCircle(x, y, r, p)
-                p.style = Paint.Style.FILL
-            }
+            p.color = if (on) beadLit else alpha(beadInk, .22f)
+            c.drawCircle(x, y, r, p)
         }
         p.shader = null
         // Прогресс к цели — тонкая дуга внутри
@@ -401,9 +369,9 @@ object WidgetArt {
             p.style = Paint.Style.STROKE
             p.strokeWidth = 3 * s
             p.strokeCap = Paint.Cap.ROUND
-            p.color = alpha(CREAM, 0.14f)
+            p.color = alpha(beadInk, 0.14f)
             c.drawArc(rect, 0f, 360f, false, p)
-            p.color = GOLD
+            p.color = beadLit
             val sweep = 360f * (count % target) / target
             if (sweep > 0f) c.drawArc(rect, -90f, sweep, false, p)
         }

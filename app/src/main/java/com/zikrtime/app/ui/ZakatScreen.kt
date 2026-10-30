@@ -73,6 +73,7 @@ private fun cbrMetalPrices(): Pair<Double, Double>? {
 }
 
 @Composable
+@OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 fun ZakatScreen() {
     val nav = LocalNav.current
     val scope = rememberCoroutineScope()
@@ -94,6 +95,7 @@ fun ZakatScreen() {
     }
     var bySilver by remember { mutableStateOf(values["by"] == "silver") }
     var loading by remember { mutableStateOf(false) }
+    var failed by remember { mutableStateOf(false) }
     var pricesDate by remember { mutableStateOf<String?>(null) }
 
     fun save() {
@@ -102,9 +104,11 @@ fun ZakatScreen() {
     fun num(k: String) = values[k]?.replace(" ", "")?.replace(',', '.')?.toDoubleOrNull() ?: 0.0
     fun loadPrices() {
         loading = true
+        failed = false
         scope.launch {
             val p = withContext(Dispatchers.IO) { runCatching { cbrMetalPrices() }.getOrNull() }
             loading = false
+            failed = p == null
             if (p != null) {
                 values["gold_price"] = "%.2f".format(Locale.US, p.first)
                 values["silver_price"] = "%.2f".format(Locale.US, p.second)
@@ -124,7 +128,7 @@ fun ZakatScreen() {
 
     ScreenScaffold(title = stringResource(R.string.zakat_title), onBack = { nav.back() }) {
         // Итог
-        GlassHero {
+        LandscapePanel(R.drawable.shop_market) {
             Column(Modifier.padding(22.dp)) {
                 Text(stringResource(R.string.zakat_due), style = MaterialTheme.typography.labelLarge, color = Cream.copy(alpha = 0.85f))
                 val due = if (nisab > 0 && total >= nisab) total * ZAKAT_RATE else 0.0
@@ -153,7 +157,7 @@ fun ZakatScreen() {
         ZCard {
             Text(stringResource(R.string.zakat_nisab), style = MaterialTheme.typography.titleSmall)
             Spacer(Modifier.height(8.dp))
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            androidx.compose.foundation.layout.FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 FilterChip(selected = !bySilver, onClick = { bySilver = false; save() }, label = { Text(stringResource(R.string.zakat_by_gold)) })
                 FilterChip(selected = bySilver, onClick = { bySilver = true; save() }, label = { Text(stringResource(R.string.zakat_by_silver)) })
             }
@@ -174,6 +178,7 @@ fun ZakatScreen() {
             }
         }
 
+        if (failed) StatePanel(stringResource(R.string.zakat_prices_failed), icon = R.drawable.ic_calc, action = stringResource(R.string.action_refresh), onAction = { loadPrices() }, error = true)
         Text(stringResource(R.string.zakat_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }

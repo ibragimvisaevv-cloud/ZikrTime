@@ -3,7 +3,8 @@
     android:id="@+id/widget_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/widget_bg">
+    android:background="@drawable/widget_surface_light"
+    android:clipToOutline="true">
 
     <ImageView
         android:id="@+id/w_bg"
@@ -32,33 +33,30 @@
             android:id="@+id/w_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-light"
+            android:fontFamily="serif"
             android:maxLines="1"
-            android:shadowColor="#66000000"
-            android:shadowDy="1"
-            android:shadowRadius="4"
-            android:textColor="#FFF6E0"
-            android:textSize="34sp" />
+            android:textColor="#F7F2EA"
+            android:textSize="40sp" />
 
         <TextView
             android:id="@+id/w_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:textColor="#FFE7A8"
+            android:textColor="#E6CBA6"
             android:textSize="11sp" />
     </LinearLayout>
 
     <!-- Сброс -->
     <TextView
         android:id="@+id/w_reset"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_gravity="top|end"
         android:layout_margin="6dp"
         android:background="@drawable/widget_chip"
         android:gravity="center"
         android:text="↺"
-        android:textColor="#FFF6E0"
+        android:textColor="#F7F2EA"
         android:textSize="15sp" />
 </FrameLayout>

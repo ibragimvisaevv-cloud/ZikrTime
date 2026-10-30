@@ -15,6 +15,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.ui.semantics.Role
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -58,6 +64,7 @@ import java.time.ZonedDateTime
 import java.time.temporal.WeekFields
 import java.util.Locale
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun AlarmSettingsScreen() {
     val nav = LocalNav.current
@@ -75,20 +82,25 @@ fun AlarmSettingsScreen() {
         version++
     }
 
-    ScreenScaffold(title = stringResource(R.string.alarm_title), onBack = { nav.back() }) {
-        val next = remember(version, Store.alarmEnabled, Store.alarmOffsetMinutes, Store.alarmDays) {
-            if (Store.alarmEnabled) FajrAlarm.nextTrigger(ZonedDateTime.now()) else null
+    fun toggleAlarm(enabled: Boolean) {
+        Store.alarmEnabled = enabled
+        if (enabled && Build.VERSION.SDK_INT >= 33 && !notificationsAllowed) notifPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+        changed()
+    }
+    ScreenScaffold(title = stringResource(R.string.alarm_title), onBack = { nav.back() }, showHeading = false) {
+        val next = remember(version, Store.alarmEnabled, Store.alarmOffsetMinutes, Store.alarmDays, Store.location, Store.method) {
+            if (Store.alarmEnabled) FajrAlarm.nextTrigger(ZonedDateTime.now()).withCityZone() else null
         }
         AlarmHero(
             enabled = Store.alarmEnabled,
             next = next,
-            onToggle = {
-                Store.alarmEnabled = it
-                if (it && Build.VERSION.SDK_INT >= 33 && !notificationsAllowed) notifPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
-                changed()
-            },
+            onToggle = ::toggleAlarm,
         )
 
+        if (!Store.alarmEnabled) {
+            StatePanel(stringResource(R.string.state_off), stringResource(R.string.alarm_note), icon = R.drawable.ic_alarm,
+                action = stringResource(R.string.alarm_enable), onAction = { toggleAlarm(true) })
+        }
         if (Store.alarmEnabled) {
             ZCard {
                 val offset = Store.alarmOffsetMinutes
@@ -109,12 +121,12 @@ fun AlarmSettingsScreen() {
                 // Неделя начинается так, как принято в стране телефона (понедельник или воскресенье).
                 val first = WeekFields.of(LocaleList.getDefault()[0] ?: Locale.getDefault()).firstDayOfWeek
                 val week = (0L..6L).map { first.plus(it) }
-                Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.fillMaxWidth()) {
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.fillMaxWidth()) {
                     week.forEach { day ->
                         DayToggle(
                             label = weekdayShort(day),
                             selected = day in Store.alarmDays,
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier.widthIn(min = 48.dp),
                             onClick = {
                                 Store.alarmDays = if (day in Store.alarmDays) Store.alarmDays - day else Store.alarmDays + day
                                 changed()
@@ -176,14 +188,7 @@ fun AlarmSettingsScreen() {
 /** Главная карточка: включатель и время следующего будильника крупно. */
 @Composable
 private fun AlarmHero(enabled: Boolean, next: ZonedDateTime?, onToggle: (Boolean) -> Unit) {
-    Box(
-        Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(28.dp))
-            .background(Brush.linearGradient(listOf(EmeraldDeep, EmeraldNight)))
-            .clickable { onToggle(!enabled) },
-    ) {
-        StarPattern(Modifier.matchParentSize(), color = Gold.copy(alpha = 0.10f))
+    LandscapePanel(R.drawable.horizon_dawn) {
         Column(Modifier.padding(horizontal = 22.dp, vertical = 20.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(painterResource(R.drawable.ic_alarm), contentDescription = null, tint = Gold, modifier = Modifier.size(26.dp))
@@ -232,18 +237,19 @@ private fun DayToggle(label: String, selected: Boolean, modifier: Modifier = Mod
     val scheme = MaterialTheme.colorScheme
     Box(
         modifier
-            .aspectRatio(1f)
-            .clip(CircleShape)
+            .heightIn(min = 48.dp)
+            .clip(RoundedCornerShape(16.dp))
             .background(if (selected) scheme.primary else scheme.surfaceContainerHigh)
-            .clickable(onClick = onClick),
+            .toggleable(value = selected, role = Role.Checkbox, onValueChange = { onClick() }).padding(horizontal = 10.dp, vertical = 12.dp),
         contentAlignment = Alignment.Center,
     ) {
         Text(
             label,
             style = MaterialTheme.typography.labelMedium,
             color = if (selected) scheme.onPrimary else scheme.onSurfaceVariant,
-            maxLines = 1,
-            softWrap = false,
+
         )
     }
 }
+
+private fun ZonedDateTime?.withCityZone(): ZonedDateTime? = this?.withZoneSameInstant(CityZones.forCity(Store.location.id))

@@ -124,11 +124,22 @@
             android:name=".prayer.FridayReceiver"
             android:exported="false" />
 
+        <activity android:name=".widget.WidgetConfigActivity" android:exported="true">
+            <intent-filter><action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" /></intent-filter>
+        </activity>
+        <receiver android:name=".widget.CompactPrayerWidget" android:exported="false" android:label="@string/widget_compact_name">
+            <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_compact" />
+        </receiver>
+        <receiver android:name=".widget.TimelineWidget" android:exported="false" android:label="@string/widget_timeline_name">
+            <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_timeline" />
+        </receiver>
         <!-- Виджеты на рабочий стол -->
         <receiver
             android:name=".widget.NextPrayerWidget"
             android:exported="false"
-            android:label="@string/widget_next_name">
+            android:label="@string/widget_square_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -139,7 +150,7 @@
         <receiver
             android:name=".widget.TodayWidget"
             android:exported="false"
-            android:label="@string/widget_today_name">
+            android:label="@string/widget_day_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

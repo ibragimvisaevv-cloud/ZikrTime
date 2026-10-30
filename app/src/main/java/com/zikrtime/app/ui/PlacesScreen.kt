@@ -36,6 +36,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
@@ -52,6 +53,7 @@ import com.zikrtime.app.R
 import com.zikrtime.app.data.Places
 import com.zikrtime.app.data.Store
 import com.zikrtime.app.ui.theme.Cream
+import com.zikrtime.app.ui.theme.Emerald
 import com.zikrtime.app.ui.theme.EmeraldDeep
 import com.zikrtime.app.ui.theme.Gold
 import com.zikrtime.app.ui.theme.LocalDarkTheme
@@ -102,6 +104,15 @@ fun PlacesScreen() {
     var locationUnavailable by remember { mutableStateOf(false) }
     val largeText = LocalDensity.current.fontScale >= 1.3f
     var showMap by rememberSaveable { mutableStateOf(!largeText) }
+    var tilesLoaded by remember { mutableStateOf(false) }
+    var slowMap by remember { mutableStateOf(false) }
+    LaunchedEffect(showMap) {
+        if (showMap) {
+            tilesLoaded = false; slowMap = false
+            kotlinx.coroutines.delay(12_000)
+            if (!tilesLoaded) slowMap = true
+        }
+    }
     LaunchedEffect(largeText) { if (largeText) showMap = false }
     fun locate() {
         locating = true
@@ -155,7 +166,15 @@ fun PlacesScreen() {
                     modifier = Modifier.fillMaxSize().clip(RoundedCornerShape(26.dp)),
                     me = here,
                     focusMe = focusMe,
+                    onLoaded = { tilesLoaded = true; slowMap = false },
                 )
+                if (!tilesLoaded) {
+                    androidx.compose.material3.Surface(color = MaterialTheme.colorScheme.surfaceContainerLow.copy(alpha = .96f),
+                        shape = RoundedCornerShape(16.dp), modifier = Modifier.align(Alignment.TopCenter).padding(12.dp)) {
+                        Text(stringResource(if (slowMap) R.string.map_slow else R.string.places_loading),
+                            style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(12.dp))
+                    }
+                }
                 // «Где я»: показать себя на карте и ближайшие места
                 androidx.compose.material3.SmallFloatingActionButton(
                     onClick = { whereAmI() },
@@ -177,7 +196,7 @@ fun PlacesScreen() {
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.clickable(enabled = here == null) { whereAmI() },
         )
-        if (locationUnavailable) Text(stringResource(R.string.place_location_unavailable), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        if (locationUnavailable) StatusLine(stringResource(R.string.place_location_unavailable))
         Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             if (hasYandexMap) FilterPill(stringResource(if (showMap) R.string.place_hide_map else R.string.place_show_map), showMap) { showMap = !showMap }
             FilterPill(stringResource(R.string.places_all), filter == "all") { filter = "all" }
@@ -191,13 +210,11 @@ fun PlacesScreen() {
             contentPadding = PaddingValues(bottom = 8.dp),
         ) {
             if (Places.refreshFailed || Places.usingSavedCopy) {
-                item { Text(stringResource(if (Places.usingSavedCopy) R.string.place_saved_copy else R.string.place_load_failed), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
+                item { StatusLine(stringResource(if (Places.usingSavedCopy) R.string.place_saved_copy else R.string.place_load_failed)) }
             }
             if (places.isEmpty()) {
                 item {
-                    ZCard {
-                        Text(stringResource(if (Places.loading) R.string.places_loading else R.string.places_empty), style = MaterialTheme.typography.bodyLarge)
-                    }
+                    StatePanel(stringResource(if (Places.loading) R.string.places_loading else R.string.places_empty), icon = R.drawable.ic_mosque)
                 }
             }
             // В списке — ближайшие 100, на карте — все (кластерами)
@@ -220,7 +237,7 @@ fun PlacesScreen() {
                 }
             }
             item {
-                GlassHero {
+                LandscapePanel(R.drawable.azkar_morning) {
                     Column(Modifier.padding(20.dp)) {
                         Text(stringResource(R.string.places_suggest_title), style = MaterialTheme.typography.titleMedium, color = Cream)
                         Spacer(Modifier.height(6.dp))
@@ -244,17 +261,17 @@ fun PlacesScreen() {
 
 @Composable
 private fun FilterPill(text: String, selected: Boolean, onClick: () -> Unit) {
-    val shape = RoundedCornerShape(50)
+    val shape = RoundedCornerShape(16.dp)
     val interaction = remember { MutableInteractionSource() }
     Box(
         Modifier
             .pressScale(interaction)
             .then(
-                if (selected) Modifier.clip(shape).background(Brush.linearGradient(listOf(Color(0xFF1A7D63), EmeraldDeep)))
+                if (selected) Modifier.clip(shape).background(Brush.linearGradient(listOf(Emerald, EmeraldDeep)))
                 else Modifier.glass(shape, elevation = 3.dp),
             )
             .clickable(interactionSource = interaction, indication = null, onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 9.dp),
+            .padding(horizontal = 16.dp, vertical = 14.dp),
     ) {
         Text(text, style = MaterialTheme.typography.labelLarge, color = if (selected) Color.White else MaterialTheme.colorScheme.onSurface)
     }
@@ -267,12 +284,12 @@ private fun PlaceCard(place: Places.Place, distanceKm: Double, expanded: Boolean
     val correctionUrl = Places.correctionUrl(place.id)
     val unknown = stringResource(R.string.place_unknown)
     fun status(value: Boolean?) = when (value) { true -> R.string.place_yes; false -> R.string.place_no; null -> R.string.place_unknown }
-    ZCard(onClick = onClick, padding = PaddingValues(16.dp)) {
+    ZCard(onClick = onClick, modifier = Modifier.testTag("place_card"), padding = PaddingValues(16.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconBadge(painterResource(kindIcon(place.kind)), container = if (place.kind == "mosque") Gold.copy(alpha = 0.45f) else MaterialTheme.colorScheme.primaryContainer)
             Spacer(Modifier.width(14.dp))
             Column(Modifier.weight(1f)) {
-                Text(place.name, style = MaterialTheme.typography.titleSmall, maxLines = if (expanded) 3 else 1, overflow = TextOverflow.Ellipsis)
+                Text(place.name, style = MaterialTheme.typography.titleMedium)
                 Text(
                     stringResource(kindName(place.kind)) + " · " + distanceText(distanceKm),
                     style = MaterialTheme.typography.bodySmall,
@@ -309,7 +326,7 @@ private fun PlaceCard(place: Places.Place, distanceKm: Double, expanded: Boolean
             ReviewsBlock("place:${place.id}", inCard = false)
         }
     }
-    if (correctionDialog) AlertDialog(
+    if (correctionDialog) HorizonDialog(
         onDismissRequest = { correctionDialog = false },
         title = { Text(stringResource(R.string.place_changed)) },
         text = { Text(stringResource(if (correctionUrl != null) R.string.place_correction_help else R.string.place_correction_unavailable), modifier = Modifier.verticalScroll(rememberScrollState())) },

@@ -8,8 +8,13 @@ import android.os.Build
 import android.provider.Settings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
+import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.ui.semantics.Role
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -82,7 +87,32 @@ fun MoreScreen() {
     val current = Lang.saved(context)
     val languageName = Lang.supported.firstOrNull { it.code == current }?.nativeName ?: stringResource(R.string.language_system)
 
-    TabColumn(title = stringResource(R.string.more_title)) {
+    HorizonSection(title = stringResource(R.string.more_title),
+        subtitle = stringResource(R.string.app_name) + " · " + BuildConfig.VERSION_NAME,
+        image = if (com.zikrtime.app.ui.theme.LocalDarkTheme.current) R.drawable.horizon_portrait_night else R.drawable.horizon_portrait_day,
+        heroHeight = 260.dp,
+        hero = {
+            Spacer(Modifier.height(8.dp))
+            AppearanceSegments()
+        }) {
+        Text(stringResource(R.string.group_practice), style = MaterialTheme.typography.headlineSmall)
+        val destinations = listOf(
+            Triple(R.string.tasbih_title, R.drawable.ic_tasbih, Screen.TASBIH),
+            Triple(R.string.qibla_title, R.drawable.ic_qibla, Screen.QIBLA),
+            Triple(R.string.places_title, R.drawable.ic_mosque, Screen.PLACES),
+            Triple(R.string.ramadan_title, R.drawable.ic_prayer_isha, Screen.RAMADAN),
+            Triple(R.string.zakat_title, R.drawable.ic_calc, Screen.ZAKAT),
+            Triple(R.string.progress_title, R.drawable.ic_nav_knowledge, Screen.PROGRESS),
+        )
+        val columns = if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 1 else 2
+        destinations.chunked(columns).forEach { pair ->
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                pair.forEach { (title, icon, screen) ->
+                    HorizonDestination(stringResource(title), icon, Modifier.weight(1f), prominent = screen == Screen.TASBIH) { nav.open(screen) }
+                }
+            }
+        }
+        SectionLabel(stringResource(R.string.group_application))
         ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
             SettingRow(
                 title = stringResource(R.string.settings_language),
@@ -110,38 +140,7 @@ fun MoreScreen() {
                 onClick = { nav.open(Screen.ALARM) },
             )
         }
-        ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
-            SettingRow(
-                title = stringResource(R.string.qibla_title),
-                subtitle = stringResource(R.string.qibla_subtitle),
-                icon = painterResource(R.drawable.ic_qibla),
-                onClick = { nav.open(Screen.QIBLA) },
-            )
-            SettingRow(
-                title = stringResource(R.string.tasbih_title),
-                subtitle = stringResource(R.string.tasbih_subtitle),
-                icon = painterResource(R.drawable.ic_tasbih),
-                onClick = { nav.open(Screen.TASBIH) },
-            )
-            SettingRow(
-                title = stringResource(R.string.places_title),
-                subtitle = stringResource(R.string.places_entry_hint),
-                icon = painterResource(R.drawable.ic_mosque),
-                onClick = { nav.open(Screen.PLACES) },
-            )
-            SettingRow(
-                title = stringResource(R.string.ramadan_title),
-                subtitle = stringResource(R.string.ramadan_subtitle),
-                icon = painterResource(R.drawable.ic_prayer_isha),
-                onClick = { nav.open(Screen.RAMADAN) },
-            )
-            SettingRow(
-                title = stringResource(R.string.zakat_title),
-                subtitle = stringResource(R.string.zakat_subtitle),
-                icon = painterResource(R.drawable.ic_calc),
-                onClick = { nav.open(Screen.ZAKAT) },
-            )
-        }
+        SectionLabel(stringResource(R.string.group_data_help))
         ZCard {
             PersonalProgressSetting()
             TextButton(onClick = { nav.open(Screen.PROGRESS) }) {
@@ -196,12 +195,13 @@ fun RadioLine(text: String, selected: Boolean, subtitle: String? = null, onClick
     Row(
         Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(14.dp))
-            .clickable(onClick = onClick)
-            .padding(vertical = 4.dp, horizontal = 4.dp),
+            .clip(RoundedCornerShape(16.dp))
+            .background(if (selected) MaterialTheme.colorScheme.primaryContainer.copy(alpha = .7f) else Color.Transparent)
+            .selectable(selected = selected, role = Role.RadioButton, onClick = onClick)
+            .heightIn(min = 52.dp).padding(vertical = 6.dp, horizontal = 6.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        RadioButton(selected = selected, onClick = onClick)
+        RadioButton(selected = selected, onClick = null)
         Spacer(Modifier.width(4.dp))
         Column(Modifier.weight(1f)) {
             Text(text, style = MaterialTheme.typography.bodyLarge)
@@ -217,7 +217,7 @@ fun CityScreen() {
     val nav = LocalNav.current
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    ScreenScaffold(title = stringResource(R.string.settings_city), onBack = { nav.back() }) {
+    ScreenScaffold(title = stringResource(R.string.settings_city), onBack = { nav.back() }, scene = R.drawable.horizon_dawn) {
         CityPicker(onPicked = { city ->
             Store.setLocation(city)
             PrayerAlarms.scheduleNext(context)
@@ -238,7 +238,7 @@ fun CityPicker(onPicked: (City) -> Unit) {
     val context = LocalContext.current
     val lang = Lang.content(context)
     val (groups, cities) = remember { Cities.load(context) }
-    var query by remember { mutableStateOf("") }
+    var query by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf("") }
     var locating by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf<String?>(null) }
     val noLocation = stringResource(R.string.city_locate_failed)
@@ -272,7 +272,7 @@ fun CityPicker(onPicked: (City) -> Unit) {
             if (LocationHelper.hasPermission(context)) locate() else permission.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
         },
     )
-    error?.let { Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall) }
+    error?.let { StatePanel(it, icon = R.drawable.ic_pin, error = true) }
 
     OutlinedTextField(
         value = query,
@@ -285,6 +285,10 @@ fun CityPicker(onPicked: (City) -> Unit) {
     )
 
     val q = query.trim()
+    if (q.isNotEmpty() && cities.none { c -> c.names.values.any { it.contains(q, ignoreCase = true) } }) {
+        StatePanel(stringResource(R.string.search_nothing), icon = R.drawable.ic_pin,
+            action = stringResource(R.string.action_reset), onAction = { query = "" })
+    }
     val currentId = Store.location.id
     groups.forEach { group ->
         val list = cities.filter { it.group == group.id }.filter { c ->
@@ -499,7 +503,7 @@ private fun fmtAngle(a: Double): String = if (a % 1.0 == 0.0) a.toInt().toString
 @Composable
 fun AboutScreen() {
     val nav = LocalNav.current
-    ScreenScaffold(title = stringResource(R.string.about_title), onBack = { nav.back() }) {
+    ScreenScaffold(title = stringResource(R.string.about_title), onBack = { nav.back() }, scene = R.drawable.azkar_morning) {
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             AppIconImage(Modifier.size(96.dp))
             Spacer(Modifier.height(12.dp))
@@ -516,7 +520,7 @@ fun AboutScreen() {
 
 @Composable
 private fun AboutBlock(title: String, text: String) {
-    ZCard {
+    Column(Modifier.padding(vertical = 10.dp)) {
         Text(title, style = MaterialTheme.typography.titleMedium)
         Spacer(Modifier.height(6.dp))
         Text(text, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)

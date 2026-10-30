@@ -1,0 +1,24 @@
+{
+  "now": "2026-10-30T12:02:32.630405+03:00[Europe/Moscow]",
+  "next": "DHUHR",
+  "at": "2026-10-30T12:13+03:00[Europe/Moscow]",
+  "widgets": [
+    {
+      "provider": "CompactPrayerWidget",
+      "id": 2,
+      "minWidth": 140,
+      "maxHeight": 84,
+      "options": "Bundle[{appWidgetMaxHeight=84, appWidgetCategory=1, appWidgetMaxWidth=211, appWidgetMinHeight=64, appWidgetMinWidth=140, appWidgetSizes=Supplier{VAL_LIST@288+60}}]"
+    },
+    {
+      "provider": "TimelineWidget",
+      "id": 3,
+      "minWidth": 292,
+      "maxHeight": 84,
+      "options": "Bundle[{appWidgetMaxHeight=84, appWidgetCategory=1, appWidgetMaxWidth=434, appWidgetMinHeight=64, appWidgetMinWidth=292, appWidgetSizes=Supplier{VAL_LIST@288+60}}]"
+    }
+  ],
+  "isha": "2026-10-30T18:38+03:00[Europe/Moscow]",
+  "date": "2026-10-30",
+  "city": "Moscow"
+}

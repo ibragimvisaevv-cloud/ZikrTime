@@ -1,0 +1,1 @@
+Reboot: fresh render timestamp and actual visible launcher content verified.

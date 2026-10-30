@@ -11,6 +11,10 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.remember
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.Role
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,6 +28,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
@@ -57,6 +62,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -105,38 +111,36 @@ fun ScreenScaffold(
     onBack: () -> Unit,
     actions: @Composable RowScope.() -> Unit = {},
     scrollable: Boolean = true,
+    scene: Int? = null,
+    showHeading: Boolean = true,
+    scrollKey: Any? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    Column(
-        Modifier
-            .fillMaxSize()
-            .windowInsetsPadding(WindowInsets.statusBars),
-    ) {
-        Row(
-            Modifier.fillMaxWidth().padding(start = 4.dp, end = 8.dp, top = 4.dp, bottom = 4.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            IconButton(onClick = onBack) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.action_back))
+    StandardSystemBars()
+    val scroll = rememberScrollState()
+    androidx.compose.runtime.LaunchedEffect(scrollKey) { if (scrollKey != null) scroll.scrollTo(0) }
+    Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
+        .windowInsetsPadding(WindowInsets.statusBars).imePadding()) {
+        Surface(color = MaterialTheme.colorScheme.surfaceContainerLow, tonalElevation = 0.dp) {
+            Row(Modifier.fillMaxWidth().heightIn(min = 64.dp).padding(horizontal = 12.dp, vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = onBack, modifier = Modifier.clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.surfaceContainerHigh)) {
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.action_back))
+                }
+                Spacer(Modifier.width(12.dp))
+                Text(title, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f),
+                    maxLines = 2, overflow = TextOverflow.Ellipsis)
+                actions()
             }
-            Text(
-                title,
-                style = MaterialTheme.typography.titleLarge,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.weight(1f),
-            )
-            actions()
         }
-        val body = Modifier
-            .fillMaxWidth()
-            .weight(1f)
-            .let { if (scrollable) it.verticalScroll(rememberScrollState()) else it }
-            .padding(horizontal = 20.dp)
-        Column(body, verticalArrangement = Arrangement.spacedBy(16.dp)) {
-            Spacer(Modifier.height(4.dp))
+        val body = Modifier.fillMaxWidth().weight(1f)
+            .let { if (scrollable) it.verticalScroll(scroll) else it }.padding(horizontal = 20.dp)
+        Column(body, verticalArrangement = Arrangement.spacedBy(20.dp)) {
+            Spacer(Modifier.height(0.dp))
+            if (showHeading && scrollable) PageHeading(title, scene = scene)
             content()
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(12.dp))
             Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
         }
     }
@@ -144,17 +148,20 @@ fun ScreenScaffold(
 
 /** Содержимое вкладки: заголовок крупно и прокрутка. */
 @Composable
-fun TabColumn(title: String? = null, subtitle: String? = null, content: @Composable ColumnScope.() -> Unit) {
+fun TabColumn(title: String? = null, subtitle: String? = null, spacing: Dp = 16.dp, content: @Composable ColumnScope.() -> Unit) {
+    StandardSystemBars()
     Column(
         Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(spacing),
     ) {
         Spacer(Modifier.height(8.dp))
         if (title != null) {
             Column {
+                Box(Modifier.width(28.dp).height(3.dp).background(MaterialTheme.colorScheme.secondary, RoundedCornerShape(2.dp)))
+                Spacer(Modifier.height(12.dp))
                 Text(title, style = MaterialTheme.typography.headlineMedium)
                 if (subtitle != null) {
                     Text(subtitle, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -162,7 +169,8 @@ fun TabColumn(title: String? = null, subtitle: String? = null, content: @Composa
             }
         }
         content()
-        Spacer(Modifier.height(112.dp))
+        Spacer(Modifier.height(96.dp))
+        Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
     }
 }
 
@@ -176,12 +184,12 @@ fun ZCard(
     padding: PaddingValues = PaddingValues(20.dp),
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    val shape = RoundedCornerShape(26.dp)
+    val shape = RoundedCornerShape(24.dp)
     val base = if (color == Color.Unspecified) modifier.fillMaxWidth().glass(shape) else modifier
         .fillMaxWidth()
-        .shadow(8.dp, shape, ambientColor = color, spotColor = color)
+        .shadow(0.dp, shape)
         .clip(shape)
-        .background(Brush.verticalGradient(listOf(color, color.copy(alpha = 0.85f))))
+        .background(color)
         .border(glassBorder(), shape)
     if (onClick != null) {
         val interaction = remember { MutableInteractionSource() }
@@ -215,13 +223,12 @@ fun IconBadge(
     container: Color = MaterialTheme.colorScheme.primaryContainer,
     size: Dp = 40.dp,
 ) {
-    val shape = RoundedCornerShape(size * 0.34f)
+    val shape = RoundedCornerShape(size * 0.4f)
     Box(
         modifier
             .size(size)
             .clip(shape)
-            .background(Brush.linearGradient(listOf(container.copy(alpha = 0.55f), container)))
-            .border(1.dp, Brush.linearGradient(listOf(Color.White.copy(alpha = 0.6f), Color.Transparent)), shape),
+            .background(container),
         contentAlignment = Alignment.Center,
     ) {
         Icon(painter, contentDescription = null, tint = tint, modifier = Modifier.size(size * 0.55f))
@@ -240,6 +247,7 @@ fun SettingRow(
     Row(
         Modifier
             .fillMaxWidth()
+            .heightIn(min = 48.dp)
             .clip(RoundedCornerShape(16.dp))
             .let { if (onClick != null) it.clickable(onClick = onClick) else it }
             .padding(vertical = 10.dp, horizontal = 4.dp),
@@ -323,6 +331,7 @@ fun TonalButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier
         modifier
             .fillMaxWidth()
             .heightIn(min = 52.dp)
+            .alpha(if (enabled) 1f else .55f)
             .pressScale(interaction)
             .glass(shape, elevation = 4.dp)
             .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.45f))
@@ -420,28 +429,29 @@ private fun star(c: Offset, r: Float): Path {
 
 /** Круглая отметка «сделано». */
 @Composable
-fun CheckCircle(checked: Boolean, enabled: Boolean, onToggle: () -> Unit, contentDescription: String) {
+fun CheckCircle(checked: Boolean, enabled: Boolean, onToggle: () -> Unit, contentDescription: String, onDark: Boolean = false) {
     val scheme = MaterialTheme.colorScheme
     Box(
         Modifier
             .size(48.dp)
             .clip(CircleShape)
-            .clickable(enabled = enabled, onClick = onToggle),
+            .semantics { this.contentDescription = contentDescription }
+            .toggleable(value = checked, enabled = enabled, role = Role.Checkbox, onValueChange = { onToggle() }),
         contentAlignment = Alignment.Center,
     ) {
         Box(
             Modifier
                 .size(26.dp)
                 .clip(CircleShape)
-                .background(if (checked) scheme.primary else Color.Transparent),
+                .background(if (checked) { if (onDark) Sand else scheme.primary } else Color.Transparent),
             contentAlignment = Alignment.Center,
         ) {
             if (checked) {
-                Icon(painterResource(R.drawable.ic_check), contentDescription, tint = scheme.onPrimary, modifier = Modifier.size(16.dp))
+                Icon(painterResource(R.drawable.ic_check), null, tint = if (onDark) Olive else scheme.onPrimary, modifier = Modifier.size(16.dp))
             } else {
                 Canvas(Modifier.fillMaxSize()) {
                     drawCircle(
-                        color = scheme.outline.copy(alpha = if (enabled) 0.9f else 0.3f),
+                        color = (if (onDark) Porcelain else scheme.outline).copy(alpha = if (enabled) 0.9f else 0.3f),
                         radius = size.minDimension / 2 - 1.dp.toPx(),
                         style = Stroke(1.8.dp.toPx()),
                     )
@@ -544,7 +554,7 @@ fun BigClock(time: ZonedDateTime, fontSize: TextUnit, color: Color, modifier: Mo
     val h24 = android.text.format.DateFormat.is24HourFormat(context)
     val digits = time.format(DateTimeFormatter.ofPattern(if (h24) "HH:mm" else "h:mm", locale))
     Row(modifier, verticalAlignment = Alignment.Bottom) {
-        Text(digits, fontSize = fontSize, fontWeight = weight, color = color, style = Tabular, maxLines = 1, softWrap = false)
+        Text(digits, fontSize = fontSize, fontWeight = weight, color = color, style = Tabular, fontFamily = androidx.compose.ui.text.font.FontFamily.Serif, maxLines = 1, softWrap = false)
         if (!h24) {
             Spacer(Modifier.width(6.dp))
             Text(

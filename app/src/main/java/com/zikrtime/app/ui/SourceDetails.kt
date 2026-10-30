@@ -14,19 +14,20 @@ import com.zikrtime.app.data.SourceInfo
 
 @Composable
 fun SourceDetails(source: SourceInfo) {
+    val original = source.originalReference?.takeIf { it.isNotBlank() }
+    val translation = source.translationAttribution?.takeIf { it.isNotBlank() }
+    if (original == null && translation == null && source.safeWebUrl == null) return
     val context = LocalContext.current
     var linkError by remember(source) { mutableStateOf(false) }
-    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(stringResource(R.string.source_heading), style = MaterialTheme.typography.titleSmall)
-        Text(source.originalReference?.takeIf { it.isNotBlank() } ?: stringResource(R.string.source_unknown), style = MaterialTheme.typography.bodySmall)
-        Text(stringResource(R.string.source_translation, source.translationAttribution?.takeIf { it.isNotBlank() } ?: stringResource(R.string.source_attribution_unknown)), style = MaterialTheme.typography.bodySmall)
-        Text(stringResource(R.string.source_original_status, source.reviewedOriginal?.let { "${it.reviewer}: ${it.scope} · v${it.reviewedContentVersion}" + (it.reviewedAt?.let { date -> " · $date" } ?: "") } ?: stringResource(R.string.source_unconfirmed)), style = MaterialTheme.typography.bodySmall)
-        Text(stringResource(R.string.source_translation_status, source.reviewedTranslation?.let { "${it.reviewer}: ${it.scope} · v${it.reviewedContentVersion}" + (it.reviewedAt?.let { date -> " · $date" } ?: "") } ?: stringResource(R.string.source_unconfirmed)), style = MaterialTheme.typography.bodySmall)
+        original?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
+        translation?.let { Text(stringResource(R.string.source_translation, it), style = MaterialTheme.typography.bodySmall) }
         source.safeWebUrl?.let { url ->
             TextButton(onClick = { linkError = runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url))) }.isFailure }) {
                 Text(stringResource(R.string.source_open_link))
             }
-            Text(stringResource(R.string.source_link_network), style = MaterialTheme.typography.bodySmall)
+            Text(stringResource(R.string.source_link_network), style = MaterialTheme.typography.bodyMedium)
         }
         if (linkError) Text(stringResource(R.string.source_link_failed), color = MaterialTheme.colorScheme.error)
     }

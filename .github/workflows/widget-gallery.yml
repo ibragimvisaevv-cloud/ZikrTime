@@ -1,0 +1,38 @@
+name: Widget review gallery
+on:
+  push:
+    branches: [codex/android-natural-all]
+    paths: ['tools/ci/widget_gallery.py', '.github/workflows/widget-gallery.yml', 'design/widgets-0812/icons/**']
+permissions:
+  contents: write
+  actions: read
+jobs:
+  gallery:
+    if: contains(github.event.head_commit.message, '[widget-gallery]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 -m pip install 'Pillow>=11,<13' cairosvg
+      - name: Wait for the exact launcher check
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run watch 41031874367 --exit-status || true
+      - name: Build review artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/ci/widget_gallery.py
+      - name: Preserve review artifacts
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add design/widgets-0812
+          if ! git diff --cached --quiet; then
+            git commit -m 'docs: preserve widget launcher evidence and icon concepts'
+            git push origin HEAD:codex/android-natural-all
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ZikrTime-widget-review
+          path: design/widgets-0812/

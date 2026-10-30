@@ -1,5 +1,9 @@
+@file:OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
+
 package com.zikrtime.app
 
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.foundation.background
 import android.Manifest
 import android.content.Context
@@ -88,6 +92,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Store.init(this)
+        nav.restore(savedInstanceState)
         // Названия каналов уведомлений — на текущем языке.
         PrayerAlarms.createChannels(this)
         if (BuildConfig.DEBUG && QaHooks.handle(this, intent, nav)) return
@@ -96,30 +101,30 @@ class MainActivity : ComponentActivity() {
         val showSplash = savedInstanceState == null && com.zikrtime.app.ui.LiveFlags.splash &&
             (intent?.hasExtra("qa_screen") != true || intent?.getBooleanExtra("qa_splash", false) == true)
         setContent {
-            val natural = Store.onboarded && (nav.stack.lastOrNull() in setOf(Screen.TASBIH, Screen.AZKAR, Screen.PROGRESS, Screen.REVIEW) || (nav.stack.isEmpty() && nav.tab == Tab.PRAYER))
-            ZikrTheme(natural = natural) {
-                val tilt = com.zikrtime.app.ui.rememberTilt(enabled = !natural)
-                var splash by androidx.compose.runtime.saveable.rememberSaveable { androidx.compose.runtime.mutableStateOf(showSplash) }
-                LaunchedEffect(Unit) {
-                    kotlinx.coroutines.delay(1_150)
-                    splash = false
-                }
-                CompositionLocalProvider(com.zikrtime.app.ui.LocalTilt provides tilt) {
-                    Box(Modifier.fillMaxSize()) {
-                        // Переливающийся фон под всеми экранами
-                        if (natural) Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background))
-                        else com.zikrtime.app.ui.AuroraBackground()
-                        CompositionLocalProvider(LocalNav provides nav) {
-                            if (BuildConfig.DEBUG && QaHooks.widgetPreview) com.zikrtime.app.ui.WidgetPreview() else AppRoot()
-                        }
-                        // Заставка: полумесяц со звездой
-                        androidx.compose.animation.AnimatedVisibility(
-                            visible = splash,
-                            enter = fadeIn(androidx.compose.animation.core.tween(0)),
-                            exit = fadeOut(androidx.compose.animation.core.tween(380)) +
-                                androidx.compose.animation.scaleOut(targetScale = 1.08f),
-                        ) {
-                            com.zikrtime.app.ui.CrescentSplash()
+            val natural = Store.onboarded && (nav.stack.lastOrNull()?.screen in setOf(Screen.TASBIH, Screen.AZKAR, Screen.PROGRESS, Screen.REVIEW) || (nav.stack.isEmpty() && nav.tab == Tab.PRAYER))
+            com.zikrtime.app.ui.ThemeRevealHost {
+                ZikrTheme(natural = natural) {
+                    val tilt = com.zikrtime.app.ui.rememberTilt(enabled = false)
+                    var splash by androidx.compose.runtime.saveable.rememberSaveable { androidx.compose.runtime.mutableStateOf(showSplash) }
+                    LaunchedEffect(Unit) {
+                        kotlinx.coroutines.delay(650)
+                        splash = false
+                    }
+                    CompositionLocalProvider(com.zikrtime.app.ui.LocalTilt provides tilt) {
+                        Box(Modifier.fillMaxSize().semantics { testTagsAsResourceId = true }) {
+                            // Переливающийся фон под всеми экранами
+                            com.zikrtime.app.ui.HorizonBackground()
+                            CompositionLocalProvider(LocalNav provides nav) {
+                                if (BuildConfig.DEBUG && QaHooks.widgetPreview) com.zikrtime.app.ui.WidgetPreview() else AppRoot()
+                            }
+                            // Заставка: полумесяц со звездой
+                            androidx.compose.animation.AnimatedVisibility(
+                                visible = splash,
+                                enter = fadeIn(androidx.compose.animation.core.tween(0)),
+                                exit = fadeOut(androidx.compose.animation.core.tween(if (com.zikrtime.app.ui.motionEnabled()) 380 else 0)),
+                            ) {
+                                com.zikrtime.app.ui.HorizonSplash()
+                            }
                         }
                     }
                 }
@@ -135,9 +140,16 @@ class MainActivity : ComponentActivity() {
     private fun handleOpen(intent: Intent?) {
         if (intent?.getBooleanExtra("open_focus", false) == true) { nav.stack.clear(); nav.tab = Tab.FOCUS }
         when (intent?.getStringExtra(EXTRA_OPEN)) {
+            "prayer" -> { nav.stack.clear(); nav.tab = Tab.PRAYER }
+            "city" -> { nav.stack.clear(); nav.tab = Tab.PRAYER; if (Store.onboarded) nav.open(Screen.CITY) }
             "alarm" -> nav.open(Screen.ALARM)
-            "focus" -> nav.tab = com.zikrtime.app.ui.Tab.FOCUS
+            "focus" -> { nav.stack.clear(); nav.tab = com.zikrtime.app.ui.Tab.FOCUS }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        nav.save(outState)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onResume() {
@@ -179,17 +191,27 @@ private fun AppRoot() {
             Store.onboarded = true
             PrayerAlarms.scheduleNext(context)
             scope.launch { if (OnlineTimes.refresh()) PrayerAlarms.scheduleNext(context) }
-            if (Build.VERSION.SDK_INT >= 33) notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
         })
         return
     }
 
+    val motion = com.zikrtime.app.ui.motionEnabled()
+    val screensState = androidx.compose.runtime.saveable.rememberSaveableStateHolder()
     BackHandler(enabled = nav.stack.isNotEmpty()) { nav.back() }
     AnimatedContent(
         targetState = nav.stack.lastOrNull(),
-        transitionSpec = { fadeIn() togetherWith fadeOut() },
+        transitionSpec = {
+            val forward = (targetState?.id ?: 0) > (initialState?.id ?: 0)
+            val duration = if (motion) 280 else 0
+            (fadeIn(androidx.compose.animation.core.tween(duration)) +
+                androidx.compose.animation.slideInHorizontally(androidx.compose.animation.core.tween(duration)) { if (motion) it / (if (forward) 8 else -12) else 0 }) togetherWith
+                (fadeOut(androidx.compose.animation.core.tween(if (motion) 160 else 0)) +
+                    androidx.compose.animation.slideOutHorizontally(androidx.compose.animation.core.tween(duration)) { if (motion) it / (if (forward) -12 else 8) else 0 })
+        },
         label = "screens",
-    ) { screen ->
+    ) { entry ->
+        val screen = entry?.screen
+        screensState.SaveableStateProvider(if (screen == Screen.QUIZ || screen == Screen.REVIEW) "${entry?.id}-${nav.quizRound}" else entry?.id?.toString() ?: "tabs") {
         when (screen) {
             null -> Tabs()
             Screen.LANGUAGE -> LanguageScreen()
@@ -204,11 +226,12 @@ private fun AppRoot() {
             Screen.AZKAR -> com.zikrtime.app.ui.AzkarScreen()
             Screen.APPS -> AppsScreen()
             Screen.ABOUT -> AboutScreen()
-            Screen.SHOP_SELLER -> com.zikrtime.app.ui.SellerScreen()
-            Screen.SHOP_PRODUCT -> com.zikrtime.app.ui.ProductScreen()
+            Screen.SHOP_SELLER -> com.zikrtime.app.ui.SellerScreen(entry?.seller)
+            Screen.SHOP_PRODUCT -> com.zikrtime.app.ui.ProductScreen(entry?.product)
             Screen.PLACES -> com.zikrtime.app.ui.PlacesScreen()
             Screen.RAMADAN -> com.zikrtime.app.ui.RamadanScreen()
             Screen.ZAKAT -> com.zikrtime.app.ui.ZakatScreen()
+        }
         }
     }
 }
@@ -216,6 +239,8 @@ private fun AppRoot() {
 @Composable
 private fun Tabs() {
     val nav = LocalNav.current
+    val tabState = androidx.compose.runtime.saveable.rememberSaveableStateHolder()
+    val motion = com.zikrtime.app.ui.motionEnabled()
     val items = listOf(
         Triple(Tab.PRAYER, R.drawable.ic_nav_prayer, R.string.tab_prayer),
         Triple(Tab.KNOWLEDGE, R.drawable.ic_nav_knowledge, R.string.tab_knowledge),
@@ -227,12 +252,13 @@ private fun Tabs() {
         AnimatedContent(
             targetState = nav.tab,
             transitionSpec = {
-                (fadeIn(androidx.compose.animation.core.tween(260)) + androidx.compose.animation.scaleIn(initialScale = 0.985f)) togetherWith
-                    fadeOut(androidx.compose.animation.core.tween(160))
+                (fadeIn(androidx.compose.animation.core.tween(if (motion) 260 else 0)) + androidx.compose.animation.scaleIn(initialScale = if (motion) 0.985f else 1f)) togetherWith
+                    fadeOut(androidx.compose.animation.core.tween(if (motion) 160 else 0))
             },
             label = "tabs",
         ) { tab ->
-            Box(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.statusBars)) {
+            tabState.SaveableStateProvider(tab.name) {
+            Box(Modifier.fillMaxSize()) {
                 when (tab) {
                     Tab.PRAYER -> HomeScreen()
                     Tab.KNOWLEDGE -> KnowledgeScreen()
@@ -241,6 +267,7 @@ private fun Tabs() {
                     Tab.MORE -> MoreScreen()
                 }
             }
+            }
         }
         com.zikrtime.app.ui.GlassNavBar(
             items = items,
@@ -248,42 +275,27 @@ private fun Tabs() {
             onSelect = { nav.tab = it.first },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
+                .background(androidx.compose.ui.graphics.Brush.verticalGradient(
+                    0f to androidx.compose.ui.graphics.Color.Transparent,
+                    .35f to MaterialTheme.colorScheme.background.copy(alpha = .96f),
+                    1f to MaterialTheme.colorScheme.background))
                 .windowInsetsPadding(WindowInsets.navigationBars)
-                .padding(horizontal = 12.dp, vertical = 10.dp),
+                .padding(horizontal = 0.dp, vertical = 0.dp),
         ) { (_, icon, label), selected ->
-            val color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
-            // Выбранная иконка «подпрыгивает» и покачивается
-            val bounce = remember { androidx.compose.animation.core.Animatable(1f) }
-            val wiggle = remember { androidx.compose.animation.core.Animatable(0f) }
-            LaunchedEffect(selected) {
-                if (selected) {
-                    launch {
-                        bounce.snapTo(0.7f)
-                        bounce.animateTo(1f, androidx.compose.animation.core.spring(dampingRatio = 0.32f, stiffness = 420f))
-                    }
-                    wiggle.snapTo(-14f)
-                    wiggle.animateTo(0f, androidx.compose.animation.core.spring(dampingRatio = 0.25f, stiffness = 300f))
-                }
-            }
-            val lift by androidx.compose.animation.core.animateFloatAsState(if (selected) -2f else 0f, label = "lift")
+            val color = if (selected) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Icon(
                     painterResource(icon),
-                    contentDescription = null,
+                    contentDescription = stringResource(label),
                     tint = color,
-                    modifier = Modifier.size(24.dp).graphicsLayer {
-                        scaleX = bounce.value
-                        scaleY = bounce.value
-                        rotationZ = wiggle.value
-                        translationY = lift * density
-                    },
+                    modifier = Modifier.size(24.dp),
                 )
-                Text(
+                if (androidx.compose.ui.platform.LocalDensity.current.fontScale <= 1.3f) Text(
                     stringResource(label),
                     style = MaterialTheme.typography.labelSmall,
                     color = color,
-                    maxLines = 1,
-                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
                 )
             }
         }

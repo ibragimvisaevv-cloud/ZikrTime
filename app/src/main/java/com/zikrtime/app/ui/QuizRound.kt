@@ -28,6 +28,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -79,25 +80,16 @@ fun QuizRound(
     val correct = session.correctIds.size
     val view = androidx.compose.ui.platform.LocalView.current
     val scheme = MaterialTheme.colorScheme
+    val readingScale by rememberReadingScale()
 
     Column(modifier.semantics { testTagsAsResourceId = true }, verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        // Прогресс: точки правильных ответов
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            repeat(if (reviewMode) session.questionIds.size else target) { i ->
-                Box(
-                    Modifier
-                        .padding(end = 6.dp)
-                        .size(width = 28.dp, height = 8.dp)
-                        .clip(RoundedCornerShape(4.dp))
-                        .background(if (i < (if (reviewMode) session.index else correct)) scheme.primary else scheme.surfaceVariant),
-                )
-            }
-            Spacer(Modifier.weight(1f))
-            Text(
-                stringResource(R.string.quiz_progress, if (reviewMode) session.index else correct, if (reviewMode) session.questionIds.size else target),
-                style = MaterialTheme.typography.labelLarge,
-                color = scheme.onSurfaceVariant,
-            )
+        Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Text(stringResource(R.string.quiz_progress, if (reviewMode) session.index else correct,
+                if (reviewMode) session.questionIds.size else target), style = MaterialTheme.typography.labelLarge,
+                color = scheme.secondary)
+            androidx.compose.material3.LinearProgressIndicator(
+                progress = { (if (reviewMode) session.index.toFloat() / session.questionIds.size.coerceAtLeast(1) else correct.toFloat() / target.coerceAtLeast(1)) },
+                modifier = Modifier.fillMaxWidth().height(4.dp), drawStopIndicator = {})
         }
 
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -113,7 +105,7 @@ fun QuizRound(
 
         }
 
-        Text(question.text, style = MaterialTheme.typography.titleLarge, modifier = Modifier.testTag("learning_question"))
+        Text(question.text, style = MaterialTheme.typography.headlineSmall.copy(fontSize = (24 * readingScale).sp, lineHeight = (33 * readingScale).sp), modifier = Modifier.testTag("learning_question"))
 
         question.arabic?.let {
             Surface(shape = RoundedCornerShape(20.dp), color = scheme.primaryContainer.copy(alpha = 0.55f), modifier = Modifier.fillMaxWidth()) {
@@ -221,27 +213,16 @@ private enum class OptionState { Idle, Correct, Wrong, Dimmed }
 
 @Composable
 private fun OptionCard(letter: String, text: String, state: OptionState, onClick: () -> Unit, celebrate: Boolean = false, modifier: Modifier = Modifier) {
-    val scheme = MaterialTheme.colorScheme
-    // Верный ответ «подпрыгивает» и рассыпает искры, неверный — покачивается.
+    val motion = motionEnabled()
     val bump = remember { androidx.compose.animation.core.Animatable(1f) }
-    LaunchedEffect(celebrate) {
-        if (celebrate) {
-            bump.animateTo(1.045f, androidx.compose.animation.core.tween(120))
-            bump.animateTo(1f, androidx.compose.animation.core.spring(dampingRatio = 0.35f, stiffness = 500f))
-        }
+    LaunchedEffect(state, motion) {
+        if (motion && state == OptionState.Correct) {
+            bump.animateTo(.985f, androidx.compose.animation.core.tween(90))
+            bump.animateTo(1f, androidx.compose.animation.core.tween(160))
+        } else bump.snapTo(1f)
     }
-    Box(
-        modifier
-            .shake(Store.personalProgressEnabled && state == OptionState.Wrong)
-            .graphicsLayer {
-                scaleX = bump.value
-                scaleY = bump.value
-            },
-    ) {
+    Box(modifier.graphicsLayer { scaleX = bump.value; scaleY = bump.value }) {
         OptionSurface(letter, text, state, onClick)
-        if (celebrate) {
-            SparkleBurst(key = text, modifier = Modifier.matchParentSize(), count = 22, spread = 120.dp)
-        }
     }
 }
 
@@ -256,12 +237,12 @@ private fun OptionSurface(letter: String, text: String, state: OptionState, onCl
     }
     val arabic = text.hasArabic()
     Surface(
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(22.dp),
         color = container,
         border = BorderStroke(if (state == OptionState.Idle) 1.dp else 1.5.dp, border),
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(18.dp))
+            .clip(RoundedCornerShape(22.dp))
             .clickable(enabled = state == OptionState.Idle, onClick = onClick),
     ) {
         Row(
@@ -282,7 +263,7 @@ private fun OptionSurface(letter: String, text: String, state: OptionState, onCl
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
-                    letter,
+                    when (state) { OptionState.Correct -> "✓"; OptionState.Wrong -> "×"; else -> letter },
                     style = MaterialTheme.typography.labelLarge,
                     color = when (state) {
                         OptionState.Correct -> scheme.onPrimary

@@ -46,9 +46,9 @@ private fun markerBitmap(selected: Boolean, density: Float): Bitmap {
     c.drawCircle(r, r + density, r - density, p)
     p.color = 0xFFE2B659.toInt()
     c.drawCircle(r, r, r - 1.5f * density, p)
-    p.color = if (selected) 0xFFFFE7A8.toInt() else 0xFF0F5C4A.toInt()
+    p.color = if (selected) 0xFFFFE7A8.toInt() else 0xFF124C40.toInt()
     c.drawCircle(r, r, r - 4.5f * density, p)
-    p.color = if (selected) 0xFF0F5C4A.toInt() else 0xFFFFF6E0.toInt()
+    p.color = if (selected) 0xFF124C40.toInt() else 0xFFFFF6E0.toInt()
     c.drawCircle(r, r, r * 0.28f, p)
     return bmp
 }
@@ -79,7 +79,7 @@ private fun clusterBitmap(count: Int, density: Float): Bitmap {
     val r = size / 2f
     p.color = 0xFFE2B659.toInt()
     c.drawCircle(r, r, r - density, p)
-    p.color = 0xFF0F5C4A.toInt()
+    p.color = 0xFF124C40.toInt()
     c.drawCircle(r, r, r - 3.5f * density, p)
     p.color = 0xFFFFF6E0.toInt()
     p.textSize = 13 * density
@@ -102,6 +102,7 @@ fun YandexPlacesMap(
     /** Где сейчас человек (если известно) и счётчик нажатий «Где я» — по нему камера летит к нему. */
     me: Pair<Double, Double>? = null,
     focusMe: Int = 0,
+    onLoaded: () -> Unit = {},
 ) {
     val context = LocalContext.current
     val density = context.resources.displayMetrics.density
@@ -113,6 +114,12 @@ fun YandexPlacesMap(
         MapView(context).also {
             it.mapWindow.map.move(CameraPosition(Point(centerLat, centerLon), 11.5f, 0f, 0f))
         }
+    }
+    val currentOnLoaded = androidx.compose.runtime.rememberUpdatedState(onLoaded)
+    val loadedListener = remember { com.yandex.mapkit.map.MapLoadedListener { currentOnLoaded.value() } }
+    DisposableEffect(mapView) {
+        mapView.mapWindow.map.setMapLoadedListener(java.lang.ref.WeakReference(loadedListener))
+        onDispose { mapView.mapWindow.map.setMapLoadedListener(null) }
     }
     // Слушатель нужно держать в памяти — MapKit хранит слабую ссылку.
     val tap = remember {
