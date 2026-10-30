@@ -8,6 +8,12 @@ def tool(identifier):
     tap_control(identifier)
 
 
+def enter_fullscreen():
+    tap_control('quran_fullscreen')
+    if present('android:id/immersive_cling_title'):
+        tap_control('android:id/ok')
+
+
 def history():
     return json.loads(prefs().get('quran_statistics_v1', '{}'))
 
@@ -81,10 +87,7 @@ else:
     assert '1:1' in saved['bookmarks']
     passed['exact_stop_note_and_existing_bookmark'] = True
     
-    tap_control('quran_fullscreen')
-    # Android's first immersive-mode tutorial is a system window, not a reader defect.
-    if present('android:id/immersive_cling_title'):
-        tap_control('android:id/ok')
+    enter_fullscreen()
     assert present('quran_exit_fullscreen') and not present('quran_read_mode')
     shot('features-fullscreen-light')
     tool('quran_rotate')
@@ -193,7 +196,7 @@ read_text('quran_arabic_286')
 jump(287)
 assert present('quran_jump_error')
 back()
-tap_control('quran_fullscreen')
+enter_fullscreen()
 shot('features-large-text-fullscreen')
 tap_control('quran_exit_fullscreen')
 passed['whole_long_surah_bounds_and_controls_320dp_150_percent'] = True
