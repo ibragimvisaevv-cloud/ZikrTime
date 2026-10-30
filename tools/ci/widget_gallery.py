@@ -3,14 +3,14 @@ import json,subprocess,shutil,io,zipfile
 from pathlib import Path
 from PIL import Image,ImageDraw,ImageFont
 import cairosvg
-RUN=40958497215
-SHA="f8faca1c89b653860898abca00ed3ec2e87edc0c"
+RUN=40962100669
+SHA="8e7963002df5b14436c70e2d3f7bea01c22fb39f"
 repo="ibragimvisaevv-cloud/ZikrTime"
 run=json.loads(subprocess.check_output(["gh","api",f"repos/{repo}/actions/runs/{RUN}"],text=True))
 assert run["head_sha"]==SHA
 subprocess.run(["gh","run","download",str(RUN),"-n","Android-widgets-launcher","-D","widget-evidence"],check=True)
 evidence=Path("widget-evidence")
-out=Path("design/widgets-0812/review");out.mkdir(parents=True,exist_ok=True)
+out=Path("design/widgets-0812/review");shutil.rmtree(out,ignore_errors=True);out.mkdir(parents=True,exist_ok=True)
 def font(n,b=False):return ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans"+("-Bold" if b else "")+".ttf",n)
 def board(name,items,title):
     page=Image.new("RGB",(960,1770),"#EEECE2");d=ImageDraw.Draw(page)
@@ -24,7 +24,7 @@ def board(name,items,title):
     page.save(out/name,quality=90)
 board("launcher-light.jpg",[("A-compact-light","A · Ближайший намаз"),("B-timeline-light","B · Линия времени"),("C-square-light","C · Мой намаз"),("D-day-light","D · Расписание дня")],"ZikrTime · реальные снимки Android 15")
 board("launcher-dark.jpg",[("B-timeline-dark","B · тёмное оформление"),("C-square-dark","C · тёмное оформление"),("D-day-dark","D · тёмное оформление"),("E-tasbih-light","Тасбих · рабочие действия")],"Темы и дополнительные виджеты")
-for name in ["widgets.mp4","widget-checks.json","widget-errors.txt","crashes.txt"]:
+for name in [p.name for p in evidence.iterdir() if p.is_file() and p.suffix in [".json",".xml",".txt",".mp4"]]:
     if (evidence/name).exists():shutil.copy2(evidence/name,out/name)
 # Separate original screenshots are convenient for close inspection (JPEG compression only).
 for p in (evidence/"screens").glob("*.png"):
