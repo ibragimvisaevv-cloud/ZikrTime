@@ -133,8 +133,9 @@ def open_surah(number):
 
 
 def jump(number):
-    # These controls are fixed above the list, so a late ayah never requires
-    # scrolling hundreds of cards back to the beginning.
+    if not present("quran_ayah_input"):
+        tap_control("quran_tools")
+        tap_control("quran_jump_open")
     replace_text('quran_ayah_input', str(number))
     tap_control('quran_go')
 
@@ -255,8 +256,11 @@ if mode == 'layout':
     tap_control('quran_read_mode')
     read_text('quran_arabic_1')
     shot('reading-verse-320dp-150')
-    locate_control('quran_go')
     locate_control('quran_read_mode')
+    tap_control('quran_tools')
+    tap_control('quran_jump_open')
+    locate_control('quran_go')
+    back()
     passed['both_modes_320dp_150_percent_text'] = True
     shell('settings', 'put', 'system', 'font_scale', '1')
     shell('wm', 'size', '1080x1920')
@@ -289,6 +293,7 @@ if mode in ('all', 'reading'):
     open_surah(1)
     first_arabic = check_ayah(1, 'quran-1-1-light')
     top()
+    tap_control('quran_tools')
     tap_control('quran_sources')
     sources = ET.tostring(shot('quran-sources'), encoding='unicode')
     assert 'Tanzil' in sources, 'Arabic source attribution missing'
@@ -344,6 +349,8 @@ if mode in ('all', 'reading'):
     open_surah(1)
     check_ayah(1, 'quran-large-text')
     top()
+    tap_control('quran_tools')
+    tap_control('quran_jump_open')
     locate_control('quran_ayah_input')
     locate_control('quran_go')
     shot('quran-large-text-controls')
