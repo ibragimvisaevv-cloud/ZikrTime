@@ -1,0 +1,98 @@
+[
+  {
+    "name": "pin confirmation CompactPrayerWidget",
+    "passed": true
+  },
+  {
+    "name": "bound in real launcher CompactPrayerWidget",
+    "passed": true
+  },
+  {
+    "name": "pin confirmation TimelineWidget",
+    "passed": true
+  },
+  {
+    "name": "bound in real launcher TimelineWidget",
+    "passed": true
+  },
+  {
+    "name": "pin confirmation NextPrayerWidget",
+    "passed": true
+  },
+  {
+    "name": "bound in real launcher NextPrayerWidget",
+    "passed": true
+  },
+  {
+    "name": "pin confirmation TodayWidget",
+    "passed": true
+  },
+  {
+    "name": "bound in real launcher TodayWidget",
+    "passed": true
+  },
+  {
+    "name": "pin confirmation TasbihWidget",
+    "passed": true
+  },
+  {
+    "name": "bound in real launcher TasbihWidget",
+    "passed": true
+  },
+  {
+    "name": "pin confirmation ScreenTimeWidget",
+    "passed": true
+  },
+  {
+    "name": "bound in real launcher ScreenTimeWidget",
+    "passed": true
+  },
+  {
+    "name": "native countdown changes while app is in background",
+    "passed": true
+  },
+  {
+    "name": "next prayer changes after countdown expires",
+    "passed": true
+  },
+  {
+    "name": "all four widgets agree after prayer boundary",
+    "passed": true
+  },
+  {
+    "name": "after Isha selects next day Fajr",
+    "passed": true
+  },
+  {
+    "name": "date updates at midnight without opening app",
+    "passed": true
+  },
+  {
+    "name": "city listener refreshes placed widget",
+    "passed": true
+  },
+  {
+    "name": "calculation adjustment updates widgets",
+    "passed": true
+  },
+  {
+    "name": "selected city timezone remains Moscow",
+    "passed": true
+  },
+  {
+    "name": "per-instance theme saved",
+    "passed": true
+  },
+  {
+    "name": "per-instance dark appearance rendered",
+    "passed": true
+  },
+  {
+    "name": "visible prayer time tap target",
+    "passed": true
+  },
+  {
+    "name": "widget opens ZikrTime",
+    "passed": false
+  }
+]
