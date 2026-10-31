@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/runner/work/ZikrTime/ZikrTime/tools/ci/quran_touch_ui.py", line 174, in <module>
+    open_surah(112)
+  File "quran-helpers", line 132, in open_surah
+    before = history()
+        ^^^^^^^^^^^^^^^
+  File "helpers", line 149, in tap_control
+    scroll_reader()
+           ^^^^^^^^^
+  File "helpers", line 145, in locate_control
+    assert '2:282' not in observed(), 'Only part of the long ayah was visible'
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: UI control not found: quran_surah_112

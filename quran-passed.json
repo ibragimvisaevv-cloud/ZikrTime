@@ -1,0 +1,7 @@
+{
+  "long_press_exact_ayah_note_without_number_fields_and_unchanged_text": true,
+  "one_tap_bookmark_rotation_restart_and_existing_notes_preserved": true,
+  "automatic_short_surah_deduplication_menu_and_background_exclusion": true,
+  "long_ayah_requires_complete_view_and_jumps_do_not_fill_gaps": true,
+  "verse_mode_note_uses_selected_ayah": true
+}
