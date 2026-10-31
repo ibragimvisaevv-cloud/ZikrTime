@@ -12,6 +12,10 @@ The user supplied RuStore Console screenshots confirming **0.8.2 (14)** is publi
 - Build artifact `13057178682`, name `ZikrTime-0.8.17-release-build`; ZIP SHA-256 `59e19abccb6dcccceaea5d3e00517c54516ceb3ab3a6315e0237e0d2d2b82b2f`. APK path: `ci-store/ZikrTime-0.8.17-UNSIGNED.apk`. The same artifact includes release reports and R8 mappings.
 - Signing probe artifact `13057825151`, `RuStore-signing-check`, records `ready=false`, `reason=wrong-secret-type`.
 
+## Password update attempt — 2026-10-31 21:16 UTC
+
+After the user updated the secret, sign-only run [41242830821](https://github.com/ibragimvisaevv-cloud/ZikrTime/actions/runs/41242830821) on `a1d2ed22f4bef1be1d98953bd053c7f0e624627a` verified original build provenance and unchanged Android inputs, but failed to open the original key: `decrypt-or-key-password-failed`. The previous `wrong-secret-type` diagnostic no longer applies to this attempt. No signed APK was produced; no rebuild occurred. Ask the user to check the original password, including case and accidental spaces. Resume with the same immutable unsigned APK after correction; do not create a new key.
+
 ## Store materials
 
 Copy-ready Russian texts are in `store/rustore/0.8.17`: changes from published 0.8.2, short/full descriptions, reviewer notes, data/privacy additions and upload instructions. A full privacy HTML candidate is produced from the existing policy template with the contact shown in the user's published listing. It is a prepared revision, not a deployed privacy page.
