@@ -1,0 +1,43 @@
+name: Sign prepared RuStore 0.8.17
+on:
+  push:
+    branches: [codex/quran-reader-0814]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  sign:
+    if: ${{ contains(github.event.head_commit.message, '[rustore-sign]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify original build identity and unchanged Android inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git fetch --no-tags --depth=1 origin 31560a5f285d9983df6cf3db852526f58cd59898
+          git diff --exit-code 31560a5f285d9983df6cf3db852526f58cd59898 HEAD -- app/ gradle/ gradlew gradlew.bat build.gradle.kts settings.gradle.kts gradle.properties keystore/ tools/quran/ tools/i18n/ tools/quiz/ tools/audio/
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/13057178682" > artifact-source.json
+          python3 - <<'PY'
+          import json
+          a=json.load(open('artifact-source.json'))
+          assert a['id']==13057178682 and a['name']=='ZikrTime-0.8.17-release-build' and not a['expired']
+          assert a['workflow_run']['id']==41240887366
+          assert a['workflow_run']['head_sha']=='31560a5f285d9983df6cf3db852526f58cd59898'
+          PY
+          gh run download 41240887366 -n ZikrTime-0.8.17-release-build -D checked-store
+      - name: Sign the prepared APK with the original certificate
+        env:
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: python3 tools/ci/rustore_signing.py sign-existing
+      - uses: actions/upload-artifact@v7.0.2
+        with:
+          path: ci-store/ZikrTime-0.8.17-RuStore.apk
+          archive: false
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ZikrTime-0.8.17-signing-evidence
+          path: ci-store/*.json
