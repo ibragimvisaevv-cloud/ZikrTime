@@ -5,3 +5,5 @@
 *.strings text eol=lf
 *.yml text eol=lf
 *.bat text eol=crlf
+# Preserve the published Quran source bytes and their integrity hashes on every OS.
+app/src/main/assets/quran/** -text

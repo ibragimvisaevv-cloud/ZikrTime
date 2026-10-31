@@ -84,6 +84,7 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
 
     private val nav = Nav()
+    private var qaHandled = false
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(Lang.wrap(newBase))
@@ -95,13 +96,19 @@ class MainActivity : ComponentActivity() {
         nav.restore(savedInstanceState)
         // Названия каналов уведомлений — на текущем языке.
         PrayerAlarms.createChannels(this)
-        if (BuildConfig.DEBUG && QaHooks.handle(this, intent, nav)) return
+        qaHandled = savedInstanceState?.getBoolean("qa_handled") ?: false
+        if (BuildConfig.DEBUG && !qaHandled) {
+            // Language selection recreates before applying the requested QA route.
+            // Rotation after that must preserve the reader instead of reopening its index.
+            if (QaHooks.handle(this, intent, nav)) return
+            qaHandled = true
+        }
         handleOpen(intent)
         enableEdgeToEdge()
         val showSplash = savedInstanceState == null && com.zikrtime.app.ui.LiveFlags.splash &&
             (intent?.hasExtra("qa_screen") != true || intent?.getBooleanExtra("qa_splash", false) == true)
         setContent {
-            val natural = Store.onboarded && (nav.stack.lastOrNull()?.screen in setOf(Screen.TASBIH, Screen.AZKAR, Screen.PROGRESS, Screen.REVIEW) || (nav.stack.isEmpty() && nav.tab == Tab.PRAYER))
+            val natural = Store.onboarded && (nav.stack.lastOrNull()?.screen in setOf(Screen.TASBIH, Screen.AZKAR, Screen.QURAN, Screen.PROGRESS, Screen.REVIEW) || (nav.stack.isEmpty() && nav.tab == Tab.PRAYER))
             com.zikrtime.app.ui.ThemeRevealHost {
                 ZikrTheme(natural = natural) {
                     val tilt = com.zikrtime.app.ui.rememberTilt(enabled = false)
@@ -148,6 +155,7 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
+        outState.putBoolean("qa_handled", qaHandled)
         nav.save(outState)
         super.onSaveInstanceState(outState)
     }
@@ -224,6 +232,7 @@ private fun AppRoot() {
             Screen.REVIEW -> com.zikrtime.app.ui.ReviewScreen()
             Screen.PROGRESS -> com.zikrtime.app.ui.ProgressScreen()
             Screen.AZKAR -> com.zikrtime.app.ui.AzkarScreen()
+            Screen.QURAN -> com.zikrtime.app.ui.QuranScreen()
             Screen.APPS -> AppsScreen()
             Screen.ABOUT -> AboutScreen()
             Screen.SHOP_SELLER -> com.zikrtime.app.ui.SellerScreen(entry?.seller)

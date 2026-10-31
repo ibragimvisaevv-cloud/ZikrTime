@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qt_note">Эскертме</string>
+    <string name="qt_save_note">Эскертмени сактоо</string>
+    <string name="qt_save_place">Окуган жерди сактоо</string>
+    <string name="qt_remove_bookmark">Кыстарманы алып салуу</string>
+    <string name="qt_copy">Аятты көчүрүү</string>
+    <string name="qt_touch_hint">Аятты тандоо үчүн басыңыз; эскертме кошуу үчүн басып туруңуз. Окуган жериңизди жогорудагы кыстарма менен сактаңыз.</string>
+    <string name="qt_ayah_actions">%1$d-аят үчүн аракеттер</string>
+    <string name="qt_bookmark_added">Окуган жер сакталды</string>
+    <string name="qt_bookmark_removed">Кыстарма алынды</string>
+</resources>

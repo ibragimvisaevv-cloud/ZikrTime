@@ -11,6 +11,9 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -106,7 +109,19 @@ private val AppShapes = Shapes(
 /** Шрифт для арабского текста (аяты, зикры) — Amiri, лицензия SIL OFL. */
 val Amiri = FontFamily(Font(R.font.amiri))
 
-val ArabicStyle = TextStyle(fontFamily = Amiri, fontSize = 30.sp, lineHeight = 52.sp)
+// Amiri's stacked Quranic signs need more room than the Latin UI font.
+// Relative leading also follows the reader's text-size control and system scale.
+val ArabicStyle = TextStyle(
+    fontFamily = Amiri,
+    fontSize = 30.sp,
+    lineHeight = 2.25.em,
+    letterSpacing = 0.sp,
+    platformStyle = PlatformTextStyle(includeFontPadding = true),
+    lineHeightStyle = LineHeightStyle(
+        alignment = LineHeightStyle.Alignment.Center,
+        trim = LineHeightStyle.Trim.None,
+    ),
+)
 
 /** Цифры одинаковой ширины — время не «прыгает». */
 val Tabular = TextStyle(fontFeatureSettings = "tnum")

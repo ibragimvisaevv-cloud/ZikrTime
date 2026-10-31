@@ -97,6 +97,7 @@ fun MoreScreen() {
         }) {
         Text(stringResource(R.string.group_practice), style = MaterialTheme.typography.headlineSmall)
         val destinations = listOf(
+            Triple(R.string.quran_title, R.drawable.ic_nav_knowledge, Screen.QURAN),
             Triple(R.string.tasbih_title, R.drawable.ic_tasbih, Screen.TASBIH),
             Triple(R.string.qibla_title, R.drawable.ic_qibla, Screen.QIBLA),
             Triple(R.string.places_title, R.drawable.ic_mosque, Screen.PLACES),
@@ -112,6 +113,8 @@ fun MoreScreen() {
                 }
             }
         }
+        DonateCard(prominent = true)
+        FeedbackButton("app")
         SectionLabel(stringResource(R.string.group_application))
         ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
             SettingRow(
@@ -147,7 +150,6 @@ fun MoreScreen() {
                 Text(stringResource(R.string.progress_settings))
             }
         }
-        DonateCard()
         ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
             SettingRow(
                 title = stringResource(R.string.about_title),

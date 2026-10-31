@@ -1,0 +1,87 @@
+{
+  "license": "https://creativecommons.org/licenses/by/3.0/",
+  "processing": "Audio track only; full duration; mono 44.1kHz Ogg Vorbis quality 5; two-pass loudnorm -16 LUFS / -2 dBTP / LRA 9. No words or pauses removed.",
+  "recordings": [
+    {
+      "id": "adhan_madinah",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/7/7c/33937_ejaz215_call-to-prayer-from-the-prophet-s-mo.ogg",
+      "sha1": "4aa432b9e44804e7d72af4429bd743aa5fa9e3a4",
+      "seconds": 186.552698412698,
+      "title": "33937 ejaz215 call-to-prayer-from-the-prophet-s-mo",
+      "author": "ejaz215",
+      "page": "https://commons.wikimedia.org/wiki/File:33937_ejaz215_call-to-prayer-from-the-prophet-s-mo.ogg",
+      "extension": "ogg",
+      "license": "https://creativecommons.org/licenses/by/3.0/",
+      "source_sha256": "4d0fabe0e0ef52186646a256220f74a972ba698ac269165fed5d52de3202d656",
+      "output_sha256": "79d8638fcde3b7066a2dce6235b9b187565dcc3b395ed14f4a1353091c5c3cb9",
+      "output_bytes": 1673488,
+      "output_seconds": 186.58,
+      "output_loudness": {
+        "input_i": "-16.03",
+        "input_tp": "-3.55",
+        "input_lra": "10.60",
+        "input_thresh": "-27.42",
+        "output_i": "-16.29",
+        "output_tp": "-2.26",
+        "output_lra": "11.80",
+        "output_thresh": "-27.66",
+        "normalization_type": "dynamic",
+        "target_offset": "0.29"
+      }
+    },
+    {
+      "id": "adhan_makkah",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Adhan%2C_Great_Mosque_of_Mecca_-_Jan_21%2C_2013.webm",
+      "sha1": "818becd553dde887095641bd1c86549db44060bc",
+      "seconds": 197.078,
+      "title": "Adhan, Great Mosque of Mecca - Jan 21, 2013",
+      "author": "Seyfula Islam",
+      "page": "https://commons.wikimedia.org/wiki/File:Adhan,_Great_Mosque_of_Mecca_-_Jan_21,_2013.webm",
+      "extension": "webm",
+      "license": "https://creativecommons.org/licenses/by/3.0/",
+      "source_sha256": "f4acc1bcc6e7919fce60b21162a3c794952c562a6df7b6aa7971f80d191eb5f0",
+      "output_sha256": "3b89d3c21ba5130a5d7220852edb49564699b6d62c6e736cef04f90001e17930",
+      "output_bytes": 1610736,
+      "output_seconds": 197.09,
+      "output_loudness": {
+        "input_i": "-15.97",
+        "input_tp": "-1.91",
+        "input_lra": "8.70",
+        "input_thresh": "-26.93",
+        "output_i": "-16.14",
+        "output_tp": "-2.00",
+        "output_lra": "8.30",
+        "output_thresh": "-26.87",
+        "normalization_type": "dynamic",
+        "target_offset": "0.14"
+      }
+    },
+    {
+      "id": "adhan_fajr",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/b1/Eid_al-Fitr_Fajr_azan_at_Malm%C3%B6_Mosque_-_19_August_2012.webm",
+      "sha1": "bc75d5cee271efb67f03d3f35474a9362fce103f",
+      "seconds": 247.561,
+      "title": "Eid al-Fitr Fajr azan at Malmö Mosque - 19 August 2012",
+      "author": "Islamic Center Malmö; muezzin Besim Azemi",
+      "page": "https://commons.wikimedia.org/wiki/File:Eid_al-Fitr_Fajr_azan_at_Malm%C3%B6_Mosque_-_19_August_2012.webm",
+      "extension": "webm",
+      "license": "https://creativecommons.org/licenses/by/3.0/",
+      "source_sha256": "899a3325aafb03e09381b3e40149e88d06b00b40ce2b1eeb09d63e594c9c1742",
+      "output_sha256": "587ff39cf10161aea4a335cad3ea18cb0708c3926ffa1b034bb2994f6386a062",
+      "output_bytes": 2401862,
+      "output_seconds": 247.6,
+      "output_loudness": {
+        "input_i": "-15.97",
+        "input_tp": "-1.76",
+        "input_lra": "8.70",
+        "input_thresh": "-27.46",
+        "output_i": "-16.35",
+        "output_tp": "-2.00",
+        "output_lra": "10.70",
+        "output_thresh": "-27.69",
+        "normalization_type": "dynamic",
+        "target_offset": "0.35"
+      }
+    }
+  ]
+}

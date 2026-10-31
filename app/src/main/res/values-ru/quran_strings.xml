@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quran_title">Коран</string>
+    <string name="quran_quiz">Викторина о Коране</string>
+    <string name="quran_sources">Источники</string>
+    <string name="quran_surahs">Суры</string>
+    <string name="quran_bookmarks">Закладки</string>
+    <string name="quran_search">Название или номер суры</string>
+    <string name="quran_continue">Продолжить чтение</string>
+    <string name="quran_ayah_count">Аятов: %1$d</string>
+    <string name="quran_ayah">Аят</string>
+    <string name="quran_go">Перейти</string>
+    <string name="quran_save">В закладки</string>
+    <string name="quran_saved">Сохранено ✓</string>
+    <string name="quran_jump_error">Введите номер аята от 1 до %1$d.</string>
+    <string name="quran_no_bookmarks">Добавьте аят в закладки во время чтения — он появится здесь.</string>
+    <string name="quran_no_results">Сура не найдена. Попробуйте её номер или другое написание.</string>
+    <string name="quran_load_error">Не удалось проверить целостность текста Корана. Попробуйте ещё раз или установите свежую копию приложения.</string>
+    <string name="quran_retry">Повторить</string>
+    <string name="quran_close">Закрыть</string>
+    <string name="quran_translation_label">Перевод смыслов</string>
+    <string name="quran_notes">Примечания к переводу</string>
+    <string name="quran_source_arabic">Арабский текст: Tanzil, усманское начертание, версия 1.1. Загруженный текст сохранён без изменений и проверяется перед чтением. Доступен без интернета.</string>
+    <string name="quran_source_translation">Перевод смыслов на русский язык: центр переводов «Рувад», версия 1.0.1, QuranEnc. Перевод передаёт смысл и приводится отдельно от арабского оригинала.</string>
+</resources>

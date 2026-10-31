@@ -189,7 +189,7 @@ private fun AlarmScreen(test: Boolean, onStop: () -> Unit, onSnooze: () -> Unit)
                         // «Намаз лучше сна» — слова из утреннего азана
                         Text(
                             "الصَّلَاةُ خَيْرٌ مِنَ النَّوْمِ",
-                            style = ArabicStyle.copy(fontSize = 34.sp, lineHeight = 58.sp, textDirection = TextDirection.Rtl),
+                            style = ArabicStyle.copy(fontSize = 34.sp, textDirection = TextDirection.Rtl),
                             color = Cream,
                             textAlign = TextAlign.Center,
                         )

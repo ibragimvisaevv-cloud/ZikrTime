@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qt_note">Not</string>
+    <string name="qt_save_note">Notu kaydet</string>
+    <string name="qt_save_place">Okuma yerini kaydet</string>
+    <string name="qt_remove_bookmark">Yer işaretini kaldır</string>
+    <string name="qt_copy">Ayeti kopyala</string>
+    <string name="qt_touch_hint">Ayeti seçmek için dokunun; not eklemek için basılı tutun. Okuma yerinizi üstteki yer işaretiyle kaydedin.</string>
+    <string name="qt_ayah_actions">%1$d. ayet işlemleri</string>
+    <string name="qt_bookmark_added">Okuma yeri kaydedildi</string>
+    <string name="qt_bookmark_removed">Yer işareti kaldırıldı</string>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qt_note">Жазба</string>
+    <string name="qt_save_note">Жазбаны сақтау</string>
+    <string name="qt_save_place">Оқу орнын сақтау</string>
+    <string name="qt_remove_bookmark">Бетбелгіні алып тастау</string>
+    <string name="qt_copy">Аятты көшіру</string>
+    <string name="qt_touch_hint">Аятты таңдау үшін түртіңіз; жазба қосу үшін басып тұрыңыз. Оқу орнын жоғарғы бетбелгімен сақтаңыз.</string>
+    <string name="qt_ayah_actions">%1$d-аят әрекеттері</string>
+    <string name="qt_bookmark_added">Оқу орны сақталды</string>
+    <string name="qt_bookmark_removed">Бетбелгі алынды</string>
+</resources>

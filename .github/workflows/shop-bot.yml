@@ -33,6 +33,11 @@ jobs:
       - name: Проверка бота
         run: python3 shop-bot/test_bot.py
 
+      - name: Проверка обращений и исправлений
+        run: |
+          python3 shop-bot/test_feedback.py
+          python3 shop-bot/test_place_corrections.py
+
       - name: Проверка API кабинета
         run: python3 shop-bot/test_miniapi.py
 

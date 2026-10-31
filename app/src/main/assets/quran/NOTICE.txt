@@ -1,0 +1,25 @@
+Arabic Quran text: Tanzil Project, Uthmani 1.1 (Hafs).
+Copyright (C) 2007-2021 Tanzil Project. Creative Commons Attribution 3.0.
+https://tanzil.net/ — https://tanzil.net/docs/Text_License
+The complete original copyright notice and terms are retained verbatim at the
+end of sources/quran-uthmani.txt. Arabic text is reproduced without modification.
+
+Russian translation of meanings: Rowwad Translation Center / QuranEnc.com.
+Version 1.0.1, updated 29 March 2026; retrieved 30 October 2026.
+https://quranenc.com/en/browse/russian_rwwad/1
+https://quranenc.com/en/home
+Translated by the team of the Rowwad Translation Center, in cooperation with
+the Rabwah Dawah Association, the Islamic Content Service Association in
+Languages, and the IslamHouse.com website.
+
+QuranEnc permits downloading and re-publishing subject to its Terms and Policies:
+preserve content without modification, additions or deletions; identify publisher
+and QuranEnc.com; identify the edition version; retain transcript information;
+report translation observations to QuranEnc.com; update with new publisher
+versions; do not display inappropriate advertisements alongside the translation.
+The original translation and footnotes are retained in all 114 source responses.
+The metadata, attribution, source URLs and SHA-256 checksums are in manifest.json.
+Translation observations can be submitted next to each verse on QuranEnc.com.
+
+Russian surah titles are navigation labels, separate from the Quran text and
+translation. No verse transcription or Quran audio is included.

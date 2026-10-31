@@ -1,0 +1,929 @@
+{
+  "schemaVersion": 1,
+  "arabicVersion": "Tanzil Uthmani 1.1",
+  "translationVersion": "1.0.1",
+  "translationUpdated": "29/03/2026",
+  "translationSource": "QuranEnc / Rowwad Translation Center",
+  "translationAttribution": "Translated by the team of the Rowwad Translation Center, in cooperation with the Rabwah Dawah Association, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
+  "translationUrl": "https://quranenc.com/en/browse/russian_rwwad/1",
+  "translationMetadataUrl": "https://quranenc.com/en/home",
+  "translationMetadataSha256": "8cbe21407a9e1ab3f4b75dc9d4ac2ffc5f096b92953972f51df96ac7490e3610",
+  "surahs": [
+    {
+      "id": 1,
+      "nameArabic": "الفاتحة",
+      "nameLatin": "Al-Faatiha",
+      "nameRu": "Аль-Фатиха",
+      "ayahCount": 7
+    },
+    {
+      "id": 2,
+      "nameArabic": "البقرة",
+      "nameLatin": "Al-Baqara",
+      "nameRu": "Аль-Бакара",
+      "ayahCount": 286
+    },
+    {
+      "id": 3,
+      "nameArabic": "آل عمران",
+      "nameLatin": "Aal-i-Imraan",
+      "nameRu": "Али Имран",
+      "ayahCount": 200
+    },
+    {
+      "id": 4,
+      "nameArabic": "النساء",
+      "nameLatin": "An-Nisaa",
+      "nameRu": "Ан-Ниса",
+      "ayahCount": 176
+    },
+    {
+      "id": 5,
+      "nameArabic": "المائدة",
+      "nameLatin": "Al-Maaida",
+      "nameRu": "Аль-Маида",
+      "ayahCount": 120
+    },
+    {
+      "id": 6,
+      "nameArabic": "الأنعام",
+      "nameLatin": "Al-An'aam",
+      "nameRu": "Аль-Анам",
+      "ayahCount": 165
+    },
+    {
+      "id": 7,
+      "nameArabic": "الأعراف",
+      "nameLatin": "Al-A'raaf",
+      "nameRu": "Аль-Араф",
+      "ayahCount": 206
+    },
+    {
+      "id": 8,
+      "nameArabic": "الأنفال",
+      "nameLatin": "Al-Anfaal",
+      "nameRu": "Аль-Анфаль",
+      "ayahCount": 75
+    },
+    {
+      "id": 9,
+      "nameArabic": "التوبة",
+      "nameLatin": "At-Tawba",
+      "nameRu": "Ат-Тауба",
+      "ayahCount": 129
+    },
+    {
+      "id": 10,
+      "nameArabic": "يونس",
+      "nameLatin": "Yunus",
+      "nameRu": "Юнус",
+      "ayahCount": 109
+    },
+    {
+      "id": 11,
+      "nameArabic": "هود",
+      "nameLatin": "Hud",
+      "nameRu": "Худ",
+      "ayahCount": 123
+    },
+    {
+      "id": 12,
+      "nameArabic": "يوسف",
+      "nameLatin": "Yusuf",
+      "nameRu": "Юсуф",
+      "ayahCount": 111
+    },
+    {
+      "id": 13,
+      "nameArabic": "الرعد",
+      "nameLatin": "Ar-Ra'd",
+      "nameRu": "Ар-Рад",
+      "ayahCount": 43
+    },
+    {
+      "id": 14,
+      "nameArabic": "ابراهيم",
+      "nameLatin": "Ibrahim",
+      "nameRu": "Ибрахим",
+      "ayahCount": 52
+    },
+    {
+      "id": 15,
+      "nameArabic": "الحجر",
+      "nameLatin": "Al-Hijr",
+      "nameRu": "Аль-Хиджр",
+      "ayahCount": 99
+    },
+    {
+      "id": 16,
+      "nameArabic": "النحل",
+      "nameLatin": "An-Nahl",
+      "nameRu": "Ан-Нахль",
+      "ayahCount": 128
+    },
+    {
+      "id": 17,
+      "nameArabic": "الإسراء",
+      "nameLatin": "Al-Israa",
+      "nameRu": "Аль-Исра",
+      "ayahCount": 111
+    },
+    {
+      "id": 18,
+      "nameArabic": "الكهف",
+      "nameLatin": "Al-Kahf",
+      "nameRu": "Аль-Кахф",
+      "ayahCount": 110
+    },
+    {
+      "id": 19,
+      "nameArabic": "مريم",
+      "nameLatin": "Maryam",
+      "nameRu": "Марьям",
+      "ayahCount": 98
+    },
+    {
+      "id": 20,
+      "nameArabic": "طه",
+      "nameLatin": "Taa-Haa",
+      "nameRu": "Та Ха",
+      "ayahCount": 135
+    },
+    {
+      "id": 21,
+      "nameArabic": "الأنبياء",
+      "nameLatin": "Al-Anbiyaa",
+      "nameRu": "Аль-Анбия",
+      "ayahCount": 112
+    },
+    {
+      "id": 22,
+      "nameArabic": "الحج",
+      "nameLatin": "Al-Hajj",
+      "nameRu": "Аль-Хадж",
+      "ayahCount": 78
+    },
+    {
+      "id": 23,
+      "nameArabic": "المؤمنون",
+      "nameLatin": "Al-Muminoon",
+      "nameRu": "Аль-Муминун",
+      "ayahCount": 118
+    },
+    {
+      "id": 24,
+      "nameArabic": "النور",
+      "nameLatin": "An-Noor",
+      "nameRu": "Ан-Нур",
+      "ayahCount": 64
+    },
+    {
+      "id": 25,
+      "nameArabic": "الفرقان",
+      "nameLatin": "Al-Furqaan",
+      "nameRu": "Аль-Фуркан",
+      "ayahCount": 77
+    },
+    {
+      "id": 26,
+      "nameArabic": "الشعراء",
+      "nameLatin": "Ash-Shu'araa",
+      "nameRu": "Аш-Шуара",
+      "ayahCount": 227
+    },
+    {
+      "id": 27,
+      "nameArabic": "النمل",
+      "nameLatin": "An-Naml",
+      "nameRu": "Ан-Намль",
+      "ayahCount": 93
+    },
+    {
+      "id": 28,
+      "nameArabic": "القصص",
+      "nameLatin": "Al-Qasas",
+      "nameRu": "Аль-Касас",
+      "ayahCount": 88
+    },
+    {
+      "id": 29,
+      "nameArabic": "العنكبوت",
+      "nameLatin": "Al-Ankaboot",
+      "nameRu": "Аль-Анкабут",
+      "ayahCount": 69
+    },
+    {
+      "id": 30,
+      "nameArabic": "الروم",
+      "nameLatin": "Ar-Room",
+      "nameRu": "Ар-Рум",
+      "ayahCount": 60
+    },
+    {
+      "id": 31,
+      "nameArabic": "لقمان",
+      "nameLatin": "Luqman",
+      "nameRu": "Лукман",
+      "ayahCount": 34
+    },
+    {
+      "id": 32,
+      "nameArabic": "السجدة",
+      "nameLatin": "As-Sajda",
+      "nameRu": "Ас-Саджда",
+      "ayahCount": 30
+    },
+    {
+      "id": 33,
+      "nameArabic": "الأحزاب",
+      "nameLatin": "Al-Ahzaab",
+      "nameRu": "Аль-Ахзаб",
+      "ayahCount": 73
+    },
+    {
+      "id": 34,
+      "nameArabic": "سبإ",
+      "nameLatin": "Saba",
+      "nameRu": "Саба",
+      "ayahCount": 54
+    },
+    {
+      "id": 35,
+      "nameArabic": "فاطر",
+      "nameLatin": "Faatir",
+      "nameRu": "Фатыр",
+      "ayahCount": 45
+    },
+    {
+      "id": 36,
+      "nameArabic": "يس",
+      "nameLatin": "Yaseen",
+      "nameRu": "Я Син",
+      "ayahCount": 83
+    },
+    {
+      "id": 37,
+      "nameArabic": "الصافات",
+      "nameLatin": "As-Saaffaat",
+      "nameRu": "Ас-Саффат",
+      "ayahCount": 182
+    },
+    {
+      "id": 38,
+      "nameArabic": "ص",
+      "nameLatin": "Saad",
+      "nameRu": "Сад",
+      "ayahCount": 88
+    },
+    {
+      "id": 39,
+      "nameArabic": "الزمر",
+      "nameLatin": "Az-Zumar",
+      "nameRu": "Аз-Зумар",
+      "ayahCount": 75
+    },
+    {
+      "id": 40,
+      "nameArabic": "غافر",
+      "nameLatin": "Al-Ghaafir",
+      "nameRu": "Гафир",
+      "ayahCount": 85
+    },
+    {
+      "id": 41,
+      "nameArabic": "فصلت",
+      "nameLatin": "Fussilat",
+      "nameRu": "Фуссилят",
+      "ayahCount": 54
+    },
+    {
+      "id": 42,
+      "nameArabic": "الشورى",
+      "nameLatin": "Ash-Shura",
+      "nameRu": "Аш-Шура",
+      "ayahCount": 53
+    },
+    {
+      "id": 43,
+      "nameArabic": "الزخرف",
+      "nameLatin": "Az-Zukhruf",
+      "nameRu": "Аз-Зухруф",
+      "ayahCount": 89
+    },
+    {
+      "id": 44,
+      "nameArabic": "الدخان",
+      "nameLatin": "Ad-Dukhaan",
+      "nameRu": "Ад-Духан",
+      "ayahCount": 59
+    },
+    {
+      "id": 45,
+      "nameArabic": "الجاثية",
+      "nameLatin": "Al-Jaathiya",
+      "nameRu": "Аль-Джасия",
+      "ayahCount": 37
+    },
+    {
+      "id": 46,
+      "nameArabic": "الأحقاف",
+      "nameLatin": "Al-Ahqaf",
+      "nameRu": "Аль-Ахкаф",
+      "ayahCount": 35
+    },
+    {
+      "id": 47,
+      "nameArabic": "محمد",
+      "nameLatin": "Muhammad",
+      "nameRu": "Мухаммад",
+      "ayahCount": 38
+    },
+    {
+      "id": 48,
+      "nameArabic": "الفتح",
+      "nameLatin": "Al-Fath",
+      "nameRu": "Аль-Фатх",
+      "ayahCount": 29
+    },
+    {
+      "id": 49,
+      "nameArabic": "الحجرات",
+      "nameLatin": "Al-Hujuraat",
+      "nameRu": "Аль-Худжурат",
+      "ayahCount": 18
+    },
+    {
+      "id": 50,
+      "nameArabic": "ق",
+      "nameLatin": "Qaaf",
+      "nameRu": "Каф",
+      "ayahCount": 45
+    },
+    {
+      "id": 51,
+      "nameArabic": "الذاريات",
+      "nameLatin": "Adh-Dhaariyat",
+      "nameRu": "Аз-Зарият",
+      "ayahCount": 60
+    },
+    {
+      "id": 52,
+      "nameArabic": "الطور",
+      "nameLatin": "At-Tur",
+      "nameRu": "Ат-Тур",
+      "ayahCount": 49
+    },
+    {
+      "id": 53,
+      "nameArabic": "النجم",
+      "nameLatin": "An-Najm",
+      "nameRu": "Ан-Наджм",
+      "ayahCount": 62
+    },
+    {
+      "id": 54,
+      "nameArabic": "القمر",
+      "nameLatin": "Al-Qamar",
+      "nameRu": "Аль-Камар",
+      "ayahCount": 55
+    },
+    {
+      "id": 55,
+      "nameArabic": "الرحمن",
+      "nameLatin": "Ar-Rahmaan",
+      "nameRu": "Ар-Рахман",
+      "ayahCount": 78
+    },
+    {
+      "id": 56,
+      "nameArabic": "الواقعة",
+      "nameLatin": "Al-Waaqia",
+      "nameRu": "Аль-Вакиа",
+      "ayahCount": 96
+    },
+    {
+      "id": 57,
+      "nameArabic": "الحديد",
+      "nameLatin": "Al-Hadid",
+      "nameRu": "Аль-Хадид",
+      "ayahCount": 29
+    },
+    {
+      "id": 58,
+      "nameArabic": "المجادلة",
+      "nameLatin": "Al-Mujaadila",
+      "nameRu": "Аль-Муджадиля",
+      "ayahCount": 22
+    },
+    {
+      "id": 59,
+      "nameArabic": "الحشر",
+      "nameLatin": "Al-Hashr",
+      "nameRu": "Аль-Хашр",
+      "ayahCount": 24
+    },
+    {
+      "id": 60,
+      "nameArabic": "الممتحنة",
+      "nameLatin": "Al-Mumtahana",
+      "nameRu": "Аль-Мумтахана",
+      "ayahCount": 13
+    },
+    {
+      "id": 61,
+      "nameArabic": "الصف",
+      "nameLatin": "As-Saff",
+      "nameRu": "Ас-Сафф",
+      "ayahCount": 14
+    },
+    {
+      "id": 62,
+      "nameArabic": "الجمعة",
+      "nameLatin": "Al-Jumu'a",
+      "nameRu": "Аль-Джумуа",
+      "ayahCount": 11
+    },
+    {
+      "id": 63,
+      "nameArabic": "المنافقون",
+      "nameLatin": "Al-Munaafiqoon",
+      "nameRu": "Аль-Мунафикун",
+      "ayahCount": 11
+    },
+    {
+      "id": 64,
+      "nameArabic": "التغابن",
+      "nameLatin": "At-Taghaabun",
+      "nameRu": "Ат-Тагабун",
+      "ayahCount": 18
+    },
+    {
+      "id": 65,
+      "nameArabic": "الطلاق",
+      "nameLatin": "At-Talaaq",
+      "nameRu": "Ат-Таляк",
+      "ayahCount": 12
+    },
+    {
+      "id": 66,
+      "nameArabic": "التحريم",
+      "nameLatin": "At-Tahrim",
+      "nameRu": "Ат-Тахрим",
+      "ayahCount": 12
+    },
+    {
+      "id": 67,
+      "nameArabic": "الملك",
+      "nameLatin": "Al-Mulk",
+      "nameRu": "Аль-Мульк",
+      "ayahCount": 30
+    },
+    {
+      "id": 68,
+      "nameArabic": "القلم",
+      "nameLatin": "Al-Qalam",
+      "nameRu": "Аль-Калям",
+      "ayahCount": 52
+    },
+    {
+      "id": 69,
+      "nameArabic": "الحاقة",
+      "nameLatin": "Al-Haaqqa",
+      "nameRu": "Аль-Хакка",
+      "ayahCount": 52
+    },
+    {
+      "id": 70,
+      "nameArabic": "المعارج",
+      "nameLatin": "Al-Ma'aarij",
+      "nameRu": "Аль-Мааридж",
+      "ayahCount": 44
+    },
+    {
+      "id": 71,
+      "nameArabic": "نوح",
+      "nameLatin": "Nooh",
+      "nameRu": "Нух",
+      "ayahCount": 28
+    },
+    {
+      "id": 72,
+      "nameArabic": "الجن",
+      "nameLatin": "Al-Jinn",
+      "nameRu": "Аль-Джинн",
+      "ayahCount": 28
+    },
+    {
+      "id": 73,
+      "nameArabic": "المزمل",
+      "nameLatin": "Al-Muzzammil",
+      "nameRu": "Аль-Муззаммиль",
+      "ayahCount": 20
+    },
+    {
+      "id": 74,
+      "nameArabic": "المدثر",
+      "nameLatin": "Al-Muddaththir",
+      "nameRu": "Аль-Муддассир",
+      "ayahCount": 56
+    },
+    {
+      "id": 75,
+      "nameArabic": "القيامة",
+      "nameLatin": "Al-Qiyaama",
+      "nameRu": "Аль-Кияма",
+      "ayahCount": 40
+    },
+    {
+      "id": 76,
+      "nameArabic": "الانسان",
+      "nameLatin": "Al-Insaan",
+      "nameRu": "Аль-Инсан",
+      "ayahCount": 31
+    },
+    {
+      "id": 77,
+      "nameArabic": "المرسلات",
+      "nameLatin": "Al-Mursalaat",
+      "nameRu": "Аль-Мурсалят",
+      "ayahCount": 50
+    },
+    {
+      "id": 78,
+      "nameArabic": "النبإ",
+      "nameLatin": "An-Naba",
+      "nameRu": "Ан-Наба",
+      "ayahCount": 40
+    },
+    {
+      "id": 79,
+      "nameArabic": "النازعات",
+      "nameLatin": "An-Naazi'aat",
+      "nameRu": "Ан-Назиат",
+      "ayahCount": 46
+    },
+    {
+      "id": 80,
+      "nameArabic": "عبس",
+      "nameLatin": "Abasa",
+      "nameRu": "Абаса",
+      "ayahCount": 42
+    },
+    {
+      "id": 81,
+      "nameArabic": "التكوير",
+      "nameLatin": "At-Takwir",
+      "nameRu": "Ат-Таквир",
+      "ayahCount": 29
+    },
+    {
+      "id": 82,
+      "nameArabic": "الإنفطار",
+      "nameLatin": "Al-Infitaar",
+      "nameRu": "Аль-Инфитар",
+      "ayahCount": 19
+    },
+    {
+      "id": 83,
+      "nameArabic": "المطففين",
+      "nameLatin": "Al-Mutaffifin",
+      "nameRu": "Аль-Мутаффифин",
+      "ayahCount": 36
+    },
+    {
+      "id": 84,
+      "nameArabic": "الإنشقاق",
+      "nameLatin": "Al-Inshiqaaq",
+      "nameRu": "Аль-Иншикак",
+      "ayahCount": 25
+    },
+    {
+      "id": 85,
+      "nameArabic": "البروج",
+      "nameLatin": "Al-Burooj",
+      "nameRu": "Аль-Бурудж",
+      "ayahCount": 22
+    },
+    {
+      "id": 86,
+      "nameArabic": "الطارق",
+      "nameLatin": "At-Taariq",
+      "nameRu": "Ат-Тарик",
+      "ayahCount": 17
+    },
+    {
+      "id": 87,
+      "nameArabic": "الأعلى",
+      "nameLatin": "Al-A'laa",
+      "nameRu": "Аль-Аля",
+      "ayahCount": 19
+    },
+    {
+      "id": 88,
+      "nameArabic": "الغاشية",
+      "nameLatin": "Al-Ghaashiya",
+      "nameRu": "Аль-Гашия",
+      "ayahCount": 26
+    },
+    {
+      "id": 89,
+      "nameArabic": "الفجر",
+      "nameLatin": "Al-Fajr",
+      "nameRu": "Аль-Фаджр",
+      "ayahCount": 30
+    },
+    {
+      "id": 90,
+      "nameArabic": "البلد",
+      "nameLatin": "Al-Balad",
+      "nameRu": "Аль-Баляд",
+      "ayahCount": 20
+    },
+    {
+      "id": 91,
+      "nameArabic": "الشمس",
+      "nameLatin": "Ash-Shams",
+      "nameRu": "Аш-Шамс",
+      "ayahCount": 15
+    },
+    {
+      "id": 92,
+      "nameArabic": "الليل",
+      "nameLatin": "Al-Lail",
+      "nameRu": "Аль-Лейль",
+      "ayahCount": 21
+    },
+    {
+      "id": 93,
+      "nameArabic": "الضحى",
+      "nameLatin": "Ad-Dhuhaa",
+      "nameRu": "Ад-Духа",
+      "ayahCount": 11
+    },
+    {
+      "id": 94,
+      "nameArabic": "الشرح",
+      "nameLatin": "Ash-Sharh",
+      "nameRu": "Аш-Шарх",
+      "ayahCount": 8
+    },
+    {
+      "id": 95,
+      "nameArabic": "التين",
+      "nameLatin": "At-Tin",
+      "nameRu": "Ат-Тин",
+      "ayahCount": 8
+    },
+    {
+      "id": 96,
+      "nameArabic": "العلق",
+      "nameLatin": "Al-Alaq",
+      "nameRu": "Аль-Аляк",
+      "ayahCount": 19
+    },
+    {
+      "id": 97,
+      "nameArabic": "القدر",
+      "nameLatin": "Al-Qadr",
+      "nameRu": "Аль-Кадр",
+      "ayahCount": 5
+    },
+    {
+      "id": 98,
+      "nameArabic": "البينة",
+      "nameLatin": "Al-Bayyina",
+      "nameRu": "Аль-Баййина",
+      "ayahCount": 8
+    },
+    {
+      "id": 99,
+      "nameArabic": "الزلزلة",
+      "nameLatin": "Az-Zalzala",
+      "nameRu": "Аз-Зальзаля",
+      "ayahCount": 8
+    },
+    {
+      "id": 100,
+      "nameArabic": "العاديات",
+      "nameLatin": "Al-Aadiyaat",
+      "nameRu": "Аль-Адият",
+      "ayahCount": 11
+    },
+    {
+      "id": 101,
+      "nameArabic": "القارعة",
+      "nameLatin": "Al-Qaari'a",
+      "nameRu": "Аль-Кариа",
+      "ayahCount": 11
+    },
+    {
+      "id": 102,
+      "nameArabic": "التكاثر",
+      "nameLatin": "At-Takaathur",
+      "nameRu": "Ат-Такасур",
+      "ayahCount": 8
+    },
+    {
+      "id": 103,
+      "nameArabic": "العصر",
+      "nameLatin": "Al-Asr",
+      "nameRu": "Аль-Аср",
+      "ayahCount": 3
+    },
+    {
+      "id": 104,
+      "nameArabic": "الهمزة",
+      "nameLatin": "Al-Humaza",
+      "nameRu": "Аль-Хумаза",
+      "ayahCount": 9
+    },
+    {
+      "id": 105,
+      "nameArabic": "الفيل",
+      "nameLatin": "Al-Fil",
+      "nameRu": "Аль-Филь",
+      "ayahCount": 5
+    },
+    {
+      "id": 106,
+      "nameArabic": "قريش",
+      "nameLatin": "Quraish",
+      "nameRu": "Курайш",
+      "ayahCount": 4
+    },
+    {
+      "id": 107,
+      "nameArabic": "الماعون",
+      "nameLatin": "Al-Maa'un",
+      "nameRu": "Аль-Маун",
+      "ayahCount": 7
+    },
+    {
+      "id": 108,
+      "nameArabic": "الكوثر",
+      "nameLatin": "Al-Kawthar",
+      "nameRu": "Аль-Каусар",
+      "ayahCount": 3
+    },
+    {
+      "id": 109,
+      "nameArabic": "الكافرون",
+      "nameLatin": "Al-Kaafiroon",
+      "nameRu": "Аль-Кафирун",
+      "ayahCount": 6
+    },
+    {
+      "id": 110,
+      "nameArabic": "النصر",
+      "nameLatin": "An-Nasr",
+      "nameRu": "Ан-Наср",
+      "ayahCount": 3
+    },
+    {
+      "id": 111,
+      "nameArabic": "المسد",
+      "nameLatin": "Al-Masad",
+      "nameRu": "Аль-Масад",
+      "ayahCount": 5
+    },
+    {
+      "id": 112,
+      "nameArabic": "الإخلاص",
+      "nameLatin": "Al-Ikhlaas",
+      "nameRu": "Аль-Ихлас",
+      "ayahCount": 4
+    },
+    {
+      "id": 113,
+      "nameArabic": "الفلق",
+      "nameLatin": "Al-Falaq",
+      "nameRu": "Аль-Фаляк",
+      "ayahCount": 5
+    },
+    {
+      "id": 114,
+      "nameArabic": "الناس",
+      "nameLatin": "An-Naas",
+      "nameRu": "Ан-Нас",
+      "ayahCount": 6
+    }
+  ],
+  "files": {
+    "sources/quran-data.xml": "8867c1d88191472adec9db694b3cd9f135b1a2ef580574d32cf888dcb22c5c7a",
+    "sources/quran-uthmani.txt": "bf4f57b968d03f4131c070b1e285da9be0e0a108a21c910e872801ca273312c8",
+    "sources/russian_rwwad/1.json": "e319e9daae8b7fdcb472cddc9b31556d215c9bb2b2d0a9b2613bceab9a1f40f0",
+    "sources/russian_rwwad/10.json": "628a8b7cd6bdcc1bde9f0527de04d792735fa2ee407ac03c5d1b7cc32d5cfca1",
+    "sources/russian_rwwad/100.json": "7d2458834454d8c6ae4336fa63d8493da3e65f02c53f7299bcdc6e41a77c0855",
+    "sources/russian_rwwad/101.json": "83a44922917f0b22625c7575e5a8a3a3b47bc127a81cceccde2c44fd31631c8d",
+    "sources/russian_rwwad/102.json": "96392256bd8e7ca3eb024a895befd99de541549c7455af7f369afb948332e56c",
+    "sources/russian_rwwad/103.json": "9bbfff61ebf53c29e68b787d6a8dfedb9cddfc170e28f50ffc697984e10ccefa",
+    "sources/russian_rwwad/104.json": "aa84eeee5eee8c9f1e92db5126f0f6015918489dbb99a58c02cbbc9fc6acf4dc",
+    "sources/russian_rwwad/105.json": "d09b7b2c5c19c8cb0b73f0924a31c454b11a2f68a7e5717cf17a61b4406d1761",
+    "sources/russian_rwwad/106.json": "c6b1c4d48e1a9aff5353f49ca98772d54b743b4d4a18b76701275f2c359332b0",
+    "sources/russian_rwwad/107.json": "410920ab05b7d373715bbafafad3474010de84c61891041b728b79bb848862ee",
+    "sources/russian_rwwad/108.json": "e8abab470299458e01bd17818c0d48391e91ecd10cc17dec8521ecc435226606",
+    "sources/russian_rwwad/109.json": "4aa1cf9e9c0efef742ee12c8eead94d9e83824ffddfecf5845f9783bf06e2d40",
+    "sources/russian_rwwad/11.json": "3cdd0f9d255a0d5cd33e1341ab83662fca36d6a9df0a433c1b4b2f242c444d82",
+    "sources/russian_rwwad/110.json": "35502565225e424abd07e2dc0c63d29cda3bd035b3b299e10eca7c7c6190b326",
+    "sources/russian_rwwad/111.json": "abca3943835996c5bd9ecdb46584933d125991ff4ea0aff67f90dac698035f04",
+    "sources/russian_rwwad/112.json": "b0b7ecaea0f3cad19b40a648630751b490324827258a7df0c5dfbe2604b38512",
+    "sources/russian_rwwad/113.json": "90379ed1e252c359a5262a27128da52240933eaf68783bada5ea124015d58848",
+    "sources/russian_rwwad/114.json": "a1f679929e6fa083df7e55bc864f7c70fc43e9c4d25de960dcf9e6499f76b549",
+    "sources/russian_rwwad/12.json": "59e416fb6cf2d3e8c3cbaa32ca4facc97ece33a1a70c0fc66f793d1c133e8553",
+    "sources/russian_rwwad/13.json": "fbdebe8ec62bd5638a9edc0d2149ddb552149c75d82a11f2508f9e2b17a9db51",
+    "sources/russian_rwwad/14.json": "7b1e3fdb309fe1540076a6e445014cd8538cffa49e34d93ff92fe86ccfbfda71",
+    "sources/russian_rwwad/15.json": "848aee05de1a25a9175abf01298beb20ff767c4bf9df458993ade6555394c169",
+    "sources/russian_rwwad/16.json": "02d21026c3a17b46ab6f7553ac66e4388b7e2882240dfdf307ce0700c2ad543f",
+    "sources/russian_rwwad/17.json": "774250d856cb9b0007b750d21bf500a5dc9f89b1728011d74b7b3031e5acaacb",
+    "sources/russian_rwwad/18.json": "6b612e538cda8f7648028e6ecae648a6b8fba5ad5490643445e808d93ad58f1f",
+    "sources/russian_rwwad/19.json": "3f986229fd9c73eafff9b5170c60927743e224e71a2ed8f01999c530c9a12619",
+    "sources/russian_rwwad/2.json": "68113c003f8d8b3ea6856c9bcd763621b851816bda6e2f5a5c8da29dcff6f3d2",
+    "sources/russian_rwwad/20.json": "4b4844731b202cf57d4ef283f0e4c4756472eaa12b51363205b241700f76cea9",
+    "sources/russian_rwwad/21.json": "c8f54dc8f07c833c7a3c0c12b44350c48b7e200bce19da419b32979dbdc316f4",
+    "sources/russian_rwwad/22.json": "88f0d9e3fc1488f2d5c50679227ba8306a99651dc45217ac2f4f0d8e90d785c1",
+    "sources/russian_rwwad/23.json": "59ef3831e64f26a4c5e2cf727f3d61ea80fe00f9d80c39534c7ceb3e23099611",
+    "sources/russian_rwwad/24.json": "653d035ae65581a2ad40ce6701a125cd5b4166020e83be89e763d3fb79dd77f8",
+    "sources/russian_rwwad/25.json": "b379099c723355b55b763ad69d4b7aa4c3735b387c996ccc6b6e17f34775c3fb",
+    "sources/russian_rwwad/26.json": "ed80aa1909b3cef685bcee93f6dd0c2769ab45eb60284a2976c752ca56e35c3d",
+    "sources/russian_rwwad/27.json": "096b80ed8f9ba1537818ae898be2ef56e5159f69758db5e09bed401d1f7b738a",
+    "sources/russian_rwwad/28.json": "669c343a90e8325e1bf013caa7a5ae4b088d319041fa0c7df405af0109494d90",
+    "sources/russian_rwwad/29.json": "26a88f258b0303718e379052b4c3082ef1599a5441c6d4525e647deeed0a0260",
+    "sources/russian_rwwad/3.json": "1edb35816df03870f61025100c124e39296f5d0b478922c1afccd1582dd10947",
+    "sources/russian_rwwad/30.json": "909f3b82b1f176c6599cc6e1d9662deebfd538bb29ab12997c60e72753c8a719",
+    "sources/russian_rwwad/31.json": "6cda69a561ec947f6b44816080a201d01f3bba813aec4d2e3b8cd0a4e03d5426",
+    "sources/russian_rwwad/32.json": "68cb607a01f37edce069688be14a123afacfe51e2343dd6754efd0d8b55899db",
+    "sources/russian_rwwad/33.json": "abb45cd6adc68adff57925c06c398640fbdf7ff6b675d6541a82f211e97257bd",
+    "sources/russian_rwwad/34.json": "78b58038caa522926f9db1c757a910f761242b11c404a8ae48e00b855f172db7",
+    "sources/russian_rwwad/35.json": "aa9be5848e2813919dd517f4de7e0af7c527c7d483cc60155b07a0bc541458c0",
+    "sources/russian_rwwad/36.json": "44ff000ca5a0de889ebbaecb4e64c6df3961a53604135ba6a47a6c169d6a50c5",
+    "sources/russian_rwwad/37.json": "01bd46eb60b1170ac1adb6e5a9e76fce6a359e434ec0cc4e3e53f039d63e717b",
+    "sources/russian_rwwad/38.json": "fea866da5ae723ca7852f109149eae256d257c0ae5bf533659e98e4521495566",
+    "sources/russian_rwwad/39.json": "9c5806c991d021a8727a0317878bd289ca6723684dda815e246151272996286e",
+    "sources/russian_rwwad/4.json": "6a70823596459ef4ccae801b3b67d5be03bf0a76296c323a0794cabe6d591729",
+    "sources/russian_rwwad/40.json": "2ab53f057be10f68f897950d58425c105bf9bc1de447f07dd0f4ec8f00c39a1b",
+    "sources/russian_rwwad/41.json": "853ddb7e984e159e74a805b57f51012f622dcd408913abcd9907df93ba22c53c",
+    "sources/russian_rwwad/42.json": "3ace9a09e62f4aab38f640fc6b976bf87c817bf0633ffbef73415e884519bc57",
+    "sources/russian_rwwad/43.json": "e07596519d01a848cf8b17dd4f6f621ad0134c7d513133b033b5834e2340fd4c",
+    "sources/russian_rwwad/44.json": "97e24ed521b6bcf7f6f848cef65105228572d0654bd967520f52c04a61df7777",
+    "sources/russian_rwwad/45.json": "4a672225f78d58e74c98ef8d681a927eba12b7fd798aded1f9b4e97c5815403b",
+    "sources/russian_rwwad/46.json": "be44ed33558b8bd2415cef7ade75ae392773a79a8c3c6eb93d236f20830d55a9",
+    "sources/russian_rwwad/47.json": "a036bd25790f21ceccf87b7ae8ff3c9fd9fd4420b7c044d8abf3e50329c27e27",
+    "sources/russian_rwwad/48.json": "a84689339e8cb66e5730a5be47f01c09a20f4f85c2f283936b8c4b0bb9689c69",
+    "sources/russian_rwwad/49.json": "4bca4fdccd05f79c514caa62e0848da9b0396fd30792d8bb33d9fbebec4ba8bc",
+    "sources/russian_rwwad/5.json": "5b6cf4671e8dc5cd79f57db3c16b2ab901aec1069113afae070825229f520cd2",
+    "sources/russian_rwwad/50.json": "1dd8dda441bc34967ccaff80cc0a89a2896f41c26dcbab3002aa3fff6654d3de",
+    "sources/russian_rwwad/51.json": "80e3858a444f2c3367a6e073cb2ab81b4179e5b374b0306db03157f1d34ba225",
+    "sources/russian_rwwad/52.json": "dc11496236b599261838fcb6ce50505ac097b299317a3728b70f14851db05914",
+    "sources/russian_rwwad/53.json": "f351480617b22859d1c1574d8d32f39226d5fd2d19febaebd36d7b91cdc2452f",
+    "sources/russian_rwwad/54.json": "eb8cdcb4ee38410ae6b18967be9084b4924a47c91ff20cdec187db302accce50",
+    "sources/russian_rwwad/55.json": "6aafc5675200983f9f4eae1967fe1d1e676526698e9d2fd8a2257eb2562fe37b",
+    "sources/russian_rwwad/56.json": "565e6aba70131c3a1286f4073f4825bd3895b5f07b0541a39c798c4937d0a5df",
+    "sources/russian_rwwad/57.json": "f0dc196fb706948cf39399e42a9c2d2f3be8eb36f899beb531a318f885c2e902",
+    "sources/russian_rwwad/58.json": "50a3be0c6e21916fa0e7651a9dfe285169ce11c871983e75fe5ce8d5b9faba15",
+    "sources/russian_rwwad/59.json": "c62cf3422f70bef031804632e8f94a210114a0524cac39f695afcfffe7fbac5e",
+    "sources/russian_rwwad/6.json": "67ca334ecad420b21d707ddfd1ea8b18d9c4fcf942a09d362cb222498d1106eb",
+    "sources/russian_rwwad/60.json": "acbb01a62166caf199b340a95e19bce9ba84e78ee895b2c2989f6d0737feb1f1",
+    "sources/russian_rwwad/61.json": "e15b2cf8f3b8a31ab84fec4c9bad81bc96cfc4647410733ffa28ecd2b2f2f93c",
+    "sources/russian_rwwad/62.json": "27b42dce87a9859f1048dcd1d056af80593d8114143172bf0b0b7882b441fdf7",
+    "sources/russian_rwwad/63.json": "9df835781c6fa9311a22227540ee354f80aefce2434d8bfab8dca62932ed4831",
+    "sources/russian_rwwad/64.json": "7d20c789a5153e1d48189b935616143016e0f1a514ca500591d8125a9ecde4fa",
+    "sources/russian_rwwad/65.json": "14008fa159630ff8ad33e225cf4becae3c47e893fb63d26f923c1a42a8395546",
+    "sources/russian_rwwad/66.json": "aecebd05ff6cca6bc0b60020eb2d32ff58af03492e0c4f8b59e7fc980584ec0f",
+    "sources/russian_rwwad/67.json": "355f5c966fcee891c4ce4349f54118078806032fa05f2c683715fefa7899689d",
+    "sources/russian_rwwad/68.json": "62dc5d4821faa9b136bdd48bfe3a5cb263be7e2e1f6244822b1cb2270d240289",
+    "sources/russian_rwwad/69.json": "328a1fa3416aed96ee72670edc041a34b5d295a98d68b470485fbe2310bf939a",
+    "sources/russian_rwwad/7.json": "f27da702f99cd771d37ae66e75d1f334b5ff56590b2f5a4aff35e05e179063c9",
+    "sources/russian_rwwad/70.json": "71bfbbf6330818402a2d1f1487d46f3b48c6ad978038a63695e80c86c80823c4",
+    "sources/russian_rwwad/71.json": "3619885aae0896e4d1a5aaee99016cfbc171240216469e14454ab85b676da8a1",
+    "sources/russian_rwwad/72.json": "228d0c13380983c9a6656fb80d87903be35cd42f406ff559c5dca509c7c76f5f",
+    "sources/russian_rwwad/73.json": "fe695806d284a858ac4eeeece6db74eb91da01ea00df599e5624c8393900af50",
+    "sources/russian_rwwad/74.json": "e6379717a29686fc3a8989e9574aa32dd78c052d9fbaafdea725400f16d7e873",
+    "sources/russian_rwwad/75.json": "742e00a8d1d5ed4f84ea9fe0ecaa3af40f7d4fd70e079bb5bbe43a30c45fd8ac",
+    "sources/russian_rwwad/76.json": "ea0aefa1d4d41fa080bf7fd2c9dde5a12641ccc7f8ad3f2b68d323e93aa19149",
+    "sources/russian_rwwad/77.json": "82b02b1ffe3a0f881b3e8f8811f26ac7c0fd0e41ba64272492306e2f2e1905f6",
+    "sources/russian_rwwad/78.json": "e36cc2dca90384ca51937788ab346efe9ca868a830fc29060608fcd0e1b646d1",
+    "sources/russian_rwwad/79.json": "7c2a149bdc9965307812a10e09ec2fc328279181b11624b188d9c4e1e00ff16e",
+    "sources/russian_rwwad/8.json": "ce1602051a7ea62f5f4789e3cc978ce003f42378c50700c11b6ac05035af0a11",
+    "sources/russian_rwwad/80.json": "47307347f8c71b4a5a9d31d75687d3b4b8cc8b5e00176d69a42aa1feb8d7bf57",
+    "sources/russian_rwwad/81.json": "fd46eb77fd5653a886742fbb800f9d4916d6b0b77f5ca3897d330d097f86f3d1",
+    "sources/russian_rwwad/82.json": "b69f58449e4ee0d8af092352c943162e048a369421c947631bc8e67663256f5d",
+    "sources/russian_rwwad/83.json": "11aae1eb295d882cd0f8f392b4bd2bc6b46ffeade9b80b948a6cc12587098d08",
+    "sources/russian_rwwad/84.json": "e6c580833c20db9297f87e31e5bcc5759b8f11980f7a81ed99e173641bf1ddfd",
+    "sources/russian_rwwad/85.json": "32b9ae8a3c9bbcdd4485ee4ed25b93e6180d58adc0acf48bbec01c733b58b314",
+    "sources/russian_rwwad/86.json": "47e61be119cc103ccdf769f3158dab67cdf900e3cb3f13fa58d0e3efd0d3f9ab",
+    "sources/russian_rwwad/87.json": "17bd9b0de091d6302bb7aea97d8f7bdb1a385b10ed8fe771ee27937dbd1a673d",
+    "sources/russian_rwwad/88.json": "fefa09b5e16496e0ff4ce4d9f86fe8c2493c4456462477f0b48f5e6dcd665314",
+    "sources/russian_rwwad/89.json": "0ca171848368b210ca873295af27a11c905d80dd1a6ce953fa4e665ca4ace6f0",
+    "sources/russian_rwwad/9.json": "e91e27a7a51d76f3da2f9edcbf28a9620d18e9b13b8938c6b7384c5f5c498059",
+    "sources/russian_rwwad/90.json": "71ac534d3a67265c3cddf322406584a8e8353613c6041de60575a78b5f4beadb",
+    "sources/russian_rwwad/91.json": "e1e488dd50cbe378306a681a20ca2f9db24dba4fb887ee3cf1b4692e1237800e",
+    "sources/russian_rwwad/92.json": "1e7ac2dd80af168090f2075436bc4589aebf1d92b8d023997389ebd6a6bb96ba",
+    "sources/russian_rwwad/93.json": "d0034fb9154354d36901310beea462fc657fc9107528fe90eeafa853dda14664",
+    "sources/russian_rwwad/94.json": "31a9544bc4f3b53020466a59e920cbaae1a74546e5138790f970b8fc7832aa54",
+    "sources/russian_rwwad/95.json": "04eb5d76e6ad7fcc0a74d9ad48d1bc32245da0809baf997291db872eb714c7f2",
+    "sources/russian_rwwad/96.json": "b2e510b8c1c044f0237ea1445fdb9d168ebd28a3740e9d2a3987b6e66a556f8b",
+    "sources/russian_rwwad/97.json": "01d44ae2a47ef16360ee3769592a003fad91dbfa7444ca75b0af4a2f2b0adb8b",
+    "sources/russian_rwwad/98.json": "d5a0c2e1796785eec6db46cc3f7b3cb8d767789a2178e0d9192227c5e32567c8",
+    "sources/russian_rwwad/99.json": "0292f0d5752391bd09f90d0792fd3e56b328936a16a443b0a24df0585a7c8c53"
+  }
+}

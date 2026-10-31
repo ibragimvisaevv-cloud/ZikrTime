@@ -12,8 +12,8 @@ android {
         applicationId = "com.zikrtime.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 25
-        versionName = "0.8.13"
+        versionCode = 29
+        versionName = "0.8.17"
         // Ключ Яндекс Карт (MapKit): из gradle.properties или переменной окружения YANDEX_MAPKIT_KEY
         val mapkitKey = (project.findProperty("yandexMapkitKey") as String?) ?: System.getenv("YANDEX_MAPKIT_KEY") ?: ""
         buildConfigField("String", "MAPKIT_KEY", "\"$mapkitKey\"")

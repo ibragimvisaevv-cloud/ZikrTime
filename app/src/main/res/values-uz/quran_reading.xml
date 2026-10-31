@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quran_read_whole">Surani to‘liq o‘qish</string>
+    <string name="quran_read_with_translation">Oyatlar va tarjima</string>
+</resources>

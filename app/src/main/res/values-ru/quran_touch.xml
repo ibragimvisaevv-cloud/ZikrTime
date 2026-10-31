@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qt_note">Заметка</string>
+    <string name="qt_save_note">Сохранить заметку</string>
+    <string name="qt_save_place">Сохранить место чтения</string>
+    <string name="qt_remove_bookmark">Убрать закладку</string>
+    <string name="qt_copy">Скопировать аят</string>
+    <string name="qt_touch_hint">Коснитесь аята, чтобы выбрать его; удерживайте, чтобы добавить заметку. Закладка — вверху читалки.</string>
+    <string name="qt_ayah_actions">Действия с аятом %1$d</string>
+    <string name="qt_bookmark_added">Место чтения сохранено</string>
+    <string name="qt_bookmark_removed">Закладка убрана</string>
+</resources>

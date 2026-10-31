@@ -1,0 +1,65 @@
+name: Deploy private feedback bot
+on:
+  push:
+    branches: [codex/feedback-0816]
+    paths: ['shop-bot/**', '.github/workflows/feedback-bot.yml']
+permissions:
+  contents: read
+concurrency:
+  group: shop-bot
+  cancel-in-progress: false
+jobs:
+  deploy:
+    if: ${{ contains(github.event.head_commit.message, '[feedback-deploy]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test bot before deployment
+        run: |
+          python3 shop-bot/test_bot.py
+          python3 shop-bot/test_miniapi.py
+          python3 shop-bot/test_place_corrections.py
+          python3 shop-bot/test_feedback.py
+          python3 -m py_compile shop-bot/deploy_feedback.py shop-bot/deploy_api.py
+      - name: Reuse current cloud access and deploy only the bot
+        env:
+          YC_SA_KEY: ${{ secrets.YC_SA_KEY }}
+          RAW_FOLDER: ${{ secrets.YC_FOLDER_ID }}
+          BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          OWNER_USERNAME: ${{ secrets.SHOP_OWNER_USERNAME }}
+        run: |
+          test -n "$YC_SA_KEY" && test -n "$RAW_FOLDER" && test -n "$BOT_TOKEN" && test -n "$VERCEL_TOKEN"
+          python3 - <<'PY'
+          import json, os, pathlib, re
+          path = pathlib.Path(os.environ['RUNNER_TEMP']) / 'feedback-yc-key.json'
+          path.write_text(json.dumps(json.loads(os.environ['YC_SA_KEY'], strict=False)))
+          path.chmod(0o600)
+          raw = os.environ['RAW_FOLDER'].strip()
+          match = re.search(r'folders/([a-z0-9]+)', raw)
+          folder = match.group(1) if match else re.sub(r'[^a-z0-9]', '', raw)
+          with open(os.environ['GITHUB_ENV'], 'a') as out:
+              out.write('FOLDER=' + folder + '\n')
+          PY
+          curl -fsSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash -s -- -i "$RUNNER_TEMP/yc" -n > "$RUNNER_TEMP/feedback-yc-install.log" 2>&1
+          "$RUNNER_TEMP/yc/bin/yc" config profile create feedback-ci
+          "$RUNNER_TEMP/yc/bin/yc" config set service-account-key "$RUNNER_TEMP/feedback-yc-key.json"
+          # Folder is parsed in GITHUB_ENV and available to the next step.
+      - name: Deploy and check existing Telegram webhook
+        env:
+          BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          OWNER_USERNAME: ${{ secrets.SHOP_OWNER_USERNAME }}
+        run: |
+          FEEDBACK_IAM=$("$RUNNER_TEMP/yc/bin/yc" iam create-token)
+          echo "::add-mask::$FEEDBACK_IAM"
+          IAM_TOKEN="$FEEDBACK_IAM" python3 shop-bot/deploy_feedback.py
+      - name: Remove temporary credentials
+        if: always()
+        run: rm -f "$RUNNER_TEMP/feedback-yc-key.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: feedback-deployment
+          path: ci-out/feedback-deploy.json
