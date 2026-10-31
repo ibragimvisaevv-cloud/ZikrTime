@@ -1,0 +1,16 @@
+{
+  "description": "Prior APK evidence; only the exact scrollable index-hint move differs in production source.",
+  "prior_source": "617c6a3a324bfd3a302882fc1d462ceb1c8c1091",
+  "prior_run": 41207824100,
+  "prior_apk_sha256": "2094067e6625cf9ef71e56406ba9b7d100ccd5ae521356e00804e2015c3b99fa",
+  "evidence_commit": "e29488951426b588d0cc9c0c591c7a424494accc",
+  "current_source": "22bed67f6863addaa1eed71f4bd563f1b6d00ad4",
+  "allowed_production_change": "app/src/main/java/com/zikrtime/app/ui/QuranScreen.kt",
+  "inherited_journeys": {
+    "long_press_exact_ayah_note_without_number_fields_and_unchanged_text": true,
+    "one_tap_bookmark_rotation_restart_and_existing_notes_preserved": true,
+    "automatic_short_surah_deduplication_menu_and_background_exclusion": true,
+    "long_ayah_requires_complete_view_and_jumps_do_not_fill_gaps": true,
+    "verse_mode_note_uses_selected_ayah": true
+  }
+}
