@@ -42,7 +42,7 @@
     <string name="qf_unique_total">Unique verses, all time: %1$d / 6236</string>
     <string name="qf_completed_surahs">Surahs fully marked: %1$d / 114</string>
     <string name="qf_last_week">Last 7 days</string>
-    <string name="qf_measurement_note">Time measures the visible reader, not attention or worship. Verse counts use your marks, not scrolling. Data stays on this device and can be cleared in Personal progress.</string>
+    <string name="qf_measurement_note">Progress is estimated automatically from ayahs fully displayed during reading. Quick scrolling and skipped text are not counted. Data stays on this device.</string>
     <string name="qf_feedback">Suggest an improvement or report an issue</string>
     <string name="qf_feedback_unavailable">Could not open the feedback bot. Check your connection and try again.</string>
     <string name="qf_support_title">Build ZikrTime with us</string>

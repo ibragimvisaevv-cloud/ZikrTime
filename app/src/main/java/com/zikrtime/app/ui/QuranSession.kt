@@ -30,7 +30,7 @@ internal class QuranSession(private val progress: QuranProgress) {
     private var pending = 0L
     private var started: Instant? = null
 
-    fun tick(active: Boolean) {
+    fun tick(active: Boolean): Long {
         val now = SystemClock.elapsedRealtime()
         val delta = now - lastTick
         lastTick = now
@@ -44,6 +44,7 @@ internal class QuranSession(private val progress: QuranProgress) {
             timer = timer.advance(counted)
         }
         if (!active || timer.finished || pending >= 5000) flush()
+        return counted
     }
 
     fun flush() {
@@ -62,32 +63,34 @@ internal class QuranSession(private val progress: QuranProgress) {
 }
 
 @Composable
-internal fun rememberQuranSession(progress: QuranProgress, reading: Boolean): QuranSession {
+internal fun rememberQuranSession(progress: QuranProgress, reading: Boolean, observe: (Long) -> Unit = {}): QuranSession {
     val context = LocalContext.current
     val view = LocalView.current
     val lifecycle = (context.readerActivity() as? LifecycleOwner)?.lifecycle
     var resumed by remember(lifecycle) { mutableStateOf(lifecycle?.currentState?.isAtLeast(Lifecycle.State.RESUMED) == true) }
     val session = remember(progress) { QuranSession(progress) }
     val active by rememberUpdatedState(reading && resumed)
+    val onObserved by rememberUpdatedState(observe)
     DisposableEffect(lifecycle, session) {
         val observer = LifecycleEventObserver { _, _ ->
             resumed = lifecycle?.currentState?.isAtLeast(Lifecycle.State.RESUMED) == true
-            if (!resumed) session.tick(false)
+            if (!resumed) { session.tick(false); onObserved(0) }
         }
         lifecycle?.addObserver(observer)
         onDispose {
             lifecycle?.removeObserver(observer)
             session.tick(false)
+            onObserved(0)
         }
     }
     LaunchedEffect(session, view) {
         val power = context.getSystemService(Context.POWER_SERVICE) as PowerManager
         while (true) {
-            session.tick(active && view.hasWindowFocus() && power.isInteractive)
+            onObserved(session.tick(active && view.hasWindowFocus() && power.isInteractive))
             delay(1000)
         }
     }
-    LaunchedEffect(reading) { if (!reading) session.tick(false) }
+    LaunchedEffect(reading) { if (!reading) { session.tick(false); onObserved(0) } }
     return session
 }
 

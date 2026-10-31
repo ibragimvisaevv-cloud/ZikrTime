@@ -28,7 +28,7 @@ if apk.exists():
               "journey_completed": Path("ci-out/quran-features-passed.json").exists()}
     (folder / "delivery.json").write_text(json.dumps(report, indent=2))
     print(json.dumps(report))
-branch = "ci-reader-0816-" + os.environ["GITHUB_RUN_ID"]
+branch = "ci-reader-" + os.environ.get("READER_EVIDENCE_VERSION", "0816") + "-" + os.environ["GITHUB_RUN_ID"]
 def git(*args):
     subprocess.run(["git", *args], cwd=folder, check=True, stdout=subprocess.DEVNULL)
 git("init", "-q")

@@ -42,7 +42,7 @@
     <string name="qf_unique_total">Bütün dövr üzrə unikal ayələr: %1$d / 6236</string>
     <string name="qf_completed_surahs">Tam işarələnən surələr: %1$d / 114</string>
     <string name="qf_last_week">Son 7 gün</string>
-    <string name="qf_measurement_note">Vaxt diqqəti və ya ibadəti deyil, açıq oxu ekranını ölçür. Ayələr sürüşdürmədən deyil, işarələrinizdən sayılır. Məlumatlar cihazda qalır; Şəxsi irəliləyişdə silinə bilər.</string>
+    <string name="qf_measurement_note">İrəliləyiş oxu zamanı tam göstərilən ayələrə əsasən avtomatik qiymətləndirilir. Sürətli sürüşdürmə və ötürülən mətn sayılmır. Məlumatlar bu cihazda qalır.</string>
     <string name="qf_feedback">Təklif və ya xəta</string>
     <string name="qf_feedback_unavailable">Müraciət botu açılmadı. Bağlantını yoxlayıb yenidən cəhd edin.</string>
     <string name="qf_support_title">ZikrTime-ı birlikdə inkişaf etdirək</string>

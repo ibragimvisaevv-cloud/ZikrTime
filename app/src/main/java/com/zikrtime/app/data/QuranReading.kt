@@ -4,13 +4,28 @@ package com.zikrtime.app.data
  * Source verse strings are never normalized or edited; only UI verse markers
  * are added between them. Blocks are not pages and require no next action.
  */
+data class QuranTextRange(val ayah: Int, val start: Int, val arabicEnd: Int, val end: Int)
+
 data class QuranReadingBlock(val verses: List<QuranAyah>) {
     val firstAyah: Int get() = verses.first().number
     val lastAyah: Int get() = verses.last().number
-    val text: String = verses.joinToString("  ") { ayah ->
-        val number = ayah.number.toString().map { '٠' + (it - '0') }.joinToString("")
-        ayah.arabic + "  ۝" + number
+    val ranges: List<QuranTextRange>
+    val text: String
+    init {
+        val result = StringBuilder()
+        ranges = verses.mapIndexed { index, ayah ->
+            if (index > 0) result.append("  ")
+            val start = result.length
+            result.append(ayah.arabic)
+            val arabicEnd = result.length
+            val number = ayah.number.toString().map { '٠' + (it - '0') }.joinToString("")
+            result.append("  ۝").append(number)
+            QuranTextRange(ayah.number, start, arabicEnd, result.length)
+        }
+        text = result.toString()
     }
+
+    fun ayahAt(offset: Int): Int? = ranges.lastOrNull { offset >= it.start }?.ayah
 }
 
 object QuranReading {

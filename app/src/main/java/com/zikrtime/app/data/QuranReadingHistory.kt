@@ -8,7 +8,7 @@ import org.json.JSONObject
 
 data class QuranReadingDay(val millis: Long = 0, val verses: Set<String> = emptySet())
 
-/** Personal measurements only. Opening or scrolling never marks a verse as read. */
+/** Local reading estimates. Only observed verses are added; navigation never fills gaps. */
 data class QuranReadingHistory(val days: Map<LocalDate, QuranReadingDay> = emptyMap()) {
     val uniqueVerses: Set<String> get() = days.values.flatMap { it.verses }.toSet()
 
@@ -84,6 +84,15 @@ object QuranStatistics {
 
     fun mark(day: LocalDate, surah: Int, first: Int, last: Int, count: Int) {
         if (Store.personalProgressEnabled) Store.putRaw(KEY, history().mark(day, surah, first, last, count).encode())
+    }
+
+    fun observe(day: LocalDate, surah: Int, verses: Set<Int>, count: Int) {
+        if (!Store.personalProgressEnabled || verses.isEmpty()) return
+        val old = history()
+        val next = verses.filter { it in 1..count }.fold(old) { value, ayah ->
+            value.mark(day, surah, ayah, ayah, count)
+        }
+        if (next != old) Store.putRaw(KEY, next.encode())
     }
 
     fun clear() = Store.putRaw(KEY, "{}")

@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   check:
-    if: ${{ !contains(github.event.head_commit.message, '[quran-ui]') && !contains(github.event.head_commit.message, '[feedback-deploy]') }}
+    if: ${{ !contains(github.event.head_commit.message, '[quran-ui]') && !contains(github.event.head_commit.message, '[feedback-deploy]') && !contains(github.event.head_commit.message, '[reader-touch]') }}
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:

@@ -42,7 +42,7 @@
     <string name="qf_unique_total">Jami noyob oyatlar: %1$d / 6236</string>
     <string name="qf_completed_surahs">To‘liq belgilangan suralar: %1$d / 114</string>
     <string name="qf_last_week">Oxirgi 7 kun</string>
-    <string name="qf_measurement_note">Vaqt e’tibor yoki ibodatni emas, ochiq o‘qish ekranini o‘lchaydi. Oyatlar aylantirishdan emas, belgilaringizdan hisoblanadi. Ma’lumotlar qurilmada saqlanadi va Shaxsiy natijalarda tozalanadi.</string>
+    <string name="qf_measurement_note">Jarayon o‘qish davomida to‘liq ko‘rsatilgan oyatlar asosida avtomatik baholanadi. Tez varaqlash va o‘tkazib yuborilgan matn hisoblanmaydi. Ma’lumotlar shu qurilmada qoladi.</string>
     <string name="qf_feedback">Taklif yoki xato haqida</string>
     <string name="qf_feedback_unavailable">Murojaat botini ochib bo‘lmadi. Ulanishni tekshirib qayta urinib ko‘ring.</string>
     <string name="qf_support_title">ZikrTime’ni birga rivojlantiramiz</string>

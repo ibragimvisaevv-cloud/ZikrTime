@@ -42,7 +42,7 @@
     <string name="qf_unique_total">Барлық уақыттағы бірегей аяттар: %1$d / 6236</string>
     <string name="qf_completed_surahs">Толық белгіленген сүрелер: %1$d / 114</string>
     <string name="qf_last_week">Соңғы 7 күн</string>
-    <string name="qf_measurement_note">Уақыт зейінді не ғибадатты емес, ашық оқу экранын өлшейді. Аяттар айналдырудан емес, белгілеріңізден саналады. Деректер құрылғыда сақталады; Жеке ілгерілеу бөлімінде тазартуға болады.</string>
+    <string name="qf_measurement_note">Ілгерілеу оқу кезінде толық көрсетілген аяттар бойынша автоматты түрде бағаланады. Жылдам айналдыру мен өткізіп кеткен мәтін есептелмейді. Деректер осы құрылғыда қалады.</string>
     <string name="qf_feedback">Ұсыныс немесе қате</string>
     <string name="qf_feedback_unavailable">Өтініш ботын ашу мүмкін болмады. Байланысты тексеріп, қайталаңыз.</string>
     <string name="qf_support_title">ZikrTime-ды бірге дамытайық</string>

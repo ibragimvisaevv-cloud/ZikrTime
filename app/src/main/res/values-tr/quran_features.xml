@@ -42,7 +42,7 @@
     <string name="qf_unique_total">Tüm zamanların benzersiz ayetleri: %1$d / 6236</string>
     <string name="qf_completed_surahs">Tam işaretlenen sureler: %1$d / 114</string>
     <string name="qf_last_week">Son 7 gün</string>
-    <string name="qf_measurement_note">Süre, dikkati veya ibadeti değil açık okuma ekranını ölçer. Ayetler kaydırmaya değil işaretlerinize göre sayılır. Veriler cihazda kalır; Kişisel ilerlemeden silinebilir.</string>
+    <string name="qf_measurement_note">İlerleme, okuma sırasında tamamen görüntülenen ayetlere göre otomatik tahmin edilir. Hızlı kaydırma ve atlanan metin sayılmaz. Veriler bu cihazda kalır.</string>
     <string name="qf_feedback">Öneri veya hata bildir</string>
     <string name="qf_feedback_unavailable">Geri bildirim botu açılamadı. Bağlantınızı kontrol edip tekrar deneyin.</string>
     <string name="qf_support_title">ZikrTime’ı birlikte geliştirelim</string>

@@ -42,7 +42,7 @@
     <string name="qf_unique_total">Ҳамаи оятҳои нодир: %1$d / 6236</string>
     <string name="qf_completed_surahs">Сураҳои пурра қайдшуда: %1$d / 114</string>
     <string name="qf_last_week">7 рӯзи охир</string>
-    <string name="qf_measurement_note">Вақт экрани кушодаи хонишро чен мекунад, на диққат ё ибодатро. Оятҳо аз қайдҳои шумо ҳисоб мешаванд, на аз ҳаракати экран. Маълумот дар дастгоҳ мемонад; онро дар Пешрафти шахсӣ пок кардан мумкин аст.</string>
+    <string name="qf_measurement_note">Пешрафт аз рӯйи оятҳое, ки ҳангоми хониш пурра нишон дода шуданд, худкор ҳисоб мешавад. Варақзании зуд ва матни гузаронидашуда ҳисоб намешаванд. Маълумот дар ин дастгоҳ мемонад.</string>
     <string name="qf_feedback">Пешниҳод ё хато</string>
     <string name="qf_feedback_unavailable">Боти муроҷиат кушода нашуд. Пайвастиро санҷед ва боз кӯшиш кунед.</string>
     <string name="qf_support_title">ZikrTime-ро якҷоя рушд медиҳем</string>

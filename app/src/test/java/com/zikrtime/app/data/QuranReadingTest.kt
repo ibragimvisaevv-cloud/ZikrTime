@@ -58,5 +58,17 @@ class QuranReadingTest {
             assertEquals(number, blocks[QuranReading.blockIndex(blocks, number)].firstAyah)
         }
     }
+
+    @Test fun hitRangesKeepExactArabicAndMapEveryCharacterAndMarkerToItsAyah() {
+        val book = book()
+        for (surah in book.surahs) for (block in QuranReading.blocks(book.verses(surah.id))) {
+            assertEquals(block.verses.size, block.ranges.size)
+            block.ranges.zip(block.verses).forEach { (range, verse) ->
+                assertEquals(verse.arabic, block.text.substring(range.start, range.arabicEnd))
+                for (offset in range.start until range.end) assertEquals(verse.number, block.ayahAt(offset))
+            }
+            assertNull(block.ayahAt(-1))
+        }
+    }
 }
 

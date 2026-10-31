@@ -33,6 +33,27 @@ class QuranProgress(context: Context) {
     fun stop(book: QuranBook): Location? = parse(prefs.getString("stop", null), book)
     fun note(location: Location): String = prefs.getString("note_" + location.key, "").orEmpty()
 
+    fun saveNote(location: Location, note: String) {
+        val editor = prefs.edit()
+        if (note.isBlank()) editor.remove("note_" + location.key)
+        else editor.putString("note_" + location.key, note.take(2000))
+        editor.apply()
+    }
+
+    /** One gesture saves both a bookmark and the exact place to resume; notes stay intact. */
+    fun toggleReadingPlace(location: Location, book: QuranBook): Set<Location> {
+        val next = bookmarks(book).toMutableSet()
+        val added = next.add(location)
+        val editor = prefs.edit()
+        if (added) editor.putString("stop", location.key).putString("last", location.key)
+        else {
+            next.remove(location)
+            if (stop(book) == location) editor.remove("stop")
+        }
+        editor.putStringSet("bookmarks", next.map { it.key }.toSet()).apply()
+        return next
+    }
+
     fun saveStop(location: Location, note: String) {
         val editor = prefs.edit().putString("stop", location.key).putString("last", location.key)
         if (note.isBlank()) editor.remove("note_" + location.key)

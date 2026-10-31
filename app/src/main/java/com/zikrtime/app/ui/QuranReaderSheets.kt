@@ -13,7 +13,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.zikrtime.app.R
 import com.zikrtime.app.data.*
-import java.time.LocalDate
 
 @Composable
 internal fun ReaderAction(label: Int, tag: String, action: () -> Unit) {
@@ -37,56 +36,17 @@ internal fun QuranJumpSheet(count: Int, current: Int, close: () -> Unit, jumpTo:
 }
 
 @Composable
-internal fun QuranStopSheet(book: QuranBook, surahId: Int, current: Int, progress: QuranProgress, close: () -> Unit) {
-    var value by rememberSaveable { mutableStateOf(current.toString()) }
-    var note by rememberSaveable { mutableStateOf(progress.note(QuranProgress.Location(surahId, current))) }
-    var invalid by rememberSaveable { mutableStateOf(false) }
-    val count = book.surahs.first { it.id == surahId }.ayahCount
-    HorizonSheet(stringResource(R.string.qf_stop), close) {
-        Text(stringResource(R.string.qf_stop_hint))
-        OutlinedTextField(value, {
-            value = it.take(3); invalid = false
-            val number = value.toIntOrNull()
-            note = if (number != null && number in 1..count) progress.note(QuranProgress.Location(surahId, number)) else ""
-        }, singleLine = true, isError = invalid, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            label = { Text(stringResource(R.string.quran_ayah)) }, modifier = Modifier.fillMaxWidth().testTag("quran_stop_ayah"))
+internal fun QuranNoteSheet(surahName: String, location: QuranProgress.Location, progress: QuranProgress, close: () -> Unit) {
+    var note by rememberSaveable(location.key) { mutableStateOf(progress.note(location)) }
+    HorizonSheet(stringResource(R.string.qt_note), close) {
+        Text(surahName + " · " + location.key, style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier.testTag("quran_note_location"))
         OutlinedTextField(note, { note = it.take(2000) }, minLines = 3, maxLines = 6,
             label = { Text(stringResource(R.string.qf_note)) }, modifier = Modifier.fillMaxWidth().testTag("quran_stop_note"))
-        if (invalid) Text(stringResource(R.string.quran_jump_error, count), color = MaterialTheme.colorScheme.error)
-        PrimaryButton(stringResource(R.string.qf_save_stop), modifier = Modifier.testTag("quran_stop_save"), onClick = {
-            val number = value.toIntOrNull()
-            if (number == null || number !in 1..count) invalid = true
-            else { progress.saveStop(QuranProgress.Location(surahId, number), note.trim()); close() }
+        PrimaryButton(stringResource(R.string.qt_save_note), modifier = Modifier.testTag("quran_stop_save"), onClick = {
+            progress.saveNote(location, note.trim())
+            close()
         })
-    }
-}
-
-@Composable
-internal fun QuranMarkSheet(surahId: Int, current: Int, count: Int, close: () -> Unit) {
-    var first by rememberSaveable { mutableStateOf("1") }
-    var last by rememberSaveable { mutableStateOf(current.toString()) }
-    var invalid by rememberSaveable { mutableStateOf(false) }
-    HorizonSheet(stringResource(R.string.qf_mark_read), close) {
-        Text(stringResource(R.string.qf_mark_hint))
-        if (!Store.personalProgressEnabled) {
-            Text(stringResource(R.string.qf_stats_disabled))
-            PersonalProgressSetting()
-        }
-        OutlinedTextField(first, { first = it.take(3); invalid = false }, singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            label = { Text(stringResource(R.string.qf_first_ayah)) }, modifier = Modifier.fillMaxWidth().testTag("quran_mark_first"))
-        OutlinedTextField(last, { last = it.take(3); invalid = false }, singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            label = { Text(stringResource(R.string.qf_last_ayah)) }, modifier = Modifier.fillMaxWidth().testTag("quran_mark_last"))
-        if (invalid) Text(stringResource(R.string.qf_range_error, count), color = MaterialTheme.colorScheme.error, modifier = Modifier.testTag("quran_mark_error"))
-        Button(onClick = {
-            val from = first.toIntOrNull()
-            val to = last.toIntOrNull()
-            if (from == null || to == null || from !in 1..count || to !in from..count) invalid = true
-            else { QuranStatistics.mark(LocalDate.now(), surahId, from, to, count); close() }
-        }, enabled = Store.personalProgressEnabled, modifier = Modifier.fillMaxWidth().testTag("quran_mark_save")) {
-            Text(stringResource(R.string.qf_mark_read))
-        }
     }
 }
 
