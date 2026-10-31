@@ -104,9 +104,11 @@ private fun QuranIndex(book: QuranBook, progress: QuranProgress, open: (QuranPro
         }
         if (tab == 0) OutlinedTextField(query, { query = it }, singleLine = true,
             label = { Text(stringResource(R.string.quran_search)) }, modifier = Modifier.fillMaxWidth().testTag("quran_search"))
-        if (tab == 0) Text(stringResource(R.string.qt_touch_hint), style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant)
         LazyColumn(Modifier.fillMaxWidth().weight(1f), verticalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(bottom = 12.dp)) {
+            if (tab == 0) item("gesture_hint") {
+                Text(stringResource(R.string.qt_touch_hint), style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
             item("statistics") {
                 OutlinedButton(onClick = { statistics = true }, modifier = Modifier.fillMaxWidth().testTag("quran_statistics_open")) {
                     Text(stringResource(R.string.qf_statistics))

@@ -38,6 +38,9 @@ jobs:
                       assert sorted(re.findall(r'%\d+\$[ds]', base[key])) == sorted(re.findall(r'%\d+\$[ds]', actual[key])), (lang, key)
           print('Reader resources checked in all 8 languages')
           PY
+      - name: Verify scope before continuing the previous gesture check
+        if: ${{ contains(github.event.head_commit.message, '[touch-finish]') }}
+        run: python3 tools/ci/verify_touch_continuation.py
       - name: Focused Quran tests, lint and test APK
         run: |
           chmod +x gradlew
@@ -57,7 +60,7 @@ jobs:
           arch: x86_64
           disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: QURAN_QA_MODE=touch bash tools/ci/quran_reader_smoke.sh
+          script: QURAN_TOUCH_PHASE=${{ contains(github.event.head_commit.message, '[touch-finish]') && 'finish' || 'all' }} QURAN_QA_MODE=touch bash tools/ci/quran_reader_smoke.sh
       - name: Keep focused evidence available
         if: always()
         env:
