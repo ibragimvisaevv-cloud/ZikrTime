@@ -6,7 +6,8 @@ target.mkdir(exist_ok=True)
 
 
 def capture(name):
-    ui()  # Reject app-error dialogs and wait for a current hierarchy.
+    tree = ui()  # Reject app-error dialogs and retain capture evidence.
+    (target / (name + '.xml')).write_bytes(ET.tostring(tree))
     shell('pidof', PKG)
     path = target / (name + '.png')
     with path.open('wb') as output:
@@ -19,7 +20,7 @@ def capture(name):
 
 start('home')
 put_pref('online_times', 'boolean', 'false')
-put_pref('appearance', 'string', 'light')
+put_pref('appearance', 'string', 'dark')
 shell('svc', 'wifi', 'disable')
 shell('svc', 'data', 'disable')
 start('home')
@@ -40,8 +41,9 @@ tap_control('quran_statistics_open')
 capture('04-quran-progress')
 start('tasbih')
 capture('05-tasbih')
-start('focus')
-capture('06-focus')
+start('shop')
+time.sleep(3)
+capture('06-shop')
 put_pref('appearance', 'string', 'dark')
 start('quran')
 open_surah(112)
@@ -52,5 +54,5 @@ capture('07-quran-dark')
     'apk_source': '22bed67f6863addaa1eed71f4bd563f1b6d00ad4',
     'apk_sha256': 'd1048c731153662808682401cfe48dc9e4638f5216bf0656ff7d4efacaefdb44',
     'method': 'Unaltered Android 15 emulator screenshots from the checked debug APK; no screenshot compositing.',
-    'size': [1080, 1920], 'language': 'ru', 'screenshots': 7,
+    'size': [1080, 1920], 'language': 'ru', 'theme': 'dark', 'screenshots': 7,
 }, indent=2))
