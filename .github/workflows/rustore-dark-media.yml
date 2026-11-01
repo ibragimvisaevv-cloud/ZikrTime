@@ -1,4 +1,4 @@
-name: Capture dark RuStore screenshots
+name: Capture shop and mosque store screenshots
 on:
   push:
     branches: [codex/quran-reader-0814]
@@ -22,7 +22,7 @@ jobs:
           mkdir -p app/build/outputs/apk/debug
           gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/13045308679/zip" > app/build/outputs/apk/debug/app-debug.apk
           echo 'd1048c731153662808682401cfe48dc9e4638f5216bf0656ff7d4efacaefdb44  app/build/outputs/apk/debug/app-debug.apk' | sha256sum -c
-          python3 -m py_compile tools/ci/rustore_media.py
+          python3 -m py_compile tools/ci/rustore_media.py tools/ci/rustore_catalog_media.py
       - run: python3 -m pip install 'Pillow>=11,<13'
       - name: Enable KVM
         run: |
@@ -35,7 +35,7 @@ jobs:
           target: google_apis
           arch: x86_64
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: bash tools/ci/rustore_media.sh
+          script: RUSTORE_MEDIA_SCRIPT=tools/ci/rustore_catalog_media.py bash tools/ci/rustore_media.sh
       - uses: actions/upload-artifact@v4
         if: always()
         with:

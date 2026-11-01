@@ -11,6 +11,6 @@ adb shell settings put system font_scale 1
 adb logcat -c
 trap 'adb logcat -d -b crash > ci-out/crashes.txt' EXIT
 adb install -r app/build/outputs/apk/debug/app-debug.apk
-python3 tools/ci/rustore_media.py
+python3 "${RUSTORE_MEDIA_SCRIPT:-tools/ci/rustore_media.py}"
 adb logcat -d -b crash > ci-out/crashes.txt
 if grep -qE 'FATAL EXCEPTION|Fatal signal' ci-out/crashes.txt; then exit 1; fi
