@@ -18,7 +18,27 @@ User request: 2 November 2026. Android version 0.8.19 (31), branch `codex/quran-
 
 ## Verification
 
-Implementation and focused verification are in progress. Do not describe this version as tested or ready until the matching build and emulator evidence are recorded below.
+Delivered as a signed **test preview**, with the following verified scope. Do not call all six UI groups complete.
+
+- Android source: `b7703f66aceb9a123992bc4266f1809cb8caed01`.
+- [Build run 41511213221](https://github.com/ibragimvisaevv-cloud/ZikrTime/actions/runs/41511213221): 29 focused Quran unit tests passed; lint has no errors; debug and signed release builds passed; the original certificate and exact Quran assets inside the release APK passed.
+- Three UI groups passed in that run: persistent bookmark/note/combined marks in both modes after restart; exact saved-list navigation and immediate deletion updates preserving bookmarks; no reading credit while saved-list/note menus are open. The run stopped because the test's numeric-field input did not replace the value.
+- [Recheck 41514721125](https://github.com/ibragimvisaevv-cloud/ZikrTime/actions/runs/41514721125), verification commit `30686032b720ce186a777004e935fea681de395c`, verified unchanged Android inputs, both APK hashes and the prior test reports. It reused the exact APK and carried over those three groups.
+- The fourth UI group then passed: distinct 7/30/90-day totals, unique ayahs, weekly/all-time values, invalid goal rejection and goal persistence after restart.
+- The recheck stopped during the disabled-state journey when upward automation swipes dismissed the statistics sheet before the enable button could be located. The disabled notice and zero totals had been reached. This is an incomplete automation journey, not a verified enable-state outcome. Crash logs are empty.
+- **Still pending:** complete disabled-to-enabled/empty-state journey, and dark/320 dp/150% text layout journey. To continue, reopen statistics at its top before tapping `quran_stats_enable`, retain the four verified groups using the same APK/source/hash guard, and run only the remaining groups. Do not rebuild unchanged Android inputs.
+- Visual review completed for light reading marks, saved-ayah list, personal-note preview, Today/period/overall statistics and the goal editor. Physical-phone testing and the remaining dark/narrow review are not claimed.
+- Evidence branches: `ci-reader-0819-41511213221` and `ci-reader-0819-41514721125`. Original build artifact: `13174791180`; recheck artifact: `13175207772`.
+
+| Candidate | Value |
+| --- | --- |
+| File | `ZikrTime-0.8.19-preview.apk` |
+| Size | 61,210,087 bytes |
+| SHA-256 | `8a3c8f2addbca9a7a726ec4eaf3a269089e300d1d021feecd2460ae5e18998ef` |
+| Certificate SHA-256 | `7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf` |
+| Debug APK | 102,117,540 bytes; `b2320efce7f39322066575b2e47d2458e4b70cdbab4073d68408c4b05f1d69d5` |
+
+The signed APK and three original light-theme screenshots (statistics, saved notes list, saved ayahs) were provided as downloadable files when the user requested the result. APK bytes were checked against the build delivery record.
 
 The `[quran-paper]` marker runs the focused Android workflow with `QURAN_QA_MODE=saved`, checking all reader locales, Quran unit tests, lint, signed candidates and changed saved-ayah/statistics journeys. Preserve original signing and Quran source bytes as described in `SIGNING_CURRENT.md` and `QURAN_READING_0818.md`.
 
