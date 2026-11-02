@@ -40,6 +40,7 @@
    "answer": 0,
    "info": "В Коране 114 сур и более 6200 аятов. Суры делятся на мекканские и мединские — по месту и времени ниспослания.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -57,6 +58,7 @@
    "answer": 0,
    "info": "«Аль-Фатиха» означает «Открывающая». Её читают в каждом ракаате намаза, поэтому её называют и «Умм аль-Китаб» — «Мать Книги».",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -74,6 +76,7 @@
    "answer": 0,
    "info": "В суре «Аль-Бакара» («Корова») 286 аятов. В ней находятся Аят аль-Курси и самый длинный аят Корана — о записи долга (2:282).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:282"
@@ -92,6 +95,7 @@
    "answer": 0,
    "info": "Сура «Аль-Каусар» состоит из трёх коротких аятов. Аль-Каусар — название райской реки, дарованной Пророку ﷺ.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -109,6 +113,7 @@
    "answer": 0,
    "info": "Об этом сказано в суре «Аль-Бакара» (2:185). Ниспослание началось в Ночь предопределения и продолжалось около 23 лет.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:185"
@@ -127,6 +132,7 @@
    "answer": 0,
    "info": "Ангел Джибриль (мир ему) передавал откровение пророкам. В Коране он назван также «Верным Духом» (26:193).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 26:193"
@@ -145,6 +151,7 @@
    "answer": 0,
    "info": "Пещера Хира находится на горе Нур недалеко от Мекки. Пророк ﷺ уединялся там для поклонения ещё до начала пророчества.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -162,6 +169,7 @@
    "answer": 0,
    "info": "Первыми были ниспосланы начальные аяты суры «Аль-Алак» (96:1–5) — о чтении во имя Господа, сотворившего человека.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 96:1–5"
@@ -180,6 +188,7 @@
    "answer": 0,
    "info": "Аят аль-Курси — 255-й аят суры «Аль-Бакара». В нём говорится о величии Аллаха, Его знании и власти над небесами и землёй.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Аль-Бакара, аят 255"
@@ -198,6 +207,7 @@
    "answer": 0,
    "info": "Об этом говорится в хадисе от Убайя ибн Кааба, который передал Муслим. Аят аль-Курси принято читать после обязательных намазов и перед сном.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Муслим; сообщение от Убайя ибн Кааба (номер в банке не указан)"
@@ -216,6 +226,7 @@
    "answer": 0,
    "info": "Девятая сура «Ат-Тауба» («Покаяние») — единственная, перед которой нет басмалы. Её также называют «Бараа» («Непричастность»).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -233,6 +244,7 @@
    "answer": 0,
    "info": "В суре «Ан-Намль» басмала стоит в начале и в 30-м аяте — в письме пророка Сулеймана царице Сабы. Поэтому басмал в Коране 114 — по числу сур.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -250,6 +262,7 @@
    "answer": 0,
    "info": "Об этом сообщается в хадисе, переданном аль-Бухари. Сура «Аль-Ихлас» («Искренность») целиком посвящена единобожию — таухиду.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Аль-Бухари (номер в банке не указан)"
@@ -268,6 +281,7 @@
    "answer": 0,
    "info": "Марьям, мать пророка Исы, — единственная женщина, названная в Коране по имени. Ей посвящена 19-я сура.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -285,6 +299,7 @@
    "answer": 0,
    "info": "В «Аль-Фатихе» семь аятов. В Коране её называют «семью повторяемыми» (15:87), потому что её повторяют в каждом ракаате.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 15:87"
@@ -303,6 +318,7 @@
    "answer": 0,
    "info": "Адам (мир ему) — первый человек, сотворённый Аллахом, и первый пророк. От него и его жены Хаввы произошли все люди.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -320,6 +336,7 @@
    "answer": 0,
    "info": "Пророк Нух (мир ему) долгие годы призывал свой народ к единобожию. По повелению Аллаха он построил ковчег и спасся от потопа вместе с верующими.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -337,6 +354,7 @@
    "answer": 0,
    "info": "Об этом сказано в суре «Аль-Бакара» (2:127). Ибрахим и Исмаил (мир им) возвели Каабу и молились, чтобы Аллах принял их труд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:127"
@@ -355,6 +373,7 @@
    "answer": 0,
    "info": "Из чрева рыбы пророк Юнус (мир ему) взывал к Аллаху, признавая Его единственность и свою ошибку. Его мольбу (21:87) читают и сегодня в трудную минуту.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 21:87"
@@ -373,6 +392,7 @@
    "answer": 0,
    "info": "Таурат (Тора) — Писание, ниспосланное пророку Мусе (мир ему). Вера во все Писания, ниспосланные Аллахом, — один из столпов имана.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -390,6 +410,7 @@
    "answer": 0,
    "info": "Забур (Псалтирь) был ниспослан пророку Дауду (мир ему). Дауд был и пророком, и правителем; Аллах даровал ему прекрасный голос.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -407,6 +428,7 @@
    "answer": 0,
    "info": "Инджиль (Евангелие) был ниспослан пророку Исе (мир ему), сыну Марьям. Мусульмане верят, что Иса — посланник Аллаха и что Аллах вознёс его.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -424,6 +446,7 @@
    "answer": 0,
    "info": "Пророку Сулейману (мир ему) было даровано небывалое царство: ему подчинялись ветер и джинны, он понимал речь птиц и муравьёв.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -441,6 +464,7 @@
    "answer": 0,
    "info": "Пророк Айюб (мир ему) лишился здоровья, богатства и детей, но не роптал. Аллах исцелил его и вернул ему благо — его терпение стало примером для верующих.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -458,6 +482,7 @@
    "answer": 0,
    "info": "Юсуф — сын пророка Якуба, внук Исхака и правнук Ибрахима (мир им всем). Якуб известен также под именем Исраил.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -475,6 +500,7 @@
    "answer": 0,
    "info": "История Юсуфа рассказана в 12-й суре, названной его именем. В Коране она названа прекраснейшим из рассказов (12:3).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 12:3"
@@ -493,6 +519,7 @@
    "answer": 0,
    "info": "Муса попросил Аллаха сделать его брата Харуна помощником, потому что тот был красноречивее. Аллах ответил на его мольбу (20:29–36).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 20:29–36"
@@ -511,6 +538,7 @@
    "answer": 0,
    "info": "Аллах даровал Закарии сына Яхью в глубокой старости, когда его жена была бесплодной. До Яхьи это имя не носил никто (19:7).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 19:7"
@@ -529,6 +557,7 @@
    "answer": 0,
    "info": "Обычно насчитывают 25 пророков, названных в Коране по имени. Всего пророков было гораздо больше — о многих Аллах не рассказал (40:78).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 40:78"
@@ -547,6 +576,7 @@
    "answer": 0,
    "info": "В Коране Мухаммад ﷺ назван «печатью пророков» (33:40). После него пророков не будет, а Коран — последнее Писание.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 33:40"
@@ -565,6 +595,7 @@
    "answer": 0,
    "info": "Пророк ﷺ родился в Мекке в Год слона — около 570 года. Он происходил из рода Хашим племени курайш.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -582,6 +613,7 @@
    "answer": 0,
    "info": "Его мать — Амина бинт Вахб. Она умерла, когда Пророку ﷺ было около шести лет, а отец, Абдуллах, умер ещё до его рождения.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -599,6 +631,7 @@
    "answer": 0,
    "info": "По обычаю арабов младенцев отдавали кормилицам в пустыню. Раннее детство Пророк ﷺ провёл у Халимы из племени бану Саад.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -616,6 +649,7 @@
    "answer": 0,
    "info": "Хадиджа (да будет доволен ею Аллах) первой уверовала в его пророческую миссию и поддерживала его в самые трудные годы.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -633,6 +667,7 @@
    "answer": 0,
    "info": "Откровение началось, когда Пророку ﷺ было 40 лет. До этого в Мекке его называли аль-Амин — «надёжный».",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -650,6 +685,7 @@
    "answer": 0,
    "info": "Около 13 лет Пророк ﷺ призывал в Мекке и около 10 лет — в Медине. Он скончался в 11 году хиджры в возрасте 63 лет.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -667,6 +703,7 @@
    "answer": 0,
    "info": "Хиджра произошла в 622 году. В Медине, которая тогда называлась Ясриб, сложилась первая мусульманская община.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -684,6 +721,7 @@
    "answer": 0,
    "info": "Календарь по хиджре ввели при халифе Умаре. Он лунный, поэтому каждый год смещается примерно на 11 дней относительно солнечного.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -701,6 +739,7 @@
    "answer": 0,
    "info": "Абу Бакр (да будет доволен им Аллах) три дня укрывался вместе с Пророком ﷺ в пещере Саур. Об этом сказано в Коране (9:40).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 9:40"
@@ -719,6 +758,7 @@
    "answer": 0,
    "info": "Исра — ночное перенесение в Иерусалим, а Мирадж — вознесение на небеса. Именно тогда были предписаны пять ежедневных намазов.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -736,6 +776,7 @@
    "answer": 0,
    "info": "Битва при Бадре произошла в Рамадане 2 года хиджры. Около 313 мусульман победили войско, которое было втрое больше.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -753,6 +794,7 @@
    "answer": 0,
    "info": "Билал был рабом в Мекке и терпел пытки за веру, пока Абу Бакр не выкупил его. Пророк ﷺ поручил ему призывать к намазу за красивый и сильный голос.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -770,6 +812,7 @@
    "answer": 0,
    "info": "Пророк ﷺ похоронен в Медине, в комнате Аиши, которая теперь находится внутри Мечети Пророка. Рядом похоронены Абу Бакр и Умар.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -787,6 +830,7 @@
    "answer": 0,
    "info": "После кончины Пророка ﷺ первым халифом стал Абу Бакр ас-Сиддик. Праведных халифов было четверо: Абу Бакр, Умар, Усман и Али.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -804,6 +848,7 @@
    "answer": 0,
    "info": "Пять столпов Ислама: шахада, намаз, закят, пост в Рамадан и хадж для того, кто в состоянии его совершить.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -821,6 +866,7 @@
    "answer": 0,
    "info": "Вера в Аллаха, Его ангелов, Писания, посланников, Судный день и предопределение. Они перечислены в известном хадисе Джибриля.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -838,6 +884,7 @@
    "answer": 0,
    "info": "Фаджр, зухр, аср, магриб и иша. Пять намазов были предписаны в ночь Мираджа.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -855,6 +902,7 @@
    "answer": 0,
    "info": "Фард утреннего намаза — два ракаата. Перед ним совершают ещё два ракаата сунны — Пророк ﷺ их почти никогда не оставлял.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -872,6 +920,7 @@
    "answer": 0,
    "info": "Магриб — единственный обязательный намаз из трёх ракаатов. Его совершают после захода солнца.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -889,6 +938,7 @@
    "answer": 0,
    "info": "Зухр, аср и иша — по четыре ракаата. Путнику разрешено сокращать их до двух.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -906,6 +956,7 @@
    "answer": 0,
    "info": "При вуду омывают лицо, руки до локтей, протирают голову и моют ноги до щиколоток (5:6). Гусль — полное омовение всего тела.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 5:6"
@@ -924,6 +975,7 @@
    "answer": 0,
    "info": "Таяммум — очищение чистой землёй, когда воды нет или её нельзя использовать. Он упомянут в Коране (4:43, 5:6).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 4:43, 5:6"
@@ -942,6 +994,7 @@
    "answer": 0,
    "info": "Азан призывает людей к намазу, а икама — второй призыв прямо перед его началом. В утреннем азане добавляют слова «Намаз лучше сна».",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -959,6 +1012,7 @@
    "answer": 0,
    "info": "Направление на Каабу называется киблой. Его можно узнать в разделе «Кибла» этого приложения.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -976,6 +1030,7 @@
    "answer": 0,
    "info": "Около 16–17 месяцев после хиджры мусульмане молились в сторону Аль-Аксы в Иерусалиме. Затем киблу сменили на Каабу (2:144).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:144"
@@ -994,6 +1049,7 @@
    "answer": 0,
    "info": "Закят — один из пяти столпов Ислама. Обычно он составляет 2,5% от сбережений, которые достигли нисаба и пролежали год.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1011,6 +1067,7 @@
    "answer": 0,
    "info": "Закят аль-фитр выплачивают за себя и членов семьи, чтобы и бедные могли встретить праздник. Его нужно отдать до праздничного намаза.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1028,6 +1085,7 @@
    "answer": 0,
    "info": "Сухур — трапеза перед рассветом, ифтар — разговение после заката. Пророк ﷺ говорил, что в сухуре есть барака.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1045,6 +1103,7 @@
    "answer": 0,
    "info": "Пятничный намаз совершают вместо зухра, и перед ним звучит проповедь — хутба. Пятница — лучший день недели для мусульман.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1062,6 +1121,7 @@
    "answer": 0,
    "info": "Таваф — обход Каабы семь раз против часовой стрелки. Его начинают от угла с Чёрным камнем.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1079,6 +1139,7 @@
    "answer": 0,
    "info": "Сай напоминает о Хаджар, которая искала воду для маленького Исмаила, семь раз пробегая между холмами Сафа и Марва (2:158).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:158"
@@ -1097,6 +1158,7 @@
    "answer": 0,
    "info": "Главные обряды хаджа проходят с 8 по 13 число месяца Зуль-хиджа. День стояния на Арафате — 9 Зуль-хиджа.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1114,6 +1176,7 @@
    "answer": 0,
    "info": "Рамадан — девятый месяц, за ним идёт Шавваль. В исламском календаре 12 лунных месяцев.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1131,6 +1194,7 @@
    "answer": 0,
    "info": "Об этом сказано в суре «Аль-Кадр» (97:3). Эту ночь ищут в последние десять ночей Рамадана, особенно в нечётные.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 97:3"
@@ -1149,6 +1213,7 @@
    "answer": 0,
    "info": "Ид аль-Фитр отмечают 1 Шавваля праздничным намазом. Второй праздник — Ид аль-Адха (Курбан-байрам) — наступает 10 Зуль-хиджа.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1166,6 +1231,7 @@
    "answer": 0,
    "info": "Источник Замзам появился по милости Аллаха, когда Хаджар искала воду для сына Исмаила. Он не иссякает уже тысячи лет.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1183,6 +1249,7 @@
    "answer": 0,
    "info": "Этими словами прославляют Аллаха и отрицают у Него любые недостатки. После намаза тасбих принято произносить 33 раза.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1200,6 +1267,7 @@
    "answer": 0,
    "info": "Так благодарят Аллаха в любом положении — и в радости, и в трудности. Эти слова открывают «Аль-Фатиху» после басмалы.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1217,6 +1285,7 @@
    "answer": 0,
    "info": "С этих слов — такбира — начинается каждый намаз. Их также произносят в азане и в праздничные дни.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1234,6 +1303,7 @@
    "answer": 0,
    "info": "Говоря о будущем, мусульмане добавляют «ИншаАллах» (18:23–24). А «МашаАллах» — «так пожелал Аллах» — говорят, восхищаясь чем-то.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 18:23–24"
@@ -1252,6 +1322,7 @@
    "answer": 0,
    "info": "Это истигфар — просьба о прощении. Пророк ﷺ просил у Аллаха прощения более семидесяти раз в день.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1269,6 +1340,7 @@
    "answer": 0,
    "info": "Сабр — терпение и стойкость: в поклонении, в отказе от грехов и в испытаниях. В Коране сказано, что Аллах — с терпеливыми (2:153).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:153"
@@ -1287,6 +1359,7 @@
    "answer": 0,
    "info": "Шукр — благодарность Аллаху сердцем, словами и делами. Аллах обещал прибавить благодарным (14:7).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 14:7"
@@ -1305,6 +1378,7 @@
    "answer": 0,
    "info": "Известный хадис из сборников аль-Бухари и Муслима начинается словами о том, что дела оцениваются по намерениям. Намерение делает обычное дело поклонением.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Аль-Бухари и Муслим (номера в банке не указаны)"
@@ -1323,6 +1397,7 @@
    "answer": 0,
    "info": "Барака — благодать и польза, которую Аллах вкладывает во время, имущество и дела. Даже малое с баракой приносит большое благо.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1340,6 +1415,7 @@
    "answer": 0,
    "info": "Ислам — покорность единому Аллаху. Слово происходит от того же корня, что и «салам» — мир.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1357,6 +1433,7 @@
    "answer": 0,
    "info": "Сура «Аль-Ихлас», аяты 1–2. Ас-Самад — Самодостаточный: в Нём нуждаются все, а Он не нуждается ни в ком.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Сура «Аль-Ихлас», аяты 1–2"
@@ -1376,6 +1453,7 @@
    "answer": 0,
    "info": "Сура «Аль-Фатиха», аяты 2–3. Ар-Рахман и Ар-Рахим — имена Аллаха, которые говорят о Его милости.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Сура «Аль-Фатиха», аяты 2–3"
@@ -1395,6 +1473,7 @@
    "answer": 0,
    "info": "Сура «Аль-Фатиха», аят 5: только Аллаху мы поклоняемся и только у Него просим помощи.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Сура «Аль-Фатиха», аят 5"
@@ -1414,6 +1493,7 @@
    "answer": 0,
    "info": "Сура «Аль-Аср», аяты 1–2. Имам аш-Шафии говорил, что если бы люди размышляли только над этой сурой, её было бы им достаточно.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Сура «Аль-Аср», аяты 1–2"
@@ -1433,6 +1513,7 @@
    "answer": 0,
    "info": "Сура «Аль-Фаляк», аяты 1–2. Вместе с сурой «Ан-Нас» её называют «аль-Муаввизатайн» — суры прибегания к защите Аллаха.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Сура «Аль-Фаляк», аяты 1–2"
@@ -1452,6 +1533,7 @@
    "answer": 0,
    "info": "Сура «Ан-Нас», аяты 1–2. Это последняя сура Корана; Пророк ﷺ читал её вместе с «Аль-Ихлас» и «Аль-Фаляк» перед сном.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Сура «Ан-Нас», аяты 1–2"
@@ -1471,11 +1553,2412 @@
    "answer": 0,
    "info": "Сура «Аль-Каусар», аяты 1–2: за дарованное благо — молиться Господу и приносить жертву ради Него.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Сура «Аль-Каусар», аяты 1–2"
    },
    "arabic": "إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ"
+  },
+  {
+   "id": "l1_verify_news",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Что следует сделать с вестью от ненадёжного человека, согласно 49:6?",
+   "options": [
+    "Проверить её",
+    "Сразу распространить",
+    "Судить по слухам",
+    "Поверить без проверки"
+   ],
+   "answer": 0,
+   "info": "Проверка вести помогает не причинить людям вред по незнанию.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:6",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_reconcile_believers",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "К чему призывает 49:10 при ссоре между верующими?",
+   "options": [
+    "Примирить их",
+    "Разжечь спор",
+    "Поддержать обиды",
+    "Распространить ссору"
+   ],
+   "answer": 0,
+   "info": "Аят называет верующих братьями и призывает восстанавливать мир между ними.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_offensive_names",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Какие прозвища запрещает давать людям аят 49:11?",
+   "options": [
+    "Обидные",
+    "Удобные для записи",
+    "Указывающие профессию",
+    "Указывающие родство"
+   ],
+   "answer": 0,
+   "info": "В аяте запрещены унижающие прозвища и высмеивание людей.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:11",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_no_spying",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Какой поступок запрещён в 49:12?",
+   "options": [
+    "Выслеживать чужие тайны",
+    "Помогать нуждающимся",
+    "Примирять соседей",
+    "Возвращать доверенное"
+   ],
+   "answer": 0,
+   "info": "Аят запрещает выслеживать людей и злословить за их спиной.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:12",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_honour_piety",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Что определяет почёт человека перед Аллахом в 49:13?",
+   "options": [
+    "Богобоязненность",
+    "Богатство",
+    "Происхождение",
+    "Известность"
+   ],
+   "answer": 0,
+   "info": "В аяте почёт перед Аллахом связан с богобоязненностью человека.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:13",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_parents_speech",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Как 17:23 учит разговаривать с пожилыми родителями?",
+   "options": [
+    "Почтительно",
+    "Раздражённо",
+    "Насмешливо",
+    "Пренебрежительно"
+   ],
+   "answer": 0,
+   "info": "Аят велит говорить с родителями уважительно и не выражать им раздражения.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:23",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_parents_mercy",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "О чём просят для родителей в молитве из 17:24?",
+   "options": [
+    "О милости Аллаха",
+    "О славе среди людей",
+    "О власти над другими",
+    "О богатстве любой ценой"
+   ],
+   "answer": 0,
+   "info": "В этой молитве человек просит Господа помиловать родителей, растивших его.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:24",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_keep_promises",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Чему учит 17:34 в отношении договоров?",
+   "options": [
+    "Соблюдать их",
+    "Забывать при неудобстве",
+    "Менять тайно",
+    "Выполнять лишь при похвале"
+   ],
+   "answer": 0,
+   "info": "Аят велит соблюдать договоры и напоминает об ответственности за них.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:34",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_fair_measure",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Как 17:35 велит отмерять и взвешивать товары?",
+   "options": [
+    "Полной мерой и верными весами",
+    "По выгоде продавца",
+    "На глаз без меры",
+    "По положению покупателя"
+   ],
+   "answer": 0,
+   "info": "Аят требует полной меры и точного взвешивания.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:35",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_avoid_arrogance",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "От какой манеры поведения предостерегает 17:37?",
+   "options": [
+    "Надменной",
+    "Спокойной",
+    "Скромной",
+    "Внимательной"
+   ],
+   "answer": 0,
+   "info": "Аят запрещает надменно ходить по земле.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:37",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_lower_voice",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Что советует 31:19 делать с голосом?",
+   "options": [
+    "Понижать его",
+    "Всегда кричать",
+    "Заглушать собеседника",
+    "Повышать при споре"
+   ],
+   "answer": 0,
+   "info": "Аят учит сдержанности в походке и голосе.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 31:19",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/31",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_luqman_prayer",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "Какое поклонение Лукман велит сыну совершать в 31:17?",
+   "options": [
+    "Намаз",
+    "Паломничество каждый месяц",
+    "Непрерывный пост",
+    "Ежедневный обход Каабы"
+   ],
+   "answer": 0,
+   "info": "Среди наставлений Лукмана сыну в этом аяте есть совершение намаза.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 31:17",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/31",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_enter_homes",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Что нужно сделать перед входом в чужой дом по 24:27?",
+   "options": [
+    "Попросить разрешения и поприветствовать",
+    "Войти, если дверь открыта",
+    "Сначала осмотреть комнаты",
+    "Войти и затем объявить о себе"
+   ],
+   "answer": 0,
+   "info": "Аят требует разрешения и приветствия перед входом в чужие дома.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 24:27",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_return_when_asked",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Как поступить, если при посещении дома вам сказали вернуться, по 24:28?",
+   "options": [
+    "Уйти",
+    "Настаивать на входе",
+    "Войти через другую дверь",
+    "Спорить с хозяином"
+   ],
+   "answer": 0,
+   "info": "Аят велит уйти, если хозяева не разрешили войти и попросили вернуться.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 24:28",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_return_greeting",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Как отвечать на приветствие согласно 4:86?",
+   "options": [
+    "Так же или лучше",
+    "Только молчанием",
+    "Обязательно короче",
+    "Только после повторения"
+   ],
+   "answer": 0,
+   "info": "Аят учит отвечать на приветствие равноценным или лучшим приветствием.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:86",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_return_trust",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Кому 4:58 велит возвращать доверенное имущество?",
+   "options": [
+    "Его владельцам",
+    "Самым богатым",
+    "Первому попросившему",
+    "Самому влиятельному"
+   ],
+   "answer": 0,
+   "info": "Аят велит передавать доверенное тем, кому оно принадлежит.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:58",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_justice_self",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Нужно ли говорить справедливо, если это против себя, по 4:135?",
+   "options": [
+    "Да, и против себя",
+    "Нет, себя всегда защищают",
+    "Только если никто не узнает",
+    "Только ради награды людей"
+   ],
+   "answer": 0,
+   "info": "Аят требует справедливого свидетельства даже против себя и близких.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:135",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_cooperate_good",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "В чём 5:2 призывает помогать друг другу?",
+   "options": [
+    "В добре и богобоязненности",
+    "В грехе и вражде",
+    "В обмане ради друзей",
+    "В мести соперникам"
+   ],
+   "answer": 0,
+   "info": "Аят велит сотрудничать в добре и отвергает помощь в грехе и вражде.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:2",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_justice_dislike",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Как 5:8 учит поступать с теми, кого мы не любим?",
+   "options": [
+    "Справедливо",
+    "Предвзято",
+    "Мстительно",
+    "По слухам о них"
+   ],
+   "answer": 0,
+   "info": "Неприязнь к людям не должна вести к несправедливости.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:8",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_justice_kindness",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Какое сочетание дел повелевается в 16:90?",
+   "options": [
+    "Справедливость, добро и помощь родным",
+    "Слава, власть и соперничество",
+    "Богатство, гордость и месть",
+    "Молчание, подозрение и отчуждение"
+   ],
+   "answer": 0,
+   "info": "Аят объединяет справедливость, добродетель и щедрость к родственникам.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:90",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_patience_prayer",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Посредством чего 2:153 призывает искать помощи?",
+   "options": [
+    "Терпения и намаза",
+    "Славы и богатства",
+    "Гнева и спора",
+    "Силы и высокомерия"
+   ],
+   "answer": 0,
+   "info": "Аят связывает поиск помощи с терпением и молитвой.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:153",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_charity_orphans",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Какая группа прямо названа среди получателей помощи в 2:177?",
+   "options": [
+    "Сироты",
+    "Военачальники",
+    "Судьи",
+    "Правители"
+   ],
+   "answer": 0,
+   "info": "Аят относит помощь сиротам к проявлениям благочестия.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:177",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_fasting_piety",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Какую цель поста указывает 2:183?",
+   "options": [
+    "Богобоязненность",
+    "Известность",
+    "Обогащение",
+    "Превосходство по происхождению"
+   ],
+   "answer": 0,
+   "info": "Предписание поста в аяте связано с воспитанием богобоязненности.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:183",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_fasting_makeup",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Какое возмещение пропущенного поста названо в 2:185 для больного или путника?",
+   "options": [
+    "Столько же дней позднее",
+    "Вдвое больше дней",
+    "Только дополнительные намазы",
+    "Паломничество вместо дней"
+   ],
+   "answer": 0,
+   "info": "В аяте указано восполнение пропущенных дней поста в другие дни.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:185",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_fast_until_night",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Какой предел дневного поста назван в 2:187?",
+   "options": [
+    "До наступления ночи",
+    "До полудня",
+    "До следующего рассвета",
+    "До середины ночи"
+   ],
+   "answer": 0,
+   "info": "Аят указывает наступление ночи как завершение дневного поста.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:187",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_kind_words",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Что 2:263 считает лучше милостыни, за которой следует обида?",
+   "options": [
+    "Доброе слово и прощение",
+    "Похвалу самому себе",
+    "Напоминание о своей щедрости",
+    "Публичное унижение"
+   ],
+   "answer": 0,
+   "info": "Аят ставит доброе слово и прощение выше помощи, причиняющей обиду.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:263",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_charity_no_reproach",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Чем, согласно 2:264, нельзя портить свои пожертвования?",
+   "options": [
+    "Упрёками и обидами",
+    "Скромностью",
+    "Уважением к получателю",
+    "Искренностью"
+   ],
+   "answer": 0,
+   "info": "Аят предостерегает от попрёков и причинения боли после пожертвования.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:264",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_debtor_respite",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Что 2:280 велит дать должнику в тяжёлом положении?",
+   "options": [
+    "Отсрочку до облегчения",
+    "Немедленное наказание",
+    "Новый долг под давлением",
+    "Публичный упрёк"
+   ],
+   "answer": 0,
+   "info": "Аят велит дать испытывающему нужду должнику время до улучшения положения.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:280",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_within_capacity",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Как в 2:286 описана возлагаемая на душу обязанность?",
+   "options": [
+    "По её силам",
+    "Всегда сверх её сил",
+    "По богатству соседей",
+    "По известности человека"
+   ],
+   "answer": 0,
+   "info": "Аят утверждает, что Аллах не возлагает на душу непосильного.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:286",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_restrain_anger",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Какая реакция на гнев похвалена в 3:134?",
+   "options": [
+    "Сдержать его и простить",
+    "Усилить ссору",
+    "Унижать обидчика",
+    "Копить обиду"
+   ],
+   "answer": 0,
+   "info": "В аяте похвалены сдерживающие гнев и прощающие людей.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:134",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_food_no_waste",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Какую меру в еде и питье устанавливает 7:31?",
+   "options": [
+    "Не излишествовать",
+    "Есть только в одиночестве",
+    "Всегда выбирать самое дорогое",
+    "Отказываться от любой пищи"
+   ],
+   "answer": 0,
+   "info": "Аят разрешает есть и пить, предостерегая от излишеств.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 7:31",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/7",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_no_religious_insult",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Чего 6:108 запрещает касаться оскорблениями?",
+   "options": [
+    "Того, чему другие поклоняются помимо Аллаха",
+    "Только имущества соседей",
+    "Только чужой одежды",
+    "Только названий городов"
+   ],
+   "answer": 0,
+   "info": "Аят запрещает эти оскорбления, чтобы не вызвать ответное оскорбление Аллаха по невежеству.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:108",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_do_not_oppress_orphan",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Какой запрет в отношении сироты содержится в 93:9?",
+   "options": [
+    "Не притеснять его",
+    "Не разговаривать с ним",
+    "Не обучать его",
+    "Не помогать ему"
+   ],
+   "answer": 0,
+   "info": "Аят запрещает притеснение сироты.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 93:9",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/93",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_do_not_repel_asker",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Какой поступок по отношению к просящему запрещён в 93:10?",
+   "options": [
+    "Прогонять его",
+    "Выслушивать его",
+    "Отвечать ему",
+    "Замечать его"
+   ],
+   "answer": 0,
+   "info": "Аят предостерегает от грубого отталкивания просящего.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 93:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/93",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_feed_needy",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "К какому делу не побуждает человек, порицаемый в 107:3?",
+   "options": [
+    "Кормить бедняка",
+    "Строить дворцы",
+    "Покупать украшения",
+    "Накапливать драгоценности"
+   ],
+   "answer": 0,
+   "info": "Аят порицает отсутствие призыва кормить нуждающегося.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 107:3",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/107",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_lord_of_house",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "Кому призывает поклоняться 106:3?",
+   "options": [
+    "Господу этого Дома",
+    "Хранителям Дома",
+    "Владельцам караванов",
+    "Предкам племени"
+   ],
+   "answer": 0,
+   "info": "Аят направляет поклонение к Господу этого Дома.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 106:3",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/106",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_elephant_verse",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "Какое животное упомянуто в 105:1?",
+   "options": [
+    "Слон",
+    "Верблюд",
+    "Лев",
+    "Конь"
+   ],
+   "answer": 0,
+   "info": "Первый аят этой суры упоминает обладателей слона.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 105:1",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/105",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_refuge_lord_people",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "Как назван Аллах в обращении о защите в 114:1?",
+   "options": [
+    "Господь людей",
+    "Владыка дня воздаяния",
+    "Господь рассвета",
+    "Господь миров"
+   ],
+   "answer": 0,
+   "info": "В первом аяте этой суры защита испрашивается у Господа людей.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 114:1",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/114",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_allah_one",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "Что о числе божеств утверждает 112:1?",
+   "options": [
+    "Аллах Един",
+    "Их три",
+    "Их множество",
+    "Их два"
+   ],
+   "answer": 0,
+   "info": "Аят утверждает единственность Аллаха.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 112:1",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/112",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_hardship_ease",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "Что 94:5 связывает с трудностью?",
+   "options": [
+    "Облегчение",
+    "Неизбежное отчаяние",
+    "Бесконечную печаль",
+    "Утрату надежды"
+   ],
+   "answer": 0,
+   "info": "Аят напоминает, что вместе с трудностью есть облегчение.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 94:5",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/94",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_covenant",
+   "cat": "prophets",
+   "difficulty": 2,
+   "q": "Какая группа исключена из завета в ответе Ибрахиму в 2:124?",
+   "options": [
+    "Несправедливые из его потомства",
+    "Неимущие из его потомства",
+    "Не имеющие царской власти потомки",
+    "Рождённые за пределами Мекки потомки"
+   ],
+   "answer": 0,
+   "info": "Аят исключает несправедливых, а не связывает завет с богатством или местом рождения.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:124",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_witnesses",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Как распределены роли свидетелей в 2:143?",
+   "options": [
+    "Община — о людях, Посланник — об общине",
+    "Люди — об общине, община — о Посланнике",
+    "Посланник — о людях, люди — об общине",
+    "Община — о Посланнике, Посланник — об ангелах"
+   ],
+   "answer": 0,
+   "info": "Срединная община названа свидетелем о людях, а Посланник — свидетелем о ней.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:143",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_safa_marwa_signs",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Как ас-Сафа и аль-Марва описаны в 2:158?",
+   "options": [
+    "Как обрядовые знаки Аллаха",
+    "Как места начала ихрама",
+    "Как границы запретной территории",
+    "Как места стояния в день Арафа"
+   ],
+   "answer": 0,
+   "info": "Аят относит ас-Сафу и аль-Марву к установленным Аллахом обрядовым знакам.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:158",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_harm_comparison",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Как в 2:219 соотносятся грех и польза вина и азартных игр?",
+   "options": [
+    "Грех больше пользы",
+    "Польза больше греха",
+    "Грех и польза равны",
+    "Они не приносят ни греха, ни пользы"
+   ],
+   "answer": 0,
+   "info": "В аяте упомянута некоторая польза, но грех назван большим.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:219",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_river_exception",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Какое исключение сделал Талут при испытании рекой?",
+   "options": [
+    "Зачерпнуть одну пригоршню",
+    "Наполнить один кувшин",
+    "Пить до полного насыщения",
+    "Напоить только своего коня"
+   ],
+   "answer": 0,
+   "info": "В 2:249 исключением была пригоршня воды, зачерпнутая рукой.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:249",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_ibrahim_reassurance",
+   "cat": "prophets",
+   "difficulty": 2,
+   "q": "Зачем Ибрахим попросил показать оживление мёртвых?",
+   "options": [
+    "Чтобы его сердце обрело покой",
+    "Чтобы впервые уверовать",
+    "Чтобы узнать срок своей смерти",
+    "Чтобы выбрать место переселения"
+   ],
+   "answer": 0,
+   "info": "В 2:260 Ибрахим подтверждает веру и объясняет просьбу желанием успокоить сердце.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:260",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_grain_parable",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Как устроен образ зерна в притче о расходовании имущества?",
+   "options": [
+    "Семь колосьев, по сто зёрен",
+    "Сто колосьев, по семь зёрен",
+    "Семь колосьев, по десять зёрен",
+    "Десять колосьев, по сто зёрен"
+   ],
+   "answer": 0,
+   "info": "В 2:261 одно зерно даёт семь колосьев со ста зёрнами в каждом.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:261",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_wisdom_gift",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Какой дар прямо назван обильным благом в 2:269?",
+   "options": [
+    "Мудрость",
+    "Красноречие",
+    "Материальный достаток",
+    "Телесная сила"
+   ],
+   "answer": 0,
+   "info": "В этом аяте получение обильного блага связано с дарованием мудрости.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:269",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_debt_dictation",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Кто должен диктовать долговое обязательство, если способен, согласно 2:282?",
+   "options": [
+    "Тот, на ком лежит долг",
+    "Тот, кто дал в долг",
+    "Один из свидетелей",
+    "Писец от своего имени"
+   ],
+   "answer": 0,
+   "info": "Аят поручает запись писцу, а диктовку — должнику.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:282",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_concealed_testimony",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Как в 2:283 оценивается сокрытие свидетельства?",
+   "options": [
+    "Грех ложится на сердце скрывающего",
+    "Ответственность переходит к писцу",
+    "Скрывающий отвечает только перед должником",
+    "Ответственность есть лишь при отсутствии залога"
+   ],
+   "answer": 0,
+   "info": "Аят связывает сокрытие свидетельства с грехом сердца.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:283",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_clear_verses",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Какая группа аятов названа основой Писания в 3:7?",
+   "options": [
+    "Ясные по смыслу аяты",
+    "Многозначные аяты",
+    "Аяты о долговых обязательствах",
+    "Аяты с рассказами о пророках"
+   ],
+   "answer": 0,
+   "info": "Основой Писания названы ясные аяты, в отличие от многозначных.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:7",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_dominion",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Какие действия со властью названы в 3:26?",
+   "options": [
+    "Аллах дарует её и лишает её",
+    "Аллах дарует, но не лишает её",
+    "Аллах лишает, но не дарует её",
+    "Власть переходит только по наследству"
+   ],
+   "answer": 0,
+   "info": "В аяте и дарование власти, и её отнятие отнесены к воле Аллаха.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:26",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_beloved_giving",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Какое расходование связано с достижением благочестия в 3:92?",
+   "options": [
+    "Из того, что человек любит",
+    "Только из ненужных вещей",
+    "Только из найденного имущества",
+    "Лишь из того, что нельзя продать"
+   ],
+   "answer": 0,
+   "info": "Аят связывает благочестие с расходованием любимого имущества.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:92",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_consult_then_trust",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "Что следует после совета и принятого решения в 3:159?",
+   "options": [
+    "Упование на Аллаха",
+    "Отказ от всякого действия",
+    "Новое решение по жребию",
+    "Сокрытие решения от всех"
+   ],
+   "answer": 0,
+   "info": "После наставления советоваться Посланнику велено, решившись, уповать на Аллаха.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:159",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_mutual_consent",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Какое условие торговли прямо указано в 4:29?",
+   "options": [
+    "Взаимное согласие",
+    "Обязательное родство сторон",
+    "Оплата только серебром",
+    "Продажа только в пути"
+   ],
+   "answer": 0,
+   "info": "Аят упоминает торговлю, основанную на согласии обеих сторон.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:29",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_family_arbiters",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Откуда следует выбрать двух посредников при семейном разладе в 4:35?",
+   "options": [
+    "По одному из каждой семьи",
+    "Обоих только из семьи мужа",
+    "Обоих только из семьи жены",
+    "Обоих только из другого города"
+   ],
+   "answer": 0,
+   "info": "Аят называет посредника из его семьи и посредника из её семьи.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:35",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_good_deed_multiplied",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Какое сочетание утверждений содержится в 4:40?",
+   "options": [
+    "Нет несправедливости даже на малую частицу, а добро приумножается",
+    "Малые поступки не учитываются, а большие приумножаются",
+    "Засчитываются только явные поступки, а скрытые не учитываются",
+    "Добро и зло всегда приумножаются одинаково"
+   ],
+   "answer": 0,
+   "info": "Аят говорит об отсутствии малейшей несправедливости и о приумножении доброго дела.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:40",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_dispute_reference",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "К кому велено возвращать предмет спора в 4:59?",
+   "options": [
+    "К Аллаху и Посланнику",
+    "К Посланнику и обладателям власти",
+    "К старейшинам и учёным общины",
+    "К свидетелям и писцу"
+   ],
+   "answer": 0,
+   "info": "Вопрос спора аят велит возвращать к Аллаху и Посланнику.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:59",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_fortified_towers",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Какой образ в 4:78 показывает, что от смерти не укрыться?",
+   "options": [
+    "Укреплённые башни",
+    "Корабли с белыми парусами",
+    "Сады с высокими пальмами",
+    "Пустынные караванные пути"
+   ],
+   "answer": 0,
+   "info": "Аят говорит, что смерть настигнет даже находящихся в укреплённых башнях.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:78",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_news_referral",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "К кому следовало отнести весть о безопасности или страхе в 4:83?",
+   "options": [
+    "К Посланнику и обладателям власти",
+    "К Аллаху и Посланнику",
+    "К двум свидетелям и писцу",
+    "К путникам, прибывшим из той местности"
+   ],
+   "answer": 0,
+   "info": "Аят противопоставляет разглашению вести обращение к Посланнику и обладателям власти.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:83",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_ablution_wiping",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Какую часть тела в 5:6 прямо велено протереть при омовении?",
+   "options": [
+    "Голову",
+    "Грудь",
+    "Спину",
+    "Колени"
+   ],
+   "answer": 0,
+   "info": "При описании омовения аят отдельно упоминает протирание головы.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:6",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_oath_fasting",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Какой пост указан в 5:89 при невозможности перечисленных способов искупления клятвы?",
+   "options": [
+    "Три дня",
+    "Семь дней",
+    "Десять дней",
+    "Два месяца"
+   ],
+   "answer": 0,
+   "info": "После перечисления способов искупления аят указывает пост три дня для не имеющего возможности.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:89",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_game_assessment",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Сколько справедливых людей определяют равноценную жертву за дичь в 5:95?",
+   "options": [
+    "Двое",
+    "Один",
+    "Трое",
+    "Четверо"
+   ],
+   "answer": 0,
+   "info": "В случае умышленного убийства дичи в ихраме аят называет двух справедливых судей.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:95",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_sea_provision",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Какое различие между морской и сухопутной охотой названо в 5:96?",
+   "options": [
+    "Морская дозволена, сухопутная запрещена в ихраме",
+    "Обе запрещены в ихраме",
+    "Обе дозволены в ихраме",
+    "Сухопутная дозволена, морская запрещена"
+   ],
+   "answer": 0,
+   "info": "Аят дозволяет морскую охоту и запрещает охоту на суше в состоянии ихрама.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:96",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_falling_leaf",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Что подчёркивает образ падающего листа в 6:59?",
+   "options": [
+    "Ничто не скрыто от знания Аллаха",
+    "Знание доступно только ночью",
+    "Листья не могут падать без ветра",
+    "Человеку известно всё сокровенное"
+   ],
+   "answer": 0,
+   "info": "Аят говорит, что ни один лист не падает без знания Аллаха.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:59",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_harvest_due",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Когда в 6:141 велено отдавать должное от урожая?",
+   "options": [
+    "В день его сбора",
+    "Только через год после сбора",
+    "Только при следующем посеве",
+    "Лишь после продажи всего урожая"
+   ],
+   "answer": 0,
+   "info": "Наставление об отдаче должного связано с днём сбора урожая.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:141",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_recitation_attention",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Какая пара действий предписана слушателю при чтении Корана в 7:204?",
+   "options": [
+    "Слушать и хранить молчание",
+    "Обсуждать и задавать вопросы",
+    "Перебивать и исправлять каждого",
+    "Продолжать разговор и торговаться"
+   ],
+   "answer": 0,
+   "info": "Аят связывает слушание Корана с вниманием и молчанием.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 7:204",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/7",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_dispute_weakness",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Какие последствия раздора прямо названы в 8:46?",
+   "options": [
+    "Потеря решимости и силы",
+    "Утрата имущества и урожая",
+    "Сокращение срока договоров",
+    "Обязанность покинуть родину"
+   ],
+   "answer": 0,
+   "info": "Аят предупреждает, что споры ведут к слабости и потере силы.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 8:46",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/8",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_inclining_peace",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "Какой ответ на склонность другой стороны к миру указан в 8:61?",
+   "options": [
+    "Тоже склониться к миру и уповать на Аллаха",
+    "Отвергнуть мир при любых условиях",
+    "Согласиться только после нового спора",
+    "Отложить ответ до смены времён года"
+   ],
+   "answer": 0,
+   "info": "Наставление о мире сопровождается призывом уповать на Аллаха.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 8:61",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/8",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_charity_recipients",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Какая пара прямо входит в перечень получателей пожертвований в 9:60?",
+   "options": [
+    "Должники и путники",
+    "Поэты и писцы",
+    "Земледельцы и кузнецы",
+    "Правители и их родственники"
+   ],
+   "answer": 0,
+   "info": "Должники и путники прямо названы в перечне получателей в этом аяте.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 9:60",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/9",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_three_repentance",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "Как описано переживание троих, чьё покаяние принято в 9:118?",
+   "options": [
+    "Земля стала тесна при всей её широте",
+    "Море стало сушей перед ними",
+    "Ночь показалась короче часа",
+    "Горы превратились в сады"
+   ],
+   "answer": 0,
+   "info": "Аят передаёт их тесноту души через образ просторной земли, ставшей тесной.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 9:118",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/9",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_pharaoh_declaration",
+   "cat": "prophets",
+   "difficulty": 2,
+   "q": "Когда Фараон объявил о вере в рассказе 10:90–91?",
+   "options": [
+    "Когда начал тонуть",
+    "Перед первым разговором с Мусой",
+    "Когда отпустил народ добровольно",
+    "Перед рождением Мусы"
+   ],
+   "answer": 0,
+   "info": "Фараон произнёс признание веры, когда его настигло утопление.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 10:90, 10:91",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/10",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_shuayb_reform",
+   "cat": "prophets",
+   "difficulty": 2,
+   "q": "Как Шуайб описывает свою цель в 11:88?",
+   "options": [
+    "Исправление по мере сил",
+    "Сбор богатств своего народа",
+    "Получение царской власти",
+    "Отмена ответственности за торговлю"
+   ],
+   "answer": 0,
+   "info": "Шуайб говорит об исправлении в меру сил и относит успех к Аллаху.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 11:88",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_inner_change",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Какое изменение предшествует перемене положения людей в 13:11?",
+   "options": [
+    "Изменение того, что в них самих",
+    "Смена их правителей",
+    "Перемена места проживания",
+    "Рост их материального достатка"
+   ],
+   "answer": 0,
+   "info": "Аят связывает перемену положения людей с переменой в них самих.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 13:11",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/13",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_bee_dwellings",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Какие места для жилищ пчелы перечислены в 16:68?",
+   "options": [
+    "Горы, деревья и людские постройки",
+    "Моря, реки и подводные пещеры",
+    "Только пустынные пески",
+    "Только крыши дворцов"
+   ],
+   "answer": 0,
+   "info": "В наставлении пчеле названы горы, деревья и то, что возводят люди.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:68",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_faculties_gratitude",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Какая цель названа в конце 16:78 после упоминания слуха, зрения и сердец?",
+   "options": [
+    "Благодарность",
+    "Терпение",
+    "Щедрость",
+    "Справедливость"
+   ],
+   "answer": 0,
+   "info": "Перечень этих даров завершается напоминанием о благодарности.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:78",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_living_water",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Из чего, согласно 21:30, создано всё живое?",
+   "options": [
+    "Из воды",
+    "Из железа",
+    "Из дыма",
+    "Из соли"
+   ],
+   "answer": 0,
+   "info": "В аяте вода названа источником создания всего живого.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 21:30",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/21",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_privacy_times",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Какие три времени уединения перечислены в 24:58?",
+   "options": [
+    "До фаджра, полуденный отдых, после иша",
+    "После фаджра, до асра, до магриба",
+    "До зухра, после асра, до иша",
+    "Восход, закат и полночь"
+   ],
+   "answer": 0,
+   "info": "Аят выделяет время до утренней молитвы, полуденного отдыха и после ночной молитвы.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 24:58",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_messenger_example",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "Какие качества названы в 33:21 у тех, для кого Посланник — прекрасный пример?",
+   "options": [
+    "Надежда на Аллаха и Последний день, частое поминание",
+    "Терпение в беде, помощь путнику и щедрость",
+    "Справедливость в торговле, верность договорам и скромность",
+    "Забота о родителях, изучение Писания и примирение людей"
+   ],
+   "answer": 0,
+   "info": "Аят называет надежду на Аллаха и Последний день и частое поминание Аллаха.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 33:21",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/33",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_tree_pledge",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "Где верующие приносили присягу, упомянутую в 48:18?",
+   "options": [
+    "Под деревом",
+    "Внутри Каабы",
+    "На вершине Синая",
+    "На палубе корабля"
+   ],
+   "answer": 0,
+   "info": "Аят сообщает о довольстве Аллаха верующими, присягавшими под деревом.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 48:18",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/48",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_grain_storage",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Что Юсуф велел делать с урожаем в годы сева, кроме небольшой части для еды?",
+   "options": [
+    "Хранить его в колосьях",
+    "Обмолотить зерно и хранить без колосьев",
+    "Перемолоть зерно и хранить в виде муки",
+    "Смешать новый урожай с прошлогодним зерном"
+   ],
+   "answer": 0,
+   "info": "Юсуф предложил сохранять урожай в колосьях, отделяя лишь немного для питания.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:47",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_prison_inquiry",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "О чём Юсуф попросил посланца царя до своего выхода из темницы?",
+   "options": [
+    "Выяснить дело женщин, порезавших руки",
+    "Сначала привести к нему его братьев",
+    "Заранее назначить его хранителем запасов",
+    "Сначала вернуть ему отцовскую рубаху"
+   ],
+   "answer": 0,
+   "info": "Юсуф отправил посланца обратно с просьбой выяснить обстоятельства дела женщин.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:50",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_storehouse_qualities",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Какими двумя качествами Юсуф обосновал просьбу поручить ему хранилища?",
+   "options": [
+    "Надёжный хранитель и знающий",
+    "Сильный и заслуживающий доверия",
+    "Правдивый и терпеливый",
+    "Щедрый и благоразумный"
+   ],
+   "answer": 0,
+   "info": "В просьбе Юсуф указал на свою надёжность в хранении и знание.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:55",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_brother_pledge",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Какое исключение Якуб оговорил в обязательстве вернуть брата?",
+   "options": [
+    "Если сыновей постигнет непреодолимая беда",
+    "Если дорога займёт больше месяца",
+    "Если брат сам захочет остаться",
+    "Если урожай окажется недостаточным"
+   ],
+   "answer": 0,
+   "info": "Обязательство вернуть брата содержало исключение для непреодолимой беды.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:66",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_separate_gates",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Как Якуб совместил совет войти разными вратами с упованием?",
+   "options": [
+    "Принять меру, признавая решение за Аллахом",
+    "Потребовать знамение перед каждым входом",
+    "Считать сохранность братьев уже обещанной",
+    "Связать исход только с точным выполнением совета"
+   ],
+   "answer": 0,
+   "info": "Якуб дал практический совет, но признал, что не может защитить от воли Аллаха.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:67",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_search_order",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "В каком порядке Юсуф осматривал мешки при поиске чаши?",
+   "options": [
+    "Сначала мешки остальных, затем брата",
+    "Сначала мешок брата, затем остальных",
+    "Только мешок старшего брата",
+    "Только мешок младшего брата"
+   ],
+   "answer": 0,
+   "info": "Аят указывает, что мешок брата был осмотрен после мешков остальных.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:76",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_fish_return",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Какое известие заставило Мусу вернуться по своим следам?",
+   "options": [
+    "Рыба у скалы нашла путь в море",
+    "Жители селения отказали в пище",
+    "Царь начал отнимать корабли",
+    "Стена в городе стала разрушаться"
+   ],
+   "answer": 0,
+   "info": "Услышав о рыбе у скалы, Муса узнал искомое место и повернул назад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:61, 18:62, 18:63, 18:64",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_journey_sequence",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Какова последовательность трёх поступков спутника Мусы в суре «Аль-Кахф»?",
+   "options": [
+    "Пробоина в корабле → убийство мальчика → починка стены",
+    "Убийство мальчика → пробоина в корабле → починка стены",
+    "Починка стены → пробоина в корабле → убийство мальчика",
+    "Пробоина в корабле → починка стены → убийство мальчика"
+   ],
+   "answer": 0,
+   "info": "Повествование последовательно описывает корабль, мальчика и затем стену.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:71, 18:74, 18:77",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_boat_explanation",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "С какой угрозой спутник Мусы связал повреждение корабля бедняков?",
+   "options": [
+    "Царь силой захватывал корабли",
+    "Царь взимал большую пошлину с груза",
+    "Царь набирал всех судовладельцев в свой флот",
+    "Царь запрещал беднякам выходить в море"
+   ],
+   "answer": 0,
+   "info": "Спутник объяснил повреждение угрозой захвата кораблей царём.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:79",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_wall_treasure",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Для чего была восстановлена стена, под которой находился клад?",
+   "options": [
+    "Чтобы два сироты достигли зрелости и извлекли клад",
+    "Чтобы опекуны извлекли клад и сразу передали его сиротам",
+    "Чтобы сироты извлекли клад после возвращения родственников",
+    "Чтобы сироты извлекли клад после полной перестройки дома"
+   ],
+   "answer": 0,
+   "info": "Восстановление стены было связано с сохранением клада до зрелости двух сирот.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:82",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_barrier_help",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Что Зу-ль-Карнайн попросил у людей в ответ на предложение платы за преграду?",
+   "options": [
+    "Помочь силой, признав дар Господа лучшим",
+    "Удвоить предложенную плату",
+    "Передать ему власть над поселением",
+    "Принести весь запас продовольствия"
+   ],
+   "answer": 0,
+   "info": "Вместо обсуждения платы Зу-ль-Карнайн попросил людей помочь в строительстве своими силами.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:94, 18:95",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_barrier_materials",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Как соотнесены железо и медь в описании преграды Зу-ль-Карнайна?",
+   "options": [
+    "Железо раскалили, затем вылили на него расплавленную медь",
+    "Медь раскалили, затем вылили на неё расплавленное железо",
+    "Железо и медь смешали, затем стали раздувать огонь",
+    "Слои железа и меди уложили, затем охладили водой"
+   ],
+   "answer": 0,
+   "info": "Аят описывает раскалённое железо, поверх которого была вылита расплавленная медь.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:96",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_mistaken_efforts",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Какой контраст описывает 18:103–104 у понёсших наибольший убыток в делах?",
+   "options": [
+    "Усилия пропали, но они считают свои дела хорошими",
+    "Дела приносят пользу, но они считают их напрасными",
+    "Усилия пропали, и они знают, что ошибались",
+    "Они не приступали к делам, но считают их завершёнными"
+   ],
+   "answer": 0,
+   "info": "Аяты противопоставляют потерянные усилия убеждённости человека, что он поступает хорошо.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:103, 18:104",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_zakariya_sign",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Как точно описано знамение Закарии в суре «Марьям»?",
+   "options": [
+    "Не говорить с людьми три ночи, оставаясь здоровым",
+    "Не видеть людей три дня из-за болезни",
+    "Не покидать святилище сорок ночей",
+    "Не принимать пищу семь дней"
+   ],
+   "answer": 0,
+   "info": "В суре «Марьям» знамение связано с речью к людям при сохранении здоровья.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 19:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/19",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_maryam_vow",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Что в 19:26 следует за повелением Марьям есть, пить и утешиться?",
+   "options": [
+    "Обет не разговаривать в этот день с людьми",
+    "Обет не выходить к людям в этот день",
+    "Обет не рассказывать людям только о ребёнке",
+    "Обет не разговаривать три ночи подряд"
+   ],
+   "answer": 0,
+   "info": "Упомянутый в аяте обет сопровождается отказом говорить с людьми в этот день.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 19:26",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/19",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_ismail_traits",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Какая пара характеристик Исмаила приведена в 19:54–55?",
+   "options": [
+    "Верность обещанию; повеление семье молитвы и закята",
+    "Толкование снов; управление хранилищами",
+    "Кротость перед Фараоном; просьба о помощнике",
+    "Строительство преграды; отказ от платы"
+   ],
+   "answer": 0,
+   "info": "Аяты соединяют верность Исмаила обещанию с его наставлением семье о молитве и закяте.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 19:54, 19:55",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/19",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_musa_two_signs",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Какая пара знамений и уточнений дана Мусе в 20:20–22?",
+   "options": [
+    "Посох стал змеёй; рука побелела без вреда",
+    "Посох стал змеёй; рука побелела от болезни",
+    "Море расступилось; рука побелела без вреда",
+    "Посох открыл источники; рука побелела без вреда"
+   ],
+   "answer": 0,
+   "info": "В этом отрывке описаны превращение посоха и белая рука без повреждения.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 20:20, 20:21, 20:22",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/20",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_musa_helper_purpose",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Как Муса обосновал просьбу сделать Харуна помощником?",
+   "options": [
+    "Укрепить его и сделать Харуна участником дела",
+    "Оставить Харуна с народом, а к Фараону идти одному",
+    "Поручить Харуну хранение Писания и обучение детей",
+    "Поручить Харуну только ответы на вопросы Фараона"
+   ],
+   "answer": 0,
+   "info": "Муса просил поддержки через Харуна и его участия в порученном деле.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 20:25, 20:26, 20:27, 20:28, 20:29, 20:30, 20:31, 20:32",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/20",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_revelation_knowledge",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Какие два наставления соединены в 20:114?",
+   "options": [
+    "Не торопиться до завершения откровения и просить увеличения знания",
+    "Дождаться завершения откровения и просить облегчения",
+    "Повторять откровение до его завершения и просить знания",
+    "Дождаться завершения откровения и просить терпения"
+   ],
+   "answer": 0,
+   "info": "Аят соединяет терпение при получении откровения с просьбой о росте знания.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 20:114",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/20",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_praise_times",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Какие времена прославления перечислены в 20:130 вместе с призывом к терпению?",
+   "options": [
+    "До восхода и заката, ночью и по краям дня",
+    "После восхода и заката, ночью и в середине дня",
+    "До восхода, после заката и только в середине ночи",
+    "После восхода, до заката и только в середине дня"
+   ],
+   "answer": 0,
+   "info": "Аят называет восход и закат, часы ночи и края дня, а не один ограниченный промежуток.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 20:130",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/20",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_measure_rights",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Какая тройка требований к торговле прямо перечислена в 26:181–183?",
+   "options": [
+    "Полная мера, правильные весы, сохранение чужих прав",
+    "Полная мера, отсрочка платежа, запись каждого долга",
+    "Верные весы, два свидетеля, назначенный писец",
+    "Сохранение чужих прав, залог, перенос срока"
+   ],
+   "answer": 0,
+   "info": "Отрывок соединяет полноту меры, точность взвешивания и запрет ущемлять людей.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 26:181, 26:182, 26:183",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/26",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_ant_warning",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Как в рассказе о муравьихе связаны опасность и ответ Сулеймана?",
+   "options": [
+    "Ненамеренное раздавливание; просьба о благодарности и праведных делах",
+    "Преднамеренное нападение; просьба о благодарности и праведных делах",
+    "Ненамеренное раздавливание; просьба о царстве без наследника",
+    "Преднамеренное нападение; просьба о сокрытии войска"
+   ],
+   "answer": 0,
+   "info": "Муравьиха предупредила о неосознанном вреде, а Сулейман попросил помочь ему быть благодарным и праведным.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:18, 27:19",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_queen_council",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Какое условие царица Сабы назвала, обращаясь за советом к знати?",
+   "options": [
+    "Не решать дело без их присутствия",
+    "Не решать дело без их единогласного согласия",
+    "Не решать дело до возвращения посланцев",
+    "Не решать дело без совета военачальника"
+   ],
+   "answer": 0,
+   "info": "Царица попросила совета и сказала, что не решит дело без присутствия знати.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:32",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_gift_response",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Как соотносятся намерение царицы с подарком и ответ Сулеймана?",
+   "options": [
+    "Проверить ответ посланцам; дар Аллаха лучше предложенного богатства",
+    "Оплатить строительство; предложенного богатства недостаточно",
+    "Выкупить пленных; дар Аллаха лучше предложенного богатства",
+    "Признать победу; подарок принят как ежегодная дань"
+   ],
+   "answer": 0,
+   "info": "Царица хотела узнать ответ через посланцев, а Сулейман указал на превосходство дара Аллаха.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:35, 27:36",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_throne_test",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Как Сулейман истолковал появление трона перед собой в 27:40?",
+   "options": [
+    "Милость Господа, испытывающая его благодарность",
+    "Проверку того, узнает ли царица свой изменённый трон",
+    "Исполнение обещания ифрита до окончания заседания",
+    "Ответ царицы на доставленное ей письмо"
+   ],
+   "answer": 0,
+   "info": "Появление трона Сулейман назвал милостью и испытанием своей благодарности.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:40",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_palace_surface",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Что царица приняла за водную гладь и что ей объяснили?",
+   "options": [
+    "Стеклянный пол дворца; он был вымощен стеклом",
+    "Настоящий водоём; по нему можно пройти без моста",
+    "Мраморный пол; он был покрыт тонким льдом",
+    "Зеркало над водой; под ним находился мост"
+   ],
+   "answer": 0,
+   "info": "В рассказе поверхность показалась царице водой, но Сулейман назвал её стеклянным покрытием.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:44",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_midian_wait",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Как женщины у воды Мадьяна объяснили, почему удерживают скот?",
+   "options": [
+    "Ждут ухода пастухов; отец очень стар",
+    "Ждут возвращения отца; пастухи уже ушли",
+    "Ждут дождя; отец пасёт другое стадо",
+    "Ждут открытия колодца; отец задержан в городе"
+   ],
+   "answer": 0,
+   "info": "Они собирались поить после ухода пастухов и сообщили о преклонном возрасте отца.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 28:23",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/28",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_hiring_qualities",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Какие два качества названы при предложении нанять Мусу после помощи женщинам?",
+   "options": [
+    "Сила и надёжность",
+    "Знание и хранительская опытность",
+    "Красноречие и богатство",
+    "Знатность и старшинство"
+   ],
+   "answer": 0,
+   "info": "Предложение нанять Мусу в 28:26 опирается на силу и надёжность работника.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 28:24, 28:25, 28:26",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/28",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_midian_contract",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Каковы сроки договора Мусы в Мадьяне и условие их исполнения?",
+   "options": [
+    "Восемь лет; десять добровольно; любой из двух сроков без упрёка",
+    "Десять лет; восемь при уплате выкупа; иначе упрёк",
+    "Семь лет; десять обязательно; меньший срок недопустим",
+    "Восемь лет; ещё десять после брака; оба срока обязательны"
+   ],
+   "answer": 0,
+   "info": "Договор предусматривал восемь лет с добровольным продлением до десяти и признанием любого из двух сроков.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 28:27, 28:28",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/28",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_qarun_wealth",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Какое сочетание целей дано в наставлении Каруну о богатстве?",
+   "options": [
+    "Стремиться к Последней обители, не забывая земную долю и делая добро",
+    "Записывать долги, привлекать свидетелей и брать залог в пути",
+    "Делить наследство, исполнив завещание и погасив долг",
+    "Сберегать урожай в колосьях и готовить запасы к трудным годам"
+   ],
+   "answer": 0,
+   "info": "Наставление соединяет стремление к Последней обители, земную долю, добро и отказ от беззакония.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 28:77",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/28",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_sheep_dispute",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "На что жаловался владелец одной овцы перед Даудом в 38:23?",
+   "options": [
+    "Брат с 99 овцами потребовал и его единственную",
+    "Брат с одной овцой просил одну из его 99",
+    "Они спорили о равном разделе 99 овец",
+    "Они спорили об обмене двух одинаковых стад"
+   ],
+   "answer": 0,
+   "info": "Жалобщик имел одну овцу; его брат с 99 овцами требовал передать ему и её.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 38:22, 38:23",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/38",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_ayyub_oath",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Что Айюбу велено было взять в руку в наставлении о ненарушении клятвы (38:44)?",
+   "options": [
+    "Пучок",
+    "Посох",
+    "Рубаху",
+    "Чашу"
+   ],
+   "answer": 0,
+   "info": "В аяте о клятве Айюба назван пучок; сам Айюб охарактеризован как терпеливый.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 38:44",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/38",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_believer_argument",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Как верующий из рода Фараона сопоставил два случая — ложь и правдивость Мусы (40:28)?",
+   "options": [
+    "Ложь — против Мусы; при правде часть угрозы постигнет их",
+    "Ложь — против них; при правде часть угрозы постигнет Мусу",
+    "В обоих случаях угроза касается только Мусы",
+    "В обоих случаях угроза касается только их потомков"
+   ],
+   "answer": 0,
+   "info": "Говорящий отнёс последствия лжи к самому Мусе, а при его правдивости предупредил слушателей о части угрозы.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 40:28",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/40",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_yusuf_after_death",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Какое заявление после смерти Юсуфа вспоминается в 40:34?",
+   "options": [
+    "Аллах больше не пошлёт после него посланника",
+    "После него придёт посланник только из его семьи",
+    "Следующий посланник придёт лишь после исхода",
+    "После него останутся только цари без Писания"
+   ],
+   "answer": 0,
+   "info": "Аят напоминает о сомнениях при жизни Юсуфа и заявлении после его смерти, что нового посланника не будет.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 40:34",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/40",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_paradise_river_traits",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Какая пара описаний молока и мёда точно соответствует 47:15?",
+   "options": [
+    "Молоко неизменного вкуса; мёд очищенный",
+    "Молоко очищенное; мёд неизменного вкуса",
+    "Молоко охлаждённое; мёд благоухающий",
+    "Молоко благоухающее; мёд охлаждённый"
+   ],
+   "answer": 0,
+   "info": "В описании райских рек вкус молока не меняется, а мёд назван очищенным.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 47:15",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/47",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_monasticism_distinction",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Что в 57:27 различается как вложенное в сердца последователей Исы и изобретённое ими самими?",
+   "options": [
+    "Сострадание и милосердие — монашество",
+    "Смирение и терпение — пост",
+    "Страх и надежда — безбрачие",
+    "Искренность и благодарность — паломничество"
+   ],
+   "answer": 0,
+   "info": "Аят связывает сострадание и милосердие с даром Аллаха, а монашество — с установлением самих последователей.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 57:27",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/57",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_fay_recipients",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Какие три группы названы в 59:7 среди получателей имущества наряду с Аллахом, Посланником и его близкими?",
+   "options": [
+    "Сироты, бедные и путник",
+    "Должники, бедные и путник",
+    "Сироты, освобождаемые рабы и путник",
+    "Сироты, бедные и сборщики закята"
+   ],
+   "answer": 0,
+   "info": "В перечне 59:7 прямо названы сироты, бедные и путник; смысл распределения — не ограничивать обращение имущества богатыми.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 59:7",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/59",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_later_believers_prayer",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Какие две просьбы объединены в молитве пришедших после первых верующих в 59:10?",
+   "options": [
+    "Простить нас и предшественников в вере; убрать злобу к верующим",
+    "Простить нас и потомков; убрать страх перед врагами",
+    "Простить родных и учителей; убрать зависть к богатым",
+    "Простить нас и предшественников в вере; уберечь детей от бед"
+   ],
+   "answer": 0,
+   "info": "Молитва просит прощения для молящихся и опередивших их в вере, а также отсутствия злобы к верующим.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 59:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/59",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_fairness_conditions",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Какие два отсутствующих действия названы в 60:8 при дозволении доброты и справедливости к людям?",
+   "options": [
+    "Не воевали из-за религии и не изгоняли из домов",
+    "Не воевали из-за имущества и не отказывали в торговле",
+    "Не изгоняли из домов и не спорили о вероучении",
+    "Не нарушали торговый договор и не отказывались от переселения"
+   ],
+   "answer": 0,
+   "info": "В 60:8 названы именно отсутствие войны из-за религии и отсутствие изгнания из домов.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 60:8",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/60",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_last_request",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Что обещает сделать просящий краткой отсрочки перед смертью в 63:10?",
+   "options": [
+    "Раздать пожертвования и стать праведным",
+    "Совершить паломничество и поститься",
+    "Вернуть долги и примирить родственников",
+    "Попросить прощения и переселиться"
+   ],
+   "answer": 0,
+   "info": "В 63:10 названы пожертвование и праведность; следующий аят указывает, что наступивший срок не откладывается.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 63:10, 63:11",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/63",
+    "translationVersion": 1
+   }
   }
  ]
 }

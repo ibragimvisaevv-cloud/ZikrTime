@@ -9,6 +9,18 @@ import java.util.UUID
 /** Additive v1 namespace inside the existing Store; legacy progress and settings are untouched. */
 object LearningStore {
     private const val KEY = "learning_state_v1"
+    private const val LEVEL_KEY = "learning_level_v1"
+    val selectedLevel: KnowledgeLevel?
+        get() = KnowledgeLevel.fromId(Store.getRaw(LEVEL_KEY)?.toIntOrNull())
+
+    /** Only in-flight rounds change. Learning history and the reward ledger remain intact. */
+    fun selectLevel(level: KnowledgeLevel) {
+        if (selectedLevel == level) return
+        val r = root()
+        r.remove("sessions"); r.remove("lastScope")
+        save(r)
+        Store.putRaw(LEVEL_KEY, level.id.toString())
+    }
     private fun root(): JSONObject = runCatching { JSONObject(Store.getRaw(KEY) ?: "{}") }.getOrDefault(JSONObject())
     private fun save(root: JSONObject) { root.put("schema", 1); Store.putRaw(KEY, root.toString()) }
     private fun states(root: JSONObject): Map<String, LearningState> {
@@ -24,8 +36,10 @@ object LearningStore {
             .put("due",s.nextReviewAt).put("shown",s.explanationAt).put("event",s.lastEventId)
         s.lastCorrect?.let { q.put("ok",it) };data.put(id,q)
     }
-    fun dueIds(bank: QuizBank, now: Long = System.currentTimeMillis()): List<String> =
-        LearningPolicy.dueIds(states(root()),bank.questions.associate { it.id to it.contentVersion },now)
+    fun dueIds(bank: QuizBank, now: Long = System.currentTimeMillis(), category: String? = null): List<String> {
+        val level = selectedLevel ?: return emptyList()
+        return LearningPolicy.dueIds(states(root()),bank.questionsFor(category,level.id).associate { it.id to it.contentVersion },now)
+    }
     fun dueCount(bank: QuizBank): Int = dueIds(bank).size
     fun historyCount(): Int = states(root()).size
     fun resetLearning() {
@@ -41,24 +55,32 @@ object LearningStore {
         val sessions=root.optJSONObject("sessions") ?: JSONObject().also { root.put("sessions",it) }
         sessions.put(s.scope,LearningSessions.encode(s));if(s.scope in setOf("normal","review")) root.put("lastScope",s.scope)
     }
-    fun update(s: LearningSession) { val r=root();writeSession(r,s);save(r) }
+    fun update(s: LearningSession) {
+        // A callback from a dismissed screen must not restore the previous level's round.
+        if(s.level == null || s.level != selectedLevel?.id)return
+        val r=root();writeSession(r,s);save(r)
+    }
     fun clearSession(scope: String) { val r=root();r.optJSONObject("sessions")?.remove(scope);save(r) }
 
-    private fun validated(s: LearningSession, bank: QuizBank): LearningSession? =
-        LearningSessions.validated(s, bank.questions.associate { it.id to it.contentVersion })
+    private fun validated(s: LearningSession, bank: QuizBank, category: String? = s.category): LearningSession? =
+        selectedLevel?.let { LearningSessions.validated(s, bank, it, category) }
+    fun activeSession(bank: QuizBank, scope: String, category: String?): LearningSession? =
+        session(scope)?.let { validated(it,bank,category) }
     fun pendingSession(bank: QuizBank): LearningSession? {
         val scopes=listOf(root().optString("lastScope","normal"),"normal","review").distinct().filter { it in setOf("normal","review") }
         return scopes.firstNotNullOfOrNull { scope -> session(scope)?.takeIf { it.stage!="RESULT" }?.let { validated(it,bank) } }
     }
     fun begin(bank: QuizBank, category: String?, scope: String = "normal", cards: Boolean = false): LearningSession? {
-        session(scope)?.takeIf { it.stage!="RESULT" && it.category==category }?.let { old ->
-            validated(old,bank)?.let { update(it);return it }
+        val level = selectedLevel ?: return null
+        session(scope)?.takeIf { it.category==category }?.let { old ->
+            validated(old,bank,category)?.let { if(it!=old)update(it);return it }
         }
-        val ids=if(scope=="review")dueIds(bank) else QuestionBank.roundOrder(bank,category,Store.recentQuestions).map { it.id }
+        val ids=if(scope=="review")dueIds(bank,category=category)
+            else QuestionBank.roundOrder(bank,category,Store.recentQuestions,level=level.id).map { it.id }
         if(ids.isEmpty()) { clearSession(scope);return null }
         val s=LearningSession(UUID.randomUUID().toString(),scope,category,ids,
-            bank.questions.associate { it.id to it.contentVersion },
-            if(scope=="normal") if(cards)"CARDS" else "ASK" else "QUIZ",rewardDate=LocalDate.now().toString())
+            bank.questions.filter { it.id in ids }.associate { it.id to it.contentVersion },
+            if(scope=="normal") if(cards)"CARDS" else "ASK" else "QUIZ",rewardDate=LocalDate.now().toString(),level=level.id)
         update(s);return s
     }
     fun showExplanation(q: Question, now: Long = System.currentTimeMillis()) {
@@ -66,7 +88,9 @@ object LearningStore {
     }
     fun answer(scope: String, q: Question, canonicalOption: Int, now: Long = System.currentTimeMillis()): LearningSession? {
         val s=session(scope) ?: return null
-        if(s.selected!=null || s.stage!="QUIZ" || s.questionIds.getOrNull(s.index)!=q.id || canonicalOption !in q.options.indices)return s
+        if(s.level!=selectedLevel?.id || q.difficulty!=s.level || (s.category!=null && q.category!=s.category) ||
+            s.versions[q.id]!=q.contentVersion || s.selected!=null || s.stage!="QUIZ" ||
+            s.questionIds.getOrNull(s.index)!=q.id || canonicalOption !in q.options.indices)return s
         val ok=canonicalOption==q.answerIndex
         val event="${s.id}:${s.index}"
         val r=root();val previous=states(r)[q.id]
@@ -82,6 +106,7 @@ object LearningStore {
     }
     fun completeCurrent(scope: String): Int {
         val s=session(scope) ?: return 0
+        if(s.level==null || s.level!=selectedLevel?.id)return 0
         if(s.stage=="RESULT")return s.addedMinutes
         if(s.stage!="QUIZ" || s.selected==null)return 0
         val added=if(scope=="review")0 else Store.quizBonusForSession(s.id).takeIf { it>0 }

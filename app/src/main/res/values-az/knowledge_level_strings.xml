@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="learning_level_title">Bilik səviyyəsini seçin</string>
+    <string name="learning_level_intro">Suallar hazırlığınıza uyğun olacaq. Səviyyəni sonra dəyişə bilərsiniz.</string>
+    <string name="learning_level_label">Bilik səviyyəsi</string>
+    <string name="learning_level_not_selected">Hələ seçilməyib</string>
+    <string name="learning_level_choose">Seç</string>
+    <string name="learning_level_change">Dəyiş</string>
+    <string name="learning_level_beginner">Başlanğıc</string>
+    <string name="learning_level_intermediate">Orta</string>
+    <string name="learning_level_advanced">İrəli</string>
+    <string name="learning_level_beginner_hint">Əsas anlayışlar və tanış faktlar.</string>
+    <string name="learning_level_intermediate_hint">Əlaqələr, kontekst və mənalar.</string>
+    <string name="learning_level_advanced_hint">Dəqiq təfərrüatlar və bir-birinə yaxın cavablar.</string>
+    <string name="learning_level_count">Səviyyədəki suallar: %1$d</string>
+    <string name="learning_level_change_hint">Səviyyə dəyişdikdə yarımçıq turlar yenidən başlayır. Öyrənmə tarixçəsi və qazanılmış dəqiqələr saxlanır.</string>
+    <string name="learning_level_confirm">Səviyyəni təsdiqlə</string>
+    <string name="learning_level_empty">Bu səviyyədə bu mövzu üçün sual yoxdur</string>
+    <string name="learning_level_empty_hint">Başqa mövzu seçin və ya səviyyəni dəyişin.</string>
+</resources>

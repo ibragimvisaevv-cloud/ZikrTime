@@ -40,6 +40,7 @@
    "answer": 0,
    "info": "Quranda 114 surə və 6200-dən çox ayə var. Surələr nə vaxt və harada nazil olduğuna görə Məkki və Mədəni surələrə bölünür.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -57,6 +58,7 @@
    "answer": 0,
    "info": "«Fatihə» — «Açan» deməkdir. O, namazın hər rükətində oxunur, buna görə də «Ümmül-Kitab» — «Kitabın anası» da adlanır.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -74,6 +76,7 @@
    "answer": 0,
    "info": "«Bəqərə» («İnək») surəsində 286 ayə var. Burada Ayətul-Kürsi və Quranın ən uzun ayəsi — borcun yazılması haqqında ayə (2:282) var.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:282"
@@ -92,6 +95,7 @@
    "answer": 0,
    "info": "«Kövsər» surəsi üç qısa ayədən ibarətdir. Kövsər — Peyğəmbərə ﷺ bəxş edilmiş Cənnətdəki çayın adıdır.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -109,6 +113,7 @@
    "answer": 0,
    "info": "Bu barədə «Bəqərə» surəsində (2:185) deyilir. Vəhy Qədr gecəsində başlayıb və təxminən 23 il davam edib.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:185"
@@ -127,6 +132,7 @@
    "answer": 0,
    "info": "Cəbrayıl (ə) peyğəmbərlərə vəhy çatdırırdı. Quranda o, «Ruhul-Əmin» — «Etibarlı Ruh» da adlandırılır (26:193).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 26:193"
@@ -145,6 +151,7 @@
    "answer": 0,
    "info": "Hira mağarası Məkkə yaxınlığındakı Nur dağındadır. Peyğəmbər ﷺ peyğəmbərlikdən əvvəl də ibadət üçün oraya çəkilərdi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -162,6 +169,7 @@
    "answer": 0,
    "info": "İlk nazil olan ayələr «Ələq» surəsinin əvvəlidir (96:1–5) — insanı yaradan Rəbbin adı ilə oxumaq haqqında.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 96:1–5"
@@ -180,6 +188,7 @@
    "answer": 0,
    "info": "Ayətul-Kürsi «Bəqərə» surəsinin 255-ci ayəsidir. Orada Allahın əzəmətindən, elmindən, göylər və yer üzərində hökmranlığından bəhs olunur.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Əl-Bəqərə, 255-ci ayə"
@@ -198,6 +207,7 @@
    "answer": 0,
    "info": "Bu, İmam Müslimin rəvayət etdiyi Übeyy ibn Kəbin hədisində gəlir. Ayətul-Kürsi fərz namazlardan sonra və yatmazdan əvvəl oxunur.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Müslim; Übey ibn Kəbdən rəvayət (bankda nömrəsi yoxdur)"
@@ -216,6 +226,7 @@
    "answer": 0,
    "info": "Doqquzuncu surə — «Tövbə» əvvəlində bəsmələ olmayan yeganə surədir. Ona «Bəraət» («Uzaqlaşma») da deyilir.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -233,6 +244,7 @@
    "answer": 0,
    "info": "«Nəml» surəsində bəsmələ əvvəldə və 30-cu ayədə — Süleyman peyğəmbərin Səba məlikəsinə məktubunda gəlir. Buna görə Quranda cəmi 114 bəsmələ var.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -250,6 +262,7 @@
    "answer": 0,
    "info": "Bu, İmam Buxarinin rəvayət etdiyi hədisdə gəlir. «İxlas» surəsi tamamilə Allahın təkliyinə — tövhidə həsr olunub.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Əl-Buxari (bankda nömrəsi yoxdur)"
@@ -268,6 +281,7 @@
    "answer": 0,
    "info": "İsa peyğəmbərin anası Məryəm Quranda adı çəkilən yeganə qadındır. 19-cu surə onun adını daşıyır.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -285,6 +299,7 @@
    "answer": 0,
    "info": "«Fatihə» yeddi ayədən ibarətdir. Quran onu «təkrarlanan yeddi ayə» adlandırır (15:87), çünki hər rükətdə təkrar oxunur.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 15:87"
@@ -303,6 +318,7 @@
    "answer": 0,
    "info": "Adəm (ə) Allahın yaratdığı ilk insan və ilk peyğəmbərdir. Bütün insanlar ondan və həyat yoldaşı Həvvadan törəyib.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -320,6 +336,7 @@
    "answer": 0,
    "info": "Nuh (ə) uzun illər qövmünü tək Allaha ibadətə çağırıb. Allahın əmri ilə gəmi düzəldərək möminlərlə birlikdə tufandan xilas olub.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -337,6 +354,7 @@
    "answer": 0,
    "info": "Bu, «Bəqərə» surəsində (2:127) deyilir. İbrahim və İsmayıl (ə) Kəbənin bünövrəsini ucaldaraq Allahdan əməllərini qəbul etməsini diləyiblər.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:127"
@@ -355,6 +373,7 @@
    "answer": 0,
    "info": "Yunus (ə) balığın qarnında Allahın təkliyini etiraf edib, öz xətasını boynuna alaraq dua edib. Onun duası (21:87) çətin anlarda bu gün də oxunur.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 21:87"
@@ -373,6 +392,7 @@
    "answer": 0,
    "info": "Tövrat Musa (ə) peyğəmbərə nazil olan kitabdır. Allahın nazil etdiyi bütün kitablara iman imanın əsaslarındandır.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -390,6 +410,7 @@
    "answer": 0,
    "info": "Zəbur Davud (ə) peyğəmbərə nazil olub. Davud həm peyğəmbər, həm də hökmdar olub, Allah ona gözəl səs bəxş edib.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -407,6 +428,7 @@
    "answer": 0,
    "info": "İncil Məryəm oğlu İsa (ə) peyğəmbərə nazil olub. Müsəlmanlar İsanı Allahın elçisi bilir və Allahın onu Öz dərgahına qaldırdığına inanırlar.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -424,6 +446,7 @@
    "answer": 0,
    "info": "Süleyman (ə) peyğəmbərə bənzərsiz hakimiyyət verilib: külək və cinlər ona tabe olub, o, quşların və qarışqaların dilini anlayıb.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -441,6 +464,7 @@
    "answer": 0,
    "info": "Əyyub (ə) sağlamlığını, var-dövlətini və övladlarını itirib, amma şikayət etməyib. Allah ona şəfa verib, nemətlərini qaytarıb — onun səbri möminlər üçün nümunədir.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -458,6 +482,7 @@
    "answer": 0,
    "info": "Yusif Yaqub peyğəmbərin oğlu, İshaqın nəvəsi və İbrahimin nəticəsidir. Yaqub İsrail adı ilə də tanınır.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -475,6 +500,7 @@
    "answer": 0,
    "info": "Yusif peyğəmbərin hekayəsi onun adını daşıyan 12-ci surədə danışılır. Quran onu hekayələrin ən gözəli adlandırır (12:3).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 12:3"
@@ -493,6 +519,7 @@
    "answer": 0,
    "info": "Musa Allahdan qardaşı Harunu ona köməkçi etməsini diləyib, çünki Harun daha fəsahətli idi. Allah onun duasını qəbul edib (20:29–36).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 20:29–36"
@@ -511,6 +538,7 @@
    "answer": 0,
    "info": "Allah Zəkəriyyəyə qocalığında, həyat yoldaşı sonsuz olsa da, Yəhyanı bəxş edib. Yəhyadan əvvəl heç kim bu adla çağırılmayıb (19:7).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 19:7"
@@ -529,6 +557,7 @@
    "answer": 0,
    "info": "Adətən Quranda 25 peyğəmbərin adının çəkildiyi qəbul edilir. Peyğəmbərlər daha çox olub — Allah onların hamısı barədə xəbər verməyib (40:78).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 40:78"
@@ -547,6 +576,7 @@
    "answer": 0,
    "info": "Quran Məhəmmədi ﷺ «peyğəmbərlərin möhürü» adlandırır (33:40). Ondan sonra peyğəmbər gəlməyəcək, Quran isə son kitabdır.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 33:40"
@@ -565,6 +595,7 @@
    "answer": 0,
    "info": "Peyğəmbər ﷺ Məkkədə, Fil ilində — təxminən 570-ci ildə doğulub. O, Qüreyş qəbiləsinin Haşim nəslindən idi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -582,6 +613,7 @@
    "answer": 0,
    "info": "Anası Əminə binti Vəhb idi. Peyğəmbər ﷺ təxminən altı yaşında olanda o vəfat edib; atası Abdullah isə o doğulmamışdan əvvəl dünyasını dəyişmişdi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -599,6 +631,7 @@
    "answer": 0,
    "info": "Ərəblərdə körpələri səhradakı süd analarına vermək adəti var idi. Peyğəmbər ﷺ erkən uşaqlığını Bəni Səd qəbiləsindən olan Həlimənin yanında keçirib.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -616,6 +649,7 @@
    "answer": 0,
    "info": "Xədicə (r.a.) onun peyğəmbərliyinə ilk iman gətirən olub və ən çətin illərdə ona dayaq olub.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -633,6 +667,7 @@
    "answer": 0,
    "info": "Vəhy Peyğəmbər ﷺ 40 yaşında olanda başlayıb. Bundan əvvəl də məkkəlilər onu «əl-Əmin» — «etibarlı» adlandırırdılar.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -650,6 +685,7 @@
    "answer": 0,
    "info": "Peyğəmbər ﷺ Məkkədə təxminən 13 il, Mədinədə təxminən 10 il İslama dəvət edib. O, hicrətin 11-ci ilində 63 yaşında vəfat edib.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -667,6 +703,7 @@
    "answer": 0,
    "info": "Hicrət 622-ci ildə baş verib. O vaxt Yəsrib adlanan Mədinədə ilk müsəlman icması formalaşıb.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -684,6 +721,7 @@
    "answer": 0,
    "info": "Hicri təqvim xəlifə Ömərin dövründə tətbiq edilib. O, qəməri təqvimdir, buna görə də şəmsi təqvimə nisbətən hər il təxminən 11 gün sürüşür.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -701,6 +739,7 @@
    "answer": 0,
    "info": "Əbu Bəkr (r.a.) Peyğəmbərlə ﷺ birlikdə Sövr mağarasında üç gün gizlənib. Bu, Quranda qeyd olunur (9:40).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 9:40"
@@ -719,6 +758,7 @@
    "answer": 0,
    "info": "İsra — Qüdsə gecə səfəri, Merac isə göylərə yüksəlişdir. Məhz o zaman beş vaxt namaz fərz edilib.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -736,6 +776,7 @@
    "answer": 0,
    "info": "Bədr döyüşü hicrətin 2-ci ilində, Ramazan ayında baş verib. Təxminən 313 müsəlman özündən üç dəfə çox olan ordunu məğlub edib.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -753,6 +794,7 @@
    "answer": 0,
    "info": "Bilal Məkkədə kölə idi və imanına görə işgəncə görürdü, sonra Əbu Bəkr onu azad etdi. Peyğəmbər ﷺ onu gözəl və gur səsinə görə azan oxumağa seçib.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -770,6 +812,7 @@
    "answer": 0,
    "info": "Peyğəmbər ﷺ Mədinədə, indi Peyğəmbər məscidinin içində olan Aişənin otağında dəfn olunub. Onun yanında Əbu Bəkr və Ömər dəfn edilib.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -787,6 +830,7 @@
    "answer": 0,
    "info": "Peyğəmbər ﷺ vəfat etdikdən sonra Əbu Bəkr Siddiq ilk xəlifə olub. Dörd raşid xəlifə: Əbu Bəkr, Ömər, Osman və Əli.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -804,6 +848,7 @@
    "answer": 0,
    "info": "İslamın beş şərti: şəhadət, namaz, zəkat, Ramazan orucu və imkanı olanlar üçün həcc.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -821,6 +866,7 @@
    "answer": 0,
    "info": "Allaha, mələklərinə, kitablarına, peyğəmbərlərinə, Axirət gününə və qədərə iman. Onlar məşhur Cəbrayıl hədisində sadalanır.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -838,6 +884,7 @@
    "answer": 0,
    "info": "Sübh, zöhr, əsr, məğrib və işa. Beş vaxt namaz Merac gecəsi fərz edilib.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -855,6 +902,7 @@
    "answer": 0,
    "info": "Sübh namazının fərzi iki rükətdir. Ondan əvvəl iki rükət sünnət qılınır — Peyğəmbər ﷺ onu demək olar ki, heç vaxt tərk etməyib.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -872,6 +920,7 @@
    "answer": 0,
    "info": "Məğrib üç rükətli yeganə fərz namazdır. O, gün batandan sonra qılınır.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -889,6 +938,7 @@
    "answer": 0,
    "info": "Zöhr, əsr və işanın hər biri dörd rükətdir. Müsafir onları iki rükətə qədər qısalda bilər.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -906,6 +956,7 @@
    "answer": 0,
    "info": "Dəstəmazda üz, dirsəklərə qədər qollar yuyulur, başa məsh çəkilir və ayaqlar topuqlara qədər yuyulur (5:6). Qüsl bütün bədənin yuyulmasıdır.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 5:6"
@@ -924,6 +975,7 @@
    "answer": 0,
    "info": "Təyəmmüm su olmadıqda və ya ondan istifadə mümkün olmadıqda təmiz torpaqla təmizlənmədir. O, Quranda xatırlanır (4:43, 5:6).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 4:43, 5:6"
@@ -942,6 +994,7 @@
    "answer": 0,
    "info": "Azan namaza çağırır, iqamə isə namaz başlamazdan dərhal əvvəlki ikinci çağırışdır. Sübh azanına «Namaz yuxudan xeyirlidir» sözləri əlavə olunur.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -959,6 +1012,7 @@
    "answer": 0,
    "info": "Kəbənin istiqaməti qiblə adlanır. Onu bu tətbiqin «Qiblə» bölməsində tapa bilərsiniz.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -976,6 +1030,7 @@
    "answer": 0,
    "info": "Hicrətdən sonra təxminən 16–17 ay müsəlmanlar Qüdsdəki Əl-Əqsaya tərəf namaz qılıblar. Sonra qiblə Kəbəyə dəyişdirilib (2:144).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:144"
@@ -994,6 +1049,7 @@
    "answer": 0,
    "info": "Zəkat İslamın beş şərtindən biridir. Adətən o, nisaba çatmış və bir il saxlanılmış yığımın 2,5 faizi qədərdir.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1011,6 +1067,7 @@
    "answer": 0,
    "info": "Fitrə özü və ailəsi üçün verilir ki, kasıblar da bayramı qeyd edə bilsinlər. O, bayram namazından əvvəl verilməlidir.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1028,6 +1085,7 @@
    "answer": 0,
    "info": "Sahur — dan yeri sökülməzdən əvvəlki yeməkdir, iftar isə gün batandan sonra orucu açmaqdır. Peyğəmbər ﷺ sahurda bərəkət olduğunu buyurub.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1045,6 +1103,7 @@
    "answer": 0,
    "info": "Cümə namazı zöhrün yerinə qılınır və ondan əvvəl xütbə oxunur. Cümə müsəlmanlar üçün həftənin ən fəzilətli günüdür.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1062,6 +1121,7 @@
    "answer": 0,
    "info": "Təvaf Kəbənin ətrafında saat əqrəbinin əksinə yeddi dəfə dolanmaqdır. O, Həcərül-Əsvəd (Qara daş) olan küncdən başlayır.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1079,6 +1139,7 @@
    "answer": 0,
    "info": "Səy balaca İsmayıla su axtararaq Səfa və Mərvə təpələri arasında yeddi dəfə qaçan Hacəri xatırladır (2:158).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:158"
@@ -1097,6 +1158,7 @@
    "answer": 0,
    "info": "Həccin əsas mərasimləri Zilhiccənin 8-dən 13-dək yerinə yetirilir. Ərəfə günü Zilhiccənin 9-dur.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1114,6 +1176,7 @@
    "answer": 0,
    "info": "Ramazan doqquzuncu aydır, ondan sonra Şəvval gəlir. Hicri təqvimdə 12 qəməri ay var.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1131,6 +1194,7 @@
    "answer": 0,
    "info": "Bu, «Qədr» surəsində (97:3) deyilir. Onu Ramazanın son on gecəsində, xüsusən tək gecələrdə axtarırlar.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 97:3"
@@ -1149,6 +1213,7 @@
    "answer": 0,
    "info": "Ramazan bayramı Şəvvalın 1-də bayram namazı ilə qeyd olunur. İkinci bayram — Qurban bayramı Zilhiccənin 10-na düşür.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1166,6 +1231,7 @@
    "answer": 0,
    "info": "Zəmzəm bulağı Hacər oğlu İsmayıla su axtararkən Allahın mərhəməti ilə yaranıb. O, minillərdir quruyub tükənmir.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1183,6 +1249,7 @@
    "answer": 0,
    "info": "Bu sözlərlə biz Allahı tərifləyir və Onu hər cür nöqsandan pak bilirik. Namazdan sonra onu 33 dəfə demək adətdir.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1200,6 +1267,7 @@
    "answer": 0,
    "info": "Müsəlmanlar istənilən vəziyyətdə — sevincdə də, çətinlikdə də — bu sözlərlə Allaha şükür edirlər. «Fatihə» bəsmələdən sonra bu sözlərlə başlayır.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1217,6 +1285,7 @@
    "answer": 0,
    "info": "Hər namaz bu sözlərlə — təkbirlə başlayır. Onlar azanda və bayram günlərində də deyilir.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1234,6 +1303,7 @@
    "answer": 0,
    "info": "Gələcək barədə danışarkən müsəlmanlar «İnşallah» əlavə edirlər (18:23–24). Nəyəsə heyran qalanda isə «Maşallah» — «Allah nə istədisə, o oldu» deyirlər.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 18:23–24"
@@ -1252,6 +1322,7 @@
    "answer": 0,
    "info": "Bu, istiğfardır — bağışlanma diləmək. Peyğəmbər ﷺ gündə yetmiş dəfədən çox Allahdan bağışlanma diləyərdi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1269,6 +1340,7 @@
    "answer": 0,
    "info": "Səbr ibadətdə, günahdan çəkinməkdə və sınaqlarda dözümlü və möhkəm olmaqdır. Quranda Allahın səbr edənlərlə olduğu bildirilir (2:153).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:153"
@@ -1287,6 +1359,7 @@
    "answer": 0,
    "info": "Şükür Allaha qəlblə, dillə və əməllə minnətdarlıqdır. Allah şükür edənlərə daha artıq verəcəyini vəd edib (14:7).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 14:7"
@@ -1305,6 +1378,7 @@
    "answer": 0,
    "info": "Buxari və Müslimin rəvayət etdiyi məşhur hədis əməllərin niyyətlərə görə olduğunu bildirməklə başlayır. Xoş niyyət adi işi ibadətə çevirir.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Əl-Buxari və Müslim (bankda nömrələri yoxdur)"
@@ -1323,6 +1397,7 @@
    "answer": 0,
    "info": "Bərəkət Allahın vaxta, mala və əməllərə qoyduğu xeyir və fayda deməkdir. Bərəkətli az şey də çox xeyir gətirir.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1340,6 +1415,7 @@
    "answer": 0,
    "info": "İslam tək Allaha təslim olmaq deməkdir. Bu söz «salam» — sülh sözü ilə eyni kökdəndir.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1357,6 +1433,7 @@
    "answer": 0,
    "info": "«İxlas» surəsi, 1–2-ci ayələr. Əs-Saməd heç kimə möhtac olmayan, hamının Ona möhtac olduğu Zatdır.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "«İxlas» surəsi, 1–2-ci ayələr"
@@ -1376,6 +1453,7 @@
    "answer": 0,
    "info": "«Fatihə» surəsi, 2–3-cü ayələr. Ər-Rəhman və Ər-Rəhim Allahın rəhmətindən xəbər verən adlarıdır.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "«Fatihə» surəsi, 2–3-cü ayələr"
@@ -1395,6 +1473,7 @@
    "answer": 0,
    "info": "«Fatihə» surəsi, 5-ci ayə: biz yalnız Allaha ibadət edir və yalnız Ondan kömək diləyirik.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "«Fatihə» surəsi, 5-ci ayə"
@@ -1414,6 +1493,7 @@
    "answer": 0,
    "info": "«Əsr» surəsi, 1–2-ci ayələr. İmam Şafii deyib: insanlar yalnız bu surə üzərində düşünsəydilər, bu onlara kifayət edərdi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "«Əsr» surəsi, 1–2-ci ayələr"
@@ -1433,6 +1513,7 @@
    "answer": 0,
    "info": "«Fələq» surəsi, 1–2-ci ayələr. «Nas» surəsi ilə birlikdə onlara «Müəvvizəteyn» — Allaha sığınma surələri deyilir.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "«Fələq» surəsi, 1–2-ci ayələr"
@@ -1452,6 +1533,7 @@
    "answer": 0,
    "info": "«Nas» surəsi, 1–2-ci ayələr. Bu, Quranın son surəsidir; Peyğəmbər ﷺ onu «İxlas» və «Fələq» ilə birlikdə yatmazdan əvvəl oxuyardı.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "«Nas» surəsi, 1–2-ci ayələr"
@@ -1471,11 +1553,2412 @@
    "answer": 0,
    "info": "«Kövsər» surəsi, 1–2-ci ayələr: verilən nemətə şükür olaraq Rəbbin üçün namaz qıl və qurban kəs.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "«Kövsər» surəsi, 1–2-ci ayələr"
    },
    "arabic": "إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ"
+  },
+  {
+   "id": "l1_verify_news",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "49:6-ya görə etibarsız şəxsin gətirdiyi xəbərlə nə etmək lazımdır?",
+   "options": [
+    "Yoxlamaq",
+    "Dərhal yaymaq",
+    "Şayiəyə görə hökm vermək",
+    "Yoxlamadan inanmaq"
+   ],
+   "answer": 0,
+   "info": "Xəbəri yoxlamaq bilmədən insanlara zərər vurmağın qarşısını alır.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:6",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_reconcile_believers",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "49:10 möminlər arasında mübahisə olduqda nəyə çağırır?",
+   "options": [
+    "Onları barışdırmağa",
+    "Mübahisəni qızışdırmağa",
+    "Kin saxlamağa",
+    "Davanı yaymağa"
+   ],
+   "answer": 0,
+   "info": "Ayə möminləri qardaş adlandırır və onları barışdırmağa çağırır.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_offensive_names",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "49:11 insanlara hansı ləqəbləri qoymağı qadağan edir?",
+   "options": [
+    "Təhqiredici ləqəbləri",
+    "Qeyd üçün rahat ləqəbləri",
+    "Peşəni bildirən ləqəbləri",
+    "Qohumluğu bildirən ləqəbləri"
+   ],
+   "answer": 0,
+   "info": "Ayə təhqiredici ləqəbləri və insanları ələ salmağı qadağan edir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:11",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_no_spying",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "49:12-də hansı əməl qadağandır?",
+   "options": [
+    "Başqalarının sirrini araşdırmaq",
+    "Ehtiyaclılara yardım etmək",
+    "Qonşuları barışdırmaq",
+    "Əmanəti qaytarmaq"
+   ],
+   "answer": 0,
+   "info": "Ayə insanların gizli işlərini araşdırmağı və qeybət etməyi qadağan edir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:12",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_honour_piety",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "49:13-də Allah yanında hörmət nə ilə ölçülür?",
+   "options": [
+    "Təqva ilə",
+    "Sərvətlə",
+    "Nəsillə",
+    "Şöhrətlə"
+   ],
+   "answer": 0,
+   "info": "Ayədə Allah yanında hörmət insanın təqvası ilə əlaqələndirilir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:13",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_parents_speech",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "17:23 yaşlı valideynlərlə necə danışmağı öyrədir?",
+   "options": [
+    "Hörmətlə",
+    "Əsəbi şəkildə",
+    "İstehza ilə",
+    "Saymazyana"
+   ],
+   "answer": 0,
+   "info": "Ayə valideynlərlə hörmətlə danışmağı və narazılıq bildirməməyi əmr edir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:23",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_parents_mercy",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "17:24-dəki duada valideynlər üçün nə istənilir?",
+   "options": [
+    "Allahın mərhəməti",
+    "İnsanlar arasında şöhrət",
+    "Başqaları üzərində hakimiyyət",
+    "Nəyin bahasına olursa olsun sərvət"
+   ],
+   "answer": 0,
+   "info": "Bu duada insan onu böyüdən valideynlərinə Rəbbindən mərhəmət diləyir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:24",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_keep_promises",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "17:34 əhdlər barədə nə öyrədir?",
+   "options": [
+    "Onlara əməl etməyi",
+    "Çətin olduqda unutmağı",
+    "Gizlicə dəyişməyi",
+    "Yalnız tərif üçün yerinə yetirməyi"
+   ],
+   "answer": 0,
+   "info": "Ayə əhdə vəfa etməyi əmr edir və bunun məsuliyyətini xatırladır.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:34",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_fair_measure",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "17:35 malları necə ölçüb çəkməyi əmr edir?",
+   "options": [
+    "Tam ölçü və düzgün tərəzi ilə",
+    "Satıcının qazancına görə",
+    "Ölçmədən təxminlə",
+    "Alıcının mövqeyinə görə"
+   ],
+   "answer": 0,
+   "info": "Ayə ölçünü tam verməyi və düzgün tərəzi ilə çəkməyi tələb edir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:35",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_avoid_arrogance",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "17:37 hansı davranışdan çəkindirir?",
+   "options": [
+    "Təkəbbürdən",
+    "Sakitlikdən",
+    "Təvazökarlıqdan",
+    "Diqqətlilikdən"
+   ],
+   "answer": 0,
+   "info": "Ayə yer üzündə təkəbbürlə gəzməyi qadağan edir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:37",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_lower_voice",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "31:19 səs barədə nə tövsiyə edir?",
+   "options": [
+    "Onu alçaltmağı",
+    "Daim qışqırmağı",
+    "Başqasının səsini batırmağı",
+    "Mübahisədə ucaltmağı"
+   ],
+   "answer": 0,
+   "info": "Ayə yerişdə və səsdə təmkinli olmağı öyrədir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 31:19",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/31",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_luqman_prayer",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "31:17-də Loğman oğluna hansı ibadəti yerinə yetirməyi tapşırır?",
+   "options": [
+    "Namazı",
+    "Hər ay həcci",
+    "Fasiləsiz orucu",
+    "Hər gün Kəbəni təvafı"
+   ],
+   "answer": 0,
+   "info": "Bu ayədə Loğmanın oğluna nəsihətləri arasında namaz qılmaq da var.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 31:17",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/31",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_enter_homes",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "24:27-yə görə başqasının evinə girməzdən əvvəl nə edilməlidir?",
+   "options": [
+    "İcazə istəmək və salam vermək",
+    "Qapı açıqdırsa girmək",
+    "Əvvəl otaqlara baxmaq",
+    "Girəndən sonra özünü bildirmək"
+   ],
+   "answer": 0,
+   "info": "Ayə başqalarının evinə girməzdən əvvəl icazə və salam tələb edir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 24:27",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_return_when_asked",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "24:28-ə görə evə qonaq gedərkən geri qayıtmaq istənilsə, nə edilməlidir?",
+   "options": [
+    "Geri qayıtmaq",
+    "Girməkdə israr etmək",
+    "Başqa qapıdan girmək",
+    "Ev sahibi ilə mübahisə etmək"
+   ],
+   "answer": 0,
+   "info": "Ayə geri qayıtmaq istənildikdə qonağın qayıtmasını əmr edir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 24:28",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_return_greeting",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "4:86-ya görə salama necə cavab verilməlidir?",
+   "options": [
+    "Eynisi və ya daha yaxşısı ilə",
+    "Yalnız susmaqla",
+    "Mütləq daha qısa",
+    "Yalnız təkrar ediləndən sonra"
+   ],
+   "answer": 0,
+   "info": "Ayə salama eyni və ya daha gözəl salamla cavab verməyi öyrədir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:86",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_return_trust",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "4:58 əmanətləri kimə qaytarmağı əmr edir?",
+   "options": [
+    "Haqlı sahiblərinə",
+    "Ən varlılara",
+    "İlk istəyənə",
+    "Ən nüfuzlu şəxsə"
+   ],
+   "answer": 0,
+   "info": "Ayə əmanətlərin onların haqq sahiblərinə verilməsini əmr edir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:58",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_justice_self",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "4:135-ə görə öz əleyhinə olsa belə ədalətlə şahidlik edilməlidirmi?",
+   "options": [
+    "Bəli, öz əleyhinə olsa belə",
+    "Xeyr, insan həmişə özünü qorumalıdır",
+    "Yalnız heç kim bilməsə",
+    "Yalnız insanların mükafatı üçün"
+   ],
+   "answer": 0,
+   "info": "Ayə insanın özünə və yaxınlarına qarşı olsa da ədalətli şahidlik tələb edir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:135",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_cooperate_good",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "5:2 bir-birimizə nədə kömək etməyə çağırır?",
+   "options": [
+    "Yaxşılıq və təqvada",
+    "Günah və düşmənçilikdə",
+    "Dostlar üçün aldatmaqda",
+    "Rəqiblərdən qisas almaqda"
+   ],
+   "answer": 0,
+   "info": "Ayə yaxşılıqda əməkdaşlığı əmr edib, günah və düşmənçilikdə yardımı qadağan edir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:2",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_justice_dislike",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "5:8 sevmədiyimiz insanlarla necə davranmağı öyrədir?",
+   "options": [
+    "Ədalətlə",
+    "Qərəzlə",
+    "Qisasçılıqla",
+    "Haqlarındakı şayiələrə görə"
+   ],
+   "answer": 0,
+   "info": "İnsanları sevməmək ədalətsiz davranmağa səbəb olmamalıdır.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:8",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_justice_kindness",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "16:90-da hansı əməllər birlikdə əmr edilir?",
+   "options": [
+    "Ədalət, yaxşılıq və qohumlara yardım",
+    "Şöhrət, hakimiyyət və rəqabət",
+    "Sərvət, təkəbbür və qisas",
+    "Sükut, şübhə və uzaqlaşma"
+   ],
+   "answer": 0,
+   "info": "Ayə ədaləti, yaxşılığı və qohumlara səxavəti birlikdə qeyd edir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:90",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_patience_prayer",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "2:153 nə vasitəsilə yardım istəməyə çağırır?",
+   "options": [
+    "Səbir və namaz",
+    "Şöhrət və sərvət",
+    "Qəzəb və mübahisə",
+    "Güc və təkəbbür"
+   ],
+   "answer": 0,
+   "info": "Ayə yardım istəməyi səbir və namazla əlaqələndirir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:153",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_charity_orphans",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "2:177-də yardım alanlar arasında hansı qrup açıq şəkildə adlanır?",
+   "options": [
+    "Yetimlər",
+    "Sərkərdələr",
+    "Hakimlər",
+    "Hökmdarlar"
+   ],
+   "answer": 0,
+   "info": "Ayə yetimlərə yardım etməyi yaxşı əməllər arasında sayır.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:177",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_fasting_piety",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "2:183 orucun hansı məqsədini göstərir?",
+   "options": [
+    "Təqva",
+    "Şöhrət",
+    "Varlanmaq",
+    "Nəsillə üstünlük"
+   ],
+   "answer": 0,
+   "info": "Ayədə oruc əmri təqvanın formalaşması ilə əlaqələndirilir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:183",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_fasting_makeup",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "2:185 xəstəlik və ya səfərə görə buraxılan oruc üçün nə bildirir?",
+   "options": [
+    "Sonra eyni sayda gün tutmaq",
+    "İkiqat gün tutmaq",
+    "Yalnız əlavə namaz qılmaq",
+    "Günlərin yerinə həcc etmək"
+   ],
+   "answer": 0,
+   "info": "Ayə buraxılan oruc günlərinin başqa günlərdə tamamlanmasını bildirir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:185",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_fast_until_night",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "2:187-də gündəlik orucun hansı bitmə vaxtı göstərilir?",
+   "options": [
+    "Gecə düşənədək",
+    "Günortayadək",
+    "Növbəti sübhədək",
+    "Gecə yarısınadək"
+   ],
+   "answer": 0,
+   "info": "Ayə gecənin gəlməsini gündəlik orucun sonu kimi göstərir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:187",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_kind_words",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "2:263 incitmə ilə müşayiət olunan sədəqədən nəyi üstün tutur?",
+   "options": [
+    "Xoş söz və bağışlamağı",
+    "Özünü tərifləməyi",
+    "Səxavətini xatırlatmağı",
+    "Hamının yanında alçaltmağı"
+   ],
+   "answer": 0,
+   "info": "Ayə xoş sözü və bağışlamağı incidici yardımdan üstün tutur.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:263",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_charity_no_reproach",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "2:264-ə görə sədəqəni nə ilə puça çıxarmaq olmaz?",
+   "options": [
+    "Minnət qoymaq və incitməklə",
+    "Təvazökarlıqla",
+    "Alana hörmətlə",
+    "Səmimiyyətlə"
+   ],
+   "answer": 0,
+   "info": "Ayə sədəqədən sonra minnət qoymaqdan və incitməkdən çəkindirir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:264",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_debtor_respite",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "2:280 çətinlikdə olan borcluya nə verməyi əmr edir?",
+   "options": [
+    "Vəziyyəti düzələnədək möhlət",
+    "Dərhal cəza",
+    "Məcburi yeni borc",
+    "İctimai qınaq"
+   ],
+   "answer": 0,
+   "info": "Ayə çətinlikdə olan borcluya vəziyyəti yüngülləşənədək möhlət verməyi əmr edir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:280",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_within_capacity",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "2:286 insana yüklənən məsuliyyəti necə təsvir edir?",
+   "options": [
+    "Gücü çatan qədər",
+    "Həmişə gücündən artıq",
+    "Qonşularının sərvətinə görə",
+    "Şəxsi şöhrətinə görə"
+   ],
+   "answer": 0,
+   "info": "Ayə Allahın insana gücündən artıq yük yükləmədiyini bildirir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:286",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_restrain_anger",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "3:134-də qəzəbə hansı münasibət təriflənir?",
+   "options": [
+    "Onu boğmaq və bağışlamaq",
+    "Mübahisəni qızışdırmaq",
+    "İncidəni alçaltmaq",
+    "Kin saxlamaq"
+   ],
+   "answer": 0,
+   "info": "Ayə qəzəbini boğan və insanları bağışlayanları tərifləyir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:134",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_food_no_waste",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "7:31 yemək və içmək üçün hansı həddi bildirir?",
+   "options": [
+    "İsraf etməmək",
+    "Yalnız tək yemək",
+    "Həmişə ən bahalısını seçmək",
+    "Bütün yeməklərdən imtina etmək"
+   ],
+   "answer": 0,
+   "info": "Ayə yeməyə və içməyə icazə verərək israfdan çəkindirir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 7:31",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/7",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_no_religious_insult",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "6:108 nəyi söyməyi qadağan edir?",
+   "options": [
+    "Başqalarının Allahdan qeyri ibadət etdiklərini",
+    "Yalnız qonşuların əmlakını",
+    "Yalnız başqalarının geyimini",
+    "Yalnız şəhər adlarını"
+   ],
+   "answer": 0,
+   "info": "Ayə qarşılığında cahilliklə Allahın söyülməməsi üçün belə təhqiri qadağan edir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:108",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_do_not_oppress_orphan",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "93:9 yetimə münasibətdə nəyi qadağan edir?",
+   "options": [
+    "Onu əzməyi",
+    "Onunla danışmağı",
+    "Ona öyrətməyi",
+    "Ona yardım etməyi"
+   ],
+   "answer": 0,
+   "info": "Ayə yetimi əzməyi qadağan edir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 93:9",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/93",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_do_not_repel_asker",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "93:10 diləyən şəxsə qarşı hansı davranışı qadağan edir?",
+   "options": [
+    "Onu qovmağı",
+    "Onu dinləməyi",
+    "Ona cavab verməyi",
+    "Onu görməyi"
+   ],
+   "answer": 0,
+   "info": "Ayə diləyən şəxsi kobudluqla qovmaqdan çəkindirir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 93:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/93",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_feed_needy",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "107:3-də qınanan şəxs hansı əmələ təşviq etmir?",
+   "options": [
+    "Yoxsulu yedirtməyə",
+    "Saraylar tikməyə",
+    "Bəzək almağa",
+    "Cəvahirat toplamağa"
+   ],
+   "answer": 0,
+   "info": "Ayə ehtiyaclını yedirtməyə təşviq etməməyi qınayır.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 107:3",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/107",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_lord_of_house",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "106:3 kimə ibadət etməyə çağırır?",
+   "options": [
+    "Bu Evin Rəbbinə",
+    "Evin keşikçilərinə",
+    "Karvan sahiblərinə",
+    "Qəbilənin əcdadlarına"
+   ],
+   "answer": 0,
+   "info": "Ayə ibadəti bu Evin Rəbbinə yönəldir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 106:3",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/106",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_elephant_verse",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "105:1-də hansı heyvan qeyd olunur?",
+   "options": [
+    "Fil",
+    "Dəvə",
+    "Şir",
+    "At"
+   ],
+   "answer": 0,
+   "info": "Bu surənin ilk ayəsində fil sahibləri qeyd olunur.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 105:1",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/105",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_refuge_lord_people",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "114:1-də sığınacaq istənilərkən Allah necə adlanır?",
+   "options": [
+    "İnsanların Rəbbi",
+    "Haqq-hesab gününün Sahibi",
+    "Sübhün Rəbbi",
+    "Aləmlərin Rəbbi"
+   ],
+   "answer": 0,
+   "info": "Bu surənin ilk ayəsində insanların Rəbbinə sığınılır.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 114:1",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/114",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_allah_one",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "112:1 ilahların sayı barədə nə bildirir?",
+   "options": [
+    "Allah Təkdir",
+    "Onlar üçdür",
+    "Onlar çoxdur",
+    "Onlar ikidir"
+   ],
+   "answer": 0,
+   "info": "Ayə Allahın təkliyini bildirir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 112:1",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/112",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_hardship_ease",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "94:5 çətinliklə nəyi əlaqələndirir?",
+   "options": [
+    "Asanlığı",
+    "Qaçılmaz ümidsizliyi",
+    "Sonsuz kədəri",
+    "Ümidin itməsini"
+   ],
+   "answer": 0,
+   "info": "Ayə çətinliklə yanaşı asanlıq olduğunu xatırladır.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 94:5",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/94",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_covenant",
+   "cat": "prophets",
+   "difficulty": 2,
+   "q": "2:124-də İbrahimə verilən cavabda hansı qrup əhddən kənarda qalır?",
+   "options": [
+    "Onun nəslindən olan zalımlar",
+    "Onun nəslindən olan yoxsullar",
+    "Onun nəslindən padşahlıq hakimiyyəti olmayanlar",
+    "Onun nəslindən Məkkədən kənarda doğulanlar"
+   ],
+   "answer": 0,
+   "info": "Ayə zalımları istisna edir; əhdi sərvət və ya doğum yeri ilə əlaqələndirmir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:124",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_witnesses",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "2:143-də şahidlik rolları necə bölüşdürülür?",
+   "options": [
+    "Ümmət insanlara, Elçi ümmətə şahiddir",
+    "İnsanlar ümmətə, ümmət Elçiyə şahiddir",
+    "Elçi insanlara, insanlar ümmətə şahiddir",
+    "Ümmət Elçiyə, Elçi mələklərə şahiddir"
+   ],
+   "answer": 0,
+   "info": "Orta ümmət insanlara, Elçi isə ümmətə şahid adlandırılır.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:143",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_safa_marwa_signs",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Səfa və Mərvə 2:158-də necə təsvir olunur?",
+   "options": [
+    "Allahın ibadət əlamətləri kimi",
+    "İhrama girilən yerlər kimi",
+    "Hərəm ərazisinin sərhədləri kimi",
+    "Ərəfə günü vəqfə yerləri kimi"
+   ],
+   "answer": 0,
+   "info": "Ayə Səfa və Mərvəni Allahın müəyyən etdiyi ibadət əlamətlərinə aid edir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:158",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_harm_comparison",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "2:219-da şərabın və qumarın günahı ilə faydası necə müqayisə edilir?",
+   "options": [
+    "Günahı faydasından böyükdür",
+    "Faydası günahından böyükdür",
+    "Günahı və faydası bərabərdir",
+    "Nə günahı, nə də faydası var"
+   ],
+   "answer": 0,
+   "info": "Ayədə müəyyən fayda qeyd olunur, lakin günahın daha böyük olduğu bildirilir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:219",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_river_exception",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Talut çayla sınaq zamanı hansı istisnanı etdi?",
+   "options": [
+    "Bir ovuc su götürmək",
+    "Bir kuzə doldurmaq",
+    "Doyana qədər su içmək",
+    "Yalnız öz atını sulamaq"
+   ],
+   "answer": 0,
+   "info": "2:249-da istisna olaraq əllə bir ovuc su götürməyə icazə verilir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:249",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_ibrahim_reassurance",
+   "cat": "prophets",
+   "difficulty": 2,
+   "q": "İbrahim ölülərin dirildilməsinin ona göstərilməsini nə üçün istədi?",
+   "options": [
+    "Qəlbinin rahatlıq tapması üçün",
+    "İlk dəfə iman gətirmək üçün",
+    "Ölüm vaxtını öyrənmək üçün",
+    "Köçəcəyi yeri seçmək üçün"
+   ],
+   "answer": 0,
+   "info": "2:260-da İbrahim iman etdiyini təsdiqləyir və istəyini qəlbinin rahatlıq tapması ilə izah edir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:260",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_grain_parable",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Mal xərcləmək haqqında məsəldə bir dənənin verdiyi məhsul necə təsvir olunur?",
+   "options": [
+    "Hərəsində yüz dənə olan yeddi sünbül",
+    "Hərəsində yeddi dənə olan yüz sünbül",
+    "Hərəsində on dənə olan yeddi sünbül",
+    "Hərəsində yüz dənə olan on sünbül"
+   ],
+   "answer": 0,
+   "info": "2:261-də bir dənə hərəsində yüz dənə olan yeddi sünbül verir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:261",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_wisdom_gift",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "2:269-da hansı nemət açıq şəkildə çoxlu xeyirlə əlaqələndirilir?",
+   "options": [
+    "Hikmət",
+    "Natiqlik qabiliyyəti",
+    "Maddi bolluq",
+    "Bədən gücü"
+   ],
+   "answer": 0,
+   "info": "Bu ayədə çoxlu xeyir əldə etmək hikmət verilməsi ilə əlaqələndirilir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:269",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_debt_dictation",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "2:282-yə görə, bacarırsa, borc sənədini yazdıran kim olmalıdır?",
+   "options": [
+    "Borc öhdəliyi olan şəxs",
+    "Borc verən şəxs",
+    "Şahidlərdən biri",
+    "Katib öz adından"
+   ],
+   "answer": 0,
+   "info": "Ayədə yazmaq katibə, yazılacaq sözləri demək isə borcluya tapşırılır.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:282",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_concealed_testimony",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "2:283-də şahidliyi gizlətmək necə qiymətləndirilir?",
+   "options": [
+    "Gizlədənin qəlbi günah daşıyır",
+    "Məsuliyyət katibə keçir",
+    "Gizlədən yalnız borcluya cavabdehdir",
+    "Məsuliyyət yalnız girov olmadıqda yaranır"
+   ],
+   "answer": 0,
+   "info": "Ayə şahidliyin gizlədilməsini qəlbin günahı ilə əlaqələndirir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:283",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_clear_verses",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "3:7-də hansı ayələr Kitabın əsası adlandırılır?",
+   "options": [
+    "Mənası aydın ayələr",
+    "Çoxmənalı ayələr",
+    "Borc öhdəlikləri haqqında ayələr",
+    "Peyğəmbərlər haqqında hekayələr olan ayələr"
+   ],
+   "answer": 0,
+   "info": "Çoxmənalı ayələrdən fərqli olaraq, mənası aydın ayələr Kitabın əsası adlandırılır.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:7",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_dominion",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "3:26-da hakimiyyətlə bağlı hansı əməllər qeyd olunur?",
+   "options": [
+    "Allah onu verir və geri alır",
+    "Allah onu verir, lakin geri almır",
+    "Allah onu geri alır, lakin vermir",
+    "Hakimiyyət yalnız mirasla keçir"
+   ],
+   "answer": 0,
+   "info": "Ayədə həm hakimiyyətin verilməsi, həm də alınması Allahın iradəsinə aid edilir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:26",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_beloved_giving",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "3:92-də yaxşılığa çatmaq hansı xərcləmə ilə əlaqələndirilir?",
+   "options": [
+    "İnsanın sevdiyi şeylərdən xərcləməklə",
+    "Yalnız lazımsız əşyalardan xərcləməklə",
+    "Yalnız tapılmış maldan xərcləməklə",
+    "Yalnız satıla bilməyən şeylərdən xərcləməklə"
+   ],
+   "answer": 0,
+   "info": "Ayə yaxşılığa çatmağı insanın sevdiyi maldan xərcləməsi ilə əlaqələndirir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:92",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_consult_then_trust",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "3:159-da məsləhətləşib qərar verdikdən sonra nə etmək buyurulur?",
+   "options": [
+    "Allaha təvəkkül etmək",
+    "Hər cür fəaliyyətdən əl çəkmək",
+    "Püşklə yeni qərar vermək",
+    "Qərarı hamıdan gizlətmək"
+   ],
+   "answer": 0,
+   "info": "Məsləhətləşmək göstərişindən sonra Elçiyə qərar verincə Allaha təvəkkül etmək buyurulur.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:159",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_mutual_consent",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "4:29-da ticarətin hansı şərti açıq şəkildə göstərilir?",
+   "options": [
+    "Qarşılıqlı razılıq",
+    "Tərəflərin mütləq qohum olması",
+    "Yalnız gümüşlə ödəniş",
+    "Yalnız səfərdə satış"
+   ],
+   "answer": 0,
+   "info": "Ayədə hər iki tərəfin razılığına əsaslanan ticarət qeyd olunur.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:29",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_family_arbiters",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "4:35-də ailə münaqişəsi zamanı iki vasitəçi haradan seçilməlidir?",
+   "options": [
+    "Hər ailədən bir nəfər",
+    "Hər ikisi yalnız ərin ailəsindən",
+    "Hər ikisi yalnız arvadın ailəsindən",
+    "Hər ikisi yalnız başqa şəhərdən"
+   ],
+   "answer": 0,
+   "info": "Ayədə bir vasitəçinin ərin, digərinin isə qadının ailəsindən olması göstərilir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:35",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_good_deed_multiplied",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "4:40-da hansı iki fikir birlikdə bildirilir?",
+   "options": [
+    "Zərrə qədər haqsızlıq edilmir, yaxşılıq isə artırılır",
+    "Kiçik əməllər nəzərə alınmır, böyüklər isə artırılır",
+    "Yalnız açıq əməllər sayılır, gizlilər nəzərə alınmır",
+    "Yaxşılıq və pislik həmişə eyni dərəcədə artırılır"
+   ],
+   "answer": 0,
+   "info": "Ayə zərrə qədər haqsızlığın olmadığını və yaxşı əməlin artırıldığını bildirir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:40",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_dispute_reference",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "4:59-da mübahisə mövzusunu kimə qaytarmaq buyurulur?",
+   "options": [
+    "Allaha və Elçiyə",
+    "Elçiyə və rəhbərliyə sahib olanlara",
+    "Ümmətin ağsaqqallarına və alimlərinə",
+    "Şahidlərə və katibə"
+   ],
+   "answer": 0,
+   "info": "Ayə mübahisə mövzusunu Allaha və Elçiyə qaytarmağı buyurur.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:59",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_fortified_towers",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "4:78-də hansı təsvir ölümdən gizlənməyin mümkün olmadığını göstərir?",
+   "options": [
+    "Möhkəmləndirilmiş qüllələr",
+    "Ağ yelkənli gəmilər",
+    "Hündür xurmalı bağlar",
+    "Kimsəsiz karvan yolları"
+   ],
+   "answer": 0,
+   "info": "Ayədə ölümün hətta möhkəmləndirilmiş qüllələrdə olanlara da çatacağı bildirilir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:78",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_news_referral",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "4:83-də təhlükəsizlik və ya qorxu xəbəri kimə çatdırılmalı idi?",
+   "options": [
+    "Elçiyə və rəhbərliyə sahib olanlara",
+    "Allaha və Elçiyə",
+    "İki şahidə və katibə",
+    "Həmin ərazidən gələn yolçulara"
+   ],
+   "answer": 0,
+   "info": "Ayə xəbəri yaymağın əvəzinə Elçiyə və rəhbərliyə sahib olanlara müraciəti göstərir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:83",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_ablution_wiping",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "5:6-da dəstəmaz alarkən bədənin hansı hissəsinə məsh etmək açıq şəkildə buyurulur?",
+   "options": [
+    "Başa",
+    "Sinəyə",
+    "Kürəyə",
+    "Dizlərə"
+   ],
+   "answer": 0,
+   "info": "Dəstəmaz təsvir edilərkən ayədə başa məsh çəkilməsi ayrıca qeyd olunur.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:6",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_oath_fasting",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "5:89-da and kəffarəsinin sadalanan yollarına imkan olmayanda hansı oruc göstərilir?",
+   "options": [
+    "Üç gün",
+    "Yeddi gün",
+    "On gün",
+    "İki ay"
+   ],
+   "answer": 0,
+   "info": "Ayədə kəffarə yollarından sonra buna imkanı olmayan üçün üç gün oruc göstərilir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:89",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_game_assessment",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "5:95-də ov heyvanına bərabər qurbanı neçə ədalətli şəxs müəyyən edir?",
+   "options": [
+    "İki",
+    "Bir",
+    "Üç",
+    "Dörd"
+   ],
+   "answer": 0,
+   "info": "İhramda ov heyvanının qəsdən öldürülməsi halında ayə iki ədalətli hakimi qeyd edir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:95",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_sea_provision",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "5:96-da dənizdə və quruda ov arasında hansı fərq göstərilir?",
+   "options": [
+    "Dənizdə ov halaldır, quruda ov ihramda haramdır",
+    "İhramda hər ikisi haramdır",
+    "İhramda hər ikisi halaldır",
+    "Quruda ov halaldır, dənizdə ov haramdır"
+   ],
+   "answer": 0,
+   "info": "Ayə dənizdə ova icazə verir və ihram halında quruda ovu qadağan edir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:96",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_falling_leaf",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "6:59-da düşən yarpaq təsviri nəyi vurğulayır?",
+   "options": [
+    "Allahın elmindən heç nə gizli deyil",
+    "Bilik yalnız gecə əldə edilir",
+    "Yarpaqlar küləksiz düşə bilməz",
+    "İnsan bütün qeybi bilir"
+   ],
+   "answer": 0,
+   "info": "Ayə bildirir ki, Allahın xəbəri olmadan heç bir yarpaq düşmür.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:59",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_harvest_due",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "6:141-də məhsuldan verilməli olan payı nə vaxt vermək buyurulur?",
+   "options": [
+    "Məhsul yığılan gün",
+    "Yalnız yığımdan bir il sonra",
+    "Yalnız növbəti səpin zamanı",
+    "Yalnız bütün məhsul satıldıqdan sonra"
+   ],
+   "answer": 0,
+   "info": "Verilməli olan pay haqqında göstəriş məhsulun yığıldığı günlə əlaqələndirilir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:141",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_recitation_attention",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "7:204-də Quran oxunarkən dinləyiciyə hansı iki davranış buyurulur?",
+   "options": [
+    "Dinləmək və susmaq",
+    "Müzakirə etmək və sual vermək",
+    "Söz kəsmək və hər kəsi düzəltmək",
+    "Söhbəti və alveri davam etdirmək"
+   ],
+   "answer": 0,
+   "info": "Ayə Quranı dinləməyi diqqət və sükutla əlaqələndirir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 7:204",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/7",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_dispute_weakness",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "8:46-da ixtilafın hansı nəticələri açıq şəkildə göstərilir?",
+   "options": [
+    "Qətiyyətin və gücün itirilməsi",
+    "Malın və məhsulun itirilməsi",
+    "Müqavilə müddətinin qısalması",
+    "Vətəni tərk etmək öhdəliyi"
+   ],
+   "answer": 0,
+   "info": "Ayə mübahisələrin zəifləməyə və güc itkisinə gətirdiyi barədə xəbərdarlıq edir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 8:46",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/8",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_inclining_peace",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "8:61-də qarşı tərəfin sülhə meylinə hansı cavab göstərilir?",
+   "options": [
+    "Sülhə meyl etmək və Allaha təvəkkül etmək",
+    "Hər şəraitdə sülhü rədd etmək",
+    "Yalnız yeni mübahisədən sonra razılaşmaq",
+    "Cavabı fəsil dəyişənədək təxirə salmaq"
+   ],
+   "answer": 0,
+   "info": "Sülh haqqında göstəriş Allaha təvəkkül çağırışı ilə birlikdə verilir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 8:61",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/8",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_charity_recipients",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "9:60-da sədəqə alanlar siyahısında hansı iki qrup açıq şəkildə göstərilir?",
+   "options": [
+    "Borclular və yolçular",
+    "Şairlər və katiblər",
+    "Əkinçilər və dəmirçilər",
+    "Hökmdarlar və onların qohumları"
+   ],
+   "answer": 0,
+   "info": "Bu ayədə sədəqə alanlar arasında borclular və yolçular açıq şəkildə sadalanır.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 9:60",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/9",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_three_repentance",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "9:118-də tövbəsi qəbul edilən üç nəfərin yaşadıqları necə təsvir olunur?",
+   "options": [
+    "Yer bütün genişliyinə baxmayaraq onlara dar gəldi",
+    "Dəniz onların qarşısında quruya çevrildi",
+    "Gecə onlara bir saatdan qısa göründü",
+    "Dağlar bağlara çevrildi"
+   ],
+   "answer": 0,
+   "info": "Ayə onların qəlb sıxıntısını geniş yerin dar gəlməsi təsviri ilə çatdırır.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 9:118",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/9",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_pharaoh_declaration",
+   "cat": "prophets",
+   "difficulty": 2,
+   "q": "10:90–91-dəki hadisədə Firon imanını nə vaxt elan etdi?",
+   "options": [
+    "Boğulmağa başlayanda",
+    "Musa ilə ilk söhbətdən əvvəl",
+    "Xalqı könüllü buraxanda",
+    "Musa doğulmazdan əvvəl"
+   ],
+   "answer": 0,
+   "info": "Firon boğulmağa məruz qalanda iman etdiyini söylədi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 10:90, 10:91",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/10",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_shuayb_reform",
+   "cat": "prophets",
+   "difficulty": 2,
+   "q": "Şüeyb 11:88-də öz məqsədini necə təsvir edir?",
+   "options": [
+    "Gücü çatdığı qədər islah etmək",
+    "Xalqının sərvətini toplamaq",
+    "Padşahlıq hakimiyyətini əldə etmək",
+    "Ticarətə görə məsuliyyəti ləğv etmək"
+   ],
+   "answer": 0,
+   "info": "Şüeyb gücü çatdığı qədər islahdan danışır və uğuru Allaha aid edir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 11:88",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_inner_change",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "13:11-də insanların vəziyyətinin dəyişməsindən əvvəl hansı dəyişiklik göstərilir?",
+   "options": [
+    "Özlərində olanı dəyişmələri",
+    "Rəhbərlərinin dəyişməsi",
+    "Yaşayış yerinin dəyişməsi",
+    "Maddi imkanlarının artması"
+   ],
+   "answer": 0,
+   "info": "Ayə insanların vəziyyətinin dəyişməsini özlərində olanı dəyişmələri ilə əlaqələndirir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 13:11",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/13",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_bee_dwellings",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "16:68-də arının yuva qurması üçün hansı yerlər sadalanır?",
+   "options": [
+    "Dağlar, ağaclar və insanların tikililəri",
+    "Dənizlər, çaylar və sualtı mağaralar",
+    "Yalnız səhranın qumları",
+    "Yalnız sarayların damları"
+   ],
+   "answer": 0,
+   "info": "Arıya verilən göstərişdə dağlar, ağaclar və insanların tikdikləri qeyd olunur.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:68",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_faculties_gratitude",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "16:78-in sonunda eşitmə, görmə və qəlblərdən sonra hansı məqsəd göstərilir?",
+   "options": [
+    "Şükür",
+    "Səbir",
+    "Səxavət",
+    "Ədalət"
+   ],
+   "answer": 0,
+   "info": "Bu nemətlərin sadalanması şükür haqqında xatırlatma ilə bitir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:78",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_living_water",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "21:30-a görə, bütün canlılar nədən yaradılıb?",
+   "options": [
+    "Sudan",
+    "Dəmirdən",
+    "Tüstüdən",
+    "Duzdan"
+   ],
+   "answer": 0,
+   "info": "Ayədə bütün canlıların sudan yaradıldığı bildirilir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 21:30",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/21",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_privacy_times",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "24:58-də hansı üç məhrəm vaxt sadalanır?",
+   "options": [
+    "Sübh namazından əvvəl, günorta istirahəti, işa namazından sonra",
+    "Sübh namazından sonra, əsrdən əvvəl, məğribdən əvvəl",
+    "Zöhrdən əvvəl, əsrdən sonra, işadan əvvəl",
+    "Günəşin doğması, batması və gecə yarısı"
+   ],
+   "answer": 0,
+   "info": "Ayə sübh namazından əvvəlki vaxtı, günorta istirahətini və işa namazından sonranı ayırır.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 24:58",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_messenger_example",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "33:21-də Elçinin gözəl nümunə olduğu insanlarda hansı xüsusiyyətlər qeyd olunur?",
+   "options": [
+    "Allaha və Axirət gününə ümid, çoxlu zikr",
+    "Çətinlikdə səbir, yolçuya yardım və səxavət",
+    "Ticarətdə ədalət, əhdə vəfa və təvazökarlıq",
+    "Valideynlərə qayğı, Kitabı öyrənmək və insanları barışdırmaq"
+   ],
+   "answer": 0,
+   "info": "Ayə Allaha və Axirət gününə ümid etməyi və Allahı çox zikr etməyi qeyd edir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 33:21",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/33",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_tree_pledge",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "48:18-də qeyd olunan beyəti möminlər harada etdilər?",
+   "options": [
+    "Ağacın altında",
+    "Kəbənin içində",
+    "Sina dağının zirvəsində",
+    "Gəminin göyərtəsində"
+   ],
+   "answer": 0,
+   "info": "Ayə Allahın ağacın altında beyət edən möminlərdən razı qaldığını bildirir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 48:18",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/48",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_grain_storage",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Yusuf yemək üçün az bir hissədən başqa məhsulu necə saxlamağı söylədi?",
+   "options": [
+    "Sünbülündə saxlamağı",
+    "Taxılı döyüb sünbülsüz saxlamaq",
+    "Taxılı üyüdüb un şəklində saxlamaq",
+    "Yeni məhsulu ötən ilin taxılı ilə qarışdırmaq"
+   ],
+   "answer": 0,
+   "info": "Yusuf məhsulu sünbülündə saxlamağı və yemək üçün az miqdar götürməyi söylədi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:47",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_prison_inquiry",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Yusuf zindandan çıxmazdan əvvəl hökmdarın elçisindən nə istədi?",
+   "options": [
+    "Əllərini kəsən qadınların işini araşdırmağı",
+    "Əvvəl qardaşlarını gətirməyi",
+    "Əvvəl onu anbarlara başçı qoymağı",
+    "Əvvəl atasının köynəyini qaytarmağı"
+   ],
+   "answer": 0,
+   "info": "Yusuf qadınların məsələsini soruşmaq üçün elçini geri göndərdi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:50",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_storehouse_qualities",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Yusuf anbarları idarə etmək üçün hansı iki xüsusiyyətini bildirdi?",
+   "options": [
+    "Etibarlı qoruyucu və bilikli",
+    "Güclü və etibarlı",
+    "Doğru danışan və səbirli",
+    "Səxavətli və tədbirli"
+   ],
+   "answer": 0,
+   "info": "Yusuf qoruyucu kimi etibarlılığını və biliyini əsas gətirdi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:55",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_brother_pledge",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Yaqub qardaşı geri gətirmək əhdində hansı istisnanı qoydu?",
+   "options": [
+    "Oğullarını qarşısıalınmaz fəlakət bürüsə",
+    "Səfər bir aydan çox çəksə",
+    "Qardaş qalmaq istəsə",
+    "Məhsul kifayət etməsə"
+   ],
+   "answer": 0,
+   "info": "Qardaşı qaytarmaq əhdində qarşısıalınmaz fəlakət istisna edildi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:66",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_separate_gates",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Yaqub ayrı qapılardan girməyi təvəkküllə necə əlaqələndirdi?",
+   "options": [
+    "Tədbir gördü, hökmün Allaha aid olduğunu dedi",
+    "Hər qapıdan girməzdən əvvəl bir əlamət tələb etmək",
+    "Qardaşların salamatlığını artıq vəd edilmiş saymaq",
+    "Nəticəni yalnız məsləhətə dəqiq əməl etməklə bağlamaq"
+   ],
+   "answer": 0,
+   "info": "Yaqub tədbir tövsiyə etsə də, Allahın iradəsindən qoruya bilməyəcəyini bildirdi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:67",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_search_order",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Qədəh axtarılarkən yüklər hansı ardıcıllıqla yoxlanıldı?",
+   "options": [
+    "Əvvəl digərlərininki, sonra qardaşınınkı",
+    "Əvvəl qardaşınınkı, sonra digərlərininki",
+    "Yalnız böyük qardaşının yükü",
+    "Yalnız kiçik qardaşının yükü"
+   ],
+   "answer": 0,
+   "info": "Ayədə qardaşının yükünün digərlərindən sonra yoxlanıldığı bildirilir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:76",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_fish_return",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Hansı xəbər Musanı öz izi ilə geri dönməyə vadar etdi?",
+   "options": [
+    "Qaya yanında balığın dənizə yol tapması",
+    "Kəndlilərin yemək verməməsi",
+    "Hökmdarın gəmiləri ələ keçirməsi",
+    "Şəhərdə divarın uçmaq üzrə olması"
+   ],
+   "answer": 0,
+   "info": "Qaya yanındakı balıq xəbərini eşidən Musa axtardığı yeri tanıyıb geri döndü.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:61, 18:62, 18:63, 18:64",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_journey_sequence",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "«Kəhf» surəsində Musanın yoldaşının üç əməli hansı ardıcıllıqdadır?",
+   "options": [
+    "Gəmini deşmək → oğlanı öldürmək → divarı düzəltmək",
+    "Oğlanı öldürmək → gəmini deşmək → divarı düzəltmək",
+    "Divarı düzəltmək → gəmini deşmək → oğlanı öldürmək",
+    "Gəmini deşmək → divarı düzəltmək → oğlanı öldürmək"
+   ],
+   "answer": 0,
+   "info": "Hekayədə əvvəl gəmi, sonra oğlan, sonda divar təsvir olunur.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:71, 18:74, 18:77",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_boat_explanation",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Yoxsulların gəmisinin zədələnməsi hansı təhlükə ilə izah edildi?",
+   "options": [
+    "Hökmdar gəmiləri zorla alırdı",
+    "Padşah yükdən ağır gömrük haqqı alırdı",
+    "Padşah bütün gəmi sahiblərini donanmasına cəlb edirdi",
+    "Padşah yoxsulların dənizə çıxmasını qadağan edirdi"
+   ],
+   "answer": 0,
+   "info": "Yoldaşı zədələməni hökmdarın gəmiləri ələ keçirməsi təhlükəsi ilə izah etdi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:79",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_wall_treasure",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Xəzinənin üstündəki divar nə üçün bərpa edildi?",
+   "options": [
+    "İki yetim böyüyüb xəzinəni çıxara bilsin deyə",
+    "Qəyyumların xəzinəni çıxarıb dərhal yetimlərə verməsi üçün",
+    "Yetimlərin qohumları qayıtdıqdan sonra xəzinəni çıxarması üçün",
+    "Yetimlərin evi tam yenidən tikdikdən sonra xəzinəni çıxarması üçün"
+   ],
+   "answer": 0,
+   "info": "Divarın bərpası xəzinənin iki yetim yetkinləşənədək qorunması ilə bağlı idi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:82",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_barrier_help",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Zülqərneyn sədd üçün pul təklifinə cavab olaraq nə istədi?",
+   "options": [
+    "Rəbbinin verdiyini üstün sayıb qüvvə ilə yardım istədi",
+    "Təklif edilən pulun ikiqatını",
+    "Yaşayış məntəqəsinin hakimiyyətini",
+    "Bütün ərzaq ehtiyatını"
+   ],
+   "answer": 0,
+   "info": "Zülqərneyn pul təklifinə cavab olaraq insanlardan öz qüvvələri ilə yardım istədi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:94, 18:95",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_barrier_materials",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Zülqərneynin səddində dəmir və mis necə işlədildi?",
+   "options": [
+    "Dəmir qızdırıldı, üzərinə ərimiş mis töküldü",
+    "Mis qızdırıldı, sonra üzərinə əridilmiş dəmir töküldü",
+    "Dəmir və mis qarışdırıldı, sonra od üfürüldü",
+    "Dəmir və mis təbəqələri düzüldü, sonra su ilə soyuduldu"
+   ],
+   "answer": 0,
+   "info": "Ayə qızdırılmış dəmirin üzərinə ərimiş mis tökülməsini təsvir edir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:96",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_mistaken_efforts",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "18:103–104-də əməlləri ən çox ziyana uğrayanlarda hansı ziddiyyət var?",
+   "options": [
+    "Səyləri boşa çıxıb, amma yaxşı iş gördüklərini düşünürlər",
+    "Əməlləri faydalıdır, lakin onları boşa çıxmış sayırlar",
+    "Səyləri boşa çıxıb və yanıldıqlarını bilirlər",
+    "Əməllərə başlamayıblar, lakin onları bitmiş sayırlar"
+   ],
+   "answer": 0,
+   "info": "Ayələr boşa çıxan səylərlə yaxşı iş görmək düşüncəsini qarşılaşdırır.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:103, 18:104",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_zakariya_sign",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "«Məryəm» surəsində Zəkəriyyanın əlaməti necə təsvir olunur?",
+   "options": [
+    "Sağlam ikən üç gecə insanlarla danışmamaq",
+    "Xəstəlikdən üç gün insanları görməmək",
+    "Qırx gecə ibadətgahdan çıxmamaq",
+    "Yeddi gün yemək yeməmək"
+   ],
+   "answer": 0,
+   "info": "«Məryəm»də əlamət sağlam olduğu halda insanlarla danışa bilməməklə bağlıdır.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 19:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/19",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_maryam_vow",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "19:26-da Məryəmə yeyib-içib təsəlli tapmaq əmrindən sonra nə gəlir?",
+   "options": [
+    "Həmin gün insanlarla danışmamaq nəzri",
+    "Həmin gün insanların arasına çıxmamaq nəzri",
+    "İnsanlara yalnız uşaq haqqında danışmamaq nəzri",
+    "Ardıcıl üç gecə danışmamaq nəzri"
+   ],
+   "answer": 0,
+   "info": "Ayədəki nəzir həmin gün insanlarla danışmamaqla müşayiət olunur.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 19:26",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/19",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_ismail_traits",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "19:54–55-də İsmayılın hansı iki xüsusiyyəti birlikdə verilir?",
+   "options": [
+    "Vədə sadiqlik; ailəsinə namaz və zəkatı əmr etmək",
+    "Yuxu yozmaq; anbarları idarə etmək",
+    "Fironla yumşaq davranmaq; köməkçi istəmək",
+    "Sədd tikmək; ödənişdən imtina etmək"
+   ],
+   "answer": 0,
+   "info": "Ayələr İsmayılın vədə sadiqliyini ailəsinə namaz və zəkatı əmr etməsi ilə birləşdirir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 19:54, 19:55",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/19",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_musa_two_signs",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "20:20–22-də Musaya hansı əlamətlər verildi?",
+   "options": [
+    "Əsa ilana çevrildi; əl zərərsiz ağardı",
+    "Əsa ilana çevrildi; əl xəstəlikdən ağardı",
+    "Dəniz yarıldı; əl zərərsiz ağardı",
+    "Əsa bulaqlar açdı; əl zərərsiz ağardı"
+   ],
+   "answer": 0,
+   "info": "Parçada əsanın çevrilməsi və əlin zərər görmədən ağarması təsvir olunur.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 20:20, 20:21, 20:22",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/20",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_musa_helper_purpose",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Musa Harunun köməkçi olmasını nə üçün istədi?",
+   "options": [
+    "Onu gücləndirmək və işinə şərik etmək üçün",
+    "Harunu xalqın yanında qoyub Fironun yanına tək getmək",
+    "Haruna Kitabı qorumağı və uşaqları öyrətməyi tapşırmaq",
+    "Haruna yalnız Fironun suallarına cavab verməyi tapşırmaq"
+   ],
+   "answer": 0,
+   "info": "Musa Harunla güclənməyi və onun vəzifəyə qoşulmasını istədi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 20:25, 20:26, 20:27, 20:28, 20:29, 20:30, 20:31, 20:32",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/20",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_revelation_knowledge",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "20:114-də hansı iki göstəriş birləşir?",
+   "options": [
+    "Vəhy bitənədək tələsməmək və elmin artmasını istəmək",
+    "Vəhyin bitməsini gözləmək və asanlıq istəmək",
+    "Vəhy bitməmiş onu təkrarlamaq və elm istəmək",
+    "Vəhyin bitməsini gözləmək və səbir istəmək"
+   ],
+   "answer": 0,
+   "info": "Ayə vəhyi qəbul edərkən səbr etməyi elmin artmasını istəməklə birləşdirir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 20:114",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/20",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_praise_times",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "20:130-da səbr çağırışı ilə yanaşı hansı təsbih vaxtları sadalanır?",
+   "options": [
+    "Gün çıxmazdan və batmazdan əvvəl, gecə və gündüzün kənarlarında",
+    "Günəş doğduqdan və batdıqdan sonra, gecə və günün ortasında",
+    "Günəş doğmazdan əvvəl, batdıqdan sonra və yalnız gecə yarısı",
+    "Günəş doğduqdan sonra, batmazdan əvvəl və yalnız günün ortasında"
+   ],
+   "answer": 0,
+   "info": "Ayədə günəşin çıxması və batması, gecə saatları və gündüzün kənarları sadalanır.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 20:130",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/20",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_measure_rights",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "26:181–183-də ticarətlə bağlı hansı üç tələb açıq sadalanır?",
+   "options": [
+    "Tam ölçü, düzgün tərəzi, insanların haqqını azaltmamaq",
+    "Tam ölçü, möhlətli ödəniş, hər borcu yazmaq",
+    "Düzgün tərəzi, iki şahid, təyin olunmuş katib",
+    "İnsanların haqqı, girov, müddəti uzatmaq"
+   ],
+   "answer": 0,
+   "info": "Parça tam ölçünü, düzgün çəkini və insanların haqqını azaltmamağı birləşdirir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 26:181, 26:182, 26:183",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/26",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_ant_warning",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Qarışqa hekayəsində təhlükə və Süleymanın cavabı necə uyğun gəlir?",
+   "options": [
+    "Bilmədən əzmək; şükür və saleh əməl üçün dua",
+    "Qəsdən hücum; şükür və saleh əməl üçün dua",
+    "Bilmədən əzmək; varissiz hakimiyyət üçün dua",
+    "Qəsdən hücum; ordunu gizlətmək üçün dua"
+   ],
+   "answer": 0,
+   "info": "Qarışqa bilmədən verilən zərəri xəbər verdi, Süleyman şükür və saleh əməl istədi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:18, 27:19",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_queen_council",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Səba hökmdarı əyanlarla məsləhətləşəndə hansı şərti bildirdi?",
+   "options": [
+    "Onlar iştirak etmədən qərar verməmək",
+    "Onların yekdil razılığı olmadan qərar verməmək",
+    "Elçilər qayıtmadan qərar verməmək",
+    "Sərkərdənin məsləhəti olmadan qərar verməmək"
+   ],
+   "answer": 0,
+   "info": "Hökmdar məsləhət istədi və əyanların iştirakı olmadan qərar verməyəcəyini dedi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:32",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_gift_response",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Hökmdarın hədiyyə məqsədi və Süleymanın cavabı necə uyğun gəlir?",
+   "options": [
+    "Elçilərin cavabını görmək; Allahın verdiyi sərvətdən üstündür",
+    "Tikinti haqqını ödəmək; təklif edilən sərvət azdır",
+    "Əsirləri azad etmək; Allahın verdiyi üstündür",
+    "Məğlubiyyəti qəbul etmək; hədiyyə illik xərac kimi alındı"
+   ],
+   "answer": 0,
+   "info": "Hökmdar elçilərlə cavabı öyrənmək istədi, Süleyman Allahın verdiyinin üstünlüyünü bildirdi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:35, 27:36",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_throne_test",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "27:40-da Süleyman taxtın gətirilməsini necə izah etdi?",
+   "options": [
+    "Rəbbinin lütfü və şükrünün sınağı",
+    "Hökmdarın dəyişdirilmiş taxtını tanıyıb-tanımayacağının sınağı",
+    "İfritin məclis bitmədən vədini yerinə yetirməsi",
+    "Hökmdarın ona çatdırılan məktuba cavabı"
+   ],
+   "answer": 0,
+   "info": "Süleyman taxtın gətirilməsini lütf və öz şükrünün sınağı adlandırdı.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:40",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_palace_surface",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Hökmdar nəyi su sandı və ona nə izah olundu?",
+   "options": [
+    "Sarayın şüşə döşəməsini; ora şüşə döşənmişdi",
+    "Həqiqi hovuzu; körpüsüz keçmək olardı",
+    "Mərmər döşəməni; onu nazik buz örtmüşdü",
+    "Su üzərində güzgünü; altında körpü vardı"
+   ],
+   "answer": 0,
+   "info": "Hökmdar səthi su sandı, Süleyman isə onun şüşə olduğunu izah etdi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:44",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_midian_wait",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Mədyən suyundakı qadınlar sürünü saxlamalarını necə izah etdilər?",
+   "options": [
+    "Çobanların getməsini gözləyirdilər; ataları çox qoca idi",
+    "Atalarının qayıtmasını gözləyirdilər; çobanlar getmişdi",
+    "Yağışı gözləyirdilər; ataları başqa sürünü otarırdı",
+    "Quyunun açılmasını gözləyirdilər; ataları şəhərdə saxlanmışdı"
+   ],
+   "answer": 0,
+   "info": "Onlar çobanlar gedəndən sonra suvaracaqlarını və atalarının qoca olduğunu dedilər.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 28:23",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/28",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_hiring_qualities",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Qadınlara yardım etdikdən sonra Musanı işə götürmək üçün hansı iki xüsusiyyət deyildi?",
+   "options": [
+    "Güc və etibarlılıq",
+    "Bilik və qoruyuculuq təcrübəsi",
+    "Natiqlik və sərvət",
+    "Zadəgan nəsli və yaşca böyüklük"
+   ],
+   "answer": 0,
+   "info": "28:26-dakı işə götürmə təklifi işçinin gücü və etibarlılığına əsaslanır.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 28:24, 28:25, 28:26",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/28",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_midian_contract",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Musanın Mədyəndə xidmət şərtləri necə idi?",
+   "options": [
+    "Səkkiz il; on il könüllü; hər iki müddət qınanmadan qəbul",
+    "On il; səkkiz il ödənişlə; əks halda qınaq",
+    "Yeddi il; on il məcburi; daha azı qəbul edilmir",
+    "Səkkiz il, nikahdan sonra daha on il; hər ikisi məcburi"
+   ],
+   "answer": 0,
+   "info": "Razılaşmada səkkiz il, könüllü on il və hər iki müddətin qəbul edilməsi göstərildi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 28:27, 28:28",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/28",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_qarun_wealth",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Qaruna sərvət barədə nəsihətdə hansı məqsədlər birlikdədir?",
+   "options": [
+    "Axirəti istəmək, dünyadakı payı unutmamaq və yaxşılıq etmək",
+    "Borcları yazmaq, şahid gətirmək və səfərdə girov götürmək",
+    "Vəsiyyəti yerinə yetirib borcu ödədikdən sonra mirası bölmək",
+    "Məhsulu sünbüldə saxlayıb çətin illər üçün ehtiyat hazırlamaq"
+   ],
+   "answer": 0,
+   "info": "Nəsihət axirəti, dünya payını, yaxşılığı və fəsaddan çəkinməyi birləşdirir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 28:77",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/28",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_sheep_dispute",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "38:23-də bir qoyun sahibi Davudun qarşısında nədən şikayət etdi?",
+   "options": [
+    "99 qoyunu olan qardaşı onun tək qoyununu da istədi",
+    "Bir qoyunu olan qardaşı onun 99 qoyunundan birini istədi",
+    "Onlar 99 qoyunun bərabər bölünməsi üstündə mübahisə etdilər",
+    "Onlar iki bərabər sürünün dəyişdirilməsi üstündə mübahisə etdilər"
+   ],
+   "answer": 0,
+   "info": "Şikayətçinin bir qoyunu vardı;99 qoyunu olan qardaşı onu da özünə verməsini tələb edirdi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 38:22, 38:23",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/38",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_ayyub_oath",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Andını pozmamaq barədə 38:44-də Əyyuba əlinə nə götürmək buyurulur?",
+   "options": [
+    "Bir dəstə",
+    "Əsa",
+    "Köynək",
+    "Qədəh"
+   ],
+   "answer": 0,
+   "info": "Əyyubun andı barədə ayədə dəstə qeyd olunur və onun səbirli olduğu bildirilir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 38:44",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/38",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_believer_argument",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Firon ailəsindən olan mömin Musanın yalan və doğru danışmasını necə qarşılaşdırdı(40:28)?",
+   "options": [
+    "Yalan Musanın əleyhinədir; doğrudursa, vədin bir hissəsi onlara çatar",
+    "Yalan onların əleyhinədir; doğrudursa, vədin bir hissəsi Musaya çatar",
+    "Hər iki halda təhdid yalnız Musaya aiddir",
+    "Hər iki halda təhdid yalnız onların nəslinə aiddir"
+   ],
+   "answer": 0,
+   "info": "Danışan yalanın nəticəsini Musanın özünə aid etdi, doğru deyirsə, dinləyənlərə təhdidin bir hissəsinin çatacağını bildirdi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 40:28",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/40",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_yusuf_after_death",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "40:34-də Yusifin ölümündən sonra deyilən hansı iddia xatırlanır?",
+   "options": [
+    "Allah ondan sonra bir daha elçi göndərməyəcək",
+    "Ondan sonra yalnız ailəsindən elçi gələcək",
+    "Növbəti elçi yalnız köçdən sonra gələcək",
+    "Ondan sonra yalnız Kitabsız hökmdarlar qalacaq"
+   ],
+   "answer": 0,
+   "info": "Ayə Yusifin sağlığındakı şübhələri və ölümündən sonra daha elçi gəlməyəcəyi iddiasını xatırladır.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 40:34",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/40",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_paradise_river_traits",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Süd və balın hansı təsvir cütü 47:15-ə tam uyğundur?",
+   "options": [
+    "Dadı dəyişməyən süd; süzülmüş bal",
+    "Süzülmüş süd; dadı dəyişməyən bal",
+    "Soyudulmuş süd; ətirli bal",
+    "Ətirli süd; soyudulmuş bal"
+   ],
+   "answer": 0,
+   "info": "Cənnət çaylarının təsvirində südün dadı dəyişmir, bal isə süzülmüş olaraq təqdim edilir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 47:15",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/47",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_monasticism_distinction",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "57:27-də İsanın ardıcıllarının qəlbinə yerləşdirilənlə onların özlərinin uydurduğu necə fərqləndirilir?",
+   "options": [
+    "Şəfqət və mərhəmət — rahiblik",
+    "Təvazökarlıq və səbir — oruc",
+    "Qorxu və ümid — evlənməmək",
+    "İxlas və şükür — həcc"
+   ],
+   "answer": 0,
+   "info": "Ayədə şəfqət və mərhəmət Allahın bəxşişi, rahiblik isə ardıcılların özlərinin yaratdığı qayda kimi ayrılır.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 57:27",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/57",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_fay_recipients",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "59:7-də malı alanlar sırasında Allah, Elçi və onun yaxınları ilə yanaşı hansı üç qrup sadalanır?",
+   "options": [
+    "Yetimlər, yoxsullar və yolçu",
+    "Borclular, yoxsullar və yolçu",
+    "Yetimlər, azad edilən qullar və yolçu",
+    "Yetimlər, yoxsullar və zəkat yığanlar"
+   ],
+   "answer": 0,
+   "info": "59:7-də yetimlər, yoxsullar və yolçu açıq sadalanır; məqsəd malın yalnız varlılar arasında dövr etməməsidir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 59:7",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/59",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_later_believers_prayer",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "59:10-da əvvəlki möminlərdən sonra gələnlərin duasında hansı iki istək birləşir?",
+   "options": [
+    "Bizi və əvvəlki möminləri bağışla; möminlərə kin qoyma",
+    "Bizi və nəslimizi bağışla; düşmən qorxusunu aradan qaldır",
+    "Yaxınları və müəllimləri bağışla; varlılara həsədi aradan qaldır",
+    "Bizi və əvvəlki möminləri bağışla; uşaqları bəlalardan qoru"
+   ],
+   "answer": 0,
+   "info": "Duada özləri və imanda onları qabaqlayanlar üçün bağışlanma, qəlblərdə isə möminlərə kin olmaması istənilir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 59:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/59",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_fairness_conditions",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "60:8-də insanlara yaxşılıq və ədalət göstərmək barədə hansı iki hərəkəti etmədikləri qeyd olunur?",
+   "options": [
+    "Din üzündən döyüşməyiblər və evlərdən qovmayıblar",
+    "Mal üzündən döyüşməyiblər və ticarətdən imtina etməyiblər",
+    "Evlərdən qovmayıblar və etiqad barədə mübahisə etməyiblər",
+    "Ticarət əhdini pozmayıblar və köçməkdən imtina etməyiblər"
+   ],
+   "answer": 0,
+   "info": "60:8-də məhz din üzündən döyüşməmək və insanları evlərindən qovmamaq göstərilir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 60:8",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/60",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_last_request",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "63:10-da ölümdən əvvəl qısa möhlət istəyən şəxs nə edəcəyini vəd edir?",
+   "options": [
+    "Sədəqə vermək və salehlərdən olmaq",
+    "Həcc etmək və oruc tutmaq",
+    "Borcları ödəmək və qohumları barışdırmaq",
+    "Bağışlanma diləmək və hicrət etmək"
+   ],
+   "answer": 0,
+   "info": "63:10-da sədəqə və salehlik qeyd olunur; sonrakı ayə müəyyən olunmuş vaxt çatdıqda onun təxirə salınmadığını bildirir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 63:10, 63:11",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/63",
+    "translationVersion": 1
+   }
   }
  ]
 }

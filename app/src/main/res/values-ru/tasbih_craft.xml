@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tb_choose_phrase">Выбрать зикр</string>
+    <string name="tb_total_count">Всего повторений</string>
+    <string name="tb_completed_laps">Завершено кругов</string>
+    <string name="tb_unlimited">Без лимита</string>
+    <string name="tb_cycle_complete">Круг завершён</string>
+    <string name="tb_gesture_hint">Нажимайте на чётки или тяните вниз, чтобы считать.</string>
+    <string name="tb_phrase_change_hint">При выборе другого зикра счётчик обнулится. Прогресс за день сохранится.</string>
+</resources>

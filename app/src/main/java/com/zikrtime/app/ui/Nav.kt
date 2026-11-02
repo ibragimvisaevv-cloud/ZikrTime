@@ -46,6 +46,8 @@ class Nav {
     }
 
     fun startQuiz(category: String?) {
+        if (com.zikrtime.app.quiz.LearningStore.session("normal")?.stage == "RESULT")
+            com.zikrtime.app.quiz.LearningStore.clearSession("normal")
         quizCategory = category
         quizRound++
         open(Screen.QUIZ)
@@ -53,7 +55,11 @@ class Nav {
 
     var azkarPeriod by mutableStateOf("morning")
 
-    fun startReview() { quizRound++; open(Screen.REVIEW) }
+    fun startReview() {
+        if (com.zikrtime.app.quiz.LearningStore.session("review")?.stage == "RESULT")
+            com.zikrtime.app.quiz.LearningStore.clearSession("review")
+        quizRound++; open(Screen.REVIEW)
+    }
     fun resumeLearning(context: android.content.Context) {
         val bank = com.zikrtime.app.quiz.QuestionBank.load(context)
         val pending = com.zikrtime.app.quiz.LearningStore.pendingSession(bank) ?: return

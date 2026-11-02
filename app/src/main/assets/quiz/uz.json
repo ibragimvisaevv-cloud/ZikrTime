@@ -40,6 +40,7 @@
    "answer": 0,
    "info": "Qurʼonda 114 ta sura va 6200 dan ortiq oyat bor. Suralar qachon va qayerda nozil boʻlganiga qarab Makkiy va Madaniy suralarga boʻlinadi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -57,6 +58,7 @@
    "answer": 0,
    "info": "«Fotiha» — «Ochuvchi» degani. U namozning har bir rakatida oʻqiladi, shuning uchun «Ummul-Kitob» — «Kitobning onasi» deb ham ataladi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -74,6 +76,7 @@
    "answer": 0,
    "info": "«Baqara» («Sigir») surasida 286 oyat bor. Unda Oyatul-Kursiy hamda Qurʼondagi eng uzun oyat — qarzni yozib qoʻyish haqidagi oyat (2:282) bor.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:282"
@@ -92,6 +95,7 @@
    "answer": 0,
    "info": "«Kavsar» surasi uchta qisqa oyatdan iborat. Kavsar — Paygʻambarimiz ﷺga berilgan jannatdagi daryoning nomi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -109,6 +113,7 @@
    "answer": 0,
    "info": "Bu haqda «Baqara» surasida (2:185) aytilgan. Vahiy Qadr kechasida boshlanib, taxminan 23 yil davom etgan.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:185"
@@ -127,6 +132,7 @@
    "answer": 0,
    "info": "Jabroil alayhissalom paygʻambarlarga vahiy yetkazgan. Qurʼonda u «Ruhul-Amin» — «Ishonchli Ruh» deb ham atalgan (26:193).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 26:193"
@@ -145,6 +151,7 @@
    "answer": 0,
    "info": "Hiro gʻori Makka yaqinidagi Nur togʻida joylashgan. Paygʻambarimiz ﷺ paygʻambarlikdan oldin ham u yerga ibodat uchun chekinar edilar.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -162,6 +169,7 @@
    "answer": 0,
    "info": "Birinchi nozil boʻlgan oyatlar «Alaq» surasining boshidir (96:1–5) — insonni yaratgan Robbining nomi bilan oʻqish haqida.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 96:1–5"
@@ -180,6 +188,7 @@
    "answer": 0,
    "info": "Oyatul-Kursiy — «Baqara» surasining 255-oyati. Unda Allohning buyukligi, ilmi hamda osmonlar va yer ustidan hokimiyati haqida soʻz boradi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Al-Baqara, 255-oyat"
@@ -198,6 +207,7 @@
    "answer": 0,
    "info": "Bu Imom Muslim rivoyat qilgan Ubay ibn Kaʼb hadisida kelgan. Oyatul-Kursiy farz namozlaridan keyin va uxlashdan oldin oʻqiladi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Muslim; Ubayy ibn Kaabdan rivoyat (bankda raqami koʻrsatilmagan)"
@@ -216,6 +226,7 @@
    "answer": 0,
    "info": "Toʻqqizinchi sura — «Tavba» boshida basmala yoʻq yagona suradir. U «Baroat» («Oqlanish») deb ham ataladi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -233,6 +244,7 @@
    "answer": 0,
    "info": "«Naml» surasida basmala boshida va 30-oyatda — Sulaymon alayhissalomning Saba malikasiga yozgan maktubida keladi. Shu bois Qurʼonda basmala 114 marta keladi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -250,6 +262,7 @@
    "answer": 0,
    "info": "Bu Imom Buxoriy rivoyat qilgan hadisda kelgan. «Ixlos» («Samimiyat») surasi toʻliq Allohning yagonaligi — tavhidga bagʻishlangan.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Al-Buxoriy (bankda raqami koʻrsatilmagan)"
@@ -268,6 +281,7 @@
    "answer": 0,
    "info": "Iso alayhissalomning onalari Maryam — Qurʼonda nomi bilan zikr qilingan yagona ayol. 19-sura uning nomi bilan atalgan.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -285,6 +299,7 @@
    "answer": 0,
    "info": "«Fotiha» yetti oyatdan iborat. Qurʼonda u «takrorlanuvchi yetti oyat» deb atalgan (15:87), chunki har bir rakatda qayta oʻqiladi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 15:87"
@@ -303,6 +318,7 @@
    "answer": 0,
    "info": "Odam alayhissalom — Alloh yaratgan birinchi inson va birinchi paygʻambar. Barcha odamlar u kishi va ayollari Havvodan tarqalgan.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -320,6 +336,7 @@
    "answer": 0,
    "info": "Nuh alayhissalom qavmini koʻp yillar yagona Allohga ibodat qilishga chaqirgan. Allohning amri bilan kema qurib, moʻminlar bilan birga toʻfondan najot topgan.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -337,6 +354,7 @@
    "answer": 0,
    "info": "Bu «Baqara» surasida (2:127) zikr qilingan. Ibrohim va Ismoil alayhimassalom Kaʼbani qurib, Allohdan amallarini qabul qilishini soʻraganlar.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:127"
@@ -355,6 +373,7 @@
    "answer": 0,
    "info": "Yunus alayhissalom baliq qornida Allohning yagonaligini eʼtirof etib, oʻz xatosini tan olib duo qilgan. Uning duosi (21:87) qiyin paytlarda hozir ham oʻqiladi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 21:87"
@@ -373,6 +392,7 @@
    "answer": 0,
    "info": "Tavrot — Muso alayhissalomga nozil qilingan kitob. Alloh nozil qilgan barcha kitoblarga iymon keltirish — iymon ruknlaridan biri.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -390,6 +410,7 @@
    "answer": 0,
    "info": "Zabur Dovud alayhissalomga nozil qilingan. Dovud alayhissalom ham paygʻambar, ham podshoh boʻlgan, Alloh unga goʻzal ovoz bergan.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -407,6 +428,7 @@
    "answer": 0,
    "info": "Injil Maryamning oʻgʻli Iso alayhissalomga nozil qilingan. Musulmonlar Isoni Allohning rasuli deb biladilar va Alloh uni oʻz huzuriga koʻtarganiga ishonadilar.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -424,6 +446,7 @@
    "answer": 0,
    "info": "Sulaymon alayhissalomga tengsiz podshohlik berilgan: shamol va jinlar unga boʻysungan, u qushlar va chumolilarning tilini tushungan.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -441,6 +464,7 @@
    "answer": 0,
    "info": "Ayyub alayhissalom sogʻligʻi, mol-mulki va farzandlaridan ayrilgan, ammo shikoyat qilmagan. Alloh unga shifo berib, neʼmatlarini qaytargan — uning sabri moʻminlar uchun namuna.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -458,6 +482,7 @@
    "answer": 0,
    "info": "Yusuf — Yaʼqub alayhissalomning oʻgʻli, Ishoqning nevarasi va Ibrohimning chevarasi. Yaʼqub alayhissalom Isroil nomi bilan ham tanilgan.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -475,6 +500,7 @@
    "answer": 0,
    "info": "Yusuf alayhissalom qissasi uning nomi bilan atalgan 12-surada hikoya qilinadi. Qurʼon uni qissalarning eng goʻzali deb ataydi (12:3).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 12:3"
@@ -493,6 +519,7 @@
    "answer": 0,
    "info": "Muso alayhissalom Allohdan akasi Horunni yordamchi qilib berishini soʻragan, chunki Horun fasohatliroq edi. Alloh uning duosini qabul qilgan (20:29–36).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 20:29–36"
@@ -511,6 +538,7 @@
    "answer": 0,
    "info": "Alloh Zakariyoga keksaligida, ayoli tugʻmas boʻlsa-da, Yahyoni ato etgan. Yahyodan oldin hech kim bu ism bilan atalmagan (19:7).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 19:7"
@@ -529,6 +557,7 @@
    "answer": 0,
    "info": "Odatda Qurʼonda 25 paygʻambarning nomi zikr qilingan deb hisoblanadi. Paygʻambarlar bundan ancha koʻp boʻlgan — Alloh ularning hammasi haqida xabar bermagan (40:78).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 40:78"
@@ -547,6 +576,7 @@
    "answer": 0,
    "info": "Qurʼon Muhammad ﷺni «paygʻambarlarning muhri» deb ataydi (33:40). Undan keyin paygʻambar kelmaydi, Qurʼon esa oxirgi kitobdir.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 33:40"
@@ -565,6 +595,7 @@
    "answer": 0,
    "info": "Paygʻambarimiz ﷺ Makkada Fil yilida — taxminan milodiy 570 yilda tugʻilganlar. U zot Quraysh qabilasining Hoshim urugʻidan edilar.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -582,6 +613,7 @@
    "answer": 0,
    "info": "Onalari — Omina binti Vahb. Paygʻambarimiz ﷺ taxminan olti yoshlarida u vafot etgan, otalari Abdulloh esa u zot tugʻilmasdan oldin vafot etgan edi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -599,6 +631,7 @@
    "answer": 0,
    "info": "Arablarda chaqaloqlarni choʻldagi emizuvchi enagalarga berish odati bor edi. Paygʻambarimiz ﷺ ilk bolaligini Baniy Saʼd qabilasidan boʻlgan Halima bilan oʻtkazganlar.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -616,6 +649,7 @@
    "answer": 0,
    "info": "Xadicha roziyallohu anho u zotning paygʻambarligiga birinchi boʻlib iymon keltirgan va eng ogʻir yillarda yonida boʻlgan.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -633,6 +667,7 @@
    "answer": 0,
    "info": "Vahiy Paygʻambarimiz ﷺ 40 yoshga toʻlganlarida boshlangan. Undan oldin ham makkaliklar u zotni «al-Amin» — «ishonchli» deb ataganlar.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -650,6 +685,7 @@
    "answer": 0,
    "info": "Paygʻambarimiz ﷺ Makkada taxminan 13 yil va Madinada taxminan 10 yil Islomga daʼvat qilganlar. U zot hijriy 11 yilda 63 yoshda vafot etganlar.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -667,6 +703,7 @@
    "answer": 0,
    "info": "Hijrat milodiy 622 yilda boʻlgan. Oʻsha paytda Yasrib deb atalgan Madinada birinchi musulmon jamiyati shakllangan.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -684,6 +721,7 @@
    "answer": 0,
    "info": "Hijriy taqvim xalifa Umar davrida joriy qilingan. U oy taqvimi boʻlgani uchun quyosh taqvimiga nisbatan har yili taxminan 11 kunga siljiydi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -701,6 +739,7 @@
    "answer": 0,
    "info": "Abu Bakr roziyallohu anhu Paygʻambarimiz ﷺ bilan Savr gʻorida uch kun yashiringan. Bu Qurʼonda zikr qilingan (9:40).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 9:40"
@@ -719,6 +758,7 @@
    "answer": 0,
    "info": "Isro — Quddusga tungi safar, Meʼroj esa osmonlarga koʻtarilish. Aynan oʻshanda besh vaqt namoz farz qilingan.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -736,6 +776,7 @@
    "answer": 0,
    "info": "Badr jangi hijriy 2 yil Ramazon oyida boʻlgan. Taxminan 313 musulmon oʻzidan uch barobar koʻp qoʻshinni yenggan.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -753,6 +794,7 @@
    "answer": 0,
    "info": "Bilol Makkada qul boʻlgan va iymoni uchun qiynalgan, toki Abu Bakr uni ozod qilgunga qadar. Paygʻambarimiz ﷺ uni goʻzal va baland ovozi uchun azon aytishga tanlaganlar.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -770,6 +812,7 @@
    "answer": 0,
    "info": "Paygʻambarimiz ﷺ Madinada, hozir Masjidi Nabaviy ichida joylashgan Oishaning hujrasida dafn etilganlar. Yonlarida Abu Bakr va Umar dafn qilingan.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -787,6 +830,7 @@
    "answer": 0,
    "info": "Paygʻambarimiz ﷺ vafotlaridan keyin Abu Bakr Siddiq birinchi xalifa boʻlgan. Toʻrt roshid xalifa: Abu Bakr, Umar, Usmon va Ali.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -804,6 +848,7 @@
    "answer": 0,
    "info": "Islomning besh rukni: shahodat, namoz, zakot, Ramazon roʻzasi va qurbi yetganlar uchun haj.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -821,6 +866,7 @@
    "answer": 0,
    "info": "Allohga, farishtalariga, kitoblariga, paygʻambarlariga, oxirat kuniga va taqdirga iymon keltirish. Ular mashhur Jabroil hadisida sanab oʻtilgan.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -838,6 +884,7 @@
    "answer": 0,
    "info": "Bomdod, peshin, asr, shom va xufton. Besh vaqt namoz Meʼroj kechasida farz qilingan.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -855,6 +902,7 @@
    "answer": 0,
    "info": "Bomdodning farzi ikki rakat. Undan oldin ikki rakat sunnat oʻqiladi — Paygʻambarimiz ﷺ uni deyarli hech qachon tark etmaganlar.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -872,6 +920,7 @@
    "answer": 0,
    "info": "Shom — uch rakatli yagona farz namoz. U quyosh botgandan keyin oʻqiladi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -889,6 +938,7 @@
    "answer": 0,
    "info": "Peshin, asr va xuftonning har biri toʻrt rakat. Musofir ularni ikki rakatga qisqartirib oʻqishi mumkin.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -906,6 +956,7 @@
    "answer": 0,
    "info": "Tahoratda yuz, tirsaklargacha qoʻllar yuviladi, boshga mash tortiladi va oyoqlar toʻpiqlargacha yuviladi (5:6). Gʻusl — butun badanni yuvish.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 5:6"
@@ -924,6 +975,7 @@
    "answer": 0,
    "info": "Tayammum — suv boʻlmaganda yoki uni ishlatib boʻlmaganda pok tuproq bilan poklanish. U Qurʼonda zikr qilingan (4:43, 5:6).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 4:43, 5:6"
@@ -942,6 +994,7 @@
    "answer": 0,
    "info": "Azon namozga chaqiradi, iqomat esa namoz boshlanishidan oldingi ikkinchi chaqiriq. Bomdod azonida «Namoz uyqudan yaxshiroq» soʻzlari qoʻshiladi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -959,6 +1012,7 @@
    "answer": 0,
    "info": "Kaʼba tomoni qibla deb ataladi. Uni ushbu ilovaning «Qibla» boʻlimida topishingiz mumkin.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -976,6 +1030,7 @@
    "answer": 0,
    "info": "Hijratdan keyin taxminan 16–17 oy musulmonlar Quddusdagi Masjidi Aqsoga qarab namoz oʻqiganlar. Keyin qibla Kaʼbaga oʻzgartirilgan (2:144).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:144"
@@ -994,6 +1049,7 @@
    "answer": 0,
    "info": "Zakot — Islomning besh ruknidan biri. Odatda u nisobga yetgan va bir yil turgan jamgʻarmaning 2,5 foizini tashkil qiladi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1011,6 +1067,7 @@
    "answer": 0,
    "info": "Fitr sadaqasi oʻzi va oilasi uchun beriladi, toki kambagʻallar ham bayramni nishonlay olsinlar. U hayit namozidan oldin berilishi kerak.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1028,6 +1085,7 @@
    "answer": 0,
    "info": "Saharlik — tong otishidan oldingi taom, iftorlik — quyosh botgandan keyin ogʻiz ochish. Paygʻambarimiz ﷺ saharlikda baraka borligini aytganlar.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1045,6 +1103,7 @@
    "answer": 0,
    "info": "Juma namozi peshin oʻrniga oʻqiladi va undan oldin xutba qilinadi. Juma — musulmonlar uchun haftaning eng afzal kuni.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1062,6 +1121,7 @@
    "answer": 0,
    "info": "Tavof — Kaʼba atrofini soat miliga teskari yetti marta aylanish. U Hajarul-Asvad burchagidan boshlanadi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1079,6 +1139,7 @@
    "answer": 0,
    "info": "Saʼy kichik Ismoilga suv izlab, Safo va Marva tepaliklari orasida yetti marta yugurgan Hojarni eslatadi (2:158).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:158"
@@ -1097,6 +1158,7 @@
    "answer": 0,
    "info": "Hajning asosiy amallari Zulhijjaning 8-kunidan 13-kunigacha bajariladi. Arafa kuni — Zulhijjaning 9-kuni.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1114,6 +1176,7 @@
    "answer": 0,
    "info": "Ramazon — toʻqqizinchi oy, undan keyin Shavvol keladi. Hijriy taqvimda 12 qamariy oy bor.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1131,6 +1194,7 @@
    "answer": 0,
    "info": "Bu «Qadr» surasida (97:3) aytilgan. U Ramazonning oxirgi oʻn kechasida, ayniqsa toq kechalarda izlanadi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 97:3"
@@ -1149,6 +1213,7 @@
    "answer": 0,
    "info": "Ramazon hayiti Shavvolning 1-kuni hayit namozi bilan nishonlanadi. Ikkinchi bayram — Qurbon hayiti Zulhijjaning 10-kuniga toʻgʻri keladi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1166,6 +1231,7 @@
    "answer": 0,
    "info": "Zamzam bulogʻi Hojar oʻgʻli Ismoilga suv izlaganida Allohning rahmati bilan paydo boʻlgan. U ming yillardan beri qurimaydi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1183,6 +1249,7 @@
    "answer": 0,
    "info": "Bu soʻzlar bilan biz Allohni ulugʻlaymiz va Uni har qanday nuqsondan pok deb bilamiz. Namozdan keyin uni 33 marta aytish odat boʻlgan.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1200,6 +1267,7 @@
    "answer": 0,
    "info": "Musulmonlar har qanday holatda — xursandchilikda ham, qiyinchilikda ham bu soʻzlar bilan Allohga shukr qiladilar. «Fotiha» basmaladan keyin shu soʻzlar bilan boshlanadi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1217,6 +1285,7 @@
    "answer": 0,
    "info": "Har bir namoz shu soʻzlar — takbir bilan boshlanadi. Ular azonda va hayit kunlarida ham aytiladi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1234,6 +1303,7 @@
    "answer": 0,
    "info": "Kelajak haqida gapirganda musulmonlar «Inshaalloh» deb qoʻshadilar (18:23–24). Biror narsadan zavqlanganda esa «Mashaalloh» — «Alloh xohlagani boʻldi» deyiladi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 18:23–24"
@@ -1252,6 +1322,7 @@
    "answer": 0,
    "info": "Bu istigʻfor — kechirim soʻrash. Paygʻambarimiz ﷺ kuniga yetmish martadan koʻproq Allohdan magʻfirat soʻraganlar.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1269,6 +1340,7 @@
    "answer": 0,
    "info": "Sabr — ibodatda, gunohdan tiyilishda va sinovlarda chidamli va matonatli boʻlish. Qurʼonda Alloh sabr qiluvchilar bilan ekani aytilgan (2:153).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:153"
@@ -1287,6 +1359,7 @@
    "answer": 0,
    "info": "Shukr — Allohga qalb, til va amal bilan minnatdorlik bildirish. Alloh shukr qiluvchilarga yanada koʻproq berishni vaʼda qilgan (14:7).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 14:7"
@@ -1305,6 +1378,7 @@
    "answer": 0,
    "info": "Buxoriy va Muslim rivoyat qilgan mashhur hadis amallar niyatlarga koʻra ekani bilan boshlanadi. Yaxshi niyat oddiy ishni ham ibodatga aylantiradi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Al-Buxoriy va Muslim (bankda raqamlari koʻrsatilmagan)"
@@ -1323,6 +1397,7 @@
    "answer": 0,
    "info": "Baraka — Alloh vaqtga, molga va amallarga joylagan fayz va foyda. Barakali oz narsa ham koʻp yaxshilik keltiradi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1340,6 +1415,7 @@
    "answer": 0,
    "info": "Islom — yagona Allohga boʻysunish demakdir. Bu soʻz «salom» — tinchlik soʻzi bilan bir oʻzakdan.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1357,6 +1433,7 @@
    "answer": 0,
    "info": "«Ixlos» surasi, 1–2-oyatlar. As-Samad — hech kimga muhtoj boʻlmagan, hamma Unga muhtoj boʻlgan Zot.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "«Ixlos» surasi, 1–2-oyatlar"
@@ -1376,6 +1453,7 @@
    "answer": 0,
    "info": "«Fotiha» surasi, 2–3-oyatlar. Ar-Rohman va Ar-Rohiym — Allohning rahmati haqida soʻzlovchi ismlari.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "«Fotiha» surasi, 2–3-oyatlar"
@@ -1395,6 +1473,7 @@
    "answer": 0,
    "info": "«Fotiha» surasi, 5-oyat: biz faqat Allohga ibodat qilamiz va faqat Undan yordam soʻraymiz.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "«Fotiha» surasi, 5-oyat"
@@ -1414,6 +1493,7 @@
    "answer": 0,
    "info": "«Asr» surasi, 1–2-oyatlar. Imom Shofeiy aytganlar: agar odamlar faqat shu sura haqida tafakkur qilsalar, ularga kifoya qilardi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "«Asr» surasi, 1–2-oyatlar"
@@ -1433,6 +1513,7 @@
    "answer": 0,
    "info": "«Falaq» surasi, 1–2-oyatlar. «Nos» surasi bilan birga ular «Muavvizatayn» — Allohdan panoh soʻrash suralari deb ataladi.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "«Falaq» surasi, 1–2-oyatlar"
@@ -1452,6 +1533,7 @@
    "answer": 0,
    "info": "«Nos» surasi, 1–2-oyatlar. Bu Qurʼonning oxirgi surasi; Paygʻambarimiz ﷺ uni «Ixlos» va «Falaq» bilan birga uxlashdan oldin oʻqiganlar.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "«Nos» surasi, 1–2-oyatlar"
@@ -1471,11 +1553,2412 @@
    "answer": 0,
    "info": "«Kavsar» surasi, 1–2-oyatlar: berilgan neʼmatga shukr sifatida Robbingiz uchun namoz oʻqing va qurbonlik qiling.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "«Kavsar» surasi, 1–2-oyatlar"
    },
    "arabic": "إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ"
+  },
+  {
+   "id": "l1_verify_news",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "49:6 ga ko‘ra, ishonchsiz kishining xabarini nima qilish kerak?",
+   "options": [
+    "Tekshirish",
+    "Darhol tarqatish",
+    "Mish-mishga qarab hukm qilish",
+    "Tekshirmay ishonish"
+   ],
+   "answer": 0,
+   "info": "Xabarni tekshirish bilmasdan odamlarga zarar yetkazishdan saqlaydi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:6",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_reconcile_believers",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "49:10 mo‘minlar orasidagi janjalda nimaga chaqiradi?",
+   "options": [
+    "Ularni yarashtirishga",
+    "Nizoni kuchaytirishga",
+    "Ginani qo‘llashga",
+    "Janjalni yoyishga"
+   ],
+   "answer": 0,
+   "info": "Oyat mo‘minlarni birodar deb atab, ularni yarashtirishga chaqiradi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_offensive_names",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "49:11 odamlarga qanday laqab qo‘yishni taqiqlaydi?",
+   "options": [
+    "Haqoratli laqablar",
+    "Yozishga qulay laqablar",
+    "Kasbni bildiruvchi laqablar",
+    "Qarindoshlikni bildiruvchi laqablar"
+   ],
+   "answer": 0,
+   "info": "Oyatda haqoratli laqablar va odamlarni masxara qilish taqiqlanadi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:11",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_no_spying",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "49:12 da qaysi ish taqiqlangan?",
+   "options": [
+    "Birovning sirini poylash",
+    "Muhtojlarga yordam berish",
+    "Qo‘shnilarni yarashtirish",
+    "Omonatni qaytarish"
+   ],
+   "answer": 0,
+   "info": "Oyat odamlarning sirini poylash va g‘iybat qilishni taqiqlaydi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:12",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_honour_piety",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "49:13 da Alloh huzuridagi hurmat nimaga bog‘liq?",
+   "options": [
+    "Taqvoga",
+    "Boylikka",
+    "Nasabga",
+    "Mashhurlikka"
+   ],
+   "answer": 0,
+   "info": "Oyat Alloh huzuridagi hurmatni insonning taqvosiga bog‘laydi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:13",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_parents_speech",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "17:23 keksa ota-onaga qanday gapirishni o‘rgatadi?",
+   "options": [
+    "Hurmat bilan",
+    "Jahldorlik bilan",
+    "Masxara qilib",
+    "Mensimay"
+   ],
+   "answer": 0,
+   "info": "Oyat ota-onaga hurmat bilan gapirishni va norozilik bildirmaslikni buyuradi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:23",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_parents_mercy",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "17:24 dagi duoda ota-ona uchun nima so‘raladi?",
+   "options": [
+    "Allohning rahmati",
+    "Odamlar orasida shuhrat",
+    "Boshqalar ustidan hokimlik",
+    "Har qanday yo‘l bilan boylik"
+   ],
+   "answer": 0,
+   "info": "Bu duoda ulg‘aytirgan ota-onaga Robbidan rahmat so‘raladi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:24",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_keep_promises",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "17:34 ahdlarga qanday munosabatni o‘rgatadi?",
+   "options": [
+    "Ularga vafo qilish",
+    "Noqulay bo‘lsa unutish",
+    "Yashirin o‘zgartirish",
+    "Faqat maqtov uchun bajarish"
+   ],
+   "answer": 0,
+   "info": "Oyat ahdlarga vafo qilishni buyurib, ular uchun javob berilishini eslatadi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:34",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_fair_measure",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "17:35 mahsulotlarni qanday o‘lchash va tortishni buyuradi?",
+   "options": [
+    "To‘liq o‘lchov va to‘g‘ri tarozi bilan",
+    "Sotuvchining foydasiga qarab",
+    "O‘lchamay chamalab",
+    "Xaridorning mavqeiga qarab"
+   ],
+   "answer": 0,
+   "info": "Oyat o‘lchovni to‘ldirish va to‘g‘ri tortishni buyuradi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:35",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_avoid_arrogance",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "17:37 qanday xulqdan qaytaradi?",
+   "options": [
+    "Kibrdan",
+    "Vazminlikdan",
+    "Kamtarlikdan",
+    "E’tiborlilikdan"
+   ],
+   "answer": 0,
+   "info": "Oyat yer yuzida kibr bilan yurishdan qaytaradi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:37",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_lower_voice",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "31:19 ovoz haqida qanday maslahat beradi?",
+   "options": [
+    "Uni pasaytirish",
+    "Doim baqirish",
+    "Suhbatdosh ovozini bosish",
+    "Bahsda balandlatish"
+   ],
+   "answer": 0,
+   "info": "Oyat yurish va ovozda mo‘tadillikni o‘rgatadi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 31:19",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/31",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_luqman_prayer",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "31:17 da Luqmon o‘g‘liga qaysi ibodatni ado etishni buyuradi?",
+   "options": [
+    "Namozni",
+    "Har oy hajni",
+    "Tinimsiz ro‘zani",
+    "Har kuni Ka’ba tavofini"
+   ],
+   "answer": 0,
+   "info": "Bu oyatda Luqmonning o‘g‘liga nasihatlari orasida namozni ado etish ham bor.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 31:17",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/31",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_enter_homes",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "24:27 ga ko‘ra, birovning uyiga kirishdan oldin nima qilish kerak?",
+   "options": [
+    "Ruxsat so‘rash va salom berish",
+    "Eshik ochiq bo‘lsa kirish",
+    "Avval xonalarni ko‘rish",
+    "Kirgach o‘zini bildirish"
+   ],
+   "answer": 0,
+   "info": "Oyat birovning uyiga kirishdan oldin ruxsat so‘rash va salom berishni talab qiladi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 24:27",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_return_when_asked",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "24:28 ga ko‘ra, uyga borganda qaytish so‘ralsa, nima qilish kerak?",
+   "options": [
+    "Qaytish",
+    "Kirishni talab qilish",
+    "Boshqa eshikdan kirish",
+    "Uy egasi bilan tortishish"
+   ],
+   "answer": 0,
+   "info": "Oyat qaytish so‘ralganda mehmonning qaytishini buyuradi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 24:28",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_return_greeting",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "4:86 ga ko‘ra, salomga qanday javob beriladi?",
+   "options": [
+    "Xuddi shunday yoki yaxshiroq",
+    "Faqat sukut bilan",
+    "Albatta qisqaroq",
+    "Faqat takrorlangach"
+   ],
+   "answer": 0,
+   "info": "Oyat salomga teng yoki yaxshiroq salom bilan javob berishni o‘rgatadi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:86",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_return_trust",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "4:58 omonatni kimga qaytarishni buyuradi?",
+   "options": [
+    "O‘z egalariga",
+    "Eng boylarga",
+    "Birinchi so‘raganga",
+    "Eng nufuzli kishiga"
+   ],
+   "answer": 0,
+   "info": "Oyat omonatni uning haqli egalariga topshirishni buyuradi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:58",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_justice_self",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "4:135 ga ko‘ra, o‘z zarariga bo‘lsa ham adolatli guvohlik beriladimi?",
+   "options": [
+    "Ha, o‘z zarariga bo‘lsa ham",
+    "Yo‘q, doim o‘zini himoya qilish kerak",
+    "Faqat hech kim bilmasa",
+    "Faqat odamlar mukofoti uchun"
+   ],
+   "answer": 0,
+   "info": "Oyat o‘ziga va yaqinlariga qarshi bo‘lsa ham adolatli guvohlikni talab qiladi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:135",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_cooperate_good",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "5:2 bir-birimizga nimada yordam berishga chaqiradi?",
+   "options": [
+    "Yaxshilik va taqvoda",
+    "Gunoh va adovatda",
+    "Do‘stlar uchun aldashda",
+    "Raqiblardan qasos olishda"
+   ],
+   "answer": 0,
+   "info": "Oyat yaxshilikda hamkorlikni buyurib, gunoh va adovatda yordamni taqiqlaydi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:2",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_justice_dislike",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "5:8 yoqtirmagan kishilarga qanday munosabatni o‘rgatadi?",
+   "options": [
+    "Adolatli",
+    "Tarafkashlik bilan",
+    "Qasoskorlik bilan",
+    "Ular haqidagi mish-mishga qarab"
+   ],
+   "answer": 0,
+   "info": "Odamlarni yoqtirmaslik adolatsizlikka olib bormasligi kerak.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:8",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_justice_kindness",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "16:90 da qaysi ishlar birga buyurilgan?",
+   "options": [
+    "Adolat, yaxshilik va qarindoshga yordam",
+    "Shuhrat, hokimiyat va raqobat",
+    "Boylik, kibr va qasos",
+    "Sukut, gumon va begonalashish"
+   ],
+   "answer": 0,
+   "info": "Oyatda adolat, yaxshilik va qarindoshlarga saxovat birga zikr etiladi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:90",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_patience_prayer",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "2:153 nimaning vositasida yordam so‘rashga chaqiradi?",
+   "options": [
+    "Sabr va namoz",
+    "Shuhrat va boylik",
+    "G‘azab va bahs",
+    "Kuch va kibr"
+   ],
+   "answer": 0,
+   "info": "Oyat yordam so‘rashni sabr va namoz bilan bog‘laydi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:153",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_charity_orphans",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "2:177 da yordam oluvchilar orasida qaysi guruh aniq sanalgan?",
+   "options": [
+    "Yetimlar",
+    "Lashkarboshilar",
+    "Qozilar",
+    "Hukmdorlar"
+   ],
+   "answer": 0,
+   "info": "Oyatda yetimlarga yordam berish yaxshilikning ko‘rinishlaridan sanaladi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:177",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_fasting_piety",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "2:183 ro‘zaning qaysi maqsadini ko‘rsatadi?",
+   "options": [
+    "Taqvo",
+    "Shuhrat",
+    "Boyish",
+    "Nasab bilan ustunlik"
+   ],
+   "answer": 0,
+   "info": "Oyatda ro‘za buyrug‘i taqvoni tarbiyalash bilan bog‘langan.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:183",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_fasting_makeup",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "2:185 kasallik yoki safar tufayli qolgan ro‘zaga qanday qazo belgilaydi?",
+   "options": [
+    "Boshqa kunlarda shuncha kun",
+    "Ikki barobar ko‘p kun",
+    "Faqat qo‘shimcha namoz",
+    "Kunlar o‘rniga haj"
+   ],
+   "answer": 0,
+   "info": "Oyatda qolgan ro‘za kunlarini boshqa kunlarda to‘ldirish ko‘rsatilgan.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:185",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_fast_until_night",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "2:187 da kundalik ro‘zaning qaysi tugash vaqti aytilgan?",
+   "options": [
+    "Kecha kirguncha",
+    "Tushgacha",
+    "Keyingi tonggacha",
+    "Yarim kechagacha"
+   ],
+   "answer": 0,
+   "info": "Oyat kundalik ro‘zaning tugashini kecha kirishi bilan belgilaydi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:187",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_kind_words",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "2:263 ozor ortidan kelgan sadaqadan nimani yaxshiroq deydi?",
+   "options": [
+    "Yaxshi so‘z va kechirish",
+    "O‘zini maqtash",
+    "Saxovatini eslatish",
+    "Ommaviy kamsitish"
+   ],
+   "answer": 0,
+   "info": "Oyat yaxshi so‘z va kechirishni ozorli yordamdan afzal ko‘radi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:263",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_charity_no_reproach",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "2:264 ga ko‘ra, sadaqani nima bilan buzmaslik kerak?",
+   "options": [
+    "Minnat va ozor bilan",
+    "Kamtarlik bilan",
+    "Oluvchiga hurmat bilan",
+    "Ixlos bilan"
+   ],
+   "answer": 0,
+   "info": "Oyat sadaqadan keyin minnat qilish va ozor berishdan qaytaradi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:264",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_debtor_respite",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "2:280 qiynalgan qarzdorga nima berishni buyuradi?",
+   "options": [
+    "Yengillikkacha muhlat",
+    "Darhol jazo",
+    "Majburan yangi qarz",
+    "Ommaviy ta’na"
+   ],
+   "answer": 0,
+   "info": "Oyat qiynalgan qarzdorga ahvoli yengillashguncha muhlat berishni buyuradi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:280",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_within_capacity",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "2:286 jonga yuklangan mas’uliyatni qanday ta’riflaydi?",
+   "options": [
+    "Uning kuchi yetadigan",
+    "Doim kuchidan ortiq",
+    "Qo‘shnilar boyligiga qarab",
+    "Kishining shuhratiga qarab"
+   ],
+   "answer": 0,
+   "info": "Oyat Alloh jonga kuchi yetmaydigan narsani yuklamasligini bildiradi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:286",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_restrain_anger",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "3:134 da g‘azabga qanday munosabat maqtalgan?",
+   "options": [
+    "Uni tiyish va kechirish",
+    "Janjalni kuchaytirish",
+    "Ozor berganni kamsitish",
+    "Gina saqlash"
+   ],
+   "answer": 0,
+   "info": "Oyatda g‘azabini tiyib, odamlarni kechiradiganlar maqtaladi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:134",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_food_no_waste",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "7:31 ovqat va ichimlikda qanday me’yor belgilaydi?",
+   "options": [
+    "Isrof qilmaslik",
+    "Faqat yolg‘iz ovqatlanish",
+    "Doim eng qimmatini tanlash",
+    "Barcha ovqatdan voz kechish"
+   ],
+   "answer": 0,
+   "info": "Oyat yeb-ichishga ruxsat berib, isrofdan qaytaradi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 7:31",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/7",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_no_religious_insult",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "6:108 nimani haqorat qilishni taqiqlaydi?",
+   "options": [
+    "Boshqalar Allohdan o‘zga sig‘inadigan narsalarni",
+    "Faqat qo‘shnilar mulkini",
+    "Faqat birovning kiyimini",
+    "Faqat shaharlar nomini"
+   ],
+   "answer": 0,
+   "info": "Oyat javoban johillik bilan Alloh haqorat qilinmasligi uchun bunday haqoratni taqiqlaydi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:108",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_do_not_oppress_orphan",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "93:9 yetimga nisbatan nimani taqiqlaydi?",
+   "options": [
+    "Uni ezishni",
+    "U bilan gaplashishni",
+    "Unga ta’lim berishni",
+    "Unga yordam berishni"
+   ],
+   "answer": 0,
+   "info": "Oyat yetimga zulm qilishni taqiqlaydi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 93:9",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/93",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_do_not_repel_asker",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "93:10 so‘rovchiga nisbatan qaysi ishni taqiqlaydi?",
+   "options": [
+    "Uni jerkishni",
+    "Uni tinglashni",
+    "Unga javob berishni",
+    "Uni payqashni"
+   ],
+   "answer": 0,
+   "info": "Oyat so‘rovchini qo‘pollik bilan haydashdan qaytaradi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 93:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/93",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_feed_needy",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "107:3 da qoralangan kishi qaysi ishga undamaydi?",
+   "options": [
+    "Miskinni ovqatlantirishga",
+    "Saroylar qurishga",
+    "Bezaklar sotib olishga",
+    "Javohir yig‘ishga"
+   ],
+   "answer": 0,
+   "info": "Oyat muhtojni ovqatlantirishga undamaslikni qoralaydi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 107:3",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/107",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_lord_of_house",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "106:3 kimga ibodat qilishga chaqiradi?",
+   "options": [
+    "Shu Uyning Robbiga",
+    "Uy qo‘riqchilariga",
+    "Karvon egalariga",
+    "Qabila ajdodlariga"
+   ],
+   "answer": 0,
+   "info": "Oyat ibodatni shu Uyning Robbiga yo‘naltiradi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 106:3",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/106",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_elephant_verse",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "105:1 da qaysi hayvon zikr qilingan?",
+   "options": [
+    "Fil",
+    "Tuya",
+    "Arslon",
+    "Ot"
+   ],
+   "answer": 0,
+   "info": "Bu suraning birinchi oyatida fil egalari zikr qilinadi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 105:1",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/105",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_refuge_lord_people",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "114:1 da panoh so‘ralganda Alloh qanday ataladi?",
+   "options": [
+    "Odamlarning Robbi",
+    "Jazo kunining Egasi",
+    "Tongning Robbi",
+    "Olamlarning Robbi"
+   ],
+   "answer": 0,
+   "info": "Bu suraning birinchi oyatida odamlarning Robbidan panoh so‘raladi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 114:1",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/114",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_allah_one",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "112:1 ilohlar soni haqida nimani bildiradi?",
+   "options": [
+    "Alloh Yagona",
+    "Ular uchta",
+    "Ular ko‘p",
+    "Ular ikkita"
+   ],
+   "answer": 0,
+   "info": "Oyat Allohning yagonaligini bildiradi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 112:1",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/112",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_hardship_ease",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "94:5 qiyinchilik bilan nimani bog‘laydi?",
+   "options": [
+    "Yengillikni",
+    "Muqarrar tushkunlikni",
+    "Cheksiz g‘amni",
+    "Umidsizlikni"
+   ],
+   "answer": 0,
+   "info": "Oyat qiyinchilik bilan birga yengillik borligini eslatadi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 94:5",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/94",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_covenant",
+   "cat": "prophets",
+   "difficulty": 2,
+   "q": "2:124 da Ibrohimga berilgan javobda qaysi guruh ahddan istisno qilingan?",
+   "options": [
+    "Uning zurriyotidagi zolimlar",
+    "Uning zurriyotidagi kambag‘allar",
+    "Podshohlik hokimiyatiga ega bo‘lmagan avlodlar",
+    "Makka tashqarisida tug‘ilgan avlodlar"
+   ],
+   "answer": 0,
+   "info": "Oyat zolimlarni istisno qiladi; ahdni boylik yoki tug‘ilgan joyga bog‘lamaydi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:124",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_witnesses",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "2:143 da guvohlik vazifalari qanday taqsimlangan?",
+   "options": [
+    "Ummat odamlarga, Payg‘ambar ummatga guvoh",
+    "Odamlar ummatga, ummat Payg‘ambarga guvoh",
+    "Payg‘ambar odamlarga, odamlar ummatga guvoh",
+    "Ummat Payg‘ambarga, Payg‘ambar farishtalarga guvoh"
+   ],
+   "answer": 0,
+   "info": "O‘rta ummat odamlarga guvoh, Payg‘ambar esa shu ummatga guvoh deb atalgan.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:143",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_safa_marwa_signs",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "2:158 da Safo va Marva qanday ta’riflangan?",
+   "options": [
+    "Alloh belgilagan ibodat alomatlari sifatida",
+    "Ehromga kirish joylari sifatida",
+    "Muqaddas hudud chegaralari sifatida",
+    "Arafa kuni turish joylari sifatida"
+   ],
+   "answer": 0,
+   "info": "Oyat Safo va Marvani Alloh belgilagan ibodat alomatlari qatoriga kiritadi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:158",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_harm_comparison",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "2:219 da may va qimorning gunohi hamda foydasi qanday solishtirilgan?",
+   "options": [
+    "Gunohi foydasidan kattaroq",
+    "Foydasi gunohidan kattaroq",
+    "Gunohi va foydasi teng",
+    "Ularda na gunoh, na foyda bor"
+   ],
+   "answer": 0,
+   "info": "Oyat ayrim foydani tilga oladi, ammo gunohni kattaroq deb ta’riflaydi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:219",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_river_exception",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Tolut daryo sinovida qanday istisnoga ruxsat bergan?",
+   "options": [
+    "Bir hovuch suv olishga",
+    "Bir ko‘za to‘ldirishga",
+    "To‘yguncha ichishga",
+    "Faqat otini sug‘orishga"
+   ],
+   "answer": 0,
+   "info": "2:249 da qo‘l bilan bir hovuch suv olish istisno qilingan.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:249",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_ibrahim_reassurance",
+   "cat": "prophets",
+   "difficulty": 2,
+   "q": "Ibrohim nega o‘liklarning tiriltirilishini ko‘rishni so‘ragan?",
+   "options": [
+    "Qalbi xotirjam bo‘lishi uchun",
+    "Birinchi marta iymon keltirish uchun",
+    "O‘lim vaqtini bilish uchun",
+    "Ko‘chib boradigan joyni tanlash uchun"
+   ],
+   "answer": 0,
+   "info": "2:260 da Ibrohim iymonini tasdiqlab, qalbi xotirjam bo‘lishini istagan.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:260",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_grain_parable",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Mol sarflash haqidagi misolda don qanday tasvirlangan?",
+   "options": [
+    "Yetti boshoq, har birida yuz don",
+    "Yuz boshoq, har birida yetti don",
+    "Yetti boshoq, har birida o‘n don",
+    "O‘n boshoq, har birida yuz don"
+   ],
+   "answer": 0,
+   "info": "2:261 da bir don har birida yuztadan don bo‘lgan yetti boshoq yetishtiradi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:261",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_wisdom_gift",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "2:269 da qaysi ne’mat bevosita ko‘p yaxshilik deb atalgan?",
+   "options": [
+    "Hikmat",
+    "Notiqlik",
+    "Moddiy farovonlik",
+    "Jismoniy kuch"
+   ],
+   "answer": 0,
+   "info": "Bu oyatda ko‘p yaxshilikka erishish hikmat berilishi bilan bog‘langan.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:269",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_debt_dictation",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "2:282 ga ko‘ra, qarz bitimini aytib turishga qodir bo‘lsa, kim aytib turadi?",
+   "options": [
+    "Qarzdor",
+    "Qarz beruvchi",
+    "Guvohlardan biri",
+    "Kotib o‘z nomidan"
+   ],
+   "answer": 0,
+   "info": "Oyat yozishni kotibga, aytib turishni esa qarzdorga topshiradi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:282",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_concealed_testimony",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "2:283 da guvohlikni yashirish qanday baholanadi?",
+   "options": [
+    "Uni yashirgan kishining qalbi gunohkor bo‘ladi",
+    "Mas’uliyat kotibga o‘tadi",
+    "Yashirgan kishi faqat qarzdor oldida javob beradi",
+    "Mas’uliyat faqat garov bo‘lmaganda mavjud"
+   ],
+   "answer": 0,
+   "info": "Oyat guvohlikni yashirishni qalbning gunohkorligi bilan bog‘laydi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:283",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_clear_verses",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "3:7 da qaysi guruh oyatlar Kitobning asosi deb atalgan?",
+   "options": [
+    "Ma’nosi aniq oyatlar",
+    "Bir necha ma’noga yo‘yilishi mumkin bo‘lgan oyatlar",
+    "Qarz majburiyatlari haqidagi oyatlar",
+    "Payg‘ambarlar qissalari keltirilgan oyatlar"
+   ],
+   "answer": 0,
+   "info": "Kitobning asosi deb ma’nosi aniq oyatlar ataladi; ular ko‘p ma’noga yo‘yiladigan oyatlardan farqlanadi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:7",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_dominion",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "3:26 da hokimiyat haqida qaysi amallar aytilgan?",
+   "options": [
+    "Alloh uni beradi va qaytarib oladi",
+    "Alloh beradi, ammo olmaydi",
+    "Alloh oladi, ammo bermaydi",
+    "Hokimiyat faqat meros bo‘lib o‘tadi"
+   ],
+   "answer": 0,
+   "info": "Oyat hokimiyatni berish va olishni Allohning irodasiga bog‘laydi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:26",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_beloved_giving",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "3:92 da yaxshilikka erishish qanday sarf bilan bog‘langan?",
+   "options": [
+    "O‘zi yaxshi ko‘rgan narsadan sarflash",
+    "Faqat keraksiz narsalardan sarflash",
+    "Faqat topib olingan moldan sarflash",
+    "Faqat sotib bo‘lmaydigan narsadan sarflash"
+   ],
+   "answer": 0,
+   "info": "Oyat yaxshilikka erishishni sevimli moldan sarflash bilan bog‘laydi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:92",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_consult_then_trust",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "3:159 da maslahat va qat’iy qarordan keyin nima keladi?",
+   "options": [
+    "Allohga tavakkal qilish",
+    "Har qanday harakatdan voz kechish",
+    "Yana qur’a tashlab qaror qilish",
+    "Qarorni hammadan yashirish"
+   ],
+   "answer": 0,
+   "info": "Maslahatlashishdan so‘ng Payg‘ambarga qaror qilib, Allohga tavakkal qilish buyurilgan.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:159",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_mutual_consent",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "4:29 da savdoning qaysi sharti aniq aytilgan?",
+   "options": [
+    "O‘zaro rozilik",
+    "Tomonlarning qarindosh bo‘lishi",
+    "Faqat kumush bilan to‘lash",
+    "Faqat safarda savdo qilish"
+   ],
+   "answer": 0,
+   "info": "Oyat ikki tomonning roziligiga asoslangan savdoni tilga oladi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:29",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_family_arbiters",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "4:35 da oilaviy nizodagi ikki hakam qayerdan tanlanadi?",
+   "options": [
+    "Har ikki oiladan bittadan",
+    "Ikkalasi erning oilasidan",
+    "Ikkalasi xotinning oilasidan",
+    "Ikkalasi boshqa shahardan"
+   ],
+   "answer": 0,
+   "info": "Oyat erning oilasidan bir va xotinning oilasidan bir hakamni tilga oladi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:35",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_good_deed_multiplied",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "4:40 da qaysi ikki fikr birga kelgan?",
+   "options": [
+    "Zarracha ham zulm qilinmaydi, yaxshilik esa ko‘paytiriladi",
+    "Kichik amallar hisobga olinmaydi, kattalari esa ko‘paytiriladi",
+    "Faqat oshkora amallar hisoblanadi, yashirinlari hisobga olinmaydi",
+    "Yaxshilik va yomonlik doimo bir xil ko‘paytiriladi"
+   ],
+   "answer": 0,
+   "info": "Oyat zarracha ham zulm bo‘lmasligini va yaxshi amal ko‘paytirilishini aytadi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:40",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_dispute_reference",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "4:59 da nizoli masalani kimga qaytarish buyurilgan?",
+   "options": [
+    "Alloh va Payg‘ambarga",
+    "Payg‘ambar va hokimiyat egalariga",
+    "Ummat oqsoqollari va olimlariga",
+    "Guvohlar va kotibga"
+   ],
+   "answer": 0,
+   "info": "Oyat nizoli masalani Alloh va Payg‘ambarga qaytarishni buyuradi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:59",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_fortified_towers",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "4:78 da o‘limdan qochib bo‘lmasligini qaysi tasvir ko‘rsatadi?",
+   "options": [
+    "Mustahkam minoralar",
+    "Oq yelkanli kemalar",
+    "Baland xurmoli bog‘lar",
+    "Cho‘l karvon yo‘llari"
+   ],
+   "answer": 0,
+   "info": "Oyat o‘lim mustahkam minoralarda bo‘lganlarga ham yetishini bildiradi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:78",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_news_referral",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "4:83 da xavfsizlik yoki xavf haqidagi xabarni kimga yetkazish kerak edi?",
+   "options": [
+    "Payg‘ambar va hokimiyat egalariga",
+    "Alloh va Payg‘ambarga",
+    "Ikki guvoh va kotibga",
+    "O‘sha hududdan kelgan yo‘lovchilarga"
+   ],
+   "answer": 0,
+   "info": "Oyat xabarni tarqatish o‘rniga Payg‘ambar va hokimiyat egalariga murojaat qilishni aytadi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:83",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_ablution_wiping",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "5:6 da tahorat paytida qaysi a’zoga mash tortish aniq buyurilgan?",
+   "options": [
+    "Boshga",
+    "Ko‘krakka",
+    "Orqaga",
+    "Tizzalarga"
+   ],
+   "answer": 0,
+   "info": "Tahorat haqidagi oyatda boshga mash tortish alohida tilga olinadi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:6",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_oath_fasting",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "5:89 da qasam kafforatining sanalgan yo‘llariga imkoni bo‘lmaganga qanday ro‘za belgilangan?",
+   "options": [
+    "Uch kun",
+    "Yetti kun",
+    "O‘n kun",
+    "Ikki oy"
+   ],
+   "answer": 0,
+   "info": "Kafforat yo‘llari sanalgach, imkon topolmagan kishiga uch kun ro‘za ko‘rsatilgan.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:89",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_game_assessment",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "5:95 da ov hayvoniga teng qurbonlikni nechta adolatli kishi belgilaydi?",
+   "options": [
+    "Ikki kishi",
+    "Bir kishi",
+    "Uch kishi",
+    "To‘rt kishi"
+   ],
+   "answer": 0,
+   "info": "Ehromda ov hayvonini qasddan o‘ldirish masalasida oyat ikki adolatli hakamni ko‘rsatadi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:95",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_sea_provision",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "5:96 da dengiz va quruqlik ovi o‘rtasida qanday farq aytilgan?",
+   "options": [
+    "Dengiz ovi halol, quruqlik ovi esa ehromda man etilgan",
+    "Ehromda ikkalasi ham man etilgan",
+    "Ehromda ikkalasi ham halol",
+    "Quruqlik ovi halol, dengiz ovi man etilgan"
+   ],
+   "answer": 0,
+   "info": "Oyat dengiz ovini halol qiladi, ehrom holatida quruqlikda ov qilishni esa taqiqlaydi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:96",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_falling_leaf",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "6:59 dagi tushayotgan barg tasviri nimani ta’kidlaydi?",
+   "options": [
+    "Hech narsa Allohning ilmidan yashirin emas",
+    "Ilm faqat tunda mavjud",
+    "Barg shamolsiz tusha olmaydi",
+    "Inson barcha g‘aybni biladi"
+   ],
+   "answer": 0,
+   "info": "Oyat hech bir barg Allohning xabarisiz tushmasligini bildiradi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:59",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_harvest_due",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "6:141 da hosilning haqqini qachon berish buyurilgan?",
+   "options": [
+    "Hosil yig‘ilgan kuni",
+    "Faqat hosildan bir yil o‘tgach",
+    "Faqat keyingi ekish vaqtida",
+    "Faqat butun hosil sotilgach"
+   ],
+   "answer": 0,
+   "info": "Hosil haqqini berish ko‘rsatmasi yig‘im kuni bilan bog‘langan.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:141",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_recitation_attention",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "7:204 da Qur’on o‘qilganda qaysi ikki amal buyurilgan?",
+   "options": [
+    "Tinglash va jim turish",
+    "Muhokama qilish va savol berish",
+    "Gapni bo‘lish va hammani tuzatish",
+    "Gaplashish va savdolashishni davom ettirish"
+   ],
+   "answer": 0,
+   "info": "Oyat Qur’onni tinglash bilan jim turishni birga zikr qiladi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 7:204",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/7",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_dispute_weakness",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "8:46 da nizoning qaysi oqibatlari bevosita aytilgan?",
+   "options": [
+    "Qat’iyat va kuchni yo‘qotish",
+    "Mol-mulk va hosilni yo‘qotish",
+    "Shartnomalar muddatining qisqarishi",
+    "Vatanni tark etish majburiyati"
+   ],
+   "answer": 0,
+   "info": "Oyat nizolar zaiflikka va kuchning ketishiga olib kelishidan ogohlantiradi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 8:46",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/8",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_inclining_peace",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "8:61 da boshqa tomon tinchlikka moyil bo‘lsa, qanday javob ko‘rsatilgan?",
+   "options": [
+    "Tinchlikka moyil bo‘lib, Allohga tavakkal qilish",
+    "Har qanday holda tinchlikni rad etish",
+    "Faqat yangi nizodan so‘ng rozi bo‘lish",
+    "Javobni fasl almashguncha kechiktirish"
+   ],
+   "answer": 0,
+   "info": "Tinchlikka moyil bo‘lish ko‘rsatmasi Allohga tavakkal bilan birga keladi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 8:61",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/8",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_charity_recipients",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "9:60 da sadaqa oluvchilar orasida qaysi juftlik aniq sanalgan?",
+   "options": [
+    "Qarzdorlar va yo‘lovchilar",
+    "Shoirlar va kotiblar",
+    "Dehqonlar va temirchilar",
+    "Hukmdorlar va ularning qarindoshlari"
+   ],
+   "answer": 0,
+   "info": "Bu oyatda qarzdorlar va yo‘lovchilar sadaqa oluvchilar orasida ochiq sanalgan.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 9:60",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/9",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_three_repentance",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "9:118 da tavbasi qabul qilingan uch kishining holati qanday tasvirlangan?",
+   "options": [
+    "Keng yer ularga tor bo‘lib qoldi",
+    "Dengiz oldilarida quruqlikka aylandi",
+    "Tun bir soatdan qisqa tuyuldi",
+    "Tog‘lar bog‘larga aylandi"
+   ],
+   "answer": 0,
+   "info": "Oyat ularning iztirobini keng yerning tor tuyulishi orqali ifodalaydi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 9:118",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/9",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_pharaoh_declaration",
+   "cat": "prophets",
+   "difficulty": 2,
+   "q": "10:90–91 dagi hikoyada Fir’avn qachon iymon keltirganini aytdi?",
+   "options": [
+    "Cho‘ka boshlaganida",
+    "Muso bilan ilk suhbatdan oldin",
+    "Xalqni ixtiyoriy qo‘yib yuborganida",
+    "Muso tug‘ilishidan oldin"
+   ],
+   "answer": 0,
+   "info": "Fir’avn suvga g‘arq bo‘layotganida iymonini e’lon qilgan.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 10:90, 10:91",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/10",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_shuayb_reform",
+   "cat": "prophets",
+   "difficulty": 2,
+   "q": "11:88 da Shuayb o‘z maqsadini qanday ta’riflaydi?",
+   "options": [
+    "Qo‘lidan kelganicha isloh qilish",
+    "Xalqining boyligini yig‘ish",
+    "Podshohlik hokimiyatini olish",
+    "Savdodagi javobgarlikni bekor qilish"
+   ],
+   "answer": 0,
+   "info": "Shuayb qo‘lidan kelganicha isloh istaydi va muvaffaqiyatni Allohdan deb biladi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 11:88",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_inner_change",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "13:11 da odamlarning holati o‘zgarishidan oldin qanday o‘zgarish aytilgan?",
+   "options": [
+    "Ularning o‘zlaridagi narsani o‘zgartirishi",
+    "Ularning hukmdorlari almashishi",
+    "Yashash joyining o‘zgarishi",
+    "Moddiy farovonligining ortishi"
+   ],
+   "answer": 0,
+   "info": "Oyat odamlarning holati o‘zgarishini ularning o‘zlaridagi o‘zgarish bilan bog‘laydi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 13:11",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/13",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_bee_dwellings",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "16:68 da asalari uylari uchun qaysi joylar sanalgan?",
+   "options": [
+    "Tog‘lar, daraxtlar va odamlar qurgan narsalar",
+    "Dengizlar, daryolar va suvosti g‘orlari",
+    "Faqat cho‘l qumlari",
+    "Faqat saroy tomlari"
+   ],
+   "answer": 0,
+   "info": "Asalariga berilgan ko‘rsatmada tog‘lar, daraxtlar va odamlar qurgan narsalar sanalgan.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:68",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_faculties_gratitude",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "16:78 oxirida eshitish, ko‘rish va qalblar zikr etilgach, qaysi maqsad aytilgan?",
+   "options": [
+    "Shukr qilish",
+    "Sabr qilish",
+    "Saxovat ko‘rsatish",
+    "Adolat qilish"
+   ],
+   "answer": 0,
+   "info": "Bu ne’matlar sanog‘i shukr qilish eslatmasi bilan yakunlanadi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:78",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_living_water",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "21:30 ga ko‘ra, barcha tirik narsa nimadan yaratilgan?",
+   "options": [
+    "Suvdan",
+    "Temirdan",
+    "Tutundan",
+    "Tuzdan"
+   ],
+   "answer": 0,
+   "info": "Oyatda barcha tirik narsaning suvdan yaratilgani aytiladi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 21:30",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/21",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_privacy_times",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "24:58 da qaysi uch xilvat vaqti sanalgan?",
+   "options": [
+    "Bomdoddan oldin, peshindagi dam, xuftondan keyin",
+    "Bomdoddan keyin, asrdan oldin, shomdan oldin",
+    "Peshindan oldin, asrdan keyin, xuftondan oldin",
+    "Quyosh chiqishi, botishi va yarim tun"
+   ],
+   "answer": 0,
+   "info": "Oyat tonggi namozdan oldin, kunduzgi dam payti va tungi namozdan keyingi vaqtni ajratadi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 24:58",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_messenger_example",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "33:21 da Payg‘ambar go‘zal o‘rnak bo‘lgan kishilarning qaysi sifatlari aytilgan?",
+   "options": [
+    "Alloh va Oxirat kunidan umid qilish, ko‘p zikr qilish",
+    "Musibatda sabr, yo‘lovchiga yordam va saxovat",
+    "Savdoda adolat, ahdga vafo va kamtarlik",
+    "Ota-onaga g‘amxo‘rlik, Kitobni o‘rganish va odamlarni yarashtirish"
+   ],
+   "answer": 0,
+   "info": "Oyat Alloh va Oxirat kunidan umid qilishni va Allohni ko‘p zikr qilishni aytadi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 33:21",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/33",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_tree_pledge",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "48:18 da tilga olingan bay’at qayerda qilingan?",
+   "options": [
+    "Daraxt ostida",
+    "Ka’baning ichida",
+    "Sinay cho‘qqisida",
+    "Kema ustida"
+   ],
+   "answer": 0,
+   "info": "Oyat Alloh daraxt ostida bay’at qilgan mo‘minlardan rozi bo‘lganini bildiradi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 48:18",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/48",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_grain_storage",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Yusuf ozgina oziq-ovqatdan tashqari hosilni qanday saqlashni buyurdi?",
+   "options": [
+    "Boshoqlarida qoldirishni",
+    "Donni yanchib, boshoqsiz saqlash",
+    "Donni maydalab, un holida saqlash",
+    "Yangi hosilni o‘tgan yilgi don bilan aralashtirish"
+   ],
+   "answer": 0,
+   "info": "Yusuf hosilni boshoqlarida saqlab, yeyish uchun ozgina olishni aytdi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:47",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_prison_inquiry",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Yusuf zindondan chiqishdan oldin podshoh elchisidan nimani so‘radi?",
+   "options": [
+    "Qo‘llarini kesgan ayollar ishini aniqlashni",
+    "Avval akalarini olib kelishni",
+    "Avval uni xazinalarga boshliq qilishni",
+    "Avval otasining ko‘ylagini qaytarishni"
+   ],
+   "answer": 0,
+   "info": "Yusuf elchini ayollar ishi haqida surishtirish uchun qaytardi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:50",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_storehouse_qualities",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Yusuf xazinalarni boshqarishni so‘rab qaysi ikki sifatini aytdi?",
+   "options": [
+    "Ishonchli saqlovchi va bilimli",
+    "Kuchli va ishonchli",
+    "Rostgo‘y va sabrli",
+    "Saxiy va oqil"
+   ],
+   "answer": 0,
+   "info": "Yusuf o‘zini ishonchli saqlovchi va bilimli deb ta’rifladi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:55",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_brother_pledge",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Ya’qub ukani qaytarish va’dasida qaysi istisnoni aytdi?",
+   "options": [
+    "O‘g‘illarini yengib bo‘lmas kulfat qamrasa",
+    "Safar bir oydan uzoq davom etsa",
+    "Ukalari qolishni xohlasa",
+    "Hosil yetarli bo‘lmasa"
+   ],
+   "answer": 0,
+   "info": "Ukani qaytarish va’dasida yengib bo‘lmas kulfat holati istisno qilindi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:66",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_separate_gates",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Ya’qub turli darvozalardan kirish maslahatini tavakkul bilan qanday bog‘ladi?",
+   "options": [
+    "Chora ko‘rib, hukm Allohniki ekanini tan oldi",
+    "Har bir darvozadan kirishdan oldin alomat talab qilish",
+    "Aka-ukalarning omonligi allaqachon va’da qilingan deb bilish",
+    "Natijani faqat maslahatga aniq amal qilishga bog‘lash"
+   ],
+   "answer": 0,
+   "info": "Ya’qub chora ko‘rishni maslahat berdi, ammo Allohning irodasidan himoya qila olmasligini aytdi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:67",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_search_order",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Yusuf idishni izlashda xaltalarni qaysi tartibda tekshirdi?",
+   "options": [
+    "Avval boshqalarnikini, keyin ukasinikini",
+    "Avval ukasinikini, keyin boshqalarnikini",
+    "Faqat eng katta akasinikini",
+    "Faqat eng kichik ukasinikini"
+   ],
+   "answer": 0,
+   "info": "Oyatda ukasining xaltasi boshqalarning xaltalaridan keyin tekshirilgani aytiladi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:76",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_fish_return",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Qaysi xabar Musoni izlari bo‘ylab qaytishga undadi?",
+   "options": [
+    "Qoya yonidagi baliq dengizga yo‘l olgani",
+    "Qishloq ahli taom bermagani",
+    "Podshoh kemalarni tortib olayotgani",
+    "Shahardagi devor qulayotgani"
+   ],
+   "answer": 0,
+   "info": "Muso qoya yonidagi baliq haqida eshitib, izlangan joyni tanidi va qaytdi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:61, 18:62, 18:63, 18:64",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_journey_sequence",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "«Kahf» surasida Musoning hamrohi qilgan uch ish qanday tartibda keladi?",
+   "options": [
+    "Kemani teshish → bolani o‘ldirish → devorni tuzatish",
+    "Bolani o‘ldirish → kemani teshish → devorni tuzatish",
+    "Devorni tuzatish → kemani teshish → bolani o‘ldirish",
+    "Kemani teshish → devorni tuzatish → bolani o‘ldirish"
+   ],
+   "answer": 0,
+   "info": "Hikoyada avval kema, keyin bola, so‘ng devor voqeasi keladi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:71, 18:74, 18:77",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_boat_explanation",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Kambag‘allarning kemasi nega shikastlangan deb tushuntirildi?",
+   "options": [
+    "Podshoh kemalarni kuch bilan tortib olayotgan edi",
+    "Podshoh yukdan katta boj olardi",
+    "Podshoh barcha kema egalarini o‘z flotiga yig‘ardi",
+    "Podshoh kambag‘allarning dengizga chiqishini taqiqlardi"
+   ],
+   "answer": 0,
+   "info": "Hamroh shikast yetkazishni podshohning kemalarni tortib olishi bilan izohladi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:79",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_wall_treasure",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Xazina ustidagi devor nima uchun tiklandi?",
+   "options": [
+    "Ikki yetim voyaga yetib, xazinani olishi uchun",
+    "Vasiylar xazinani chiqarib, darhol yetimlarga berishi uchun",
+    "Yetimlar qarindoshlari qaytgach xazinani chiqarishi uchun",
+    "Yetimlar uyni to‘liq qayta qurgach xazinani chiqarishi uchun"
+   ],
+   "answer": 0,
+   "info": "Devorning tiklanishi ikki yetim voyaga yetguncha xazinani saqlash bilan bog‘liq edi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:82",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_barrier_help",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Zulqarnayn to‘siq uchun haq taklif qilinganda nima so‘radi?",
+   "options": [
+    "Rabbining ne’matini afzal bilib, kuch bilan yordam so‘radi",
+    "Taklif qilingan haqni ikki baravar oshirishni",
+    "Qishloq ustidan hokimiyatni berishni",
+    "Barcha oziq-ovqat zaxirasini keltirishni"
+   ],
+   "answer": 0,
+   "info": "Zulqarnayn haq o‘rniga odamlarning kuch bilan yordam berishini so‘radi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:94, 18:95",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_barrier_materials",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Zulqarnayn to‘sig‘ida temir va mis qanday ishlatildi?",
+   "options": [
+    "Temir qizdirilib, ustiga eritilgan mis quyildi",
+    "Mis qizdirilib, ustiga eritilgan temir quyildi",
+    "Temir bilan mis aralashtirilib, keyin olov puflandi",
+    "Temir va mis qatlamlari terilib, keyin suv bilan sovitildi"
+   ],
+   "answer": 0,
+   "info": "Oyatda qizdirilgan temir ustiga eritilgan mis quyilishi tasvirlanadi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:96",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_mistaken_efforts",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "18:103–104 da amallari eng ko‘p ziyon ko‘rganlar haqida qanday qarama-qarshilik bor?",
+   "options": [
+    "Mehnati zoye, ammo o‘zini yaxshi ish qilyapman deb biladi",
+    "Amallari foydali, lekin ular uni behuda deb hisoblaydi",
+    "Harakatlari zoye ketgan va ular xato qilganini biladi",
+    "Amalni boshlamagan, lekin uni tugallangan deb hisoblaydi"
+   ],
+   "answer": 0,
+   "info": "Oyatlar zoye ketgan mehnatni insonning yaxshi ish qilyapman degan fikriga qarama-qarshi qo‘yadi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:103, 18:104",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_zakariya_sign",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "«Maryam» surasida Zakariyoning alomati qanday tasvirlangan?",
+   "options": [
+    "Sog‘lom bo‘la turib, uch kecha odamlarga gapirmaslik",
+    "Kasallikdan uch kun odamlarni ko‘rmaslik",
+    "Qirq kecha ibodatxonadan chiqmaslik",
+    "Yetti kun ovqat yemaslik"
+   ],
+   "answer": 0,
+   "info": "«Maryam»da alomat sog‘lom holda odamlar bilan gaplasha olmaslik bilan bog‘liq.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 19:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/19",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_maryam_vow",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "19:26 da Maryamga yeb-ichib, taskin topish amridan keyin nima keladi?",
+   "options": [
+    "O‘sha kuni odamlar bilan gaplashmaslik nazri",
+    "O‘sha kuni odamlar orasiga chiqmaslik nazri",
+    "Odamlarga faqat bola haqida gapirmaslik nazri",
+    "Uch kecha ketma-ket gapirmaslik nazri"
+   ],
+   "answer": 0,
+   "info": "Oyatdagi nazr o‘sha kuni odamlar bilan gaplashmaslik bilan izohlanadi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 19:26",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/19",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_ismail_traits",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "19:54–55 da Ismoilning qaysi sifatlari birga keladi?",
+   "options": [
+    "Va’daga sodiqlik; oilasini namoz va zakotga buyurish",
+    "Tush ta’biri; xazinalarni boshqarish",
+    "Fir’avn oldida yumshoqlik; yordamchi so‘rash",
+    "To‘siq qurish; haqni rad etish"
+   ],
+   "answer": 0,
+   "info": "Oyatlar Ismoilning va’daga sodiqligini oilasiga namoz va zakotni buyurishi bilan bog‘laydi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 19:54, 19:55",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/19",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_musa_two_signs",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "20:20–22 da Musoga qaysi ikki alomat berildi?",
+   "options": [
+    "Aso ilonga aylandi; qo‘l zararsiz oppoq bo‘ldi",
+    "Aso ilonga aylandi; qo‘l kasallikdan oqardi",
+    "Dengiz yorildi; qo‘l zararsiz oqardi",
+    "Aso buloqlarni ochdi; qo‘l zararsiz oqardi"
+   ],
+   "answer": 0,
+   "info": "Bu parchada asoning aylanishi va qo‘lning zararsiz oppoq bo‘lishi bayon qilinadi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 20:20, 20:21, 20:22",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/20",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_musa_helper_purpose",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Muso Horunni yordamchi qilishni nima uchun so‘radi?",
+   "options": [
+    "Uni quvvatlash va ishiga sherik qilish uchun",
+    "Horunni xalq bilan qoldirib, Fir’avnga yolg‘iz borish",
+    "Horunga Kitobni saqlash va bolalarni o‘qitishni topshirish",
+    "Horunga faqat Fir’avnning savollariga javob berishni topshirish"
+   ],
+   "answer": 0,
+   "info": "Muso Horun orqali quvvatlanishni va uning vazifada ishtirokini so‘radi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 20:25, 20:26, 20:27, 20:28, 20:29, 20:30, 20:31, 20:32",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/20",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_revelation_knowledge",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "20:114 da qaysi ikki ko‘rsatma birga keladi?",
+   "options": [
+    "Vahiy tugaguncha shoshilmaslik va ilm ortishini so‘rash",
+    "Vahiy tugashini kutish va yengillik so‘rash",
+    "Vahiy tugamasidan uni takrorlash va ilm so‘rash",
+    "Vahiy tugashini kutish va sabr so‘rash"
+   ],
+   "answer": 0,
+   "info": "Oyat vahiy olishdagi sabrni ilmning ziyoda bo‘lishini so‘rash bilan birlashtiradi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 20:114",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/20",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_praise_times",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "20:130 da sabrga chaqiriq bilan birga qaysi tasbeh vaqtlari aytilgan?",
+   "options": [
+    "Quyosh chiqishi va botishidan oldin, kechasi va kun chetlarida",
+    "Quyosh chiqqandan va botgandan keyin, tunda va kun o‘rtasida",
+    "Quyosh chiqishidan oldin, botgandan keyin va faqat tun yarmida",
+    "Quyosh chiqqandan keyin, botishidan oldin va faqat kun o‘rtasida"
+   ],
+   "answer": 0,
+   "info": "Oyat tong va quyosh botishi, tun qismlari hamda kun chetlarini sanaydi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 20:130",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/20",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_measure_rights",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "26:181–183 da savdoga oid qaysi uch talab bevosita aytilgan?",
+   "options": [
+    "To‘liq o‘lchov, to‘g‘ri tarozi, odamlar haqini kamaytirmaslik",
+    "To‘liq o‘lchov, kechiktirilgan to‘lov, qarzni yozish",
+    "To‘g‘ri tarozi, ikki guvoh, tayinlangan kotib",
+    "Odamlar haqini saqlash, garov, muddatni uzaytirish"
+   ],
+   "answer": 0,
+   "info": "Parcha to‘liq o‘lchash, to‘g‘ri tortish va odamlar haqini kamaytirmaslikni birlashtiradi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 26:181, 26:182, 26:183",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/26",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_ant_warning",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Chumoli hikoyasida xavf va Sulaymonning javobi qanday bog‘langan?",
+   "options": [
+    "Bilmay ezib ketish; shukr va solih amal uchun duo",
+    "Qasddan hujum; shukr va solih amal uchun duo",
+    "Bilmay ezib ketish; vorissiz saltanat uchun duo",
+    "Qasddan hujum; qo‘shinni yashirish uchun duo"
+   ],
+   "answer": 0,
+   "info": "Chumoli bilmagan holda zarar yetkazishdan ogohlantirdi, Sulaymon esa shukr va solih amalni so‘radi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:18, 27:19",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_queen_council",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Saba malikasi a’yonlardan maslahat so‘raganda qanday shart aytdi?",
+   "options": [
+    "Ular hozir bo‘lmay turib qaror qilmaslik",
+    "Ularning bir ovozdan roziligisiz qaror qilmaslik",
+    "Elchilar qaytmaguncha qaror qilmaslik",
+    "Lashkarboshi maslahatisiz qaror qilmaslik"
+   ],
+   "answer": 0,
+   "info": "Malika maslahat so‘rab, a’yonlar ishtirokisiz qaror qilmasligini aytdi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:32",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_gift_response",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Malikaning sovg‘adan maqsadi va Sulaymonning javobi qanday mos keladi?",
+   "options": [
+    "Elchilar qanday javob bilan qaytishini ko‘rish; Allohning bergani afzal",
+    "Qurilish haqini to‘lash; taklif qilingan boylik kam",
+    "Asirlarni ozod qilish; Allohning bergani afzal",
+    "Mag‘lubiyatni tan olish; sovg‘a yillik o‘lpon sifatida olindi"
+   ],
+   "answer": 0,
+   "info": "Malika elchilar orqali javobni bilmoqchi bo‘ldi, Sulaymon Alloh berganining afzalligini aytdi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:35, 27:36",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_throne_test",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "27:40 da Sulaymon taxtning kelishini qanday tushundi?",
+   "options": [
+    "Rabbining ne’mati va shukrini sinash",
+    "Malika o‘zgartirilgan taxtini taniydimi, degan sinov",
+    "Majlis tugashidan oldin ifrit va’dasining bajarilishi",
+    "Malikaning unga yetkazilgan maktubga javobi"
+   ],
+   "answer": 0,
+   "info": "Sulaymon taxt kelishini ne’mat va o‘z shukrining sinovi deb atadi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:40",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_palace_surface",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Malika nimani suv deb o‘yladi va unga nima tushuntirildi?",
+   "options": [
+    "Saroyning shisha poli; u shisha bilan qoplangan edi",
+    "Haqiqiy hovuz; undan ko‘priksiz o‘tish mumkin edi",
+    "Marmar pol; uni yupqa muz qoplagan edi",
+    "Suv ustidagi oyna; tagida ko‘prik bor edi"
+   ],
+   "answer": 0,
+   "info": "Malika sirtni suv deb o‘yladi, Sulaymon esa uning shisha ekanini tushuntirdi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:44",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_midian_wait",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Madyan suvi yonidagi ayollar chorvani ushlab turishini qanday izohladi?",
+   "options": [
+    "Cho‘ponlar ketishini kutishardi; otasi juda qari edi",
+    "Otasi qaytishini kutishardi; cho‘ponlar ketgan edi",
+    "Yomg‘irni kutishardi; otasi boshqa podani boqardi",
+    "Quduq ochilishini kutishardi; otasi shaharda ushlangan edi"
+   ],
+   "answer": 0,
+   "info": "Ular cho‘ponlar ketgach sug‘orishini va otasi qari ekanini aytdi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 28:23",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/28",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_hiring_qualities",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Ayollarga yordam bergach, Musoni yollash uchun qaysi ikki sifat aytildi?",
+   "options": [
+    "Kuch va ishonchlilik",
+    "Bilim va saqlash tajribasi",
+    "Notiqlik va boylik",
+    "Aslzodalik va katta yoshlilik"
+   ],
+   "answer": 0,
+   "info": "28:26 da Musoni yollash taklifi ishchining kuchi va ishonchliligiga asoslanadi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 28:24, 28:25, 28:26",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/28",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_midian_contract",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Musoning Madyandagi xizmat shartlari qanday edi?",
+   "options": [
+    "Sakkiz yil; o‘n yil ixtiyoriy; har ikki muddatda e’tiroz yo‘q",
+    "O‘n yil; sakkiz yil to‘lov bilan; aks holda e’tiroz",
+    "Yetti yil; o‘n yil majburiy; qisqasi qabul qilinmaydi",
+    "Sakkiz yil, nikohdan so‘ng yana o‘n yil; ikkisi ham shart"
+   ],
+   "answer": 0,
+   "info": "Kelishuv sakkiz yilni, ixtiyoriy o‘n yilni va har ikki muddatning qabul qilinishini belgiladi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 28:27, 28:28",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/28",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_qarun_wealth",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Qorunga boylik haqida berilgan nasihatda qaysi maqsadlar birga keladi?",
+   "options": [
+    "Oxiratni izlash, dunyo ulushini unutmaslik va yaxshilik qilish",
+    "Qarzlarni yozish, guvohlar keltirish va safarda garov olish",
+    "Vasiyatni bajarib, qarzni uzgach merosni taqsimlash",
+    "Hosilni boshoqlarda saqlab, qiyin yillarga zaxira tayyorlash"
+   ],
+   "answer": 0,
+   "info": "Nasihat oxiratni izlash, dunyodagi ulush, yaxshilik va buzg‘unchilikdan tiyilishni birlashtiradi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 28:77",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/28",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_sheep_dispute",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "38:23 da bir qo‘y egasi Dovud huzurida nimadan shikoyat qildi?",
+   "options": [
+    "99 qo‘yli akasi uning yagona qo‘yini ham talab qildi",
+    "Bir qo‘yli akasi uning 99 qo‘yidan bittasini so‘radi",
+    "Ular 99 qo‘yni teng bo‘lish haqida tortishdi",
+    "Ular ikki teng podani almashtirish haqida tortishdi"
+   ],
+   "answer": 0,
+   "info": "Shikoyatchining bir qo‘yi bor edi; 99 qo‘yli akasi uni ham o‘ziga berishni talab qildi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 38:22, 38:23",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/38",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_ayyub_oath",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Qasamni buzmaslik haqidagi 38:44 ko‘rsatmasida Ayyub qo‘liga nima olishi aytilgan?",
+   "options": [
+    "Bir bog‘lam",
+    "Asa",
+    "Ko‘ylak",
+    "Qadah"
+   ],
+   "answer": 0,
+   "info": "Ayyubning qasami haqidagi oyatda bog‘lam tilga olinadi va u sabrli deb ta’riflanadi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 38:44",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/38",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_believer_argument",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Fir’avn oilasidagi mo‘min Musoning yolg‘on yoki rost gapirishini qanday qiyosladi(40:28)?",
+   "options": [
+    "Yolg‘on Musoning zarariga; rost bo‘lsa, tahdidning bir qismi ularga yetadi",
+    "Yolg‘on ularning zarariga; rost bo‘lsa, tahdidning bir qismi Musoga yetadi",
+    "Har ikki holda tahdid faqat Musoga tegishli",
+    "Har ikki holda tahdid faqat ularning avlodlariga tegishli"
+   ],
+   "answer": 0,
+   "info": "So‘zlovchi yolg‘onning oqibatini Musoning o‘ziga bog‘ladi, rost bo‘lsa, tinglovchilarga tahdidning bir qismi yetishini aytdi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 40:28",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/40",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_yusuf_after_death",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "40:34 da Yusuf vafotidan keyingi qaysi da’vo eslatiladi?",
+   "options": [
+    "Alloh undan keyin boshqa elchi yubormaydi",
+    "Undan keyin faqat uning oilasidan elchi keladi",
+    "Keyingi elchi faqat ko‘chib ketishdan so‘ng keladi",
+    "Undan keyin faqat Kitobsiz podshohlar qoladi"
+   ],
+   "answer": 0,
+   "info": "Oyat Yusuf hayotligidagi shubhalarni va vafotidan so‘ng boshqa elchi kelmaydi degan da’voni eslatadi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 40:34",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/40",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_paradise_river_traits",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Sut va asalning qaysi juft ta’rifi 47:15 ga aniq mos?",
+   "options": [
+    "Ta’mi o‘zgarmas sut; tozalangan asal",
+    "Tozalangan sut; ta’mi o‘zgarmas asal",
+    "Sovitilgan sut; xushbo‘y asal",
+    "Xushbo‘y sut; sovitilgan asal"
+   ],
+   "answer": 0,
+   "info": "Jannat daryolari ta’rifida sutning ta’mi o‘zgarmaydi, asal esa tozalangan deb aytiladi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 47:15",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/47",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_monasticism_distinction",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "57:27 da Iso izdoshlarining qalbiga solingan narsa va ular o‘zlari joriy qilgan narsa qanday farqlanadi?",
+   "options": [
+    "Mehr-shafqat va rahm — rohiblik",
+    "Kamtarlik va sabr — ro‘za",
+    "Qo‘rquv va umid — uylanmaslik",
+    "Ixlos va shukr — haj"
+   ],
+   "answer": 0,
+   "info": "Oyatda mehr-shafqat va rahm Allohning in’omi, rohiblik esa izdoshlarning o‘zlari joriy qilgan amal sifatida ajratiladi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 57:27",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/57",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_fay_recipients",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "59:7 da molni oluvchilar qatorida Alloh, Rasul va uning yaqinlaridan tashqari qaysi uch guruh sanaladi?",
+   "options": [
+    "Yetimlar, miskinlar va musofir",
+    "Qarzdorlar, miskinlar va musofir",
+    "Yetimlar, ozod qilinadigan qullar va musofir",
+    "Yetimlar, miskinlar va zakot yig‘uvchilar"
+   ],
+   "answer": 0,
+   "info": "59:7 dagi ro‘yxatda yetimlar, miskinlar va musofir aniq sanaladi; maqsad molning faqat boylar orasida aylanib qolmasligidir.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 59:7",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/59",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_later_believers_prayer",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "59:10 da oldingi mo‘minlardan keyin kelganlarning duosida qaysi ikki iltijo birlashadi?",
+   "options": [
+    "Bizni va oldingi mo‘minlarni kechir; mo‘minlarga gina qoldirma",
+    "Bizni va avlodlarimizni kechir; dushmandan qo‘rquvni ketkaz",
+    "Yaqinlar va ustozlarni kechir; boylarga hasadni ketkaz",
+    "Bizni va oldingi mo‘minlarni kechir; bolalarni balodan asra"
+   ],
+   "answer": 0,
+   "info": "Duoda o‘zlari va iymonda ilgari o‘tganlar uchun mag‘firat, qalblarda esa mo‘minlarga nisbatan gina bo‘lmasligi so‘raladi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 59:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/59",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_fairness_conditions",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "60:8 da odamlarga yaxshilik va adolat qilish haqida qaysi ikki ishni qilmaganlari aytiladi?",
+   "options": [
+    "Din sababli urushmagan va uylardan haydamagan",
+    "Mol sababli urushmagan va savdoni rad etmagan",
+    "Uylardan haydamagan va e’tiqod haqida bahslashmagan",
+    "Savdo ahdini buzmagan va hijratni rad etmagan"
+   ],
+   "answer": 0,
+   "info": "60:8 da aynan din sababli urushmaslik va uylaridan haydamaslik zikr etiladi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 60:8",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/60",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_last_request",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "63:10 da o‘lim oldidan qisqa muhlat so‘ragan kishi nima qilishni va’da qiladi?",
+   "options": [
+    "Sadaqa berish va solihlardan bo‘lish",
+    "Haj qilish va ro‘za tutish",
+    "Qarzlarni uzish va qarindoshlarni yarashtirish",
+    "Mag‘firat so‘rash va hijrat qilish"
+   ],
+   "answer": 0,
+   "info": "63:10 da sadaqa va solihlik aytiladi; keyingi oyat belgilangan ajal kelganda kechiktirilmasligini bildiradi.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 63:10, 63:11",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/63",
+    "translationVersion": 1
+   }
   }
  ]
 }

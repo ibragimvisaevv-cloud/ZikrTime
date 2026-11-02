@@ -1,0 +1,3683 @@
+[
+  {
+    "id": "l1_verify_news",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 49:6",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "sourceVerses": [
+      "49:6"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Что следует сделать с вестью от ненадёжного человека, согласно 49:6?",
+        "options": [
+          "Проверить её",
+          "Сразу распространить",
+          "Судить по слухам",
+          "Поверить без проверки"
+        ],
+        "info": "Проверка вести помогает не причинить людям вред по незнанию."
+      },
+      "en": {
+        "q": "What should you do with news from an unreliable person in 49:6?",
+        "options": [
+          "Verify it",
+          "Spread it immediately",
+          "Judge by rumours",
+          "Believe without checking"
+        ],
+        "info": "Verifying a report helps prevent harming people through ignorance."
+      },
+      "uz": {
+        "q": "49:6 ga ko‘ra, ishonchsiz kishining xabarini nima qilish kerak?",
+        "options": [
+          "Tekshirish",
+          "Darhol tarqatish",
+          "Mish-mishga qarab hukm qilish",
+          "Tekshirmay ishonish"
+        ],
+        "info": "Xabarni tekshirish bilmasdan odamlarga zarar yetkazishdan saqlaydi."
+      },
+      "tg": {
+        "q": "Мувофиқи 49:6 бо хабари шахси беэътимод чӣ бояд кард?",
+        "options": [
+          "Онро санҷид",
+          "Дарҳол паҳн кард",
+          "Аз рӯйи овоза ҳукм кард",
+          "Бе санҷиш бовар кард"
+        ],
+        "info": "Санҷидани хабар аз расонидани зарар ба мардум аз рӯйи нодонӣ пешгирӣ мекунад."
+      },
+      "kk": {
+        "q": "49:6 бойынша сенімсіз адамның хабарын не істеу керек?",
+        "options": [
+          "Тексеру",
+          "Бірден тарату",
+          "Қауесетпен үкім шығару",
+          "Тексермей сену"
+        ],
+        "info": "Хабарды тексеру білместікпен адамдарға зиян келтіруден сақтайды."
+      },
+      "ky": {
+        "q": "49:6 боюнча ишенимсиз кишинин кабарын эмне кылуу керек?",
+        "options": [
+          "Текшерүү",
+          "Дароо таратуу",
+          "Ушакка карап өкүм чыгаруу",
+          "Текшербей ишенүү"
+        ],
+        "info": "Кабарды текшерүү билбестиктен адамдарга зыян келтирүүдөн сактайт."
+      },
+      "az": {
+        "q": "49:6-ya görə etibarsız şəxsin gətirdiyi xəbərlə nə etmək lazımdır?",
+        "options": [
+          "Yoxlamaq",
+          "Dərhal yaymaq",
+          "Şayiəyə görə hökm vermək",
+          "Yoxlamadan inanmaq"
+        ],
+        "info": "Xəbəri yoxlamaq bilmədən insanlara zərər vurmağın qarşısını alır."
+      },
+      "tr": {
+        "q": "49:6'ya göre güvenilmez kişinin getirdiği habere nasıl yaklaşılmalıdır?",
+        "options": [
+          "Doğruluğu araştırılmalı",
+          "Hemen yayılmalı",
+          "Söylentiyle hüküm verilmeli",
+          "Araştırmadan inanılmalı"
+        ],
+        "info": "Haberi doğrulamak, bilmeden insanlara zarar vermeyi önler."
+      }
+    }
+  },
+  {
+    "id": "l1_reconcile_believers",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 49:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "sourceVerses": [
+      "49:10"
+    ],
+    "locales": {
+      "ru": {
+        "q": "К чему призывает 49:10 при ссоре между верующими?",
+        "options": [
+          "Примирить их",
+          "Разжечь спор",
+          "Поддержать обиды",
+          "Распространить ссору"
+        ],
+        "info": "Аят называет верующих братьями и призывает восстанавливать мир между ними."
+      },
+      "en": {
+        "q": "What does 49:10 call for when believers quarrel?",
+        "options": [
+          "Reconcile them",
+          "Inflame the dispute",
+          "Encourage resentment",
+          "Spread the quarrel"
+        ],
+        "info": "The verse calls believers brothers and urges reconciliation between them."
+      },
+      "uz": {
+        "q": "49:10 mo‘minlar orasidagi janjalda nimaga chaqiradi?",
+        "options": [
+          "Ularni yarashtirishga",
+          "Nizoni kuchaytirishga",
+          "Ginani qo‘llashga",
+          "Janjalni yoyishga"
+        ],
+        "info": "Oyat mo‘minlarni birodar deb atab, ularni yarashtirishga chaqiradi."
+      },
+      "tg": {
+        "q": "49:10 ҳангоми низои байни мӯъминон ба чӣ даъват мекунад?",
+        "options": [
+          "Оштӣ додани онҳо",
+          "Шиддат додани низо",
+          "Дастгирии кина",
+          "Паҳн кардани ҷанҷол"
+        ],
+        "info": "Оят мӯъминонро бародар хонда, ба оштӣ додани онҳо даъват мекунад."
+      },
+      "kk": {
+        "q": "49:10 мүміндер жанжалдасқанда не істеуге шақырады?",
+        "options": [
+          "Оларды татуластыруға",
+          "Дауды ушықтыруға",
+          "Өкпені қолдауға",
+          "Жанжалды таратуға"
+        ],
+        "info": "Аят мүміндерді бауыр деп атап, оларды татуластыруға шақырады."
+      },
+      "ky": {
+        "q": "49:10 момундар урушканда эмнеге чакырат?",
+        "options": [
+          "Аларды жараштырууга",
+          "Чырды күчөтүүгө",
+          "Таарынычты колдоого",
+          "Чырды жайылтууга"
+        ],
+        "info": "Аят момундарды бир тууган деп атап, аларды жараштырууга чакырат."
+      },
+      "az": {
+        "q": "49:10 möminlər arasında mübahisə olduqda nəyə çağırır?",
+        "options": [
+          "Onları barışdırmağa",
+          "Mübahisəni qızışdırmağa",
+          "Kin saxlamağa",
+          "Davanı yaymağa"
+        ],
+        "info": "Ayə möminləri qardaş adlandırır və onları barışdırmağa çağırır."
+      },
+      "tr": {
+        "q": "49:10, müminler anlaşmazlığa düştüğünde neyi öğütler?",
+        "options": [
+          "Aralarını düzeltmeyi",
+          "Tartışmayı büyütmeyi",
+          "Kırgınlığı desteklemeyi",
+          "Kavgayı yaymayı"
+        ],
+        "info": "Ayet müminleri kardeş sayar ve aralarının düzeltilmesini ister."
+      }
+    }
+  },
+  {
+    "id": "l1_offensive_names",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 49:11",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "sourceVerses": [
+      "49:11"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие прозвища запрещает давать людям аят 49:11?",
+        "options": [
+          "Обидные",
+          "Удобные для записи",
+          "Указывающие профессию",
+          "Указывающие родство"
+        ],
+        "info": "В аяте запрещены унижающие прозвища и высмеивание людей."
+      },
+      "en": {
+        "q": "Which nicknames does 49:11 forbid using for people?",
+        "options": [
+          "Insulting ones",
+          "Ones useful for records",
+          "Ones identifying a trade",
+          "Ones identifying kinship"
+        ],
+        "info": "The verse forbids insulting nicknames and mocking people."
+      },
+      "uz": {
+        "q": "49:11 odamlarga qanday laqab qo‘yishni taqiqlaydi?",
+        "options": [
+          "Haqoratli laqablar",
+          "Yozishga qulay laqablar",
+          "Kasbni bildiruvchi laqablar",
+          "Qarindoshlikni bildiruvchi laqablar"
+        ],
+        "info": "Oyatda haqoratli laqablar va odamlarni masxara qilish taqiqlanadi."
+      },
+      "tg": {
+        "q": "49:11 ба одамон гузоштани кадом лақабҳоро манъ мекунад?",
+        "options": [
+          "Лақабҳои таҳқиромез",
+          "Лақабҳои қулай барои навиштан",
+          "Лақабҳои нишондиҳандаи касб",
+          "Лақабҳои нишондиҳандаи хешӣ"
+        ],
+        "info": "Оят лақабҳои таҳқиромез ва масхараи одамонро манъ мекунад."
+      },
+      "kk": {
+        "q": "49:11 адамдарға қандай лақап ат қоюға тыйым салады?",
+        "options": [
+          "Кемсітетін аттар",
+          "Жазуға ыңғайлы аттар",
+          "Кәсіпті білдіретін аттар",
+          "Туыстықты білдіретін аттар"
+        ],
+        "info": "Аят кемсітетін лақап аттар мен адамдарды мазақтауға тыйым салады."
+      },
+      "ky": {
+        "q": "49:11 адамдарга кандай каймана ат коюуга тыюу салат?",
+        "options": [
+          "Кемсинткен аттар",
+          "Жазууга ыңгайлуу аттар",
+          "Кесипти билдирген аттар",
+          "Туугандыкты билдирген аттар"
+        ],
+        "info": "Аят кемсинткен аттарга жана адамдарды шылдыңдоого тыюу салат."
+      },
+      "az": {
+        "q": "49:11 insanlara hansı ləqəbləri qoymağı qadağan edir?",
+        "options": [
+          "Təhqiredici ləqəbləri",
+          "Qeyd üçün rahat ləqəbləri",
+          "Peşəni bildirən ləqəbləri",
+          "Qohumluğu bildirən ləqəbləri"
+        ],
+        "info": "Ayə təhqiredici ləqəbləri və insanları ələ salmağı qadağan edir."
+      },
+      "tr": {
+        "q": "49:11 insanlara hangi lakaplarla seslenmeyi yasaklar?",
+        "options": [
+          "İncitici lakaplarla",
+          "Kayıt için uygun lakaplarla",
+          "Meslek bildiren lakaplarla",
+          "Akrabalık bildiren lakaplarla"
+        ],
+        "info": "Ayet incitici lakapları ve insanlarla alay etmeyi yasaklar."
+      }
+    }
+  },
+  {
+    "id": "l1_no_spying",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 49:12",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "sourceVerses": [
+      "49:12"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какой поступок запрещён в 49:12?",
+        "options": [
+          "Выслеживать чужие тайны",
+          "Помогать нуждающимся",
+          "Примирять соседей",
+          "Возвращать доверенное"
+        ],
+        "info": "Аят запрещает выслеживать людей и злословить за их спиной."
+      },
+      "en": {
+        "q": "Which action is prohibited in 49:12?",
+        "options": [
+          "Spying on others",
+          "Helping those in need",
+          "Reconciling neighbours",
+          "Returning entrusted property"
+        ],
+        "info": "The verse prohibits spying on people and speaking ill behind their backs."
+      },
+      "uz": {
+        "q": "49:12 da qaysi ish taqiqlangan?",
+        "options": [
+          "Birovning sirini poylash",
+          "Muhtojlarga yordam berish",
+          "Qo‘shnilarni yarashtirish",
+          "Omonatni qaytarish"
+        ],
+        "info": "Oyat odamlarning sirini poylash va g‘iybat qilishni taqiqlaydi."
+      },
+      "tg": {
+        "q": "Кадом амал дар 49:12 манъ шудааст?",
+        "options": [
+          "Кофтукови сирри дигарон",
+          "Ёрӣ ба ниёзмандон",
+          "Оштӣ додани ҳамсоягон",
+          "Баргардондани амонат"
+        ],
+        "info": "Оят ҷосусӣ дар ҳаққи одамон ва ғайбати онҳоро манъ мекунад."
+      },
+      "kk": {
+        "q": "49:12-де қандай әрекетке тыйым салынған?",
+        "options": [
+          "Өзгенің сырын аңду",
+          "Мұқтаждарға көмектесу",
+          "Көршілерді татуластыру",
+          "Аманатты қайтару"
+        ],
+        "info": "Аят адамдардың сырын аңдуға және сыртынан ғайбаттауға тыйым салады."
+      },
+      "ky": {
+        "q": "49:12де кайсы ишке тыюу салынган?",
+        "options": [
+          "Бирөөнүн сырын аңдуу",
+          "Муктаждарга жардам берүү",
+          "Коңшуларды жараштыруу",
+          "Аманатты кайтаруу"
+        ],
+        "info": "Аят адамдардын сырын аңдууга жана артынан ушактоого тыюу салат."
+      },
+      "az": {
+        "q": "49:12-də hansı əməl qadağandır?",
+        "options": [
+          "Başqalarının sirrini araşdırmaq",
+          "Ehtiyaclılara yardım etmək",
+          "Qonşuları barışdırmaq",
+          "Əmanəti qaytarmaq"
+        ],
+        "info": "Ayə insanların gizli işlərini araşdırmağı və qeybət etməyi qadağan edir."
+      },
+      "tr": {
+        "q": "49:12'de hangi davranış yasaklanır?",
+        "options": [
+          "İnsanların gizlisini araştırmak",
+          "İhtiyaç sahiplerine yardım etmek",
+          "Komşuları barıştırmak",
+          "Emaneti geri vermek"
+        ],
+        "info": "Ayet insanların gizlisini araştırmayı ve gıybet etmeyi yasaklar."
+      }
+    }
+  },
+  {
+    "id": "l1_honour_piety",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 49:13",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "sourceVerses": [
+      "49:13"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Что определяет почёт человека перед Аллахом в 49:13?",
+        "options": [
+          "Богобоязненность",
+          "Богатство",
+          "Происхождение",
+          "Известность"
+        ],
+        "info": "В аяте почёт перед Аллахом связан с богобоязненностью человека."
+      },
+      "en": {
+        "q": "What determines honour before Allah in 49:13?",
+        "options": [
+          "Piety",
+          "Wealth",
+          "Ancestry",
+          "Fame"
+        ],
+        "info": "The verse links honour before Allah to a person's piety."
+      },
+      "uz": {
+        "q": "49:13 da Alloh huzuridagi hurmat nimaga bog‘liq?",
+        "options": [
+          "Taqvoga",
+          "Boylikka",
+          "Nasabga",
+          "Mashhurlikka"
+        ],
+        "info": "Oyat Alloh huzuridagi hurmatni insonning taqvosiga bog‘laydi."
+      },
+      "tg": {
+        "q": "Дар 49:13 қадр назди Аллоҳ ба чӣ вобаста аст?",
+        "options": [
+          "Тақво",
+          "Сарват",
+          "Насаб",
+          "Шуҳрат"
+        ],
+        "info": "Оят қадри инсонро назди Аллоҳ ба тақвои ӯ вобаста мекунад."
+      },
+      "kk": {
+        "q": "49:13 бойынша Алланың алдындағы абырой неге байланысты?",
+        "options": [
+          "Тақуалыққа",
+          "Байлыққа",
+          "Текке",
+          "Даңққа"
+        ],
+        "info": "Аят Алланың алдындағы абыройды адамның тақуалығымен байланыстырады."
+      },
+      "ky": {
+        "q": "49:13 боюнча Аллахтын алдындагы кадыр эмнеге байланыштуу?",
+        "options": [
+          "Такыбалыкка",
+          "Байлыкка",
+          "Текке",
+          "Атакка"
+        ],
+        "info": "Аят Аллахтын алдындагы кадырды адамдын такыбалыгына байланыштырат."
+      },
+      "az": {
+        "q": "49:13-də Allah yanında hörmət nə ilə ölçülür?",
+        "options": [
+          "Təqva ilə",
+          "Sərvətlə",
+          "Nəsillə",
+          "Şöhrətlə"
+        ],
+        "info": "Ayədə Allah yanında hörmət insanın təqvası ilə əlaqələndirilir."
+      },
+      "tr": {
+        "q": "49:13'e göre Allah katındaki değer neye bağlıdır?",
+        "options": [
+          "Takvaya",
+          "Zenginliğe",
+          "Soya",
+          "Şöhrete"
+        ],
+        "info": "Ayet Allah katındaki değeri kişinin takvasıyla ilişkilendirir."
+      }
+    }
+  },
+  {
+    "id": "l1_parents_speech",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 17:23",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "sourceVerses": [
+      "17:23"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как 17:23 учит разговаривать с пожилыми родителями?",
+        "options": [
+          "Почтительно",
+          "Раздражённо",
+          "Насмешливо",
+          "Пренебрежительно"
+        ],
+        "info": "Аят велит говорить с родителями уважительно и не выражать им раздражения."
+      },
+      "en": {
+        "q": "How does 17:23 teach us to speak to elderly parents?",
+        "options": [
+          "Respectfully",
+          "Irritably",
+          "Mockingly",
+          "Dismissively"
+        ],
+        "info": "The verse instructs respectful speech to parents without expressing irritation."
+      },
+      "uz": {
+        "q": "17:23 keksa ota-onaga qanday gapirishni o‘rgatadi?",
+        "options": [
+          "Hurmat bilan",
+          "Jahldorlik bilan",
+          "Masxara qilib",
+          "Mensimay"
+        ],
+        "info": "Oyat ota-onaga hurmat bilan gapirishni va norozilik bildirmaslikni buyuradi."
+      },
+      "tg": {
+        "q": "17:23 бо падару модари солхӯрда чӣ гуна сухан гуфтанро меомӯзад?",
+        "options": [
+          "Бо эҳтиром",
+          "Бо асабоният",
+          "Бо масхара",
+          "Бо беэътиноӣ"
+        ],
+        "info": "Оят ба сухани эҳтиромона бо падару модар ва дурӣ аз озори онҳо амр мекунад."
+      },
+      "kk": {
+        "q": "17:23 қарт ата-анамен қалай сөйлесуді үйретеді?",
+        "options": [
+          "Құрметпен",
+          "Ашумен",
+          "Мазақтап",
+          "Менсінбей"
+        ],
+        "info": "Аят ата-анамен құрметпен сөйлесіп, оларға реніш білдірмеуді бұйырады."
+      },
+      "ky": {
+        "q": "17:23 улгайган ата-эне менен кантип сүйлөшүүнү үйрөтөт?",
+        "options": [
+          "Урмат менен",
+          "Ачууланып",
+          "Шылдыңдап",
+          "Тоготпой"
+        ],
+        "info": "Аят ата-эне менен урматтап сүйлөшүүнү жана аларга нааразы болбоону буйруйт."
+      },
+      "az": {
+        "q": "17:23 yaşlı valideynlərlə necə danışmağı öyrədir?",
+        "options": [
+          "Hörmətlə",
+          "Əsəbi şəkildə",
+          "İstehza ilə",
+          "Saymazyana"
+        ],
+        "info": "Ayə valideynlərlə hörmətlə danışmağı və narazılıq bildirməməyi əmr edir."
+      },
+      "tr": {
+        "q": "17:23 yaşlı anne babayla nasıl konuşmayı öğretir?",
+        "options": [
+          "Saygıyla",
+          "Öfkeyle",
+          "Alay ederek",
+          "Küçümseyerek"
+        ],
+        "info": "Ayet anne babaya saygılı söz söylemeyi ve bıkkınlık göstermemeyi emreder."
+      }
+    }
+  },
+  {
+    "id": "l1_parents_mercy",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 17:24",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "sourceVerses": [
+      "17:24"
+    ],
+    "locales": {
+      "ru": {
+        "q": "О чём просят для родителей в молитве из 17:24?",
+        "options": [
+          "О милости Аллаха",
+          "О славе среди людей",
+          "О власти над другими",
+          "О богатстве любой ценой"
+        ],
+        "info": "В этой молитве человек просит Господа помиловать родителей, растивших его."
+      },
+      "en": {
+        "q": "What is requested for parents in the prayer in 17:24?",
+        "options": [
+          "Allah's mercy",
+          "Fame among people",
+          "Power over others",
+          "Wealth at any cost"
+        ],
+        "info": "This prayer asks the Lord to have mercy on the parents who raised us."
+      },
+      "uz": {
+        "q": "17:24 dagi duoda ota-ona uchun nima so‘raladi?",
+        "options": [
+          "Allohning rahmati",
+          "Odamlar orasida shuhrat",
+          "Boshqalar ustidan hokimlik",
+          "Har qanday yo‘l bilan boylik"
+        ],
+        "info": "Bu duoda ulg‘aytirgan ota-onaga Robbidan rahmat so‘raladi."
+      },
+      "tg": {
+        "q": "Дар дуои 17:24 барои падару модар чӣ хоста мешавад?",
+        "options": [
+          "Раҳмати Аллоҳ",
+          "Шуҳрат байни мардум",
+          "Ҳокимият бар дигарон",
+          "Сарват бо ҳар роҳ"
+        ],
+        "info": "Дар ин дуо аз Парвардигор барои падару модари тарбияткунанда раҳмат хоста мешавад."
+      },
+      "kk": {
+        "q": "17:24-тегі дұғада ата-ана үшін не сұралады?",
+        "options": [
+          "Алланың мейірімі",
+          "Ел арасындағы даңқ",
+          "Өзгелерге билік жүргізу",
+          "Қалай да бай болу"
+        ],
+        "info": "Бұл дұғада өсірген ата-анаға Раббыдан мейірім сұралады."
+      },
+      "ky": {
+        "q": "17:24төгү дубада ата-эне үчүн эмне суралат?",
+        "options": [
+          "Аллахтын ырайымы",
+          "Эл арасындагы атак",
+          "Башкаларга бийлик кылуу",
+          "Кандай жол менен болсо да байлык"
+        ],
+        "info": "Бул дубада өстүргөн ата-энеге Раббиден ырайым суралат."
+      },
+      "az": {
+        "q": "17:24-dəki duada valideynlər üçün nə istənilir?",
+        "options": [
+          "Allahın mərhəməti",
+          "İnsanlar arasında şöhrət",
+          "Başqaları üzərində hakimiyyət",
+          "Nəyin bahasına olursa olsun sərvət"
+        ],
+        "info": "Bu duada insan onu böyüdən valideynlərinə Rəbbindən mərhəmət diləyir."
+      },
+      "tr": {
+        "q": "17:24'teki duada anne baba için ne istenir?",
+        "options": [
+          "Allah'ın merhameti",
+          "İnsanlar arasında ün",
+          "Başkaları üzerinde güç",
+          "Ne pahasına olursa olsun servet"
+        ],
+        "info": "Bu dua, insanı yetiştiren anne babaya Rabbin merhametini diler."
+      }
+    }
+  },
+  {
+    "id": "l1_keep_promises",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 17:34",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "sourceVerses": [
+      "17:34"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Чему учит 17:34 в отношении договоров?",
+        "options": [
+          "Соблюдать их",
+          "Забывать при неудобстве",
+          "Менять тайно",
+          "Выполнять лишь при похвале"
+        ],
+        "info": "Аят велит соблюдать договоры и напоминает об ответственности за них."
+      },
+      "en": {
+        "q": "What does 17:34 teach about commitments?",
+        "options": [
+          "Honour them",
+          "Forget them when inconvenient",
+          "Change them secretly",
+          "Keep them only for praise"
+        ],
+        "info": "The verse commands keeping commitments and reminds us of accountability for them."
+      },
+      "uz": {
+        "q": "17:34 ahdlarga qanday munosabatni o‘rgatadi?",
+        "options": [
+          "Ularga vafo qilish",
+          "Noqulay bo‘lsa unutish",
+          "Yashirin o‘zgartirish",
+          "Faqat maqtov uchun bajarish"
+        ],
+        "info": "Oyat ahdlarga vafo qilishni buyurib, ular uchun javob berilishini eslatadi."
+      },
+      "tg": {
+        "q": "17:34 дар бораи аҳдҳо чӣ меомӯзад?",
+        "options": [
+          "Ба онҳо вафо кардан",
+          "Ҳангоми душворӣ фаромӯш кардан",
+          "Пинҳонӣ дигар кардан",
+          "Танҳо барои ситоиш иҷро кардан"
+        ],
+        "info": "Оят ба вафои аҳд амр карда, масъулиятро барои он ёдрас мекунад."
+      },
+      "kk": {
+        "q": "17:34 келісімдер туралы не үйретеді?",
+        "options": [
+          "Оларды орындауды",
+          "Қолайсыз болса ұмытуды",
+          "Жасырын өзгертуді",
+          "Тек мақтау үшін орындауды"
+        ],
+        "info": "Аят келісімдерді орындауды бұйырып, олар үшін жауап берілетінін ескертеді."
+      },
+      "ky": {
+        "q": "17:34 убадалар тууралуу эмнени үйрөтөт?",
+        "options": [
+          "Аларды аткарууну",
+          "Ыңгайсыз болсо унутууну",
+          "Жашыруун өзгөртүүнү",
+          "Мактоо үчүн гана аткарууну"
+        ],
+        "info": "Аят убадаларды аткарууну буйруп, алар үчүн жооп берилерин эскертет."
+      },
+      "az": {
+        "q": "17:34 əhdlər barədə nə öyrədir?",
+        "options": [
+          "Onlara əməl etməyi",
+          "Çətin olduqda unutmağı",
+          "Gizlicə dəyişməyi",
+          "Yalnız tərif üçün yerinə yetirməyi"
+        ],
+        "info": "Ayə əhdə vəfa etməyi əmr edir və bunun məsuliyyətini xatırladır."
+      },
+      "tr": {
+        "q": "17:34 verilen sözler hakkında ne öğretir?",
+        "options": [
+          "Onları yerine getirmeyi",
+          "Zor gelince unutmayı",
+          "Gizlice değiştirmeyi",
+          "Yalnız övgü için tutmayı"
+        ],
+        "info": "Ayet sözleri tutmayı emreder ve onlardan sorumlu olunacağını hatırlatır."
+      }
+    }
+  },
+  {
+    "id": "l1_fair_measure",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 17:35",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "sourceVerses": [
+      "17:35"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как 17:35 велит отмерять и взвешивать товары?",
+        "options": [
+          "Полной мерой и верными весами",
+          "По выгоде продавца",
+          "На глаз без меры",
+          "По положению покупателя"
+        ],
+        "info": "Аят требует полной меры и точного взвешивания."
+      },
+      "en": {
+        "q": "How does 17:35 instruct us to measure and weigh goods?",
+        "options": [
+          "With full measure and accurate scales",
+          "To suit the seller's profit",
+          "By guessing without measuring",
+          "According to the buyer's status"
+        ],
+        "info": "The verse requires full measure and accurate weighing."
+      },
+      "uz": {
+        "q": "17:35 mahsulotlarni qanday o‘lchash va tortishni buyuradi?",
+        "options": [
+          "To‘liq o‘lchov va to‘g‘ri tarozi bilan",
+          "Sotuvchining foydasiga qarab",
+          "O‘lchamay chamalab",
+          "Xaridorning mavqeiga qarab"
+        ],
+        "info": "Oyat o‘lchovni to‘ldirish va to‘g‘ri tortishni buyuradi."
+      },
+      "tg": {
+        "q": "17:35 молҳоро чӣ гуна чену вазн карданро амр мекунад?",
+        "options": [
+          "Бо паймонаи пур ва тарозуи дуруст",
+          "Ба фоидаи фурӯшанда",
+          "Бо тахмин бе ченак",
+          "Вобаста ба мақоми харидор"
+        ],
+        "info": "Оят паймонаи пур ва тарозуи дурустро талаб мекунад."
+      },
+      "kk": {
+        "q": "17:35 тауарды қалай өлшеп, тартуды бұйырады?",
+        "options": [
+          "Толық өлшеммен, дұрыс таразымен",
+          "Сатушының пайдасына қарай",
+          "Өлшемей шамалаумен",
+          "Сатып алушының дәрежесіне қарай"
+        ],
+        "info": "Аят өлшемді толық беріп, дұрыс таразымен тартуды талап етеді."
+      },
+      "ky": {
+        "q": "17:35 товарды кантип өлчөп, тартууну буйруйт?",
+        "options": [
+          "Толук өлчөм, туура тараза менен",
+          "Сатуучунун пайдасына карап",
+          "Өлчөбөй болжоп",
+          "Кардардын даражасына карап"
+        ],
+        "info": "Аят өлчөмдү толук берүүнү жана туура тараза менен тартууну талап кылат."
+      },
+      "az": {
+        "q": "17:35 malları necə ölçüb çəkməyi əmr edir?",
+        "options": [
+          "Tam ölçü və düzgün tərəzi ilə",
+          "Satıcının qazancına görə",
+          "Ölçmədən təxminlə",
+          "Alıcının mövqeyinə görə"
+        ],
+        "info": "Ayə ölçünü tam verməyi və düzgün tərəzi ilə çəkməyi tələb edir."
+      },
+      "tr": {
+        "q": "17:35 malları nasıl ölçüp tartmayı emreder?",
+        "options": [
+          "Tam ölçü ve doğru teraziyle",
+          "Satıcının kazancına göre",
+          "Ölçmeden tahminle",
+          "Alıcının konumuna göre"
+        ],
+        "info": "Ayet ölçüyü tam yapmayı ve doğru teraziyle tartmayı ister."
+      }
+    }
+  },
+  {
+    "id": "l1_avoid_arrogance",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 17:37",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "sourceVerses": [
+      "17:37"
+    ],
+    "locales": {
+      "ru": {
+        "q": "От какой манеры поведения предостерегает 17:37?",
+        "options": [
+          "Надменной",
+          "Спокойной",
+          "Скромной",
+          "Внимательной"
+        ],
+        "info": "Аят запрещает надменно ходить по земле."
+      },
+      "en": {
+        "q": "Which manner of behaviour does 17:37 warn against?",
+        "options": [
+          "Arrogance",
+          "Calmness",
+          "Humility",
+          "Attentiveness"
+        ],
+        "info": "The verse warns against walking on earth with arrogance."
+      },
+      "uz": {
+        "q": "17:37 qanday xulqdan qaytaradi?",
+        "options": [
+          "Kibrdan",
+          "Vazminlikdan",
+          "Kamtarlikdan",
+          "E’tiborlilikdan"
+        ],
+        "info": "Oyat yer yuzida kibr bilan yurishdan qaytaradi."
+      },
+      "tg": {
+        "q": "17:37 аз кадом рафтор ҳушдор медиҳад?",
+        "options": [
+          "Такаббур",
+          "Оромӣ",
+          "Фурӯтанӣ",
+          "Диққаткорӣ"
+        ],
+        "info": "Оят аз мағрурона роҳ рафтан дар замин манъ мекунад."
+      },
+      "kk": {
+        "q": "17:37 қандай мінезден сақтандырады?",
+        "options": [
+          "Тәкаппарлықтан",
+          "Байсалдылықтан",
+          "Кішіпейілділіктен",
+          "Зейінділіктен"
+        ],
+        "info": "Аят жер бетінде тәкаппарланып жүруге тыйым салады."
+      },
+      "ky": {
+        "q": "17:37 кандай жүрүм-турумдан сактандырат?",
+        "options": [
+          "Текебердиктен",
+          "Сабырдуулуктан",
+          "Жөнөкөйлүктөн",
+          "Көңүл буруудан"
+        ],
+        "info": "Аят жер үстүндө текеберленип басууга тыюу салат."
+      },
+      "az": {
+        "q": "17:37 hansı davranışdan çəkindirir?",
+        "options": [
+          "Təkəbbürdən",
+          "Sakitlikdən",
+          "Təvazökarlıqdan",
+          "Diqqətlilikdən"
+        ],
+        "info": "Ayə yer üzündə təkəbbürlə gəzməyi qadağan edir."
+      },
+      "tr": {
+        "q": "17:37 hangi davranıştan sakındırır?",
+        "options": [
+          "Kibirden",
+          "Sakinlikten",
+          "Alçak gönüllülükten",
+          "Dikkatli olmaktan"
+        ],
+        "info": "Ayet yeryüzünde kibirle yürümeyi yasaklar."
+      }
+    }
+  },
+  {
+    "id": "l1_lower_voice",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 31:19",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/31",
+    "sourceVerses": [
+      "31:19"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Что советует 31:19 делать с голосом?",
+        "options": [
+          "Понижать его",
+          "Всегда кричать",
+          "Заглушать собеседника",
+          "Повышать при споре"
+        ],
+        "info": "Аят учит сдержанности в походке и голосе."
+      },
+      "en": {
+        "q": "What does 31:19 advise about one's voice?",
+        "options": [
+          "Lower it",
+          "Always shout",
+          "Drown out others",
+          "Raise it in arguments"
+        ],
+        "info": "The verse teaches moderation in walking and speaking."
+      },
+      "uz": {
+        "q": "31:19 ovoz haqida qanday maslahat beradi?",
+        "options": [
+          "Uni pasaytirish",
+          "Doim baqirish",
+          "Suhbatdosh ovozini bosish",
+          "Bahsda balandlatish"
+        ],
+        "info": "Oyat yurish va ovozda mo‘tadillikni o‘rgatadi."
+      },
+      "tg": {
+        "q": "31:19 дар бораи овоз чӣ насиҳат мекунад?",
+        "options": [
+          "Онро паст кардан",
+          "Ҳамеша фарёд задан",
+          "Овози дигаронро пахш кардан",
+          "Ҳангоми баҳс баланд кардан"
+        ],
+        "info": "Оят дар роҳравӣ ва овоз мӯътадил буданро меомӯзад."
+      },
+      "kk": {
+        "q": "31:19 дауыс туралы қандай кеңес береді?",
+        "options": [
+          "Оны бәсеңдету",
+          "Үнемі айқайлау",
+          "Өзгенің дауысын басу",
+          "Дау кезінде көтеру"
+        ],
+        "info": "Аят жүріс пен дауыста ұстамдылықты үйретеді."
+      },
+      "ky": {
+        "q": "31:19 үн тууралуу кандай кеңеш берет?",
+        "options": [
+          "Аны басаңдатуу",
+          "Дайыма кыйкыруу",
+          "Башканын үнүн басуу",
+          "Талашта көтөрүү"
+        ],
+        "info": "Аят басууда жана сүйлөөдө токтоолукту үйрөтөт."
+      },
+      "az": {
+        "q": "31:19 səs barədə nə tövsiyə edir?",
+        "options": [
+          "Onu alçaltmağı",
+          "Daim qışqırmağı",
+          "Başqasının səsini batırmağı",
+          "Mübahisədə ucaltmağı"
+        ],
+        "info": "Ayə yerişdə və səsdə təmkinli olmağı öyrədir."
+      },
+      "tr": {
+        "q": "31:19 ses hakkında ne öğütler?",
+        "options": [
+          "Sesi alçaltmayı",
+          "Sürekli bağırmayı",
+          "Başkasının sesini bastırmayı",
+          "Tartışmada sesi yükseltmeyi"
+        ],
+        "info": "Ayet yürüyüşte ve seste ölçülü olmayı öğretir."
+      }
+    }
+  },
+  {
+    "id": "l1_luqman_prayer",
+    "cat": "quran",
+    "difficulty": 1,
+    "reference": "Quran 31:17",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/31",
+    "sourceVerses": [
+      "31:17",
+      "31:13"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какое поклонение Лукман велит сыну совершать в 31:17?",
+        "options": [
+          "Намаз",
+          "Паломничество каждый месяц",
+          "Непрерывный пост",
+          "Ежедневный обход Каабы"
+        ],
+        "info": "Среди наставлений Лукмана сыну в этом аяте есть совершение намаза."
+      },
+      "en": {
+        "q": "Which act of worship does Luqman tell his son to establish in 31:17?",
+        "options": [
+          "Prayer",
+          "Pilgrimage every month",
+          "Unbroken fasting",
+          "Daily circling of the Kaaba"
+        ],
+        "info": "Establishing prayer is among Luqman's instructions to his son in this verse."
+      },
+      "uz": {
+        "q": "31:17 da Luqmon o‘g‘liga qaysi ibodatni ado etishni buyuradi?",
+        "options": [
+          "Namozni",
+          "Har oy hajni",
+          "Tinimsiz ro‘zani",
+          "Har kuni Ka’ba tavofini"
+        ],
+        "info": "Bu oyatda Luqmonning o‘g‘liga nasihatlari orasida namozni ado etish ham bor."
+      },
+      "tg": {
+        "q": "Луқмон дар 31:17 ба писараш кадом ибодатро амр мекунад?",
+        "options": [
+          "Намоз",
+          "Ҳаҷ ҳар моҳ",
+          "Рӯзаи бефосила",
+          "Тавофи ҳаррӯзаи Каъба"
+        ],
+        "info": "Барпо кардани намоз аз насиҳатҳои Луқмон ба писараш дар ин оят аст."
+      },
+      "kk": {
+        "q": "31:17-де Лұқман ұлына қандай құлшылықты орындауды бұйырады?",
+        "options": [
+          "Намазды",
+          "Ай сайын қажылықты",
+          "Үздіксіз оразаны",
+          "Күн сайын Қағбаны тауап етуді"
+        ],
+        "info": "Осы аятта Лұқманның ұлына айтқан өсиеттерінің бірі — намаз оқу."
+      },
+      "ky": {
+        "q": "31:17де Лукман уулуна кайсы ибадатты аткарууну буйруйт?",
+        "options": [
+          "Намазды",
+          "Ай сайын ажылыкты",
+          "Тынымсыз орозону",
+          "Күн сайын Каабаны таваф кылууну"
+        ],
+        "info": "Бул аятта Лукмандын уулуна берген насааттарынын бири — намаз окуу."
+      },
+      "az": {
+        "q": "31:17-də Loğman oğluna hansı ibadəti yerinə yetirməyi tapşırır?",
+        "options": [
+          "Namazı",
+          "Hər ay həcci",
+          "Fasiləsiz orucu",
+          "Hər gün Kəbəni təvafı"
+        ],
+        "info": "Bu ayədə Loğmanın oğluna nəsihətləri arasında namaz qılmaq da var."
+      },
+      "tr": {
+        "q": "31:17'de Lokman oğluna hangi ibadeti yerine getirmesini söyler?",
+        "options": [
+          "Namazı",
+          "Her ay hac yapmayı",
+          "Aralıksız oruç tutmayı",
+          "Her gün Kâbe'yi tavaf etmeyi"
+        ],
+        "info": "Bu ayette Lokman'ın oğluna öğütleri arasında namaz kılmak da vardır."
+      }
+    }
+  },
+  {
+    "id": "l1_enter_homes",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 24:27",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "sourceVerses": [
+      "24:27"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Что нужно сделать перед входом в чужой дом по 24:27?",
+        "options": [
+          "Попросить разрешения и поприветствовать",
+          "Войти, если дверь открыта",
+          "Сначала осмотреть комнаты",
+          "Войти и затем объявить о себе"
+        ],
+        "info": "Аят требует разрешения и приветствия перед входом в чужие дома."
+      },
+      "en": {
+        "q": "What should precede entering another person's home in 24:27?",
+        "options": [
+          "Asking permission and greeting",
+          "Entering if the door is open",
+          "Inspecting the rooms first",
+          "Entering before announcing yourself"
+        ],
+        "info": "The verse requires permission and a greeting before entering others' homes."
+      },
+      "uz": {
+        "q": "24:27 ga ko‘ra, birovning uyiga kirishdan oldin nima qilish kerak?",
+        "options": [
+          "Ruxsat so‘rash va salom berish",
+          "Eshik ochiq bo‘lsa kirish",
+          "Avval xonalarni ko‘rish",
+          "Kirgach o‘zini bildirish"
+        ],
+        "info": "Oyat birovning uyiga kirishdan oldin ruxsat so‘rash va salom berishni talab qiladi."
+      },
+      "tg": {
+        "q": "Мувофиқи 24:27 пеш аз даромадан ба хонаи дигарон чӣ бояд кард?",
+        "options": [
+          "Иҷозат пурсидан ва салом додан",
+          "Агар дар кушода бошад, даромадан",
+          "Аввал ҳуҷраҳоро дидан",
+          "Даромада, баъд худро шиносондан"
+        ],
+        "info": "Оят пеш аз даромадан ба хонаи дигарон иҷозат ва саломро талаб мекунад."
+      },
+      "kk": {
+        "q": "24:27 бойынша өзгенің үйіне кірер алдында не істеу керек?",
+        "options": [
+          "Рұқсат сұрап, сәлем беру",
+          "Есік ашық болса кіру",
+          "Алдымен бөлмелерді қарау",
+          "Кірген соң өзін таныстыру"
+        ],
+        "info": "Аят өзгенің үйіне кірмес бұрын рұқсат сұрап, сәлем беруді талап етеді."
+      },
+      "ky": {
+        "q": "24:27 боюнча бирөөнүн үйүнө кирерде эмне кылуу керек?",
+        "options": [
+          "Уруксат сурап, салам берүү",
+          "Эшик ачык болсо кирүү",
+          "Адегенде бөлмөлөрдү кароо",
+          "Киргенден кийин үн катуу"
+        ],
+        "info": "Аят бирөөнүн үйүнө кирүүдөн мурда уруксат сурап, салам берүүнү талап кылат."
+      },
+      "az": {
+        "q": "24:27-yə görə başqasının evinə girməzdən əvvəl nə edilməlidir?",
+        "options": [
+          "İcazə istəmək və salam vermək",
+          "Qapı açıqdırsa girmək",
+          "Əvvəl otaqlara baxmaq",
+          "Girəndən sonra özünü bildirmək"
+        ],
+        "info": "Ayə başqalarının evinə girməzdən əvvəl icazə və salam tələb edir."
+      },
+      "tr": {
+        "q": "24:27'ye göre başkasının evine girmeden önce ne yapılmalıdır?",
+        "options": [
+          "İzin istenip selam verilmeli",
+          "Kapı açıksa girilmeli",
+          "Önce odalara bakılmalı",
+          "Girildikten sonra seslenilmeli"
+        ],
+        "info": "Ayet başkasının evine girmeden önce izin istemeyi ve selam vermeyi emreder."
+      }
+    }
+  },
+  {
+    "id": "l1_return_when_asked",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 24:28",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "sourceVerses": [
+      "24:28"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как поступить, если при посещении дома вам сказали вернуться, по 24:28?",
+        "options": [
+          "Уйти",
+          "Настаивать на входе",
+          "Войти через другую дверь",
+          "Спорить с хозяином"
+        ],
+        "info": "Аят велит уйти, если хозяева не разрешили войти и попросили вернуться."
+      },
+      "en": {
+        "q": "What should you do if told to go back when visiting a home in 24:28?",
+        "options": [
+          "Leave",
+          "Insist on entering",
+          "Use another entrance",
+          "Argue with the host"
+        ],
+        "info": "The verse instructs visitors to leave when told to go back."
+      },
+      "uz": {
+        "q": "24:28 ga ko‘ra, uyga borganda qaytish so‘ralsa, nima qilish kerak?",
+        "options": [
+          "Qaytish",
+          "Kirishni talab qilish",
+          "Boshqa eshikdan kirish",
+          "Uy egasi bilan tortishish"
+        ],
+        "info": "Oyat qaytish so‘ralganda mehmonning qaytishini buyuradi."
+      },
+      "tg": {
+        "q": "Мувофиқи 24:28 агар ҳангоми меҳмонӣ бозгаштанро хоҳанд, чӣ бояд кард?",
+        "options": [
+          "Баргаштан",
+          "Барои даромадан пофишорӣ кардан",
+          "Аз дари дигар даромадан",
+          "Бо соҳибхона баҳс кардан"
+        ],
+        "info": "Оят фармон медиҳад, ки агар бозгаштанро талаб кунанд, баргардед."
+      },
+      "kk": {
+        "q": "24:28 бойынша үйге келгенде қайтуды сұраса, не істеу керек?",
+        "options": [
+          "Қайту",
+          "Кіруді талап ету",
+          "Басқа есіктен кіру",
+          "Үй иесімен дауласу"
+        ],
+        "info": "Аят қайтуды сұрағанда қонақтың қайтуын бұйырады."
+      },
+      "ky": {
+        "q": "24:28 боюнча үйгө келгенде кайтууну сурашса, эмне кылуу керек?",
+        "options": [
+          "Кайтуу",
+          "Кирүүнү талап кылуу",
+          "Башка эшиктен кирүү",
+          "Үй ээси менен талашуу"
+        ],
+        "info": "Аят кайтууну сурашканда коноктун кайтуусун буйруйт."
+      },
+      "az": {
+        "q": "24:28-ə görə evə qonaq gedərkən geri qayıtmaq istənilsə, nə edilməlidir?",
+        "options": [
+          "Geri qayıtmaq",
+          "Girməkdə israr etmək",
+          "Başqa qapıdan girmək",
+          "Ev sahibi ilə mübahisə etmək"
+        ],
+        "info": "Ayə geri qayıtmaq istənildikdə qonağın qayıtmasını əmr edir."
+      },
+      "tr": {
+        "q": "24:28'e göre ziyarette geri dönmeniz istenirse ne yapmalısınız?",
+        "options": [
+          "Geri dönmek",
+          "Girmekte ısrar etmek",
+          "Başka kapıdan girmek",
+          "Ev sahibiyle tartışmak"
+        ],
+        "info": "Ayet geri dönmeleri istendiğinde ziyaretçilerin dönmesini emreder."
+      }
+    }
+  },
+  {
+    "id": "l1_return_greeting",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 4:86",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "sourceVerses": [
+      "4:86"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как отвечать на приветствие согласно 4:86?",
+        "options": [
+          "Так же или лучше",
+          "Только молчанием",
+          "Обязательно короче",
+          "Только после повторения"
+        ],
+        "info": "Аят учит отвечать на приветствие равноценным или лучшим приветствием."
+      },
+      "en": {
+        "q": "How should a greeting be answered according to 4:86?",
+        "options": [
+          "Equally or better",
+          "Only with silence",
+          "Always more briefly",
+          "Only after it is repeated"
+        ],
+        "info": "The verse teaches returning a greeting with an equal or better one."
+      },
+      "uz": {
+        "q": "4:86 ga ko‘ra, salomga qanday javob beriladi?",
+        "options": [
+          "Xuddi shunday yoki yaxshiroq",
+          "Faqat sukut bilan",
+          "Albatta qisqaroq",
+          "Faqat takrorlangach"
+        ],
+        "info": "Oyat salomga teng yoki yaxshiroq salom bilan javob berishni o‘rgatadi."
+      },
+      "tg": {
+        "q": "Мувофиқи 4:86 ба салом чӣ гуна ҷавоб бояд дод?",
+        "options": [
+          "Монанд ё беҳтар",
+          "Танҳо бо хомӯшӣ",
+          "Ҳатман кӯтоҳтар",
+          "Танҳо баъди такрор"
+        ],
+        "info": "Оят ба салом бо саломи монанд ё беҳтар ҷавоб доданро меомӯзад."
+      },
+      "kk": {
+        "q": "4:86 бойынша сәлемге қалай жауап беру керек?",
+        "options": [
+          "Солай немесе жақсырақ",
+          "Тек үнсіздікпен",
+          "Міндетті түрде қысқалау",
+          "Тек қайталанғаннан кейін"
+        ],
+        "info": "Аят сәлемге сондай немесе одан жақсы сәлеммен жауап беруді үйретеді."
+      },
+      "ky": {
+        "q": "4:86 боюнча саламга кандай жооп берүү керек?",
+        "options": [
+          "Ошондой же жакшыраак",
+          "Үн катпай гана",
+          "Сөзсүз кыскараак",
+          "Кайталангандан кийин гана"
+        ],
+        "info": "Аят саламга ошондой же жакшыраак салам менен жооп берүүнү үйрөтөт."
+      },
+      "az": {
+        "q": "4:86-ya görə salama necə cavab verilməlidir?",
+        "options": [
+          "Eynisi və ya daha yaxşısı ilə",
+          "Yalnız susmaqla",
+          "Mütləq daha qısa",
+          "Yalnız təkrar ediləndən sonra"
+        ],
+        "info": "Ayə salama eyni və ya daha gözəl salamla cavab verməyi öyrədir."
+      },
+      "tr": {
+        "q": "4:86'ya göre selama nasıl karşılık verilmelidir?",
+        "options": [
+          "Aynısıyla veya daha güzeliyle",
+          "Yalnız sessizlikle",
+          "Mutlaka daha kısa biçimde",
+          "Ancak tekrar edildikten sonra"
+        ],
+        "info": "Ayet selama aynısıyla veya daha güzel bir selamla karşılık vermeyi öğretir."
+      }
+    }
+  },
+  {
+    "id": "l1_return_trust",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 4:58",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "sourceVerses": [
+      "4:58"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Кому 4:58 велит возвращать доверенное имущество?",
+        "options": [
+          "Его владельцам",
+          "Самым богатым",
+          "Первому попросившему",
+          "Самому влиятельному"
+        ],
+        "info": "Аят велит передавать доверенное тем, кому оно принадлежит."
+      },
+      "en": {
+        "q": "To whom does 4:58 command returning entrusted property?",
+        "options": [
+          "Its rightful owners",
+          "The wealthiest people",
+          "The first person who asks",
+          "The most influential person"
+        ],
+        "info": "The verse commands handing trusts back to those entitled to them."
+      },
+      "uz": {
+        "q": "4:58 omonatni kimga qaytarishni buyuradi?",
+        "options": [
+          "O‘z egalariga",
+          "Eng boylarga",
+          "Birinchi so‘raganga",
+          "Eng nufuzli kishiga"
+        ],
+        "info": "Oyat omonatni uning haqli egalariga topshirishni buyuradi."
+      },
+      "tg": {
+        "q": "4:58 амонатро ба кӣ баргардонданро амр мекунад?",
+        "options": [
+          "Ба соҳибонаш",
+          "Ба сарватмандтаринҳо",
+          "Ба аввалин пурсанда",
+          "Ба бонуфузтарин шахс"
+        ],
+        "info": "Оят баргардондани амонатро ба соҳибони ҳаққонии он амр мекунад."
+      },
+      "kk": {
+        "q": "4:58 аманатты кімге қайтаруды бұйырады?",
+        "options": [
+          "Оның иелеріне",
+          "Ең байларға",
+          "Бірінші сұрағанға",
+          "Ең ықпалды адамға"
+        ],
+        "info": "Аят аманатты оның заңды иелеріне беруді бұйырады."
+      },
+      "ky": {
+        "q": "4:58 аманатты кимге кайтарууну буйруйт?",
+        "options": [
+          "Анын ээлерине",
+          "Эң байларга",
+          "Биринчи сураганга",
+          "Эң таасирдүү кишиге"
+        ],
+        "info": "Аят аманатты анын акылуу ээлерине тапшырууну буйруйт."
+      },
+      "az": {
+        "q": "4:58 əmanətləri kimə qaytarmağı əmr edir?",
+        "options": [
+          "Haqlı sahiblərinə",
+          "Ən varlılara",
+          "İlk istəyənə",
+          "Ən nüfuzlu şəxsə"
+        ],
+        "info": "Ayə əmanətlərin onların haqq sahiblərinə verilməsini əmr edir."
+      },
+      "tr": {
+        "q": "4:58 emanetleri kime vermeyi emreder?",
+        "options": [
+          "Hak sahiplerine",
+          "En zenginlere",
+          "İlk isteyene",
+          "En nüfuzlu kişiye"
+        ],
+        "info": "Ayet emanetlerin gerçek hak sahiplerine verilmesini emreder."
+      }
+    }
+  },
+  {
+    "id": "l1_justice_self",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 4:135",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "sourceVerses": [
+      "4:135"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Нужно ли говорить справедливо, если это против себя, по 4:135?",
+        "options": [
+          "Да, и против себя",
+          "Нет, себя всегда защищают",
+          "Только если никто не узнает",
+          "Только ради награды людей"
+        ],
+        "info": "Аят требует справедливого свидетельства даже против себя и близких."
+      },
+      "en": {
+        "q": "Must you testify justly even against yourself in 4:135?",
+        "options": [
+          "Yes, even against yourself",
+          "No, always protect yourself",
+          "Only if nobody finds out",
+          "Only to gain people's rewards"
+        ],
+        "info": "The verse requires just testimony even against oneself and close relatives."
+      },
+      "uz": {
+        "q": "4:135 ga ko‘ra, o‘z zarariga bo‘lsa ham adolatli guvohlik beriladimi?",
+        "options": [
+          "Ha, o‘z zarariga bo‘lsa ham",
+          "Yo‘q, doim o‘zini himoya qilish kerak",
+          "Faqat hech kim bilmasa",
+          "Faqat odamlar mukofoti uchun"
+        ],
+        "info": "Oyat o‘ziga va yaqinlariga qarshi bo‘lsa ham adolatli guvohlikni talab qiladi."
+      },
+      "tg": {
+        "q": "Мувофиқи 4:135 оё ҳатто бар зидди худ одилона шаҳодат додан лозим аст?",
+        "options": [
+          "Бале, ҳатто бар зидди худ",
+          "Не, ҳамеша худро ҳимоя мекунанд",
+          "Танҳо агар касе нафаҳмад",
+          "Танҳо барои подоши мардум"
+        ],
+        "info": "Оят ҳатто бар зидди худ ва хешовандон шаҳодати одилонаро талаб мекунад."
+      },
+      "kk": {
+        "q": "4:135 бойынша өзіңе қарсы болса да әділ куәлік беру керек пе?",
+        "options": [
+          "Иә, өзіңе қарсы болса да",
+          "Жоқ, өзіңді үнемі қорғау керек",
+          "Тек ешкім білмесе",
+          "Тек елден сый алу үшін"
+        ],
+        "info": "Аят өзіңе және жақындарыңа қарсы болса да әділ куәлік беруді талап етеді."
+      },
+      "ky": {
+        "q": "4:135 боюнча өзүңө каршы болсо да адилет күбөлүк берүү керекпи?",
+        "options": [
+          "Ооба, өзүңө каршы болсо да",
+          "Жок, өзүңдү дайыма коргоо керек",
+          "Эч ким билбесе гана",
+          "Элден сый алуу үчүн гана"
+        ],
+        "info": "Аят өзүңө жана жакындарыңа каршы болсо да адилет күбөлүктү талап кылат."
+      },
+      "az": {
+        "q": "4:135-ə görə öz əleyhinə olsa belə ədalətlə şahidlik edilməlidirmi?",
+        "options": [
+          "Bəli, öz əleyhinə olsa belə",
+          "Xeyr, insan həmişə özünü qorumalıdır",
+          "Yalnız heç kim bilməsə",
+          "Yalnız insanların mükafatı üçün"
+        ],
+        "info": "Ayə insanın özünə və yaxınlarına qarşı olsa da ədalətli şahidlik tələb edir."
+      },
+      "tr": {
+        "q": "4:135'e göre kendi aleyhine de olsa adaletle tanıklık edilmeli mi?",
+        "options": [
+          "Evet, kendi aleyhine de olsa",
+          "Hayır, daima kendini korumalı",
+          "Yalnız kimse öğrenmezse",
+          "Yalnız insanların ödülü için"
+        ],
+        "info": "Ayet insanın kendisi ve yakınları aleyhine de olsa adaletle tanıklık etmesini ister."
+      }
+    }
+  },
+  {
+    "id": "l1_cooperate_good",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 5:2",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "sourceVerses": [
+      "5:2"
+    ],
+    "locales": {
+      "ru": {
+        "q": "В чём 5:2 призывает помогать друг другу?",
+        "options": [
+          "В добре и богобоязненности",
+          "В грехе и вражде",
+          "В обмане ради друзей",
+          "В мести соперникам"
+        ],
+        "info": "Аят велит сотрудничать в добре и отвергает помощь в грехе и вражде."
+      },
+      "en": {
+        "q": "In what does 5:2 call us to help one another?",
+        "options": [
+          "Goodness and piety",
+          "Sin and hostility",
+          "Deception for friends",
+          "Revenge against rivals"
+        ],
+        "info": "The verse commands cooperation in goodness and forbids assistance in sin and hostility."
+      },
+      "uz": {
+        "q": "5:2 bir-birimizga nimada yordam berishga chaqiradi?",
+        "options": [
+          "Yaxshilik va taqvoda",
+          "Gunoh va adovatda",
+          "Do‘stlar uchun aldashda",
+          "Raqiblardan qasos olishda"
+        ],
+        "info": "Oyat yaxshilikda hamkorlikni buyurib, gunoh va adovatda yordamni taqiqlaydi."
+      },
+      "tg": {
+        "q": "5:2 ба ёрии ҳамдигар дар чӣ даъват мекунад?",
+        "options": [
+          "Некӣ ва тақво",
+          "Гуноҳ ва душманӣ",
+          "Фиреб барои дӯстон",
+          "Қасос аз рақибон"
+        ],
+        "info": "Оят ҳамкориро дар некӣ амр карда, ёриро дар гуноҳу душманӣ манъ мекунад."
+      },
+      "kk": {
+        "q": "5:2 бір-біріне неде көмектесуге шақырады?",
+        "options": [
+          "Ізгілік пен тақуалықта",
+          "Күнә мен дұшпандықта",
+          "Достар үшін алдауда",
+          "Қарсыластардан кек алуда"
+        ],
+        "info": "Аят ізгілікте көмектесуді бұйырып, күнә мен дұшпандықта көмектесуге тыйым салады."
+      },
+      "ky": {
+        "q": "5:2 бири-бирине эмнеде жардам берүүгө чакырат?",
+        "options": [
+          "Жакшылык жана такыбалыкта",
+          "Күнөө жана душмандыкта",
+          "Достор үчүн алдоодо",
+          "Атаандаштан өч алууда"
+        ],
+        "info": "Аят жакшылыкта жардамдашууну буйруп, күнөө жана душмандыкта жардамга тыюу салат."
+      },
+      "az": {
+        "q": "5:2 bir-birimizə nədə kömək etməyə çağırır?",
+        "options": [
+          "Yaxşılıq və təqvada",
+          "Günah və düşmənçilikdə",
+          "Dostlar üçün aldatmaqda",
+          "Rəqiblərdən qisas almaqda"
+        ],
+        "info": "Ayə yaxşılıqda əməkdaşlığı əmr edib, günah və düşmənçilikdə yardımı qadağan edir."
+      },
+      "tr": {
+        "q": "5:2 hangi konuda yardımlaşmayı emreder?",
+        "options": [
+          "İyilik ve takvada",
+          "Günah ve düşmanlıkta",
+          "Dostlar için aldatmada",
+          "Rakiplerden intikam almada"
+        ],
+        "info": "Ayet iyilikte yardımlaşmayı emreder, günah ve düşmanlıkta yardımlaşmayı yasaklar."
+      }
+    }
+  },
+  {
+    "id": "l1_justice_dislike",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 5:8",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "sourceVerses": [
+      "5:8"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как 5:8 учит поступать с теми, кого мы не любим?",
+        "options": [
+          "Справедливо",
+          "Предвзято",
+          "Мстительно",
+          "По слухам о них"
+        ],
+        "info": "Неприязнь к людям не должна вести к несправедливости."
+      },
+      "en": {
+        "q": "How does 5:8 teach us to treat people we dislike?",
+        "options": [
+          "Justly",
+          "With bias",
+          "Vengefully",
+          "According to rumours"
+        ],
+        "info": "Dislike of people must not lead us to act unjustly."
+      },
+      "uz": {
+        "q": "5:8 yoqtirmagan kishilarga qanday munosabatni o‘rgatadi?",
+        "options": [
+          "Adolatli",
+          "Tarafkashlik bilan",
+          "Qasoskorlik bilan",
+          "Ular haqidagi mish-mishga qarab"
+        ],
+        "info": "Odamlarni yoqtirmaslik adolatsizlikka olib bormasligi kerak."
+      },
+      "tg": {
+        "q": "5:8 бо касони дӯстнадошта чӣ гуна рафторро меомӯзад?",
+        "options": [
+          "Одилона",
+          "Ғаразнок",
+          "Қасосҷӯёна",
+          "Аз рӯйи овозаҳо"
+        ],
+        "info": "Бад дидани одамон набояд ба беадолатӣ барад."
+      },
+      "kk": {
+        "q": "5:8 ұнатпайтын адамдарға қалай қарауды үйретеді?",
+        "options": [
+          "Әділ",
+          "Біржақты",
+          "Кекшіл",
+          "Олар туралы қауесетке қарай"
+        ],
+        "info": "Адамдарды жақтырмау әділетсіздікке әкелмеуге тиіс."
+      },
+      "ky": {
+        "q": "5:8 жактырбаган адамдарга кандай мамилени үйрөтөт?",
+        "options": [
+          "Адилеттүү",
+          "Бир жактуу",
+          "Өч алуу менен",
+          "Алар тууралуу ушакка карап"
+        ],
+        "info": "Адамдарды жек көрүү адилетсиздикке алып барбашы керек."
+      },
+      "az": {
+        "q": "5:8 sevmədiyimiz insanlarla necə davranmağı öyrədir?",
+        "options": [
+          "Ədalətlə",
+          "Qərəzlə",
+          "Qisasçılıqla",
+          "Haqlarındakı şayiələrə görə"
+        ],
+        "info": "İnsanları sevməmək ədalətsiz davranmağa səbəb olmamalıdır."
+      },
+      "tr": {
+        "q": "5:8 sevmediğimiz kişilere nasıl davranmayı öğretir?",
+        "options": [
+          "Adaletle",
+          "Önyargıyla",
+          "İntikam duygusuyla",
+          "Haklarındaki söylentilere göre"
+        ],
+        "info": "İnsanlara duyulan hoşnutsuzluk adaletsizliğe yol açmamalıdır."
+      }
+    }
+  },
+  {
+    "id": "l1_justice_kindness",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 16:90",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "sourceVerses": [
+      "16:90"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какое сочетание дел повелевается в 16:90?",
+        "options": [
+          "Справедливость, добро и помощь родным",
+          "Слава, власть и соперничество",
+          "Богатство, гордость и месть",
+          "Молчание, подозрение и отчуждение"
+        ],
+        "info": "Аят объединяет справедливость, добродетель и щедрость к родственникам."
+      },
+      "en": {
+        "q": "Which set of deeds is commanded in 16:90?",
+        "options": [
+          "Justice, goodness and helping relatives",
+          "Fame, power and rivalry",
+          "Wealth, pride and revenge",
+          "Silence, suspicion and alienation"
+        ],
+        "info": "The verse brings together justice, good conduct and generosity to relatives."
+      },
+      "uz": {
+        "q": "16:90 da qaysi ishlar birga buyurilgan?",
+        "options": [
+          "Adolat, yaxshilik va qarindoshga yordam",
+          "Shuhrat, hokimiyat va raqobat",
+          "Boylik, kibr va qasos",
+          "Sukut, gumon va begonalashish"
+        ],
+        "info": "Oyatda adolat, yaxshilik va qarindoshlarga saxovat birga zikr etiladi."
+      },
+      "tg": {
+        "q": "Дар 16:90 кадом амалҳо якҷо амр шудаанд?",
+        "options": [
+          "Адолат, некӣ ва ёрӣ ба хешовандон",
+          "Шуҳрат, қудрат ва рақобат",
+          "Сарват, кибр ва қасос",
+          "Хомӯшӣ, гумон ва дурӣ"
+        ],
+        "info": "Оят адолат, некӣ ва саховат ба хешовандонро якҷо меорад."
+      },
+      "kk": {
+        "q": "16:90-да қандай істер бірге бұйырылған?",
+        "options": [
+          "Әділдік, ізгілік, туысқа көмек",
+          "Даңқ, билік, бәсеке",
+          "Байлық, тәкаппарлық, кек",
+          "Үнсіздік, күдік, жатсыну"
+        ],
+        "info": "Аят әділдік, ізгілік пен туыстарға жомарттықты бірге атайды."
+      },
+      "ky": {
+        "q": "16:90до кайсы иштер бирге буйрулган?",
+        "options": [
+          "Адилеттик, жакшылык, тууганга жардам",
+          "Атак, бийлик, атаандаштык",
+          "Байлык, текебердик, өч",
+          "Унчукпоо, шектенүү, жатсынуу"
+        ],
+        "info": "Аят адилеттикти, жакшылыкты жана тууганга берешендикти бирге атайт."
+      },
+      "az": {
+        "q": "16:90-da hansı əməllər birlikdə əmr edilir?",
+        "options": [
+          "Ədalət, yaxşılıq və qohumlara yardım",
+          "Şöhrət, hakimiyyət və rəqabət",
+          "Sərvət, təkəbbür və qisas",
+          "Sükut, şübhə və uzaqlaşma"
+        ],
+        "info": "Ayə ədaləti, yaxşılığı və qohumlara səxavəti birlikdə qeyd edir."
+      },
+      "tr": {
+        "q": "16:90'da hangi davranışlar birlikte emredilir?",
+        "options": [
+          "Adalet, iyilik ve akrabaya yardım",
+          "Şöhret, güç ve rekabet",
+          "Zenginlik, kibir ve intikam",
+          "Sessizlik, şüphe ve uzaklaşma"
+        ],
+        "info": "Ayet adaleti, iyiliği ve akrabaya yardım etmeyi birlikte bildirir."
+      }
+    }
+  },
+  {
+    "id": "l1_patience_prayer",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 2:153",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:153"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Посредством чего 2:153 призывает искать помощи?",
+        "options": [
+          "Терпения и намаза",
+          "Славы и богатства",
+          "Гнева и спора",
+          "Силы и высокомерия"
+        ],
+        "info": "Аят связывает поиск помощи с терпением и молитвой."
+      },
+      "en": {
+        "q": "Through what does 2:153 call believers to seek help?",
+        "options": [
+          "Patience and prayer",
+          "Fame and wealth",
+          "Anger and argument",
+          "Power and arrogance"
+        ],
+        "info": "The verse connects seeking help with patience and prayer."
+      },
+      "uz": {
+        "q": "2:153 nimaning vositasida yordam so‘rashga chaqiradi?",
+        "options": [
+          "Sabr va namoz",
+          "Shuhrat va boylik",
+          "G‘azab va bahs",
+          "Kuch va kibr"
+        ],
+        "info": "Oyat yordam so‘rashni sabr va namoz bilan bog‘laydi."
+      },
+      "tg": {
+        "q": "2:153 ба воситаи чӣ ёрӣ хостанро мефармояд?",
+        "options": [
+          "Сабр ва намоз",
+          "Шуҳрат ва сарват",
+          "Хашм ва баҳс",
+          "Қудрат ва такаббур"
+        ],
+        "info": "Оят ёрӣ хостанро бо сабр ва намоз мепайвандад."
+      },
+      "kk": {
+        "q": "2:153 не арқылы жәрдем сұрауға шақырады?",
+        "options": [
+          "Сабыр мен намаз",
+          "Даңқ пен байлық",
+          "Ашу мен дау",
+          "Күш пен тәкаппарлық"
+        ],
+        "info": "Аят жәрдем сұрауды сабыр мен намазға байланыстырады."
+      },
+      "ky": {
+        "q": "2:153 эмне аркылуу жардам суроого чакырат?",
+        "options": [
+          "Сабыр жана намаз",
+          "Атак жана байлык",
+          "Ачуу жана талаш",
+          "Күч жана текебердик"
+        ],
+        "info": "Аят жардам суроону сабыр жана намаз менен байланыштырат."
+      },
+      "az": {
+        "q": "2:153 nə vasitəsilə yardım istəməyə çağırır?",
+        "options": [
+          "Səbir və namaz",
+          "Şöhrət və sərvət",
+          "Qəzəb və mübahisə",
+          "Güc və təkəbbür"
+        ],
+        "info": "Ayə yardım istəməyi səbir və namazla əlaqələndirir."
+      },
+      "tr": {
+        "q": "2:153 ne ile yardım istemeyi öğütler?",
+        "options": [
+          "Sabır ve namaz",
+          "Şöhret ve zenginlik",
+          "Öfke ve tartışma",
+          "Güç ve kibir"
+        ],
+        "info": "Ayet yardım istemeyi sabır ve namazla ilişkilendirir."
+      }
+    }
+  },
+  {
+    "id": "l1_charity_orphans",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 2:177",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:177"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какая группа прямо названа среди получателей помощи в 2:177?",
+        "options": [
+          "Сироты",
+          "Военачальники",
+          "Судьи",
+          "Правители"
+        ],
+        "info": "Аят относит помощь сиротам к проявлениям благочестия."
+      },
+      "en": {
+        "q": "Which group is explicitly named among recipients of support in 2:177?",
+        "options": [
+          "Orphans",
+          "Military commanders",
+          "Judges",
+          "Rulers"
+        ],
+        "info": "The verse includes giving to orphans among acts of righteousness."
+      },
+      "uz": {
+        "q": "2:177 da yordam oluvchilar orasida qaysi guruh aniq sanalgan?",
+        "options": [
+          "Yetimlar",
+          "Lashkarboshilar",
+          "Qozilar",
+          "Hukmdorlar"
+        ],
+        "info": "Oyatda yetimlarga yordam berish yaxshilikning ko‘rinishlaridan sanaladi."
+      },
+      "tg": {
+        "q": "Кадом гурӯҳ дар 2:177 байни гирандагони ёрӣ ошкоро номбар шудааст?",
+        "options": [
+          "Ятимон",
+          "Лашкаркашон",
+          "Қозиён",
+          "Ҳокимон"
+        ],
+        "info": "Оят ёрӣ ба ятимонро аз нишонаҳои некӯкорӣ мешуморад."
+      },
+      "kk": {
+        "q": "2:177-де көмек алушылардың қай тобы анық аталған?",
+        "options": [
+          "Жетімдер",
+          "Қолбасшылар",
+          "Билер",
+          "Билеушілер"
+        ],
+        "info": "Аят жетімдерге көмектесуді ізгі істердің қатарына қосады."
+      },
+      "ky": {
+        "q": "2:177де жардам алуучулардын кайсы тобу так аталган?",
+        "options": [
+          "Жетимдер",
+          "Кол башчылар",
+          "Казылар",
+          "Башкаруучулар"
+        ],
+        "info": "Аят жетимдерге жардам берүүнү жакшылыктын белгиси катары атайт."
+      },
+      "az": {
+        "q": "2:177-də yardım alanlar arasında hansı qrup açıq şəkildə adlanır?",
+        "options": [
+          "Yetimlər",
+          "Sərkərdələr",
+          "Hakimlər",
+          "Hökmdarlar"
+        ],
+        "info": "Ayə yetimlərə yardım etməyi yaxşı əməllər arasında sayır."
+      },
+      "tr": {
+        "q": "2:177'de yardım edilenler arasında hangi grup açıkça anılır?",
+        "options": [
+          "Yetimler",
+          "Komutanlar",
+          "Yargıçlar",
+          "Hükümdarlar"
+        ],
+        "info": "Ayet yetimlere yardım etmeyi iyilik kapsamındaki davranışlardan sayar."
+      }
+    }
+  },
+  {
+    "id": "l1_fasting_piety",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 2:183",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:183"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какую цель поста указывает 2:183?",
+        "options": [
+          "Богобоязненность",
+          "Известность",
+          "Обогащение",
+          "Превосходство по происхождению"
+        ],
+        "info": "Предписание поста в аяте связано с воспитанием богобоязненности."
+      },
+      "en": {
+        "q": "What aim of fasting is stated in 2:183?",
+        "options": [
+          "Piety",
+          "Fame",
+          "Getting rich",
+          "Superiority by ancestry"
+        ],
+        "info": "The command to fast in this verse is connected with developing piety."
+      },
+      "uz": {
+        "q": "2:183 ro‘zaning qaysi maqsadini ko‘rsatadi?",
+        "options": [
+          "Taqvo",
+          "Shuhrat",
+          "Boyish",
+          "Nasab bilan ustunlik"
+        ],
+        "info": "Oyatda ro‘za buyrug‘i taqvoni tarbiyalash bilan bog‘langan."
+      },
+      "tg": {
+        "q": "2:183 кадом ҳадафи рӯзаро нишон медиҳад?",
+        "options": [
+          "Тақво",
+          "Шуҳрат",
+          "Сарватманд шудан",
+          "Бартарӣ аз рӯйи насаб"
+        ],
+        "info": "Дар оят фармони рӯза бо парвариши тақво алоқаманд аст."
+      },
+      "kk": {
+        "q": "2:183 оразаның қандай мақсатын атайды?",
+        "options": [
+          "Тақуалық",
+          "Даңқ",
+          "Баю",
+          "Тек арқылы үстем болу"
+        ],
+        "info": "Аяттағы ораза парызы тақуалықты қалыптастырумен байланысты."
+      },
+      "ky": {
+        "q": "2:183 орозонун кайсы максатын атайт?",
+        "options": [
+          "Такыбалык",
+          "Атак",
+          "Байып кетүү",
+          "Тек аркылуу үстөмдүк"
+        ],
+        "info": "Аяттагы орозо буйругу такыбалыкты тарбиялоого байланышкан."
+      },
+      "az": {
+        "q": "2:183 orucun hansı məqsədini göstərir?",
+        "options": [
+          "Təqva",
+          "Şöhrət",
+          "Varlanmaq",
+          "Nəsillə üstünlük"
+        ],
+        "info": "Ayədə oruc əmri təqvanın formalaşması ilə əlaqələndirilir."
+      },
+      "tr": {
+        "q": "2:183 orucun hangi amacını bildirir?",
+        "options": [
+          "Takva",
+          "Şöhret",
+          "Zenginleşmek",
+          "Soyla üstünlük"
+        ],
+        "info": "Ayette oruç emri takvanın gelişmesiyle ilişkilendirilir."
+      }
+    }
+  },
+  {
+    "id": "l1_fasting_makeup",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 2:185",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:185"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какое возмещение пропущенного поста названо в 2:185 для больного или путника?",
+        "options": [
+          "Столько же дней позднее",
+          "Вдвое больше дней",
+          "Только дополнительные намазы",
+          "Паломничество вместо дней"
+        ],
+        "info": "В аяте указано восполнение пропущенных дней поста в другие дни."
+      },
+      "en": {
+        "q": "What replacement for missed fasting does 2:185 mention for illness or travel?",
+        "options": [
+          "The same number of days later",
+          "Twice as many days",
+          "Extra prayers only",
+          "Pilgrimage instead of days"
+        ],
+        "info": "The verse specifies making up the missed fasts on other days."
+      },
+      "uz": {
+        "q": "2:185 kasallik yoki safar tufayli qolgan ro‘zaga qanday qazo belgilaydi?",
+        "options": [
+          "Boshqa kunlarda shuncha kun",
+          "Ikki barobar ko‘p kun",
+          "Faqat qo‘shimcha namoz",
+          "Kunlar o‘rniga haj"
+        ],
+        "info": "Oyatda qolgan ro‘za kunlarini boshqa kunlarda to‘ldirish ko‘rsatilgan."
+      },
+      "tg": {
+        "q": "2:185 барои рӯзҳои рӯзаи аз беморӣ ё сафар монда чӣ муқаррар мекунад?",
+        "options": [
+          "Ҳамин қадар рӯз дар вақти дигар",
+          "Ду баробар бештар рӯз",
+          "Танҳо намозҳои иловагӣ",
+          "Ҳаҷ ба ҷойи рӯзҳо"
+        ],
+        "info": "Оят қазои рӯзҳои мондаи рӯзаро дар рӯзҳои дигар муайян мекунад."
+      },
+      "kk": {
+        "q": "2:185 ауру не сапар себебімен қалған оразаны қалай өтеуді атайды?",
+        "options": [
+          "Басқа күндері сонша күн",
+          "Екі есе көп күн",
+          "Тек қосымша намаз",
+          "Күндердің орнына қажылық"
+        ],
+        "info": "Аят қалған ораза күндерін басқа күндері өтеуді көрсетеді."
+      },
+      "ky": {
+        "q": "2:185 оорудан же сапардан калган орозону кантип толуктоону айтат?",
+        "options": [
+          "Башка күндөрү ошончо күн",
+          "Эки эсе көп күн",
+          "Кошумча намаз гана",
+          "Күндөрдүн ордуна ажылык"
+        ],
+        "info": "Аят калган орозо күндөрүн башка күндөрү толуктоону көрсөтөт."
+      },
+      "az": {
+        "q": "2:185 xəstəlik və ya səfərə görə buraxılan oruc üçün nə bildirir?",
+        "options": [
+          "Sonra eyni sayda gün tutmaq",
+          "İkiqat gün tutmaq",
+          "Yalnız əlavə namaz qılmaq",
+          "Günlərin yerinə həcc etmək"
+        ],
+        "info": "Ayə buraxılan oruc günlərinin başqa günlərdə tamamlanmasını bildirir."
+      },
+      "tr": {
+        "q": "2:185 hastalık veya yolculuk sebebiyle tutulamayan oruç için ne bildirir?",
+        "options": [
+          "Başka günlerde aynı sayıyı tutmak",
+          "İki katı gün tutmak",
+          "Yalnız ek namaz kılmak",
+          "Günlerin yerine hac yapmak"
+        ],
+        "info": "Ayet tutulamayan oruçların başka günlerde tamamlanmasını bildirir."
+      }
+    }
+  },
+  {
+    "id": "l1_fast_until_night",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 2:187",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:187"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какой предел дневного поста назван в 2:187?",
+        "options": [
+          "До наступления ночи",
+          "До полудня",
+          "До следующего рассвета",
+          "До середины ночи"
+        ],
+        "info": "Аят указывает наступление ночи как завершение дневного поста."
+      },
+      "en": {
+        "q": "What endpoint of the daily fast is named in 2:187?",
+        "options": [
+          "Nightfall",
+          "Noon",
+          "The next dawn",
+          "Midnight"
+        ],
+        "info": "The verse gives nightfall as the end of the daily fast."
+      },
+      "uz": {
+        "q": "2:187 da kundalik ro‘zaning qaysi tugash vaqti aytilgan?",
+        "options": [
+          "Kecha kirguncha",
+          "Tushgacha",
+          "Keyingi tonggacha",
+          "Yarim kechagacha"
+        ],
+        "info": "Oyat kundalik ro‘zaning tugashini kecha kirishi bilan belgilaydi."
+      },
+      "tg": {
+        "q": "Дар 2:187 кадом вақти анҷоми рӯзаи рӯзона зикр шудааст?",
+        "options": [
+          "То фаро расидани шаб",
+          "То нисфирӯзӣ",
+          "То субҳи дигар",
+          "То нисфи шаб"
+        ],
+        "info": "Оят фаро расидани шабро поёни рӯзаи рӯзона муайян мекунад."
+      },
+      "kk": {
+        "q": "2:187-де күнделікті оразаның аяқталатын қай уақыты аталған?",
+        "options": [
+          "Түн кіргенше",
+          "Түске дейін",
+          "Келесі таңға дейін",
+          "Түн ортасына дейін"
+        ],
+        "info": "Аят күнделікті оразаның аяқталуын түн кіруімен белгілейді."
+      },
+      "ky": {
+        "q": "2:187де күндүзгү орозонун кайсы аяктоо убактысы аталган?",
+        "options": [
+          "Түн киргенче",
+          "Түшкө чейин",
+          "Кийинки таңга чейин",
+          "Түн ортосуна чейин"
+        ],
+        "info": "Аят күндүзгү орозонун аякташын түндүн кириши менен белгилейт."
+      },
+      "az": {
+        "q": "2:187-də gündəlik orucun hansı bitmə vaxtı göstərilir?",
+        "options": [
+          "Gecə düşənədək",
+          "Günortayadək",
+          "Növbəti sübhədək",
+          "Gecə yarısınadək"
+        ],
+        "info": "Ayə gecənin gəlməsini gündəlik orucun sonu kimi göstərir."
+      },
+      "tr": {
+        "q": "2:187'de günlük orucun hangi bitiş vakti belirtilir?",
+        "options": [
+          "Gece girene kadar",
+          "Öğleye kadar",
+          "Ertesi sabaha kadar",
+          "Gece yarısına kadar"
+        ],
+        "info": "Ayet günlük orucun bitişini gecenin girişiyle belirtir."
+      }
+    }
+  },
+  {
+    "id": "l1_kind_words",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 2:263",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:263"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Что 2:263 считает лучше милостыни, за которой следует обида?",
+        "options": [
+          "Доброе слово и прощение",
+          "Похвалу самому себе",
+          "Напоминание о своей щедрости",
+          "Публичное унижение"
+        ],
+        "info": "Аят ставит доброе слово и прощение выше помощи, причиняющей обиду."
+      },
+      "en": {
+        "q": "What does 2:263 place above charity followed by hurt?",
+        "options": [
+          "Kind words and forgiveness",
+          "Praising oneself",
+          "Reminding others of one's generosity",
+          "Public humiliation"
+        ],
+        "info": "The verse values kind words and forgiveness above hurtful charity."
+      },
+      "uz": {
+        "q": "2:263 ozor ortidan kelgan sadaqadan nimani yaxshiroq deydi?",
+        "options": [
+          "Yaxshi so‘z va kechirish",
+          "O‘zini maqtash",
+          "Saxovatini eslatish",
+          "Ommaviy kamsitish"
+        ],
+        "info": "Oyat yaxshi so‘z va kechirishni ozorli yordamdan afzal ko‘radi."
+      },
+      "tg": {
+        "q": "2:263 чиро аз садақаи бо озор беҳтар мешуморад?",
+        "options": [
+          "Сухани нек ва бахшиш",
+          "Ситоиши худ",
+          "Ёдоварии саховати худ",
+          "Таҳқир дар назди мардум"
+        ],
+        "info": "Оят сухани нек ва бахшишро аз ёрии озордиҳанда беҳтар медонад."
+      },
+      "kk": {
+        "q": "2:263 реніш келтіретін садақадан нені артық санайды?",
+        "options": [
+          "Жақсы сөз бен кешірім",
+          "Өзін мақтауды",
+          "Жомарттығын еске салуды",
+          "Жұрт алдында қорлауды"
+        ],
+        "info": "Аят жақсы сөз бен кешірімді реніш келтіретін көмектен артық қояды."
+      },
+      "ky": {
+        "q": "2:263 көңүл ооруткан садакадан эмнени жакшы дейт?",
+        "options": [
+          "Жакшы сөз жана кечирим",
+          "Өзүн мактоону",
+          "Берешендигин эске салууну",
+          "Эл алдында кемсинтүүнү"
+        ],
+        "info": "Аят жакшы сөз менен кечиримди көңүл ооруткан жардамдан жогору коёт."
+      },
+      "az": {
+        "q": "2:263 incitmə ilə müşayiət olunan sədəqədən nəyi üstün tutur?",
+        "options": [
+          "Xoş söz və bağışlamağı",
+          "Özünü tərifləməyi",
+          "Səxavətini xatırlatmağı",
+          "Hamının yanında alçaltmağı"
+        ],
+        "info": "Ayə xoş sözü və bağışlamağı incidici yardımdan üstün tutur."
+      },
+      "tr": {
+        "q": "2:263 ardından incitme gelen sadakadan neyi üstün tutar?",
+        "options": [
+          "Güzel söz ve bağışlamayı",
+          "Kendini övmeyi",
+          "Cömertliğini hatırlatmayı",
+          "Herkesin önünde aşağılamayı"
+        ],
+        "info": "Ayet güzel söz ve bağışlamayı incitici yardımdan üstün tutar."
+      }
+    }
+  },
+  {
+    "id": "l1_charity_no_reproach",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 2:264",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:264"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Чем, согласно 2:264, нельзя портить свои пожертвования?",
+        "options": [
+          "Упрёками и обидами",
+          "Скромностью",
+          "Уважением к получателю",
+          "Искренностью"
+        ],
+        "info": "Аят предостерегает от попрёков и причинения боли после пожертвования."
+      },
+      "en": {
+        "q": "What must not spoil one's charity according to 2:264?",
+        "options": [
+          "Reproaches and hurt",
+          "Modesty",
+          "Respect for the recipient",
+          "Sincerity"
+        ],
+        "info": "The verse warns against reminding recipients of favours and hurting them."
+      },
+      "uz": {
+        "q": "2:264 ga ko‘ra, sadaqani nima bilan buzmaslik kerak?",
+        "options": [
+          "Minnat va ozor bilan",
+          "Kamtarlik bilan",
+          "Oluvchiga hurmat bilan",
+          "Ixlos bilan"
+        ],
+        "info": "Oyat sadaqadan keyin minnat qilish va ozor berishdan qaytaradi."
+      },
+      "tg": {
+        "q": "Мувофиқи 2:264 садақаро бо чӣ набояд ботил кард?",
+        "options": [
+          "Миннат ва озор",
+          "Фурӯтанӣ",
+          "Эҳтироми гиранда",
+          "Ихлос"
+        ],
+        "info": "Оят аз миннат кардан ва озор додан баъди садақа ҳушдор медиҳад."
+      },
+      "kk": {
+        "q": "2:264 бойынша садақаны немен зая кетірмеу керек?",
+        "options": [
+          "Міндетсіну мен ренжітумен",
+          "Кішіпейілділікпен",
+          "Алушыны құрметтеумен",
+          "Ықыласпен"
+        ],
+        "info": "Аят садақадан кейін міндетсіну мен ренжітуден сақтандырады."
+      },
+      "ky": {
+        "q": "2:264 боюнча садаканы эмне менен жокко чыгарбоо керек?",
+        "options": [
+          "Милдет кылуу жана таарынтуу менен",
+          "Жөнөкөйлүк менен",
+          "Алуучуну урматтоо менен",
+          "Ыклас менен"
+        ],
+        "info": "Аят садакадан кийин милдет кылуудан жана көңүл оорутуудан сактандырат."
+      },
+      "az": {
+        "q": "2:264-ə görə sədəqəni nə ilə puça çıxarmaq olmaz?",
+        "options": [
+          "Minnət qoymaq və incitməklə",
+          "Təvazökarlıqla",
+          "Alana hörmətlə",
+          "Səmimiyyətlə"
+        ],
+        "info": "Ayə sədəqədən sonra minnət qoymaqdan və incitməkdən çəkindirir."
+      },
+      "tr": {
+        "q": "2:264'e göre sadaka neyle boşa çıkarılmamalıdır?",
+        "options": [
+          "Başa kakma ve incitmeyle",
+          "Alçak gönüllülükle",
+          "Alana saygıyla",
+          "Samimiyetle"
+        ],
+        "info": "Ayet sadakadan sonra başa kakmaktan ve incitmekten sakındırır."
+      }
+    }
+  },
+  {
+    "id": "l1_debtor_respite",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 2:280",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:280"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Что 2:280 велит дать должнику в тяжёлом положении?",
+        "options": [
+          "Отсрочку до облегчения",
+          "Немедленное наказание",
+          "Новый долг под давлением",
+          "Публичный упрёк"
+        ],
+        "info": "Аят велит дать испытывающему нужду должнику время до улучшения положения."
+      },
+      "en": {
+        "q": "What does 2:280 require for a debtor in hardship?",
+        "options": [
+          "Time until circumstances improve",
+          "Immediate punishment",
+          "A forced new debt",
+          "Public reproach"
+        ],
+        "info": "The verse requires granting a debtor in difficulty time until relief."
+      },
+      "uz": {
+        "q": "2:280 qiynalgan qarzdorga nima berishni buyuradi?",
+        "options": [
+          "Yengillikkacha muhlat",
+          "Darhol jazo",
+          "Majburan yangi qarz",
+          "Ommaviy ta’na"
+        ],
+        "info": "Oyat qiynalgan qarzdorga ahvoli yengillashguncha muhlat berishni buyuradi."
+      },
+      "tg": {
+        "q": "2:280 ба қарздори дар тангӣ чӣ доданро амр мекунад?",
+        "options": [
+          "То осонӣ муҳлат",
+          "Ҷазои фаврӣ",
+          "Қарзи нави маҷбурӣ",
+          "Сарзаниши оммавӣ"
+        ],
+        "info": "Оят ба қарздори дар тангӣ то беҳбудии вазъ муҳлат доданро амр мекунад."
+      },
+      "kk": {
+        "q": "2:280 қиналған борышкерге не беруді бұйырады?",
+        "options": [
+          "Жағдайы түзелгенше мұрсат",
+          "Дереу жаза",
+          "Мәжбүрлі жаңа қарыз",
+          "Ел алдында сөгіс"
+        ],
+        "info": "Аят қиналған борышкерге жағдайы жеңілдегенше уақыт беруді бұйырады."
+      },
+      "ky": {
+        "q": "2:280 кыйналган карызкорго эмне берүүнү буйруйт?",
+        "options": [
+          "Абалы жеңилдегенче мөөнөт",
+          "Дароо жаза",
+          "Мажбурлап жаңы карыз",
+          "Эл алдында жемелөө"
+        ],
+        "info": "Аят кыйналган карызкорго абалы оңолгончо мөөнөт берүүнү буйруйт."
+      },
+      "az": {
+        "q": "2:280 çətinlikdə olan borcluya nə verməyi əmr edir?",
+        "options": [
+          "Vəziyyəti düzələnədək möhlət",
+          "Dərhal cəza",
+          "Məcburi yeni borc",
+          "İctimai qınaq"
+        ],
+        "info": "Ayə çətinlikdə olan borcluya vəziyyəti yüngülləşənədək möhlət verməyi əmr edir."
+      },
+      "tr": {
+        "q": "2:280 darlıktaki borçluya ne verilmesini emreder?",
+        "options": [
+          "Rahatlayana kadar süre",
+          "Hemen ceza",
+          "Zorla yeni borç",
+          "Toplum önünde kınama"
+        ],
+        "info": "Ayet zor durumdaki borçluya rahatlayana kadar süre verilmesini emreder."
+      }
+    }
+  },
+  {
+    "id": "l1_within_capacity",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 2:286",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:286"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как в 2:286 описана возлагаемая на душу обязанность?",
+        "options": [
+          "По её силам",
+          "Всегда сверх её сил",
+          "По богатству соседей",
+          "По известности человека"
+        ],
+        "info": "Аят утверждает, что Аллах не возлагает на душу непосильного."
+      },
+      "en": {
+        "q": "How does 2:286 describe what a soul is charged with?",
+        "options": [
+          "Within its capacity",
+          "Always beyond its capacity",
+          "According to neighbours' wealth",
+          "According to personal fame"
+        ],
+        "info": "The verse affirms that Allah does not charge a soul beyond its capacity."
+      },
+      "uz": {
+        "q": "2:286 jonga yuklangan mas’uliyatni qanday ta’riflaydi?",
+        "options": [
+          "Uning kuchi yetadigan",
+          "Doim kuchidan ortiq",
+          "Qo‘shnilar boyligiga qarab",
+          "Kishining shuhratiga qarab"
+        ],
+        "info": "Oyat Alloh jonga kuchi yetmaydigan narsani yuklamasligini bildiradi."
+      },
+      "tg": {
+        "q": "2:286 масъулияти бар дӯш гузоштаи ҷонро чӣ гуна баён мекунад?",
+        "options": [
+          "Ба андозаи тавонаш",
+          "Ҳамеша бештар аз тавонаш",
+          "Мувофиқи сарвати ҳамсояҳо",
+          "Мувофиқи шуҳрати шахс"
+        ],
+        "info": "Оят мегӯяд, ки Аллоҳ ба ҷон беш аз тавонаш бор намегузорад."
+      },
+      "kk": {
+        "q": "2:286 жанға жүктелетін міндетті қалай сипаттайды?",
+        "options": [
+          "Шамасы жететіндей",
+          "Әрдайым шамасынан тыс",
+          "Көршілерінің байлығына қарай",
+          "Адамның даңқына қарай"
+        ],
+        "info": "Аят Алланың жанға шамасынан тыс міндет жүктемейтінін айтады."
+      },
+      "ky": {
+        "q": "2:286 жанга жүктөлгөн милдетти кандай сүрөттөйт?",
+        "options": [
+          "Күчү жеткендей",
+          "Дайыма күчүнөн ашык",
+          "Коңшулардын байлыгына карап",
+          "Адамдын атагына карап"
+        ],
+        "info": "Аят Аллах жанга күчү жетпеген нерсени жүктөбөсүн билдирет."
+      },
+      "az": {
+        "q": "2:286 insana yüklənən məsuliyyəti necə təsvir edir?",
+        "options": [
+          "Gücü çatan qədər",
+          "Həmişə gücündən artıq",
+          "Qonşularının sərvətinə görə",
+          "Şəxsi şöhrətinə görə"
+        ],
+        "info": "Ayə Allahın insana gücündən artıq yük yükləmədiyini bildirir."
+      },
+      "tr": {
+        "q": "2:286 kişinin yükümlülüğünü nasıl açıklar?",
+        "options": [
+          "Gücünün yettiği kadar",
+          "Daima gücünden fazla",
+          "Komşuların servetine göre",
+          "Kişinin ününe göre"
+        ],
+        "info": "Ayet Allah'ın kişiyi gücünü aşan bir şeyle yükümlü tutmadığını bildirir."
+      }
+    }
+  },
+  {
+    "id": "l1_restrain_anger",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 3:134",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "sourceVerses": [
+      "3:134"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какая реакция на гнев похвалена в 3:134?",
+        "options": [
+          "Сдержать его и простить",
+          "Усилить ссору",
+          "Унижать обидчика",
+          "Копить обиду"
+        ],
+        "info": "В аяте похвалены сдерживающие гнев и прощающие людей."
+      },
+      "en": {
+        "q": "Which response to anger is praised in 3:134?",
+        "options": [
+          "Restrain it and forgive",
+          "Escalate the quarrel",
+          "Humiliate the offender",
+          "Hold on to resentment"
+        ],
+        "info": "The verse praises those who restrain anger and forgive people."
+      },
+      "uz": {
+        "q": "3:134 da g‘azabga qanday munosabat maqtalgan?",
+        "options": [
+          "Uni tiyish va kechirish",
+          "Janjalni kuchaytirish",
+          "Ozor berganni kamsitish",
+          "Gina saqlash"
+        ],
+        "info": "Oyatda g‘azabini tiyib, odamlarni kechiradiganlar maqtaladi."
+      },
+      "tg": {
+        "q": "Дар 3:134 кадом муносибат ба хашм ситоиш шудааст?",
+        "options": [
+          "Фурӯ бурдан ва бахшидан",
+          "Шиддат додани ҷанҷол",
+          "Таҳқири озордиҳанда",
+          "Кина доштан"
+        ],
+        "info": "Оят касонеро меситояд, ки хашмро фурӯ мебаранд ва мардумро мебахшанд."
+      },
+      "kk": {
+        "q": "3:134-те ашуға қандай әрекет мақталған?",
+        "options": [
+          "Оны тежеп, кешіру",
+          "Жанжалды күшейту",
+          "Ренжіткенді қорлау",
+          "Өкпе сақтау"
+        ],
+        "info": "Аят ашуын тежеп, адамдарды кешіретіндерді мақтайды."
+      },
+      "ky": {
+        "q": "3:134тө ачууга кандай мамиле макталган?",
+        "options": [
+          "Аны басып, кечирүү",
+          "Чырды күчөтүү",
+          "Таарынтканды кемсинтүү",
+          "Кек сактоо"
+        ],
+        "info": "Аят ачуусун басып, адамдарды кечиргендерди мактайт."
+      },
+      "az": {
+        "q": "3:134-də qəzəbə hansı münasibət təriflənir?",
+        "options": [
+          "Onu boğmaq və bağışlamaq",
+          "Mübahisəni qızışdırmaq",
+          "İncidəni alçaltmaq",
+          "Kin saxlamaq"
+        ],
+        "info": "Ayə qəzəbini boğan və insanları bağışlayanları tərifləyir."
+      },
+      "tr": {
+        "q": "3:134'te öfkeye karşı hangi tutum övülür?",
+        "options": [
+          "Onu yenmek ve affetmek",
+          "Tartışmayı büyütmek",
+          "İncinmeye sebep olanı aşağılamak",
+          "Kin tutmak"
+        ],
+        "info": "Ayet öfkesini yenen ve insanları affedenleri över."
+      }
+    }
+  },
+  {
+    "id": "l1_food_no_waste",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 7:31",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/7",
+    "sourceVerses": [
+      "7:31"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какую меру в еде и питье устанавливает 7:31?",
+        "options": [
+          "Не излишествовать",
+          "Есть только в одиночестве",
+          "Всегда выбирать самое дорогое",
+          "Отказываться от любой пищи"
+        ],
+        "info": "Аят разрешает есть и пить, предостерегая от излишеств."
+      },
+      "en": {
+        "q": "What limit on eating and drinking does 7:31 give?",
+        "options": [
+          "Avoid excess",
+          "Eat only alone",
+          "Always choose the most expensive",
+          "Refuse all food"
+        ],
+        "info": "The verse permits eating and drinking while warning against excess."
+      },
+      "uz": {
+        "q": "7:31 ovqat va ichimlikda qanday me’yor belgilaydi?",
+        "options": [
+          "Isrof qilmaslik",
+          "Faqat yolg‘iz ovqatlanish",
+          "Doim eng qimmatini tanlash",
+          "Barcha ovqatdan voz kechish"
+        ],
+        "info": "Oyat yeb-ichishga ruxsat berib, isrofdan qaytaradi."
+      },
+      "tg": {
+        "q": "7:31 дар хӯрдану нӯшидан кадом меъёрро муқаррар мекунад?",
+        "options": [
+          "Исроф накардан",
+          "Танҳо хӯрок хӯрдан",
+          "Ҳамеша гаронтаринро интихоб кардан",
+          "Аз ҳама ғизо даст кашидан"
+        ],
+        "info": "Оят хӯрдану нӯшиданро иҷозат дода, аз исроф ҳушдор медиҳад."
+      },
+      "kk": {
+        "q": "7:31 ішіп-жеуге қандай шек қояды?",
+        "options": [
+          "Ысырап етпеу",
+          "Тек жалғыз тамақтану",
+          "Үнемі ең қымбатын таңдау",
+          "Барлық тағамнан бас тарту"
+        ],
+        "info": "Аят ішіп-жеуге рұқсат беріп, ысыраптан сақтандырады."
+      },
+      "ky": {
+        "q": "7:31 жеп-ичүүгө кандай ченем коёт?",
+        "options": [
+          "Ысырап кылбоо",
+          "Жалгыз гана тамактануу",
+          "Дайыма эң кымбатын тандоо",
+          "Бардык тамактан баш тартуу"
+        ],
+        "info": "Аят жеп-ичүүгө уруксат берип, ысыраптан сактандырат."
+      },
+      "az": {
+        "q": "7:31 yemək və içmək üçün hansı həddi bildirir?",
+        "options": [
+          "İsraf etməmək",
+          "Yalnız tək yemək",
+          "Həmişə ən bahalısını seçmək",
+          "Bütün yeməklərdən imtina etmək"
+        ],
+        "info": "Ayə yeməyə və içməyə icazə verərək israfdan çəkindirir."
+      },
+      "tr": {
+        "q": "7:31 yeme ve içmede hangi ölçüyü bildirir?",
+        "options": [
+          "İsraf etmemek",
+          "Yalnız yemek yemek",
+          "Daima en pahalıyı seçmek",
+          "Bütün yiyecekleri reddetmek"
+        ],
+        "info": "Ayet yemeye ve içmeye izin verirken israftan sakındırır."
+      }
+    }
+  },
+  {
+    "id": "l1_no_religious_insult",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 6:108",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "sourceVerses": [
+      "6:108"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Чего 6:108 запрещает касаться оскорблениями?",
+        "options": [
+          "Того, чему другие поклоняются помимо Аллаха",
+          "Только имущества соседей",
+          "Только чужой одежды",
+          "Только названий городов"
+        ],
+        "info": "Аят запрещает эти оскорбления, чтобы не вызвать ответное оскорбление Аллаха по невежеству."
+      },
+      "en": {
+        "q": "What does 6:108 forbid insulting?",
+        "options": [
+          "What others worship besides Allah",
+          "Only neighbours' property",
+          "Only other people's clothes",
+          "Only the names of cities"
+        ],
+        "info": "The verse forbids such insults to prevent ignorant insults against Allah in return."
+      },
+      "uz": {
+        "q": "6:108 nimani haqorat qilishni taqiqlaydi?",
+        "options": [
+          "Boshqalar Allohdan o‘zga sig‘inadigan narsalarni",
+          "Faqat qo‘shnilar mulkini",
+          "Faqat birovning kiyimini",
+          "Faqat shaharlar nomini"
+        ],
+        "info": "Oyat javoban johillik bilan Alloh haqorat qilinmasligi uchun bunday haqoratni taqiqlaydi."
+      },
+      "tg": {
+        "q": "6:108 таҳқири чиро манъ мекунад?",
+        "options": [
+          "Он чиро дигарон ғайри Аллоҳ мепарастанд",
+          "Танҳо моли ҳамсоягонро",
+          "Танҳо либоси дигаронро",
+          "Танҳо номи шаҳрҳоро"
+        ],
+        "info": "Оят ин таҳқирро манъ мекунад, то дигарон аз нодонӣ Аллоҳро таҳқир накунанд."
+      },
+      "kk": {
+        "q": "6:108 нені тілдеуге тыйым салады?",
+        "options": [
+          "Өзгелердің Алладан басқа табынатындарын",
+          "Тек көршілердің мүлкін",
+          "Тек өзгенің киімін",
+          "Тек қала атауларын"
+        ],
+        "info": "Аят өзгелердің білместікпен Алланы тілдеуіне жол бермеу үшін мұндай қорлауға тыйым салады."
+      },
+      "ky": {
+        "q": "6:108 эмнени тилдөөгө тыюу салат?",
+        "options": [
+          "Башкалардын Аллахтан башка сыйынгандарын",
+          "Коңшулардын мүлкүн гана",
+          "Башканын кийимин гана",
+          "Шаарлардын аттарын гана"
+        ],
+        "info": "Аят башкалар билбестиктен Аллахты тилдебеши үчүн мындай мазактоого тыюу салат."
+      },
+      "az": {
+        "q": "6:108 nəyi söyməyi qadağan edir?",
+        "options": [
+          "Başqalarının Allahdan qeyri ibadət etdiklərini",
+          "Yalnız qonşuların əmlakını",
+          "Yalnız başqalarının geyimini",
+          "Yalnız şəhər adlarını"
+        ],
+        "info": "Ayə qarşılığında cahilliklə Allahın söyülməməsi üçün belə təhqiri qadağan edir."
+      },
+      "tr": {
+        "q": "6:108 neye sövmeyi yasaklar?",
+        "options": [
+          "Başkalarının Allah'tan başka taptıklarına",
+          "Yalnız komşuların malına",
+          "Yalnız başkalarının giysilerine",
+          "Yalnız şehir adlarına"
+        ],
+        "info": "Ayet karşılık olarak bilgisizce Allah'a sövülmesini önlemek için bu hakareti yasaklar."
+      }
+    }
+  },
+  {
+    "id": "l1_do_not_oppress_orphan",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 93:9",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/93",
+    "sourceVerses": [
+      "93:9"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какой запрет в отношении сироты содержится в 93:9?",
+        "options": [
+          "Не притеснять его",
+          "Не разговаривать с ним",
+          "Не обучать его",
+          "Не помогать ему"
+        ],
+        "info": "Аят запрещает притеснение сироты."
+      },
+      "en": {
+        "q": "What does 93:9 prohibit regarding an orphan?",
+        "options": [
+          "Oppressing the orphan",
+          "Speaking to the orphan",
+          "Teaching the orphan",
+          "Helping the orphan"
+        ],
+        "info": "The verse prohibits oppressing an orphan."
+      },
+      "uz": {
+        "q": "93:9 yetimga nisbatan nimani taqiqlaydi?",
+        "options": [
+          "Uni ezishni",
+          "U bilan gaplashishni",
+          "Unga ta’lim berishni",
+          "Unga yordam berishni"
+        ],
+        "info": "Oyat yetimga zulm qilishni taqiqlaydi."
+      },
+      "tg": {
+        "q": "93:9 нисбат ба ятим чиро манъ мекунад?",
+        "options": [
+          "Зулм кардан ба ӯ",
+          "Бо ӯ сухан гуфтан",
+          "Ба ӯ омӯзондан",
+          "Ба ӯ ёрӣ додан"
+        ],
+        "info": "Оят зулм кардан ба ятимро манъ мекунад."
+      },
+      "kk": {
+        "q": "93:9 жетімге қатысты нені тыйады?",
+        "options": [
+          "Оны жәбірлеуді",
+          "Онымен сөйлесуді",
+          "Оны оқытуды",
+          "Оған көмектесуді"
+        ],
+        "info": "Аят жетімді жәбірлеуге тыйым салады."
+      },
+      "ky": {
+        "q": "93:9 жетимге карата эмнеге тыюу салат?",
+        "options": [
+          "Аны кордоого",
+          "Аны менен сүйлөшүүгө",
+          "Аны окутууга",
+          "Ага жардам берүүгө"
+        ],
+        "info": "Аят жетимди кордоого тыюу салат."
+      },
+      "az": {
+        "q": "93:9 yetimə münasibətdə nəyi qadağan edir?",
+        "options": [
+          "Onu əzməyi",
+          "Onunla danışmağı",
+          "Ona öyrətməyi",
+          "Ona yardım etməyi"
+        ],
+        "info": "Ayə yetimi əzməyi qadağan edir."
+      },
+      "tr": {
+        "q": "93:9 yetime karşı neyi yasaklar?",
+        "options": [
+          "Onu ezmeyi",
+          "Onunla konuşmayı",
+          "Ona öğretmeyi",
+          "Ona yardım etmeyi"
+        ],
+        "info": "Ayet yetimin ezilmesini yasaklar."
+      }
+    }
+  },
+  {
+    "id": "l1_do_not_repel_asker",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 93:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/93",
+    "sourceVerses": [
+      "93:10"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какой поступок по отношению к просящему запрещён в 93:10?",
+        "options": [
+          "Прогонять его",
+          "Выслушивать его",
+          "Отвечать ему",
+          "Замечать его"
+        ],
+        "info": "Аят предостерегает от грубого отталкивания просящего."
+      },
+      "en": {
+        "q": "Which treatment of someone who asks is prohibited in 93:10?",
+        "options": [
+          "Turning them away harshly",
+          "Listening to them",
+          "Answering them",
+          "Noticing them"
+        ],
+        "info": "The verse warns against harshly turning away someone who asks."
+      },
+      "uz": {
+        "q": "93:10 so‘rovchiga nisbatan qaysi ishni taqiqlaydi?",
+        "options": [
+          "Uni jerkishni",
+          "Uni tinglashni",
+          "Unga javob berishni",
+          "Uni payqashni"
+        ],
+        "info": "Oyat so‘rovchini qo‘pollik bilan haydashdan qaytaradi."
+      },
+      "tg": {
+        "q": "93:10 нисбат ба пурсанда кадом рафторро манъ мекунад?",
+        "options": [
+          "Ӯро рондан",
+          "Ӯро гӯш кардан",
+          "Ба ӯ ҷавоб додан",
+          "Ба ӯ аҳамият додан"
+        ],
+        "info": "Оят аз дағалона рондани пурсанда ҳушдор медиҳад."
+      },
+      "kk": {
+        "q": "93:10 сұраушыға қатысты не істеуге тыйым салады?",
+        "options": [
+          "Оны зекіп қууға",
+          "Оны тыңдауға",
+          "Оған жауап беруге",
+          "Оны байқауға"
+        ],
+        "info": "Аят сұраушыны дөрекілікпен қуып жіберуден сақтандырады."
+      },
+      "ky": {
+        "q": "93:10 сураган кишиге карата эмнеге тыюу салат?",
+        "options": [
+          "Аны зекип кууп жиберүүгө",
+          "Аны угууга",
+          "Ага жооп берүүгө",
+          "Аны байкоого"
+        ],
+        "info": "Аят сураган кишини орой кууп жиберүүдөн сактандырат."
+      },
+      "az": {
+        "q": "93:10 diləyən şəxsə qarşı hansı davranışı qadağan edir?",
+        "options": [
+          "Onu qovmağı",
+          "Onu dinləməyi",
+          "Ona cavab verməyi",
+          "Onu görməyi"
+        ],
+        "info": "Ayə diləyən şəxsi kobudluqla qovmaqdan çəkindirir."
+      },
+      "tr": {
+        "q": "93:10 isteyene karşı hangi davranışı yasaklar?",
+        "options": [
+          "Onu azarlamayı",
+          "Onu dinlemeyi",
+          "Ona cevap vermeyi",
+          "Onu fark etmeyi"
+        ],
+        "info": "Ayet bir şey isteyeni azarlayıp kovmaktan sakındırır."
+      }
+    }
+  },
+  {
+    "id": "l1_feed_needy",
+    "cat": "quran",
+    "difficulty": 1,
+    "reference": "Quran 107:3",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/107",
+    "sourceVerses": [
+      "107:3"
+    ],
+    "locales": {
+      "ru": {
+        "q": "К какому делу не побуждает человек, порицаемый в 107:3?",
+        "options": [
+          "Кормить бедняка",
+          "Строить дворцы",
+          "Покупать украшения",
+          "Накапливать драгоценности"
+        ],
+        "info": "Аят порицает отсутствие призыва кормить нуждающегося."
+      },
+      "en": {
+        "q": "What does the person criticised in 107:3 fail to encourage?",
+        "options": [
+          "Feeding the needy",
+          "Building palaces",
+          "Buying ornaments",
+          "Hoarding jewels"
+        ],
+        "info": "The verse criticises failing to encourage feeding a needy person."
+      },
+      "uz": {
+        "q": "107:3 da qoralangan kishi qaysi ishga undamaydi?",
+        "options": [
+          "Miskinni ovqatlantirishga",
+          "Saroylar qurishga",
+          "Bezaklar sotib olishga",
+          "Javohir yig‘ishga"
+        ],
+        "info": "Oyat muhtojni ovqatlantirishga undamaslikni qoralaydi."
+      },
+      "tg": {
+        "q": "Шахси мазамматшуда дар 107:3 ба кадом кор ташвиқ намекунад?",
+        "options": [
+          "Хӯрок додан ба мискин",
+          "Сохтани қасрҳо",
+          "Харидани ороишҳо",
+          "Ҷамъ кардани ҷавоҳир"
+        ],
+        "info": "Оят ташвиқ накардан ба хӯрок додани ниёзмандро мазаммат мекунад."
+      },
+      "kk": {
+        "q": "107:3-те сыналған адам қандай іске үндемейді?",
+        "options": [
+          "Міскінді тамақтандыруға",
+          "Сарайлар салуға",
+          "Әшекейлер сатып алуға",
+          "Асыл тас жинауға"
+        ],
+        "info": "Аят мұқтажды тамақтандыруға үндемеуді сынайды."
+      },
+      "ky": {
+        "q": "107:3тө айыпталган киши кайсы ишке үндөбөйт?",
+        "options": [
+          "Жакырды тамактандырууга",
+          "Сарай курууга",
+          "Кооздук сатып алууга",
+          "Асыл таш топтоого"
+        ],
+        "info": "Аят муктажды тамактандырууга үндөбөөнү айыптайт."
+      },
+      "az": {
+        "q": "107:3-də qınanan şəxs hansı əmələ təşviq etmir?",
+        "options": [
+          "Yoxsulu yedirtməyə",
+          "Saraylar tikməyə",
+          "Bəzək almağa",
+          "Cəvahirat toplamağa"
+        ],
+        "info": "Ayə ehtiyaclını yedirtməyə təşviq etməməyi qınayır."
+      },
+      "tr": {
+        "q": "107:3'te kınanan kişi hangi işe teşvik etmez?",
+        "options": [
+          "Yoksulu doyurmaya",
+          "Saraylar yapmaya",
+          "Süs eşyası almaya",
+          "Mücevher biriktirmeye"
+        ],
+        "info": "Ayet ihtiyaç sahibini doyurmaya teşvik etmemeyi kınar."
+      }
+    }
+  },
+  {
+    "id": "l1_lord_of_house",
+    "cat": "quran",
+    "difficulty": 1,
+    "reference": "Quran 106:3",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/106",
+    "sourceVerses": [
+      "106:3"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Кому призывает поклоняться 106:3?",
+        "options": [
+          "Господу этого Дома",
+          "Хранителям Дома",
+          "Владельцам караванов",
+          "Предкам племени"
+        ],
+        "info": "Аят направляет поклонение к Господу этого Дома."
+      },
+      "en": {
+        "q": "Whom does 106:3 call people to worship?",
+        "options": [
+          "The Lord of this House",
+          "The House's keepers",
+          "Caravan owners",
+          "The tribe's ancestors"
+        ],
+        "info": "The verse directs worship to the Lord of this House."
+      },
+      "uz": {
+        "q": "106:3 kimga ibodat qilishga chaqiradi?",
+        "options": [
+          "Shu Uyning Robbiga",
+          "Uy qo‘riqchilariga",
+          "Karvon egalariga",
+          "Qabila ajdodlariga"
+        ],
+        "info": "Oyat ibodatni shu Uyning Robbiga yo‘naltiradi."
+      },
+      "tg": {
+        "q": "106:3 ба парастиши кӣ даъват мекунад?",
+        "options": [
+          "Парвардигори ин Хона",
+          "Нигоҳбонони Хона",
+          "Соҳибони корвонҳо",
+          "Аҷдоди қабила"
+        ],
+        "info": "Оят парастишро ба Парвардигори ин Хона равона мекунад."
+      },
+      "kk": {
+        "q": "106:3 кімге құлшылық етуге шақырады?",
+        "options": [
+          "Осы Үйдің Раббысына",
+          "Үйдің сақшыларына",
+          "Керуен иелеріне",
+          "Тайпаның ата-бабаларына"
+        ],
+        "info": "Аят құлшылықты осы Үйдің Раббысына бағыттайды."
+      },
+      "ky": {
+        "q": "106:3 кимге ибадат кылууга чакырат?",
+        "options": [
+          "Бул Үйдүн Раббисине",
+          "Үйдүн сакчыларына",
+          "Кербен ээлерине",
+          "Уруунун ата-бабаларына"
+        ],
+        "info": "Аят ибадатты бул Үйдүн Раббисине багыттайт."
+      },
+      "az": {
+        "q": "106:3 kimə ibadət etməyə çağırır?",
+        "options": [
+          "Bu Evin Rəbbinə",
+          "Evin keşikçilərinə",
+          "Karvan sahiblərinə",
+          "Qəbilənin əcdadlarına"
+        ],
+        "info": "Ayə ibadəti bu Evin Rəbbinə yönəldir."
+      },
+      "tr": {
+        "q": "106:3 kime kulluk etmeye çağırır?",
+        "options": [
+          "Bu Ev'in Rabbine",
+          "Ev'in bekçilerine",
+          "Kervan sahiplerine",
+          "Kabilenin atalarına"
+        ],
+        "info": "Ayet kulluğu bu Ev'in Rabbine yöneltir."
+      }
+    }
+  },
+  {
+    "id": "l1_elephant_verse",
+    "cat": "quran",
+    "difficulty": 1,
+    "reference": "Quran 105:1",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/105",
+    "sourceVerses": [
+      "105:1"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какое животное упомянуто в 105:1?",
+        "options": [
+          "Слон",
+          "Верблюд",
+          "Лев",
+          "Конь"
+        ],
+        "info": "Первый аят этой суры упоминает обладателей слона."
+      },
+      "en": {
+        "q": "Which animal is mentioned in 105:1?",
+        "options": [
+          "Elephant",
+          "Camel",
+          "Lion",
+          "Horse"
+        ],
+        "info": "The first verse of this surah mentions the people of the elephant."
+      },
+      "uz": {
+        "q": "105:1 da qaysi hayvon zikr qilingan?",
+        "options": [
+          "Fil",
+          "Tuya",
+          "Arslon",
+          "Ot"
+        ],
+        "info": "Bu suraning birinchi oyatida fil egalari zikr qilinadi."
+      },
+      "tg": {
+        "q": "Дар 105:1 кадом ҳайвон зикр шудааст?",
+        "options": [
+          "Фил",
+          "Шутур",
+          "Шер",
+          "Асп"
+        ],
+        "info": "Ояти аввали ин сура соҳибони филро зикр мекунад."
+      },
+      "kk": {
+        "q": "105:1-де қандай жануар аталған?",
+        "options": [
+          "Піл",
+          "Түйе",
+          "Арыстан",
+          "Жылқы"
+        ],
+        "info": "Бұл сүренің бірінші аяты піл иелерін атайды."
+      },
+      "ky": {
+        "q": "105:1де кайсы жаныбар айтылган?",
+        "options": [
+          "Пил",
+          "Төө",
+          "Арстан",
+          "Жылкы"
+        ],
+        "info": "Бул сүрөнүн биринчи аятында пил ээлери айтылат."
+      },
+      "az": {
+        "q": "105:1-də hansı heyvan qeyd olunur?",
+        "options": [
+          "Fil",
+          "Dəvə",
+          "Şir",
+          "At"
+        ],
+        "info": "Bu surənin ilk ayəsində fil sahibləri qeyd olunur."
+      },
+      "tr": {
+        "q": "105:1'de hangi hayvan anılır?",
+        "options": [
+          "Fil",
+          "Deve",
+          "Aslan",
+          "At"
+        ],
+        "info": "Bu surenin ilk ayetinde fil sahipleri anılır."
+      }
+    }
+  },
+  {
+    "id": "l1_refuge_lord_people",
+    "cat": "quran",
+    "difficulty": 1,
+    "reference": "Quran 114:1",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/114",
+    "sourceVerses": [
+      "114:1"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как назван Аллах в обращении о защите в 114:1?",
+        "options": [
+          "Господь людей",
+          "Владыка дня воздаяния",
+          "Господь рассвета",
+          "Господь миров"
+        ],
+        "info": "В первом аяте этой суры защита испрашивается у Господа людей."
+      },
+      "en": {
+        "q": "How is Allah addressed when seeking refuge in 114:1?",
+        "options": [
+          "Lord of people",
+          "Master of the Day of Judgement",
+          "Lord of daybreak",
+          "Lord of the worlds"
+        ],
+        "info": "The first verse of this surah seeks refuge with the Lord of people."
+      },
+      "uz": {
+        "q": "114:1 da panoh so‘ralganda Alloh qanday ataladi?",
+        "options": [
+          "Odamlarning Robbi",
+          "Jazo kunining Egasi",
+          "Tongning Robbi",
+          "Olamlarning Robbi"
+        ],
+        "info": "Bu suraning birinchi oyatida odamlarning Robbidan panoh so‘raladi."
+      },
+      "tg": {
+        "q": "Ҳангоми паноҳ хостан дар 114:1 Аллоҳ чӣ номида мешавад?",
+        "options": [
+          "Парвардигори мардум",
+          "Соҳиби рӯзи ҷазо",
+          "Парвардигори субҳ",
+          "Парвардигори ҷаҳониён"
+        ],
+        "info": "Дар ояти аввали ин сура аз Парвардигори мардум паноҳ хоста мешавад."
+      },
+      "kk": {
+        "q": "114:1-де пана сұрағанда Алла қалай аталған?",
+        "options": [
+          "Адамдардың Раббысы",
+          "Қиямет күнінің Иесі",
+          "Таңның Раббысы",
+          "Әлемдердің Раббысы"
+        ],
+        "info": "Бұл сүренің бірінші аятында адамдардың Раббысына сыйынылады."
+      },
+      "ky": {
+        "q": "114:1де баш паанек сураганда Аллах кандай аталат?",
+        "options": [
+          "Адамдардын Раббиси",
+          "Кыямат күнүнүн Ээси",
+          "Таңдын Раббиси",
+          "Ааламдардын Раббиси"
+        ],
+        "info": "Бул сүрөнүн биринчи аятында адамдардын Раббисинен баш паанек суралат."
+      },
+      "az": {
+        "q": "114:1-də sığınacaq istənilərkən Allah necə adlanır?",
+        "options": [
+          "İnsanların Rəbbi",
+          "Haqq-hesab gününün Sahibi",
+          "Sübhün Rəbbi",
+          "Aləmlərin Rəbbi"
+        ],
+        "info": "Bu surənin ilk ayəsində insanların Rəbbinə sığınılır."
+      },
+      "tr": {
+        "q": "114:1'de sığınırken Allah'a nasıl hitap edilir?",
+        "options": [
+          "İnsanların Rabbi",
+          "Hesap gününün Sahibi",
+          "Sabahın Rabbi",
+          "Âlemlerin Rabbi"
+        ],
+        "info": "Bu surenin ilk ayetinde insanların Rabbine sığınılır."
+      }
+    }
+  },
+  {
+    "id": "l1_allah_one",
+    "cat": "quran",
+    "difficulty": 1,
+    "reference": "Quran 112:1",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/112",
+    "sourceVerses": [
+      "112:1"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Что о числе божеств утверждает 112:1?",
+        "options": [
+          "Аллах Един",
+          "Их три",
+          "Их множество",
+          "Их два"
+        ],
+        "info": "Аят утверждает единственность Аллаха."
+      },
+      "en": {
+        "q": "What does 112:1 affirm about the number of deities?",
+        "options": [
+          "Allah is One",
+          "There are three",
+          "There are many",
+          "There are two"
+        ],
+        "info": "The verse affirms the oneness of Allah."
+      },
+      "uz": {
+        "q": "112:1 ilohlar soni haqida nimani bildiradi?",
+        "options": [
+          "Alloh Yagona",
+          "Ular uchta",
+          "Ular ko‘p",
+          "Ular ikkita"
+        ],
+        "info": "Oyat Allohning yagonaligini bildiradi."
+      },
+      "tg": {
+        "q": "112:1 дар бораи шумораи маъбудон чӣ мегӯяд?",
+        "options": [
+          "Аллоҳ Ягона аст",
+          "Онҳо сеанд",
+          "Онҳо бисёранд",
+          "Онҳо дуанд"
+        ],
+        "info": "Оят ягонагии Аллоҳро баён мекунад."
+      },
+      "kk": {
+        "q": "112:1 құдайлардың саны туралы не айтады?",
+        "options": [
+          "Алла Жалғыз",
+          "Олар үшеу",
+          "Олар көп",
+          "Олар екеу"
+        ],
+        "info": "Аят Алланың жалғыздығын білдіреді."
+      },
+      "ky": {
+        "q": "112:1 кудайлардын саны тууралуу эмнени айтат?",
+        "options": [
+          "Аллах Жалгыз",
+          "Алар үчөө",
+          "Алар көп",
+          "Алар экөө"
+        ],
+        "info": "Аят Аллахтын жалгыздыгын билдирет."
+      },
+      "az": {
+        "q": "112:1 ilahların sayı barədə nə bildirir?",
+        "options": [
+          "Allah Təkdir",
+          "Onlar üçdür",
+          "Onlar çoxdur",
+          "Onlar ikidir"
+        ],
+        "info": "Ayə Allahın təkliyini bildirir."
+      },
+      "tr": {
+        "q": "112:1 ilahların sayısı hakkında ne bildirir?",
+        "options": [
+          "Allah Tektir",
+          "Üç tanedir",
+          "Çoktur",
+          "İki tanedir"
+        ],
+        "info": "Ayet Allah'ın birliğini bildirir."
+      }
+    }
+  },
+  {
+    "id": "l1_hardship_ease",
+    "cat": "quran",
+    "difficulty": 1,
+    "reference": "Quran 94:5",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/94",
+    "sourceVerses": [
+      "94:5"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Что 94:5 связывает с трудностью?",
+        "options": [
+          "Облегчение",
+          "Неизбежное отчаяние",
+          "Бесконечную печаль",
+          "Утрату надежды"
+        ],
+        "info": "Аят напоминает, что вместе с трудностью есть облегчение."
+      },
+      "en": {
+        "q": "What does 94:5 associate with hardship?",
+        "options": [
+          "Ease",
+          "Inevitable despair",
+          "Endless sadness",
+          "Loss of hope"
+        ],
+        "info": "The verse reminds us that ease accompanies hardship."
+      },
+      "uz": {
+        "q": "94:5 qiyinchilik bilan nimani bog‘laydi?",
+        "options": [
+          "Yengillikni",
+          "Muqarrar tushkunlikni",
+          "Cheksiz g‘amni",
+          "Umidsizlikni"
+        ],
+        "info": "Oyat qiyinchilik bilan birga yengillik borligini eslatadi."
+      },
+      "tg": {
+        "q": "94:5 душвориро бо чӣ мепайвандад?",
+        "options": [
+          "Осонӣ",
+          "Ноумедии ногузир",
+          "Ғами беохир",
+          "Аз даст додани умед"
+        ],
+        "info": "Оят ёдрас мекунад, ки бо душворӣ осонӣ ҳаст."
+      },
+      "kk": {
+        "q": "94:5 қиындықпен нені байланыстырады?",
+        "options": [
+          "Жеңілдікті",
+          "Міндетті күйзелісті",
+          "Шексіз мұңды",
+          "Үміттен айырылуды"
+        ],
+        "info": "Аят қиындықпен бірге жеңілдік бар екенін еске салады."
+      },
+      "ky": {
+        "q": "94:5 кыйынчылык менен эмнени байланыштырат?",
+        "options": [
+          "Жеңилдикти",
+          "Сөзсүз үмүтсүздүктү",
+          "Чексиз кайгыны",
+          "Үмүттү жоготууну"
+        ],
+        "info": "Аят кыйынчылык менен бирге жеңилдик бар экенин эскертет."
+      },
+      "az": {
+        "q": "94:5 çətinliklə nəyi əlaqələndirir?",
+        "options": [
+          "Asanlığı",
+          "Qaçılmaz ümidsizliyi",
+          "Sonsuz kədəri",
+          "Ümidin itməsini"
+        ],
+        "info": "Ayə çətinliklə yanaşı asanlıq olduğunu xatırladır."
+      },
+      "tr": {
+        "q": "94:5 zorlukla neyi ilişkilendirir?",
+        "options": [
+          "Kolaylığı",
+          "Kaçınılmaz umutsuzluğu",
+          "Sonsuz üzüntüyü",
+          "Ümidin kaybını"
+        ],
+        "info": "Ayet zorlukla beraber kolaylık olduğunu hatırlatır."
+      }
+    }
+  }
+]

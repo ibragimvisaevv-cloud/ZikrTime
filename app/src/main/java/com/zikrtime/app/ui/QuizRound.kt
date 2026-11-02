@@ -70,10 +70,29 @@ fun QuizRound(
     sessionScope: String = "blocking",
     reviewMode: Boolean = false,
 ) {
-    val persisted = LearningStore.session(sessionScope)
-    val initial = remember(bank, category, sessionScope) { LearningStore.begin(bank, category, sessionScope) }
-    val session = persisted ?: initial ?: return
-    if (session.stage == "RESULT") return
+    Column(modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        KnowledgeLevelGate(bank) { level ->
+            if(sessionScope == "blocking") KnowledgeLevelControl(bank)
+            androidx.compose.runtime.key(level.id) {
+                QuizRoundContent(bank,category,onFinished,target,finishText,sessionScope,reviewMode)
+            }
+        }
+    }
+}
+
+@Composable
+private fun QuizRoundContent(bank: QuizBank, category: String?, onFinished: () -> Unit,
+    target: Int, finishText: String, sessionScope: String, reviewMode: Boolean) {
+    remember(bank, category, sessionScope) { LearningStore.begin(bank, category, sessionScope) }
+    val session = LearningStore.activeSession(bank,sessionScope,category)
+    if(session == null) {
+        StatePanel(stringResource(R.string.learning_level_empty), stringResource(R.string.learning_level_empty_hint))
+        return
+    }
+    if (session.stage == "RESULT") {
+        LaunchedEffect(session.id) { onFinished() }
+        return
+    }
     val question = bank.questions.firstOrNull { it.id == session.questionIds.getOrNull(session.index) } ?: return
     val displayOrder = LearningStore.displayOrder(session, question)
     val selected = session.selected?.let { displayOrder.indexOf(it) }
@@ -82,7 +101,7 @@ fun QuizRound(
     val scheme = MaterialTheme.colorScheme
     val readingScale by rememberReadingScale()
 
-    Column(modifier.semantics { testTagsAsResourceId = true }, verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column(Modifier.semantics { testTagsAsResourceId = true }, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Text(stringResource(R.string.quiz_progress, if (reviewMode) session.index else correct,
                 if (reviewMode) session.questionIds.size else target), style = MaterialTheme.typography.labelLarge,

@@ -86,13 +86,17 @@ fun KnowledgeScreen() {
         }
         HorizonDestination(stringResource(R.string.quran_title), R.drawable.ic_nav_knowledge,
             Modifier.fillMaxWidth().testTag("quran_open"), prominent = true) { nav.open(Screen.QURAN) }
-        Text(stringResource(R.string.knowledge_topics), style = MaterialTheme.typography.headlineSmall)
-        val columns = if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 1 else 2
-        bank.categories.toList().chunked(columns).forEach { pair ->
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                pair.forEach { (id, name) ->
-                    HorizonDestination(if (id == "quran") stringResource(R.string.quran_quiz) else name,
-                        categoryIcon(id), Modifier.weight(1f)) { nav.startQuiz(id) }
+        KnowledgeLevelGate(bank) { level ->
+            KnowledgeLevelControl(bank)
+            Text(stringResource(R.string.knowledge_topics), style = MaterialTheme.typography.headlineSmall)
+            val columns = if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 1 else 2
+            bank.categories.filter { (id, _) -> bank.questionsFor(id,level.id).isNotEmpty() }
+                .chunked(columns).forEach { pair ->
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    pair.forEach { (id, name) ->
+                        HorizonDestination(if (id == "quran") stringResource(R.string.quran_quiz) else name,
+                            categoryIcon(id), Modifier.weight(1f)) { nav.startQuiz(id) }
+                    }
                 }
             }
         }
@@ -185,16 +189,23 @@ fun QuizScreen() {
     val category = nav.quizCategory
     val title = category?.let { bank.categoryName(it) } ?: stringResource(R.string.knowledge_title)
     var readingScale by rememberReadingScale()
-    val sessionKey = LearningStore.session("normal")?.let { "${it.stage}-${it.index}-${it.cardIndex}" }
-    ScreenScaffold(title = title, onBack = { nav.back() }, showHeading = false, scrollKey = sessionKey,
+    val session = LearningStore.session("normal")
+    val sessionKey = "${LearningStore.selectedLevel?.id}-${session?.id}-${session?.stage}-${session?.index}-${session?.cardIndex}"
+    ScreenScaffold(title = title, onBack = {
+        if(LearningStore.session("normal")?.stage == "RESULT") LearningStore.clearSession("normal")
+        nav.back()
+    }, showHeading = false, scrollKey = sessionKey,
         actions = { ReadingTools(readingScale) { readingScale = it } }) {
-        androidx.compose.runtime.key(nav.quizRound) {
-            QuizFlow(
-                bank = bank,
-                category = category,
-                onDone = { nav.back() },
-                onAgain = { nav.quizRound++ },
-            )
+        KnowledgeLevelGate(bank) { level ->
+            KnowledgeLevelControl(bank)
+            androidx.compose.runtime.key(nav.quizRound, level.id) {
+                QuizFlow(
+                    bank = bank,
+                    category = category,
+                    onDone = { LearningStore.clearSession("normal"); nav.back() },
+                    onAgain = { nav.quizRound++ },
+                )
+            }
         }
     }
 }
@@ -203,8 +214,12 @@ fun QuizScreen() {
 @Composable
 private fun QuizFlow(bank: QuizBank, category: String?, onDone: () -> Unit, onAgain: () -> Unit) {
     val nav = LocalNav.current
-    val initial = remember(bank, category, nav.quizRound) { LearningStore.begin(bank, category, cards = nav.quizStartWithCards) }
-    val session = LearningStore.session("normal") ?: initial ?: return
+    remember(bank, category, nav.quizRound) { LearningStore.begin(bank, category, cards = nav.quizStartWithCards) }
+    val session = LearningStore.activeSession(bank,"normal",category)
+    if (session == null) {
+        StatePanel(stringResource(R.string.learning_level_empty), stringResource(R.string.learning_level_empty_hint))
+        return
+    }
     val cards = session.questionIds.take(PREP_CARDS).mapNotNull { id -> bank.questions.firstOrNull { it.id == id } }
     when (session.stage) {
         "ASK" -> PrepOffer(
@@ -226,19 +241,30 @@ fun ReviewScreen() {
     val nav = LocalNav.current
     val context = LocalContext.current
     val bank = remember { QuestionBank.load(context) }
-    val initial = remember(bank) { LearningStore.begin(bank, null, scope = "review") }
-    val session = LearningStore.session("review") ?: initial
-    ScreenScaffold(title = stringResource(R.string.learning_review), onBack = { nav.back() }, scrollKey = "${session?.stage}-${session?.index}") {
-        when {
-            session == null -> StatePanel(stringResource(R.string.learning_none_due), stringResource(R.string.learning_none_due_hint), action = stringResource(R.string.knowledge_start), onAction = { nav.startQuiz(null) })
-            session.stage == "RESULT" -> {
-                Text(stringResource(R.string.learning_complete), style = MaterialTheme.typography.headlineSmall)
-                Text(stringResource(R.string.learning_review_done), style = MaterialTheme.typography.bodyLarge)
-                PrimaryButton(stringResource(R.string.action_done), onClick = { nav.back() })
-            }
-            else -> QuizRound(bank = bank, category = null, sessionScope = "review", reviewMode = true,
-                onFinished = { LearningStore.completeCurrent("review") })
+    val session = LearningStore.session("review")
+    ScreenScaffold(title = stringResource(R.string.learning_review), onBack = { nav.back() },
+        scrollKey = "${LearningStore.selectedLevel?.id}-${session?.id}-${session?.stage}-${session?.index}") {
+        KnowledgeLevelGate(bank) { level ->
+            KnowledgeLevelControl(bank)
+            androidx.compose.runtime.key(level.id) { ReviewFlow(bank) }
         }
+    }
+}
+
+@Composable
+private fun ReviewFlow(bank: QuizBank) {
+    val nav = LocalNav.current
+    remember(bank) { LearningStore.begin(bank, null, scope = "review") }
+    val session = LearningStore.activeSession(bank,"review",null)
+    when {
+        session == null -> StatePanel(stringResource(R.string.learning_none_due), stringResource(R.string.learning_none_due_hint), action = stringResource(R.string.knowledge_start), onAction = { nav.startQuiz(null) })
+        session.stage == "RESULT" -> {
+            Text(stringResource(R.string.learning_complete), style = MaterialTheme.typography.headlineSmall)
+            Text(stringResource(R.string.learning_review_done), style = MaterialTheme.typography.bodyLarge)
+            PrimaryButton(stringResource(R.string.action_done), onClick = { LearningStore.clearSession("review"); nav.back() })
+        }
+        else -> QuizRound(bank = bank, category = null, sessionScope = "review", reviewMode = true,
+            onFinished = { LearningStore.completeCurrent("review") })
     }
 }
 

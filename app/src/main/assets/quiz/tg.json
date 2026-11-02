@@ -40,6 +40,7 @@
    "answer": 0,
    "info": "Дар Қуръон 114 сура ва зиёда аз 6200 оят ҳаст. Сураҳо вобаста ба вақт ва ҷои нозил шуданашон маккӣ ва мадинӣ мешаванд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -57,6 +58,7 @@
    "answer": 0,
    "info": "«Фотиҳа» маънои «Кушоянда»-ро дорад. Он дар ҳар ракати намоз хонда мешавад, бинобар ин онро «Уммул-Китоб» — «Модари Китоб» низ меноманд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -74,6 +76,7 @@
    "answer": 0,
    "info": "Сураи «Бақара» («Гов») 286 оят дорад. Дар он Оятул-Курсӣ ва дарозтарин ояти Қуръон — дар бораи навиштани қарз (2:282) омадааст.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:282"
@@ -92,6 +95,7 @@
    "answer": 0,
    "info": "Сураи «Кавсар» се ояти кӯтоҳ дорад. Кавсар — номи наҳре дар биҳишт аст, ки ба Паёмбар ﷺ ато шудааст.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -109,6 +113,7 @@
    "answer": 0,
    "info": "Ин дар сураи «Бақара» (2:185) зикр шудааст. Ваҳй дар Шаби Қадр оғоз ёфта, қариб 23 сол идома кард.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:185"
@@ -127,6 +132,7 @@
    "answer": 0,
    "info": "Ҷабрил алайҳиссалом ба паёмбарон ваҳй мерасонд. Дар Қуръон ӯ «Рӯҳул-Амин» — «Рӯҳи боваринок» низ номида шудааст (26:193).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 26:193"
@@ -145,6 +151,7 @@
    "answer": 0,
    "info": "Ғори Ҳиро дар кӯҳи Нур, наздикии Макка ҷойгир аст. Паёмбар ﷺ ҳанӯз пеш аз паёмбарӣ барои ибодат ба он ҷо мерафтанд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -162,6 +169,7 @@
    "answer": 0,
    "info": "Оятҳои нахустини нозилшуда аввали сураи «Алақ» (96:1–5) мебошанд — дар бораи хондан ба номи Парвардигоре, ки инсонро офаридааст.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 96:1–5"
@@ -180,6 +188,7 @@
    "answer": 0,
    "info": "Оятул-Курсӣ ояти 255-уми сураи «Бақара» аст. Дар он аз бузургии Аллоҳ, илми Ӯ ва ҳокимияти Ӯ бар осмонҳо ва замин сухан меравад.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Ал-Бақара, ояти 255"
@@ -198,6 +207,7 @@
    "answer": 0,
    "info": "Ин дар ҳадиси Убай ибни Каъб, ки Имом Муслим ривоят кардааст, омадааст. Оятул-Курсиро пас аз намозҳои фарз ва пеш аз хоб мехонанд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Муслим; ривоят аз Убай ибни Каъб (рақам дар бонк нест)"
@@ -216,6 +226,7 @@
    "answer": 0,
    "info": "Сураи нӯҳум — «Тавба» ягона сураест, ки дар аввалаш басмала нест. Онро «Бароат» («Безорӣ») низ меноманд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -233,6 +244,7 @@
    "answer": 0,
    "info": "Дар сураи «Намл» басмала дар аввал ва дар ояти 30 — дар номаи Сулаймон алайҳиссалом ба маликаи Сабо омадааст. Аз ин рӯ дар Қуръон 114 басмала ҳаст.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -250,6 +262,7 @@
    "answer": 0,
    "info": "Ин дар ҳадисе, ки Имом Бухорӣ ривоят кардааст, омадааст. Сураи «Ихлос» пурра ба ягонагии Аллоҳ — тавҳид бахшида шудааст.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Ал-Бухорӣ (рақам дар бонк нест)"
@@ -268,6 +281,7 @@
    "answer": 0,
    "info": "Марям, модари Исо алайҳиссалом, ягона занест, ки номаш дар Қуръон зикр шудааст. Сураи 19 номи ӯро дорад.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -285,6 +299,7 @@
    "answer": 0,
    "info": "«Фотиҳа» ҳафт оят дорад. Қуръон онро «ҳафт ояти такроршаванда» меномад (15:87), зеро он дар ҳар ракат такрор мешавад.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 15:87"
@@ -303,6 +318,7 @@
    "answer": 0,
    "info": "Одам алайҳиссалом аввалин инсоне аст, ки Аллоҳ офарид, ва аввалин паёмбар. Ҳамаи одамон аз ӯ ва ҳамсараш Ҳавво ба вуҷуд омадаанд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -320,6 +336,7 @@
    "answer": 0,
    "info": "Нӯҳ алайҳиссалом солҳои дароз қавмашро ба ибодати Аллоҳи ягона даъват кард. Бо амри Аллоҳ киштӣ сохт ва бо мӯъминон аз тӯфон наҷот ёфт.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -337,6 +354,7 @@
    "answer": 0,
    "info": "Ин дар сураи «Бақара» (2:127) зикр шудааст. Иброҳим ва Исмоил алайҳимассалом Каъбаро бино карда, аз Аллоҳ қабули амалашонро хостанд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:127"
@@ -355,6 +373,7 @@
    "answer": 0,
    "info": "Юнус алайҳиссалом дар шиками моҳӣ ягонагии Аллоҳро эътироф намуда, хатояшро иқрор карду дуо кард. Дуои ӯ (21:87) то ҳол дар душвориҳо хонда мешавад.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 21:87"
@@ -373,6 +392,7 @@
    "answer": 0,
    "info": "Таврот китобест, ки ба Мусо алайҳиссалом нозил шуд. Имон ба ҳамаи китобҳои нозилкардаи Аллоҳ яке аз аркони имон аст.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -390,6 +410,7 @@
    "answer": 0,
    "info": "Забур ба Довуд алайҳиссалом нозил шуд. Довуд ҳам паёмбар ва ҳам подшоҳ буд ва Аллоҳ ба ӯ овози зебо ато карда буд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -407,6 +428,7 @@
    "answer": 0,
    "info": "Инҷил ба Исо алайҳиссалом, писари Марям, нозил шуд. Мусулмонон Исоро расули Аллоҳ медонанд ва имон доранд, ки Аллоҳ ӯро ба назди Худ боло бурд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -424,6 +446,7 @@
    "answer": 0,
    "info": "Ба Сулаймон алайҳиссалом подшоҳии беназир дода шуда буд: бод ва ҷинҳо ба ӯ итоат мекарданд, ӯ забони паррандагон ва мӯрчагонро мефаҳмид.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -441,6 +464,7 @@
    "answer": 0,
    "info": "Айюб алайҳиссалом саломатӣ, мол ва фарзандонашро аз даст дод, вале шикоят накард. Аллоҳ ӯро шифо дод ва неъматҳояшро баргардонд — сабри ӯ барои мӯъминон намуна гашт.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -458,6 +482,7 @@
    "answer": 0,
    "info": "Юсуф писари Яъқуб, набераи Исҳоқ ва абераи Иброҳим (алайҳимуссалом) буд. Яъқубро Исроил низ меноманд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -475,6 +500,7 @@
    "answer": 0,
    "info": "Қиссаи Юсуф дар сураи 12, ки номи ӯро дорад, нақл мешавад. Қуръон онро беҳтарини қиссаҳо меномад (12:3).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 12:3"
@@ -493,6 +519,7 @@
    "answer": 0,
    "info": "Мусо аз Аллоҳ хост, ки бародараш Ҳорунро ёвари ӯ гардонад, зеро Ҳорун фасеҳтар буд. Аллоҳ дуои ӯро иҷобат кард (20:29–36).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 20:29–36"
@@ -511,6 +538,7 @@
    "answer": 0,
    "info": "Аллоҳ ба Закариё дар пиронсолӣ, бо вуҷуди нозой будани ҳамсараш, Яҳёро ато кард. Пеш аз Яҳё касе бо ин ном номида нашуда буд (19:7).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 19:7"
@@ -529,6 +557,7 @@
    "answer": 0,
    "info": "Одатан номи 25 паёмбарро дар Қуръон мешумуранд. Паёмбарон хеле зиёдтар буданд — Аллоҳ дар бораи ҳамаашон хабар надодааст (40:78).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 40:78"
@@ -547,6 +576,7 @@
    "answer": 0,
    "info": "Қуръон Муҳаммад ﷺ-ро «Хотамун-набийин» — «муҳри паёмбарон» меномад (33:40). Баъд аз ӯ паёмбаре нахоҳад омад ва Қуръон охирин китоб аст.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 33:40"
@@ -565,6 +595,7 @@
    "answer": 0,
    "info": "Паёмбар ﷺ дар Макка, дар Соли Фил — тақрибан соли 570 мелодӣ таваллуд шудаанд. Ӯ аз хонадони Ҳошим аз қабилаи Қурайш буданд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -582,6 +613,7 @@
    "answer": 0,
    "info": "Модарашон Омина бинти Ваҳб буд. Ӯ вақте даргузашт, ки Паёмбар ﷺ тақрибан шашсола буданд; падарашон Абдуллоҳ пеш аз таваллуди ӯ вафот карда буд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -599,6 +631,7 @@
    "answer": 0,
    "info": "Арабҳо одат доштанд, ки кӯдаконро ба доягони биёбонӣ медоданд. Паёмбар ﷺ кӯдакии аввалашонро назди Ҳалима аз қабилаи Бану Саъд гузарониданд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -616,6 +649,7 @@
    "answer": 0,
    "info": "Хадиҷа (разияллоҳу анҳо) нахустин шуда ба паёмбарии ӯ имон овард ва дар душвортарин солҳо пуштибони ӯ буд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -633,6 +667,7 @@
    "answer": 0,
    "info": "Ваҳй вақте оғоз ёфт, ки Паёмбар ﷺ 40-сола буданд. Пеш аз он ҳам мардуми Макка ӯро «Амин» — «боваринок» меномиданд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -650,6 +685,7 @@
    "answer": 0,
    "info": "Паёмбар ﷺ тақрибан 13 сол дар Макка ва тақрибан 10 сол дар Мадина ба Ислом даъват карданд. Ӯ дар соли 11 ҳиҷрӣ дар синни 63-солагӣ вафот карданд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -667,6 +703,7 @@
    "answer": 0,
    "info": "Ҳиҷрат соли 622 мелодӣ рух дод. Дар Мадина, ки он вақт Ясриб ном дошт, нахустин ҷомеаи мусулмонон ташаккул ёфт.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -684,6 +721,7 @@
    "answer": 0,
    "info": "Тақвими ҳиҷрӣ дар замони халифа Умар ҷорӣ шуд. Он қамарӣ аст, бинобар ин нисбат ба тақвими шамсӣ ҳар сол тақрибан 11 рӯз ҷой иваз мекунад.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -701,6 +739,7 @@
    "answer": 0,
    "info": "Абӯбакр (разияллоҳу анҳу) бо Паёмбар ﷺ се рӯз дар ғори Савр пинҳон шуд. Ин дар Қуръон зикр шудааст (9:40).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 9:40"
@@ -719,6 +758,7 @@
    "answer": 0,
    "info": "Исро сафари шабона ба Қуддус аст, Меъроҷ — боло рафтан ба осмонҳо. Маҳз он вақт панҷ вақт намоз фарз шуд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -736,6 +776,7 @@
    "answer": 0,
    "info": "Ҷанги Бадр дар моҳи Рамазони соли 2 ҳиҷрӣ рух дод. Тақрибан 313 мусулмон лашкареро, ки се баробар зиёд буд, шикаст доданд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -753,6 +794,7 @@
    "answer": 0,
    "info": "Билол дар Макка ғулом буд ва барои имонаш азоб мекашид, то он ки Абӯбакр ӯро озод кард. Паёмбар ﷺ ӯро барои овози зебо ва баландаш ба гуфтани азон интихоб карданд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -770,6 +812,7 @@
    "answer": 0,
    "info": "Паёмбар ﷺ дар Мадина, дар ҳуҷраи Оиша, ки ҳоло дохили Масҷиди Набавӣ аст, дафн шудаанд. Дар паҳлуяшон Абӯбакр ва Умар дафн шудаанд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -787,6 +830,7 @@
    "answer": 0,
    "info": "Пас аз вафоти Паёмбар ﷺ Абӯбакри Сиддиқ нахустин халифа шуд. Чор халифаи рошид: Абӯбакр, Умар, Усмон ва Алӣ.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -804,6 +848,7 @@
    "answer": 0,
    "info": "Панҷ рукни Ислом: шаҳодат, намоз, закот, рӯзаи Рамазон ва ҳаҷ барои касоне, ки қудрат доранд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -821,6 +866,7 @@
    "answer": 0,
    "info": "Имон ба Аллоҳ, ба фариштагонаш, ба китобҳояш, ба паёмбаронаш, ба рӯзи охират ва ба тақдир. Онҳо дар ҳадиси машҳури Ҷабрил зикр шудаанд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -838,6 +884,7 @@
    "answer": 0,
    "info": "Бомдод, пешин, аср, шом ва хуфтан. Панҷ вақт намоз дар шаби Меъроҷ фарз шуд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -855,6 +902,7 @@
    "answer": 0,
    "info": "Фарзи бомдод ду ракат аст. Пеш аз он ду ракат суннат хонда мешавад — Паёмбар ﷺ онро қариб ҳеҷ гоҳ тарк намекарданд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -872,6 +920,7 @@
    "answer": 0,
    "info": "Шом ягона намози фарзест, ки се ракат дорад. Он пас аз ғуруби офтоб хонда мешавад.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -889,6 +938,7 @@
    "answer": 0,
    "info": "Пешин, аср ва хуфтан ҳар кадом чор ракат доранд. Мусофир метавонад онҳоро то ду ракат кӯтоҳ кунад.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -906,6 +956,7 @@
    "answer": 0,
    "info": "Дар таҳорат рӯй ва дастҳоро то оринҷ мешӯянд, сарро масҳ мекунанд ва пойҳоро то буҷулак мешӯянд (5:6). Ғусл шустани тамоми бадан аст.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 5:6"
@@ -924,6 +975,7 @@
    "answer": 0,
    "info": "Таяммум покшавӣ бо хоки пок аст, вақте ки об нест ё истифодаи он имконнопазир аст. Он дар Қуръон зикр шудааст (4:43, 5:6).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 4:43, 5:6"
@@ -942,6 +994,7 @@
    "answer": 0,
    "info": "Азон мардумро ба намоз даъват мекунад, иқомат бошад, даъвати дуюм пеш аз оғози намоз аст. Дар азони бомдод суханони «Намоз аз хоб беҳтар аст» илова мешаванд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -959,6 +1012,7 @@
    "answer": 0,
    "info": "Самти Каъба қибла ном дорад. Онро дар бахши «Қибла»-и ин барнома ёфта метавонед.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -976,6 +1030,7 @@
    "answer": 0,
    "info": "Тақрибан 16–17 моҳ пас аз ҳиҷрат мусулмонон рӯ ба Масҷиди Ақсо дар Қуддус намоз мехонданд. Сипас қибла ба Каъба иваз шуд (2:144).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:144"
@@ -994,6 +1049,7 @@
    "answer": 0,
    "info": "Закот яке аз панҷ рукни Ислом аст. Одатан он 2,5 фоизи пасандозест, ки ба нисоб расида ва як сол нигоҳ дошта шудааст.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1011,6 +1067,7 @@
    "answer": 0,
    "info": "Закоти фитрро барои худ ва аҳли оила медиҳанд, то камбағалон низ идро ҷашн гиранд. Он бояд пеш аз намози ид дода шавад.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1028,6 +1085,7 @@
    "answer": 0,
    "info": "Саҳарӣ хӯроки пеш аз субҳ аст, ифтор — кушодани рӯза пас аз ғуруби офтоб. Паёмбар ﷺ фармудаанд, ки дар саҳарӣ баракат ҳаст.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1045,6 +1103,7 @@
    "answer": 0,
    "info": "Намози ҷумъа ба ҷои пешин хонда мешавад ва пеш аз он хутба гуфта мешавад. Ҷумъа барои мусулмонон беҳтарин рӯзи ҳафта аст.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1062,6 +1121,7 @@
    "answer": 0,
    "info": "Тавоф ҳафт бор гаштан дар гирди Каъба бар хилофи ақрабаки соат аст. Он аз кунҷи Ҳаҷарул-Асвад оғоз мешавад.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1079,6 +1139,7 @@
    "answer": 0,
    "info": "Саъй Ҳоҷарро ба ёд меорад, ки барои Исмоили хурдсол об ҷуста, ҳафт бор байни теппаҳои Сафо ва Марва давид (2:158).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:158"
@@ -1097,6 +1158,7 @@
    "answer": 0,
    "info": "Амалҳои асосии ҳаҷ аз 8 то 13-уми Зулҳиҷҷа иҷро мешаванд. Рӯзи Арафа — 9-уми Зулҳиҷҷа аст.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1114,6 +1176,7 @@
    "answer": 0,
    "info": "Рамазон моҳи нӯҳум аст, пас аз он Шаввол меояд. Тақвими ҳиҷрӣ 12 моҳи қамарӣ дорад.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1131,6 +1194,7 @@
    "answer": 0,
    "info": "Ин дар сураи «Қадр» (97:3) гуфта шудааст. Онро дар даҳ шаби охири Рамазон, махсусан дар шабҳои тоқ меҷӯянд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 97:3"
@@ -1149,6 +1213,7 @@
    "answer": 0,
    "info": "Иди Рамазон 1-уми Шаввол бо намози ид ҷашн гирифта мешавад. Иди дуюм — Иди Қурбон ба 10-уми Зулҳиҷҷа рост меояд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1166,6 +1231,7 @@
    "answer": 0,
    "info": "Чашмаи Замзам ба раҳмати Аллоҳ пайдо шуд, вақте ки Ҳоҷар барои писараш Исмоил об меҷуст. Он ҳазорҳо сол боз хушк намешавад.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1183,6 +1249,7 @@
    "answer": 0,
    "info": "Бо ин суханон мо Аллоҳро тасбеҳ мегӯем ва Ӯро аз ҳар нуқсон пок медонем. Пас аз намоз онро 33 бор гуфтан одат шудааст.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1200,6 +1267,7 @@
    "answer": 0,
    "info": "Мусулмонон дар ҳар ҳол — ҳам дар шодӣ, ҳам дар душворӣ — бо ин суханон ба Аллоҳ шукр мегӯянд. «Фотиҳа» пас аз басмала бо ин суханон оғоз мешавад.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1217,6 +1285,7 @@
    "answer": 0,
    "info": "Ҳар намоз бо ин суханон — такбир оғоз мешавад. Онҳо дар азон ва дар рӯзҳои ид низ гуфта мешаванд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1234,6 +1303,7 @@
    "answer": 0,
    "info": "Ҳангоми сухан дар бораи оянда мусулмонон «Иншоаллоҳ» илова мекунанд (18:23–24). Ҳангоми ҳайрат аз чизе бошад, «Машоаллоҳ» — «он чи Аллоҳ хост» мегӯянд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 18:23–24"
@@ -1252,6 +1322,7 @@
    "answer": 0,
    "info": "Ин истиғфор — талаби бахшиш аст. Паёмбар ﷺ рӯзе беш аз ҳафтод бор аз Аллоҳ омурзиш металабиданд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1269,6 +1340,7 @@
    "answer": 0,
    "info": "Сабр — шикебоӣ ва устуворӣ дар ибодат, дар парҳез аз гуноҳ ва дар озмоишҳост. Дар Қуръон гуфта шудааст, ки Аллоҳ бо сабркунандагон аст (2:153).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:153"
@@ -1287,6 +1359,7 @@
    "answer": 0,
    "info": "Шукр — сипосгузорӣ ба Аллоҳ бо дил, забон ва амал. Аллоҳ ваъда додааст, ки ба шукргузорон бештар медиҳад (14:7).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 14:7"
@@ -1305,6 +1378,7 @@
    "answer": 0,
    "info": "Ҳадиси машҳуре, ки Бухорӣ ва Муслим ривоят кардаанд, бо он оғоз мешавад, ки амалҳо ба ниятҳо вобастаанд. Нияти нек кори оддиро ибодат мегардонад.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Ал-Бухорӣ ва Муслим (рақамҳо дар бонк нестанд)"
@@ -1323,6 +1397,7 @@
    "answer": 0,
    "info": "Баракат файз ва нафъест, ки Аллоҳ дар вақт, мол ва амал мегузорад. Ҳатто андаки бобаракат хайри зиёд меорад.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1340,6 +1415,7 @@
    "answer": 0,
    "info": "Ислом маънои таслим шудан ба Аллоҳи ягонаро дорад. Ин калима бо калимаи «салом» — сулҳ ҳамреша аст.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1357,6 +1433,7 @@
    "answer": 0,
    "info": "Сураи «Ихлос», оятҳои 1–2. Ас-Самад — Зоти бениёз: ҳама ба Ӯ ниёз доранд, Ӯ бошад ба ҳеҷ кас ниёз надорад.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Сураи «Ихлос», оятҳои 1–2"
@@ -1376,6 +1453,7 @@
    "answer": 0,
    "info": "Сураи «Фотиҳа», оятҳои 2–3. Ар-Раҳмон ва Ар-Раҳим номҳои Аллоҳанд, ки аз раҳмати Ӯ хабар медиҳанд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Сураи «Фотиҳа», оятҳои 2–3"
@@ -1395,6 +1473,7 @@
    "answer": 0,
    "info": "Сураи «Фотиҳа», ояти 5: мо танҳо ба Аллоҳ ибодат мекунем ва танҳо аз Ӯ мадад мехоҳем.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Сураи «Фотиҳа», ояти 5"
@@ -1414,6 +1493,7 @@
    "answer": 0,
    "info": "Сураи «Аср», оятҳои 1–2. Имом Шофеъӣ гуфтааст: агар мардум танҳо дар бораи ҳамин сура тафаккур мекарданд, барояшон кофӣ буд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Сураи «Аср», оятҳои 1–2"
@@ -1433,6 +1513,7 @@
    "answer": 0,
    "info": "Сураи «Фалақ», оятҳои 1–2. Якҷоя бо сураи «Нос» онро «Муъаввизатайн» — ду сураи паноҳ бурдан ба Аллоҳ меноманд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Сураи «Фалақ», оятҳои 1–2"
@@ -1452,6 +1533,7 @@
    "answer": 0,
    "info": "Сураи «Нос», оятҳои 1–2. Ин охирин сураи Қуръон аст; Паёмбар ﷺ онро бо «Ихлос» ва «Фалақ» пеш аз хоб мехонданд.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Сураи «Нос», оятҳои 1–2"
@@ -1471,11 +1553,2412 @@
    "answer": 0,
    "info": "Сураи «Кавсар», оятҳои 1–2: ба шукронаи неъмати додашуда барои Парвардигоратон намоз гузоред ва қурбонӣ кунед.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Сураи «Кавсар», оятҳои 1–2"
    },
    "arabic": "إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ"
+  },
+  {
+   "id": "l1_verify_news",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Мувофиқи 49:6 бо хабари шахси беэътимод чӣ бояд кард?",
+   "options": [
+    "Онро санҷид",
+    "Дарҳол паҳн кард",
+    "Аз рӯйи овоза ҳукм кард",
+    "Бе санҷиш бовар кард"
+   ],
+   "answer": 0,
+   "info": "Санҷидани хабар аз расонидани зарар ба мардум аз рӯйи нодонӣ пешгирӣ мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:6",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_reconcile_believers",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "49:10 ҳангоми низои байни мӯъминон ба чӣ даъват мекунад?",
+   "options": [
+    "Оштӣ додани онҳо",
+    "Шиддат додани низо",
+    "Дастгирии кина",
+    "Паҳн кардани ҷанҷол"
+   ],
+   "answer": 0,
+   "info": "Оят мӯъминонро бародар хонда, ба оштӣ додани онҳо даъват мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_offensive_names",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "49:11 ба одамон гузоштани кадом лақабҳоро манъ мекунад?",
+   "options": [
+    "Лақабҳои таҳқиромез",
+    "Лақабҳои қулай барои навиштан",
+    "Лақабҳои нишондиҳандаи касб",
+    "Лақабҳои нишондиҳандаи хешӣ"
+   ],
+   "answer": 0,
+   "info": "Оят лақабҳои таҳқиромез ва масхараи одамонро манъ мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:11",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_no_spying",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Кадом амал дар 49:12 манъ шудааст?",
+   "options": [
+    "Кофтукови сирри дигарон",
+    "Ёрӣ ба ниёзмандон",
+    "Оштӣ додани ҳамсоягон",
+    "Баргардондани амонат"
+   ],
+   "answer": 0,
+   "info": "Оят ҷосусӣ дар ҳаққи одамон ва ғайбати онҳоро манъ мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:12",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_honour_piety",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Дар 49:13 қадр назди Аллоҳ ба чӣ вобаста аст?",
+   "options": [
+    "Тақво",
+    "Сарват",
+    "Насаб",
+    "Шуҳрат"
+   ],
+   "answer": 0,
+   "info": "Оят қадри инсонро назди Аллоҳ ба тақвои ӯ вобаста мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:13",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_parents_speech",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "17:23 бо падару модари солхӯрда чӣ гуна сухан гуфтанро меомӯзад?",
+   "options": [
+    "Бо эҳтиром",
+    "Бо асабоният",
+    "Бо масхара",
+    "Бо беэътиноӣ"
+   ],
+   "answer": 0,
+   "info": "Оят ба сухани эҳтиромона бо падару модар ва дурӣ аз озори онҳо амр мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:23",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_parents_mercy",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Дар дуои 17:24 барои падару модар чӣ хоста мешавад?",
+   "options": [
+    "Раҳмати Аллоҳ",
+    "Шуҳрат байни мардум",
+    "Ҳокимият бар дигарон",
+    "Сарват бо ҳар роҳ"
+   ],
+   "answer": 0,
+   "info": "Дар ин дуо аз Парвардигор барои падару модари тарбияткунанда раҳмат хоста мешавад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:24",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_keep_promises",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "17:34 дар бораи аҳдҳо чӣ меомӯзад?",
+   "options": [
+    "Ба онҳо вафо кардан",
+    "Ҳангоми душворӣ фаромӯш кардан",
+    "Пинҳонӣ дигар кардан",
+    "Танҳо барои ситоиш иҷро кардан"
+   ],
+   "answer": 0,
+   "info": "Оят ба вафои аҳд амр карда, масъулиятро барои он ёдрас мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:34",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_fair_measure",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "17:35 молҳоро чӣ гуна чену вазн карданро амр мекунад?",
+   "options": [
+    "Бо паймонаи пур ва тарозуи дуруст",
+    "Ба фоидаи фурӯшанда",
+    "Бо тахмин бе ченак",
+    "Вобаста ба мақоми харидор"
+   ],
+   "answer": 0,
+   "info": "Оят паймонаи пур ва тарозуи дурустро талаб мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:35",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_avoid_arrogance",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "17:37 аз кадом рафтор ҳушдор медиҳад?",
+   "options": [
+    "Такаббур",
+    "Оромӣ",
+    "Фурӯтанӣ",
+    "Диққаткорӣ"
+   ],
+   "answer": 0,
+   "info": "Оят аз мағрурона роҳ рафтан дар замин манъ мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:37",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_lower_voice",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "31:19 дар бораи овоз чӣ насиҳат мекунад?",
+   "options": [
+    "Онро паст кардан",
+    "Ҳамеша фарёд задан",
+    "Овози дигаронро пахш кардан",
+    "Ҳангоми баҳс баланд кардан"
+   ],
+   "answer": 0,
+   "info": "Оят дар роҳравӣ ва овоз мӯътадил буданро меомӯзад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 31:19",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/31",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_luqman_prayer",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "Луқмон дар 31:17 ба писараш кадом ибодатро амр мекунад?",
+   "options": [
+    "Намоз",
+    "Ҳаҷ ҳар моҳ",
+    "Рӯзаи бефосила",
+    "Тавофи ҳаррӯзаи Каъба"
+   ],
+   "answer": 0,
+   "info": "Барпо кардани намоз аз насиҳатҳои Луқмон ба писараш дар ин оят аст.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 31:17",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/31",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_enter_homes",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Мувофиқи 24:27 пеш аз даромадан ба хонаи дигарон чӣ бояд кард?",
+   "options": [
+    "Иҷозат пурсидан ва салом додан",
+    "Агар дар кушода бошад, даромадан",
+    "Аввал ҳуҷраҳоро дидан",
+    "Даромада, баъд худро шиносондан"
+   ],
+   "answer": 0,
+   "info": "Оят пеш аз даромадан ба хонаи дигарон иҷозат ва саломро талаб мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 24:27",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_return_when_asked",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Мувофиқи 24:28 агар ҳангоми меҳмонӣ бозгаштанро хоҳанд, чӣ бояд кард?",
+   "options": [
+    "Баргаштан",
+    "Барои даромадан пофишорӣ кардан",
+    "Аз дари дигар даромадан",
+    "Бо соҳибхона баҳс кардан"
+   ],
+   "answer": 0,
+   "info": "Оят фармон медиҳад, ки агар бозгаштанро талаб кунанд, баргардед.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 24:28",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_return_greeting",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Мувофиқи 4:86 ба салом чӣ гуна ҷавоб бояд дод?",
+   "options": [
+    "Монанд ё беҳтар",
+    "Танҳо бо хомӯшӣ",
+    "Ҳатман кӯтоҳтар",
+    "Танҳо баъди такрор"
+   ],
+   "answer": 0,
+   "info": "Оят ба салом бо саломи монанд ё беҳтар ҷавоб доданро меомӯзад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:86",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_return_trust",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "4:58 амонатро ба кӣ баргардонданро амр мекунад?",
+   "options": [
+    "Ба соҳибонаш",
+    "Ба сарватмандтаринҳо",
+    "Ба аввалин пурсанда",
+    "Ба бонуфузтарин шахс"
+   ],
+   "answer": 0,
+   "info": "Оят баргардондани амонатро ба соҳибони ҳаққонии он амр мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:58",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_justice_self",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Мувофиқи 4:135 оё ҳатто бар зидди худ одилона шаҳодат додан лозим аст?",
+   "options": [
+    "Бале, ҳатто бар зидди худ",
+    "Не, ҳамеша худро ҳимоя мекунанд",
+    "Танҳо агар касе нафаҳмад",
+    "Танҳо барои подоши мардум"
+   ],
+   "answer": 0,
+   "info": "Оят ҳатто бар зидди худ ва хешовандон шаҳодати одилонаро талаб мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:135",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_cooperate_good",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "5:2 ба ёрии ҳамдигар дар чӣ даъват мекунад?",
+   "options": [
+    "Некӣ ва тақво",
+    "Гуноҳ ва душманӣ",
+    "Фиреб барои дӯстон",
+    "Қасос аз рақибон"
+   ],
+   "answer": 0,
+   "info": "Оят ҳамкориро дар некӣ амр карда, ёриро дар гуноҳу душманӣ манъ мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:2",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_justice_dislike",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "5:8 бо касони дӯстнадошта чӣ гуна рафторро меомӯзад?",
+   "options": [
+    "Одилона",
+    "Ғаразнок",
+    "Қасосҷӯёна",
+    "Аз рӯйи овозаҳо"
+   ],
+   "answer": 0,
+   "info": "Бад дидани одамон набояд ба беадолатӣ барад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:8",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_justice_kindness",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Дар 16:90 кадом амалҳо якҷо амр шудаанд?",
+   "options": [
+    "Адолат, некӣ ва ёрӣ ба хешовандон",
+    "Шуҳрат, қудрат ва рақобат",
+    "Сарват, кибр ва қасос",
+    "Хомӯшӣ, гумон ва дурӣ"
+   ],
+   "answer": 0,
+   "info": "Оят адолат, некӣ ва саховат ба хешовандонро якҷо меорад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:90",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_patience_prayer",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "2:153 ба воситаи чӣ ёрӣ хостанро мефармояд?",
+   "options": [
+    "Сабр ва намоз",
+    "Шуҳрат ва сарват",
+    "Хашм ва баҳс",
+    "Қудрат ва такаббур"
+   ],
+   "answer": 0,
+   "info": "Оят ёрӣ хостанро бо сабр ва намоз мепайвандад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:153",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_charity_orphans",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Кадом гурӯҳ дар 2:177 байни гирандагони ёрӣ ошкоро номбар шудааст?",
+   "options": [
+    "Ятимон",
+    "Лашкаркашон",
+    "Қозиён",
+    "Ҳокимон"
+   ],
+   "answer": 0,
+   "info": "Оят ёрӣ ба ятимонро аз нишонаҳои некӯкорӣ мешуморад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:177",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_fasting_piety",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "2:183 кадом ҳадафи рӯзаро нишон медиҳад?",
+   "options": [
+    "Тақво",
+    "Шуҳрат",
+    "Сарватманд шудан",
+    "Бартарӣ аз рӯйи насаб"
+   ],
+   "answer": 0,
+   "info": "Дар оят фармони рӯза бо парвариши тақво алоқаманд аст.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:183",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_fasting_makeup",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "2:185 барои рӯзҳои рӯзаи аз беморӣ ё сафар монда чӣ муқаррар мекунад?",
+   "options": [
+    "Ҳамин қадар рӯз дар вақти дигар",
+    "Ду баробар бештар рӯз",
+    "Танҳо намозҳои иловагӣ",
+    "Ҳаҷ ба ҷойи рӯзҳо"
+   ],
+   "answer": 0,
+   "info": "Оят қазои рӯзҳои мондаи рӯзаро дар рӯзҳои дигар муайян мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:185",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_fast_until_night",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Дар 2:187 кадом вақти анҷоми рӯзаи рӯзона зикр шудааст?",
+   "options": [
+    "То фаро расидани шаб",
+    "То нисфирӯзӣ",
+    "То субҳи дигар",
+    "То нисфи шаб"
+   ],
+   "answer": 0,
+   "info": "Оят фаро расидани шабро поёни рӯзаи рӯзона муайян мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:187",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_kind_words",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "2:263 чиро аз садақаи бо озор беҳтар мешуморад?",
+   "options": [
+    "Сухани нек ва бахшиш",
+    "Ситоиши худ",
+    "Ёдоварии саховати худ",
+    "Таҳқир дар назди мардум"
+   ],
+   "answer": 0,
+   "info": "Оят сухани нек ва бахшишро аз ёрии озордиҳанда беҳтар медонад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:263",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_charity_no_reproach",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Мувофиқи 2:264 садақаро бо чӣ набояд ботил кард?",
+   "options": [
+    "Миннат ва озор",
+    "Фурӯтанӣ",
+    "Эҳтироми гиранда",
+    "Ихлос"
+   ],
+   "answer": 0,
+   "info": "Оят аз миннат кардан ва озор додан баъди садақа ҳушдор медиҳад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:264",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_debtor_respite",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "2:280 ба қарздори дар тангӣ чӣ доданро амр мекунад?",
+   "options": [
+    "То осонӣ муҳлат",
+    "Ҷазои фаврӣ",
+    "Қарзи нави маҷбурӣ",
+    "Сарзаниши оммавӣ"
+   ],
+   "answer": 0,
+   "info": "Оят ба қарздори дар тангӣ то беҳбудии вазъ муҳлат доданро амр мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:280",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_within_capacity",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "2:286 масъулияти бар дӯш гузоштаи ҷонро чӣ гуна баён мекунад?",
+   "options": [
+    "Ба андозаи тавонаш",
+    "Ҳамеша бештар аз тавонаш",
+    "Мувофиқи сарвати ҳамсояҳо",
+    "Мувофиқи шуҳрати шахс"
+   ],
+   "answer": 0,
+   "info": "Оят мегӯяд, ки Аллоҳ ба ҷон беш аз тавонаш бор намегузорад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:286",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_restrain_anger",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Дар 3:134 кадом муносибат ба хашм ситоиш шудааст?",
+   "options": [
+    "Фурӯ бурдан ва бахшидан",
+    "Шиддат додани ҷанҷол",
+    "Таҳқири озордиҳанда",
+    "Кина доштан"
+   ],
+   "answer": 0,
+   "info": "Оят касонеро меситояд, ки хашмро фурӯ мебаранд ва мардумро мебахшанд.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:134",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_food_no_waste",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "7:31 дар хӯрдану нӯшидан кадом меъёрро муқаррар мекунад?",
+   "options": [
+    "Исроф накардан",
+    "Танҳо хӯрок хӯрдан",
+    "Ҳамеша гаронтаринро интихоб кардан",
+    "Аз ҳама ғизо даст кашидан"
+   ],
+   "answer": 0,
+   "info": "Оят хӯрдану нӯшиданро иҷозат дода, аз исроф ҳушдор медиҳад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 7:31",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/7",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_no_religious_insult",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "6:108 таҳқири чиро манъ мекунад?",
+   "options": [
+    "Он чиро дигарон ғайри Аллоҳ мепарастанд",
+    "Танҳо моли ҳамсоягонро",
+    "Танҳо либоси дигаронро",
+    "Танҳо номи шаҳрҳоро"
+   ],
+   "answer": 0,
+   "info": "Оят ин таҳқирро манъ мекунад, то дигарон аз нодонӣ Аллоҳро таҳқир накунанд.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:108",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_do_not_oppress_orphan",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "93:9 нисбат ба ятим чиро манъ мекунад?",
+   "options": [
+    "Зулм кардан ба ӯ",
+    "Бо ӯ сухан гуфтан",
+    "Ба ӯ омӯзондан",
+    "Ба ӯ ёрӣ додан"
+   ],
+   "answer": 0,
+   "info": "Оят зулм кардан ба ятимро манъ мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 93:9",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/93",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_do_not_repel_asker",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "93:10 нисбат ба пурсанда кадом рафторро манъ мекунад?",
+   "options": [
+    "Ӯро рондан",
+    "Ӯро гӯш кардан",
+    "Ба ӯ ҷавоб додан",
+    "Ба ӯ аҳамият додан"
+   ],
+   "answer": 0,
+   "info": "Оят аз дағалона рондани пурсанда ҳушдор медиҳад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 93:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/93",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_feed_needy",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "Шахси мазамматшуда дар 107:3 ба кадом кор ташвиқ намекунад?",
+   "options": [
+    "Хӯрок додан ба мискин",
+    "Сохтани қасрҳо",
+    "Харидани ороишҳо",
+    "Ҷамъ кардани ҷавоҳир"
+   ],
+   "answer": 0,
+   "info": "Оят ташвиқ накардан ба хӯрок додани ниёзмандро мазаммат мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 107:3",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/107",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_lord_of_house",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "106:3 ба парастиши кӣ даъват мекунад?",
+   "options": [
+    "Парвардигори ин Хона",
+    "Нигоҳбонони Хона",
+    "Соҳибони корвонҳо",
+    "Аҷдоди қабила"
+   ],
+   "answer": 0,
+   "info": "Оят парастишро ба Парвардигори ин Хона равона мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 106:3",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/106",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_elephant_verse",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "Дар 105:1 кадом ҳайвон зикр шудааст?",
+   "options": [
+    "Фил",
+    "Шутур",
+    "Шер",
+    "Асп"
+   ],
+   "answer": 0,
+   "info": "Ояти аввали ин сура соҳибони филро зикр мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 105:1",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/105",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_refuge_lord_people",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "Ҳангоми паноҳ хостан дар 114:1 Аллоҳ чӣ номида мешавад?",
+   "options": [
+    "Парвардигори мардум",
+    "Соҳиби рӯзи ҷазо",
+    "Парвардигори субҳ",
+    "Парвардигори ҷаҳониён"
+   ],
+   "answer": 0,
+   "info": "Дар ояти аввали ин сура аз Парвардигори мардум паноҳ хоста мешавад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 114:1",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/114",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_allah_one",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "112:1 дар бораи шумораи маъбудон чӣ мегӯяд?",
+   "options": [
+    "Аллоҳ Ягона аст",
+    "Онҳо сеанд",
+    "Онҳо бисёранд",
+    "Онҳо дуанд"
+   ],
+   "answer": 0,
+   "info": "Оят ягонагии Аллоҳро баён мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 112:1",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/112",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_hardship_ease",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "94:5 душвориро бо чӣ мепайвандад?",
+   "options": [
+    "Осонӣ",
+    "Ноумедии ногузир",
+    "Ғами беохир",
+    "Аз даст додани умед"
+   ],
+   "answer": 0,
+   "info": "Оят ёдрас мекунад, ки бо душворӣ осонӣ ҳаст.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 94:5",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/94",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_covenant",
+   "cat": "prophets",
+   "difficulty": 2,
+   "q": "Дар ҷавоб ба Иброҳим дар 2:124 кадом гурӯҳ аз аҳд истисно шудааст?",
+   "options": [
+    "Ситамкорон аз насли ӯ",
+    "Камбағалон аз насли ӯ",
+    "Фарзандоне, ки қудрати подшоҳӣ надоранд",
+    "Фарзандоне, ки берун аз Макка таваллуд шудаанд"
+   ],
+   "answer": 0,
+   "info": "Оят ситамкоронро истисно мекунад ва аҳдро ба сарват ё зодгоҳ вобаста намесозад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:124",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_witnesses",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Дар 2:143 нақшҳои шоҳидӣ чӣ гуна тақсим шудаанд?",
+   "options": [
+    "Уммат бар мардум, Паёмбар бар уммат шоҳид аст",
+    "Мардум бар уммат, уммат бар Паёмбар шоҳид аст",
+    "Паёмбар бар мардум, мардум бар уммат шоҳид аст",
+    "Уммат бар Паёмбар, Паёмбар бар фариштагон шоҳид аст"
+   ],
+   "answer": 0,
+   "info": "Уммати миёнарав шоҳид бар мардум ва Паёмбар шоҳид бар ин уммат номида шудааст.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:143",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_safa_marwa_signs",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Сафо ва Марва дар 2:158 чӣ гуна тавсиф шудаанд?",
+   "options": [
+    "Ҳамчун нишонаҳои маросимии муқарраркардаи Аллоҳ",
+    "Ҳамчун ҷойҳои ворид шудан ба эҳром",
+    "Ҳамчун ҳудуди сарзамини муқаддас",
+    "Ҳамчун ҷойҳои истодан дар рӯзи Арафа"
+   ],
+   "answer": 0,
+   "info": "Оят Сафо ва Марваро аз нишонаҳои маросимии муқарраркардаи Аллоҳ мешуморад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:158",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_harm_comparison",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Дар 2:219 гуноҳ ва фоидаи шаробу қимор чӣ гуна муқоиса шудаанд?",
+   "options": [
+    "Гуноҳашон аз фоидаашон бештар аст",
+    "Фоидаашон аз гуноҳашон бештар аст",
+    "Гуноҳу фоидаашон баробаранд",
+    "На гуноҳ доранд ва на фоида"
+   ],
+   "answer": 0,
+   "info": "Оят баъзе фоидаро зикр мекунад, вале гуноҳро бештар медонад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:219",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_river_exception",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Толут ҳангоми озмоиш бо дарё ба чӣ истисно иҷозат дод?",
+   "options": [
+    "Як каф об гирифтан",
+    "Як кӯза об пур кардан",
+    "То сер шудан нӯшидан",
+    "Танҳо аспи худро об додан"
+   ],
+   "answer": 0,
+   "info": "Дар 2:249 як каф об, ки бо даст гирифта мешавад, истисно шудааст.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:249",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_ibrahim_reassurance",
+   "cat": "prophets",
+   "difficulty": 2,
+   "q": "Чаро Иброҳим хост зинда шудани мурдагонро бинад?",
+   "options": [
+    "Барои ором гирифтани дилаш",
+    "Барои бори аввал имон овардан",
+    "Барои донистани вақти маргаш",
+    "Барои интихоби макони ҳиҷрат"
+   ],
+   "answer": 0,
+   "info": "Дар 2:260 Иброҳим имонашро тасдиқ карда, оромии дил мехоҳад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:260",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_grain_parable",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Дар масали харҷ кардани мол дона чӣ гуна тасвир мешавад?",
+   "options": [
+    "Ҳафт хӯша, дар ҳар кадом сад дона",
+    "Сад хӯша, дар ҳар кадом ҳафт дона",
+    "Ҳафт хӯша, дар ҳар кадом даҳ дона",
+    "Даҳ хӯша, дар ҳар кадом сад дона"
+   ],
+   "answer": 0,
+   "info": "Дар 2:261 як дона ҳафт хӯша медиҳад ва ҳар хӯша сад дона дорад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:261",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_wisdom_gift",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Дар 2:269 кадом неъмат бевосита хайри фаровон номида шудааст?",
+   "options": [
+    "Ҳикмат",
+    "Суханварӣ",
+    "Фаровонии молӣ",
+    "Нерӯи ҷисмонӣ"
+   ],
+   "answer": 0,
+   "info": "Дар ин оят гирифтани хайри фаровон бо дода шудани ҳикмат вобаста аст.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:269",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_debt_dictation",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Мувофиқи 2:282, агар тавонад, кӣ бояд матни қарзро бигӯяд?",
+   "options": [
+    "Қарздор",
+    "Қарздиҳанда",
+    "Яке аз шоҳидон",
+    "Котиб аз номи худ"
+   ],
+   "answer": 0,
+   "info": "Оят навиштанро ба котиб ва гуфтани шартҳоро ба қарздор месупорад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:282",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_concealed_testimony",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Дар 2:283 пинҳон кардани шаҳодат чӣ гуна арзёбӣ мешавад?",
+   "options": [
+    "Дили пинҳонкунанда гунаҳкор мешавад",
+    "Масъулият ба котиб мегузарад",
+    "Пинҳонкунанда танҳо назди қарздор ҷавобгар аст",
+    "Масъулият танҳо ҳангоми набудани гарав вуҷуд дорад"
+   ],
+   "answer": 0,
+   "info": "Оят пинҳон кардани шаҳодатро бо гуноҳи дил мепайвандад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:283",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_clear_verses",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Дар 3:7 кадом гурӯҳи оятҳо асоси Китоб номида шудааст?",
+   "options": [
+    "Оятҳои маънояшон равшан",
+    "Оятҳои дорои чанд маъно",
+    "Оятҳо дар бораи ӯҳдадориҳои қарзӣ",
+    "Оятҳое, ки қиссаҳои паёмбаронро доранд"
+   ],
+   "answer": 0,
+   "info": "Оятҳои маънояшон равшан асоси Китоб номида шудаанд, бар хилофи оятҳои чандмаъно.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:7",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_dominion",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Дар 3:26 дар бораи ҳокимият кадом амалҳо зикр шудаанд?",
+   "options": [
+    "Аллоҳ онро медиҳад ва мегирад",
+    "Аллоҳ медиҳад, вале намегирад",
+    "Аллоҳ мегирад, вале намедиҳад",
+    "Ҳокимият танҳо мерос мешавад"
+   ],
+   "answer": 0,
+   "info": "Оят додан ва гирифтани ҳокимиятро ба иродаи Аллоҳ нисбат медиҳад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:26",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_beloved_giving",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Дар 3:92 расидан ба некӣ бо кадом харҷ вобаста аст?",
+   "options": [
+    "Харҷ аз чизи дӯстдошта",
+    "Танҳо аз чизҳои нолозим",
+    "Танҳо аз моли ёфташуда",
+    "Танҳо аз чизи фурӯхтанашаванда"
+   ],
+   "answer": 0,
+   "info": "Оят некиро бо харҷ аз моли дӯстдошта мепайвандад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:92",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_consult_then_trust",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "Дар 3:159 пас аз машварат ва тасмим чӣ меояд?",
+   "options": [
+    "Таваккал ба Аллоҳ",
+    "Даст кашидан аз ҳар амал",
+    "Қарори дигар бо қуръакашӣ",
+    "Пинҳон кардани қарор аз ҳама"
+   ],
+   "answer": 0,
+   "info": "Баъди амри машварат ба Паёмбар гуфта мешавад, ки пас аз тасмим ба Аллоҳ таваккал кунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:159",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_mutual_consent",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Дар 4:29 кадом шарти тиҷорат ошкоро зикр шудааст?",
+   "options": [
+    "Розигии тарафайн",
+    "Хешованд будани тарафҳо",
+    "Пардохт танҳо бо нуқра",
+    "Тиҷорат танҳо дар сафар"
+   ],
+   "answer": 0,
+   "info": "Оят тиҷорати бо розигии ҳар ду тарафро зикр мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:29",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_family_arbiters",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Дар 4:35 ду миёнарави низои оилавӣ аз куҷо интихоб мешаванд?",
+   "options": [
+    "Аз ҳар оила як нафар",
+    "Ҳар ду аз оилаи шавҳар",
+    "Ҳар ду аз оилаи зан",
+    "Ҳар ду аз шаҳри дигар"
+   ],
+   "answer": 0,
+   "info": "Оят як довар аз оилаи шавҳар ва як довар аз оилаи занро зикр мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:35",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_good_deed_multiplied",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Дар 4:40 кадом ду баён якҷо омадааст?",
+   "options": [
+    "Ҳатто ба андозаи зарра ситам нест ва некӣ афзун мегардад",
+    "Амалҳои хурд ҳисоб намешаванд ва амалҳои бузург афзун мегарданд",
+    "Танҳо амалҳои ошкор ҳисоб мешаванд ва амалҳои пинҳон ҳисоб намешаванд",
+    "Некӣ ва бадӣ ҳамеша яксон афзун мегарданд"
+   ],
+   "answer": 0,
+   "info": "Оят аз набудани хурдтарин ситам ва афзун кардани кори нек сухан мегӯяд.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:40",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_dispute_reference",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Дар 4:59 баргардондани масъалаи баҳс ба кӣ фармуда шудааст?",
+   "options": [
+    "Ба Аллоҳ ва Паёмбар",
+    "Ба Паёмбар ва соҳибони амр",
+    "Ба бузургон ва олимони уммат",
+    "Ба шоҳидон ва котиб"
+   ],
+   "answer": 0,
+   "info": "Оят фармудааст, ки масъалаи баҳс ба Аллоҳ ва Паёмбар баргардонда шавад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:59",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_fortified_towers",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Кадом тасвир дар 4:78 ногузирии маргро нишон медиҳад?",
+   "options": [
+    "Бурҷҳои мустаҳкам",
+    "Киштиҳои бодбонашон сафед",
+    "Боғҳои хурмояшон баланд",
+    "Роҳҳои корвони биёбон"
+   ],
+   "answer": 0,
+   "info": "Оят мегӯяд, ки марг ҳатто дар бурҷҳои мустаҳкам ҳам мерасад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:78",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_news_referral",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Дар 4:83 хабари амният ё тарсро бояд ба кӣ мерасонданд?",
+   "options": [
+    "Ба Паёмбар ва соҳибони амр",
+    "Ба Аллоҳ ва Паёмбар",
+    "Ба ду шоҳид ва котиб",
+    "Ба мусофироне, ки аз он минтақа омадаанд"
+   ],
+   "answer": 0,
+   "info": "Оят ба ҷойи паҳн кардани хабар муроҷиат ба Паёмбар ва соҳибони амрро зикр мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:83",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_ablution_wiping",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Дар 5:6 ҳангоми вузӯ масҳ кардани кадом узв ошкоро амр шудааст?",
+   "options": [
+    "Сар",
+    "Сина",
+    "Пушт",
+    "Зонуҳо"
+   ],
+   "answer": 0,
+   "info": "Дар ояти вузӯ масҳ кардани сар алоҳида зикр шудааст.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:6",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_oath_fasting",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Дар 5:89 барои касе, ки роҳҳои зикршудаи каффорати қасамро наметавонад, чӣ рӯза аст?",
+   "options": [
+    "Се рӯз",
+    "Ҳафт рӯз",
+    "Даҳ рӯз",
+    "Ду моҳ"
+   ],
+   "answer": 0,
+   "info": "Пас аз роҳҳои каффорат барои каси нотавон се рӯз рӯза нишон дода шудааст.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:89",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_game_assessment",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Дар 5:95 чанд шахси одил қурбонии ҳамарзиши сайдро муайян мекунанд?",
+   "options": [
+    "Ду нафар",
+    "Як нафар",
+    "Се нафар",
+    "Чор нафар"
+   ],
+   "answer": 0,
+   "info": "Барои қасдан куштани сайд дар эҳром оят ду довари одилро ном мебарад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:95",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_sea_provision",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Дар 5:96 байни шикори баҳрӣ ва хушкӣ кадом фарқ гуфта шудааст?",
+   "options": [
+    "Шикори баҳрӣ ҳалол ва шикори хушкӣ дар эҳром манъ аст",
+    "Ҳар ду дар эҳром манъ аст",
+    "Ҳар ду дар эҳром ҳалол аст",
+    "Шикори хушкӣ ҳалол ва шикори баҳрӣ манъ аст"
+   ],
+   "answer": 0,
+   "info": "Оят шикори баҳриро ҳалол ва шикор дар хушкӣ ҳангоми эҳромро манъ мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:96",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_falling_leaf",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Тасвири барги афтанда дар 6:59 чиро таъкид мекунад?",
+   "options": [
+    "Ҳеҷ чиз аз илми Аллоҳ пинҳон нест",
+    "Дониш танҳо шаб дастрас аст",
+    "Барг бе шамол намеафтад",
+    "Инсон тамоми ғайбро медонад"
+   ],
+   "answer": 0,
+   "info": "Оят мегӯяд, ки ҳеҷ барг бе огоҳии Аллоҳ намеафтад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:59",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_harvest_due",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Дар 6:141 ҳаққи ҳосилро кай додан амр шудааст?",
+   "options": [
+    "Дар рӯзи ҷамъоварии ҳосил",
+    "Танҳо як сол пас аз ҷамъоварӣ",
+    "Танҳо ҳангоми кишти нав",
+    "Танҳо пас аз фурӯши тамоми ҳосил"
+   ],
+   "answer": 0,
+   "info": "Додани ҳаққи ҳосил бо рӯзи ҷамъоварии он вобаста шудааст.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:141",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_recitation_attention",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Дар 7:204 ҳангоми қироати Қуръон кадом ду амал амр шудаанд?",
+   "options": [
+    "Гӯш кардан ва хомӯш мондан",
+    "Муҳокима ва савол додан",
+    "Буридани сухан ва ислоҳи ҳама",
+    "Идомаи суҳбат ва савдо"
+   ],
+   "answer": 0,
+   "info": "Оят гӯш кардани Қуръонро бо хомӯшӣ якҷо зикр мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 7:204",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/7",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_dispute_weakness",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Дар 8:46 кадом паёмадҳои низоъ бевосита номбар шудаанд?",
+   "options": [
+    "Аз даст рафтани ирода ва нерӯ",
+    "Аз даст рафтани молу мулк ва ҳосил",
+    "Кӯтоҳ шудани муҳлати паймонҳо",
+    "Ӯҳдадории тарки ватан"
+   ],
+   "answer": 0,
+   "info": "Оят ҳушдор медиҳад, ки низоъ ба сустӣ ва аз даст рафтани нерӯ меорад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 8:46",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/8",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_inclining_peace",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "Дар 8:61 ба майли тарафи дигар ба сулҳ чӣ ҷавоб дода мешавад?",
+   "options": [
+    "Ба сулҳ майл кардан ва ба Аллоҳ таваккал кардан",
+    "Рад кардани сулҳ дар ҳар ҳол",
+    "Розӣ шудан танҳо баъди баҳси нав",
+    "Ба таъхир гузоштан то ивазшавии фасл"
+   ],
+   "answer": 0,
+   "info": "Амри майл ба сулҳ бо таваккал ба Аллоҳ ҳамроҳ аст.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 8:61",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/8",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_charity_recipients",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Кадом ҷуфт дар 9:60 дар байни гирандагони садақа ошкоро номбар шудааст?",
+   "options": [
+    "Қарздорон ва мусофирон",
+    "Шоирон ва котибон",
+    "Деҳқонон ва оҳангарон",
+    "Ҳокимон ва хешовандони онҳо"
+   ],
+   "answer": 0,
+   "info": "Қарздорон ва мусофирон дар рӯйхати гирандагони ин оят ошкоро зикр шудаанд.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 9:60",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/9",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_three_repentance",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "Дар 9:118 ҳолати се нафаре, ки тавбаашон пазируфта шуд, чӣ гуна тасвир мешавад?",
+   "options": [
+    "Замини васеъ барояшон танг шуд",
+    "Баҳр пеши онҳо хушкӣ шуд",
+    "Шаб аз як соат кӯтоҳ намуд",
+    "Кӯҳҳо ба боғҳо табдил ёфтанд"
+   ],
+   "answer": 0,
+   "info": "Оят тангии дили онҳоро бо танг шудани замини васеъ ифода мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 9:118",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/9",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_pharaoh_declaration",
+   "cat": "prophets",
+   "difficulty": 2,
+   "q": "Дар қиссаи 10:90–91 Фиръавн кай имон оварданашро эълон кард?",
+   "options": [
+    "Ҳангоми ғарқ шудан",
+    "Пеш аз суҳбати аввал бо Мӯсо",
+    "Вақте мардумро ихтиёран озод кард",
+    "Пеш аз таваллуди Мӯсо"
+   ],
+   "answer": 0,
+   "info": "Фиръавн ҳангоми фаро гирифтани ғарқшавӣ имон оварданашро эълон кард.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 10:90, 10:91",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/10",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_shuayb_reform",
+   "cat": "prophets",
+   "difficulty": 2,
+   "q": "Шуайб дар 11:88 ҳадафи худро чӣ гуна баён мекунад?",
+   "options": [
+    "Ислоҳ ба қадри тавоноӣ",
+    "Ҷамъ кардани сарвати қавмаш",
+    "Ба даст овардани подшоҳӣ",
+    "Бекор кардани масъулияти тиҷорат"
+   ],
+   "answer": 0,
+   "info": "Шуайб то ҳадди тавонаш ислоҳ мехоҳад ва муваффақиятро аз Аллоҳ медонад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 11:88",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_inner_change",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Дар 13:11 пеш аз тағйири ҳолати мардум кадом тағйир омадааст?",
+   "options": [
+    "Тағйири он чӣ дар худи онҳост",
+    "Иваз шудани ҳокимони онҳо",
+    "Тағйири ҷойи зист",
+    "Афзоиши фаровонии молии онҳо"
+   ],
+   "answer": 0,
+   "info": "Оят тағйири ҳолати мардумро бо тағйир дар худи онҳо мепайвандад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 13:11",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/13",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_bee_dwellings",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Дар 16:68 кадом ҷойҳо барои хонаи занбӯр зикр шудаанд?",
+   "options": [
+    "Кӯҳҳо, дарахтон ва сохтаҳои мардум",
+    "Баҳрҳо, дарёҳо ва ғорҳои зериобӣ",
+    "Танҳо регҳои биёбон",
+    "Танҳо боми қасрҳо"
+   ],
+   "answer": 0,
+   "info": "Дар дастури занбӯр кӯҳҳо, дарахтон ва он чӣ мардум месозанд, зикр шудаанд.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:68",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_faculties_gratitude",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Дар поёни 16:78 пас аз зикри шунавоӣ, биноӣ ва дилҳо кадом мақсад гуфта шудааст?",
+   "options": [
+    "Шукргузорӣ",
+    "Сабр",
+    "Саховат",
+    "Адолат"
+   ],
+   "answer": 0,
+   "info": "Номбар кардани ин неъматҳо бо ёдоварии шукргузорӣ анҷом меёбад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:78",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_living_water",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Мувофиқи 21:30, ҳар чизи зинда аз чӣ офарида шудааст?",
+   "options": [
+    "Аз об",
+    "Аз оҳан",
+    "Аз дуд",
+    "Аз намак"
+   ],
+   "answer": 0,
+   "info": "Оят обро манбаи офариниши ҳар чизи зинда меномад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 21:30",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/21",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_privacy_times",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Дар 24:58 кадом се вақти хилват номбар шудаанд?",
+   "options": [
+    "Пеш аз бомдод, истироҳати нисфирӯзӣ, баъди хуфтан",
+    "Баъди бомдод, пеш аз аср, пеш аз шом",
+    "Пеш аз пешин, баъди аср, пеш аз хуфтан",
+    "Тулӯъ, ғуруб ва нисфи шаб"
+   ],
+   "answer": 0,
+   "info": "Оят вақти пеш аз намози саҳар, истироҳати нисфирӯзӣ ва баъди намози шабро ҷудо мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 24:58",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_messenger_example",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "Дар 33:21 барои касоне, ки Паёмбар намунаи некӯст, кадом сифатҳо зикр шудаанд?",
+   "options": [
+    "Умед ба Аллоҳ ва рӯзи охират, бисёр ёд кардан",
+    "Сабр дар мусибат, ёрӣ ба мусофир ва саховат",
+    "Адолат дар тиҷорат, вафо ба аҳд ва фурӯтанӣ",
+    "Ғамхорӣ ба падару модар, омӯхтани Китоб ва оштӣ додани мардум"
+   ],
+   "answer": 0,
+   "info": "Оят умед ба Аллоҳ ва рӯзи охират ва бисёр ёд кардани Аллоҳро ном мебарад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 33:21",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/33",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_tree_pledge",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "Байъати мӯъминон, ки дар 48:18 зикр шудааст, дар куҷо буд?",
+   "options": [
+    "Зери дарахт",
+    "Даруни Каъба",
+    "Бар қуллаи Сино",
+    "Дар саҳни киштӣ"
+   ],
+   "answer": 0,
+   "info": "Оят аз ризояти Аллоҳ ба мӯъминоне хабар медиҳад, ки зери дарахт байъат карданд.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 48:18",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/48",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_grain_storage",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Юсуф ғайр аз миқдори ками хӯрок бо ҳосил чӣ карданро фармуд?",
+   "options": [
+    "Онро дар хӯшаҳо нигоҳ доштан",
+    "Ғалларо кӯфта, бе хӯша нигоҳ доштан",
+    "Ғалларо орд карда нигоҳ доштан",
+    "Ҳосили навро бо ғаллаи соли гузашта омехтан"
+   ],
+   "answer": 0,
+   "info": "Юсуф нигоҳ доштани ҳосилро дар хӯшаҳо ва гирифтани андак барои хӯрокро пешниҳод кард.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:47",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_prison_inquiry",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Юсуф пеш аз баромадан аз зиндон аз фиристодаи подшоҳ чӣ хост?",
+   "options": [
+    "Кори занони дастбуридаро таҳқиқ кунад",
+    "Аввал бародаронашро биёрад",
+    "Аввал ӯро сардори анборҳо таъйин кунад",
+    "Аввал куртаи падарашро баргардонад"
+   ],
+   "answer": 0,
+   "info": "Юсуф фиристодаро барои пурсидани ҳодисаи занон баргардонд.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:50",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_storehouse_qualities",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Юсуф барои идораи анборҳо кадом ду сифати худро гуфт?",
+   "options": [
+    "Нигоҳбони боэътимод ва доно",
+    "Қавӣ ва боэътимод",
+    "Ростгӯ ва сабур",
+    "Саховатманд ва хирадманд"
+   ],
+   "answer": 0,
+   "info": "Юсуф боэътимодӣ дар нигоҳдорӣ ва дониши худро далел овард.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:55",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_brother_pledge",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Яъқуб дар ваъдаи бозгардондани бародар кадом истисноро гузошт?",
+   "options": [
+    "Агар писарон ба балои ногузир гирифтор шаванд",
+    "Агар сафар зиёда аз як моҳ шавад",
+    "Агар бародар монданро хоҳад",
+    "Агар ҳосил нокифоя бошад"
+   ],
+   "answer": 0,
+   "info": "Дар аҳди бозгардондани бародар балои рафънопазир истисно шуд.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:66",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_separate_gates",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Яъқуб маслиҳати дарвозаҳои гуногунро бо таваккал чӣ гуна пайваст?",
+   "options": [
+    "Чора андешид, вале ҳукмро аз Аллоҳ донист",
+    "Пеш аз ворид шудан ба ҳар дарвоза нишона талаб кардан",
+    "Саломатии бародаронро аллакай ваъдашуда донистан",
+    "Натиҷаро танҳо ба иҷрои дақиқи маслиҳат вобаста кардан"
+   ],
+   "answer": 0,
+   "info": "Яъқуб чора пешниҳод кард, вале гуфт, ки аз иродаи Аллоҳ ҳимоя карда наметавонад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:67",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_search_order",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Ҳангоми ҷустуҷӯи ҷом халтаҳо бо кадом тартиб санҷида шуданд?",
+   "options": [
+    "Аввал дигарон, сипас бародараш",
+    "Аввал бародараш, сипас дигарон",
+    "Танҳо халтаи бародари калонӣ",
+    "Танҳо халтаи бародари хурдӣ"
+   ],
+   "answer": 0,
+   "info": "Оят санҷидани халтаи бародарро пас аз халтаҳои дигарон меорад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:76",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_fish_return",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Кадом хабар Мусоро водор кард, ки аз пайи қадамҳояш баргардад?",
+   "options": [
+    "Моҳӣ назди санг ба баҳр роҳ ёфтааст",
+    "Аҳли деҳа хӯрок надодаанд",
+    "Подшоҳ киштиҳоро мегирад",
+    "Девори шаҳр фурӯ мерезад"
+   ],
+   "answer": 0,
+   "info": "Мусо аз хабари моҳӣ назди санг макони ҷустуҷӯшударо шинохт ва баргашт.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:61, 18:62, 18:63, 18:64",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_journey_sequence",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Се амали ҳамроҳи Мусо дар сураи «Каҳф» бо кадом тартиб меоянд?",
+   "options": [
+    "Сӯрох кардани киштӣ → куштани писар → таъмири девор",
+    "Куштани писар → сӯрох кардани киштӣ → таъмири девор",
+    "Таъмири девор → сӯрох кардани киштӣ → куштани писар",
+    "Сӯрох кардани киштӣ → таъмири девор → куштани писар"
+   ],
+   "answer": 0,
+   "info": "Қисса аввал киштӣ, сипас писар ва дар охир деворро баён мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:71, 18:74, 18:77",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_boat_explanation",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Осеб додани киштии камбағалон бо кадом хатар шарҳ дода шуд?",
+   "options": [
+    "Подшоҳ киштиҳоро бо зӯр мегирифт",
+    "Подшоҳ аз бор боҷи калон мегирифт",
+    "Подшоҳ ҳамаи соҳибони киштиро ба флоти худ ҷалб мекард",
+    "Подшоҳ ба камбағалон ба баҳр баромаданро манъ мекард"
+   ],
+   "answer": 0,
+   "info": "Ҳамроҳ осебро бо хатари гирифтани киштиҳо аз ҷониби подшоҳ шарҳ дод.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:79",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_wall_treasure",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Чаро девори болои ганҷ таъмир шуд?",
+   "options": [
+    "То ду ятим болиғ шуда, ганҷро гиранд",
+    "То сарпарастон ганҷро гирифта, фавран ба ятимон диҳанд",
+    "То ятимон пас аз бозгашти хешовандон ганҷро гиранд",
+    "То ятимон пас аз бозсозии пурраи хона ганҷро гиранд"
+   ],
+   "answer": 0,
+   "info": "Таъмири девор ганҷро то ба балоғат расидани ду ятим нигоҳ медошт.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:82",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_barrier_help",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Зулқарнайн дар ҷавоб ба пешниҳоди музди садд чӣ хост?",
+   "options": [
+    "Неъмати Парвардигорро беҳтар дониста, ёрии қувва хост",
+    "Музди пешниҳодшударо ду баробар кардан",
+    "Ҳокимияти деҳаро ба ӯ додан",
+    "Ҳамаи захираи озуқаро овардан"
+   ],
+   "answer": 0,
+   "info": "Зулқарнайн дар ҷавоби пешниҳоди музд аз мардум ёрӣ бо қувваашон хост.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:94, 18:95",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_barrier_materials",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Оҳан ва мис дар садди Зулқарнайн чӣ гуна истифода шуданд?",
+   "options": [
+    "Оҳанро тафсонданд ва бар он миси гудохта рехтанд",
+    "Мисро тафсонида, сипас бар он оҳани гудохта рехтанд",
+    "Оҳану мисро омехта, сипас оташро дамиданд",
+    "Қабатҳои оҳану мисро чида, сипас бо об сард карданд"
+   ],
+   "answer": 0,
+   "info": "Оят оҳани тафсон ва рехтани миси гудохта бар онро баён мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:96",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_mistaken_efforts",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "18:103–104 дар бораи зиёнкортарин амалкунандагон кадом тазодро баён мекунад?",
+   "options": [
+    "Кӯшишашон барбод рафт, вале худро некӯкор медонанд",
+    "Корашон фоида дорад, вале онро беҳуда мешуморанд",
+    "Кӯшишҳояшон зоеъ шудааст ва хатояшонро медонанд",
+    "Ба кор оғоз накардаанд, вале онро анҷомёфта мешуморанд"
+   ],
+   "answer": 0,
+   "info": "Оятҳо кӯшиши барбодрафтаро бо гумони некӯкорӣ муқобил мегузоранд.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:103, 18:104",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_zakariya_sign",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Нишонаи Закариё дар сураи «Марям» чӣ гуна баён шудааст?",
+   "options": [
+    "Се шаб бо мардум сухан нагуфтан, дар ҳоли тандурустӣ",
+    "Аз беморӣ се рӯз мардумро надидан",
+    "Чил шаб аз меҳроб набаромадан",
+    "Ҳафт рӯз хӯрок нахӯрдан"
+   ],
+   "answer": 0,
+   "info": "Дар «Марям» нишона ба сухан гуфтан бо мардум дар ҳоли тандурустӣ марбут аст.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 19:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/19",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_maryam_vow",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Дар 19:26 пас аз амри хӯрдану нӯшидан ба Марям чӣ меояд?",
+   "options": [
+    "Назри он рӯз бо мардум сухан нагуфтан",
+    "Назри он рӯз назди мардум набаромадан",
+    "Назри ба мардум танҳо дар бораи кӯдак нагуфтан",
+    "Назри се шаб пайдарпай сухан нагуфтан"
+   ],
+   "answer": 0,
+   "info": "Назри зикршуда бо сухан нагуфтан бо мардум дар он рӯз ҳамроҳ аст.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 19:26",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/19",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_ismail_traits",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Дар 19:54–55 кадом ду хусусияти Исмоил омадааст?",
+   "options": [
+    "Вафо ба ваъда; амри аҳл ба намозу закот",
+    "Таъбири хоб; идораи анборҳо",
+    "Нармӣ назди Фиръавн; дархости ёвар",
+    "Сохтани садд; рад кардани музд"
+   ],
+   "answer": 0,
+   "info": "Оятҳо вафои Исмоил ба ваъдаро бо амри хонаводааш ба намозу закот меоранд.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 19:54, 19:55",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/19",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_musa_two_signs",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Дар 20:20–22 ба Мусо кадом нишонаҳо дода шуданд?",
+   "options": [
+    "Асо мор шуд; даст бе осеб сафед шуд",
+    "Асо мор шуд; даст аз беморӣ сафед гашт",
+    "Баҳр ду қисм шуд; даст бе осеб сафед гашт",
+    "Асо чашмаҳо кушод; даст бе осеб сафед гашт"
+   ],
+   "answer": 0,
+   "info": "Порча табдили асо ва сафед шудани даст бе осебро баён мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 20:20, 20:21, 20:22",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/20",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_musa_helper_purpose",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Мусо барои чӣ Ҳорунро ёвар хост?",
+   "options": [
+    "То ӯро қувват бахшад ва шарики кораш бошад",
+    "Ҳорунро назди қавм гузошта, танҳо назди Фиръавн рафтан",
+    "Ба Ҳорун ҳифзи Китоб ва таълими кӯдаконро супоридан",
+    "Ба Ҳорун танҳо ҷавоб ба саволҳои Фиръавнро супоридан"
+   ],
+   "answer": 0,
+   "info": "Мусо бо Ҳорун қувват гирифтан ва ӯро дар кор шарик карданро хост.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 20:25, 20:26, 20:27, 20:28, 20:29, 20:30, 20:31, 20:32",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/20",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_revelation_knowledge",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Дар 20:114 кадом ду дастур якҷо омадааст?",
+   "options": [
+    "То анҷоми ваҳй шитоб накардан ва афзоиши илм хостан",
+    "То анҷоми ваҳй интизор шудан ва осонӣ хостан",
+    "Пеш аз анҷоми ваҳй онро такрор кардан ва илм хостан",
+    "То анҷоми ваҳй интизор шудан ва сабр хостан"
+   ],
+   "answer": 0,
+   "info": "Оят сабр дар гирифтани ваҳйро бо дархости афзоиши илм пайваст мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 20:114",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/20",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_praise_times",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Дар 20:130 ҳамроҳи даъват ба сабр кадом вақтҳои тасбеҳ омадааст?",
+   "options": [
+    "Пеш аз тулӯъ ва ғуруб, шабона ва канораҳои рӯз",
+    "Баъд аз тулӯъ ва ғуруб, шабона ва дар миёнаи рӯз",
+    "Пеш аз тулӯъ, баъд аз ғуруб ва танҳо дар нисфи шаб",
+    "Баъд аз тулӯъ, пеш аз ғуруб ва танҳо дар миёнаи рӯз"
+   ],
+   "answer": 0,
+   "info": "Оят тулӯъу ғуруб, соатҳои шаб ва канораҳои рӯзро ном мебарад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 20:130",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/20",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_measure_rights",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Дар 26:181–183 кадом се талаб ба муомила бевосита омадааст?",
+   "options": [
+    "Паймонаи пур, тарозуи дуруст, кам накардани ҳаққи мардум",
+    "Паймонаи пур, пардохти муҳлатнок, навиштани қарз",
+    "Тарозуи дуруст, ду шоҳид, котиби таъйиншуда",
+    "Ҳифзи ҳаққи мардум, гарав, дароз кардани муҳлат"
+   ],
+   "answer": 0,
+   "info": "Порча паймонаи пур, тарозуи дуруст ва кам накардани ҳаққи мардумро якҷо меорад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 26:181, 26:182, 26:183",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/26",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_ant_warning",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Дар қиссаи мӯрча хатар ва посухи Сулаймон чӣ гуна пайвастанд?",
+   "options": [
+    "Надониста поймол кардан; дуои шукру амали солеҳ",
+    "Ҳамлаи қасдӣ; дуои шукру амали солеҳ",
+    "Надониста поймол кардан; дуои мулки бе ворис",
+    "Ҳамлаи қасдӣ; дуои пинҳон шудани лашкар"
+   ],
+   "answer": 0,
+   "info": "Мӯрча аз зарари ноогоҳона ҳушдор дод ва Сулаймон шукру амали солеҳ хост.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:18, 27:19",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_queen_council",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Маликаи Сабо ҳангоми машварат бо бузургон чӣ шарт гуфт?",
+   "options": [
+    "Бе ҳузури онҳо қарор накардан",
+    "Бе ризоияти якдилонаи онҳо қарор накардан",
+    "То бозгашти фиристодагон қарор накардан",
+    "Бе машварати сарлашкар қарор накардан"
+   ],
+   "answer": 0,
+   "info": "Малика машварат хост ва гуфт, ки бе ҳузури бузургон қарор намекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:32",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_gift_response",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Ҳадафи ҳадяи малика ва ҷавоби Сулаймон чӣ гуна мувофиқанд?",
+   "options": [
+    "Дидани ҷавоби фиристодагон; бахшоиши Аллоҳ беҳтар аст",
+    "Пардохти сохтмон; сарвати пешниҳодшуда кам аст",
+    "Озод кардани асирон; бахшоиши Аллоҳ беҳтар аст",
+    "Эътирофи шикаст; ҳадя ҳамчун боҷи солона қабул шуд"
+   ],
+   "answer": 0,
+   "info": "Малика мехост ҷавобро аз фиристодагон фаҳмад, Сулаймон бартарии бахшоиши Аллоҳро гуфт.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:35, 27:36",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_throne_test",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Сулаймон дар 27:40 омадани тахтро чӣ гуна фаҳмид?",
+   "options": [
+    "Фазли Парвардигор ва озмоиши шукри ӯ",
+    "Озмоиши он ки малика тахти тағйирёфтаашро мешиносад ё не",
+    "Иҷрои ваъдаи ифрит пеш аз анҷоми маҷлис",
+    "Ҷавоби малика ба номаи ба ӯ расида"
+   ],
+   "answer": 0,
+   "info": "Сулаймон омадани тахтро фазл ва озмоиши шукри худ номид.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:40",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_palace_surface",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Малика чиро об пиндошт ва ба ӯ чӣ фаҳмонданд?",
+   "options": [
+    "Фарши шишагии қаср; он бо шиша пӯшида буд",
+    "Ҳавзи ҳақиқӣ; аз он бе пул гузаштан мумкин буд",
+    "Фарши мармарӣ; рӯяш яхи тунук буд",
+    "Оинаи болои об; зераш пул буд"
+   ],
+   "answer": 0,
+   "info": "Малика рӯйи фаршро об пиндошт, вале Сулаймон шишагӣ будани онро фаҳмонд.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:44",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_midian_wait",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Занони назди оби Мадян нигоҳ доштани рамаро чӣ гуна шарҳ доданд?",
+   "options": [
+    "Рафтани чӯпонҳоро интизор буданд; падар хеле пир буд",
+    "Бозгашти падарро интизор буданд; чӯпонҳо рафта буданд",
+    "Боронро интизор буданд; падар рамаи дигар мечаронд",
+    "Кушодани чоҳро интизор буданд; падар дар шаҳр боздошт буд"
+   ],
+   "answer": 0,
+   "info": "Онҳо баъд аз рафтани чӯпонҳо об медоданд ва пирии падарро гуфтанд.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 28:23",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/28",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_hiring_qualities",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Пас аз ёрӣ ба занон барои киро кардани Мусо кадом ду сифат гуфта шуд?",
+   "options": [
+    "Қувват ва боэътимодӣ",
+    "Дониш ва таҷрибаи нигоҳдорӣ",
+    "Суханварӣ ва сарват",
+    "Насаби ашроф ва калонсолӣ"
+   ],
+   "answer": 0,
+   "info": "Пешниҳоди киро дар 28:26 ба қувват ва боэътимодии корманд такя мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 28:24, 28:25, 28:26",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/28",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_midian_contract",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Шартҳои хизмати Мусо дар Мадян чӣ буданд?",
+   "options": [
+    "Ҳашт сол; даҳ сол ихтиёрӣ; ҳар ду муҳлат бе маломат",
+    "Даҳ сол; ҳашт бо пардохт; вагарна маломат",
+    "Ҳафт сол; даҳ ҳатмӣ; камтар қабул нест",
+    "Ҳашт сол ва баъди никоҳ боз даҳ; ҳар ду ҳатмӣ"
+   ],
+   "answer": 0,
+   "info": "Аҳд ҳашт сол, тамдиди ихтиёрӣ то даҳ ва қабули ҳар яке аз ду муҳлатро муқаррар кард.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 28:27, 28:28",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/28",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_qarun_wealth",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Дар насиҳати Қорун дар бораи сарват кадом ҳадафҳо якҷоянд?",
+   "options": [
+    "Ҷустуҷӯи охират, фаромӯш накардани баҳраи дунё ва некӣ",
+    "Навиштани қарзҳо, овардани шоҳидон ва гирифтани гарав дар сафар",
+    "Тақсими мерос пас аз иҷрои васият ва адои қарз",
+    "Нигоҳ доштани ҳосил дар хӯшаҳо ва захира барои солҳои душвор"
+   ],
+   "answer": 0,
+   "info": "Насиҳат охират, баҳраи дунё, некӣ ва дурӣ аз фасодро мепайвандад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 28:77",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/28",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_sheep_dispute",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Дар 38:23 соҳиби як гӯсфанд назди Довуд аз чӣ шикоят кард?",
+   "options": [
+    "Бародари соҳиби 99 гӯсфанд ягона гӯсфанди ӯро ҳам талаб кард",
+    "Бародари соҳиби як гӯсфанд аз 99 гӯсфанди ӯ якеро хост",
+    "Онҳо барои баробар тақсим кардани 99 гӯсфанд баҳс карданд",
+    "Онҳо барои иваз кардани ду рамаи баробар баҳс карданд"
+   ],
+   "answer": 0,
+   "info": "Шикояткунанда як гӯсфанд дошт; бародари соҳиби 99 гӯсфанд талаб кард, ки онро ҳам ба ӯ диҳад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 38:22, 38:23",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/38",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_ayyub_oath",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Дар дастури 38:44 дар бораи нашикастани савганд ба Айюб фармуданд чӣ ба даст гирад?",
+   "options": [
+    "Як даста",
+    "Асо",
+    "Ҷома",
+    "Ҷом"
+   ],
+   "answer": 0,
+   "info": "Оят дар бораи савганди Айюб дастаро зикр мекунад ва ӯро сабркунанда меномад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 38:44",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/38",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_believer_argument",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Марди мӯъмин аз хонадони Фиръавн дурӯғ ё рост гуфтани Мусоро чӣ гуна муқоиса кард(40:28)?",
+   "options": [
+    "Дурӯғ бар зарари Мусост; агар рост бошад, қисми таҳдид ба онҳо мерасад",
+    "Дурӯғ бар зарари онҳост; агар рост бошад, қисми таҳдид ба Мусо мерасад",
+    "Дар ҳар ду ҳолат таҳдид танҳо ба Мусо дахл дорад",
+    "Дар ҳар ду ҳолат таҳдид танҳо ба насли онҳо дахл дорад"
+   ],
+   "answer": 0,
+   "info": "Гӯянда оқибати дурӯғро ба худи Мусо нисбат дод, вале агар рост гӯяд, шунавандагонро аз қисми таҳдид огоҳ кард.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 40:28",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/40",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_yusuf_after_death",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Дар 40:34 кадом иддаои пас аз марги Юсуф ёд мешавад?",
+   "options": [
+    "Аллоҳ баъд аз ӯ дигар паёмбар намефиристад",
+    "Баъд аз ӯ танҳо аз хонаводааш паёмбар меояд",
+    "Паёмбари дигар танҳо баъд аз кӯчидан меояд",
+    "Баъд аз ӯ танҳо подшоҳони бе Китоб мемонанд"
+   ],
+   "answer": 0,
+   "info": "Оят шакҳои замони зиндагии Юсуф ва иддаои пас аз маргашро, ки дигар паёмбар намеояд, ёд мекунад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 40:34",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/40",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_paradise_river_traits",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Кадом ҷуфти тавсифи шир ва асал ба 47:15 дақиқан мувофиқ аст?",
+   "options": [
+    "Шири таъмаш тағйирнаёбанда; асали покшуда",
+    "Шири покшуда; асали таъмаш тағйирнаёбанда",
+    "Шири сардшуда; асали хушбӯй",
+    "Шири хушбӯй; асали сардшуда"
+   ],
+   "answer": 0,
+   "info": "Дар тавсифи рӯдҳои биҳишт таъми шир тағйир намеёбад ва асал покшуда номида мешавад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 47:15",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/47",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_monasticism_distinction",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Дар 57:27 чӣ ҳамчун дар дилҳои пайравони Исо ҷойдодашуда ва чӣ ҳамчун ихтирои худи онҳо фарқ карда мешавад?",
+   "options": [
+    "Шафқат ва раҳмат — роҳибӣ",
+    "Фурӯтанӣ ва сабр — рӯза",
+    "Тарс ва умед — безанӣ",
+    "Ихлос ва шукр — ҳаҷ"
+   ],
+   "answer": 0,
+   "info": "Оят шафқату раҳматро ба атои Аллоҳ ва роҳибиро ба расми ҷорӣкардаи худи пайравон нисбат медиҳад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 57:27",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/57",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_fay_recipients",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Дар 59:7 дар баробари Аллоҳ, Паёмбар ва наздикони ӯ кадом се гурӯҳ ҳамчун гирандагони мол номбар шудаанд?",
+   "options": [
+    "Ятимон, камбағалон ва мусофир",
+    "Қарздорон, камбағалон ва мусофир",
+    "Ятимон, ғуломони озодшаванда ва мусофир",
+    "Ятимон, камбағалон ва ҷамъкунандагони закот"
+   ],
+   "answer": 0,
+   "info": "Дар рӯйхати 59:7 ятимон, камбағалон ва мусофир омадаанд, то мол танҳо миёни сарватмандон дар гардиш набошад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 59:7",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/59",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_later_believers_prayer",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Дар дуои касоне, ки баъд аз мӯъминони аввал омаданд, дар 59:10 кадом ду хоҳиш якҷо омадааст?",
+   "options": [
+    "Мо ва пешиниёни имондорро биёмурз; кина ба мӯъминонро дур кун",
+    "Мо ва насли моро биёмурз; тарс аз душманонро дур кун",
+    "Наздикону устодонро биёмурз; ҳасад ба сарватмандонро дур кун",
+    "Мо ва пешиниёни имондорро биёмурз; кӯдаконро аз бало нигоҳ дор"
+   ],
+   "answer": 0,
+   "info": "Дуо барои худ ва пешгузаштагон дар имон омурзиш ва барои дилҳо набудани кина ба мӯъминонро мехоҳад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 59:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/59",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_fairness_conditions",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Дар 60:8 ҳангоми иҷозати некӣ ва адолат ба мардум анҷом надодани кадом ду кор зикр мешавад?",
+   "options": [
+    "Барои дин наҷангидаанд ва аз хонаҳо нарондаанд",
+    "Барои мол наҷангидаанд ва савдоро рад накардаанд",
+    "Аз хонаҳо нарондаанд ва дар бораи эътиқод баҳс накардаанд",
+    "Аҳди савдоро нашикастаанд ва ҳиҷратро рад накардаанд"
+   ],
+   "answer": 0,
+   "info": "Дар 60:8 маҳз наҷангидан ба сабаби дин ва аз хонаҳо нарондан зикр шудааст.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 60:8",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/60",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_last_request",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Дар 63:10 касе, ки пеш аз марг муҳлати кӯтоҳ мехоҳад, чӣ ваъда медиҳад?",
+   "options": [
+    "Садақа додан ва аз солеҳон шудан",
+    "Ҳаҷ кардан ва рӯза гирифтан",
+    "Қарзҳоро додан ва наздиконро оштӣ кардан",
+    "Омурзиш хостан ва ҳиҷрат кардан"
+   ],
+   "answer": 0,
+   "info": "Дар 63:10 садақа ва солеҳӣ зикр мешавад; ояти баъдӣ мегӯяд, ки муҳлати фарорасида ба таъхир намеафтад.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 63:10, 63:11",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/63",
+    "translationVersion": 1
+   }
   }
  ]
 }

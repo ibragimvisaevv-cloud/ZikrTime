@@ -24,6 +24,8 @@ class ContentTest {
             bank.questions.zip(master.questions).forEach { (q, m) ->
                 assertEquals("${f.name}: id", m.id, q.id)
                 assertEquals("${f.name}/${q.id}: тема", m.category, q.category)
+                assertEquals("${f.name}/${q.id}: уровень", m.difficulty, q.difficulty)
+                assertTrue(q.difficulty in 1..3)
                 assertEquals("${f.name}/${q.id}: арабский текст", m.arabic, q.arabic)
                 assertEquals("${f.name}/${q.id}: 4 варианта", 4, q.options.toSet().size)
                 assertTrue("${f.name}/${q.id}: нет справки", q.info.length >= 20)

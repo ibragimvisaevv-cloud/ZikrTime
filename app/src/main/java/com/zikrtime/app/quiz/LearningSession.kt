@@ -18,6 +18,8 @@ data class LearningSession(
     val correctIds: Set<String> = emptySet(),
     val rewardDate: String,
     val addedMinutes: Int = 0,
+    /** Missing on pre-level sessions; those require a fresh, explicitly selected round. */
+    val level: Int? = null,
 )
 
 /** Storage codec is independent of Android and localized text. */
@@ -34,14 +36,21 @@ object LearningSessions {
             ids.associateWith { versions.optInt(it,1) },stage,o.optInt("card").coerceIn(0,minOf(4,ids.lastIndex)),index,
             if(o.has("selected"))o.getInt("selected").takeIf { it in 0..3 } else null,
             o.optJSONArray("correct")?.strings()?.toSet()?.intersect(ids.toSet()) ?: emptySet(),
-            o.getString("date"),o.optInt("added"))
+            o.getString("date"),o.optInt("added"),
+            if(o.has("level"))o.getInt("level").also { require(KnowledgeLevel.fromId(it)!=null) } else null)
     }.getOrNull()
 
     fun encode(s: LearningSession): JSONObject = JSONObject().put("id",s.id).put("category",s.category ?: "")
         .put("ids",JSONArray(s.questionIds)).put("versions",JSONObject(s.versions.filterKeys { it in s.questionIds }))
         .put("stage",s.stage).put("card",s.cardIndex).put("index",s.index)
         .put("correct",JSONArray(s.correctIds.toList())).put("date",s.rewardDate).put("added",s.addedMinutes)
-        .apply { s.selected?.let { put("selected",it) } }
+        .apply { s.selected?.let { put("selected",it) }; s.level?.let { put("level",it) } }
+
+    fun validated(s: LearningSession, bank: QuizBank, level: KnowledgeLevel,
+        category: String? = s.category): LearningSession? {
+        if(s.level != level.id || s.category != category)return null
+        return validated(s, bank.questionsFor(category,level.id).associate { it.id to it.contentVersion })
+    }
 
     fun validated(s: LearningSession, versions: Map<String, Int>): LearningSession? {
         // A changed meaning invalidates that question only; no results transfer by position.

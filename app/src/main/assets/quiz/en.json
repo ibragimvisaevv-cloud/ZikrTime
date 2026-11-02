@@ -40,6 +40,7 @@
    "answer": 0,
    "info": "The Quran has 114 surahs and more than 6,200 ayahs. Surahs are classed as Meccan or Medinan, by when and where they were revealed.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -57,6 +58,7 @@
    "answer": 0,
    "info": "Al-Fatiha means \"The Opening\". It is recited in every rak'ah of prayer, which is why it is also called Umm al-Kitab — \"the Mother of the Book\".",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -74,6 +76,7 @@
    "answer": 0,
    "info": "Surah Al-Baqarah (\"The Cow\") has 286 ayahs. It contains Ayat al-Kursi and the longest ayah of the Quran, about recording debts (2:282).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:282"
@@ -92,6 +95,7 @@
    "answer": 0,
    "info": "Surah Al-Kawthar has three short ayahs. Al-Kawthar is the name of a river in Paradise granted to the Prophet ﷺ.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -109,6 +113,7 @@
    "answer": 0,
    "info": "This is stated in Surah Al-Baqarah (2:185). The revelation began on the Night of Decree and continued for about 23 years.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:185"
@@ -127,6 +132,7 @@
    "answer": 0,
    "info": "The angel Jibril (peace be upon him) conveyed revelation to the prophets. The Quran also calls him \"the Trustworthy Spirit\" (26:193).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 26:193"
@@ -145,6 +151,7 @@
    "answer": 0,
    "info": "The cave of Hira is on Mount Nur near Makkah. The Prophet ﷺ used to retreat there for worship even before his prophethood.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -162,6 +169,7 @@
    "answer": 0,
    "info": "The first verses revealed were the opening ayahs of Surah Al-Alaq (96:1–5) — about reading in the name of the Lord who created man.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 96:1–5"
@@ -180,6 +188,7 @@
    "answer": 0,
    "info": "Ayat al-Kursi is the 255th ayah of Surah Al-Baqarah. It speaks of Allah's greatness, His knowledge and His dominion over the heavens and the earth.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Al-Baqarah, verse 255"
@@ -198,6 +207,7 @@
    "answer": 0,
    "info": "This is reported in a hadith from Ubayy ibn Ka'b, narrated by Muslim. Ayat al-Kursi is commonly recited after the obligatory prayers and before sleep.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Muslim; narration from Ubayy ibn Kaab (number not provided in the bank)"
@@ -216,6 +226,7 @@
    "answer": 0,
    "info": "The ninth surah, At-Tawbah (\"Repentance\"), is the only one without the basmala at its start. It is also called Bara'ah (\"Disavowal\").",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -233,6 +244,7 @@
    "answer": 0,
    "info": "In Surah An-Naml the basmala appears at the start and in ayah 30 — in Prophet Sulayman's letter to the Queen of Sheba. So the Quran has 114 basmalas, one per surah.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -250,6 +262,7 @@
    "answer": 0,
    "info": "This is reported in a hadith narrated by al-Bukhari. Surah Al-Ikhlas (\"Sincerity\") is devoted entirely to the oneness of Allah — tawhid.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Al-Bukhari (number not provided in the bank)"
@@ -268,6 +281,7 @@
    "answer": 0,
    "info": "Maryam, the mother of Prophet Isa, is the only woman mentioned by name in the Quran. The 19th surah bears her name.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -285,6 +299,7 @@
    "answer": 0,
    "info": "Al-Fatiha has seven ayahs. The Quran calls it \"the seven oft-repeated\" (15:87) because it is repeated in every rak'ah.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 15:87"
@@ -303,6 +318,7 @@
    "answer": 0,
    "info": "Adam (peace be upon him) was the first human created by Allah and the first prophet. All people descend from him and his wife Hawwa.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -320,6 +336,7 @@
    "answer": 0,
    "info": "Prophet Nuh (peace be upon him) called his people to worship one God for many years. By Allah's command he built the ark and was saved from the flood with the believers.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -337,6 +354,7 @@
    "answer": 0,
    "info": "This is mentioned in Surah Al-Baqarah (2:127). Ibrahim and Ismail (peace be upon them) raised the Kaaba and prayed that Allah would accept their work.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:127"
@@ -355,6 +373,7 @@
    "answer": 0,
    "info": "From inside the fish, Prophet Yunus (peace be upon him) called on Allah, affirming His oneness and admitting his own mistake. His supplication (21:87) is still recited in hard times.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 21:87"
@@ -373,6 +392,7 @@
    "answer": 0,
    "info": "The Tawrat (Torah) is the scripture revealed to Prophet Musa (peace be upon him). Belief in all the scriptures revealed by Allah is a pillar of faith.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -390,6 +410,7 @@
    "answer": 0,
    "info": "The Zabur (Psalms) was revealed to Prophet Dawud (peace be upon him). Dawud was both a prophet and a ruler, and Allah gave him a beautiful voice.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -407,6 +428,7 @@
    "answer": 0,
    "info": "The Injil (Gospel) was revealed to Prophet Isa (peace be upon him), the son of Maryam. Muslims believe Isa is a messenger of Allah and that Allah raised him up.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -424,6 +446,7 @@
    "answer": 0,
    "info": "Prophet Sulayman (peace be upon him) was given an unmatched kingdom: the wind and the jinn obeyed him, and he understood the speech of birds and ants.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -441,6 +464,7 @@
    "answer": 0,
    "info": "Prophet Ayyub (peace be upon him) lost his health, wealth and children, yet never complained. Allah healed him and restored his blessings — his patience became an example for believers.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -458,6 +482,7 @@
    "answer": 0,
    "info": "Yusuf was the son of Prophet Yaqub, the grandson of Ishaq and the great-grandson of Ibrahim (peace be upon them all). Yaqub is also known as Israil.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -475,6 +500,7 @@
    "answer": 0,
    "info": "The story of Yusuf is told in the 12th surah, which bears his name. The Quran calls it the best of stories (12:3).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 12:3"
@@ -493,6 +519,7 @@
    "answer": 0,
    "info": "Musa asked Allah to make his brother Harun his helper, because Harun was more eloquent. Allah answered his prayer (20:29–36).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 20:29–36"
@@ -511,6 +538,7 @@
    "answer": 0,
    "info": "Allah gave Zakariya his son Yahya in old age, when his wife was barren. No one had borne that name before Yahya (19:7).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 19:7"
@@ -529,6 +557,7 @@
    "answer": 0,
    "info": "Usually 25 prophets are counted as named in the Quran. There were many more prophets — Allah did not tell us about all of them (40:78).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 40:78"
@@ -547,6 +576,7 @@
    "answer": 0,
    "info": "The Quran calls Muhammad ﷺ \"the Seal of the Prophets\" (33:40). There will be no prophet after him, and the Quran is the final scripture.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 33:40"
@@ -565,6 +595,7 @@
    "answer": 0,
    "info": "The Prophet ﷺ was born in Makkah in the Year of the Elephant — around 570 CE. He was from the clan of Hashim of the Quraysh tribe.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -582,6 +613,7 @@
    "answer": 0,
    "info": "His mother was Aminah bint Wahb. She passed away when the Prophet ﷺ was about six; his father, Abdullah, had died before he was born.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -599,6 +631,7 @@
    "answer": 0,
    "info": "It was an Arab custom to send infants to wet nurses in the desert. The Prophet ﷺ spent his early childhood with Halimah of the Banu Sa'd tribe.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -616,6 +649,7 @@
    "answer": 0,
    "info": "Khadijah (may Allah be pleased with her) was the first to believe in his prophethood and supported him through the hardest years.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -633,6 +667,7 @@
    "answer": 0,
    "info": "The revelation began when the Prophet ﷺ was 40. Before that, people in Makkah called him al-Amin — \"the trustworthy\".",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -650,6 +685,7 @@
    "answer": 0,
    "info": "The Prophet ﷺ called people to Islam for about 13 years in Makkah and about 10 years in Madinah. He passed away in 11 AH at the age of 63.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -667,6 +703,7 @@
    "answer": 0,
    "info": "The Hijrah took place in 622 CE. In Madinah, then called Yathrib, the first Muslim community took shape.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -684,6 +721,7 @@
    "answer": 0,
    "info": "The Hijri calendar was introduced under Caliph Umar. It is lunar, so it shifts about 11 days each year relative to the solar calendar.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -701,6 +739,7 @@
    "answer": 0,
    "info": "Abu Bakr (may Allah be pleased with him) hid with the Prophet ﷺ in the cave of Thawr for three days. This is mentioned in the Quran (9:40).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 9:40"
@@ -719,6 +758,7 @@
    "answer": 0,
    "info": "Al-Isra is the night journey to Jerusalem, and al-Mi'raj is the ascension to the heavens. It was then that the five daily prayers were prescribed.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -736,6 +776,7 @@
    "answer": 0,
    "info": "The Battle of Badr took place in Ramadan, 2 AH. About 313 Muslims defeated an army three times their size.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -753,6 +794,7 @@
    "answer": 0,
    "info": "Bilal was enslaved in Makkah and tortured for his faith until Abu Bakr freed him. The Prophet ﷺ chose him to call the adhan for his beautiful, strong voice.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -770,6 +812,7 @@
    "answer": 0,
    "info": "The Prophet ﷺ is buried in Madinah, in Aishah's room, which is now inside the Prophet's Mosque. Abu Bakr and Umar are buried beside him.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -787,6 +830,7 @@
    "answer": 0,
    "info": "After the Prophet ﷺ passed away, Abu Bakr as-Siddiq became the first caliph. There were four rightly guided caliphs: Abu Bakr, Umar, Uthman and Ali.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -804,6 +848,7 @@
    "answer": 0,
    "info": "The five pillars of Islam: the shahadah, prayer, zakat, fasting in Ramadan, and Hajj for those who are able.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -821,6 +866,7 @@
    "answer": 0,
    "info": "Belief in Allah, His angels, His books, His messengers, the Last Day and divine decree. They are listed in the well-known hadith of Jibril.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -838,6 +884,7 @@
    "answer": 0,
    "info": "Fajr, Dhuhr, Asr, Maghrib and Isha. The five prayers were prescribed on the night of the Mi'raj.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -855,6 +902,7 @@
    "answer": 0,
    "info": "The obligatory part of Fajr is two rak'ahs. Two sunnah rak'ahs are prayed before it — the Prophet ﷺ almost never left them.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -872,6 +920,7 @@
    "answer": 0,
    "info": "Maghrib is the only obligatory prayer with three rak'ahs. It is prayed after sunset.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -889,6 +938,7 @@
    "answer": 0,
    "info": "Dhuhr, Asr and Isha have four rak'ahs each. A traveller may shorten them to two.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -906,6 +956,7 @@
    "answer": 0,
    "info": "In wudu you wash the face, the arms to the elbows, wipe the head and wash the feet to the ankles (5:6). Ghusl is the full ablution of the whole body.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 5:6"
@@ -924,6 +975,7 @@
    "answer": 0,
    "info": "Tayammum is purification with clean earth when there is no water or it cannot be used. It is mentioned in the Quran (4:43, 5:6).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 4:43, 5:6"
@@ -942,6 +994,7 @@
    "answer": 0,
    "info": "The adhan calls people to prayer, and the iqamah is the second call right before it starts. In the Fajr adhan the words \"Prayer is better than sleep\" are added.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -959,6 +1012,7 @@
    "answer": 0,
    "info": "The direction of the Kaaba is called the qibla. You can find it in the Qibla section of this app.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -976,6 +1030,7 @@
    "answer": 0,
    "info": "For about 16–17 months after the Hijrah, Muslims prayed towards Al-Aqsa in Jerusalem. Then the qibla was changed to the Kaaba (2:144).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:144"
@@ -994,6 +1049,7 @@
    "answer": 0,
    "info": "Zakat is one of the five pillars of Islam. It is usually 2.5% of savings that have reached the nisab and been held for a year.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1011,6 +1067,7 @@
    "answer": 0,
    "info": "Zakat al-Fitr is paid for oneself and one's family so that the poor can celebrate too. It must be given before the Eid prayer.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1028,6 +1085,7 @@
    "answer": 0,
    "info": "Suhur is the meal before dawn, and iftar is breaking the fast after sunset. The Prophet ﷺ said there is barakah in suhur.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1045,6 +1103,7 @@
    "answer": 0,
    "info": "The Friday prayer replaces Dhuhr and is preceded by a sermon — the khutbah. Friday is the best day of the week for Muslims.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1062,6 +1121,7 @@
    "answer": 0,
    "info": "Tawaf is walking around the Kaaba seven times anticlockwise. It begins at the corner of the Black Stone.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1079,6 +1139,7 @@
    "answer": 0,
    "info": "Sa'i recalls Hajar, who searched for water for little Ismail, running seven times between the hills of Safa and Marwah (2:158).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:158"
@@ -1097,6 +1158,7 @@
    "answer": 0,
    "info": "The main rites of Hajj take place from the 8th to the 13th of Dhu al-Hijjah. The Day of Arafah is the 9th of Dhu al-Hijjah.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1114,6 +1176,7 @@
    "answer": 0,
    "info": "Ramadan is the ninth month, followed by Shawwal. The Islamic calendar has 12 lunar months.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1131,6 +1194,7 @@
    "answer": 0,
    "info": "This is stated in Surah Al-Qadr (97:3). It is sought in the last ten nights of Ramadan, especially the odd ones.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 97:3"
@@ -1149,6 +1213,7 @@
    "answer": 0,
    "info": "Eid al-Fitr is celebrated on the 1st of Shawwal with the Eid prayer. The second holiday, Eid al-Adha, falls on the 10th of Dhu al-Hijjah.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1166,6 +1231,7 @@
    "answer": 0,
    "info": "The spring of Zamzam appeared by Allah's mercy when Hajar was searching for water for her son Ismail. It has not dried up for thousands of years.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1183,6 +1249,7 @@
    "answer": 0,
    "info": "With these words we glorify Allah and declare Him free of any imperfection. After prayer it is customary to say it 33 times.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1200,6 +1267,7 @@
    "answer": 0,
    "info": "Muslims thank Allah with these words in every situation — in joy and in hardship. They open Al-Fatiha after the basmala.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1217,6 +1285,7 @@
    "answer": 0,
    "info": "Every prayer begins with these words — the takbir. They are also said in the adhan and on the days of Eid.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1234,6 +1303,7 @@
    "answer": 0,
    "info": "When speaking about the future, Muslims add \"InshaAllah\" (18:23–24). \"MashaAllah\" — \"what Allah has willed\" — is said when admiring something.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 18:23–24"
@@ -1252,6 +1322,7 @@
    "answer": 0,
    "info": "This is istighfar — asking for forgiveness. The Prophet ﷺ asked Allah for forgiveness more than seventy times a day.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1269,6 +1340,7 @@
    "answer": 0,
    "info": "Sabr is patience and steadfastness: in worship, in avoiding sin and in trials. The Quran says that Allah is with the patient (2:153).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 2:153"
@@ -1287,6 +1359,7 @@
    "answer": 0,
    "info": "Shukr is gratitude to Allah with the heart, words and deeds. Allah promised to give more to those who are grateful (14:7).",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "القرآن 14:7"
@@ -1305,6 +1378,7 @@
    "answer": 0,
    "info": "A well-known hadith in al-Bukhari and Muslim begins by saying that deeds are judged by intentions. A good intention turns an ordinary act into worship.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Al-Bukhari and Muslim (numbers not provided in the bank)"
@@ -1323,6 +1397,7 @@
    "answer": 0,
    "info": "Barakah is the blessing and benefit Allah places in time, wealth and deeds. Even a little with barakah brings much good.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1340,6 +1415,7 @@
    "answer": 0,
    "info": "Islam means submission to the one God. The word comes from the same root as \"salam\" — peace.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1
    }
@@ -1357,6 +1433,7 @@
    "answer": 0,
    "info": "Surah Al-Ikhlas, ayahs 1–2. As-Samad means the Self-Sufficient: everyone needs Him, and He needs no one.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Surah Al-Ikhlas, ayahs 1–2"
@@ -1376,6 +1453,7 @@
    "answer": 0,
    "info": "Surah Al-Fatiha, ayahs 2–3. Ar-Rahman and Ar-Rahim are names of Allah that speak of His mercy.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Surah Al-Fatiha, ayahs 2–3"
@@ -1395,6 +1473,7 @@
    "answer": 0,
    "info": "Surah Al-Fatiha, ayah 5: we worship Allah alone and ask for help from Him alone.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Surah Al-Fatiha, ayah 5"
@@ -1414,6 +1493,7 @@
    "answer": 0,
    "info": "Surah Al-Asr, ayahs 1–2. Imam ash-Shafi'i said that if people reflected only on this surah, it would be enough for them.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Surah Al-Asr, ayahs 1–2"
@@ -1433,6 +1513,7 @@
    "answer": 0,
    "info": "Surah Al-Falaq, ayahs 1–2. Together with Surah An-Nas it is called al-Mu'awwidhatayn — the two surahs of seeking Allah's protection.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Surah Al-Falaq, ayahs 1–2"
@@ -1452,6 +1533,7 @@
    "answer": 0,
    "info": "Surah An-Nas, ayahs 1–2. It is the last surah of the Quran; the Prophet ﷺ recited it with Al-Ikhlas and Al-Falaq before sleep.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Surah An-Nas, ayahs 1–2"
@@ -1471,11 +1553,2412 @@
    "answer": 0,
    "info": "Surah Al-Kawthar, ayahs 1–2: in gratitude for the blessing given — pray to your Lord and offer sacrifice for Him.",
    "contentVersion": 1,
+   "difficulty": 1,
    "source": {
     "translationVersion": 1,
     "reference": "Surah Al-Kawthar, ayahs 1–2"
    },
    "arabic": "إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ"
+  },
+  {
+   "id": "l1_verify_news",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "What should you do with news from an unreliable person in 49:6?",
+   "options": [
+    "Verify it",
+    "Spread it immediately",
+    "Judge by rumours",
+    "Believe without checking"
+   ],
+   "answer": 0,
+   "info": "Verifying a report helps prevent harming people through ignorance.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:6",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_reconcile_believers",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "What does 49:10 call for when believers quarrel?",
+   "options": [
+    "Reconcile them",
+    "Inflame the dispute",
+    "Encourage resentment",
+    "Spread the quarrel"
+   ],
+   "answer": 0,
+   "info": "The verse calls believers brothers and urges reconciliation between them.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_offensive_names",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Which nicknames does 49:11 forbid using for people?",
+   "options": [
+    "Insulting ones",
+    "Ones useful for records",
+    "Ones identifying a trade",
+    "Ones identifying kinship"
+   ],
+   "answer": 0,
+   "info": "The verse forbids insulting nicknames and mocking people.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:11",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_no_spying",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Which action is prohibited in 49:12?",
+   "options": [
+    "Spying on others",
+    "Helping those in need",
+    "Reconciling neighbours",
+    "Returning entrusted property"
+   ],
+   "answer": 0,
+   "info": "The verse prohibits spying on people and speaking ill behind their backs.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:12",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_honour_piety",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "What determines honour before Allah in 49:13?",
+   "options": [
+    "Piety",
+    "Wealth",
+    "Ancestry",
+    "Fame"
+   ],
+   "answer": 0,
+   "info": "The verse links honour before Allah to a person's piety.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 49:13",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/49",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_parents_speech",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "How does 17:23 teach us to speak to elderly parents?",
+   "options": [
+    "Respectfully",
+    "Irritably",
+    "Mockingly",
+    "Dismissively"
+   ],
+   "answer": 0,
+   "info": "The verse instructs respectful speech to parents without expressing irritation.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:23",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_parents_mercy",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "What is requested for parents in the prayer in 17:24?",
+   "options": [
+    "Allah's mercy",
+    "Fame among people",
+    "Power over others",
+    "Wealth at any cost"
+   ],
+   "answer": 0,
+   "info": "This prayer asks the Lord to have mercy on the parents who raised us.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:24",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_keep_promises",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "What does 17:34 teach about commitments?",
+   "options": [
+    "Honour them",
+    "Forget them when inconvenient",
+    "Change them secretly",
+    "Keep them only for praise"
+   ],
+   "answer": 0,
+   "info": "The verse commands keeping commitments and reminds us of accountability for them.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:34",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_fair_measure",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "How does 17:35 instruct us to measure and weigh goods?",
+   "options": [
+    "With full measure and accurate scales",
+    "To suit the seller's profit",
+    "By guessing without measuring",
+    "According to the buyer's status"
+   ],
+   "answer": 0,
+   "info": "The verse requires full measure and accurate weighing.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:35",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_avoid_arrogance",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Which manner of behaviour does 17:37 warn against?",
+   "options": [
+    "Arrogance",
+    "Calmness",
+    "Humility",
+    "Attentiveness"
+   ],
+   "answer": 0,
+   "info": "The verse warns against walking on earth with arrogance.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:37",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_lower_voice",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "What does 31:19 advise about one's voice?",
+   "options": [
+    "Lower it",
+    "Always shout",
+    "Drown out others",
+    "Raise it in arguments"
+   ],
+   "answer": 0,
+   "info": "The verse teaches moderation in walking and speaking.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 31:19",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/31",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_luqman_prayer",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "Which act of worship does Luqman tell his son to establish in 31:17?",
+   "options": [
+    "Prayer",
+    "Pilgrimage every month",
+    "Unbroken fasting",
+    "Daily circling of the Kaaba"
+   ],
+   "answer": 0,
+   "info": "Establishing prayer is among Luqman's instructions to his son in this verse.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 31:17",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/31",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_enter_homes",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "What should precede entering another person's home in 24:27?",
+   "options": [
+    "Asking permission and greeting",
+    "Entering if the door is open",
+    "Inspecting the rooms first",
+    "Entering before announcing yourself"
+   ],
+   "answer": 0,
+   "info": "The verse requires permission and a greeting before entering others' homes.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 24:27",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_return_when_asked",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "What should you do if told to go back when visiting a home in 24:28?",
+   "options": [
+    "Leave",
+    "Insist on entering",
+    "Use another entrance",
+    "Argue with the host"
+   ],
+   "answer": 0,
+   "info": "The verse instructs visitors to leave when told to go back.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 24:28",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_return_greeting",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "How should a greeting be answered according to 4:86?",
+   "options": [
+    "Equally or better",
+    "Only with silence",
+    "Always more briefly",
+    "Only after it is repeated"
+   ],
+   "answer": 0,
+   "info": "The verse teaches returning a greeting with an equal or better one.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:86",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_return_trust",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "To whom does 4:58 command returning entrusted property?",
+   "options": [
+    "Its rightful owners",
+    "The wealthiest people",
+    "The first person who asks",
+    "The most influential person"
+   ],
+   "answer": 0,
+   "info": "The verse commands handing trusts back to those entitled to them.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:58",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_justice_self",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Must you testify justly even against yourself in 4:135?",
+   "options": [
+    "Yes, even against yourself",
+    "No, always protect yourself",
+    "Only if nobody finds out",
+    "Only to gain people's rewards"
+   ],
+   "answer": 0,
+   "info": "The verse requires just testimony even against oneself and close relatives.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:135",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_cooperate_good",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "In what does 5:2 call us to help one another?",
+   "options": [
+    "Goodness and piety",
+    "Sin and hostility",
+    "Deception for friends",
+    "Revenge against rivals"
+   ],
+   "answer": 0,
+   "info": "The verse commands cooperation in goodness and forbids assistance in sin and hostility.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:2",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_justice_dislike",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "How does 5:8 teach us to treat people we dislike?",
+   "options": [
+    "Justly",
+    "With bias",
+    "Vengefully",
+    "According to rumours"
+   ],
+   "answer": 0,
+   "info": "Dislike of people must not lead us to act unjustly.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:8",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_justice_kindness",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Which set of deeds is commanded in 16:90?",
+   "options": [
+    "Justice, goodness and helping relatives",
+    "Fame, power and rivalry",
+    "Wealth, pride and revenge",
+    "Silence, suspicion and alienation"
+   ],
+   "answer": 0,
+   "info": "The verse brings together justice, good conduct and generosity to relatives.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:90",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_patience_prayer",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Through what does 2:153 call believers to seek help?",
+   "options": [
+    "Patience and prayer",
+    "Fame and wealth",
+    "Anger and argument",
+    "Power and arrogance"
+   ],
+   "answer": 0,
+   "info": "The verse connects seeking help with patience and prayer.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:153",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_charity_orphans",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Which group is explicitly named among recipients of support in 2:177?",
+   "options": [
+    "Orphans",
+    "Military commanders",
+    "Judges",
+    "Rulers"
+   ],
+   "answer": 0,
+   "info": "The verse includes giving to orphans among acts of righteousness.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:177",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_fasting_piety",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "What aim of fasting is stated in 2:183?",
+   "options": [
+    "Piety",
+    "Fame",
+    "Getting rich",
+    "Superiority by ancestry"
+   ],
+   "answer": 0,
+   "info": "The command to fast in this verse is connected with developing piety.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:183",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_fasting_makeup",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "What replacement for missed fasting does 2:185 mention for illness or travel?",
+   "options": [
+    "The same number of days later",
+    "Twice as many days",
+    "Extra prayers only",
+    "Pilgrimage instead of days"
+   ],
+   "answer": 0,
+   "info": "The verse specifies making up the missed fasts on other days.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:185",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_fast_until_night",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "What endpoint of the daily fast is named in 2:187?",
+   "options": [
+    "Nightfall",
+    "Noon",
+    "The next dawn",
+    "Midnight"
+   ],
+   "answer": 0,
+   "info": "The verse gives nightfall as the end of the daily fast.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:187",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_kind_words",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "What does 2:263 place above charity followed by hurt?",
+   "options": [
+    "Kind words and forgiveness",
+    "Praising oneself",
+    "Reminding others of one's generosity",
+    "Public humiliation"
+   ],
+   "answer": 0,
+   "info": "The verse values kind words and forgiveness above hurtful charity.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:263",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_charity_no_reproach",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "What must not spoil one's charity according to 2:264?",
+   "options": [
+    "Reproaches and hurt",
+    "Modesty",
+    "Respect for the recipient",
+    "Sincerity"
+   ],
+   "answer": 0,
+   "info": "The verse warns against reminding recipients of favours and hurting them.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:264",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_debtor_respite",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "What does 2:280 require for a debtor in hardship?",
+   "options": [
+    "Time until circumstances improve",
+    "Immediate punishment",
+    "A forced new debt",
+    "Public reproach"
+   ],
+   "answer": 0,
+   "info": "The verse requires granting a debtor in difficulty time until relief.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:280",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_within_capacity",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "How does 2:286 describe what a soul is charged with?",
+   "options": [
+    "Within its capacity",
+    "Always beyond its capacity",
+    "According to neighbours' wealth",
+    "According to personal fame"
+   ],
+   "answer": 0,
+   "info": "The verse affirms that Allah does not charge a soul beyond its capacity.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:286",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_restrain_anger",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Which response to anger is praised in 3:134?",
+   "options": [
+    "Restrain it and forgive",
+    "Escalate the quarrel",
+    "Humiliate the offender",
+    "Hold on to resentment"
+   ],
+   "answer": 0,
+   "info": "The verse praises those who restrain anger and forgive people.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:134",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_food_no_waste",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "What limit on eating and drinking does 7:31 give?",
+   "options": [
+    "Avoid excess",
+    "Eat only alone",
+    "Always choose the most expensive",
+    "Refuse all food"
+   ],
+   "answer": 0,
+   "info": "The verse permits eating and drinking while warning against excess.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 7:31",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/7",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_no_religious_insult",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "What does 6:108 forbid insulting?",
+   "options": [
+    "What others worship besides Allah",
+    "Only neighbours' property",
+    "Only other people's clothes",
+    "Only the names of cities"
+   ],
+   "answer": 0,
+   "info": "The verse forbids such insults to prevent ignorant insults against Allah in return.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:108",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_do_not_oppress_orphan",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "What does 93:9 prohibit regarding an orphan?",
+   "options": [
+    "Oppressing the orphan",
+    "Speaking to the orphan",
+    "Teaching the orphan",
+    "Helping the orphan"
+   ],
+   "answer": 0,
+   "info": "The verse prohibits oppressing an orphan.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 93:9",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/93",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_do_not_repel_asker",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Which treatment of someone who asks is prohibited in 93:10?",
+   "options": [
+    "Turning them away harshly",
+    "Listening to them",
+    "Answering them",
+    "Noticing them"
+   ],
+   "answer": 0,
+   "info": "The verse warns against harshly turning away someone who asks.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 93:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/93",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_feed_needy",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "What does the person criticised in 107:3 fail to encourage?",
+   "options": [
+    "Feeding the needy",
+    "Building palaces",
+    "Buying ornaments",
+    "Hoarding jewels"
+   ],
+   "answer": 0,
+   "info": "The verse criticises failing to encourage feeding a needy person.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 107:3",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/107",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_lord_of_house",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "Whom does 106:3 call people to worship?",
+   "options": [
+    "The Lord of this House",
+    "The House's keepers",
+    "Caravan owners",
+    "The tribe's ancestors"
+   ],
+   "answer": 0,
+   "info": "The verse directs worship to the Lord of this House.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 106:3",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/106",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_elephant_verse",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "Which animal is mentioned in 105:1?",
+   "options": [
+    "Elephant",
+    "Camel",
+    "Lion",
+    "Horse"
+   ],
+   "answer": 0,
+   "info": "The first verse of this surah mentions the people of the elephant.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 105:1",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/105",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_refuge_lord_people",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "How is Allah addressed when seeking refuge in 114:1?",
+   "options": [
+    "Lord of people",
+    "Master of the Day of Judgement",
+    "Lord of daybreak",
+    "Lord of the worlds"
+   ],
+   "answer": 0,
+   "info": "The first verse of this surah seeks refuge with the Lord of people.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 114:1",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/114",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_allah_one",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "What does 112:1 affirm about the number of deities?",
+   "options": [
+    "Allah is One",
+    "There are three",
+    "There are many",
+    "There are two"
+   ],
+   "answer": 0,
+   "info": "The verse affirms the oneness of Allah.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 112:1",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/112",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1_hardship_ease",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "What does 94:5 associate with hardship?",
+   "options": [
+    "Ease",
+    "Inevitable despair",
+    "Endless sadness",
+    "Loss of hope"
+   ],
+   "answer": 0,
+   "info": "The verse reminds us that ease accompanies hardship.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 94:5",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/94",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_covenant",
+   "cat": "prophets",
+   "difficulty": 2,
+   "q": "Which group is excluded from the covenant in the answer to Ibrahim in 2:124?",
+   "options": [
+    "Wrongdoers among his descendants",
+    "Poor people among his descendants",
+    "Descendants without royal authority",
+    "Descendants born outside Makkah"
+   ],
+   "answer": 0,
+   "info": "The verse excludes wrongdoers; it does not link the covenant to wealth or birthplace.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:124",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_witnesses",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "How are the roles of witnesses assigned in 2:143?",
+   "options": [
+    "The community witnesses over people; the Messenger over the community",
+    "People witness over the community; the community over the Messenger",
+    "The Messenger witnesses over people; people over the community",
+    "The community witnesses over the Messenger; the Messenger over angels"
+   ],
+   "answer": 0,
+   "info": "The middle community is called a witness over people, and the Messenger a witness over it.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:143",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_safa_marwa_signs",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "How are as-Safa and al-Marwah described in 2:158?",
+   "options": [
+    "As ritual symbols established by Allah",
+    "As places where ihram begins",
+    "As boundaries of the sacred territory",
+    "As places of standing on the day of Arafah"
+   ],
+   "answer": 0,
+   "info": "The verse counts as-Safa and al-Marwah among the ritual symbols established by Allah.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:158",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_harm_comparison",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "How does 2:219 compare the sin and benefit of wine and gambling?",
+   "options": [
+    "Their sin exceeds their benefit",
+    "Their benefit exceeds their sin",
+    "Their sin and benefit are equal",
+    "They have neither sin nor benefit"
+   ],
+   "answer": 0,
+   "info": "The verse acknowledges some benefit but describes the sin as greater.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:219",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_river_exception",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What exception did Talut allow during the river test?",
+   "options": [
+    "One handful of water",
+    "One full jug of water",
+    "Drinking until fully satisfied",
+    "Giving water only to one's horse"
+   ],
+   "answer": 0,
+   "info": "In 2:249 the exception is a single handful drawn by hand.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:249",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_ibrahim_reassurance",
+   "cat": "prophets",
+   "difficulty": 2,
+   "q": "Why did Ibrahim ask to see the dead brought to life?",
+   "options": [
+    "To reassure his heart",
+    "To believe for the first time",
+    "To learn the time of his death",
+    "To choose where to migrate"
+   ],
+   "answer": 0,
+   "info": "In 2:260 Ibrahim affirms his faith and asks for reassurance of his heart.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:260",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_grain_parable",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "How is the grain described in the parable of spending?",
+   "options": [
+    "Seven ears with one hundred grains each",
+    "One hundred ears with seven grains each",
+    "Seven ears with ten grains each",
+    "Ten ears with one hundred grains each"
+   ],
+   "answer": 0,
+   "info": "In 2:261 one grain grows seven ears, each holding one hundred grains.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:261",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_wisdom_gift",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which gift is explicitly described as abundant good in 2:269?",
+   "options": [
+    "Wisdom",
+    "Eloquence",
+    "Material prosperity",
+    "Physical strength"
+   ],
+   "answer": 0,
+   "info": "In this verse, receiving abundant good is linked to being granted wisdom.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:269",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_debt_dictation",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Who should dictate a debt agreement, when able, according to 2:282?",
+   "options": [
+    "The debtor",
+    "The lender",
+    "One of the witnesses",
+    "The scribe on their own behalf"
+   ],
+   "answer": 0,
+   "info": "The verse assigns writing to the scribe and dictation to the debtor.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:282",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_concealed_testimony",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "How is concealing testimony judged in 2:283?",
+   "options": [
+    "The concealer's heart bears sin",
+    "Responsibility passes to the scribe",
+    "The concealer answers only to the debtor",
+    "Responsibility exists only when there is no pledge"
+   ],
+   "answer": 0,
+   "info": "The verse links concealing testimony to sin in the heart.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:283",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_clear_verses",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which group of verses is called the foundation of the Scripture in 3:7?",
+   "options": [
+    "Verses clear in meaning",
+    "Verses open to more than one meaning",
+    "Verses about debt obligations",
+    "Verses containing stories of prophets"
+   ],
+   "answer": 0,
+   "info": "Clear verses are called the foundation of the Scripture, in contrast to ambiguous ones.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:7",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_dominion",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which actions concerning dominion are mentioned in 3:26?",
+   "options": [
+    "Allah grants it and takes it away",
+    "Allah grants it but never takes it away",
+    "Allah takes it away but never grants it",
+    "Dominion passes only by inheritance"
+   ],
+   "answer": 0,
+   "info": "The verse attributes both granting and removing dominion to Allah's will.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:26",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_beloved_giving",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What kind of giving is linked to attaining righteousness in 3:92?",
+   "options": [
+    "Giving from what one loves",
+    "Giving only unwanted things",
+    "Giving only found property",
+    "Giving only unsellable things"
+   ],
+   "answer": 0,
+   "info": "The verse links righteousness with giving from cherished possessions.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:92",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_consult_then_trust",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "What follows consultation and a firm decision in 3:159?",
+   "options": [
+    "Trust in Allah",
+    "Abandoning every action",
+    "Drawing lots for another decision",
+    "Hiding the decision from everyone"
+   ],
+   "answer": 0,
+   "info": "After being told to consult, the Messenger is told to trust Allah once resolved.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:159",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_mutual_consent",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "What condition of trade is expressly mentioned in 4:29?",
+   "options": [
+    "Mutual consent",
+    "Both parties being relatives",
+    "Payment only in silver",
+    "Trading only while travelling"
+   ],
+   "answer": 0,
+   "info": "The verse mentions trade based on the consent of both parties.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:29",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_family_arbiters",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Where should the two arbiters in a marital dispute come from in 4:35?",
+   "options": [
+    "One from each spouse's family",
+    "Both from the husband's family",
+    "Both from the wife's family",
+    "Both from another city"
+   ],
+   "answer": 0,
+   "info": "The verse names one arbiter from his family and one from hers.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:35",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_good_deed_multiplied",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which combination of statements appears in 4:40?",
+   "options": [
+    "There is no injustice even by a tiny particle, and good is multiplied",
+    "Small deeds are not counted, while great deeds are multiplied",
+    "Only visible deeds are counted; hidden ones are not",
+    "Good and evil are always multiplied equally"
+   ],
+   "answer": 0,
+   "info": "The verse speaks of the absence of the slightest injustice and of multiplying a good deed.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:40",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_dispute_reference",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "To whom must a disputed matter be referred in 4:59?",
+   "options": [
+    "To Allah and the Messenger",
+    "To the Messenger and those in authority",
+    "To the community's elders and scholars",
+    "To the witnesses and the scribe"
+   ],
+   "answer": 0,
+   "info": "The verse directs a disputed matter to Allah and the Messenger.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:59",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_fortified_towers",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which image in 4:78 shows that death cannot be escaped?",
+   "options": [
+    "Fortified towers",
+    "Ships with white sails",
+    "Gardens of tall palms",
+    "Desert caravan routes"
+   ],
+   "answer": 0,
+   "info": "The verse says death reaches people even inside fortified towers.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:78",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_news_referral",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "To whom should news of security or fear have been referred in 4:83?",
+   "options": [
+    "To the Messenger and those in authority",
+    "To Allah and the Messenger",
+    "To two witnesses and the scribe",
+    "To travellers arriving from that area"
+   ],
+   "answer": 0,
+   "info": "The verse contrasts spreading the news with referring it to the Messenger and those in authority.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:83",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_ablution_wiping",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Which body part does 5:6 expressly instruct believers to wipe during ablution?",
+   "options": [
+    "The head",
+    "The chest",
+    "The back",
+    "The knees"
+   ],
+   "answer": 0,
+   "info": "The ablution passage specifically mentions wiping the head.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:6",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_oath_fasting",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "What fast does 5:89 specify when the listed means of expiating an oath are beyond one's means?",
+   "options": [
+    "Three days",
+    "Seven days",
+    "Ten days",
+    "Two months"
+   ],
+   "answer": 0,
+   "info": "After listing expiation options, the verse specifies three days of fasting for someone unable to provide them.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:89",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_game_assessment",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "How many just people assess the equivalent livestock offering for game in 5:95?",
+   "options": [
+    "Two",
+    "One",
+    "Three",
+    "Four"
+   ],
+   "answer": 0,
+   "info": "For deliberately killing game in ihram, the verse names two just assessors.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:95",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_sea_provision",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "What distinction between sea and land hunting is stated in 5:96?",
+   "options": [
+    "Sea hunting is allowed; land hunting is forbidden during ihram",
+    "Both are forbidden during ihram",
+    "Both are allowed during ihram",
+    "Land hunting is allowed; sea hunting is forbidden"
+   ],
+   "answer": 0,
+   "info": "The verse permits sea hunting and forbids hunting on land while in ihram.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:96",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_falling_leaf",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What does the falling leaf image in 6:59 emphasize?",
+   "options": [
+    "Nothing escapes Allah's knowledge",
+    "Knowledge is available only at night",
+    "Leaves cannot fall without wind",
+    "Humans know all the unseen"
+   ],
+   "answer": 0,
+   "info": "The verse says no leaf falls without Allah knowing it.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:59",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_harvest_due",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "When does 6:141 instruct that the harvest's due be given?",
+   "options": [
+    "On the day of harvest",
+    "Only a year after harvest",
+    "Only at the next sowing",
+    "Only after selling the entire crop"
+   ],
+   "answer": 0,
+   "info": "The instruction to give the due is tied to harvest day.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:141",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_recitation_attention",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which two actions are prescribed when listening to Quran recitation in 7:204?",
+   "options": [
+    "Listen and remain silent",
+    "Discuss and ask questions",
+    "Interrupt and correct everyone",
+    "Keep talking and bargaining"
+   ],
+   "answer": 0,
+   "info": "The verse pairs listening to the Quran with attentive silence.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 7:204",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/7",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_dispute_weakness",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which consequences of discord are explicitly named in 8:46?",
+   "options": [
+    "Loss of resolve and strength",
+    "Loss of property and harvest",
+    "Shortening of treaty terms",
+    "An obligation to leave one's homeland"
+   ],
+   "answer": 0,
+   "info": "The verse warns that disputes lead to weakness and loss of strength.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 8:46",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/8",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_inclining_peace",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "What response to the other side inclining to peace is given in 8:61?",
+   "options": [
+    "Also incline to peace and trust Allah",
+    "Reject peace under every circumstance",
+    "Agree only after another dispute",
+    "Delay the reply until the seasons change"
+   ],
+   "answer": 0,
+   "info": "The instruction to incline to peace is accompanied by trust in Allah.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 8:61",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/8",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_charity_recipients",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Which pair is explicitly listed among charity recipients in 9:60?",
+   "options": [
+    "Debtors and travellers",
+    "Poets and scribes",
+    "Farmers and blacksmiths",
+    "Rulers and their relatives"
+   ],
+   "answer": 0,
+   "info": "Debtors and travellers are expressly named among the recipients in this verse.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 9:60",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/9",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_three_repentance",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "How is the distress of the three whose repentance was accepted described in 9:118?",
+   "options": [
+    "The vast earth felt narrow to them",
+    "The sea became dry land before them",
+    "The night seemed shorter than an hour",
+    "The mountains became gardens"
+   ],
+   "answer": 0,
+   "info": "The verse expresses their distress through the image of the spacious earth feeling narrow.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 9:118",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/9",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_pharaoh_declaration",
+   "cat": "prophets",
+   "difficulty": 2,
+   "q": "When did Pharaoh declare belief in the account of 10:90–91?",
+   "options": [
+    "When he began drowning",
+    "Before first speaking with Musa",
+    "When he freely released the people",
+    "Before Musa was born"
+   ],
+   "answer": 0,
+   "info": "Pharaoh declared belief when drowning overtook him.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 10:90, 10:91",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/10",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_shuayb_reform",
+   "cat": "prophets",
+   "difficulty": 2,
+   "q": "How does Shuayb describe his aim in 11:88?",
+   "options": [
+    "Reform as far as he is able",
+    "Collecting his people's wealth",
+    "Obtaining royal authority",
+    "Ending accountability in trade"
+   ],
+   "answer": 0,
+   "info": "Shuayb seeks reform to the best of his ability and attributes success to Allah.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 11:88",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_inner_change",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What change precedes a change in people's condition in 13:11?",
+   "options": [
+    "A change in what is within themselves",
+    "A change of their rulers",
+    "A change of residence",
+    "An increase in their material prosperity"
+   ],
+   "answer": 0,
+   "info": "The verse connects a change in people's condition with a change within themselves.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 13:11",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/13",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_bee_dwellings",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which places for bee dwellings are listed in 16:68?",
+   "options": [
+    "Mountains, trees and human structures",
+    "Seas, rivers and underwater caves",
+    "Only desert sands",
+    "Only palace roofs"
+   ],
+   "answer": 0,
+   "info": "The instruction to the bee mentions mountains, trees and what people build.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:68",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_faculties_gratitude",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What aim is named at the end of 16:78 after hearing, sight and hearts are mentioned?",
+   "options": [
+    "Gratitude",
+    "Patience",
+    "Generosity",
+    "Justice"
+   ],
+   "answer": 0,
+   "info": "The list of these gifts ends with a reminder of gratitude.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:78",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_living_water",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "From what was every living thing made, according to 21:30?",
+   "options": [
+    "Water",
+    "Iron",
+    "Smoke",
+    "Salt"
+   ],
+   "answer": 0,
+   "info": "The verse identifies water as that from which every living thing was made.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 21:30",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/21",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_privacy_times",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which three times of privacy are listed in 24:58?",
+   "options": [
+    "Before Fajr, midday rest and after Isha",
+    "After Fajr, before Asr and before Maghrib",
+    "Before Dhuhr, after Asr and before Isha",
+    "Sunrise, sunset and midnight"
+   ],
+   "answer": 0,
+   "info": "The verse singles out the time before dawn prayer, midday rest and after night prayer.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 24:58",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_messenger_example",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "What qualities are named in 33:21 in those for whom the Messenger is an excellent example?",
+   "options": [
+    "Hope in Allah and the Last Day, and frequent remembrance",
+    "Patience in hardship, help for travellers and generosity",
+    "Fairness in trade, keeping agreements and modesty",
+    "Care for parents, study of Scripture and reconciliation"
+   ],
+   "answer": 0,
+   "info": "The verse names hope in Allah and the Last Day and frequent remembrance of Allah.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 33:21",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/33",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2_tree_pledge",
+   "cat": "seerah",
+   "difficulty": 2,
+   "q": "Where did the believers make the pledge mentioned in 48:18?",
+   "options": [
+    "Under a tree",
+    "Inside the Kaaba",
+    "On the summit of Sinai",
+    "On a ship's deck"
+   ],
+   "answer": 0,
+   "info": "The verse states Allah's pleasure with believers pledging under a tree.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 48:18",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/48",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_grain_storage",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "What did Yusuf advise for the harvest, apart from a little for food?",
+   "options": [
+    "Keep it in its ears",
+    "Thresh the grain and store it without ears",
+    "Grind the grain and store it as flour",
+    "Mix the new harvest with last year’s grain"
+   ],
+   "answer": 0,
+   "info": "Yusuf advised keeping the harvest in its ears, taking only a little for food.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:47",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_prison_inquiry",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "What did Yusuf ask the king’s messenger before leaving prison?",
+   "options": [
+    "Inquire about the women who cut their hands",
+    "Bring his brothers to him first",
+    "Appoint him keeper of the stores first",
+    "Return his father’s shirt first"
+   ],
+   "answer": 0,
+   "info": "Yusuf sent the messenger back to inquire about the women’s case.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:50",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_storehouse_qualities",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Which two qualities did Yusuf give when asking to manage the storehouses?",
+   "options": [
+    "A trustworthy keeper and knowledgeable",
+    "Strong and trustworthy",
+    "Truthful and patient",
+    "Generous and prudent"
+   ],
+   "answer": 0,
+   "info": "Yusuf supported his request with his trustworthiness as a keeper and his knowledge.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:55",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_brother_pledge",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "What exception did Yaqub allow in the pledge to bring the brother back?",
+   "options": [
+    "An overwhelming calamity befalls the sons",
+    "The journey takes longer than a month",
+    "The brother chooses to remain",
+    "The harvest proves insufficient"
+   ],
+   "answer": 0,
+   "info": "The pledge included an exception if the sons were overcome by calamity.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:66",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_separate_gates",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "How did Yaqub combine using different gates with trust in Allah?",
+   "options": [
+    "Take a precaution, while judgment belongs to Allah",
+    "Require a sign before entering each gate",
+    "Treat the brothers’ safety as already promised",
+    "Make the outcome depend only on following the advice exactly"
+   ],
+   "answer": 0,
+   "info": "Yaqub advised a precaution but said he could not protect them against Allah’s will.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:67",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_search_order",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "In what order were the bags searched for the cup?",
+   "options": [
+    "The other bags first, then his brother’s",
+    "His brother’s bag first, then the others",
+    "Only the eldest brother’s bag",
+    "Only the younger brother’s bag"
+   ],
+   "answer": 0,
+   "info": "The verse places the search of his brother’s bag after the other bags.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:76",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_fish_return",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "What report made Musa retrace his steps?",
+   "options": [
+    "The fish at the rock had made its way into the sea",
+    "The villagers had refused them food",
+    "A king had begun seizing boats",
+    "A wall in the town was falling down"
+   ],
+   "answer": 0,
+   "info": "Hearing about the fish at the rock, Musa recognized the place they sought and returned.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:61, 18:62, 18:63, 18:64",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_journey_sequence",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "What is the order of the three acts by Musa’s companion in Al-Kahf?",
+   "options": [
+    "Damaging the boat → killing the boy → repairing the wall",
+    "Killing the boy → damaging the boat → repairing the wall",
+    "Repairing the wall → damaging the boat → killing the boy",
+    "Damaging the boat → repairing the wall → killing the boy"
+   ],
+   "answer": 0,
+   "info": "The narrative describes the boat first, then the boy, and finally the wall.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:71, 18:74, 18:77",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_boat_explanation",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "What threat explained the damage to the poor workers’ boat?",
+   "options": [
+    "A king was seizing boats by force",
+    "The king charged a heavy duty on cargo",
+    "The king recruited all boat owners into his fleet",
+    "The king forbade poor people to sail"
+   ],
+   "answer": 0,
+   "info": "The companion linked the damage to a king’s seizure of boats.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:79",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_wall_treasure",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Why was the wall above a treasure repaired?",
+   "options": [
+    "So two orphans could mature and retrieve it",
+    "So the guardians could recover the treasure and give it to the orphans immediately",
+    "So the orphans could recover the treasure when their relatives returned",
+    "So the orphans could recover the treasure after rebuilding the whole house"
+   ],
+   "answer": 0,
+   "info": "Repairing the wall preserved the treasure until the two orphans reached maturity.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:82",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_barrier_help",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "What did Dhul-Qarnayn request when offered payment for a barrier?",
+   "options": [
+    "Help with their strength, since his Lord’s gift was better",
+    "Twice the offered payment",
+    "Rule over their settlement",
+    "Their entire food supply"
+   ],
+   "answer": 0,
+   "info": "Dhul-Qarnayn answered the offer by asking the people to contribute their strength.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:94, 18:95",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_barrier_materials",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "How are iron and copper used in Dhul-Qarnayn’s barrier?",
+   "options": [
+    "Iron was heated, then molten copper poured over it",
+    "Copper was heated, then molten iron was poured over it",
+    "Iron and copper were mixed, then the fire was fanned",
+    "Layers of iron and copper were laid, then cooled with water"
+   ],
+   "answer": 0,
+   "info": "The verse describes heated iron with molten copper poured over it.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:96",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_mistaken_efforts",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "What contrast describes those losing most in deeds in 18:103–104?",
+   "options": [
+    "Their efforts are lost, yet they think they do good",
+    "Their deeds are beneficial, but they think them wasted",
+    "Their efforts are wasted, and they know they were mistaken",
+    "They have not begun their deeds, but think them completed"
+   ],
+   "answer": 0,
+   "info": "The verses contrast wasted efforts with the belief that one is doing well.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:103, 18:104",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_zakariya_sign",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "How is Zakariya’s sign described in Surah Maryam?",
+   "options": [
+    "Unable to speak to people for three nights while healthy",
+    "Unable to see people for three days through illness",
+    "Unable to leave the sanctuary for forty nights",
+    "Unable to eat for seven days"
+   ],
+   "answer": 0,
+   "info": "In Maryam, the sign concerns speaking to people while remaining physically sound.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 19:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/19",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_maryam_vow",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "What follows the instruction to Maryam to eat, drink and be comforted in 19:26?",
+   "options": [
+    "A vow not to speak to people that day",
+    "A vow not to go out among people that day",
+    "A vow not to tell people specifically about the child",
+    "A vow not to speak for three consecutive nights"
+   ],
+   "answer": 0,
+   "info": "The vow mentioned in the verse is accompanied by not speaking to people that day.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 19:26",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/19",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_ismail_traits",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Which pair describes Ismail in 19:54–55?",
+   "options": [
+    "Keeping promises; urging his family to pray and give zakat",
+    "Interpreting dreams; managing storehouses",
+    "Gentleness before Pharaoh; requesting a helper",
+    "Building a barrier; declining payment"
+   ],
+   "answer": 0,
+   "info": "The verses connect Ismail’s faithfulness to promises with instructing his family in prayer and zakat.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 19:54, 19:55",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/19",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_musa_two_signs",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Which signs and details are given to Musa in 20:20–22?",
+   "options": [
+    "The staff became a snake; the hand turned white without harm",
+    "The staff became a snake; the hand turned white from illness",
+    "The sea parted; the hand turned white without harm",
+    "The staff opened springs; the hand turned white without harm"
+   ],
+   "answer": 0,
+   "info": "This passage describes the transformed staff and the white hand without harm.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 20:20, 20:21, 20:22",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/20",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_musa_helper_purpose",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Why did Musa ask for Harun as his helper?",
+   "options": [
+    "To strengthen him and share in his task",
+    "Leave Harun with the people and go to Pharaoh alone",
+    "Entrust Harun with keeping the Scripture and teaching children",
+    "Entrust Harun only with answering Pharaoh’s questions"
+   ],
+   "answer": 0,
+   "info": "Musa asked to be strengthened through Harun and for Harun to share his task.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 20:25, 20:26, 20:27, 20:28, 20:29, 20:30, 20:31, 20:32",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/20",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_revelation_knowledge",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Which two instructions are joined in 20:114?",
+   "options": [
+    "Do not hasten before revelation ends; ask for more knowledge",
+    "Wait for the revelation to finish and ask for ease",
+    "Repeat the revelation before it finishes and ask for knowledge",
+    "Wait for the revelation to finish and ask for patience"
+   ],
+   "answer": 0,
+   "info": "The verse joins patience in receiving revelation with asking for increased knowledge.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 20:114",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/20",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_praise_times",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Which times for praise accompany the call to patience in 20:130?",
+   "options": [
+    "Before sunrise and sunset, at night and at the day’s ends",
+    "After sunrise and sunset, at night and in the middle of the day",
+    "Before sunrise, after sunset and only in the middle of the night",
+    "After sunrise, before sunset and only in the middle of the day"
+   ],
+   "answer": 0,
+   "info": "The verse includes sunrise and sunset, parts of the night and the day’s ends.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 20:130",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/20",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_measure_rights",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Which three trading requirements are expressly listed in 26:181–183?",
+   "options": [
+    "Full measure, accurate scales, respecting people’s due",
+    "Full measure, deferred payment, recording every debt",
+    "Accurate scales, two witnesses, an appointed scribe",
+    "Respecting people’s due, a pledge, extending the term"
+   ],
+   "answer": 0,
+   "info": "The passage combines full measure, accurate weighing and not depriving people of their due.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 26:181, 26:182, 26:183",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/26",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_ant_warning",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "How are the danger and Sulayman’s response paired in the ant narrative?",
+   "options": [
+    "Unintentional crushing; a prayer for gratitude and good deeds",
+    "Deliberate attack; a prayer for gratitude and good deeds",
+    "Unintentional crushing; a prayer for a kingdom without an heir",
+    "Deliberate attack; a prayer to conceal the army"
+   ],
+   "answer": 0,
+   "info": "The ant warned of unintentional harm, and Sulayman prayed for gratitude and righteous action.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:18, 27:19",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_queen_council",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "What condition did the queen of Saba state when consulting her council?",
+   "options": [
+    "She would not decide without their presence",
+    "She would not decide without their unanimous agreement",
+    "She would not decide before the messengers returned",
+    "She would not decide without the commander’s advice"
+   ],
+   "answer": 0,
+   "info": "The queen requested advice and said she would not decide without the council present.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:32",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_gift_response",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "How do the queen’s gift and Sulayman’s response correspond?",
+   "options": [
+    "Observe the envoys’ return; Allah’s gift surpasses their wealth",
+    "Pay for construction; the wealth offered is insufficient",
+    "Ransom captives; Allah’s gift surpasses their wealth",
+    "Acknowledge defeat; the gift is accepted as annual tribute"
+   ],
+   "answer": 0,
+   "info": "The queen intended to observe the envoys’ response, while Sulayman pointed to Allah’s greater gift.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:35, 27:36",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_throne_test",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "How did Sulayman understand the throne’s arrival in 27:40?",
+   "options": [
+    "His Lord’s favour testing his gratitude",
+    "A test of whether the queen would recognise her altered throne",
+    "The ifrit’s promise fulfilled before the council ended",
+    "The queen’s response to the letter delivered to her"
+   ],
+   "answer": 0,
+   "info": "Sulayman described the throne’s arrival as a favour and a test of his gratitude.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:40",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_palace_surface",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "What did the queen mistake for water, and what was explained?",
+   "options": [
+    "The palace’s glass floor; it was paved with glass",
+    "A real pool; it could be crossed without a bridge",
+    "A marble floor; it was covered with thin ice",
+    "A mirror above water; a bridge lay underneath"
+   ],
+   "answer": 0,
+   "info": "The queen took the surface for water, but Sulayman explained that it was glass.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 27:44",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/27",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_midian_wait",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "How did the women at Madyan explain holding back their flock?",
+   "options": [
+    "They awaited the shepherds’ departure; their father was very old",
+    "They awaited their father’s return; the shepherds had left",
+    "They awaited rain; their father tended another flock",
+    "They awaited the well’s opening; their father was held in town"
+   ],
+   "answer": 0,
+   "info": "They would water after the shepherds left and said their father was elderly.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 28:23",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/28",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_hiring_qualities",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Which two qualities support hiring Musa after he helped the women?",
+   "options": [
+    "Strength and trustworthiness",
+    "Knowledge and experience as a keeper",
+    "Eloquence and wealth",
+    "Noble ancestry and seniority"
+   ],
+   "answer": 0,
+   "info": "The proposal in 28:26 rests on a worker’s strength and trustworthiness.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 28:24, 28:25, 28:26",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/28",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_midian_contract",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "What were Musa’s service terms in Madyan?",
+   "options": [
+    "Eight years; ten voluntarily; either term without reproach",
+    "Ten years; eight with a payment; otherwise reproach",
+    "Seven years; ten required; no shorter term accepted",
+    "Eight years, then ten after marriage; both required"
+   ],
+   "answer": 0,
+   "info": "The agreement set eight years, an optional extension to ten and acceptance of either term.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 28:27, 28:28",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/28",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_qarun_wealth",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Which combination of aims appears in the advice to Qarun about wealth?",
+   "options": [
+    "Seek the Hereafter, retain one’s worldly share and do good",
+    "Record debts, bring witnesses and take a pledge while travelling",
+    "Distribute inheritance after fulfilling a bequest and paying debts",
+    "Store the harvest in ears and prepare supplies for difficult years"
+   ],
+   "answer": 0,
+   "info": "The advice joins the Hereafter, one’s worldly share, doing good and avoiding corruption.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 28:77",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/28",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_sheep_dispute",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "What did the owner of one ewe complain about before Dawud in 38:23?",
+   "options": [
+    "His brother with 99 ewes demanded his only ewe too",
+    "His brother with one ewe asked for one of his 99",
+    "They disputed an equal division of 99 ewes",
+    "They disputed an exchange of two equal flocks"
+   ],
+   "answer": 0,
+   "info": "The complainant owned one ewe; his brother with 99 asked him to hand over that ewe too.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 38:22, 38:23",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/38",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_ayyub_oath",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "What was Ayyub told to take in his hand in the instruction about keeping his oath (38:44)?",
+   "options": [
+    "A bundle",
+    "A staff",
+    "A shirt",
+    "A cup"
+   ],
+   "answer": 0,
+   "info": "The verse about Ayyub’s oath mentions a bundle and describes Ayyub as patient.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 38:44",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/38",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_believer_argument",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "How did the believer from Pharaoh’s family contrast Musa lying and telling the truth (40:28)?",
+   "options": [
+    "A lie is against Musa; if true, some threatened harm will reach them",
+    "A lie is against them; if true, some threatened harm will reach Musa",
+    "In both cases the threat concerns only Musa",
+    "In both cases the threat concerns only their descendants"
+   ],
+   "answer": 0,
+   "info": "The speaker assigned a lie’s consequence to Musa himself, but warned his listeners of some threatened harm if Musa was truthful.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 40:28",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/40",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_yusuf_after_death",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "What claim made after Yusuf’s death is recalled in 40:34?",
+   "options": [
+    "Allah will never send another messenger after him",
+    "Only a messenger from his family will follow him",
+    "The next messenger will come only after the exodus",
+    "After him only kings without Scripture will remain"
+   ],
+   "answer": 0,
+   "info": "The verse recalls doubts during Yusuf’s lifetime and the claim after his death that no further messenger would come.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 40:34",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/40",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_paradise_river_traits",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Which pair of descriptions of milk and honey matches 47:15 exactly?",
+   "options": [
+    "Milk of unchanging taste; purified honey",
+    "Purified milk; honey of unchanging taste",
+    "Chilled milk; fragrant honey",
+    "Fragrant milk; chilled honey"
+   ],
+   "answer": 0,
+   "info": "In the description of Paradise’s rivers, milk does not change in taste, while the honey is described as purified.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 47:15",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/47",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_monasticism_distinction",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "What does 57:27 distinguish as placed in the hearts of Jesus’ followers and as invented by them?",
+   "options": [
+    "Compassion and mercy — monasticism",
+    "Humility and patience — fasting",
+    "Fear and hope — celibacy",
+    "Sincerity and gratitude — pilgrimage"
+   ],
+   "answer": 0,
+   "info": "The verse attributes compassion and mercy to Allah’s gift, while monasticism was introduced by the followers themselves.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 57:27",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/57",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_fay_recipients",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Which three groups are named in 59:7 alongside Allah, the Messenger and his relatives as recipients of the property?",
+   "options": [
+    "Orphans, the poor and the traveller",
+    "Debtors, the poor and the traveller",
+    "Orphans, slaves being freed and the traveller",
+    "Orphans, the poor and zakat collectors"
+   ],
+   "answer": 0,
+   "info": "The list in 59:7 expressly names orphans, the poor and the traveller, so that the property does not circulate only among the rich.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 59:7",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/59",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_later_believers_prayer",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Which two requests are joined in the prayer of later believers in 59:10?",
+   "options": [
+    "Forgive us and earlier believers; remove rancour towards believers",
+    "Forgive us and our descendants; remove fear of enemies",
+    "Forgive relatives and teachers; remove envy of the rich",
+    "Forgive us and earlier believers; protect children from hardship"
+   ],
+   "answer": 0,
+   "info": "The prayer asks forgiveness for those praying and their predecessors in faith, and for hearts free of rancour towards believers.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 59:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/59",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_fairness_conditions",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Which two absent actions are specified in 60:8 concerning kindness and justice towards people?",
+   "options": [
+    "They did not fight over religion or expel people from their homes",
+    "They did not fight over property or refuse trade",
+    "They did not expel people from homes or debate beliefs",
+    "They did not break a trade agreement or refuse migration"
+   ],
+   "answer": 0,
+   "info": "60:8 specifically names not fighting people because of religion and not driving them from their homes.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 60:8",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/60",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3_last_request",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "What does the person requesting a short delay before death promise to do in 63:10?",
+   "options": [
+    "Give charity and become righteous",
+    "Perform pilgrimage and fast",
+    "Repay debts and reconcile relatives",
+    "Seek forgiveness and migrate"
+   ],
+   "answer": 0,
+   "info": "63:10 names charity and righteousness; the next verse states that an appointed term is not delayed once it arrives.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 63:10, 63:11",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/63",
+    "translationVersion": 1
+   }
   }
  ]
 }
