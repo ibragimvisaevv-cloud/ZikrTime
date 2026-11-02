@@ -10,7 +10,7 @@
     <string name="qf_save_stop">Токтогон жерди сактоо</string>
     <string name="qf_notes">Эскертмелерим</string>
     <string name="qf_saved_stop">Токтогон жерим</string>
-    <string name="qf_no_notes">Окуу жөндөөлөрүнөн жеке эскертме кошуңуз.</string>
+    <string name="qf_no_notes">Аяттын менюсун ачып, эскертме кошуңуз. Бардык эскертмелериңиз бул жерде көрсөтүлөт.</string>
     <string name="qf_mark_read">Окулган аяттарды белгилөө</string>
     <string name="qf_mark_hint">Окуган аяттарды гана белгилеңиз. Кайра окуу уникалдуу аяттардын санын көбөйтпөйт.</string>
     <string name="qf_first_ayah">Баштапкы аят</string>

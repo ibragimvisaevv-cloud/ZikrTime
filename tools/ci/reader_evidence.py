@@ -9,12 +9,12 @@ import xml.etree.ElementTree as ET
 
 folder = Path("reader-evidence")
 folder.mkdir(exist_ok=True)
-for name in ["quran-failure.txt", "quran-passed.json", "quran-features-passed.json", "quran-paper-passed.json", "release-delivery.json", "crashes.txt", "last-ui.xml",
+for name in ["quran-failure.txt", "quran-passed.json", "quran-features-passed.json", "quran-paper-passed.json", "quran-saved-passed.json", "release-delivery.json", "crashes.txt", "last-ui.xml",
              "reused-build-verification.json", "inherited-touch-verification.json"]:
     source = Path("ci-out") / name
     if source.exists():
         shutil.copyfile(source, folder / name)
-for source in [*Path("ci-out/screens").glob("features-*.png"), *Path("ci-out/screens").glob("paper-*.png")]:
+for source in [*Path("ci-out/screens").glob("features-*.png"), *Path("ci-out/screens").glob("paper-*.png"), *Path("ci-out/screens").glob("saved-*.png")]:
     shutil.copyfile(source, folder / source.name)
 failure = Path("ci-out/screens/quran-failure.png")
 if failure.exists():
@@ -26,7 +26,7 @@ if apk.exists():
               "unit_tests": sum(int(t.get("tests", 0)) for t in tests),
               "source_sha": os.environ.get("APK_SOURCE_SHA", os.environ["GITHUB_SHA"]),
               "verification_sha": os.environ["GITHUB_SHA"], "run": int(os.environ["GITHUB_RUN_ID"]),
-              "journey_completed": (Path("ci-out/quran-features-passed.json").exists() or Path("ci-out/quran-paper-passed.json").exists())}
+              "journey_completed": (Path("ci-out/quran-saved-passed.json").exists() or Path("ci-out/quran-features-passed.json").exists() or Path("ci-out/quran-paper-passed.json").exists())}
     (folder / "delivery.json").write_text(json.dumps(report, indent=2))
     print(json.dumps(report))
 branch = "ci-reader-" + os.environ.get("READER_EVIDENCE_VERSION", "0816") + "-" + os.environ["GITHUB_RUN_ID"]

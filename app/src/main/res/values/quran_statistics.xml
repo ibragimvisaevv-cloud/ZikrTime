@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qs_today">Today</string>
+    <string name="qs_paused">Tracking is paused</string>
+    <string name="qs_enable_progress">Enable personal progress</string>
+    <string name="qs_goal_complete">Daily goal reached</string>
+    <string name="qs_today_start">Read at your own pace. Time will appear here.</string>
+    <string name="qs_goal_remaining">%1$d min left to your goal</string>
+    <string name="qs_change_goal">Change goal</string>
+    <string name="qs_empty_title">Your reading starts here</string>
+    <string name="qs_empty_body">After reading, your time and observed ayahs will appear here automatically.</string>
+    <string name="qs_period">Selected period</string>
+    <string name="qs_reading_time">Reading time</string>
+    <string name="qs_observed_ayahs">Distinct ayahs recorded</string>
+    <string name="qs_active_days">Days with reading</string>
+    <string name="qs_unique_hint">Reading the same ayah again does not increase this count.</string>
+    <string name="qs_all_time">Overall progress</string>
+    <string name="qs_complete_surahs">Surahs with every ayah recorded</string>
+    <string name="qs_less_minute">Less than a minute</string>
+    <string name="qs_duration_minutes">%1$d min</string>
+    <string name="qs_duration_hours">%1$d h %2$d min</string>
+    <string name="qs_week_minutes">Minutes of reading each day</string>
+    <string name="qs_goal_title">Daily reading goal</string>
+    <string name="qs_goal_hint">Choose a comfortable amount of time. You can change it whenever you like.</string>
+    <string name="qs_goal_minutes">Minutes per day</string>
+    <string name="qs_goal_save">Save goal</string>
+</resources>

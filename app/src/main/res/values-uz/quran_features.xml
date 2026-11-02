@@ -10,7 +10,7 @@
     <string name="qf_save_stop">Joyni saqlash</string>
     <string name="qf_notes">Qaydlarim</string>
     <string name="qf_saved_stop">To‘xtagan joyim</string>
-    <string name="qf_no_notes">O‘qish sozlamalarida shaxsiy qayd qo‘shing.</string>
+    <string name="qf_no_notes">Oyat menyusini ochib, qayd qo‘shing. Barcha qaydlaringiz shu yerda ko‘rinadi.</string>
     <string name="qf_mark_read">O‘qilgan oyatlarni belgilash</string>
     <string name="qf_mark_hint">Faqat o‘qigan oyatlaringizni belgilang. Takroriy o‘qish noyob oyatlar sonini oshirmaydi.</string>
     <string name="qf_first_ayah">Boshlanish oyati</string>

@@ -10,7 +10,7 @@
     <string name="qf_save_stop">Нигоҳ доштани ҷой</string>
     <string name="qf_notes">Ёддоштҳои ман</string>
     <string name="qf_saved_stop">Ҷое, ки истодам</string>
-    <string name="qf_no_notes">Аз танзимоти хониш ёддошти шахсӣ илова кунед.</string>
+    <string name="qf_no_notes">Менюи оятро кушоед ва ёддошт илова кунед. Ҳамаи ёддоштҳои шумо дар ин ҷо пайдо мешаванд.</string>
     <string name="qf_mark_read">Қайд кардани оятҳои хондашуда</string>
     <string name="qf_mark_hint">Танҳо оятҳои хондаро қайд кунед. Хониши такрорӣ шумораи оятҳои нодирро зиёд намекунад.</string>
     <string name="qf_first_ayah">Аз оят</string>

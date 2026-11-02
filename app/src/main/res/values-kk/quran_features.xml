@@ -10,7 +10,7 @@
     <string name="qf_save_stop">Тоқтаған жерді сақтау</string>
     <string name="qf_notes">Жазбаларым</string>
     <string name="qf_saved_stop">Тоқтаған жерім</string>
-    <string name="qf_no_notes">Оқу баптауларында жеке жазба қосыңыз.</string>
+    <string name="qf_no_notes">Аят мәзірін ашып, жазба қосыңыз. Барлық жазбаңыз осы жерде көрсетіледі.</string>
     <string name="qf_mark_read">Оқылған аяттарды белгілеу</string>
     <string name="qf_mark_hint">Тек оқылған аяттарды белгілеңіз. Қайталап оқу бірегей аяттар санын арттырмайды.</string>
     <string name="qf_first_ayah">Бастапқы аят</string>

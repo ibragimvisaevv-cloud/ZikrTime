@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qs_today">Сегодня</string>
+    <string name="qs_paused">Учёт чтения отключён</string>
+    <string name="qs_enable_progress">Включить личный прогресс</string>
+    <string name="qs_goal_complete">Цель на сегодня достигнута</string>
+    <string name="qs_today_start">Читайте в своём темпе. Время появится здесь.</string>
+    <string name="qs_goal_remaining">До цели осталось %1$d мин</string>
+    <string name="qs_change_goal">Изменить цель</string>
+    <string name="qs_empty_title">Здесь начнётся ваша история чтения</string>
+    <string name="qs_empty_body">После чтения здесь автоматически появятся время и учтённые аяты.</string>
+    <string name="qs_period">За выбранный период</string>
+    <string name="qs_reading_time">Время чтения</string>
+    <string name="qs_observed_ayahs">Учтено разных аятов</string>
+    <string name="qs_active_days">Дней с чтением</string>
+    <string name="qs_unique_hint">Повторное чтение одного аята не увеличивает этот счётчик.</string>
+    <string name="qs_all_time">Общий прогресс</string>
+    <string name="qs_complete_surahs">Сур, где учтены все аяты</string>
+    <string name="qs_less_minute">Меньше минуты</string>
+    <string name="qs_duration_minutes">%1$d мин</string>
+    <string name="qs_duration_hours">%1$d ч %2$d мин</string>
+    <string name="qs_week_minutes">Минуты чтения по дням</string>
+    <string name="qs_goal_title">Ежедневная цель чтения</string>
+    <string name="qs_goal_hint">Выберите комфортное время. Цель можно изменить в любой момент.</string>
+    <string name="qs_goal_minutes">Минут в день</string>
+    <string name="qs_goal_save">Сохранить цель</string>
+</resources>

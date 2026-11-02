@@ -10,7 +10,7 @@
     <string name="qf_save_stop">Save my place</string>
     <string name="qf_notes">My notes</string>
     <string name="qf_saved_stop">Where I stopped</string>
-    <string name="qf_no_notes">Add a personal note from the reading tools.</string>
+    <string name="qf_no_notes">Open a verse menu and add a note. Your notes will appear here.</string>
     <string name="qf_mark_read">Mark verses as read</string>
     <string name="qf_mark_hint">Only mark verses you have read. Repeating a verse does not increase the unique verse count.</string>
     <string name="qf_first_ayah">From verse</string>

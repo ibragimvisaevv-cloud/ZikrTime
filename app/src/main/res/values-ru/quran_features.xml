@@ -10,7 +10,7 @@
     <string name="qf_save_stop">Сохранить остановку</string>
     <string name="qf_notes">Мои заметки</string>
     <string name="qf_saved_stop">Моя остановка</string>
-    <string name="qf_no_notes">Добавьте личную заметку через настройки читалки.</string>
+    <string name="qf_no_notes">Откройте меню аята и добавьте заметку. Здесь будут собраны все ваши заметки.</string>
     <string name="qf_mark_read">Отметить прочитанное</string>
     <string name="qf_mark_hint">Отмечайте только прочитанные аяты. Повторное чтение не увеличивает число уникальных аятов.</string>
     <string name="qf_first_ayah">С аята</string>

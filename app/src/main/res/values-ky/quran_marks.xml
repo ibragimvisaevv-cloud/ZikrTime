@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qm_saved_here">Сүрөдө сакталгандар</string>
+    <string name="qm_in_surah">Бул сүрөдө сакталган аяттар: %1$d</string>
+    <string name="qm_your_note">Жазмаңыз</string>
+    <string name="qm_empty">Бул сүрөнүн белгилери жана жазмалары бул жерде көрүнөт. Аларды аяттын менюсунан кошуңуз.</string>
+    <string name="qm_go_to_ayah">Аятка өтүү</string>
+    <string name="qm_open_note">Жазманы ачуу</string>
+</resources>

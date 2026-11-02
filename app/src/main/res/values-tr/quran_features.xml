@@ -10,7 +10,7 @@
     <string name="qf_save_stop">Kaldığım yeri kaydet</string>
     <string name="qf_notes">Notlarım</string>
     <string name="qf_saved_stop">Kaldığım yer</string>
-    <string name="qf_no_notes">Okuma ayarlarından kişisel not ekleyin.</string>
+    <string name="qf_no_notes">Ayet menüsünü açıp not ekleyin. Tüm notlarınız burada görünecek.</string>
     <string name="qf_mark_read">Okunan ayetleri işaretle</string>
     <string name="qf_mark_hint">Yalnızca okuduğunuz ayetleri işaretleyin. Tekrar okuma benzersiz ayet sayısını artırmaz.</string>
     <string name="qf_first_ayah">İlk ayet</string>

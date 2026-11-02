@@ -1,4 +1,4 @@
-name: Quran book reading check
+name: Quran saved marks and statistics check
 on:
   push:
     branches: [codex/quran-reader-0814]
@@ -23,11 +23,11 @@ jobs:
         run: |
           python3 tools/quran/import_quran.py --build
           git diff --exit-code -- app/src/main/assets/quran app/src/main/java/com/zikrtime/app/data/QuranContent.kt
-          python3 -m py_compile tools/ci/quran_paper_ui.py
+          python3 -m py_compile tools/ci/quran_saved_ui.py
           python3 - <<'PY'
           import pathlib, re, xml.etree.ElementTree as ET
           res = pathlib.Path('app/src/main/res')
-          for file in ['quran_paper.xml', 'quran_touch.xml', 'quran_features.xml']:
+          for file in ['quran_paper.xml', 'quran_touch.xml', 'quran_features.xml', 'quran_marks.xml', 'quran_statistics.xml']:
               def read(folder):
                   return {x.get('name'): x.text for x in ET.parse(res / folder / file).getroot()}
               base = read('values')
@@ -66,7 +66,7 @@ jobs:
                   if file.is_file():
                       assert archive.read('assets/quran/' + file.relative_to(source).as_posix()) == file.read_bytes(), str(file)
           pathlib.Path('ci-out/release-delivery.json').write_text(json.dumps({
-              'version': '0.8.18', 'version_code': 30, 'source_sha': os.environ['GITHUB_SHA'],
+              'version': '0.8.19', 'version_code': 31, 'source_sha': os.environ['GITHUB_SHA'],
               'run': int(os.environ['GITHUB_RUN_ID']), 'apk_size': apk.stat().st_size,
               'apk_sha256': hashlib.sha256(apk.read_bytes()).hexdigest(),
               'certificate_sha256': '7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf',
@@ -79,8 +79,8 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-quran.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      - name: Book reading and ayah action journeys on Android 15
-        timeout-minutes: 18
+      - name: Saved marks and statistics journeys on Android 15
+        timeout-minutes: 22
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 35
@@ -88,26 +88,26 @@ jobs:
           arch: x86_64
           disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: QURAN_QA_MODE=paper bash tools/ci/quran_reader_smoke.sh
+          script: QURAN_QA_MODE=saved bash tools/ci/quran_reader_smoke.sh
       - name: Preserve synthetic emulator evidence
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
-          READER_EVIDENCE_VERSION: '0818'
+          READER_EVIDENCE_VERSION: '0819'
         run: python3 tools/ci/reader_evidence.py
       - name: Prepare signed candidate
         if: success()
-        run: cp app/build/outputs/apk/release/app-release.apk ZikrTime-0.8.18-preview.apk
+        run: cp app/build/outputs/apk/release/app-release.apk ZikrTime-0.8.19-preview.apk
       - uses: actions/upload-artifact@v7.0.2
         if: success()
         with:
-          path: ZikrTime-0.8.18-preview.apk
+          path: ZikrTime-0.8.19-preview.apk
           archive: false
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: ZikrTime-0.8.18-check
+          name: ZikrTime-0.8.19-check
           path: |
             app/build/outputs/apk/
             app/build/reports/

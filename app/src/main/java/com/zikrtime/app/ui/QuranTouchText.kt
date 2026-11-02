@@ -21,6 +21,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import com.zikrtime.app.R
 import com.zikrtime.app.data.QuranTextRange
 import com.zikrtime.app.data.QuranVisibleText
@@ -61,7 +62,7 @@ internal class QuranTextGeometry {
 @Composable
 internal fun QuranTouchText(text: String, ranges: List<QuranTextRange>, selected: Int,
     geometry: QuranTextGeometry, style: TextStyle, tag: String, modifier: Modifier = Modifier,
-    choose: (Int, Boolean) -> Unit) {
+    choose: (Int, Boolean) -> Unit, savedAyahs: Set<Int> = emptySet()) {
     val key = ranges.first().ayah
     val entry = remember(geometry, ranges) { QuranTextGeometry.Entry(ranges) }
     DisposableEffect(geometry, entry) {
@@ -71,9 +72,15 @@ internal fun QuranTouchText(text: String, ranges: List<QuranTextRange>, selected
     val onChoose by rememberUpdatedState(choose)
     val haptic = LocalHapticFeedback.current
     val colors = quranPaperColors()
-    val annotated = remember(text, ranges, selected, colors) {
+    val annotated = remember(text, ranges, selected, colors, savedAyahs) {
         AnnotatedString.Builder(text).apply {
             ranges.forEach { range ->
+                if (range.ayah in savedAyahs) {
+                    addStyle(SpanStyle(background = colors.selection.copy(alpha = .38f)), range.start, range.end)
+                    // Only the existing UI verse marker is decorated; source glyphs/offsets stay exact.
+                    if (range.arabicEnd < range.end) addStyle(SpanStyle(textDecoration = TextDecoration.Underline),
+                        range.arabicEnd, range.end)
+                }
                 if (range.arabicEnd < range.end) addStyle(SpanStyle(color = colors.accent), range.arabicEnd, range.end)
             }
             ranges.firstOrNull { it.ayah == selected }?.let {

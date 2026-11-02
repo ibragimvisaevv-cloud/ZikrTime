@@ -13,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
@@ -25,6 +26,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
@@ -114,6 +116,8 @@ private fun QuranIndex(book: QuranBook, progress: QuranProgress, open: (QuranPro
     val stop = remember(book) { progress.stop(book) }
     val notes = remember(book) { progress.notes(book) }
     val bookmarks = remember(book) { progress.bookmarks(book).sortedWith(compareBy({ it.surah }, { it.ayah })) }
+    val bookmarksBySurah = remember(bookmarks) { bookmarks.groupingBy { it.surah }.eachCount() }
+    val notesBySurah = remember(notes) { notes.groupingBy { it.surah }.eachCount() }
     val last = remember(book) { progress.last(book) }
     val filtered = remember(book, query) {
         val value = query.trim()
@@ -141,9 +145,11 @@ private fun QuranIndex(book: QuranBook, progress: QuranProgress, open: (QuranPro
             FlowRow(Modifier.fillMaxWidth().padding(bottom = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 FilterChip(tab == 0, { onTab(0) }, label = { Text(stringResource(R.string.quran_surahs)) },
                     modifier = Modifier.testTag("quran_surahs"))
-                FilterChip(tab == 1, { onTab(1) }, label = { Text(stringResource(R.string.quran_bookmarks)) },
+                FilterChip(tab == 1, { onTab(1) }, label = { Text(stringResource(R.string.quran_bookmarks) + " · " + bookmarks.size) },
+                    leadingIcon = { Icon(painterResource(R.drawable.ic_quran_bookmark_saved), null, Modifier.size(18.dp)) },
                     modifier = Modifier.testTag("quran_bookmarks"))
-                FilterChip(tab == 2, { onTab(2) }, label = { Text(stringResource(R.string.qf_notes)) },
+                FilterChip(tab == 2, { onTab(2) }, label = { Text(stringResource(R.string.qf_notes) + " · " + notes.size) },
+                    leadingIcon = { Icon(Icons.Filled.Edit, null, Modifier.size(18.dp)) },
                     modifier = Modifier.testTag("quran_personal_notes"))
             }
         }
@@ -185,7 +191,7 @@ private fun QuranIndex(book: QuranBook, progress: QuranProgress, open: (QuranPro
                     val surah = book.surahs.first { it.id == location.surah }
                     QuranSavedRow(if (ru) surah.nameRu else surah.nameLatin, location,
                         "quran_note_" + location.surah + "_" + location.ayah,
-                        onClick = { open(location) }, note = progress.note(location))
+                        onClick = { open(location) }, note = progress.note(location), bookmarked = location in bookmarks)
                 }
             }
             1 -> {
@@ -193,20 +199,23 @@ private fun QuranIndex(book: QuranBook, progress: QuranProgress, open: (QuranPro
                 items(bookmarks, key = { "saved_" + it.key }) { location ->
                     val surah = book.surahs.first { it.id == location.surah }
                     QuranSavedRow(if (ru) surah.nameRu else surah.nameLatin, location,
-                        "quran_saved_" + location.surah + "_" + location.ayah, onClick = { open(location) })
+                        "quran_saved_" + location.surah + "_" + location.ayah, onClick = { open(location) },
+                        note = progress.note(location), bookmarked = true)
                 }
             }
             else -> {
                 if (filtered.isEmpty()) item("no_results") { QuranIndexEmpty(stringResource(R.string.quran_no_results)) }
                 items(filtered, key = { "surah_" + it.id }) { surah ->
-                    QuranSurahRow(surah, ru) { open(QuranProgress.Location(surah.id, 1)) }
+                    QuranSurahRow(surah, ru, bookmarksBySurah[surah.id] ?: 0, notesBySurah[surah.id] ?: 0) {
+                        open(QuranProgress.Location(surah.id, 1))
+                    }
                 }
             }
         }
     }
     if (statistics) HorizonSheet(stringResource(R.string.qf_statistics), { statistics = false }) {
+        QuranStatisticsCard(book, showTitle = false)
         PersonalProgressSetting()
-        QuranStatisticsCard(book)
     }
 }
 
@@ -233,7 +242,7 @@ private fun QuranContinueCard(book: QuranBook, location: QuranProgress.Location,
 }
 
 @Composable
-private fun QuranSurahRow(surah: QuranSurah, ru: Boolean, open: () -> Unit) {
+private fun QuranSurahRow(surah: QuranSurah, ru: Boolean, bookmarkCount: Int, noteCount: Int, open: () -> Unit) {
     val colors = quranPaperColors()
     val largeText = LocalConfiguration.current.fontScale > 1.25f
     BoxWithConstraints(Modifier.fillMaxWidth()) {
@@ -246,6 +255,7 @@ private fun QuranSurahRow(surah: QuranSurah, ru: Boolean, open: () -> Unit) {
                 Text(if (ru) surah.nameRu else surah.nameLatin, style = MaterialTheme.typography.titleMedium, color = colors.ink)
                 Text(stringResource(R.string.quran_ayah_count, surah.ayahCount),
                     style = MaterialTheme.typography.bodySmall, color = colors.muted)
+                if (bookmarkCount > 0 || noteCount > 0) QuranIndexSavedBadges(bookmarkCount, noteCount)
                 if (compact) Text(surah.nameArabic,
                     style = ArabicStyle.copy(fontSize = 23.sp, textDirection = TextDirection.Rtl),
                     color = colors.accent, modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Right)
@@ -260,17 +270,38 @@ private fun QuranSurahRow(surah: QuranSurah, ru: Boolean, open: () -> Unit) {
 
 @Composable
 private fun QuranSavedRow(title: String, location: QuranProgress.Location, tag: String,
-    onClick: () -> Unit, note: String = "") {
+    onClick: () -> Unit, note: String = "", bookmarked: Boolean = false) {
     val colors = quranPaperColors()
     Column(Modifier.fillMaxWidth().testTag(tag).clickable(role = Role.Button, onClick = onClick)
         .semantics(mergeDescendants = true) {}.padding(vertical = 18.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
         Text(title, style = MaterialTheme.typography.titleMedium, color = colors.ink)
         Text(stringResource(R.string.quran_ayah) + " " + location.ayah + "  \u00b7  " + location.key,
             style = MaterialTheme.typography.labelMedium, color = colors.accent)
+        QuranIndexSavedBadges(if (bookmarked) 1 else 0, if (note.isNotBlank()) 1 else 0, showCount = false)
         if (note.isNotBlank()) Text(note, style = MaterialTheme.typography.bodyLarge, color = colors.muted,
             maxLines = 4, overflow = TextOverflow.Ellipsis)
     }
     HorizontalDivider(color = colors.rule.copy(alpha = .6f))
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun QuranIndexSavedBadges(bookmarkCount: Int, noteCount: Int, showCount: Boolean = true) {
+    val colors = quranPaperColors()
+    FlowRow(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        if (bookmarkCount > 0) Row(verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+            Icon(painterResource(R.drawable.ic_quran_bookmark_saved), null, Modifier.size(14.dp), tint = colors.accent)
+            Text(stringResource(R.string.quran_bookmarks) + if (showCount) " · $bookmarkCount" else "",
+                style = MaterialTheme.typography.labelSmall, color = colors.accent)
+        }
+        if (noteCount > 0) Row(verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+            Icon(Icons.Filled.Edit, null, Modifier.size(14.dp), tint = colors.accent)
+            Text(stringResource(R.string.qf_notes) + if (showCount) " · $noteCount" else "",
+                style = MaterialTheme.typography.labelSmall, color = colors.accent)
+        }
+    }
 }
 
 @Composable

@@ -42,7 +42,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalLayoutApi::class)
 @Composable
 internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: Float,
     onScale: (Float) -> Unit, progress: QuranProgress, showIndex: () -> Unit) {
@@ -77,6 +77,16 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
     val noteSavedLabel = stringResource(R.string.qp_note_saved)
     val noteDeletedLabel = stringResource(R.string.qp_note_deleted)
     var bookmarks by remember { mutableStateOf(progress.bookmarks(book)) }
+    fun loadNotes(): Map<Int, String> = progress.notes(book).filter { it.surah == surahId }
+        .associate { it.ayah to progress.note(it) }.filterValues { it.isNotBlank() }
+    var noteTexts by remember(progress, book, surahId) { mutableStateOf(loadNotes()) }
+    val savedMarks = remember(bookmarks, noteTexts, surahId) {
+        (bookmarks.filter { it.surah == surahId }.map { it.ayah } + noteTexts.keys).distinct().sorted().map { number ->
+            QuranSavedMark(number, QuranProgress.Location(surahId, number) in bookmarks, noteTexts[number].orEmpty())
+        }
+    }
+    val savedByAyah = remember(savedMarks) { savedMarks.associateBy { it.ayah } }
+    val savedAyahs = remember(savedMarks) { savedByAyah.keys }
     var fullscreen by rememberSaveable { mutableStateOf(false) }
     var sheet by rememberSaveable { mutableStateOf("") }
     var keepAwake by rememberSaveable { mutableStateOf(progress.keepAwake) }
@@ -218,6 +228,7 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
                             Modifier.fillMaxWidth().testTag("quran_mode_translation"), textAlign = TextAlign.Center) })
                 }
             }
+            if (savedMarks.isNotEmpty()) QuranSavedEntry(savedMarks.size) { openSheet("saved") }
             if (!compact && (session.timer.remaining > 0 || session.timer.paused)) TextButton(
                 onClick = { openSheet("timer") }, modifier = Modifier.testTag("quran_timer_status")) {
                 Text(stringResource(if (session.timer.paused) R.string.qf_timer_paused else R.string.qf_timer_remaining, readingClock(session.timer.remaining)))
@@ -235,9 +246,17 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
                             contentPadding = PaddingValues(top = if (compact) 12.dp else 4.dp, bottom = 28.dp),
                         ) {
                             items(blocks, key = { it.firstAyah }) { block ->
-                                QuranTouchText(block.text, block.ranges, selectedAyah, geometry,
-                                    ArabicStyle.copy(fontSize = (30 * scale).sp, textDirection = TextDirection.Rtl, textAlign = TextAlign.Justify),
-                                    "quran_whole_" + block.firstAyah, Modifier.fillMaxWidth(), choose)
+                                Column(Modifier.fillMaxWidth()) {
+                                    val marks = block.ranges.mapNotNull { savedByAyah[it.ayah] }
+                                    if (marks.isNotEmpty()) FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                                        marks.forEach { mark -> QuranSavedIndicator(surahId, mark) {
+                                            openAyahSheet(mark.ayah, if (mark.note.isNotEmpty()) "note" else "actions")
+                                        } }
+                                    }
+                                    QuranTouchText(block.text, block.ranges, selectedAyah, geometry,
+                                        ArabicStyle.copy(fontSize = (30 * scale).sp, textDirection = TextDirection.Rtl, textAlign = TextAlign.Justify),
+                                        "quran_whole_" + block.firstAyah, Modifier.fillMaxWidth(), choose, savedAyahs)
+                                }
                             }
                         }
                     } else LazyColumn(
@@ -265,10 +284,16 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
                                             stringResource(if (location in bookmarks) R.string.qt_remove_bookmark else R.string.qt_save_place))
                                     }
                                 }
+                                savedByAyah[ayah.number]?.let { mark ->
+                                    QuranSavedIndicator(surahId, mark) {
+                                        openAyahSheet(mark.ayah, if (mark.note.isNotEmpty()) "note" else "actions")
+                                    }
+                                    if (mark.note.isNotEmpty()) QuranSavedNotePreview(mark) { openAyahSheet(mark.ayah, "note") }
+                                }
                                 val ranges = remember(ayah) { listOf(QuranTextRange(ayah.number, 0, ayah.arabic.length, ayah.arabic.length)) }
                                 QuranTouchText(ayah.arabic, ranges, selectedAyah, geometry,
                                     ArabicStyle.copy(fontSize = (30 * scale).sp, textDirection = TextDirection.Rtl),
-                                    "quran_arabic_" + ayah.number, Modifier.fillMaxWidth(), choose)
+                                    "quran_arabic_" + ayah.number, Modifier.fillMaxWidth(), choose, savedAyahs)
                                 Text(stringResource(R.string.quran_translation_label), style = MaterialTheme.typography.labelSmall, color = colors.accent)
                                 Text(ayah.translation, modifier = Modifier.testTag("quran_translation_" + ayah.number)
                                     .combinedClickable(onClick = { choose(ayah.number, false) }, onLongClick = { choose(ayah.number, true) }),
@@ -304,6 +329,7 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
         "tools" -> HorizonSheet(stringResource(R.string.qf_tools), { sheet = "" }) {
             Text(surahId.toString() + ":" + currentAyah, style = MaterialTheme.typography.titleLarge)
             ReaderAction(R.string.qf_jump, "quran_jump_open") { sheet = "jump" }
+            ReaderAction(R.string.qm_saved_here, "quran_saved_tools") { sheet = "saved" }
             ReaderAction(R.string.qt_note, "quran_note_open") { openAyahSheet(currentAyah, "note") }
             ReaderAction(R.string.qf_timer, "quran_timer_open") { sheet = "timer" }
             ReaderAction(R.string.qf_statistics, "quran_statistics_open") { sheet = "statistics" }
@@ -321,6 +347,8 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
             ReaderAction(R.string.quran_sources, "quran_sources") { sheet = "sources" }
         }
         "jump" -> QuranJumpSheet(surah.ayahCount, currentAyah, { sheet = "" }, jumpTo)
+        "saved" -> QuranSavedSheet(surahId, if (ru) surah.nameRu else surah.nameLatin, savedMarks,
+            close = { sheet = "" }, jump = jumpTo, edit = { openAyahSheet(it, "note") })
         "actions" -> HorizonSheet((if (ru) surah.nameRu else surah.nameLatin) + " · " + surahId + ":" + actionAyah, { sheet = "" }) {
             ReaderAction(R.string.qt_note, "quran_note_open") { sheet = "note" }
             ReaderAction(if (QuranProgress.Location(surahId, actionAyah) in bookmarks) R.string.qt_remove_bookmark else R.string.qt_save_place,
@@ -345,12 +373,15 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
         }
         "note" -> QuranNoteSheet(if (ru) surah.nameRu else surah.nameLatin,
             QuranProgress.Location(surahId, actionAyah), progress,
-            onSaved = { deleted -> scope.launch { snackbar.showSnackbar(if (deleted) noteDeletedLabel else noteSavedLabel) } },
+            onSaved = { deleted ->
+                noteTexts = loadNotes()
+                scope.launch { snackbar.showSnackbar(if (deleted) noteDeletedLabel else noteSavedLabel) }
+            },
             close = { sheet = "" })
         "timer" -> QuranTimerSheet(progress, session) { sheet = "" }
         "statistics" -> HorizonSheet(stringResource(R.string.qf_statistics), { sheet = "" }) {
+            QuranStatisticsCard(book, showTitle = false)
             PersonalProgressSetting()
-            QuranStatisticsCard(book)
         }
         "size" -> HorizonSheet(stringResource(R.string.reader_text_size), { sheet = "" }) {
             Text(book.verses(1).first().arabic, style = ArabicStyle.copy(fontSize = (30 * scale).sp))

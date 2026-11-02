@@ -10,7 +10,7 @@
     <string name="qf_save_stop">Yeri saxla</string>
     <string name="qf_notes">Qeydlərim</string>
     <string name="qf_saved_stop">Dayandığım yer</string>
-    <string name="qf_no_notes">Oxu ayarlarından şəxsi qeyd əlavə edin.</string>
+    <string name="qf_no_notes">Ayənin menyusunu açıb qeyd əlavə edin. Bütün qeydləriniz burada görünəcək.</string>
     <string name="qf_mark_read">Oxunan ayələri işarələ</string>
     <string name="qf_mark_hint">Yalnız oxuduğunuz ayələri işarələyin. Təkrar oxu unikal ayələrin sayını artırmır.</string>
     <string name="qf_first_ayah">İlk ayə</string>
