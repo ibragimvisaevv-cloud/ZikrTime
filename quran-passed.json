@@ -1,0 +1,10 @@
+{
+  "visible_ayah_menu_stable_reference_and_back_clears_selection": true,
+  "three_copy_variants_preserve_exact_rendered_text_without_saving_drafts": true,
+  "note_draft_guard_save_and_confirmed_delete_preserve_bookmark_and_arabic": true,
+  "last_ayah_mode_switch_and_process_restart_preserve_position": true,
+  "dark_book_surface_both_modes_fullscreen_and_rotation": true,
+  "scrollable_index_and_reachable_reader_note_controls_at_320dp_150_percent": true,
+  "new_viewport_preserves_visible_only_reading_and_excludes_menus_background_and_jumps": true,
+  "english_note_controls": true
+}
