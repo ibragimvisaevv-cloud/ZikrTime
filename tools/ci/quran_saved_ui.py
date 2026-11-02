@@ -11,7 +11,20 @@ import os
 
 passed = Checkpoints()
 phase = os.environ.get('QURAN_SAVED_PHASE', 'all')
-assert phase in ('all', 'marks', 'stats', 'layout'), phase
+assert phase in ('all', 'marks', 'stats', 'layout', 'remaining'), phase
+if phase == 'remaining':
+    # Only the reuse workflow may select this phase. It pins and verifies the
+    # APK and unchanged Android inputs before carrying completed journeys over.
+    previous = json.loads((OUT / 'inherited-saved-verification.json').read_text())['passed']
+    inherited = (
+        'bookmark_note_and_combined_marks_visible_in_both_modes_after_restart',
+        'saved_list_exact_jump_and_note_deletion_refresh_marks_preserving_bookmark',
+        'saved_list_and_note_editor_do_not_add_reading_time',
+    )
+    assert set(previous) == set(inherited), ('Unexpected inherited journeys', previous)
+    for key in inherited:
+        assert previous.get(key) is True, ('Missing inherited journey', key)
+        passed[key] = True
 
 
 def content(identifier):
@@ -28,7 +41,36 @@ def first_number(identifier):
     return int(found.group())
 
 
-def reveal_above(identifier):
+def replace_goal(value):
+    # The numeric keyboard does not reliably implement the desktop Ctrl+A
+    # shortcut used by the general text helper. This field permits <=3 digits;
+    # delete them explicitly, then verify the value before testing validation.
+    owner = locate_control('quran_daily_goal')
+    editable = next((n for n in owner.iter('node')
+                     if n.get('class') == 'android.widget.EditText'), None)
+    assert editable is not None, 'Numeric goal has no editable semantic node'
+    # Compose's outer EditText also bounds its label/supporting text. Prefer the
+    # blank inner editor view, which is the actual typing area, when exposed.
+    areas = []
+    for node in editable.iter('node'):
+        if node is not editable and node.get('class') != 'android.view.View':
+            continue
+        left, upper, right, bottom = map(int, re.findall(r'-?\d+', node.get('bounds')))
+        if right - left > 24 and bottom - upper > 12:
+            areas.append((node is editable, -(right - left), left, upper, right, bottom))
+    assert areas, 'Numeric goal has no visible typing area'
+    _, _, left, upper, right, bottom = min(areas)
+    shell('input', 'tap', (left + right) // 2, (upper + bottom) // 2)
+    time.sleep(.7)
+    shell('input', 'keyevent', 'KEYCODE_MOVE_END')
+    shell('input', 'keyevent', 'KEYCODE_DEL', 'KEYCODE_DEL', 'KEYCODE_DEL')
+    assert field_value('quran_daily_goal') == '', 'Automation did not clear numeric goal'
+    shell('input', 'text', str(value))
+    back()
+    assert field_value('quran_daily_goal') == str(value), 'Automation did not enter numeric goal'
+
+
+def reveal_above(identifier, attribute='resource-id'):
     """Scroll upward only until the needed control is on screen.
 
     Blindly swiping down several more times at the top of a bottom sheet can
@@ -36,7 +78,7 @@ def reveal_above(identifier):
     """
     for _ in range(22):
         tree = ui()
-        node = find_control(tree, identifier)
+        node = find_control(tree, identifier, attribute)
         if node is not None:
             left, upper, right, bottom = map(int, re.findall(r'-?\d+', node.get('bounds')))
             if right - left >= 12 and bottom - upper >= 12:
@@ -53,6 +95,36 @@ def reveal_above(identifier):
         shell('input', 'swipe', left + 6, int(upper + (bottom - upper) * .25),
               left + 6, int(upper + (bottom - upper) * .82), 400)
     raise AssertionError('Control not reached above: ' + identifier)
+
+
+def frame_week(from_below=False):
+    # Align the actual section heading, not the tall container's clipped lower
+    # edge. This captures the complete chart on a normal screen and its first
+    # readable day rows with enlarged text.
+    title = 'Последние 7 дней'
+    if from_below:
+        reveal_above(title, 'text')
+    else:
+        locate_control(title, 'text')
+    for _ in range(6):
+        tree = ui()
+        heading = find_control(tree, title, 'text')
+        assert heading is not None, 'Week heading disappeared while framing'
+        parents = {child: parent for parent in tree.iter() for child in parent}
+        owner = parents.get(heading)
+        while owner is not None and owner.get('scrollable') != 'true':
+            owner = parents.get(owner)
+        assert owner is not None, 'Week heading has no scroll owner'
+        left, upper, right, bottom = map(int, re.findall(r'-?\d+', owner.get('bounds')))
+        _, heading_top, _, _ = map(int, re.findall(r'-?\d+', heading.get('bounds')))
+        delta = heading_top - (upper + 32)
+        if abs(delta) < 40:
+            return
+        height = bottom - upper
+        distance = min(abs(delta), int(height * .55))
+        start_y = int(upper + height * (.8 if delta > 0 else .2))
+        end_y = start_y - distance if delta > 0 else start_y + distance
+        shell('input', 'swipe', left + 6, start_y, left + 6, end_y, 400)
 
 
 def seed_reader(whole=False, saved=False):
@@ -136,6 +208,8 @@ if phase in ('all', 'marks'):
         assert word.lower() in content('quran_saved_indicator_' + str(number)).lower()
     assert 'заклад' in content('quran_saved_indicator_3').lower()
     assert 'Review-0819' in content('quran_saved_note_preview_3')
+    if present('quran_selection'):
+        back()
     shot('saved-translation-light')
     jump(1)
     assert read_text('quran_arabic_1') == original
@@ -202,7 +276,7 @@ if phase in ('all', 'marks'):
     tap_control('quran_note_close')
     passed['saved_list_and_note_editor_do_not_add_reading_time'] = True
 
-if phase in ('all', 'stats'):
+if phase in ('all', 'stats', 'remaining'):
     seed_reader(saved=True)
     today = seed_history()
     open_stats()
@@ -217,17 +291,17 @@ if phase in ('all', 'stats'):
     assert first_number('quran_stats_unique') == 8
     assert first_number('quran_stats_surahs') == 1
     shot('saved-statistics-overall-light')
-    reveal_above('quran_stats_week')
+    frame_week(from_below=True)
     today_info = content('quran_stats_day_' + today.isoformat())
     yesterday_info = content('quran_stats_day_' + (today - timedelta(days=1)).isoformat())
     assert '2 мин' in today_info and '3 мин' in yesterday_info, (today_info, yesterday_info)
     shot('saved-statistics-week-light')
     reveal_above('quran_goal_open')
     tap_control('quran_goal_open')
-    replace_text('quran_daily_goal', '0')
+    replace_goal('0')
     assert locate_control('quran_goal_save').get('enabled') == 'false'
     assert prefs('quran_reading')['daily_goal_minutes'] == '10'
-    replace_text('quran_daily_goal', '15')
+    replace_goal('15')
     tap_control('quran_goal_save')
     assert prefs('quran_reading')['daily_goal_minutes'] == '15'
     open_stats()
@@ -252,19 +326,37 @@ if phase in ('all', 'stats'):
     assert '1:1' in prefs('quran_reading')['bookmarks']
     passed['statistics_empty_and_disabled_states_keep_annotations'] = True
 
-if phase in ('all', 'layout'):
-    seed_reader(whole=True, saved=True)
+if phase in ('all', 'layout', 'remaining'):
+    seed_reader(whole=False, saved=True)
     seed_history(enabled=False)
+    start('quran')
+    tap_control('quran_continue')
+    jump(3)
+    if present('quran_selection'):
+        back()
+    locate_control('quran_saved_indicator_3')
+    shot('saved-translation-light')
     put_pref('appearance', 'string', 'dark')
     start('quran')
     tap_control('quran_continue')
+    if present('quran_selection'):
+        back()
+    locate_control('quran_saved_indicator_3')
+    shot('saved-translation-dark')
+    set_reading_mode(True)
+    jump(1)
+    if present('quran_selection'):
+        back()
     locate_control('quran_saved_indicator_1')
     shot('saved-reader-dark')
     tap_control('quran_saved_open')
     locate_control('quran_saved_edit_2')
     shot('saved-surah-list-dark')
+    seed_history(enabled=True)
     open_stats()
     shot('saved-statistics-dark')
+    frame_week()
+    shot('saved-statistics-week-dark')
 
     shell('wm', 'size', '720x1280')
     shell('wm', 'density', '360')
@@ -284,7 +376,7 @@ if phase in ('all', 'layout'):
     locate_control('quran_goal_save')
     shot('saved-goal-320dp-150')
     back()
-    locate_control('quran_stats_week')
+    frame_week()
     shot('saved-statistics-week-320dp-150')
     locate_control('quran_stats_unique')
     locate_control('quran_stats_surahs')

@@ -1,4 +1,4 @@
-name: Quran book reading UI recheck
+name: Quran saved marks and statistics UI recheck
 on:
   push:
     branches: [codex/quran-reader-0814]
@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
-      APK_SOURCE_SHA: 6275b1a485d65210ad44932a1a5e15be67d6db9d
+      APK_SOURCE_SHA: b7703f66aceb9a123992bc4266f1809cb8caed01
     steps:
       - uses: actions/checkout@v4
       - name: Reuse unchanged and verified Android builds
@@ -24,24 +24,24 @@ jobs:
           mkdir -p ci-out app/build
           git fetch --no-tags --depth=1 origin "$APK_SOURCE_SHA"
           git diff --exit-code "$APK_SOURCE_SHA" HEAD -- app/ tools/i18n/ tools/quiz/ tools/quran/ tools/audio/ build.gradle.kts settings.gradle.kts gradle.properties gradle/ gradlew gradlew.bat .gitattributes
-          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/13165932469" > ci-out/reused-artifact.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/13174791180" > ci-out/reused-artifact.json
           python3 - <<'PY'
           import json, os, pathlib
           a = json.loads(pathlib.Path('ci-out/reused-artifact.json').read_text())
-          assert a['id'] == 13165932469 and a['name'] == 'ZikrTime-0.8.18-check'
-          assert not a['expired'] and a['workflow_run']['id'] == 41493288209
+          assert a['id'] == 13174791180 and a['name'] == 'ZikrTime-0.8.19-check'
+          assert not a['expired'] and a['workflow_run']['id'] == 41511213221
           assert a['workflow_run']['head_sha'] == os.environ['APK_SOURCE_SHA']
           PY
-          gh run download 41493288209 -n ZikrTime-0.8.18-check -D reused-check
+          gh run download 41511213221 -n ZikrTime-0.8.19-check -D reused-check
           cp -R reused-check/app/build/outputs reused-check/app/build/reports reused-check/app/build/test-results app/build/
           cp reused-check/ci-out/release-delivery.json reused-check/ci-out/release-signature.txt ci-out/
-          python3 -m py_compile tools/ci/quran_paper_ui.py
+          python3 -m py_compile tools/ci/quran_saved_ui.py
           python3 - <<'PY'
           import hashlib, json, os, pathlib, xml.etree.ElementTree as ET
           build = pathlib.Path('app/build')
           expected = {
-              'debug/app-debug.apk': ('df4029e4068360986225ad04575fc8f31c20add71aec0edca81262dac30d8f02', 102026352),
-              'release/app-release.apk': ('ad17abce7a2d1d9a00299fd91f4463c9ff56ebd879427d977ac7b1dd79a91b3c', 61170479),
+              'debug/app-debug.apk': ('b2320efce7f39322066575b2e47d2458e4b70cdbab4073d68408c4b05f1d69d5', 102117540),
+              'release/app-release.apk': ('8a3c8f2addbca9a7a726ec4eaf3a269089e300d1d021feecd2460ae5e18998ef', 61210087),
           }
           for name, (digest, size) in expected.items():
               p = build / 'outputs/apk' / name
@@ -55,9 +55,21 @@ jobs:
           release = json.loads(pathlib.Path('ci-out/release-delivery.json').read_text())
           assert release['source_sha'] == os.environ['APK_SOURCE_SHA'] and release['quran_assets_unchanged']
           assert release['certificate_sha256'] == '7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf'
+          prior = json.loads(pathlib.Path('reused-check/ci-out/quran-passed.json').read_text())
+          inherited_keys = {
+              'bookmark_note_and_combined_marks_visible_in_both_modes_after_restart',
+              'saved_list_exact_jump_and_note_deletion_refresh_marks_preserving_bookmark',
+              'saved_list_and_note_editor_do_not_add_reading_time',
+          }
+          assert set(prior) == inherited_keys and all(value is True for value in prior.values())
+          pathlib.Path('ci-out/inherited-saved-verification.json').write_text(json.dumps({
+              'source_sha': os.environ['APK_SOURCE_SHA'], 'build_run': 41511213221,
+              'artifact_id': 13174791180, 'debug_sha256': expected['debug/app-debug.apk'][0],
+              'passed': prior,
+          }, indent=2))
           pathlib.Path('ci-out/reused-build-verification.json').write_text(json.dumps({
-              'source_sha': os.environ['APK_SOURCE_SHA'], 'build_run': 41493288209,
-              'artifact_id': 13165932469, 'passed_unit_tests': count, 'lint_errors': 0,
+              'source_sha': os.environ['APK_SOURCE_SHA'], 'build_run': 41511213221,
+              'artifact_id': 13174791180, 'passed_unit_tests': count, 'lint_errors': 0,
               'debug_sha256': expected['debug/app-debug.apk'][0],
               'release_sha256': expected['release/app-release.apk'][0],
           }, indent=2))
@@ -68,7 +80,7 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-quran.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      - name: Book reading and ayah actions on the same APK
+      - name: Remaining statistics and layout journeys on the same APK
         timeout-minutes: 25
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -77,26 +89,26 @@ jobs:
           arch: x86_64
           disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: QURAN_QA_MODE=paper bash tools/ci/quran_reader_smoke.sh
+          script: QURAN_QA_MODE=saved QURAN_SAVED_PHASE=remaining bash tools/ci/quran_reader_smoke.sh
       - name: Preserve synthetic emulator evidence
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
-          READER_EVIDENCE_VERSION: '0818'
+          READER_EVIDENCE_VERSION: '0819'
         run: python3 tools/ci/reader_evidence.py
       - name: Prepare signed candidate without rebuilding
         if: success()
-        run: cp app/build/outputs/apk/release/app-release.apk ZikrTime-0.8.18-preview.apk
+        run: cp app/build/outputs/apk/release/app-release.apk ZikrTime-0.8.19-preview.apk
       - uses: actions/upload-artifact@v7.0.2
         if: success()
         with:
-          path: ZikrTime-0.8.18-preview.apk
+          path: ZikrTime-0.8.19-preview.apk
           archive: false
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: ZikrTime-0.8.18-ui-check
+          name: ZikrTime-0.8.19-ui-check
           path: |
             app/build/outputs/apk/
             app/build/reports/

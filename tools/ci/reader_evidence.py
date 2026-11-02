@@ -10,7 +10,7 @@ import xml.etree.ElementTree as ET
 folder = Path("reader-evidence")
 folder.mkdir(exist_ok=True)
 for name in ["quran-failure.txt", "quran-passed.json", "quran-features-passed.json", "quran-paper-passed.json", "quran-saved-passed.json", "release-delivery.json", "crashes.txt", "last-ui.xml",
-             "reused-build-verification.json", "inherited-touch-verification.json"]:
+             "reused-build-verification.json", "inherited-touch-verification.json", "inherited-saved-verification.json"]:
     source = Path("ci-out") / name
     if source.exists():
         shutil.copyfile(source, folder / name)
