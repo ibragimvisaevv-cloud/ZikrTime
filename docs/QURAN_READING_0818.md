@@ -16,7 +16,23 @@ Patterns reviewed: [Quran.com Study Mode](https://quran.com/en/product-updates/n
 
 ## Verification
 
-Pending first 0.8.18 CI run. Do not treat this document as a passed test report until the evidence below is updated.
+Verified on 2 November 2026. Android source: `6275b1a485d65210ad44932a1a5e15be67d6db9d`.
+
+- [Build run 41493288209](https://github.com/ibragimvisaevv-cloud/ZikrTime/actions/runs/41493288209): 29 focused Quran tests, lint with no errors, debug and signed release builds, original certificate and exact Quran assets inside the release APK passed. The first UI attempt stopped when Android's clipboard preview intercepted an automation tap; the crash log was empty.
+- [UI run 41495690961](https://github.com/ibragimvisaevv-cloud/ZikrTime/actions/runs/41495690961) passed all eight scenario groups on the same APK. Verification commit: `80a3d9d3d3f3bb129f44bc3ba34fed0e9450158f`. The guard verified unchanged Android inputs and both APK hashes; no second build was performed.
+- Passed: exact-ayah actions and Back; three exact clipboard variants; note discard/save/confirmed deletion preserving bookmarks; last-ayah mode switch and restart; dark reading/translation/full-screen/rotation; 320 dp with 150% text; automatic progress exclusions for menus/background/jumps; English note controls. Crash log is empty.
+- Visual review covered day index/actions, night reading/translation, landscape, 320 dp reading/note controls and unsaved-note confirmation. This is emulator evidence, not a physical-phone test or independent religious review.
+- Evidence branch: `ci-reader-0818-41495690961`. Signed candidate artifact: `13168315791`; UI evidence artifact: `13167102952`.
+
+| Candidate | Value |
+| --- | --- |
+| File | `ZikrTime-0.8.18-preview.apk` |
+| Size | 61,170,479 bytes |
+| SHA-256 | `ad17abce7a2d1d9a00299fd91f4463c9ff56ebd879427d977ac7b1dd79a91b3c` |
+| Certificate SHA-256 | `7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf` |
+| Debug APK SHA-256 used for emulator checks | `df4029e4068360986225ad04575fc8f31c20add71aec0edca81262dac30d8f02` |
+
+The signed candidate was downloaded and independently checked by size and hash. APK and four original emulator screenshots were provided as separate downloadable files.
 
 Use the `[quran-paper]` commit marker to run `.github/workflows/quran-paper.yml`. It checks the original source snapshots, all eight reader locales, focused Quran unit tests, Android lint, debug and signed release builds, the original signing certificate, and source bytes inside the release APK. Emulator journeys exercise changed reader actions, persistence, note dismissal, selection, copying, themes, rotation, large text and automatic progress exclusions.
 
