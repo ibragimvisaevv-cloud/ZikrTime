@@ -25,6 +25,9 @@ if apk.exists():
               "journey_completed": (Path("ci-out/levels-tasbih-passed.json").exists() and not Path("ci-out/levels-tasbih-failure.txt").exists())}
     (folder / "delivery.json").write_text(json.dumps(report, indent=2))
     print(json.dumps(report))
+if not any(folder.iterdir()):
+    print("No emulator or APK evidence exists yet")
+    raise SystemExit(0)
 branch = "ci-levels-0820-" + os.environ["GITHUB_RUN_ID"]
 def git(*args):
     subprocess.run(["git", *args], cwd=folder, check=True, stdout=subprocess.DEVNULL)

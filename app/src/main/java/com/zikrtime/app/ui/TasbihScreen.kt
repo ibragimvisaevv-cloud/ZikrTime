@@ -342,6 +342,7 @@ private fun BeadCounter(materials: TasbihMaterials, dark: Boolean, count: Int, t
             role = Role.Button, onClickLabel = tapHint, onClick = addOne)
         .semantics { contentDescription = label; stateDescription = countDescription },
         contentAlignment = Alignment.Center) {
+        val counterWidth = maxWidth
         Canvas(Modifier.fillMaxSize()) {
             val origin = Offset(size.width / 2f, size.height * .46f)
             val radius = size.minDimension * .385f
@@ -386,11 +387,11 @@ private fun BeadCounter(materials: TasbihMaterials, dark: Boolean, count: Int, t
                 1.dp.toPx(), cap = StrokeCap.Round)
         }
         Column(horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxWidth(.52f).padding(bottom = maxWidth * .08f)
+            modifier = Modifier.fillMaxWidth(.52f).padding(bottom = counterWidth * .08f)
                 .graphicsLayer { scaleX = 1f + pulse * .025f; scaleY = scaleX }) {
             val preferredSize = if (fontScale > 1.3f) 44f else 58f
             // Infinite mode can have ten digits. Fit the number without cutting off its end.
-            val numberSize = preferredSize.coerceAtMost(maxWidth.value * .49f /
+            val numberSize = preferredSize.coerceAtMost(counterWidth.value * .49f /
                 (count.toString().length * .65f * fontScale))
             Text(count.toString(), modifier = Modifier.testTag("tasbih_count_value"),
                 style = Tabular, fontSize = numberSize.sp, fontWeight = FontWeight.Medium,
