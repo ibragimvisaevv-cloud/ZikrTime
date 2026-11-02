@@ -1,0 +1,9 @@
+{
+  "source_sha": "b7703f66aceb9a123992bc4266f1809cb8caed01",
+  "build_run": 41511213221,
+  "artifact_id": 13174791180,
+  "passed_unit_tests": 29,
+  "lint_errors": 0,
+  "debug_sha256": "b2320efce7f39322066575b2e47d2458e4b70cdbab4073d68408c4b05f1d69d5",
+  "release_sha256": "8a3c8f2addbca9a7a726ec4eaf3a269089e300d1d021feecd2460ae5e18998ef"
+}

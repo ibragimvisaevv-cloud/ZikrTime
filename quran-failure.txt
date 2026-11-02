@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/home/runner/work/ZikrTime/ZikrTime/tools/ci/quran_saved_ui.py", line 319, in <module>
+    reveal_above('quran_stats_enable')
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ZikrTime/ZikrTime/tools/ci/quran_saved_ui.py", line 97, in reveal_above
+    raise AssertionError('Control not reached above: ' + identifier)
+AssertionError: Control not reached above: quran_stats_enable
