@@ -1,0 +1,71 @@
+name: Sign prepared APK with replacement key
+on:
+  push:
+    branches: [codex/quran-reader-0814]
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: zikrtime-replacement-signing
+  cancel-in-progress: false
+jobs:
+  sign:
+    if: ${{ contains(github.event.head_commit.message, '[rustore-new-key]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/quran-reader-0814
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Verify prepared release provenance without rebuilding
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git fetch --no-tags --depth=1 origin 31560a5f285d9983df6cf3db852526f58cd59898
+          git diff --exit-code 31560a5f285d9983df6cf3db852526f58cd59898 HEAD -- app/ gradle/ gradlew gradlew.bat build.gradle.kts settings.gradle.kts gradle.properties tools/quran/ tools/i18n/ tools/quiz/ tools/audio/
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/13057178682" > artifact-source.json
+          python3 - <<'PY'
+          import json
+          a=json.load(open('artifact-source.json'))
+          assert a['id']==13057178682 and a['name']=='ZikrTime-0.8.17-release-build' and not a['expired']
+          assert a['workflow_run']['id']==41240887366
+          assert a['workflow_run']['head_sha']=='31560a5f285d9983df6cf3db852526f58cd59898'
+          PY
+          gh run download 41240887366 -n ZikrTime-0.8.17-release-build -D checked-store
+      - name: Create or verify the encrypted replacement key
+        env:
+          RELEASE_KEY_PASSWORD_V2: ${{ secrets.RELEASE_KEY_PASSWORD_V2 }}
+        run: python3 tools/ci/rustore_new_key.py prepare-key
+      - name: Persist encrypted backup before using its identity to sign
+        run: |
+          git add -- keystore/release-v2.jks.enc keystore/release-v2.der
+          if ! git diff --cached --quiet; then
+            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Save encrypted replacement signing key and public certificate [skip ci]'
+            git push origin HEAD:codex/quran-reader-0814
+          fi
+      - name: Save password-protected recovery package
+        uses: actions/upload-artifact@v4
+        with:
+          name: ZikrTime-signing-key-v2-ENCRYPTED
+          path: ci-key-backup/
+          if-no-files-found: error
+      - name: Sign unchanged release APK
+        env:
+          RELEASE_KEY_PASSWORD_V2: ${{ secrets.RELEASE_KEY_PASSWORD_V2 }}
+        run: python3 tools/ci/rustore_new_key.py sign-existing
+      - uses: actions/upload-artifact@v7.0.2
+        with:
+          path: ci-store-v2/ZikrTime-0.8.17-RuStore.apk
+          archive: false
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ZikrTime-0.8.17-replacement-signing-evidence
+          path: |
+            ci-store-v2/release-report.json
+            ci-store-v2/signature.txt
+            ci-store-v2/SHA256SUMS.txt
