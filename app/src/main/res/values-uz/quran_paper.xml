@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qp_index_title">Qur’oni karim</string>
+    <string name="qp_reading_mode">O‘qish</string>
+    <string name="qp_translation_mode">Tarjima bilan</string>
+    <string name="qp_selected_ayah">Oyat %1$d:%2$d</string>
+    <string name="qp_ayah_menu">%1$d-oyat amallari</string>
+    <string name="qp_clear_selection">Tanlovni bekor qilish</string>
+    <string name="qp_selection_hint">Amallarni ochish uchun oyatni bosing</string>
+    <string name="qp_copied">Oyat nusxalandi</string>
+    <string name="qp_note_saved">Qayd saqlandi</string>
+    <string name="qp_discard_note_title">O‘zgarishlar saqlanmasinmi?</string>
+    <string name="qp_discard_note_body">Qayddagi o‘zgarishlar yo‘qoladi.</string>
+    <string name="qp_keep_editing">Tahrirlashni davom ettirish</string>
+    <string name="qp_discard">Saqlamaslik</string>
+    <string name="qp_delete_note">Qaydni o‘chirish</string>
+    <string name="qp_delete_note_title">Bu qayd o‘chirilsinmi?</string>
+    <string name="qp_delete_note_body">Qayd matni o‘chiriladi. Xatcho‘p saqlanadi.</string>
+    <string name="qp_note_deleted">Qayd o‘chirildi</string>
+    <string name="qp_delete">O‘chirish</string>
+    <string name="qp_copy_arabic">Arabcha matn</string>
+    <string name="qp_copy_translation">Tarjima</string>
+    <string name="qp_copy_both">Arabcha matn va tarjima</string>
+    <string name="qp_copy_title">Oyatni nusxalash</string>
+    <string name="qp_note_counter">%1$d / 2000</string>
+    <string name="qp_action_close">O‘qishga qaytish</string>
+    <string name="qp_surah_total">%1$d ta sura</string>
+    <string name="qp_index_subtitle">Arabcha matn va ma’nolar tarjimasi</string>
+    <string name="qp_clear_search">Qidiruvni tozalash</string>
+    <string name="qp_bookmark_short">Xatcho‘p</string>
+    <string name="qp_copy_short">Nusxalash</string>
+    <string name="qp_note_delete_cancel">Bekor qilish</string>
+</resources>

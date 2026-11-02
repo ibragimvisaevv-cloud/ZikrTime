@@ -1,31 +1,35 @@
 package com.zikrtime.app.ui
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.background
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDirection
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zikrtime.app.R
@@ -33,12 +37,15 @@ import com.zikrtime.app.data.*
 import com.zikrtime.app.i18n.Lang
 import com.zikrtime.app.ui.theme.ArabicStyle
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.launch
 
 @Composable
 fun QuranScreen() {
+    QuranReadingTheme { QuranScreenContent() }
+}
+
+@Composable
+private fun QuranScreenContent() {
+    StandardSystemBars()
     val context = LocalContext.current
     val nav = LocalNav.current
     val progress = remember { QuranProgress(context) }
@@ -48,6 +55,9 @@ fun QuranScreen() {
     var surahId by rememberSaveable { mutableIntStateOf(0) }
     var startAyah by rememberSaveable { mutableIntStateOf(1) }
     var sources by rememberSaveable { mutableStateOf(false) }
+    var indexQuery by rememberSaveable { mutableStateOf("") }
+    var indexTab by rememberSaveable { mutableIntStateOf(0) }
+    val indexList = rememberLazyListState()
     var scale by rememberReadingScale()
     LaunchedEffect(attempt) {
         failed = false
@@ -58,23 +68,36 @@ fun QuranScreen() {
     BackHandler(surahId != 0) { surahId = 0 }
     val content = book
     if (content != null && surahId != 0) {
-        key(surahId) { QuranReader(content, surahId, startAyah, scale, { scale = it }, progress, { surahId = 0 }) }
-    } else ScreenScaffold(stringResource(R.string.quran_title), onBack = { nav.back() },
-        scrollable = false, showHeading = false,
-        actions = {
-            IconButton(onClick = { sources = true }, modifier = Modifier.testTag("quran_sources")) {
-                Icon(Icons.Filled.Info, stringResource(R.string.quran_sources))
+        key(surahId) {
+            QuranReader(content, surahId, startAyah, scale, { scale = it }, progress, { surahId = 0 })
+        }
+    } else Surface(color = quranPaperColors().canvas, modifier = Modifier.fillMaxSize()) {
+        Column(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing)) {
+            Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = { nav.back() }) {
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.action_back))
+                }
+                Text(stringResource(R.string.quran_title), style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.weight(1f), color = quranPaperColors().ink)
+                IconButton(onClick = { sources = true }, modifier = Modifier.testTag("quran_sources")) {
+                    Icon(Icons.Filled.Info, stringResource(R.string.quran_sources), tint = quranPaperColors().muted)
+                }
             }
-        }) {
-        when {
-            content != null -> QuranIndex(content, progress, {
-                startAyah = it.ayah; surahId = it.surah; progress.save(it)
-            }, Modifier.weight(1f))
-            failed -> Column(Modifier.weight(1f), verticalArrangement = Arrangement.Center) {
-                Text(stringResource(R.string.quran_load_error))
-                TextButton(onClick = { attempt++ }) { Text(stringResource(R.string.quran_retry)) }
+            when {
+                content != null -> QuranIndex(content, progress, {
+                    startAyah = it.ayah
+                    surahId = it.surah
+                    progress.save(it)
+                }, Modifier.weight(1f), indexQuery, { indexQuery = it }, indexTab, { indexTab = it }, indexList)
+                failed -> Column(Modifier.weight(1f).padding(24.dp), verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(stringResource(R.string.quran_load_error), textAlign = TextAlign.Center)
+                    TextButton(onClick = { attempt++ }) { Text(stringResource(R.string.quran_retry)) }
+                }
+                else -> Box(Modifier.fillMaxWidth().weight(1f), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
             }
-            else -> Box(Modifier.fillMaxWidth().weight(1f), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
         }
     }
     if (sources) QuranSources { sources = false }
@@ -82,82 +105,101 @@ fun QuranScreen() {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun QuranIndex(book: QuranBook, progress: QuranProgress, open: (QuranProgress.Location) -> Unit, modifier: Modifier) {
+private fun QuranIndex(book: QuranBook, progress: QuranProgress, open: (QuranProgress.Location) -> Unit,
+    modifier: Modifier, query: String, onQuery: (String) -> Unit, tab: Int, onTab: (Int) -> Unit,
+    listState: LazyListState) {
     val ru = Lang.content(LocalContext.current) == "ru"
-    var query by rememberSaveable { mutableStateOf("") }
-    var tab by rememberSaveable { mutableIntStateOf(0) }
-    val showBookmarks = tab == 1
-    var statistics by remember { mutableStateOf(false) }
+    val colors = quranPaperColors()
+    var statistics by rememberSaveable { mutableStateOf(false) }
     val stop = remember(book) { progress.stop(book) }
     val notes = remember(book) { progress.notes(book) }
     val bookmarks = remember(book) { progress.bookmarks(book).sortedWith(compareBy({ it.surah }, { it.ayah })) }
     val last = remember(book) { progress.last(book) }
     val filtered = remember(book, query) {
-        book.surahs.filter { query.isBlank() || it.id.toString() == query.trim() ||
-            it.nameRu.contains(query.trim(), true) || it.nameLatin.contains(query.trim(), true) || it.nameArabic.contains(query.trim()) }
+        val value = query.trim()
+        book.surahs.filter { value.isEmpty() || it.id.toString() == value ||
+            it.nameRu.contains(value, true) || it.nameLatin.contains(value, true) || it.nameArabic.contains(value) }
     }
-    Column(modifier, verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            FilterChip(tab == 0, { tab = 0 }, label = { Text(stringResource(R.string.quran_surahs)) }, modifier = Modifier.testTag("quran_surahs"))
-            FilterChip(showBookmarks, { tab = 1 }, label = { Text(stringResource(R.string.quran_bookmarks)) }, modifier = Modifier.testTag("quran_bookmarks"))
-            FilterChip(tab == 2, { tab = 2 }, label = { Text(stringResource(R.string.qf_notes)) }, modifier = Modifier.testTag("quran_personal_notes"))
-        }
-        if (tab == 0) OutlinedTextField(query, { query = it }, singleLine = true,
-            label = { Text(stringResource(R.string.quran_search)) }, modifier = Modifier.fillMaxWidth().testTag("quran_search"))
-        LazyColumn(Modifier.fillMaxWidth().weight(1f), verticalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(bottom = 12.dp)) {
-            if (tab == 0) item("gesture_hint") {
-                Text(stringResource(R.string.qt_touch_hint), style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant)
+    // A single scroll surface keeps the catalog reachable with large accessibility text.
+    LazyColumn(modifier.fillMaxWidth().testTag("quran_index_list"), state = listState,
+        contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 32.dp)) {
+        item("book_heading") {
+            Column(Modifier.fillMaxWidth().padding(top = 12.dp, bottom = 20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally) {
+                QuranOrnament(Modifier.width(104.dp).height(16.dp))
+                Text(stringResource(R.string.qp_index_title),
+                    style = MaterialTheme.typography.headlineMedium, color = colors.ink,
+                    modifier = Modifier.padding(top = 12.dp, bottom = 6.dp), textAlign = TextAlign.Center)
+                Text(stringResource(R.string.qp_surah_total, book.surahs.size),
+                    style = MaterialTheme.typography.labelLarge, color = colors.accent,
+                    modifier = Modifier.padding(bottom = 6.dp))
+                Text(stringResource(R.string.qp_index_subtitle), style = MaterialTheme.typography.bodyMedium,
+                    color = colors.muted, textAlign = TextAlign.Center)
             }
-            item("statistics") {
-                OutlinedButton(onClick = { statistics = true }, modifier = Modifier.fillMaxWidth().testTag("quran_statistics_open")) {
+        }
+        item("sections") {
+            FlowRow(Modifier.fillMaxWidth().padding(bottom = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                FilterChip(tab == 0, { onTab(0) }, label = { Text(stringResource(R.string.quran_surahs)) },
+                    modifier = Modifier.testTag("quran_surahs"))
+                FilterChip(tab == 1, { onTab(1) }, label = { Text(stringResource(R.string.quran_bookmarks)) },
+                    modifier = Modifier.testTag("quran_bookmarks"))
+                FilterChip(tab == 2, { onTab(2) }, label = { Text(stringResource(R.string.qf_notes)) },
+                    modifier = Modifier.testTag("quran_personal_notes"))
+            }
+        }
+        if (tab == 0) {
+            item("search") {
+                OutlinedTextField(query, onQuery, singleLine = true,
+                    leadingIcon = { Icon(Icons.Filled.Search, null) },
+                    trailingIcon = if (query.isNotEmpty()) {
+                        {
+                            IconButton(onClick = { onQuery("") }, modifier = Modifier.testTag("quran_search_clear")) {
+                                Icon(Icons.Filled.Close, stringResource(R.string.qp_clear_search))
+                            }
+                        }
+                    } else null,
+                    label = { Text(stringResource(R.string.quran_search)) }, shape = RoundedCornerShape(16.dp),
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp).testTag("quran_search"))
+            }
+            if (query.isBlank() && last != null) item("continue") {
+                QuranContinueCard(book, last, ru, R.string.quran_continue, "quran_continue", open)
+                Spacer(Modifier.height(12.dp))
+            }
+            if (query.isBlank() && stop != null && stop != last) item("stop") {
+                QuranContinueCard(book, stop, ru, R.string.qf_saved_stop, "quran_saved_stop", open, progress.note(stop))
+                Spacer(Modifier.height(12.dp))
+            }
+        }
+        item("statistics") {
+            Row(Modifier.fillMaxWidth().padding(bottom = 8.dp), horizontalArrangement = Arrangement.End) {
+                TextButton(onClick = { statistics = true }, modifier = Modifier.testTag("quran_statistics_open")) {
                     Text(stringResource(R.string.qf_statistics))
                 }
             }
-            if (stop != null && tab != 1) item("stop") {
-                ZCard(onClick = { open(stop) }, modifier = Modifier.testTag("quran_saved_stop")) {
-                    Text(stringResource(R.string.qf_saved_stop), style = MaterialTheme.typography.titleMedium)
-                    Text(stop.key + " · " + book.surahs.first { it.id == stop.surah }.let { if (ru) it.nameRu else it.nameLatin })
-                    if (progress.note(stop).isNotBlank()) Text(progress.note(stop), maxLines = 3)
-                }
-            }
-            if (tab == 0 && last != null) item("continue") {
-                ZCard(modifier = Modifier.testTag("quran_continue"), onClick = { open(last) }) {
-                    Text(stringResource(R.string.quran_continue), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-                    val surah = book.surahs.first { it.id == last.surah }
-                    Text("${if (ru) surah.nameRu else surah.nameLatin} · ${last.surah}:${last.ayah}", style = MaterialTheme.typography.titleMedium)
-                }
-            }
-            if (tab == 2) {
-                if (notes.isEmpty()) item { Text(stringResource(R.string.qf_no_notes)) }
+            HorizontalDivider(color = colors.rule)
+        }
+        when (tab) {
+            2 -> {
+                if (notes.isEmpty()) item("no_notes") { QuranIndexEmpty(stringResource(R.string.qf_no_notes)) }
                 items(notes, key = { "note_" + it.key }) { location ->
-                    ZCard(onClick = { open(location) }, modifier = Modifier.testTag("quran_note_" + location.surah + "_" + location.ayah)) {
-                        Text(location.key, style = MaterialTheme.typography.titleMedium)
-                        Text(progress.note(location), maxLines = 4)
-                    }
-                }
-            } else if (showBookmarks) {
-                if (bookmarks.isEmpty()) item { Text(stringResource(R.string.quran_no_bookmarks), modifier = Modifier.padding(vertical = 24.dp)) }
-                items(bookmarks, key = { it.key }) { location ->
                     val surah = book.surahs.first { it.id == location.surah }
-                    ZCard(onClick = { open(location) }, modifier = Modifier.testTag("quran_saved_${location.surah}_${location.ayah}")) {
-                        Text(if (ru) surah.nameRu else surah.nameLatin, style = MaterialTheme.typography.titleMedium)
-                        Text("${location.surah}:${location.ayah}", color = MaterialTheme.colorScheme.primary)
-                    }
+                    QuranSavedRow(if (ru) surah.nameRu else surah.nameLatin, location,
+                        "quran_note_" + location.surah + "_" + location.ayah,
+                        onClick = { open(location) }, note = progress.note(location))
                 }
-            } else {
-                if (filtered.isEmpty()) item { Text(stringResource(R.string.quran_no_results)) }
-                items(filtered, key = { it.id }) { surah ->
-                    ZCard(onClick = { open(QuranProgress.Location(surah.id, 1)) }, modifier = Modifier.testTag("quran_surah_${surah.id}")) {
-                        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                            Text(surah.id.toString(), color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.titleMedium)
-                            Column(Modifier.weight(1f)) {
-                                Text(if (ru) surah.nameRu else surah.nameLatin, style = MaterialTheme.typography.titleMedium)
-                                Text(stringResource(R.string.quran_ayah_count, surah.ayahCount), style = MaterialTheme.typography.bodySmall)
-                            }
-                            Text(surah.nameArabic, style = ArabicStyle.copy(fontSize = 25.sp, textDirection = TextDirection.Rtl), color = MaterialTheme.colorScheme.primary)
-                        }
-                    }
+            }
+            1 -> {
+                if (bookmarks.isEmpty()) item("no_bookmarks") { QuranIndexEmpty(stringResource(R.string.quran_no_bookmarks)) }
+                items(bookmarks, key = { "saved_" + it.key }) { location ->
+                    val surah = book.surahs.first { it.id == location.surah }
+                    QuranSavedRow(if (ru) surah.nameRu else surah.nameLatin, location,
+                        "quran_saved_" + location.surah + "_" + location.ayah, onClick = { open(location) })
+                }
+            }
+            else -> {
+                if (filtered.isEmpty()) item("no_results") { QuranIndexEmpty(stringResource(R.string.quran_no_results)) }
+                items(filtered, key = { "surah_" + it.id }) { surah ->
+                    QuranSurahRow(surah, ru) { open(QuranProgress.Location(surah.id, 1)) }
                 }
             }
         }
@@ -165,6 +207,79 @@ private fun QuranIndex(book: QuranBook, progress: QuranProgress, open: (QuranPro
     if (statistics) HorizonSheet(stringResource(R.string.qf_statistics), { statistics = false }) {
         PersonalProgressSetting()
         QuranStatisticsCard(book)
+    }
+}
+
+@Composable
+private fun QuranContinueCard(book: QuranBook, location: QuranProgress.Location, ru: Boolean,
+    label: Int, tag: String, open: (QuranProgress.Location) -> Unit, note: String = "") {
+    val colors = quranPaperColors()
+    val surah = book.surahs.first { it.id == location.surah }
+    Surface(onClick = { open(location) }, modifier = Modifier.fillMaxWidth().testTag(tag),
+        shape = RoundedCornerShape(18.dp), color = colors.paper, border = BorderStroke(1.dp, colors.rule)) {
+        Row(Modifier.padding(18.dp), verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text(stringResource(label), color = colors.accent, style = MaterialTheme.typography.labelLarge)
+                Text(if (ru) surah.nameRu else surah.nameLatin, style = MaterialTheme.typography.titleLarge, color = colors.ink)
+                Text(stringResource(R.string.quran_ayah) + " " + location.ayah + "  \u00b7  " + location.key,
+                    color = colors.muted, style = MaterialTheme.typography.bodySmall)
+                if (note.isNotBlank()) Text(note, maxLines = 2, overflow = TextOverflow.Ellipsis,
+                    color = colors.muted, style = MaterialTheme.typography.bodyMedium)
+            }
+            Icon(Icons.AutoMirrored.Filled.ArrowForward, null, tint = colors.accent, modifier = Modifier.size(22.dp))
+        }
+    }
+}
+
+@Composable
+private fun QuranSurahRow(surah: QuranSurah, ru: Boolean, open: () -> Unit) {
+    val colors = quranPaperColors()
+    val largeText = LocalConfiguration.current.fontScale > 1.25f
+    BoxWithConstraints(Modifier.fillMaxWidth()) {
+        val compact = maxWidth < 340.dp || largeText
+        Row(Modifier.fillMaxWidth().testTag("quran_surah_" + surah.id)
+            .clickable(role = Role.Button, onClick = open).semantics(mergeDescendants = true) {}.padding(vertical = 15.dp),
+            verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+            QuranNumberSeal(surah.id.toString(), Modifier.size(44.dp))
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(if (ru) surah.nameRu else surah.nameLatin, style = MaterialTheme.typography.titleMedium, color = colors.ink)
+                Text(stringResource(R.string.quran_ayah_count, surah.ayahCount),
+                    style = MaterialTheme.typography.bodySmall, color = colors.muted)
+                if (compact) Text(surah.nameArabic,
+                    style = ArabicStyle.copy(fontSize = 23.sp, textDirection = TextDirection.Rtl),
+                    color = colors.accent, modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Right)
+            }
+            if (!compact) Text(surah.nameArabic,
+                style = ArabicStyle.copy(fontSize = 25.sp, textDirection = TextDirection.Rtl),
+                color = colors.accent, modifier = Modifier.widthIn(max = 126.dp), textAlign = TextAlign.Right)
+        }
+    }
+    HorizontalDivider(color = colors.rule.copy(alpha = .6f))
+}
+
+@Composable
+private fun QuranSavedRow(title: String, location: QuranProgress.Location, tag: String,
+    onClick: () -> Unit, note: String = "") {
+    val colors = quranPaperColors()
+    Column(Modifier.fillMaxWidth().testTag(tag).clickable(role = Role.Button, onClick = onClick)
+        .semantics(mergeDescendants = true) {}.padding(vertical = 18.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Text(title, style = MaterialTheme.typography.titleMedium, color = colors.ink)
+        Text(stringResource(R.string.quran_ayah) + " " + location.ayah + "  \u00b7  " + location.key,
+            style = MaterialTheme.typography.labelMedium, color = colors.accent)
+        if (note.isNotBlank()) Text(note, style = MaterialTheme.typography.bodyLarge, color = colors.muted,
+            maxLines = 4, overflow = TextOverflow.Ellipsis)
+    }
+    HorizontalDivider(color = colors.rule.copy(alpha = .6f))
+}
+
+@Composable
+private fun QuranIndexEmpty(message: String) {
+    val colors = quranPaperColors()
+    Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 36.dp),
+        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        QuranOrnament(Modifier.width(80.dp).height(16.dp))
+        Text(message, style = MaterialTheme.typography.bodyLarge, color = colors.muted, textAlign = TextAlign.Center)
     }
 }
 

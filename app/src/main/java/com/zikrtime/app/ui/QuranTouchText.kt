@@ -1,7 +1,6 @@
 package com.zikrtime.app.ui
 
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -71,11 +70,14 @@ internal fun QuranTouchText(text: String, ranges: List<QuranTextRange>, selected
     }
     val onChoose by rememberUpdatedState(choose)
     val haptic = LocalHapticFeedback.current
-    val selectionColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = .65f)
-    val annotated = remember(text, ranges, selected, selectionColor) {
+    val colors = quranPaperColors()
+    val annotated = remember(text, ranges, selected, colors) {
         AnnotatedString.Builder(text).apply {
+            ranges.forEach { range ->
+                if (range.arabicEnd < range.end) addStyle(SpanStyle(color = colors.accent), range.arabicEnd, range.end)
+            }
             ranges.firstOrNull { it.ayah == selected }?.let {
-                addStyle(SpanStyle(background = selectionColor), it.start, it.end)
+                addStyle(SpanStyle(background = colors.selection), it.start, it.end)
             }
         }.toAnnotatedString()
     }
@@ -90,9 +92,10 @@ internal fun QuranTouchText(text: String, ranges: List<QuranTextRange>, selected
         if (position.y < layout.getLineTop(line) || position.y > layout.getLineBottom(line) ||
             position.x < layout.getLineLeft(line) || position.x > layout.getLineRight(line)) return null
         val offset = layout.getOffsetForPosition(position)
-        return ranges.lastOrNull { offset >= it.start }?.ayah
+        return ranges.firstOrNull { offset >= it.start && offset < it.end }?.ayah
     }
-    Text(annotated, style = style, textAlign = TextAlign.Right, color = MaterialTheme.colorScheme.primary,
+    Text(annotated, style = style,
+        textAlign = if (style.textAlign == TextAlign.Unspecified) TextAlign.Right else style.textAlign, color = colors.ink,
         onTextLayout = { entry.layout = it },
         modifier = modifier.testTag(tag).onGloballyPositioned { entry.coordinates = it }
             .semantics { customActions = accessibility }
@@ -104,3 +107,4 @@ internal fun QuranTouchText(text: String, ranges: List<QuranTextRange>, selected
                     } })
             })
 }
+
