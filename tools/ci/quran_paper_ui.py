@@ -133,7 +133,9 @@ for kind, expected in [('arabic', arabic), ('translation', translation),
     tap_control('quran_ayah_actions_2')
     tap_control('quran_copy_ayah')
     tap_control('quran_copy_' + kind)
-    tap_control('quran_selection_note')
+    # Android's clipboard preview temporarily covers the lower selection dock.
+    # Open the same selected ayah through the unobstructed upper tools control.
+    tool('quran_note_open')
     assert '112:2' in read_text('quran_note_location')
     tap_control('quran_stop_note')
     shell('input', 'keyevent', 'KEYCODE_PASTE')
