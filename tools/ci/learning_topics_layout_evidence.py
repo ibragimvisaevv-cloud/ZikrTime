@@ -33,7 +33,8 @@ changed_paths = subprocess.check_output(
     text=True,
 ).splitlines()
 report = {
-    "source_sha": os.environ["GITHUB_SHA"], "run": int(os.environ["GITHUB_RUN_ID"]),
+    "source_sha": os.environ.get("APK_SOURCE_SHA", os.environ["GITHUB_SHA"]),
+    "verification_sha": os.environ["GITHUB_SHA"], "run": int(os.environ["GITHUB_RUN_ID"]),
     "scope": "topics-layout", "full_ui_suite_executed": False,
     "targeted_journey_completed": complete, "ui_step_outcome": os.environ.get("TARGETED_UI_OUTCOME"),
     "executed_ui_groups": sorted(result.get("groups", {})),

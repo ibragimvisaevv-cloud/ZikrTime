@@ -24,7 +24,7 @@ def start(route, lang='ru'):
           '--es', 'qa_lang', lang, '--ez', 'qa_onboarded', 'true')
     time.sleep(1.2)
     if route == 'quran':
-        wait_for('quran_index_list')
+        wait_for('quran_index_list', seconds=100)
 
 
 def save_report():
