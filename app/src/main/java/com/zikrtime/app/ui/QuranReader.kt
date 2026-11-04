@@ -45,7 +45,8 @@ import java.time.LocalDate
 @OptIn(ExperimentalFoundationApi::class, ExperimentalLayoutApi::class)
 @Composable
 internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: Float,
-    onScale: (Float) -> Unit, progress: QuranProgress, showIndex: () -> Unit) {
+    onScale: (Float) -> Unit, progress: QuranProgress, showIndex: () -> Unit,
+    backLabel: Int = R.string.quran_surahs) {
     val context = LocalContext.current
     val view = LocalView.current
     val activity = context.readerActivity()
@@ -199,7 +200,7 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
                     }
                 } else {
                     IconButton(onClick = showIndex, modifier = Modifier.testTag("quran_surahs")) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.quran_surahs))
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(backLabel))
                     }
                 }
                 Column(Modifier.weight(1f)) {

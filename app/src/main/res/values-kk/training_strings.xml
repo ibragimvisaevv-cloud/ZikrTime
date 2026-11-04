@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="training_title">Тақырыптар бойынша жаттығу</string>
+    <string name="training_first_hint">Таңдалған деңгейде бірнеше сұраққа жауап беріңіз. Жауаптарыңызға қарай қайталау сұрақтары таңдалады.</string>
+    <string name="training_overview_hint">Ненің бекігенін және қай сұрақтарға қайта оралу керегін көріңіз. Жауаптарыңызға негізделген қысқа жаттығуды бастаңыз.</string>
+    <string name="training_overview_counts">Жауап берілді: %1$d · Қайталайтын қателер: %2$d</string>
+    <string name="training_open">Тақырыптарымды ашу</string>
+    <string name="training_personal_plan">Қайталау жоспарыңыз</string>
+    <string name="training_method">5-ке дейін таныс сұрақ: алдымен қателер, содан кейін бекітуге арналған материал. Әр жауаптан соң түсіндірме мен дереккөз беріледі.</string>
+    <string name="training_no_data">Әзірге дерек жеткіліксіз</string>
+    <string name="training_start">Жаттығуды бастау</string>
+    <string name="training_no_bonus">Бонус минуттар берілмейді. Жауаптар оқу тарихында сақталады.</string>
+    <string name="training_topics">Менің тақырыптарым</string>
+    <string name="training_scope_note">Көрсеткіштер тек таңдалған деңгейдегі жауап берілген сұрақтарға қатысты. Жолақ білім бағасын емес, тақырыптың қамтылуын көрсетеді.</string>
+    <string name="training_status_new">Әлі оқылмаған</string>
+    <string name="training_status_limited">Қорытынды жасауға жауап аз</string>
+    <string name="training_status_practice">Қайталау керек</string>
+    <string name="training_status_building">Бекітіп жатырмыз</string>
+    <string name="training_status_retained">Жақсы бекіген</string>
+    <string name="training_coverage">Жауап берілді: %2$d сұрақтың %1$d-іне</string>
+    <string name="training_error_count">Соңғы қате жауаптар: %1$d</string>
+    <string name="training_retained_count">Әртүрлі күндері қайталап бекітілді: %1$d</string>
+    <string name="training_topic_action">Осы тақырыпты жаттықтыру</string>
+    <string name="training_discover">Тақырыпты оқу</string>
+    <string name="training_back_topics">Тақырыптарыма оралу</string>
+    <string name="training_complete">Жаттығу аяқталды</string>
+    <string name="training_result_score">Дұрыс жауаптар: %2$d сұрақтың %1$d-і</string>
+    <string name="training_result_success">Бұл айналымда қате жоқ. Кейінірек қайталаңыз: бір сәтті айналым әлі ұзақ уақыт есте сақтауды білдірмейді.</string>
+    <string name="training_result_repeat">Төменде қате жауап берілген сұрақтар жиналған. Түсіндірмелерді оқып, оларға кейінірек оралыңыз.</string>
+    <string name="training_review_errors">Қателерді талдау</string>
+    <string name="training_again">Тағы бір айналым</string>
+    <string name="training_round_hint">Асықпай жауап беріңіз. Бұл айналымдағы барлық сұрақтан өтіңіз; бонус минуттар берілмейді.</string>
+    <string name="training_question_progress">%2$d сұрақтың %1$d-і</string>
+    <string name="training_replace_title">Басқа жаттығуды бастайсыз ба?</string>
+    <string name="training_replace_hint">Аяқталмаған айналым ауыстырылады. Сақталған жауаптар, әдеттегі викторина және бонус минуттар сақталады.</string>
+    <string name="training_replace_confirm">Жаңа жаттығу</string>
+</resources>

@@ -73,6 +73,7 @@ object QaHooks {
             "about" -> nav.open(Screen.ABOUT)
             "apps" -> nav.open(Screen.APPS)
             "review" -> nav.startReview()
+            "training" -> nav.openTraining()
             "progress" -> nav.open(Screen.PROGRESS)
             "azkar" -> nav.openAzkar("morning")
             "quran" -> nav.open(Screen.QURAN)

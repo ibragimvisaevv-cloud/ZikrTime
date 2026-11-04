@@ -1,0 +1,2490 @@
+[
+  {
+    "id": "l1x_moon_calendar",
+    "cat": "quran",
+    "difficulty": 1,
+    "reference": "Quran 10:5",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/10",
+    "sourceVerses": [
+      "10:5"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Для чего в 10:5 названы стоянки Луны?",
+        "options": [
+          "Для счёта лет и времени",
+          "Для определения цены товаров",
+          "Для выбора имён детей",
+          "Для установления родства"
+        ],
+        "info": "Аят связывает стоянки Луны со счётом лет и времени."
+      },
+      "en": {
+        "q": "What purpose do the moon's phases serve in 10:5?",
+        "options": [
+          "Counting years and time",
+          "Setting prices of goods",
+          "Choosing children's names",
+          "Establishing family ties"
+        ],
+        "info": "The verse connects the moon's phases with reckoning years and time."
+      },
+      "uz": {
+        "q": "10:5 da Oyning manzillari nima uchun belgilangan?",
+        "options": [
+          "Yillar va vaqtni hisoblash uchun",
+          "Tovar narxlarini belgilash uchun",
+          "Bolalarga ism tanlash uchun",
+          "Qarindoshlikni aniqlash uchun"
+        ],
+        "info": "Oyat Oy manzillarini yillar va vaqt hisobiga bog‘laydi."
+      },
+      "tg": {
+        "q": "Дар 10:5 манзилҳои Моҳ барои чӣ муайян шудаанд?",
+        "options": [
+          "Барои ҳисоби солҳо ва вақт",
+          "Барои нархгузории мол",
+          "Барои интихоби номи кӯдакон",
+          "Барои муайян кардани хешутаборӣ"
+        ],
+        "info": "Оят манзилҳои Моҳро бо ҳисоби солҳо ва вақт мепайвандад."
+      },
+      "kk": {
+        "q": "10:5 аятында Айдың кезеңдері не үшін белгіленген?",
+        "options": [
+          "Жылдар мен уақытты есептеу үшін",
+          "Тауар бағасын белгілеу үшін",
+          "Балаларға есім таңдау үшін",
+          "Туыстықты анықтау үшін"
+        ],
+        "info": "Аят Айдың кезеңдерін жылдар мен уақыт есебімен байланыстырады."
+      },
+      "ky": {
+        "q": "10:5 аятында Айдын баскычтары эмне үчүн белгиленген?",
+        "options": [
+          "Жылдарды жана убакытты эсептөө үчүн",
+          "Товардын баасын аныктоо үчүн",
+          "Балдарга ат тандоо үчүн",
+          "Туугандыкты аныктоо үчүн"
+        ],
+        "info": "Аят Айдын баскычтарын жылдар менен убакыттын эсебине байланыштырат."
+      },
+      "az": {
+        "q": "10:5-də Ayın mənzilləri nə üçün müəyyən edilir?",
+        "options": [
+          "İlləri və vaxtı hesablamaq üçün",
+          "Mallara qiymət qoymaq üçün",
+          "Uşaqlara ad seçmək üçün",
+          "Qohumluğu müəyyən etmək üçün"
+        ],
+        "info": "Ayə Ayın mənzillərini illərin və vaxtın hesablanması ilə əlaqələndirir."
+      },
+      "tr": {
+        "q": "10:5'te Ay'ın evreleri hangi amaçla belirlenmiştir?",
+        "options": [
+          "Yılları ve zamanı hesaplamak için",
+          "Mallara fiyat koymak için",
+          "Çocuklara isim seçmek için",
+          "Akrabalığı belirlemek için"
+        ],
+        "info": "Ayet, Ay'ın evrelerini yılların ve zamanın hesabıyla ilişkilendirir."
+      }
+    }
+  },
+  {
+    "id": "l1x_languages_colours",
+    "cat": "quran",
+    "difficulty": 1,
+    "reference": "Quran 30:22",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/30",
+    "sourceVerses": [
+      "30:22"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие различия между людьми названы знамениями в 30:22?",
+        "options": [
+          "Языков и цветов кожи",
+          "Должностей и зарплат",
+          "Жилищ и одежды",
+          "Профессий и наград"
+        ],
+        "info": "Аят называет разнообразие языков и цветов кожи среди знамений Аллаха."
+      },
+      "en": {
+        "q": "Which human differences are called signs in 30:22?",
+        "options": [
+          "Languages and skin colours",
+          "Job titles and salaries",
+          "Homes and clothing",
+          "Professions and awards"
+        ],
+        "info": "The verse includes languages and skin colours among Allah's signs."
+      },
+      "uz": {
+        "q": "30:22 da odamlarning qaysi farqlari alomat deb atalgan?",
+        "options": [
+          "Tillari va teri ranglari",
+          "Lavozimlari va maoshlari",
+          "Uylari va kiyimlari",
+          "Kasblari va mukofotlari"
+        ],
+        "info": "Oyat tillar va teri ranglari xilma-xilligini Allohning alomatlari qatorida sanaydi."
+      },
+      "tg": {
+        "q": "Дар 30:22 кадом фарқҳои одамон нишона номида шудаанд?",
+        "options": [
+          "Забонҳо ва рангҳои пӯст",
+          "Мансабҳо ва маошҳо",
+          "Хонаҳо ва либосҳо",
+          "Касбҳо ва мукофотҳо"
+        ],
+        "info": "Оят гуногунии забонҳо ва рангҳои пӯстро аз нишонаҳои Аллоҳ мешуморад."
+      },
+      "kk": {
+        "q": "30:22 аятында адамдардың қандай айырмашылықтары белгі деп аталған?",
+        "options": [
+          "Тілдері мен тері түстері",
+          "Лауазымдары мен жалақылары",
+          "Үйлері мен киімдері",
+          "Кәсіптері мен марапаттары"
+        ],
+        "info": "Аят тілдер мен тері түстерінің алуандығын Алланың белгілеріне жатқызады."
+      },
+      "ky": {
+        "q": "30:22 аятында адамдардын кайсы айырмачылыктары белги деп аталат?",
+        "options": [
+          "Тилдери жана терисинин түстөрү",
+          "Кызматтары жана айлыктары",
+          "Үйлөрү жана кийимдери",
+          "Кесиптери жана сыйлыктары"
+        ],
+        "info": "Аят тилдер менен теринин түстөрүнүн ар түрдүүлүгүн Аллахтын белгилеринен дейт."
+      },
+      "az": {
+        "q": "30:22-də insanların hansı fərqləri dəlil sayılır?",
+        "options": [
+          "Dilləri və dəri rəngləri",
+          "Vəzifələri və maaşları",
+          "Evləri və geyimləri",
+          "Peşələri və mükafatları"
+        ],
+        "info": "Ayə dillərin və dəri rənglərinin müxtəlifliyini Allahın dəlillərindən sayır."
+      },
+      "tr": {
+        "q": "30:22'de insanların hangi farklılıkları delil sayılır?",
+        "options": [
+          "Dilleri ve ten renkleri",
+          "Makamları ve maaşları",
+          "Evleri ve kıyafetleri",
+          "Meslekleri ve ödülleri"
+        ],
+        "info": "Ayet, dil ve ten rengi çeşitliliğini Allah'ın delilleri arasında sayar."
+      }
+    }
+  },
+  {
+    "id": "l1x_sleep_rest",
+    "cat": "quran",
+    "difficulty": 1,
+    "reference": "Quran 78:9",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/78",
+    "sourceVerses": [
+      "78:9"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Чем назван сон в 78:9?",
+        "options": [
+          "Отдыхом",
+          "Испытанием торговли",
+          "Средством путешествия",
+          "Временем урожая"
+        ],
+        "info": "В аяте сон описывается как предоставленный человеку отдых."
+      },
+      "en": {
+        "q": "How is sleep described in 78:9?",
+        "options": [
+          "As rest",
+          "As a test of trade",
+          "As a means of travel",
+          "As harvest time"
+        ],
+        "info": "This verse presents sleep as rest provided for people."
+      },
+      "uz": {
+        "q": "78:9 da uyqu qanday ta’riflangan?",
+        "options": [
+          "Dam olish deb",
+          "Savdo sinovi deb",
+          "Safar vositasi deb",
+          "Hosil vaqti deb"
+        ],
+        "info": "Oyat uyquni insonga berilgan dam olish deb ta’riflaydi."
+      },
+      "tg": {
+        "q": "Дар 78:9 хоб чӣ номида шудааст?",
+        "options": [
+          "Осоиш",
+          "Озмоиши тиҷорат",
+          "Воситаи сафар",
+          "Вақти ҳосил"
+        ],
+        "info": "Дар оят хоб ҳамчун осоише барои инсон баён мешавад."
+      },
+      "kk": {
+        "q": "78:9 аятында ұйқы қалай сипатталған?",
+        "options": [
+          "Тынығу ретінде",
+          "Сауда сынағы ретінде",
+          "Сапар құралы ретінде",
+          "Егін жинау уақыты ретінде"
+        ],
+        "info": "Аят ұйқыны адамға берілген тынығу деп сипаттайды."
+      },
+      "ky": {
+        "q": "78:9 аятында уйку кандай сүрөттөлөт?",
+        "options": [
+          "Эс алуу катары",
+          "Сооданын сыноосу катары",
+          "Сапар каражаты катары",
+          "Түшүм жыйноо маалы катары"
+        ],
+        "info": "Аят уйкуну адамга берилген эс алуу катары баяндайт."
+      },
+      "az": {
+        "q": "78:9-da yuxu necə təsvir olunur?",
+        "options": [
+          "İstirahət kimi",
+          "Ticarət sınağı kimi",
+          "Səfər vasitəsi kimi",
+          "Məhsul vaxtı kimi"
+        ],
+        "info": "Ayə yuxunu insanlara verilmiş istirahət kimi təqdim edir."
+      },
+      "tr": {
+        "q": "78:9'da uyku nasıl nitelenir?",
+        "options": [
+          "Dinlenme olarak",
+          "Ticaret sınavı olarak",
+          "Yolculuk aracı olarak",
+          "Hasat zamanı olarak"
+        ],
+        "info": "Ayette uyku, insanlara sağlanan bir dinlenme olarak anlatılır."
+      }
+    }
+  },
+  {
+    "id": "l1x_day_livelihood",
+    "cat": "quran",
+    "difficulty": 1,
+    "reference": "Quran 78:11",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/78",
+    "sourceVerses": [
+      "78:11"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Для чего предназначен день согласно 78:11?",
+        "options": [
+          "Для добывания средств к жизни",
+          "Только для сна",
+          "Только для уединения",
+          "Только для путешествий"
+        ],
+        "info": "Аят описывает день как время добывания средств к жизни."
+      },
+      "en": {
+        "q": "What is the day made for according to 78:11?",
+        "options": [
+          "Seeking a livelihood",
+          "Sleeping only",
+          "Solitude only",
+          "Travelling only"
+        ],
+        "info": "The verse describes daytime as a time for earning a living."
+      },
+      "uz": {
+        "q": "78:11 ga ko‘ra kunduz nima uchun yaratilgan?",
+        "options": [
+          "Tirikchilik qilish uchun",
+          "Faqat uxlash uchun",
+          "Faqat yolg‘iz qolish uchun",
+          "Faqat sayohat uchun"
+        ],
+        "info": "Oyat kunduzni tirikchilik vositalarini topish vaqti deydi."
+      },
+      "tg": {
+        "q": "Мувофиқи 78:11 рӯз барои чӣ аст?",
+        "options": [
+          "Барои ҷустуҷӯи рӯзӣ",
+          "Танҳо барои хоб",
+          "Танҳо барои танҳоӣ",
+          "Танҳо барои сафар"
+        ],
+        "info": "Оят рӯзро вақти ба даст овардани василаҳои зиндагӣ меномад."
+      },
+      "kk": {
+        "q": "78:11 бойынша күндізгі уақыт не үшін берілген?",
+        "options": [
+          "Күнкөріс табу үшін",
+          "Тек ұйықтау үшін",
+          "Тек оңашалану үшін",
+          "Тек саяхаттау үшін"
+        ],
+        "info": "Аят күндізді адамдардың күнкөріс табатын уақыты деп сипаттайды."
+      },
+      "ky": {
+        "q": "78:11 боюнча күндүз эмне үчүн берилген?",
+        "options": [
+          "Тиричилик кылуу үчүн",
+          "Уктоо үчүн гана",
+          "Жалгыз болуу үчүн гана",
+          "Саякат үчүн гана"
+        ],
+        "info": "Аят күндүздү тиричилик каражатын таба турган убакыт дейт."
+      },
+      "az": {
+        "q": "78:11-ə görə gündüz nə üçün yaradılmışdır?",
+        "options": [
+          "Ruzi qazanmaq üçün",
+          "Yalnız yatmaq üçün",
+          "Yalnız təklik üçün",
+          "Yalnız səfər üçün"
+        ],
+        "info": "Ayə gündüzü insanların dolanışıq qazandığı vaxt kimi təsvir edir."
+      },
+      "tr": {
+        "q": "78:11'e göre gündüz ne için yaratılmıştır?",
+        "options": [
+          "Geçim sağlamak için",
+          "Yalnızca uyumak için",
+          "Yalnızca yalnız kalmak için",
+          "Yalnızca yolculuk için"
+        ],
+        "info": "Ayet gündüzü, insanların geçimlerini sağladıkları zaman olarak anlatır."
+      }
+    }
+  },
+  {
+    "id": "l1x_teaching_pen",
+    "cat": "quran",
+    "difficulty": 1,
+    "reference": "Quran 96:4",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/96",
+    "sourceVerses": [
+      "96:4"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какое средство обучения названо в 96:4?",
+        "options": [
+          "Перо",
+          "Весы",
+          "Компас",
+          "Ключ"
+        ],
+        "info": "В аяте говорится об обучении посредством пера."
+      },
+      "en": {
+        "q": "Which means of teaching is named in 96:4?",
+        "options": [
+          "The pen",
+          "The scales",
+          "The compass",
+          "The key"
+        ],
+        "info": "The verse mentions teaching through the pen."
+      },
+      "uz": {
+        "q": "96:4 da ta’limning qaysi vositasi aytilgan?",
+        "options": [
+          "Qalam",
+          "Tarozi",
+          "Kompas",
+          "Kalit"
+        ],
+        "info": "Oyat qalam vositasida o‘rgatishni eslatadi."
+      },
+      "tg": {
+        "q": "Дар 96:4 кадом воситаи таълим зикр шудааст?",
+        "options": [
+          "Қалам",
+          "Тарозу",
+          "Қутбнамо",
+          "Калид"
+        ],
+        "info": "Оят таълим ба воситаи қаламро зикр мекунад."
+      },
+      "kk": {
+        "q": "96:4 аятында үйретудің қандай құралы аталған?",
+        "options": [
+          "Қалам",
+          "Таразы",
+          "Құбылнама",
+          "Кілт"
+        ],
+        "info": "Аят қалам арқылы үйретуді еске салады."
+      },
+      "ky": {
+        "q": "96:4 аятында үйрөтүүнүн кайсы каражаты аталат?",
+        "options": [
+          "Калем",
+          "Тараза",
+          "Компас",
+          "Ачкыч"
+        ],
+        "info": "Аят калем аркылуу үйрөтүүнү эске салат."
+      },
+      "az": {
+        "q": "96:4-də hansı öyrətmə vasitəsi qeyd olunur?",
+        "options": [
+          "Qələm",
+          "Tərəzi",
+          "Kompas",
+          "Açar"
+        ],
+        "info": "Ayədə qələmlə öyrətmək qeyd olunur."
+      },
+      "tr": {
+        "q": "96:4'te hangi öğretme aracı anılır?",
+        "options": [
+          "Kalem",
+          "Terazi",
+          "Pusula",
+          "Anahtar"
+        ],
+        "info": "Ayette kalemle öğretmekten söz edilir."
+      }
+    }
+  },
+  {
+    "id": "l1x_clear_speech",
+    "cat": "quran",
+    "difficulty": 1,
+    "reference": "Quran 55:3, 55:4",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/55",
+    "sourceVerses": [
+      "55:3",
+      "55:4"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какой способности Аллах научил человека в 55:3–4?",
+        "options": [
+          "Ясно выражать мысли",
+          "Знать всё сокровенное",
+          "Никогда не ошибаться",
+          "Предсказывать все события"
+        ],
+        "info": "После создания человека здесь упоминается дар ясной речи."
+      },
+      "en": {
+        "q": "What ability did Allah teach humans in 55:3–4?",
+        "options": [
+          "Clear expression",
+          "Knowing all the unseen",
+          "Never making mistakes",
+          "Predicting every event"
+        ],
+        "info": "After human creation, these verses mention the gift of clear speech."
+      },
+      "uz": {
+        "q": "55:3–4 da Alloh insonga nimani o‘rgatgan?",
+        "options": [
+          "Fikrini aniq bayon qilishni",
+          "Barcha g‘aybni bilishni",
+          "Hech qachon xato qilmaslikni",
+          "Har bir hodisani oldindan aytishni"
+        ],
+        "info": "Inson yaratilgach, unga ravshan nutq berilgani eslatiladi."
+      },
+      "tg": {
+        "q": "Дар 55:3–4 Аллоҳ ба инсон чиро омӯхт?",
+        "options": [
+          "Равшан баён кардани фикр",
+          "Донистани тамоми ғайб",
+          "Ҳеҷ гоҳ хато накардан",
+          "Пешгӯии ҳар ҳодиса"
+        ],
+        "info": "Пас аз офариниши инсон неъмати сухани равшан зикр мешавад."
+      },
+      "kk": {
+        "q": "55:3–4 аяттарында Алла адамға нені үйреткен?",
+        "options": [
+          "Ойын анық жеткізуді",
+          "Барлық ғайыпты білуді",
+          "Ешқашан қателеспеуді",
+          "Әр оқиғаны болжауды"
+        ],
+        "info": "Адамның жаратылуынан кейін анық сөйлеу нығметі аталады."
+      },
+      "ky": {
+        "q": "55:3–4 аяттарында Аллах адамга эмнени үйрөткөн?",
+        "options": [
+          "Оюн ачык билдирүүнү",
+          "Бардык кайыпты билүүнү",
+          "Эч качан жаңылбоону",
+          "Ар бир окуяны алдын ала айтууну"
+        ],
+        "info": "Адамдын жаратылышынан кийин так сүйлөө белеги эскерилет."
+      },
+      "az": {
+        "q": "55:3–4-də Allah insana nəyi öyrətmişdir?",
+        "options": [
+          "Fikrini aydın ifadə etməyi",
+          "Bütün qeybi bilməyi",
+          "Heç vaxt yanılmamağı",
+          "Hər hadisəni qabaqcadan deməyi"
+        ],
+        "info": "İnsanın yaradılmasından sonra aydın danışıq neməti anılır."
+      },
+      "tr": {
+        "q": "55:3–4'te Allah insana neyi öğretmiştir?",
+        "options": [
+          "Kendini açıkça ifade etmeyi",
+          "Gaybın tamamını bilmeyi",
+          "Hiç hata yapmamayı",
+          "Her olayı önceden söylemeyi"
+        ],
+        "info": "İnsanın yaratılmasının ardından açık anlatım nimeti anılır."
+      }
+    }
+  },
+  {
+    "id": "l1x_cattle_milk",
+    "cat": "quran",
+    "difficulty": 1,
+    "reference": "Quran 16:66",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "sourceVerses": [
+      "16:66"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какой напиток от скота описан в 16:66?",
+        "options": [
+          "Чистое молоко",
+          "Виноградный сок",
+          "Оливковое масло",
+          "Родниковая вода"
+        ],
+        "info": "Аят обращает внимание на чистое молоко, получаемое от скота."
+      },
+      "en": {
+        "q": "Which drink from livestock is described in 16:66?",
+        "options": [
+          "Pure milk",
+          "Grape juice",
+          "Olive oil",
+          "Spring water"
+        ],
+        "info": "The verse draws attention to pure milk obtained from livestock."
+      },
+      "uz": {
+        "q": "16:66 da chorvadan olinadigan qaysi ichimlik tasvirlangan?",
+        "options": [
+          "Sof sut",
+          "Uzum sharbati",
+          "Zaytun moyi",
+          "Buloq suvi"
+        ],
+        "info": "Oyat chorvadan olinadigan sof sutga e’tibor qaratadi."
+      },
+      "tg": {
+        "q": "Дар 16:66 кадом нӯшокӣ аз чорво тасвир шудааст?",
+        "options": [
+          "Шири соф",
+          "Оби ангур",
+          "Равғани зайтун",
+          "Оби чашма"
+        ],
+        "info": "Оят ба шири софе, ки аз чорво мегиранд, таваҷҷуҳ медиҳад."
+      },
+      "kk": {
+        "q": "16:66 аятында малдан алынатын қандай сусын сипатталған?",
+        "options": [
+          "Таза сүт",
+          "Жүзім шырыны",
+          "Зәйтүн майы",
+          "Бұлақ суы"
+        ],
+        "info": "Аят малдан алынатын таза сүтке назар аудартады."
+      },
+      "ky": {
+        "q": "16:66 аятында малдан алынган кайсы суусундук сүрөттөлөт?",
+        "options": [
+          "Таза сүт",
+          "Жүзүм ширеси",
+          "Зайтун майы",
+          "Булак суусу"
+        ],
+        "info": "Аят малдан алынган таза сүткө көңүл бурат."
+      },
+      "az": {
+        "q": "16:66-da heyvanlardan alınan hansı içki təsvir olunur?",
+        "options": [
+          "Saf süd",
+          "Üzüm şirəsi",
+          "Zeytun yağı",
+          "Bulaq suyu"
+        ],
+        "info": "Ayə heyvanlardan alınan saf südə diqqət çəkir."
+      },
+      "tr": {
+        "q": "16:66'da hayvanlardan elde edilen hangi içecek anlatılır?",
+        "options": [
+          "Saf süt",
+          "Üzüm suyu",
+          "Zeytinyağı",
+          "Kaynak suyu"
+        ],
+        "info": "Ayet, hayvanlardan elde edilen saf süte dikkat çeker."
+      }
+    }
+  },
+  {
+    "id": "l1x_bee_drink",
+    "cat": "quran",
+    "difficulty": 1,
+    "reference": "Quran 16:68, 16:69",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "sourceVerses": [
+      "16:68",
+      "16:69"
+    ],
+    "locales": {
+      "ru": {
+        "q": "От какого существа получают питьё, в котором 16:68–69 указывает исцеление?",
+        "options": [
+          "От пчелы",
+          "От муравья",
+          "От бабочки",
+          "От саранчи"
+        ],
+        "info": "Речь о пчёлах и их мёде; аят отмечает его пользу для людей."
+      },
+      "en": {
+        "q": "Which creature produces the drink associated with healing in 16:68–69?",
+        "options": [
+          "The bee",
+          "The ant",
+          "The butterfly",
+          "The locust"
+        ],
+        "info": "The passage concerns bees and their honey, noting its benefit for people."
+      },
+      "uz": {
+        "q": "16:68–69 da shifo bor deyilgan ichimlikni qaysi jonzot beradi?",
+        "options": [
+          "Asalari",
+          "Chumoli",
+          "Kapalak",
+          "Chigirtka"
+        ],
+        "info": "Gap asalarilar va ularning asali haqida; uning odamlarga foydasi eslatiladi."
+      },
+      "tg": {
+        "q": "Дар 16:68–69 кадом ҷонвар нӯшокии дорои шифоро медиҳад?",
+        "options": [
+          "Занбӯри асал",
+          "Мӯрча",
+          "Шабпарак",
+          "Малах"
+        ],
+        "info": "Сухан дар бораи занбӯрҳо ва асал аст; фоидаи он барои мардум зикр мешавад."
+      },
+      "kk": {
+        "q": "16:68–69 аяттарындағы шипасы бар сусынды қай жәндік береді?",
+        "options": [
+          "Бал арасы",
+          "Құмырсқа",
+          "Көбелек",
+          "Шегіртке"
+        ],
+        "info": "Үзінді бал аралары мен олардың балының адамға пайдасын айтады."
+      },
+      "ky": {
+        "q": "16:68–69 аяттарындагы шыпаасы бар суусундукту кайсы жандык берет?",
+        "options": [
+          "Бал аарысы",
+          "Кумурска",
+          "Көпөлөк",
+          "Чегиртке"
+        ],
+        "info": "Бул жерде бал аарылары менен алардын балынын адамдарга пайдасы айтылат."
+      },
+      "az": {
+        "q": "16:68–69-da şəfa ilə əlaqələndirilən içkini hansı canlı verir?",
+        "options": [
+          "Bal arısı",
+          "Qarışqa",
+          "Kəpənək",
+          "Çəyirtkə"
+        ],
+        "info": "Burada arılar və onların balının insanlar üçün faydası qeyd olunur."
+      },
+      "tr": {
+        "q": "16:68–69'da şifa içerdiği belirtilen içeceği hangi canlı üretir?",
+        "options": [
+          "Bal arısı",
+          "Karınca",
+          "Kelebek",
+          "Çekirge"
+        ],
+        "info": "Burada arılar ve ürettikleri balın insanlara yararı anlatılır."
+      }
+    }
+  },
+  {
+    "id": "l1x_sea_ornaments",
+    "cat": "quran",
+    "difficulty": 1,
+    "reference": "Quran 16:14",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "sourceVerses": [
+      "16:14"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Что, кроме свежего мяса, люди извлекают из моря согласно 16:14?",
+        "options": [
+          "Украшения для ношения",
+          "Зерно для посева",
+          "Древесину для домов",
+          "Шерсть для одежды"
+        ],
+        "info": "Аят называет среди благ моря украшения, которые носят люди."
+      },
+      "en": {
+        "q": "Besides fresh meat, what do people take from the sea in 16:14?",
+        "options": [
+          "Ornaments to wear",
+          "Grain for sowing",
+          "Timber for houses",
+          "Wool for clothing"
+        ],
+        "info": "The verse names wearable ornaments among the sea's benefits."
+      },
+      "uz": {
+        "q": "16:14 ga ko‘ra dengizdan yangi go‘shtdan tashqari nima olinadi?",
+        "options": [
+          "Taqiladigan bezaklar",
+          "Ekish uchun don",
+          "Uy uchun yog‘och",
+          "Kiyim uchun jun"
+        ],
+        "info": "Oyat dengiz ne’matlari orasida taqiladigan bezaklarni aytadi."
+      },
+      "tg": {
+        "q": "Мувофиқи 16:14 аз баҳр ғайр аз гӯшти тоза чӣ мегиранд?",
+        "options": [
+          "Зеварҳои пӯшиданӣ",
+          "Дон барои кишт",
+          "Чӯб барои хона",
+          "Пашм барои либос"
+        ],
+        "info": "Оят зеварҳои пӯшиданиро аз неъматҳои баҳр мешуморад."
+      },
+      "kk": {
+        "q": "16:14 бойынша теңізден жас еттен басқа не алынады?",
+        "options": [
+          "Тағатын әшекейлер",
+          "Егуге арналған дән",
+          "Үйге арналған ағаш",
+          "Киімге арналған жүн"
+        ],
+        "info": "Аят теңіз нығметтерінің арасында тағылатын әшекейлерді атайды."
+      },
+      "ky": {
+        "q": "16:14 боюнча деңизден жаңы эттен башка эмне алынат?",
+        "options": [
+          "Тагынуучу жасалгалар",
+          "Себүү үчүн дан",
+          "Үй үчүн жыгач",
+          "Кийим үчүн жүн"
+        ],
+        "info": "Аят деңиздин белектеринин арасында тагынуучу жасалгаларды атайт."
+      },
+      "az": {
+        "q": "16:14-ə görə dənizdən təzə ətdən başqa nə çıxarılır?",
+        "options": [
+          "Taxılan zinət əşyaları",
+          "Əkin üçün taxıl",
+          "Ev üçün taxta",
+          "Geyim üçün yun"
+        ],
+        "info": "Ayə dənizin nemətləri arasında taxılan zinət əşyalarını qeyd edir."
+      },
+      "tr": {
+        "q": "16:14'e göre denizden taze et dışında ne çıkarılır?",
+        "options": [
+          "Takılan süs eşyaları",
+          "Ekim için tahıl",
+          "Evler için kereste",
+          "Giysiler için yün"
+        ],
+        "info": "Ayet, denizin nimetleri arasında takılan süs eşyalarını sayar."
+      }
+    }
+  },
+  {
+    "id": "l1x_stars_navigation",
+    "cat": "quran",
+    "difficulty": 1,
+    "reference": "Quran 16:16",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "sourceVerses": [
+      "16:16"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какую пользу звёзд указывает 16:16?",
+        "options": [
+          "По ним находят путь",
+          "По ним устанавливают цены",
+          "По ним выбирают правителей",
+          "По ним определяют родство"
+        ],
+        "info": "Аят упоминает звёзды как ориентиры для нахождения пути."
+      },
+      "en": {
+        "q": "What use of the stars is mentioned in 16:16?",
+        "options": [
+          "Finding one's way",
+          "Setting prices",
+          "Choosing rulers",
+          "Determining family ties"
+        ],
+        "info": "The verse mentions the stars as guides for finding one's way."
+      },
+      "uz": {
+        "q": "16:16 da yulduzlarning qaysi foydasi aytilgan?",
+        "options": [
+          "Yo‘l topish",
+          "Narx belgilash",
+          "Hukmdor tanlash",
+          "Qarindoshlikni aniqlash"
+        ],
+        "info": "Oyat yulduzlarni yo‘l topish uchun mo‘ljal sifatida eslatadi."
+      },
+      "tg": {
+        "q": "Дар 16:16 кадом фоидаи ситораҳо зикр шудааст?",
+        "options": [
+          "Роҳ ёфтан",
+          "Нархгузорӣ",
+          "Интихоби ҳоким",
+          "Муайян кардани хешутаборӣ"
+        ],
+        "info": "Оят ситораҳоро ҳамчун нишона барои ёфтани роҳ зикр мекунад."
+      },
+      "kk": {
+        "q": "16:16 аятында жұлдыздардың қандай пайдасы аталған?",
+        "options": [
+          "Жол табу",
+          "Баға белгілеу",
+          "Билеуші таңдау",
+          "Туыстықты анықтау"
+        ],
+        "info": "Аят жұлдыздарды жол табуға арналған бағдар ретінде атайды."
+      },
+      "ky": {
+        "q": "16:16 аятында жылдыздардын кайсы пайдасы айтылат?",
+        "options": [
+          "Жол табуу",
+          "Баа коюу",
+          "Башкаруучу тандоо",
+          "Туугандыкты аныктоо"
+        ],
+        "info": "Аят жылдыздарды жол табууга багыт берүүчү белги катары айтат."
+      },
+      "az": {
+        "q": "16:16-da ulduzların hansı faydası qeyd olunur?",
+        "options": [
+          "Yol tapmaq",
+          "Qiymət qoymaq",
+          "Hökmdar seçmək",
+          "Qohumluğu müəyyən etmək"
+        ],
+        "info": "Ayə ulduzları yol tapmaq üçün istiqamətverici nişan kimi qeyd edir."
+      },
+      "tr": {
+        "q": "16:16'da yıldızların hangi yararı belirtilir?",
+        "options": [
+          "Yol bulmak",
+          "Fiyat belirlemek",
+          "Yönetici seçmek",
+          "Akrabalığı belirlemek"
+        ],
+        "info": "Ayet, yıldızları yol bulmaya yarayan işaretler olarak anar."
+      }
+    }
+  },
+  {
+    "id": "l1x_small_good",
+    "cat": "quran",
+    "difficulty": 1,
+    "reference": "Quran 99:7",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/99",
+    "sourceVerses": [
+      "99:7"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Что сказано в 99:7 о самом малом добром деле?",
+        "options": [
+          "Человек увидит и его",
+          "Оно обязательно забудется",
+          "Оно учитывается лишь при свидетелях",
+          "Оно учитывается лишь у богатого"
+        ],
+        "info": "Аят подчёркивает, что даже очень малое добро не останется незамеченным."
+      },
+      "en": {
+        "q": "What does 99:7 say about even the smallest good deed?",
+        "options": [
+          "A person will see it too",
+          "It will certainly be forgotten",
+          "It counts only with witnesses",
+          "It counts only for the wealthy"
+        ],
+        "info": "The verse stresses that even a very small good deed will not go unnoticed."
+      },
+      "uz": {
+        "q": "99:7 da eng kichik yaxshilik haqida nima aytilgan?",
+        "options": [
+          "Inson uni ham ko‘radi",
+          "U albatta unutiladi",
+          "Faqat guvoh bo‘lsa hisoblanadi",
+          "Faqat boy uchun hisoblanadi"
+        ],
+        "info": "Oyat juda kichik yaxshilik ham e’tiborsiz qolmasligini ta’kidlaydi."
+      },
+      "tg": {
+        "q": "Дар 99:7 дар бораи хурдтарин некӣ чӣ гуфта шудааст?",
+        "options": [
+          "Инсон онро ҳам мебинад",
+          "Он ҳатман фаромӯш мешавад",
+          "Танҳо бо шоҳид ҳисоб мешавад",
+          "Танҳо барои сарватманд ҳисоб мешавад"
+        ],
+        "info": "Оят таъкид мекунад, ки ҳатто некии бисёр хурд нодида намемонад."
+      },
+      "kk": {
+        "q": "99:7 аятында ең кішкентай жақсылық туралы не айтылған?",
+        "options": [
+          "Адам оны да көреді",
+          "Ол міндетті түрде ұмытылады",
+          "Тек куәгер болса есептеледі",
+          "Тек бай адамға есептеледі"
+        ],
+        "info": "Аят өте аз жақсылықтың да елеусіз қалмайтынын көрсетеді."
+      },
+      "ky": {
+        "q": "99:7 аятында эң кичине жакшылык жөнүндө эмне айтылат?",
+        "options": [
+          "Адам аны да көрөт",
+          "Ал сөзсүз унутулат",
+          "Күбө болсо гана эсептелет",
+          "Бай адамга гана эсептелет"
+        ],
+        "info": "Аят өтө кичине жакшылык да көз жаздымда калбасын белгилейт."
+      },
+      "az": {
+        "q": "99:7-də ən kiçik yaxşı əməl haqqında nə deyilir?",
+        "options": [
+          "İnsan onu da görəcək",
+          "O, mütləq unudulacaq",
+          "Yalnız şahid olanda sayılır",
+          "Yalnız varlı üçün sayılır"
+        ],
+        "info": "Ayə çox kiçik yaxşılığın da nəzərdən qaçmayacağını vurğulayır."
+      },
+      "tr": {
+        "q": "99:7'de en küçük iyilik hakkında ne söylenir?",
+        "options": [
+          "İnsan onu da görecektir",
+          "Kesinlikle unutulacaktır",
+          "Yalnız şahit varsa sayılır",
+          "Yalnız zengin için sayılır"
+        ],
+        "info": "Ayet, çok küçük bir iyiliğin bile gözden kaçmayacağını vurgular."
+      }
+    }
+  },
+  {
+    "id": "l1x_soul_purification",
+    "cat": "quran",
+    "difficulty": 1,
+    "reference": "Quran 91:7, 91:8, 91:9",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/91",
+    "sourceVerses": [
+      "91:7",
+      "91:8",
+      "91:9"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Кто назван преуспевшим в 91:9 после упоминания души?",
+        "options": [
+          "Тот, кто очищает её",
+          "Тот, кто лишь хвалит себя",
+          "Тот, кто скрывает свои ошибки",
+          "Тот, кто сравнивает своё богатство"
+        ],
+        "info": "Этот отрывок связывает успех с очищением собственной души."
+      },
+      "en": {
+        "q": "Who is called successful in 91:9, following the mention of the soul?",
+        "options": [
+          "The one who purifies it",
+          "The one who only praises himself",
+          "The one who hides his mistakes",
+          "The one who compares his wealth"
+        ],
+        "info": "This passage connects success with purifying one's own soul."
+      },
+      "uz": {
+        "q": "Nafs zikr etilganidan so‘ng, 91:9 da kim muvaffaqiyatli deb aytilgan?",
+        "options": [
+          "Uni poklagan kishi",
+          "Faqat o‘zini maqtagan kishi",
+          "Xatolarini yashirgan kishi",
+          "Boyligini taqqoslagan kishi"
+        ],
+        "info": "Bu oyatlar muvaffaqiyatni o‘z nafsini poklashga bog‘laydi."
+      },
+      "tg": {
+        "q": "Пас аз зикри нафс, дар 91:9 кӣ растагор номида шудааст?",
+        "options": [
+          "Касе, ки онро пок мекунад",
+          "Касе, ки танҳо худро меситояд",
+          "Касе, ки хатоҳои худро пинҳон мекунад",
+          "Касе, ки сарваташро муқоиса мекунад"
+        ],
+        "info": "Ин порча растагориро бо пок кардани нафси худ мепайвандад."
+      },
+      "kk": {
+        "q": "Жан туралы айтылғаннан кейін 91:9 аятында кім құтылған деп аталған?",
+        "options": [
+          "Оны тазартқан адам",
+          "Тек өзін мақтайтын адам",
+          "Қателерін жасыратын адам",
+          "Байлығын салыстыратын адам"
+        ],
+        "info": "Бұл үзінді жетістікті адамның өз жанын тазартуымен байланыстырады."
+      },
+      "ky": {
+        "q": "Напси айтылгандан кийин 91:9 аятында ким ийгиликке жеткен делет?",
+        "options": [
+          "Аны тазарткан адам",
+          "Өзүн гана мактаган адам",
+          "Каталарын жашырган адам",
+          "Байлыгын салыштырган адам"
+        ],
+        "info": "Бул үзүндү ийгиликти адамдын өз напсисин тазалоосу менен байланыштырат."
+      },
+      "az": {
+        "q": "Nəfsin qeydindən sonra 91:9-da kim nicat tapmış sayılır?",
+        "options": [
+          "Onu təmizləyən",
+          "Yalnız özünü tərifləyən",
+          "Səhvlərini gizlədən",
+          "Sərvətini müqayisə edən"
+        ],
+        "info": "Bu hissə nicatı insanın öz nəfsini təmizləməsi ilə əlaqələndirir."
+      },
+      "tr": {
+        "q": "Nefsin anılmasından sonra 91:9'da kim kurtuluşa ermiş sayılır?",
+        "options": [
+          "Onu arındıran",
+          "Yalnız kendini öven",
+          "Hatalarını gizleyen",
+          "Servetini karşılaştıran"
+        ],
+        "info": "Bu bölüm kurtuluşu kişinin kendi nefsini arındırmasıyla ilişkilendirir."
+      }
+    }
+  },
+  {
+    "id": "l1x_hope_in_mercy",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 39:53",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/39",
+    "sourceVerses": [
+      "39:53"
+    ],
+    "locales": {
+      "ru": {
+        "q": "В чём 39:53 призывает не отчаиваться совершивших грехи?",
+        "options": [
+          "В милости Аллаха",
+          "В собственной безошибочности",
+          "В богатстве",
+          "В известности среди людей"
+        ],
+        "info": "Аят обращается к согрешившим с призывом не терять надежду на милость Аллаха."
+      },
+      "en": {
+        "q": "What does 39:53 tell those who have sinned not to despair of?",
+        "options": [
+          "Allah's mercy",
+          "Their own faultlessness",
+          "Wealth",
+          "Fame among people"
+        ],
+        "info": "The verse calls on those who have sinned not to lose hope in Allah's mercy."
+      },
+      "uz": {
+        "q": "39:53 da gunoh qilganlarga nimadan umid uzmaslik aytilgan?",
+        "options": [
+          "Allohning rahmatidan",
+          "O‘zining xatosizligidan",
+          "Boylikdan",
+          "Odamlar orasidagi shuhratdan"
+        ],
+        "info": "Oyat gunoh qilganlarni Allohning rahmatidan umid uzmaslikka chaqiradi."
+      },
+      "tg": {
+        "q": "Дар 39:53 ба гунаҳкорон аз чӣ ноумед нашудан гуфта шудааст?",
+        "options": [
+          "Аз раҳмати Аллоҳ",
+          "Аз бехато будани худ",
+          "Аз сарват",
+          "Аз шуҳрат дар байни мардум"
+        ],
+        "info": "Оят гунаҳкоронро даъват мекунад, ки аз раҳмати Аллоҳ ноумед нашаванд."
+      },
+      "kk": {
+        "q": "39:53 аятында күнә жасағандарға неден үміт үзбеу айтылған?",
+        "options": [
+          "Алланың мейірімінен",
+          "Өзінің қатесіздігінен",
+          "Байлықтан",
+          "Адамдар арасындағы атақтан"
+        ],
+        "info": "Аят күнә жасағандарды Алланың мейірімінен үміт үзбеуге шақырады."
+      },
+      "ky": {
+        "q": "39:53 аятында күнөө кылгандарга эмнеден үмүт үзбөө айтылат?",
+        "options": [
+          "Аллахтын ырайымынан",
+          "Өзүнүн катасыздыгынан",
+          "Байлыктан",
+          "Эл арасындагы атактан"
+        ],
+        "info": "Аят күнөө кылгандарды Аллахтын ырайымынан үмүт үзбөөгө чакырат."
+      },
+      "az": {
+        "q": "39:53-də günah edənlərə nədən ümid kəsməmək buyurulur?",
+        "options": [
+          "Allahın rəhmətindən",
+          "Öz qüsursuzluqlarından",
+          "Sərvətdən",
+          "İnsanlar arasındakı şöhrətdən"
+        ],
+        "info": "Ayə günah edənləri Allahın rəhmətindən ümid kəsməməyə çağırır."
+      },
+      "tr": {
+        "q": "39:53'te günah işleyenlere neden ümit kesmemeleri söylenir?",
+        "options": [
+          "Allah'ın rahmetinden",
+          "Kendi kusursuzluklarından",
+          "Servetten",
+          "İnsanlar arasındaki şöhretten"
+        ],
+        "info": "Ayet, günah işleyenleri Allah'ın rahmetinden ümit kesmemeye çağırır."
+      }
+    }
+  },
+  {
+    "id": "l1x_hearts_remembrance",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 13:28",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/13",
+    "sourceVerses": [
+      "13:28"
+    ],
+    "locales": {
+      "ru": {
+        "q": "В чём сердца обретают спокойствие согласно 13:28?",
+        "options": [
+          "В поминании Аллаха",
+          "В накоплении славы",
+          "В сравнении имущества",
+          "В одобрении всех людей"
+        ],
+        "info": "Аят связывает спокойствие верующих сердец с поминанием Аллаха."
+      },
+      "en": {
+        "q": "In what do hearts find tranquillity according to 13:28?",
+        "options": [
+          "In remembering Allah",
+          "In accumulating fame",
+          "In comparing possessions",
+          "In everyone's approval"
+        ],
+        "info": "The verse connects tranquillity in believing hearts with remembering Allah."
+      },
+      "uz": {
+        "q": "13:28 ga ko‘ra qalblar nimada orom topadi?",
+        "options": [
+          "Allohni zikr qilishda",
+          "Shuhrat orttirishda",
+          "Mol-mulkni taqqoslashda",
+          "Hammaning ma’qullashida"
+        ],
+        "info": "Oyat mo‘min qalblarining oromini Allohni zikr qilish bilan bog‘laydi."
+      },
+      "tg": {
+        "q": "Мувофиқи 13:28 дилҳо дар чӣ ором меёбанд?",
+        "options": [
+          "Дар ёди Аллоҳ",
+          "Дар ҷамъ кардани шуҳрат",
+          "Дар муқоисаи мол",
+          "Дар писанди ҳама будан"
+        ],
+        "info": "Оят оромии дилҳои мӯъминро бо ёди Аллоҳ мепайвандад."
+      },
+      "kk": {
+        "q": "13:28 бойынша жүректер неден тыныштық табады?",
+        "options": [
+          "Алланы еске алудан",
+          "Атақ жинаудан",
+          "Мүлікті салыстырудан",
+          "Барлық адамның мақұлдауынан"
+        ],
+        "info": "Аят иманды жүректердің тыныштығын Алланы еске алумен байланыстырады."
+      },
+      "ky": {
+        "q": "13:28 боюнча жүрөктөр эмнеден тынчтык табат?",
+        "options": [
+          "Аллахты эстөөдөн",
+          "Атак топтоодон",
+          "Мүлктү салыштыруудан",
+          "Баарынын жактыруусунан"
+        ],
+        "info": "Аят ыймандуу жүрөктөрдүн тынчтыгын Аллахты эстөө менен байланыштырат."
+      },
+      "az": {
+        "q": "13:28-ə görə qəlblər nədə rahatlıq tapır?",
+        "options": [
+          "Allahı zikr etməkdə",
+          "Şöhrət toplamaqda",
+          "Mülkü müqayisə etməkdə",
+          "Hamının razılığında"
+        ],
+        "info": "Ayə mömin qəlblərin rahatlığını Allahı zikr etməklə əlaqələndirir."
+      },
+      "tr": {
+        "q": "13:28'e göre kalpler ne ile huzur bulur?",
+        "options": [
+          "Allah'ı anmakla",
+          "Şöhret biriktirmekle",
+          "Malları karşılaştırmakla",
+          "Herkesin onayıyla"
+        ],
+        "info": "Ayet, iman eden kalplerin huzurunu Allah'ı anmakla ilişkilendirir."
+      }
+    }
+  },
+  {
+    "id": "l1x_sincere_repentance",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 66:8",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/66",
+    "sourceVerses": [
+      "66:8"
+    ],
+    "locales": {
+      "ru": {
+        "q": "К какому покаянию призывает 66:8?",
+        "options": [
+          "Искреннему",
+          "Показному",
+          "Только на словах",
+          "Ради одобрения людей"
+        ],
+        "info": "Аят призывает верующих обратиться к Аллаху с искренним покаянием."
+      },
+      "en": {
+        "q": "What kind of repentance does 66:8 call for?",
+        "options": [
+          "Sincere repentance",
+          "Repentance for show",
+          "Repentance in words only",
+          "Repentance for public approval"
+        ],
+        "info": "The verse calls believers to turn to Allah in sincere repentance."
+      },
+      "uz": {
+        "q": "66:8 qanday tavbaga chaqiradi?",
+        "options": [
+          "Samimiy tavbaga",
+          "Ko‘z-ko‘z qilingan tavbaga",
+          "Faqat og‘zaki tavbaga",
+          "Odamlar maqtovi uchun tavbaga"
+        ],
+        "info": "Oyat mo‘minlarni Allohga samimiy tavba qilishga chaqiradi."
+      },
+      "tg": {
+        "q": "66:8 ба чӣ гуна тавба даъват мекунад?",
+        "options": [
+          "Тавбаи самимӣ",
+          "Тавбаи намоишӣ",
+          "Тавбаи танҳо забонӣ",
+          "Тавба барои писанди мардум"
+        ],
+        "info": "Оят мӯъминонро ба тавбаи самимӣ назди Аллоҳ даъват мекунад."
+      },
+      "kk": {
+        "q": "66:8 қандай тәубеге шақырады?",
+        "options": [
+          "Шынайы тәубеге",
+          "Көзбояушылық тәубеге",
+          "Тек сөз жүзіндегі тәубеге",
+          "Адамдардың мақтауы үшін тәубеге"
+        ],
+        "info": "Аят мүміндерді Аллаға шынайы тәубе етуге шақырады."
+      },
+      "ky": {
+        "q": "66:8 кандай тообого чакырат?",
+        "options": [
+          "Чын ыкластуу тообого",
+          "Көз көрсөтмө тообого",
+          "Сөз жүзүндөгү гана тообого",
+          "Элдин мактоосу үчүн тообого"
+        ],
+        "info": "Аят момундарды Аллахка чын ыклас менен тообо кылууга чакырат."
+      },
+      "az": {
+        "q": "66:8 necə tövbəyə çağırır?",
+        "options": [
+          "Səmimi tövbəyə",
+          "Göstərişli tövbəyə",
+          "Yalnız sözdə tövbəyə",
+          "İnsanların razılığı üçün tövbəyə"
+        ],
+        "info": "Ayə möminləri Allaha səmimi tövbə etməyə çağırır."
+      },
+      "tr": {
+        "q": "66:8 nasıl bir tövbeye çağırır?",
+        "options": [
+          "İçten tövbeye",
+          "Gösteriş için tövbeye",
+          "Yalnız sözde tövbeye",
+          "İnsanların onayı için tövbeye"
+        ],
+        "info": "Ayet, müminleri Allah'a içten bir tövbeyle yönelmeye çağırır."
+      }
+    }
+  },
+  {
+    "id": "l1x_idle_talk",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 23:3",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/23",
+    "sourceVerses": [
+      "23:3"
+    ],
+    "locales": {
+      "ru": {
+        "q": "От чего отворачиваются верующие, описанные в 23:3?",
+        "options": [
+          "От празднословия",
+          "От полезного совета",
+          "От приветствия",
+          "От просьбы о помощи"
+        ],
+        "info": "Среди качеств верующих аят отмечает отказ от пустых и бесполезных речей."
+      },
+      "en": {
+        "q": "What do the believers described in 23:3 turn away from?",
+        "options": [
+          "Idle talk",
+          "Helpful advice",
+          "Greetings",
+          "Requests for help"
+        ],
+        "info": "The verse names avoiding empty, useless talk among believers' qualities."
+      },
+      "uz": {
+        "q": "23:3 da tasvirlangan mo‘minlar nimadan yuz o‘giradilar?",
+        "options": [
+          "Behuda gaplardan",
+          "Foydali maslahatdan",
+          "Salomlashishdan",
+          "Yordam so‘rashdan"
+        ],
+        "info": "Oyat mo‘minlarning sifatlari qatorida behuda so‘zlardan yuz o‘girishni aytadi."
+      },
+      "tg": {
+        "q": "Мӯъминони дар 23:3 тасвиршуда аз чӣ рӯй мегардонанд?",
+        "options": [
+          "Аз сухани беҳуда",
+          "Аз маслиҳати фоиданок",
+          "Аз салом",
+          "Аз дархости ёрӣ"
+        ],
+        "info": "Оят дурӣ аз суханҳои бефоидаро аз сифатҳои мӯъминон мешуморад."
+      },
+      "kk": {
+        "q": "23:3 аятында сипатталған мүміндер неден аулақ жүреді?",
+        "options": [
+          "Бос сөзден",
+          "Пайдалы кеңестен",
+          "Сәлемдесуден",
+          "Көмек сұраудан"
+        ],
+        "info": "Аят мүміндердің қасиеттеріне бос әрі пайдасыз сөзден аулақ болуды жатқызады."
+      },
+      "ky": {
+        "q": "23:3 аятында сүрөттөлгөн момундар эмнеден жүз бурушат?",
+        "options": [
+          "Бош сөздөн",
+          "Пайдалуу кеңештен",
+          "Саламдашуудан",
+          "Жардам суроодон"
+        ],
+        "info": "Аят момундардын сапаттарынын арасында пайдасыз сөздөн алыс болууну атайт."
+      },
+      "az": {
+        "q": "23:3-də təsvir olunan möminlər nədən üz çevirirlər?",
+        "options": [
+          "Boş sözlərdən",
+          "Faydalı məsləhətdən",
+          "Salamlaşmaqdan",
+          "Kömək xahişindən"
+        ],
+        "info": "Ayə faydasız sözlərdən uzaqlaşmağı möminlərin xüsusiyyətlərindən sayır."
+      },
+      "tr": {
+        "q": "23:3'te anlatılan müminler neden yüz çevirirler?",
+        "options": [
+          "Boş sözlerden",
+          "Yararlı öğütten",
+          "Selamlaşmaktan",
+          "Yardım isteğinden"
+        ],
+        "info": "Ayet, boş ve yararsız sözlerden uzak durmayı müminlerin özellikleri arasında sayar."
+      }
+    }
+  },
+  {
+    "id": "l1x_spending_balance",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 25:67",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/25",
+    "sourceVerses": [
+      "25:67"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как расходуют имущество люди, похваленные в 25:67?",
+        "options": [
+          "Умеренно, без расточительства и скупости",
+          "Всегда тратят всё сразу",
+          "Всегда удерживают всё",
+          "Тратят лишь ради похвалы"
+        ],
+        "info": "Аят описывает разумную меру между расточительностью и скупостью."
+      },
+      "en": {
+        "q": "How do the people praised in 25:67 spend?",
+        "options": [
+          "Moderately, without waste or stinginess",
+          "Always spending everything at once",
+          "Always keeping everything",
+          "Spending only for praise"
+        ],
+        "info": "The verse describes a balanced course between wastefulness and stinginess."
+      },
+      "uz": {
+        "q": "25:67 da maqtalgan kishilar qanday sarflaydilar?",
+        "options": [
+          "Isrofsiz va baxilliksiz, me’yor bilan",
+          "Doim hammasini birdan sarflab",
+          "Doim hammasini saqlab",
+          "Faqat maqtov uchun"
+        ],
+        "info": "Oyat isrof va baxillik orasidagi o‘rtacha yo‘lni tasvirlaydi."
+      },
+      "tg": {
+        "q": "Одамони дар 25:67 ситоишшуда чӣ гуна харҷ мекунанд?",
+        "options": [
+          "Бо меъёр, бе исрофу бахилӣ",
+          "Ҳамеша ҳамаро якбора",
+          "Ҳамеша ҳамаро нигоҳ медоранд",
+          "Танҳо барои таъриф"
+        ],
+        "info": "Оят роҳи миёнаро байни исрофкорӣ ва бахилӣ тасвир мекунад."
+      },
+      "kk": {
+        "q": "25:67 аятында мақталған адамдар қалай жұмсайды?",
+        "options": [
+          "Ысырапсыз әрі сараңдықсыз, мөлшермен",
+          "Әрдайым бәрін бірден жұмсап",
+          "Әрдайым бәрін ұстап қалып",
+          "Тек мақтау үшін"
+        ],
+        "info": "Аят ысырап пен сараңдық арасындағы орта жолды сипаттайды."
+      },
+      "ky": {
+        "q": "25:67 аятында макталган адамдар кантип сарпташат?",
+        "options": [
+          "Ысырапсыз жана сараңдыксыз, ченем менен",
+          "Дайыма баарын дароо сарптап",
+          "Дайыма баарын кармап калып",
+          "Мактоо үчүн гана"
+        ],
+        "info": "Аят ысырапкорчулук менен сараңдыктын ортосундагы ченемди баяндайт."
+      },
+      "az": {
+        "q": "25:67-də təriflənən insanlar necə xərcləyirlər?",
+        "options": [
+          "İsraf və xəsislik etmədən, ölçülü",
+          "Həmişə hamısını birdən xərcləyərək",
+          "Həmişə hamısını saxlayaraq",
+          "Yalnız tərif üçün"
+        ],
+        "info": "Ayə israfla xəsislik arasındakı tarazlığı təsvir edir."
+      },
+      "tr": {
+        "q": "25:67'de övülen insanlar nasıl harcarlar?",
+        "options": [
+          "İsraf ve cimrilik etmeden, ölçülü",
+          "Her zaman hepsini birden harcayarak",
+          "Her zaman hepsini saklayarak",
+          "Yalnız övgü için"
+        ],
+        "info": "Ayet, israf ile cimrilik arasındaki dengeli yolu anlatır."
+      }
+    }
+  },
+  {
+    "id": "l1x_words_deeds",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 61:2",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/61",
+    "sourceVerses": [
+      "61:2"
+    ],
+    "locales": {
+      "ru": {
+        "q": "За какое расхождение упрекает 61:2?",
+        "options": [
+          "Говорить то, чего не делаешь",
+          "Говорить на разных языках",
+          "Менять работу после обучения",
+          "Задавать вопрос после чтения"
+        ],
+        "info": "Аят обращает внимание на несоответствие слов собственным поступкам."
+      },
+      "en": {
+        "q": "What inconsistency does 61:2 rebuke?",
+        "options": [
+          "Saying what one does not do",
+          "Speaking different languages",
+          "Changing jobs after training",
+          "Asking a question after reading"
+        ],
+        "info": "The verse draws attention to a mismatch between one's words and actions."
+      },
+      "uz": {
+        "q": "61:2 qaysi nomuvofiqlikni qoralaydi?",
+        "options": [
+          "Qilmaydigan ishni aytishni",
+          "Turli tillarda gapirishni",
+          "O‘qigach ishni almashtirishni",
+          "O‘qigach savol berishni"
+        ],
+        "info": "Oyat insonning so‘zlari va amallari mos kelmasligiga e’tibor qaratadi."
+      },
+      "tg": {
+        "q": "61:2 кадом номувофиқатиро сарзаниш мекунад?",
+        "options": [
+          "Гуфтани коре, ки намекунӣ",
+          "Бо забонҳои гуногун гуфтан",
+          "Иваз кардани кор пас аз омӯзиш",
+          "Савол додан пас аз хондан"
+        ],
+        "info": "Оят ба номувофиқатии сухан ва рафтори худи инсон ишора мекунад."
+      },
+      "kk": {
+        "q": "61:2 қандай сәйкессіздікті айыптайды?",
+        "options": [
+          "Істемейтін нәрсені айтуды",
+          "Әртүрлі тілде сөйлеуді",
+          "Оқыған соң жұмыс ауыстыруды",
+          "Оқыған соң сұрақ қоюды"
+        ],
+        "info": "Аят адамның сөзі мен ісінің сәйкес келмеуіне назар аудартады."
+      },
+      "ky": {
+        "q": "61:2 кайсы дал келбестикти айыптайт?",
+        "options": [
+          "Өзү жасабаган нерсени айтууну",
+          "Ар түрдүү тилде сүйлөөнү",
+          "Окуудан кийин иш алмаштырууну",
+          "Окугандан кийин суроо берүүнү"
+        ],
+        "info": "Аят адамдын сөзү менен ишинин дал келбешине көңүл бурат."
+      },
+      "az": {
+        "q": "61:2 hansı uyğunsuzluğu qınayır?",
+        "options": [
+          "Etmədiyini deməyi",
+          "Müxtəlif dillərdə danışmağı",
+          "Təhsildən sonra iş dəyişməyi",
+          "Oxuduqdan sonra sual verməyi"
+        ],
+        "info": "Ayə insanın sözləri ilə əməllərinin uyğun gəlməməsinə diqqət çəkir."
+      },
+      "tr": {
+        "q": "61:2 hangi tutarsızlığı kınar?",
+        "options": [
+          "Yapmadığını söylemeyi",
+          "Farklı diller konuşmayı",
+          "Eğitimden sonra iş değiştirmeyi",
+          "Okuduktan sonra soru sormayı"
+        ],
+        "info": "Ayet, kişinin sözleriyle davranışlarının uyuşmamasına dikkat çeker."
+      }
+    }
+  },
+  {
+    "id": "l1x_both_neighbours",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 4:36",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "sourceVerses": [
+      "4:36"
+    ],
+    "locales": {
+      "ru": {
+        "q": "О каких соседях прямо говорит 4:36, призывая к доброму отношению?",
+        "options": [
+          "О родственнике и постороннем",
+          "Только о богатом",
+          "Только о ровеснике",
+          "Только о влиятельном"
+        ],
+        "info": "Аят включает в круг доброго отношения как соседа-родственника, так и постороннего соседа."
+      },
+      "en": {
+        "q": "Which neighbours does 4:36 explicitly include in its call for kindness?",
+        "options": [
+          "Related and unrelated neighbours",
+          "Only wealthy neighbours",
+          "Only neighbours of one's age",
+          "Only influential neighbours"
+        ],
+        "info": "The verse includes both neighbours who are relatives and those who are not."
+      },
+      "uz": {
+        "q": "4:36 yaxshilik qilishda qaysi qo‘shnilarni aniq tilga oladi?",
+        "options": [
+          "Qarindosh va begona qo‘shnini",
+          "Faqat boy qo‘shnini",
+          "Faqat tengdosh qo‘shnini",
+          "Faqat obro‘li qo‘shnini"
+        ],
+        "info": "Oyat yaxshilikni qarindosh qo‘shniga ham, begona qo‘shniga ham buyuradi."
+      },
+      "tg": {
+        "q": "4:36 ҳангоми даъват ба некӣ кадом ҳамсояҳоро зикр мекунад?",
+        "options": [
+          "Ҳамсояи хеш ва бегона",
+          "Танҳо ҳамсояи сарватманд",
+          "Танҳо ҳамсояи ҳамсол",
+          "Танҳо ҳамсояи бонуфуз"
+        ],
+        "info": "Оят ҳам ҳамсояи хеш ва ҳам ҳамсояи бегонаро дар доираи некӣ меорад."
+      },
+      "kk": {
+        "q": "4:36 жақсылық жасауда қай көршілерді нақты атайды?",
+        "options": [
+          "Туыс және бөтен көршіні",
+          "Тек бай көршіні",
+          "Тек құрдас көршіні",
+          "Тек ықпалды көршіні"
+        ],
+        "info": "Аят жақсылық көрсетілетіндердің қатарына туыс та, бөтен де көршіні қосады."
+      },
+      "ky": {
+        "q": "4:36 жакшылык кылууда кайсы кошуналарды түз атайт?",
+        "options": [
+          "Тууган жана бөтөн кошунаны",
+          "Бай кошунаны гана",
+          "Курдаш кошунаны гана",
+          "Таасирдүү кошунаны гана"
+        ],
+        "info": "Аят жакшылык кылууга тууган кошунаны да, бөтөн кошунаны да камтыйт."
+      },
+      "az": {
+        "q": "4:36 yaxşılıq etməyə çağırarkən hansı qonşuları açıqca qeyd edir?",
+        "options": [
+          "Qohum və yad qonşunu",
+          "Yalnız varlı qonşunu",
+          "Yalnız həmyaşıd qonşunu",
+          "Yalnız nüfuzlu qonşunu"
+        ],
+        "info": "Ayə yaxşılıq dairəsinə həm qohum, həm də yad qonşunu daxil edir."
+      },
+      "tr": {
+        "q": "4:36 iyilik çağrısında hangi komşuları açıkça anar?",
+        "options": [
+          "Akraba ve yabancı komşuyu",
+          "Yalnız zengin komşuyu",
+          "Yalnız yaşıt komşuyu",
+          "Yalnız nüfuzlu komşuyu"
+        ],
+        "info": "Ayet, iyilik gösterilecekler arasında akraba olan ve olmayan komşuyu birlikte anar."
+      }
+    }
+  },
+  {
+    "id": "l1x_ask_scripture_people",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 16:43",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "sourceVerses": [
+      "16:43"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Кого 16:43 велит спросить тем, кто не знает?",
+        "options": [
+          "Обладателей знания о Писании",
+          "Самого богатого торговца",
+          "Самого известного поэта",
+          "Первого встречного"
+        ],
+        "info": "В контексте прежних посланников аят направляет вопрос к обладателям знания о Писании."
+      },
+      "en": {
+        "q": "Whom does 16:43 tell those who do not know to ask?",
+        "options": [
+          "People with knowledge of Scripture",
+          "The wealthiest merchant",
+          "The most famous poet",
+          "The first passer-by"
+        ],
+        "info": "In the context of earlier messengers, the verse directs questions to people who know Scripture."
+      },
+      "uz": {
+        "q": "16:43 bilmaganlarga kimdan so‘rashni buyuradi?",
+        "options": [
+          "Kitob haqida bilim egalaridan",
+          "Eng boy savdogardan",
+          "Eng mashhur shoirdan",
+          "Birinchi uchragan kishidan"
+        ],
+        "info": "Oldingi elchilar haqidagi bu oyat savolni Kitob bilim egalariga yo‘naltiradi."
+      },
+      "tg": {
+        "q": "16:43 ба касони надониста аз кӣ пурсиданро мефармояд?",
+        "options": [
+          "Аз донишмандони Китоб",
+          "Аз сарватмандтарин тоҷир",
+          "Аз машҳуртарин шоир",
+          "Аз аввалин раҳгузар"
+        ],
+        "info": "Дар бораи паёмбарони пешин оят саволро ба донишмандони Китоб равона мекунад."
+      },
+      "kk": {
+        "q": "16:43 білмегендерге кімнен сұрауды бұйырады?",
+        "options": [
+          "Кітап жайын білетіндерден",
+          "Ең бай саудагерден",
+          "Ең әйгілі ақыннан",
+          "Алғаш кездескен адамнан"
+        ],
+        "info": "Бұрынғы елшілер туралы бұл аят сұрақты Кітапты білетіндерге бағыттайды."
+      },
+      "ky": {
+        "q": "16:43 билбегендерге кимден суроону буйруйт?",
+        "options": [
+          "Китеп жөнүндө билим ээлеринен",
+          "Эң бай соодагерден",
+          "Эң белгилүү акындан",
+          "Биринчи жолуккан кишиден"
+        ],
+        "info": "Мурунку элчилер жөнүндө бул аят суроону Китепти билгендерге багыттайт."
+      },
+      "az": {
+        "q": "16:43 bilməyənlərə kimdən soruşmağı buyurur?",
+        "options": [
+          "Kitab haqqında elm sahiblərindən",
+          "Ən varlı tacirdən",
+          "Ən məşhur şairdən",
+          "İlk qarşılaşdıqları adamdan"
+        ],
+        "info": "Əvvəlki elçilərdən danışılan bu ayə sualı Kitabı bilənlərə yönəldir."
+      },
+      "tr": {
+        "q": "16:43 bilmeyenlere kime sormalarını buyurur?",
+        "options": [
+          "Kitap hakkında bilgi sahiplerine",
+          "En zengin tüccara",
+          "En ünlü şaire",
+          "İlk karşılaştıkları kişiye"
+        ],
+        "info": "Önceki elçiler bağlamında ayet, soruyu Kitap hakkında bilgi sahiplerine yöneltir."
+      }
+    }
+  },
+  {
+    "id": "l1x_measured_recitation",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 73:4",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/73",
+    "sourceVerses": [
+      "73:4"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как 73:4 велит читать Коран?",
+        "options": [
+          "Размеренно",
+          "Как можно быстрее",
+          "Перескакивая через слова",
+          "Только последние слова аятов"
+        ],
+        "info": "Аят предписывает размеренное чтение Корана."
+      },
+      "en": {
+        "q": "How does 73:4 instruct one to recite the Quran?",
+        "options": [
+          "In a measured manner",
+          "As fast as possible",
+          "Skipping words",
+          "Only the last words of verses"
+        ],
+        "info": "The verse instructs a measured recitation of the Quran."
+      },
+      "uz": {
+        "q": "73:4 Qur’onni qanday o‘qishni buyuradi?",
+        "options": [
+          "Tartil bilan, dona-dona",
+          "Iloji boricha tez",
+          "So‘zlarni tashlab",
+          "Faqat oyatlarning oxirgi so‘zlarini"
+        ],
+        "info": "Oyat Qur’onni tartil bilan o‘qishni buyuradi."
+      },
+      "tg": {
+        "q": "73:4 Қуръонро чӣ гуна хонданро мефармояд?",
+        "options": [
+          "Оҳиста ва равшан",
+          "Ҳарчи зудтар",
+          "Бо партофтани калимаҳо",
+          "Танҳо калимаҳои охири оятҳоро"
+        ],
+        "info": "Оят ба хондани Қуръон бо тартил дастур медиҳад."
+      },
+      "kk": {
+        "q": "73:4 Құранды қалай оқуды бұйырады?",
+        "options": [
+          "Байыппен, анық оқуды",
+          "Мүмкіндігінше жылдам оқуды",
+          "Сөздерді аттап оқуды",
+          "Аяттардың тек соңғы сөздерін оқуды"
+        ],
+        "info": "Аят Құранды байыппен, анық оқуды бұйырады."
+      },
+      "ky": {
+        "q": "73:4 Куранды кантип окууну буйруйт?",
+        "options": [
+          "Шашпай, так окууну",
+          "Мүмкүн болушунча тез окууну",
+          "Сөздөрдү таштап окууну",
+          "Аяттардын акыркы сөздөрүн гана окууну"
+        ],
+        "info": "Аят Куранды шашпай, так окууну буйруйт."
+      },
+      "az": {
+        "q": "73:4 Quranı necə oxumağı buyurur?",
+        "options": [
+          "Aramla və aydın",
+          "Mümkün qədər sürətlə",
+          "Sözləri atlayaraq",
+          "Yalnız ayələrin son sözlərini"
+        ],
+        "info": "Ayə Quranın aramla və aydın oxunmasını buyurur."
+      },
+      "tr": {
+        "q": "73:4 Kur'an'ın nasıl okunmasını buyurur?",
+        "options": [
+          "Ağır ağır, tane tane",
+          "Mümkün olduğunca hızlı",
+          "Kelimeler atlanarak",
+          "Yalnız ayetlerin son sözleriyle"
+        ],
+        "info": "Ayet Kur'an'ın tertil üzere okunmasını buyurur."
+      }
+    }
+  },
+  {
+    "id": "l1x_invitation_wisdom",
+    "cat": "fiqh",
+    "difficulty": 1,
+    "reference": "Quran 16:125",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "sourceVerses": [
+      "16:125"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как 16:125 учит призывать к пути Господа?",
+        "options": [
+          "С мудростью и добрым увещеванием",
+          "С оскорблениями",
+          "С насмешками",
+          "С давлением ради спора"
+        ],
+        "info": "Аят соединяет мудрость и добрый совет с лучшей манерой вести обсуждение."
+      },
+      "en": {
+        "q": "How does 16:125 teach one to invite to the Lord's way?",
+        "options": [
+          "With wisdom and good counsel",
+          "With insults",
+          "With ridicule",
+          "With pressure for the sake of argument"
+        ],
+        "info": "The verse combines wisdom and good counsel with the best manner of discussion."
+      },
+      "uz": {
+        "q": "16:125 Rabbining yo‘liga qanday da’vat qilishni o‘rgatadi?",
+        "options": [
+          "Hikmat va yaxshi nasihat bilan",
+          "Haqorat bilan",
+          "Masxara bilan",
+          "Bahs uchun bosim bilan"
+        ],
+        "info": "Oyat hikmat va yaxshi nasihatni eng yaxshi usulda bahslashish bilan bog‘laydi."
+      },
+      "tg": {
+        "q": "16:125 ба роҳи Парвардигор чӣ гуна даъват карданро меомӯзад?",
+        "options": [
+          "Бо ҳикмат ва панду андарзи нек",
+          "Бо таҳқир",
+          "Бо масхара",
+          "Бо фишор барои баҳс"
+        ],
+        "info": "Оят ҳикмату панди некро бо беҳтарин тарзи гуфтугӯ мепайвандад."
+      },
+      "kk": {
+        "q": "16:125 Раббының жолына қалай шақыруды үйретеді?",
+        "options": [
+          "Даналықпен және жақсы насихатпен",
+          "Қорлаумен",
+          "Мазақтаумен",
+          "Талас үшін қысыммен"
+        ],
+        "info": "Аят даналық пен жақсы насихатты пікірлесудің ең жақсы тәсілімен байланыстырады."
+      },
+      "ky": {
+        "q": "16:125 Раббинин жолуна кантип чакырууну үйрөтөт?",
+        "options": [
+          "Даанышмандык жана жакшы насаат менен",
+          "Кемсинтүү менен",
+          "Шылдың менен",
+          "Талаш үчүн кысым менен"
+        ],
+        "info": "Аят даанышмандык менен жакшы насаатты талкуунун эң жакшы жолу менен байланыштырат."
+      },
+      "az": {
+        "q": "16:125 Rəbbin yoluna necə dəvət etməyi öyrədir?",
+        "options": [
+          "Hikmət və gözəl öyüdlə",
+          "Təhqirlə",
+          "İstehza ilə",
+          "Mübahisə üçün təzyiqlə"
+        ],
+        "info": "Ayə hikmət və gözəl öyüdü ən yaxşı müzakirə üsulu ilə birləşdirir."
+      },
+      "tr": {
+        "q": "16:125 Rabbin yoluna nasıl davet etmeyi öğretir?",
+        "options": [
+          "Hikmet ve güzel öğütle",
+          "Hakaretle",
+          "Alayla",
+          "Tartışma uğruna baskıyla"
+        ],
+        "info": "Ayet, hikmet ve güzel öğüdü en güzel tartışma yöntemiyle birleştirir."
+      }
+    }
+  },
+  {
+    "id": "l1x_hud_aad",
+    "cat": "prophets",
+    "difficulty": 1,
+    "reference": "Quran 11:50",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
+    "sourceVerses": [
+      "11:50"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какой пророк послан к народу ад согласно 11:50?",
+        "options": [
+          "Худ",
+          "Салих",
+          "Шуайб",
+          "Юсуф"
+        ],
+        "info": "В этом аяте Худ обращается к народу ад с призывом поклоняться Аллаху."
+      },
+      "en": {
+        "q": "Which prophet was sent to Aad according to 11:50?",
+        "options": [
+          "Hud",
+          "Salih",
+          "Shuayb",
+          "Yusuf"
+        ],
+        "info": "In this verse Hud calls the people of Aad to worship Allah."
+      },
+      "uz": {
+        "q": "11:50 ga ko‘ra Od qavmiga qaysi payg‘ambar yuborilgan?",
+        "options": [
+          "Hud",
+          "Solih",
+          "Shuayb",
+          "Yusuf"
+        ],
+        "info": "Bu oyatda Hud Od qavmini Allohga ibodat qilishga chaqiradi."
+      },
+      "tg": {
+        "q": "Мувофиқи 11:50 кадом паёмбар ба қавми Од фиристода шуд?",
+        "options": [
+          "Ҳуд",
+          "Солеҳ",
+          "Шуайб",
+          "Юсуф"
+        ],
+        "info": "Дар ин оят Ҳуд қавми Одро ба ибодати Аллоҳ даъват мекунад."
+      },
+      "kk": {
+        "q": "11:50 бойынша Ад қауымына қай пайғамбар жіберілген?",
+        "options": [
+          "Һуд",
+          "Салих",
+          "Шұғайып",
+          "Жүсіп"
+        ],
+        "info": "Бұл аятта Һуд Ад қауымын Аллаға құлшылық етуге шақырады."
+      },
+      "ky": {
+        "q": "11:50 боюнча Ад коомуна кайсы пайгамбар жөнөтүлгөн?",
+        "options": [
+          "Худ",
+          "Салих",
+          "Шуайб",
+          "Жусуп"
+        ],
+        "info": "Бул аятта Худ Ад коомун Аллахка сыйынууга чакырат."
+      },
+      "az": {
+        "q": "11:50-yə görə Ad qövmünə hansı peyğəmbər göndərilmişdir?",
+        "options": [
+          "Hud",
+          "Saleh",
+          "Şüeyb",
+          "Yusif"
+        ],
+        "info": "Bu ayədə Hud Ad qövmünü Allaha ibadət etməyə çağırır."
+      },
+      "tr": {
+        "q": "11:50'ye göre Âd kavmine hangi peygamber gönderilmiştir?",
+        "options": [
+          "Hûd",
+          "Sâlih",
+          "Şuayb",
+          "Yûsuf"
+        ],
+        "info": "Bu ayette Hûd, Âd kavmini Allah'a kulluk etmeye çağırır."
+      }
+    }
+  },
+  {
+    "id": "l1x_salih_thamud",
+    "cat": "prophets",
+    "difficulty": 1,
+    "reference": "Quran 11:61",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
+    "sourceVerses": [
+      "11:61"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какой пророк обращается к самудянам в 11:61?",
+        "options": [
+          "Салих",
+          "Худ",
+          "Шуайб",
+          "Нух"
+        ],
+        "info": "Аят называет Салиха посланником к самудянам и передаёт его призыв к поклонению Аллаху."
+      },
+      "en": {
+        "q": "Which prophet addresses Thamud in 11:61?",
+        "options": [
+          "Salih",
+          "Hud",
+          "Shuayb",
+          "Nuh"
+        ],
+        "info": "The verse names Salih as the messenger to Thamud and relates his call to worship Allah."
+      },
+      "uz": {
+        "q": "11:61 da Samud qavmiga qaysi payg‘ambar murojaat qiladi?",
+        "options": [
+          "Solih",
+          "Hud",
+          "Shuayb",
+          "Nuh"
+        ],
+        "info": "Oyat Solihni Samudga yuborilgan elchi deb atab, uning Allohga ibodatga da’vatini keltiradi."
+      },
+      "tg": {
+        "q": "Дар 11:61 кадом паёмбар ба қавми Самуд муроҷиат мекунад?",
+        "options": [
+          "Солеҳ",
+          "Ҳуд",
+          "Шуайб",
+          "Нӯҳ"
+        ],
+        "info": "Оят Солеҳро фиристода ба Самуд номида, даъвати ӯро ба ибодати Аллоҳ меорад."
+      },
+      "kk": {
+        "q": "11:61 аятында Самұд қауымына қай пайғамбар үн қатады?",
+        "options": [
+          "Салих",
+          "Һуд",
+          "Шұғайып",
+          "Нұх"
+        ],
+        "info": "Аят Салихты Самұдқа жіберілген елші деп атап, Аллаға құлшылық етуге шақыруын жеткізеді."
+      },
+      "ky": {
+        "q": "11:61 аятында Самуд коомуна кайсы пайгамбар кайрылат?",
+        "options": [
+          "Салих",
+          "Худ",
+          "Шуайб",
+          "Нух"
+        ],
+        "info": "Аят Салихти Самудга жиберилген элчи деп атап, Аллахка сыйынууга чакырыгын баяндайт."
+      },
+      "az": {
+        "q": "11:61-də Səmud qövmünə hansı peyğəmbər müraciət edir?",
+        "options": [
+          "Saleh",
+          "Hud",
+          "Şüeyb",
+          "Nuh"
+        ],
+        "info": "Ayə Salehi Səmuda göndərilən elçi adlandırır və Allaha ibadət çağırışını çatdırır."
+      },
+      "tr": {
+        "q": "11:61'de Semûd kavmine hangi peygamber seslenir?",
+        "options": [
+          "Sâlih",
+          "Hûd",
+          "Şuayb",
+          "Nûh"
+        ],
+        "info": "Ayet, Sâlih'i Semûd'a gönderilen elçi olarak anar ve Allah'a kulluk çağrısını aktarır."
+      }
+    }
+  },
+  {
+    "id": "l1x_shuayb_madyan",
+    "cat": "prophets",
+    "difficulty": 1,
+    "reference": "Quran 11:84",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
+    "sourceVerses": [
+      "11:84"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какой пророк послан в Мадьян согласно 11:84?",
+        "options": [
+          "Шуайб",
+          "Салих",
+          "Худ",
+          "Идрис"
+        ],
+        "info": "Аят называет Шуайба и передаёт его обращение к жителям Мадьяна."
+      },
+      "en": {
+        "q": "Which prophet was sent to Madyan according to 11:84?",
+        "options": [
+          "Shuayb",
+          "Salih",
+          "Hud",
+          "Idris"
+        ],
+        "info": "The verse names Shuayb and relates his address to the people of Madyan."
+      },
+      "uz": {
+        "q": "11:84 ga ko‘ra Madyanga qaysi payg‘ambar yuborilgan?",
+        "options": [
+          "Shuayb",
+          "Solih",
+          "Hud",
+          "Idris"
+        ],
+        "info": "Oyat Shuaybni nomlab, uning Madyan ahliga murojaatini keltiradi."
+      },
+      "tg": {
+        "q": "Мувофиқи 11:84 кадом паёмбар ба Мадян фиристода шуд?",
+        "options": [
+          "Шуайб",
+          "Солеҳ",
+          "Ҳуд",
+          "Идрис"
+        ],
+        "info": "Оят Шуайбро ном бурда, муроҷиати ӯро ба аҳли Мадян меорад."
+      },
+      "kk": {
+        "q": "11:84 бойынша Мәдиянға қай пайғамбар жіберілген?",
+        "options": [
+          "Шұғайып",
+          "Салих",
+          "Һуд",
+          "Ыдырыс"
+        ],
+        "info": "Аят Шұғайыпты атап, оның Мәдиян халқына үндеуін жеткізеді."
+      },
+      "ky": {
+        "q": "11:84 боюнча Мадянга кайсы пайгамбар жөнөтүлгөн?",
+        "options": [
+          "Шуайб",
+          "Салих",
+          "Худ",
+          "Идрис"
+        ],
+        "info": "Аят Шуайбды атап, анын Мадян элине кайрылуусун баяндайт."
+      },
+      "az": {
+        "q": "11:84-ə görə Mədyənə hansı peyğəmbər göndərilmişdir?",
+        "options": [
+          "Şüeyb",
+          "Saleh",
+          "Hud",
+          "İdris"
+        ],
+        "info": "Ayə Şüeybin adını çəkərək onun Mədyən əhlinə müraciətini çatdırır."
+      },
+      "tr": {
+        "q": "11:84'e göre Medyen'e hangi peygamber gönderilmiştir?",
+        "options": [
+          "Şuayb",
+          "Sâlih",
+          "Hûd",
+          "İdris"
+        ],
+        "info": "Ayet Şuayb'ı anarak onun Medyen halkına seslenişini aktarır."
+      }
+    }
+  },
+  {
+    "id": "l1x_ibrahim_fire",
+    "cat": "prophets",
+    "difficulty": 1,
+    "reference": "Quran 21:69",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/21",
+    "sourceVerses": [
+      "21:69"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Для какого пророка огню велено стать прохладным и безопасным в 21:69?",
+        "options": [
+          "Для Ибрахима",
+          "Для Мусы",
+          "Для Юсуфа",
+          "Для Нуха"
+        ],
+        "info": "Аят описывает повеление Аллаха огню не причинять вреда Ибрахиму."
+      },
+      "en": {
+        "q": "For which prophet is the fire commanded to be cool and safe in 21:69?",
+        "options": [
+          "Ibrahim",
+          "Musa",
+          "Yusuf",
+          "Nuh"
+        ],
+        "info": "The verse describes Allah's command that the fire not harm Ibrahim."
+      },
+      "uz": {
+        "q": "21:69 da olov qaysi payg‘ambar uchun salqin va omon bo‘lishga buyurilgan?",
+        "options": [
+          "Ibrohim uchun",
+          "Muso uchun",
+          "Yusuf uchun",
+          "Nuh uchun"
+        ],
+        "info": "Oyat Allohning olovga Ibrohimga zarar yetkazmaslik buyrug‘ini bayon qiladi."
+      },
+      "tg": {
+        "q": "Дар 21:69 оташ барои кадом паёмбар сард ва амон шудан амр шудааст?",
+        "options": [
+          "Барои Иброҳим",
+          "Барои Мӯсо",
+          "Барои Юсуф",
+          "Барои Нӯҳ"
+        ],
+        "info": "Оят фармони Аллоҳро ба оташ, ки ба Иброҳим зарар нарасонад, баён мекунад."
+      },
+      "kk": {
+        "q": "21:69 аятында отқа қай пайғамбар үшін салқын әрі қауіпсіз болу бұйырылған?",
+        "options": [
+          "Ибраһим үшін",
+          "Мұса үшін",
+          "Жүсіп үшін",
+          "Нұх үшін"
+        ],
+        "info": "Аят Алланың отқа Ибраһимге зиян тигізбеу жөніндегі бұйрығын сипаттайды."
+      },
+      "ky": {
+        "q": "21:69 аятында отко кайсы пайгамбар үчүн салкын жана амандык болуу буйрулган?",
+        "options": [
+          "Ибрахим үчүн",
+          "Муса үчүн",
+          "Жусуп үчүн",
+          "Нух үчүн"
+        ],
+        "info": "Аят Аллахтын отко Ибрахимге зыян келтирбөө буйругун баяндайт."
+      },
+      "az": {
+        "q": "21:69-da oda hansı peyğəmbər üçün sərin və salamat olmaq əmr edilir?",
+        "options": [
+          "İbrahim üçün",
+          "Musa üçün",
+          "Yusif üçün",
+          "Nuh üçün"
+        ],
+        "info": "Ayə Allahın oda İbrahimə zərər verməmək əmrini təsvir edir."
+      },
+      "tr": {
+        "q": "21:69'da ateşe hangi peygamber için serin ve güvenli olması emredilir?",
+        "options": [
+          "İbrâhim için",
+          "Mûsâ için",
+          "Yûsuf için",
+          "Nûh için"
+        ],
+        "info": "Ayet, Allah'ın ateşe İbrâhim'e zarar vermemesi yönündeki emrini anlatır."
+      }
+    }
+  },
+  {
+    "id": "l1x_dawud_iron",
+    "cat": "prophets",
+    "difficulty": 1,
+    "reference": "Quran 34:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/34",
+    "sourceVerses": [
+      "34:10"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Для какого пророка было смягчено железо согласно 34:10?",
+        "options": [
+          "Для Дауда",
+          "Для Сулеймана",
+          "Для Мусы",
+          "Для Яхьи"
+        ],
+        "info": "Среди дарованных Дауду милостей аят упоминает смягчение железа."
+      },
+      "en": {
+        "q": "For which prophet was iron softened according to 34:10?",
+        "options": [
+          "Dawud",
+          "Sulayman",
+          "Musa",
+          "Yahya"
+        ],
+        "info": "Among the favours given to Dawud, the verse mentions the softening of iron."
+      },
+      "uz": {
+        "q": "34:10 ga ko‘ra temir qaysi payg‘ambar uchun yumshatilgan?",
+        "options": [
+          "Dovud uchun",
+          "Sulaymon uchun",
+          "Muso uchun",
+          "Yahyo uchun"
+        ],
+        "info": "Oyat Dovudga berilgan ne’matlar orasida temir yumshatilganini aytadi."
+      },
+      "tg": {
+        "q": "Мувофиқи 34:10 оҳан барои кадом паёмбар нарм карда шуд?",
+        "options": [
+          "Барои Довуд",
+          "Барои Сулаймон",
+          "Барои Мӯсо",
+          "Барои Яҳё"
+        ],
+        "info": "Оят дар байни неъматҳои Довуд нарм шудани оҳанро зикр мекунад."
+      },
+      "kk": {
+        "q": "34:10 бойынша темір қай пайғамбар үшін жұмсартылған?",
+        "options": [
+          "Дәуіт үшін",
+          "Сүлеймен үшін",
+          "Мұса үшін",
+          "Яхия үшін"
+        ],
+        "info": "Аят Дәуітке берілген нығметтер арасында темірдің жұмсартылуын атайды."
+      },
+      "ky": {
+        "q": "34:10 боюнча темир кайсы пайгамбар үчүн жумшартылган?",
+        "options": [
+          "Дауд үчүн",
+          "Сулайман үчүн",
+          "Муса үчүн",
+          "Яхья үчүн"
+        ],
+        "info": "Аят Даудга берилген белектердин арасында темирдин жумшартылышын атайт."
+      },
+      "az": {
+        "q": "34:10-a görə dəmir hansı peyğəmbər üçün yumşaldılmışdır?",
+        "options": [
+          "Davud üçün",
+          "Süleyman üçün",
+          "Musa üçün",
+          "Yəhya üçün"
+        ],
+        "info": "Ayə Davuda verilən nemətlər arasında dəmirin yumşaldılmasını qeyd edir."
+      },
+      "tr": {
+        "q": "34:10'a göre demir hangi peygamber için yumuşatılmıştır?",
+        "options": [
+          "Dâvûd için",
+          "Süleyman için",
+          "Mûsâ için",
+          "Yahyâ için"
+        ],
+        "info": "Ayet, Dâvûd'a verilen nimetler arasında demirin yumuşatılmasını anar."
+      }
+    }
+  }
+]

@@ -41,6 +41,14 @@ object LearningStore {
         return LearningPolicy.dueIds(states(root()),bank.questionsFor(category,level.id).associate { it.id to it.contentVersion },now)
     }
     fun dueCount(bank: QuizBank): Int = dueIds(bank).size
+    fun topics(bank: QuizBank, now: Long = System.currentTimeMillis()): List<TopicLearning> {
+        val level = selectedLevel ?: return emptyList()
+        return WeakTopicPolicy.topics(bank,states(root()),level.id,now)
+    }
+    fun trainingIds(bank: QuizBank, category: String? = null, now: Long = System.currentTimeMillis()): List<String> {
+        val level = selectedLevel ?: return emptyList()
+        return WeakTopicPolicy.trainingIds(bank,states(root()),level.id,category,now)
+    }
     fun historyCount(): Int = states(root()).size
     fun resetLearning() {
         save(JSONObject())
@@ -53,11 +61,11 @@ object LearningStore {
     }
     private fun writeSession(root: JSONObject, s: LearningSession) {
         val sessions=root.optJSONObject("sessions") ?: JSONObject().also { root.put("sessions",it) }
-        sessions.put(s.scope,LearningSessions.encode(s));if(s.scope in setOf("normal","review")) root.put("lastScope",s.scope)
+        sessions.put(s.scope,LearningSessions.encode(s));if(s.scope in setOf("normal","review","training")) root.put("lastScope",s.scope)
     }
-    fun update(s: LearningSession) {
-        // A callback from a dismissed screen must not restore the previous level's round.
-        if(s.level == null || s.level != selectedLevel?.id)return
+    fun update(s: LearningSession, expected: LearningSession? = null) {
+        // A dismissed or replaced screen cannot resurrect its round or overwrite a later answer.
+        if(!LearningSessions.acceptsUpdate(session(s.scope),s,selectedLevel,expected))return
         val r=root();writeSession(r,s);save(r)
     }
     fun clearSession(scope: String) { val r=root();r.optJSONObject("sessions")?.remove(scope);save(r) }
@@ -67,27 +75,32 @@ object LearningStore {
     fun activeSession(bank: QuizBank, scope: String, category: String?): LearningSession? =
         session(scope)?.let { validated(it,bank,category) }
     fun pendingSession(bank: QuizBank): LearningSession? {
-        val scopes=listOf(root().optString("lastScope","normal"),"normal","review").distinct().filter { it in setOf("normal","review") }
+        val scopes=listOf(root().optString("lastScope","normal"),"normal","review","training").distinct().filter { it in setOf("normal","review","training") }
         return scopes.firstNotNullOfOrNull { scope -> session(scope)?.takeIf { it.stage!="RESULT" }?.let { validated(it,bank) } }
     }
     fun begin(bank: QuizBank, category: String?, scope: String = "normal", cards: Boolean = false): LearningSession? {
         val level = selectedLevel ?: return null
         session(scope)?.takeIf { it.category==category }?.let { old ->
-            validated(old,bank,category)?.let { if(it!=old)update(it);return it }
+            validated(old,bank,category)?.let { if(it!=old)update(it,expected=old);return it }
         }
-        val ids=if(scope=="review")dueIds(bank,category=category)
-            else QuestionBank.roundOrder(bank,category,Store.recentQuestions,level=level.id).map { it.id }
+        val ids=when(scope) {
+            "review" -> dueIds(bank,category=category)
+            "training" -> trainingIds(bank,category)
+            else -> QuestionBank.roundOrder(bank,category,Store.recentQuestions,level=level.id).map { it.id }
+        }
         if(ids.isEmpty()) { clearSession(scope);return null }
         val s=LearningSession(UUID.randomUUID().toString(),scope,category,ids,
             bank.questions.filter { it.id in ids }.associate { it.id to it.contentVersion },
             if(scope=="normal") if(cards)"CARDS" else "ASK" else "QUIZ",rewardDate=LocalDate.now().toString(),level=level.id)
-        update(s);return s
+        val r=root();writeSession(r,s);save(r);return s
     }
     fun showExplanation(q: Question, now: Long = System.currentTimeMillis()) {
         val r=root();writeState(r,q.id,LearningPolicy.explanation(states(r)[q.id],q.contentVersion,now));save(r)
     }
-    fun answer(scope: String, q: Question, canonicalOption: Int, now: Long = System.currentTimeMillis()): LearningSession? {
+    fun answer(scope: String, q: Question, canonicalOption: Int, now: Long = System.currentTimeMillis(),
+        expectedSessionId: String? = null): LearningSession? {
         val s=session(scope) ?: return null
+        if(expectedSessionId != null && s.id != expectedSessionId)return s
         if(s.level!=selectedLevel?.id || q.difficulty!=s.level || (s.category!=null && q.category!=s.category) ||
             s.versions[q.id]!=q.contentVersion || s.selected!=null || s.stage!="QUIZ" ||
             s.questionIds.getOrNull(s.index)!=q.id || canonicalOption !in q.options.indices)return s
@@ -101,18 +114,20 @@ object LearningStore {
         val next=s.copy(selected=canonicalOption,correctIds=if(ok)s.correctIds+q.id else s.correctIds)
         writeSession(r,next);save(r)
         Store.recordAnswer(q.id,q.category,ok)
-        if(scope=="review")Store.recordReviewedQuestion(event,q.id)
+        if(scope in setOf("review","training"))Store.recordReviewedQuestion(event,q.id)
         return next
     }
-    fun completeCurrent(scope: String): Int {
+    fun completeCurrent(scope: String, expectedSessionId: String? = null): Int {
         val s=session(scope) ?: return 0
+        if(expectedSessionId != null && s.id != expectedSessionId)return 0
         if(s.level==null || s.level!=selectedLevel?.id)return 0
-        if(s.stage=="RESULT")return s.addedMinutes
+        if(s.stage=="RESULT")return if(scope in setOf("review","training"))0 else s.addedMinutes
         if(s.stage!="QUIZ" || s.selected==null)return 0
-        val added=if(scope=="review")0 else Store.quizBonusForSession(s.id).takeIf { it>0 }
+        if(scope=="training" && s.index < s.questionIds.lastIndex)return 0
+        val added=if(scope in setOf("review","training"))0 else Store.quizBonusForSession(s.id).takeIf { it>0 }
             ?: Store.awardQuizBonusOnce(s.id,s.correctIds,LocalDate.parse(s.rewardDate))
-        update(s.copy(stage="RESULT",addedMinutes=added))
-        Store.recordLearningCompleted(s.id,s.category,scope=="review")
+        update(s.copy(stage="RESULT",addedMinutes=added),expected=s)
+        Store.recordLearningCompleted(s.id,s.category,scope in setOf("review","training"))
         return added
     }
     fun displayOrder(s: LearningSession, q: Question): List<Int> = LearningSessions.displayOrder(s, q.options.size)

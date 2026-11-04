@@ -103,9 +103,11 @@ private fun QuizRoundContent(bank: QuizBank, category: String?, onFinished: () -
 
     Column(Modifier.semantics { testTagsAsResourceId = true }, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-            Text(stringResource(R.string.quiz_progress, if (reviewMode) session.index else correct,
-                if (reviewMode) session.questionIds.size else target), style = MaterialTheme.typography.labelLarge,
-                color = scheme.secondary)
+            Text(if(sessionScope == "training") stringResource(R.string.training_question_progress,session.index + 1,session.questionIds.size)
+                else stringResource(R.string.quiz_progress, if (reviewMode) session.index else correct,
+                    if (reviewMode) session.questionIds.size else target),
+                modifier = if(sessionScope == "training") Modifier.testTag("training_progress") else Modifier,
+                style = MaterialTheme.typography.labelLarge, color = scheme.secondary)
             androidx.compose.material3.LinearProgressIndicator(
                 progress = { (if (reviewMode) session.index.toFloat() / session.questionIds.size.coerceAtLeast(1) else correct.toFloat() / target.coerceAtLeast(1)) },
                 modifier = Modifier.fillMaxWidth().height(4.dp), drawStopIndicator = {})
@@ -155,7 +157,7 @@ private fun QuizRoundContent(bank: QuizBank, category: String?, onFinished: () -
                     onClick = {
                         if (selected == null) {
                             val ok = canonical == question.answerIndex
-                            LearningStore.answer(sessionScope, question, canonical)
+                            LearningStore.answer(sessionScope, question, canonical, expectedSessionId = session.id)
                             view.performHapticFeedback(if (ok) android.view.HapticFeedbackConstants.VIRTUAL_KEY else android.view.HapticFeedbackConstants.LONG_PRESS)
                         }
                     },
@@ -176,7 +178,7 @@ private fun QuizRoundContent(bank: QuizBank, category: String?, onFinished: () -
                         if (finished) {
                             onFinished()
                         } else {
-                            LearningStore.update(session.copy(index=session.index+1, selected=null))
+                            LearningStore.update(session.copy(index=session.index+1, selected=null),expected=session)
                         }
                     },
                 )

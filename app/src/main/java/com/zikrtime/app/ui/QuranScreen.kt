@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -39,6 +40,7 @@ import com.zikrtime.app.data.*
 import com.zikrtime.app.i18n.Lang
 import com.zikrtime.app.ui.theme.ArabicStyle
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.launch
 
 @Composable
 fun QuranScreen() {
@@ -60,6 +62,13 @@ private fun QuranScreenContent() {
     var indexQuery by rememberSaveable { mutableStateOf("") }
     var indexTab by rememberSaveable { mutableIntStateOf(0) }
     val indexList = rememberLazyListState()
+    var topicQuery by rememberSaveable { mutableStateOf("") }
+    var topicId by rememberSaveable { mutableStateOf("") }
+    val topicsList = rememberLazyListState()
+    val topicDetailList = rememberLazyListState()
+    val scope = rememberCoroutineScope()
+    val focus = LocalFocusManager.current
+    val closeTopic: () -> Unit = { focus.clearFocus(); topicId = "" }
     var scale by rememberReadingScale()
     LaunchedEffect(attempt) {
         failed = false
@@ -68,15 +77,19 @@ private fun QuranScreenContent() {
         catch (_: Exception) { failed = true }
     }
     BackHandler(surahId != 0) { surahId = 0 }
+    BackHandler(surahId == 0 && indexTab == 3 && topicId.isNotEmpty()) { closeTopic() }
     val content = book
     if (content != null && surahId != 0) {
         key(surahId) {
-            QuranReader(content, surahId, startAyah, scale, { scale = it }, progress, { surahId = 0 })
+            QuranReader(content, surahId, startAyah, scale, { scale = it }, progress, { surahId = 0 },
+                backLabel = if (indexTab == 3 && topicId.isNotEmpty()) R.string.qti_back_to_topic else R.string.quran_surahs)
         }
     } else Surface(color = quranPaperColors().canvas, modifier = Modifier.fillMaxSize()) {
         Column(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing)) {
             Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = { nav.back() }) {
+                IconButton(onClick = {
+                    if (indexTab == 3 && topicId.isNotEmpty()) closeTopic() else nav.back()
+                }) {
                     Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.action_back))
                 }
                 Text(stringResource(R.string.quran_title), style = MaterialTheme.typography.titleLarge,
@@ -90,7 +103,15 @@ private fun QuranScreenContent() {
                     startAyah = it.ayah
                     surahId = it.surah
                     progress.save(it)
-                }, Modifier.weight(1f), indexQuery, { indexQuery = it }, indexTab, { indexTab = it }, indexList)
+                }, Modifier.weight(1f), indexQuery, { indexQuery = it }, indexTab, {
+                    focus.clearFocus()
+                    indexTab = it
+                }, if (indexTab != 3) indexList else if (topicId.isEmpty()) topicsList else topicDetailList,
+                    topicQuery, { topicQuery = it }, topicId, {
+                        focus.clearFocus()
+                        topicId = it
+                        scope.launch { topicDetailList.scrollToItem(0) }
+                    }, closeTopic)
                 failed -> Column(Modifier.weight(1f).padding(24.dp), verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(stringResource(R.string.quran_load_error), textAlign = TextAlign.Center)
@@ -109,8 +130,14 @@ private fun QuranScreenContent() {
 @Composable
 private fun QuranIndex(book: QuranBook, progress: QuranProgress, open: (QuranProgress.Location) -> Unit,
     modifier: Modifier, query: String, onQuery: (String) -> Unit, tab: Int, onTab: (Int) -> Unit,
-    listState: LazyListState) {
-    val ru = Lang.content(LocalContext.current) == "ru"
+    listState: LazyListState, topicQuery: String, onTopicQuery: (String) -> Unit,
+    topicId: String, onTopic: (String) -> Unit, closeTopic: () -> Unit) {
+    val context = LocalContext.current
+    val ru = Lang.content(context) == "ru"
+    val selectedTopic = if (tab == 3) QuranTopics.find(topicId) else null
+    val filteredTopics = if (tab == 3) QuranTopics.search(topicQuery, book) {
+        context.getString(it.titleResource()) + " " + context.getString(it.descriptionResource())
+    } else emptyList()
     val colors = quranPaperColors()
     var statistics by rememberSaveable { mutableStateOf(false) }
     val stop = remember(book) { progress.stop(book) }
@@ -125,9 +152,10 @@ private fun QuranIndex(book: QuranBook, progress: QuranProgress, open: (QuranPro
             it.nameRu.contains(value, true) || it.nameLatin.contains(value, true) || it.nameArabic.contains(value) }
     }
     // A single scroll surface keeps the catalog reachable with large accessibility text.
-    LazyColumn(modifier.fillMaxWidth().testTag("quran_index_list"), state = listState,
+    LazyColumn(modifier.fillMaxWidth().testTag(if (tab != 3) "quran_index_list" else
+        if (selectedTopic == null) "quran_topics_list" else "quran_topics_detail_list"), state = listState,
         contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 32.dp)) {
-        item("book_heading") {
+        if (tab != 3) item("book_heading") {
             Column(Modifier.fillMaxWidth().padding(top = 12.dp, bottom = 20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally) {
                 QuranOrnament(Modifier.width(104.dp).height(16.dp))
@@ -141,7 +169,7 @@ private fun QuranIndex(book: QuranBook, progress: QuranProgress, open: (QuranPro
                     color = colors.muted, textAlign = TextAlign.Center)
             }
         }
-        item("sections") {
+        if (selectedTopic == null) item("sections") {
             FlowRow(Modifier.fillMaxWidth().padding(bottom = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 FilterChip(tab == 0, { onTab(0) }, label = { Text(stringResource(R.string.quran_surahs)) },
                     modifier = Modifier.testTag("quran_surahs"))
@@ -151,6 +179,8 @@ private fun QuranIndex(book: QuranBook, progress: QuranProgress, open: (QuranPro
                 FilterChip(tab == 2, { onTab(2) }, label = { Text(stringResource(R.string.qf_notes) + " · " + notes.size) },
                     leadingIcon = { Icon(Icons.Filled.Edit, null, Modifier.size(18.dp)) },
                     modifier = Modifier.testTag("quran_personal_notes"))
+                FilterChip(tab == 3, { onTab(3) }, label = { Text(stringResource(R.string.qti_title)) },
+                    modifier = Modifier.testTag("quran_topics"))
             }
         }
         if (tab == 0) {
@@ -176,7 +206,7 @@ private fun QuranIndex(book: QuranBook, progress: QuranProgress, open: (QuranPro
                 Spacer(Modifier.height(12.dp))
             }
         }
-        item("statistics") {
+        if (tab != 3) item("statistics") {
             Row(Modifier.fillMaxWidth().padding(bottom = 8.dp), horizontalArrangement = Arrangement.End) {
                 TextButton(onClick = { statistics = true }, modifier = Modifier.testTag("quran_statistics_open")) {
                     Text(stringResource(R.string.qf_statistics))
@@ -185,6 +215,8 @@ private fun QuranIndex(book: QuranBook, progress: QuranProgress, open: (QuranPro
             HorizontalDivider(color = colors.rule)
         }
         when (tab) {
+            3 -> quranTopicItems(book, selectedTopic, filteredTopics, topicQuery, onTopicQuery,
+                onTopic, closeTopic, open)
             2 -> {
                 if (notes.isEmpty()) item("no_notes") { QuranIndexEmpty(stringResource(R.string.qf_no_notes)) }
                 items(notes, key = { "note_" + it.key }) { location ->

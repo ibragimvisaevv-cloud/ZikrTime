@@ -8,7 +8,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 
 /** Экраны второго уровня (поверх вкладок). */
-enum class Screen { LANGUAGE, CITY, PRAYER_SETTINGS, ALARM, QIBLA, TASBIH, QUIZ, APPS, ABOUT, SHOP_SELLER, SHOP_PRODUCT, PLACES, RAMADAN, ZAKAT, REVIEW, PROGRESS, AZKAR, QURAN }
+enum class Screen { LANGUAGE, CITY, PRAYER_SETTINGS, ALARM, QIBLA, TASBIH, QUIZ, APPS, ABOUT, SHOP_SELLER, SHOP_PRODUCT, PLACES, RAMADAN, ZAKAT, REVIEW, PROGRESS, AZKAR, QURAN, TRAINING }
 
 /** Вкладки нижней панели. */
 enum class Tab { PRAYER, KNOWLEDGE, SHOP, FOCUS, MORE }
@@ -23,6 +23,9 @@ class Nav {
 
     /** Тема для раунда викторины (null — все темы). */
     var quizCategory by mutableStateOf<String?>(null)
+
+    var trainingCategory by mutableStateOf<String?>(null)
+    var trainingActive by mutableStateOf(false)
 
     /** Увеличивается при каждом новом раунде — чтобы экран викторины начинался заново. */
     var quizRound by mutableIntStateOf(0)
@@ -63,7 +66,20 @@ class Nav {
     fun resumeLearning(context: android.content.Context) {
         val bank = com.zikrtime.app.quiz.QuestionBank.load(context)
         val pending = com.zikrtime.app.quiz.LearningStore.pendingSession(bank) ?: return
-        if (pending.scope == "review") startReview() else startQuiz(pending.category)
+        when(pending.scope) {
+            "review" -> startReview()
+            "training" -> startTraining(pending.category)
+            else -> startQuiz(pending.category)
+        }
+    }
+    fun openTraining() { trainingActive = false; open(Screen.TRAINING) }
+    fun startTraining(category: String?) {
+        if (com.zikrtime.app.quiz.LearningStore.session("training")?.stage == "RESULT")
+            com.zikrtime.app.quiz.LearningStore.clearSession("training")
+        trainingCategory = category
+        trainingActive = true
+        quizRound++
+        open(Screen.TRAINING)
     }
     fun openAzkar(period: String) {
         azkarPeriod = if (period == "evening") "evening" else "morning"
@@ -76,6 +92,7 @@ class Nav {
         out.putString("nav_tab", tab.name)
         out.putStringArrayList("nav_routes", ArrayList(stack.map { "${it.screen.name}|${it.id}|${it.seller.orEmpty()}|${it.product.orEmpty()}" }))
         out.putString("nav_category", quizCategory); out.putInt("nav_round", quizRound)
+        out.putString("nav_training_category", trainingCategory); out.putBoolean("nav_training_active", trainingActive)
         out.putString("nav_period", azkarPeriod)
     }
     fun restore(saved: android.os.Bundle?) {
@@ -87,6 +104,7 @@ class Nav {
                 .getOrNull()?.let { stack.add(it); nextEntry = maxOf(nextEntry, it.id) }
         }
         quizCategory = saved.getString("nav_category"); quizRound = saved.getInt("nav_round")
+        trainingCategory = saved.getString("nav_training_category"); trainingActive = saved.getBoolean("nav_training_active")
         azkarPeriod = saved.getString("nav_period") ?: "morning"
         shopSeller = stack.lastOrNull()?.seller; shopProduct = stack.lastOrNull()?.product
     }

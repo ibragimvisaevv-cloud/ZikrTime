@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="training_title">Темалар боюнча машыгуу</string>
+    <string name="training_first_hint">Тандалган деңгээлде бир нече суроого жооп бериңиз. Жоопторуңуз боюнча кайталоо суроолору тандалат.</string>
+    <string name="training_overview_hint">Эмнелер бекемделгенин жана кайсы суроолорго кайтуу керектигин көрүңүз. Жоопторуңузга негизделген кыска машыгууну баштаңыз.</string>
+    <string name="training_overview_counts">Жооп берилди: %1$d · Кайталоочу каталар: %2$d</string>
+    <string name="training_open">Темаларымды ачуу</string>
+    <string name="training_personal_plan">Кайталоо планыңыз</string>
+    <string name="training_method">5ке чейин тааныш суроо: адегенде каталар, андан кийин бекемдөөчү материал. Ар бир жооптон кийин түшүндүрмө жана булак берилет.</string>
+    <string name="training_no_data">Азырынча маалымат жетишсиз</string>
+    <string name="training_start">Машыгууну баштоо</string>
+    <string name="training_no_bonus">Бонустук мүнөттөр берилбейт. Жооптор окуу тарыхында сакталат.</string>
+    <string name="training_topics">Менин темаларым</string>
+    <string name="training_scope_note">Көрсөткүчтөр тандалган деңгээлдеги жооп берилген суроолорго гана тиешелүү. Тилке билимдин баасын эмес, теманын камтылышын көрсөтөт.</string>
+    <string name="training_status_new">Азырынча үйрөнүлө элек</string>
+    <string name="training_status_limited">Тыянак чыгарууга жооп аз</string>
+    <string name="training_status_practice">Кайталоо керек</string>
+    <string name="training_status_building">Бекемдеп жатабыз</string>
+    <string name="training_status_retained">Жакшы бекемделген</string>
+    <string name="training_coverage">Жооп берилди: %2$d суроонун %1$dине</string>
+    <string name="training_error_count">Акыркы туура эмес жооптор: %1$d</string>
+    <string name="training_retained_count">Ар башка күндөрү кайталап бекемделген: %1$d</string>
+    <string name="training_topic_action">Бул тема боюнча машыгуу</string>
+    <string name="training_discover">Теманы үйрөнүү</string>
+    <string name="training_back_topics">Темаларыма кайтуу</string>
+    <string name="training_complete">Машыгуу аяктады</string>
+    <string name="training_result_score">Туура жооптор: %2$d суроонун %1$dи</string>
+    <string name="training_result_success">Бул айлампада ката жок. Кийинчерээк дагы кайталаңыз: бир ийгиликтүү айлампа узак убакытка эстеп калууну билдирбейт.</string>
+    <string name="training_result_repeat">Төмөндө ката жооп берилген суроолор бар. Түшүндүрмөлөрдү окуп, кийинчерээк аларга кайтыңыз.</string>
+    <string name="training_review_errors">Каталарды талдоо</string>
+    <string name="training_again">Дагы бир айлампа</string>
+    <string name="training_round_hint">Шашпай жооп бериңиз. Бул айлампанын бардык суроолорун өтүңүз; бонустук мүнөттөр берилбейт.</string>
+    <string name="training_question_progress">%2$d суроонун %1$dи</string>
+    <string name="training_replace_title">Башка машыгуу башталсынбы?</string>
+    <string name="training_replace_hint">Бүтпөгөн айлампа алмаштырылат. Сакталган жооптор, кадимки викторина жана бонустук мүнөттөр сакталат.</string>
+    <string name="training_replace_confirm">Жаңы машыгуу</string>
+</resources>

@@ -88,6 +88,7 @@ fun KnowledgeScreen() {
             Modifier.fillMaxWidth().testTag("quran_open"), prominent = true) { nav.open(Screen.QURAN) }
         KnowledgeLevelGate(bank) { level ->
             KnowledgeLevelControl(bank)
+            WeakTopicsOverview(bank)
             Text(stringResource(R.string.knowledge_topics), style = MaterialTheme.typography.headlineSmall)
             val columns = if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 1 else 2
             bank.categories.filter { (id, _) -> bank.questionsFor(id,level.id).isNotEmpty() }
@@ -223,13 +224,13 @@ private fun QuizFlow(bank: QuizBank, category: String?, onDone: () -> Unit, onAg
     val cards = session.questionIds.take(PREP_CARDS).mapNotNull { id -> bank.questions.firstOrNull { it.id == id } }
     when (session.stage) {
         "ASK" -> PrepOffer(
-            onRead = { LearningStore.update(session.copy(stage = "CARDS")) },
-            onSkip = { LearningStore.update(session.copy(stage = "QUIZ")) },
+            onRead = { LearningStore.update(session.copy(stage = "CARDS"), expected = session) },
+            onSkip = { LearningStore.update(session.copy(stage = "QUIZ"), expected = session) },
         )
         "CARDS" -> StudyCards(bank, cards, session,
-            onReady = { LearningStore.update(session.copy(stage = "QUIZ")) })
+            onReady = { LearningStore.update(session.copy(stage = "QUIZ"), expected = session) })
         "QUIZ" -> QuizRound(bank = bank, category = category, sessionScope = "normal",
-            onFinished = { LearningStore.completeCurrent("normal") })
+            onFinished = { LearningStore.completeCurrent("normal", expectedSessionId = session.id) })
         "RESULT" -> RoundResult(addedMinutes = session.addedMinutes, onAgain = {
             LearningStore.clearSession("normal"); onAgain()
         }, onDone = onDone)
@@ -264,7 +265,7 @@ private fun ReviewFlow(bank: QuizBank) {
             PrimaryButton(stringResource(R.string.action_done), onClick = { LearningStore.clearSession("review"); nav.back() })
         }
         else -> QuizRound(bank = bank, category = null, sessionScope = "review", reviewMode = true,
-            onFinished = { LearningStore.completeCurrent("review") })
+            onFinished = { LearningStore.completeCurrent("review", expectedSessionId = session.id) })
     }
 }
 
@@ -341,7 +342,7 @@ private fun StudyCards(bank: QuizBank, cards: List<com.zikrtime.app.quiz.Questio
         }
     }
     if (index < cards.size - 1) {
-        ShimmerButton(stringResource(R.string.prep_next), onClick = { LearningStore.update(session.copy(cardIndex = index + 1)) }, modifier = Modifier.testTag("learning_card_next").semantics { testTagsAsResourceId = true })
+        ShimmerButton(stringResource(R.string.prep_next), onClick = { LearningStore.update(session.copy(cardIndex = index + 1), expected = session) }, modifier = Modifier.testTag("learning_card_next").semantics { testTagsAsResourceId = true })
     } else {
         ShimmerButton(stringResource(R.string.prep_start_quiz), onClick = onReady, modifier = Modifier.testTag("learning_card_quiz").semantics { testTagsAsResourceId = true })
     }
