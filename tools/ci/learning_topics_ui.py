@@ -1,6 +1,6 @@
 """Focused 0.8.21 journeys on a disposable debug emulator.
 
-Run: python3 tools/ci/learning_topics_ui.py [all|training|topics|layout].
+Run: python3 tools/ci/learning_topics_ui.py [all|training|topics|layout|topics-layout].
 Only synthetic emulator preferences are modified. Question choices use the actual
 bundled bank; no hard-coded display option indexes or manufactured pass results.
 """
@@ -10,7 +10,7 @@ import traceback
 exec(compile(open('tools/ci/features_controls.py').read().split('mode = sys.argv[1]')[0], 'features_helpers', 'exec'))
 
 MODE = sys.argv[1] if len(sys.argv) > 1 else 'all'
-assert MODE in {'all', 'training', 'topics', 'layout'}, MODE
+assert MODE in {'all', 'training', 'topics', 'layout', 'topics-layout'}, MODE
 OUT.mkdir(exist_ok=True)
 (OUT / 'screens').mkdir(exist_ok=True)
 BANK = {q['id']: q for q in json.loads(Path('app/src/main/assets/quiz/ru.json').read_text())['questions']}
@@ -490,9 +490,9 @@ try:
     report['question_counts'] = counts
     if MODE in {'all', 'training'}:
         training_journey()
-    if MODE in {'all', 'topics'}:
+    if MODE in {'all', 'topics', 'topics-layout'}:
         topics_journey()
-    if MODE in {'all', 'layout'}:
+    if MODE in {'all', 'layout', 'topics-layout'}:
         compact_dark()
     save_report()
 except Exception:

@@ -218,15 +218,28 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
                 }
             }
             if (!fullscreen) {
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    FilterChip(selected = wholeSurah, onClick = { switchMode(true) },
-                        modifier = Modifier.weight(1f).then(if (!wholeSurah) Modifier.testTag("quran_read_mode") else Modifier),
-                        label = { Text(stringResource(R.string.qp_reading_mode),
-                            Modifier.fillMaxWidth().testTag("quran_mode_read"), textAlign = TextAlign.Center) })
-                    FilterChip(selected = !wholeSurah, onClick = { switchMode(false) },
-                        modifier = Modifier.weight(1f).then(if (wholeSurah) Modifier.testTag("quran_read_mode") else Modifier),
-                        label = { Text(stringResource(R.string.qp_translation_mode),
-                            Modifier.fillMaxWidth().testTag("quran_mode_translation"), textAlign = TextAlign.Center) })
+                BoxWithConstraints(Modifier.fillMaxWidth()) {
+                    // Keep labels readable at large font sizes instead of squeezing two columns.
+                    val stackModes = maxWidth / LocalDensity.current.fontScale < 320.dp
+                    val modeChips: @Composable (Modifier) -> Unit = { chipModifier ->
+                        FilterChip(selected = wholeSurah, onClick = { switchMode(true) },
+                            modifier = chipModifier.then(if (!wholeSurah) Modifier.testTag("quran_read_mode") else Modifier),
+                            label = { Text(stringResource(R.string.qp_reading_mode),
+                                Modifier.fillMaxWidth().testTag("quran_mode_read"), textAlign = TextAlign.Center) })
+                        FilterChip(selected = !wholeSurah, onClick = { switchMode(false) },
+                            modifier = chipModifier.then(if (wholeSurah) Modifier.testTag("quran_read_mode") else Modifier),
+                            label = { Text(stringResource(R.string.qp_translation_mode),
+                                Modifier.fillMaxWidth().testTag("quran_mode_translation"), textAlign = TextAlign.Center) })
+                    }
+                    if (stackModes) {
+                        Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                            modeChips(Modifier.fillMaxWidth())
+                        }
+                    } else {
+                        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            modeChips(Modifier.weight(1f))
+                        }
+                    }
                 }
             }
             if (savedMarks.isNotEmpty()) QuranSavedEntry(savedMarks.size) { openSheet("saved") }

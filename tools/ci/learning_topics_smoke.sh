@@ -10,6 +10,6 @@ trap 'adb logcat -d -b crash > ci-out/crashes.txt; adb shell dumpsys gfxinfo com
 adb shell wm size 1080x1920
 adb shell wm density 420
 adb install -r app/build/outputs/apk/debug/app-debug.apk
-python3 tools/ci/learning_topics_ui.py
+python3 tools/ci/learning_topics_ui.py "${1:-all}"
 adb logcat -d -b crash > ci-out/crashes.txt
 if grep -qE 'FATAL EXCEPTION|Fatal signal' ci-out/crashes.txt; then exit 1; fi
