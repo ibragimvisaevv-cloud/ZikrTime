@@ -1,0 +1,18 @@
+Verifies
+Verified using v1 scheme (JAR signing): false
+Verified using v2 scheme (APK Signature Scheme v2): true
+Verified using v3 scheme (APK Signature Scheme v3): false
+Verified using v3.1 scheme (APK Signature Scheme v3.1): false
+Verified using v3.2 scheme (APK Signature Scheme v3.2): false
+Verified using v4 scheme (APK Signature Scheme v4): false
+Verified for SourceStamp: false
+Number of signers: 1
+V2 Signer: certificate DN: CN=ZikrTime, O=ZikrTime, C=RU
+V2 Signer: certificate SHA-256 digest: 7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf
+V2 Signer: certificate SHA-1 digest: d7bb94024dcbfe475e76d90808c410193074a125
+V2 Signer: certificate MD5 digest: fae449ddd7b01205f181193692ac80c7
+V2 Signer: key algorithm: RSA
+V2 Signer: key size (bits): 4096
+V2 Signer: public key SHA-256 digest: f1629541982927c152914cbbadab9725249c23fd8d9cdbbc7e3e8b21904ec3ab
+V2 Signer: public key SHA-1 digest: e919e2e6ec55fb20f3690d5424c030a22ef84d64
+V2 Signer: public key MD5 digest: fbfd987a26626d44a1711f3b0efb3c29

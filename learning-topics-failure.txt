@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/runner/work/ZikrTime/ZikrTime/tools/ci/learning_topics_ui.py", line 494, in <module>
+    topics_journey()
+    ~~~~~~~~~~~~~~^^
+  File "/home/runner/work/ZikrTime/ZikrTime/tools/ci/learning_topics_ui.py", line 379, in topics_journey
+    start('quran')
+    ~~~~~^^^^^^^^^
+  File "/home/runner/work/ZikrTime/ZikrTime/tools/ci/learning_topics_ui.py", line 27, in start
+    wait_for('quran_index_list')
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ZikrTime/ZikrTime/tools/ci/learning_topics_ui.py", line 59, in wait_for
+    raise AssertionError('UI did not become ready: ' + identifier)
+AssertionError: UI did not become ready: quran_index_list
