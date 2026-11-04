@@ -36,7 +36,7 @@ object LearningSessions {
             ids.associateWith { versions.optInt(it,1) },stage,o.optInt("card").coerceIn(0,minOf(4,ids.lastIndex)),index,
             if(o.has("selected"))o.getInt("selected").takeIf { it in 0..3 } else null,
             o.optJSONArray("correct")?.strings()?.toSet()?.intersect(ids.toSet()) ?: emptySet(),
-            o.getString("date"),o.optInt("added"),
+            o.getString("date"),if(scope in setOf("review","training"))0 else o.optInt("added"),
             if(o.has("level"))o.getInt("level").also { require(KnowledgeLevel.fromId(it)!=null) } else null)
     }.getOrNull()
 
@@ -66,6 +66,13 @@ object LearningSessions {
             index=newIndex.coerceAtMost(valid.lastIndex),cardIndex=newCard.coerceAtMost(4),
             selected=s.selected.takeIf { current in valid },correctIds=s.correctIds.intersect(valid.toSet()))
     }
+
+    /** Compare the rendered round before accepting an asynchronous UI callback. */
+    fun acceptsUpdate(current: LearningSession?, target: LearningSession, level: KnowledgeLevel?,
+        expected: LearningSession? = null): Boolean =
+        current != null && level != null && current.scope == target.scope && current.id == target.id &&
+            current.category == target.category && current.level == level.id && target.level == level.id &&
+            (expected == null || current == expected)
 
     fun displayOrder(s: LearningSession, optionCount: Int): List<Int> =
         (0 until optionCount).shuffled(Random(s.id.hashCode() xor s.index))

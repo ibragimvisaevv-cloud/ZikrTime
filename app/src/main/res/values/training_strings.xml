@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="training_title">Practice by topic</string>
+    <string name="training_first_hint">Answer a few questions at your selected level. Your answers will shape your practice.</string>
+    <string name="training_overview_hint">See what you have retained and which questions to revisit. Start a short practice based on your answers.</string>
+    <string name="training_overview_counts">Answered: %1$d · Errors to revisit: %2$d</string>
+    <string name="training_open">Open my topics</string>
+    <string name="training_personal_plan">Your review plan</string>
+    <string name="training_method">Up to 5 familiar questions: errors first, then material to consolidate. Every answer includes an explanation and source.</string>
+    <string name="training_no_data">Not enough data yet</string>
+    <string name="training_start">Start practice</string>
+    <string name="training_no_bonus">No bonus minutes. Answers are saved in your learning history.</string>
+    <string name="training_topics">My topics</string>
+    <string name="training_scope_note">These indicators cover only answered questions at your selected level. The bar shows topic coverage, not a knowledge grade.</string>
+    <string name="training_status_new">Not explored yet</string>
+    <string name="training_status_limited">Too few answers to assess</string>
+    <string name="training_status_practice">Worth revisiting</string>
+    <string name="training_status_building">Building retention</string>
+    <string name="training_status_retained">Well retained</string>
+    <string name="training_coverage">Answered: %1$d of %2$d</string>
+    <string name="training_error_count">Latest incorrect answers: %1$d</string>
+    <string name="training_retained_count">Retained through reviews on different days: %1$d</string>
+    <string name="training_topic_action">Practice this topic</string>
+    <string name="training_discover">Explore topic</string>
+    <string name="training_back_topics">Back to my topics</string>
+    <string name="training_complete">Practice complete</string>
+    <string name="training_result_score">Correct answers: %1$d of %2$d</string>
+    <string name="training_result_success">No errors in this round. Review again later: one successful round does not yet show lasting retention.</string>
+    <string name="training_result_repeat">Questions you missed are below. Read the explanations and revisit them later.</string>
+    <string name="training_review_errors">Review your errors</string>
+    <string name="training_again">Another round</string>
+    <string name="training_round_hint">Take your time. Complete every question in this round; no bonus minutes are awarded.</string>
+    <string name="training_question_progress">Question %1$d of %2$d</string>
+    <string name="training_replace_title">Start a different practice?</string>
+    <string name="training_replace_hint">This will replace the unfinished round. Saved answers, your normal quiz and bonus minutes will remain.</string>
+    <string name="training_replace_confirm">Start new practice</string>
+</resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="training_title">Mavzular bo‘yicha mashq</string>
+    <string name="training_first_hint">Tanlangan darajada bir nechta savolga javob bering. Javoblaringiz asosida takrorlash savollari tanlanadi.</string>
+    <string name="training_overview_hint">Nimalar mustahkamlanganini va qaysi savollarga qaytish kerakligini ko‘ring. Javoblaringiz asosida qisqa mashq boshlang.</string>
+    <string name="training_overview_counts">Javob berildi: %1$d · Takrorlash uchun xatolar: %2$d</string>
+    <string name="training_open">Mavzularimni ochish</string>
+    <string name="training_personal_plan">Takrorlash rejangiz</string>
+    <string name="training_method">5 tagacha tanish savol: avval xatolar, keyin mustahkamlash uchun material. Har bir javobdan so‘ng izoh va manba ko‘rsatiladi.</string>
+    <string name="training_no_data">Hozircha ma’lumot yetarli emas</string>
+    <string name="training_start">Mashqni boshlash</string>
+    <string name="training_no_bonus">Bonus daqiqalarsiz. Javoblar o‘rganish tarixida saqlanadi.</string>
+    <string name="training_topics">Mavzularim</string>
+    <string name="training_scope_note">Ko‘rsatkichlar faqat tanlangan darajadagi javob berilgan savollarga tegishli. Chiziq bilim bahosini emas, mavzu qamrovini ko‘rsatadi.</string>
+    <string name="training_status_new">Hali o‘rganilmagan</string>
+    <string name="training_status_limited">Xulosa uchun javoblar kam</string>
+    <string name="training_status_practice">Takrorlash kerak</string>
+    <string name="training_status_building">Mustahkamlanmoqda</string>
+    <string name="training_status_retained">Yaxshi mustahkamlangan</string>
+    <string name="training_coverage">Javob berildi: %2$d tadan %1$d</string>
+    <string name="training_error_count">So‘nggi noto‘g‘ri javoblar: %1$d</string>
+    <string name="training_retained_count">Turli kunlarda takrorlab mustahkamlangan: %1$d</string>
+    <string name="training_topic_action">Shu mavzuda mashq qilish</string>
+    <string name="training_discover">Mavzuni o‘rganish</string>
+    <string name="training_back_topics">Mavzularimga qaytish</string>
+    <string name="training_complete">Mashq yakunlandi</string>
+    <string name="training_result_score">To‘g‘ri javoblar: %2$d tadan %1$d</string>
+    <string name="training_result_success">Bu bosqichda xato yo‘q. Keyinroq yana takrorlang: bitta muvaffaqiyatli urinish hali uzoq muddatli eslab qolishni bildirmaydi.</string>
+    <string name="training_result_repeat">Quyida xato javob berilgan savollar bor. Izohlarni o‘qing va keyinroq ularga qayting.</string>
+    <string name="training_review_errors">Xatolar tahlili</string>
+    <string name="training_again">Yana bir bosqich</string>
+    <string name="training_round_hint">Shoshilmay javob bering. Bu bosqichdagi barcha savollardan o‘ting; bonus daqiqalar berilmaydi.</string>
+    <string name="training_question_progress">%2$d tadan %1$d-savol</string>
+    <string name="training_replace_title">Boshqa mashq boshlansinmi?</string>
+    <string name="training_replace_hint">Tugallanmagan bosqich almashtiriladi. Saqlangan javoblar, oddiy viktorina va bonus daqiqalar saqlanadi.</string>
+    <string name="training_replace_confirm">Yangi mashq</string>
+</resources>

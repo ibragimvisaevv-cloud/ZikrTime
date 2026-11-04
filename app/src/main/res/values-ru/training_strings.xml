@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="training_title">Тренировка по темам</string>
+    <string name="training_first_hint">Ответьте на несколько вопросов выбранного уровня. По вашим ответам появится подборка для повторения.</string>
+    <string name="training_overview_hint">Видно, что уже закреплено и к каким вопросам стоит вернуться. Начните короткую тренировку по своим ответам.</string>
+    <string name="training_overview_counts">Отвечено: %1$d · Ошибок к повторению: %2$d</string>
+    <string name="training_open">Открыть мои темы</string>
+    <string name="training_personal_plan">Ваш план повторения</string>
+    <string name="training_method">До 5 знакомых вопросов: сначала ошибки, затем материал для закрепления. После каждого ответа — пояснение и источник.</string>
+    <string name="training_no_data">Пока недостаточно данных</string>
+    <string name="training_start">Начать тренировку</string>
+    <string name="training_no_bonus">Без бонусных минут. Ответы сохраняются в учебной истории.</string>
+    <string name="training_topics">Мои темы</string>
+    <string name="training_scope_note">Показатели относятся только к отвеченным вопросам выбранного уровня. Полоса показывает охват темы, а не оценку знаний.</string>
+    <string name="training_status_new">Ещё не изучали</string>
+    <string name="training_status_limited">Мало ответов для вывода</string>
+    <string name="training_status_practice">Стоит повторить</string>
+    <string name="training_status_building">Закрепляем</string>
+    <string name="training_status_retained">Хорошо закреплено</string>
+    <string name="training_coverage">Отвечено: %1$d из %2$d</string>
+    <string name="training_error_count">Последних ошибок: %1$d</string>
+    <string name="training_retained_count">Закреплено с повторением в разные дни: %1$d</string>
+    <string name="training_topic_action">Тренировать эту тему</string>
+    <string name="training_discover">Изучить тему</string>
+    <string name="training_back_topics">К моим темам</string>
+    <string name="training_complete">Тренировка завершена</string>
+    <string name="training_result_score">Правильных ответов: %1$d из %2$d</string>
+    <string name="training_result_success">В этом подходе ошибок нет. Вернитесь к повторению позже: один удачный подход ещё не означает устойчивое запоминание.</string>
+    <string name="training_result_repeat">Ниже собраны вопросы с ошибками. Прочитайте пояснения и вернитесь к ним позже.</string>
+    <string name="training_review_errors">Разбор ошибок</string>
+    <string name="training_again">Ещё один подход</string>
+    <string name="training_round_hint">Отвечайте спокойно. В этом подходе нужно пройти все вопросы; бонусные минуты не начисляются.</string>
+    <string name="training_question_progress">Вопрос %1$d из %2$d</string>
+    <string name="training_replace_title">Начать другую тренировку?</string>
+    <string name="training_replace_hint">Незаконченный подход будет заменён. Уже записанные ответы, обычная викторина и бонусные минуты сохранятся.</string>
+    <string name="training_replace_confirm">Начать новую</string>
+</resources>

@@ -2361,6 +2361,546 @@
    }
   },
   {
+   "id": "l1x_moon_calendar",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "What purpose do the moon's phases serve in 10:5?",
+   "options": [
+    "Counting years and time",
+    "Setting prices of goods",
+    "Choosing children's names",
+    "Establishing family ties"
+   ],
+   "answer": 0,
+   "info": "The verse connects the moon's phases with reckoning years and time.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 10:5",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/10",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_languages_colours",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "Which human differences are called signs in 30:22?",
+   "options": [
+    "Languages and skin colours",
+    "Job titles and salaries",
+    "Homes and clothing",
+    "Professions and awards"
+   ],
+   "answer": 0,
+   "info": "The verse includes languages and skin colours among Allah's signs.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 30:22",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/30",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_sleep_rest",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "How is sleep described in 78:9?",
+   "options": [
+    "As rest",
+    "As a test of trade",
+    "As a means of travel",
+    "As harvest time"
+   ],
+   "answer": 0,
+   "info": "This verse presents sleep as rest provided for people.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 78:9",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/78",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_day_livelihood",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "What is the day made for according to 78:11?",
+   "options": [
+    "Seeking a livelihood",
+    "Sleeping only",
+    "Solitude only",
+    "Travelling only"
+   ],
+   "answer": 0,
+   "info": "The verse describes daytime as a time for earning a living.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 78:11",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/78",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_teaching_pen",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "Which means of teaching is named in 96:4?",
+   "options": [
+    "The pen",
+    "The scales",
+    "The compass",
+    "The key"
+   ],
+   "answer": 0,
+   "info": "The verse mentions teaching through the pen.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 96:4",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/96",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_clear_speech",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "What ability did Allah teach humans in 55:3–4?",
+   "options": [
+    "Clear expression",
+    "Knowing all the unseen",
+    "Never making mistakes",
+    "Predicting every event"
+   ],
+   "answer": 0,
+   "info": "After human creation, these verses mention the gift of clear speech.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 55:3, 55:4",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/55",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_cattle_milk",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "Which drink from livestock is described in 16:66?",
+   "options": [
+    "Pure milk",
+    "Grape juice",
+    "Olive oil",
+    "Spring water"
+   ],
+   "answer": 0,
+   "info": "The verse draws attention to pure milk obtained from livestock.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:66",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_bee_drink",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "Which creature produces the drink associated with healing in 16:68–69?",
+   "options": [
+    "The bee",
+    "The ant",
+    "The butterfly",
+    "The locust"
+   ],
+   "answer": 0,
+   "info": "The passage concerns bees and their honey, noting its benefit for people.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:68, 16:69",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_sea_ornaments",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "Besides fresh meat, what do people take from the sea in 16:14?",
+   "options": [
+    "Ornaments to wear",
+    "Grain for sowing",
+    "Timber for houses",
+    "Wool for clothing"
+   ],
+   "answer": 0,
+   "info": "The verse names wearable ornaments among the sea's benefits.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:14",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_stars_navigation",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "What use of the stars is mentioned in 16:16?",
+   "options": [
+    "Finding one's way",
+    "Setting prices",
+    "Choosing rulers",
+    "Determining family ties"
+   ],
+   "answer": 0,
+   "info": "The verse mentions the stars as guides for finding one's way.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:16",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_small_good",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "What does 99:7 say about even the smallest good deed?",
+   "options": [
+    "A person will see it too",
+    "It will certainly be forgotten",
+    "It counts only with witnesses",
+    "It counts only for the wealthy"
+   ],
+   "answer": 0,
+   "info": "The verse stresses that even a very small good deed will not go unnoticed.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 99:7",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/99",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_soul_purification",
+   "cat": "quran",
+   "difficulty": 1,
+   "q": "Who is called successful in 91:9, following the mention of the soul?",
+   "options": [
+    "The one who purifies it",
+    "The one who only praises himself",
+    "The one who hides his mistakes",
+    "The one who compares his wealth"
+   ],
+   "answer": 0,
+   "info": "This passage connects success with purifying one's own soul.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 91:7, 91:8, 91:9",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/91",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_hope_in_mercy",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "What does 39:53 tell those who have sinned not to despair of?",
+   "options": [
+    "Allah's mercy",
+    "Their own faultlessness",
+    "Wealth",
+    "Fame among people"
+   ],
+   "answer": 0,
+   "info": "The verse calls on those who have sinned not to lose hope in Allah's mercy.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 39:53",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/39",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_hearts_remembrance",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "In what do hearts find tranquillity according to 13:28?",
+   "options": [
+    "In remembering Allah",
+    "In accumulating fame",
+    "In comparing possessions",
+    "In everyone's approval"
+   ],
+   "answer": 0,
+   "info": "The verse connects tranquillity in believing hearts with remembering Allah.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 13:28",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/13",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_sincere_repentance",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "What kind of repentance does 66:8 call for?",
+   "options": [
+    "Sincere repentance",
+    "Repentance for show",
+    "Repentance in words only",
+    "Repentance for public approval"
+   ],
+   "answer": 0,
+   "info": "The verse calls believers to turn to Allah in sincere repentance.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 66:8",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/66",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_idle_talk",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "What do the believers described in 23:3 turn away from?",
+   "options": [
+    "Idle talk",
+    "Helpful advice",
+    "Greetings",
+    "Requests for help"
+   ],
+   "answer": 0,
+   "info": "The verse names avoiding empty, useless talk among believers' qualities.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 23:3",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/23",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_spending_balance",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "How do the people praised in 25:67 spend?",
+   "options": [
+    "Moderately, without waste or stinginess",
+    "Always spending everything at once",
+    "Always keeping everything",
+    "Spending only for praise"
+   ],
+   "answer": 0,
+   "info": "The verse describes a balanced course between wastefulness and stinginess.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 25:67",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/25",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_words_deeds",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "What inconsistency does 61:2 rebuke?",
+   "options": [
+    "Saying what one does not do",
+    "Speaking different languages",
+    "Changing jobs after training",
+    "Asking a question after reading"
+   ],
+   "answer": 0,
+   "info": "The verse draws attention to a mismatch between one's words and actions.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 61:2",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/61",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_both_neighbours",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Which neighbours does 4:36 explicitly include in its call for kindness?",
+   "options": [
+    "Related and unrelated neighbours",
+    "Only wealthy neighbours",
+    "Only neighbours of one's age",
+    "Only influential neighbours"
+   ],
+   "answer": 0,
+   "info": "The verse includes both neighbours who are relatives and those who are not.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:36",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_ask_scripture_people",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "Whom does 16:43 tell those who do not know to ask?",
+   "options": [
+    "People with knowledge of Scripture",
+    "The wealthiest merchant",
+    "The most famous poet",
+    "The first passer-by"
+   ],
+   "answer": 0,
+   "info": "In the context of earlier messengers, the verse directs questions to people who know Scripture.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:43",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_measured_recitation",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "How does 73:4 instruct one to recite the Quran?",
+   "options": [
+    "In a measured manner",
+    "As fast as possible",
+    "Skipping words",
+    "Only the last words of verses"
+   ],
+   "answer": 0,
+   "info": "The verse instructs a measured recitation of the Quran.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 73:4",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/73",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_invitation_wisdom",
+   "cat": "fiqh",
+   "difficulty": 1,
+   "q": "How does 16:125 teach one to invite to the Lord's way?",
+   "options": [
+    "With wisdom and good counsel",
+    "With insults",
+    "With ridicule",
+    "With pressure for the sake of argument"
+   ],
+   "answer": 0,
+   "info": "The verse combines wisdom and good counsel with the best manner of discussion.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:125",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_hud_aad",
+   "cat": "prophets",
+   "difficulty": 1,
+   "q": "Which prophet was sent to Aad according to 11:50?",
+   "options": [
+    "Hud",
+    "Salih",
+    "Shuayb",
+    "Yusuf"
+   ],
+   "answer": 0,
+   "info": "In this verse Hud calls the people of Aad to worship Allah.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 11:50",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_salih_thamud",
+   "cat": "prophets",
+   "difficulty": 1,
+   "q": "Which prophet addresses Thamud in 11:61?",
+   "options": [
+    "Salih",
+    "Hud",
+    "Shuayb",
+    "Nuh"
+   ],
+   "answer": 0,
+   "info": "The verse names Salih as the messenger to Thamud and relates his call to worship Allah.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 11:61",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_shuayb_madyan",
+   "cat": "prophets",
+   "difficulty": 1,
+   "q": "Which prophet was sent to Madyan according to 11:84?",
+   "options": [
+    "Shuayb",
+    "Salih",
+    "Hud",
+    "Idris"
+   ],
+   "answer": 0,
+   "info": "The verse names Shuayb and relates his address to the people of Madyan.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 11:84",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_ibrahim_fire",
+   "cat": "prophets",
+   "difficulty": 1,
+   "q": "For which prophet is the fire commanded to be cool and safe in 21:69?",
+   "options": [
+    "Ibrahim",
+    "Musa",
+    "Yusuf",
+    "Nuh"
+   ],
+   "answer": 0,
+   "info": "The verse describes Allah's command that the fire not harm Ibrahim.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 21:69",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/21",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l1x_dawud_iron",
+   "cat": "prophets",
+   "difficulty": 1,
+   "q": "For which prophet was iron softened according to 34:10?",
+   "options": [
+    "Dawud",
+    "Sulayman",
+    "Musa",
+    "Yahya"
+   ],
+   "answer": 0,
+   "info": "Among the favours given to Dawud, the verse mentions the softening of iron.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 34:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/34",
+    "translationVersion": 1
+   }
+  },
+  {
    "id": "l2_covenant",
    "cat": "prophets",
    "difficulty": 2,
@@ -3161,6 +3701,2206 @@
    }
   },
   {
+   "id": "l2x_truth_not_mixed",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Which two ways of treating truth are forbidden specifically in 2:42?",
+   "options": [
+    "Mixing it with falsehood and knowingly concealing it",
+    "Passing on unverified news and spreading suspicions",
+    "Distorting testimony and refusing to record it",
+    "Swearing for gain and breaking a concluded covenant"
+   ],
+   "answer": 0,
+   "info": "The verse forbids both distortion and deliberate concealment of truth; including one truthful detail is not enough.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:42",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_advice_and_self",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "What contradiction between advice and conduct is condemned in 2:44?",
+   "options": [
+    "Urging others to do good while forgetting oneself",
+    "Concealing knowledge while awaiting payment for explaining it",
+    "Demanding justice but refusing to testify",
+    "Speaking of generosity while reproaching a gift's recipient"
+   ],
+   "answer": 0,
+   "info": "The rebuke concerns the gap between advising others and one's own conduct despite knowledge of Scripture.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:44",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_prayer_humility",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "For whom is prayer not burdensome in 2:45?",
+   "options": [
+    "The humble",
+    "Travellers",
+    "Property owners",
+    "Students of history"
+   ],
+   "answer": 0,
+   "info": "The verse relates one's attitude to prayer to humility, rather than social status.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:45",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_covenant_speech",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "What requirement for speech appears in the covenant in 2:83?",
+   "options": [
+    "Speak kindly to people",
+    "Lower one's voice when walking",
+    "Verify every report",
+    "Record debt obligations"
+   ],
+   "answer": 0,
+   "info": "Kind speech toward people is listed alongside worship and care for those in need.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:83",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_good_sent_ahead",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What does 2:110 say about good a person sends ahead?",
+   "options": [
+    "They will find it with Allah",
+    "It will necessarily return as equal wealth",
+    "It will necessarily bring public fame",
+    "It will rule out every later trial"
+   ],
+   "answer": 0,
+   "info": "Good deeds are not lost: the verse connects them with finding their result with Allah, who sees actions.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:110",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_remember_and_thank",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which two calls are combined in 2:152?",
+   "options": [
+    "Remember Me and be grateful to Me",
+    "Seek forgiveness and reconcile people",
+    "Consult one another and fulfill commitments",
+    "Listen to recitation and remain silent"
+   ],
+   "answer": 0,
+   "info": "Remembrance and gratitude are joined together, followed by a warning against ingratitude.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:152",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_forms_of_trial",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which set of trials is explicitly listed in 2:155?",
+   "options": [
+    "Fear, hunger, and loss of wealth, lives and fruits",
+    "Wealth, children and public honor",
+    "Illness, travel and family disputes",
+    "Sleeplessness, hard work and delayed trade"
+   ],
+   "answer": 0,
+   "info": "The verse lists several kinds of loss and gives good news to the patient; trials are not limited to one part of life.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:155",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_calamity_return",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What conviction underlies the patient response to calamity in 2:156?",
+   "options": [
+    "We belong to Allah and return to Him",
+    "Every effort necessarily brings earthly wealth",
+    "The patient will never face another loss",
+    "The size of a loss determines a person's worth"
+   ],
+   "answer": 0,
+   "info": "The response affirms belonging to Allah and returning to Him, placing calamity within life's wider meaning.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:156",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_food_and_steps",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "What instruction accompanies lawful, wholesome food in 2:168?",
+   "options": [
+    "Do not follow Satan's footsteps",
+    "Give the harvest's due on harvest day",
+    "Record every trade transaction",
+    "Take provisions for the coming pilgrimage"
+   ],
+   "answer": 0,
+   "info": "Permission to eat wholesome food is paired with a warning against Satan, described as an open enemy.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:168",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_ancestors_reasoning",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What argument does 2:170 give against blindly following ancestors?",
+   "options": [
+    "The ancestors may have lacked understanding and guidance",
+    "Different peoples have different customs",
+    "A new generation is responsible for its own property",
+    "Kinship cannot replace testimony in a dispute"
+   ],
+   "answer": 0,
+   "info": "An inherited custom is challenged as sufficient justification when the ancestors lacked understanding and right guidance.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:170",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_unjust_gain_judges",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Which way of wrongfully taking property is singled out in 2:188?",
+   "options": [
+    "Seeking it through judges while knowing the claim is wrongful",
+    "Reducing a product's weight when settling with a buyer",
+    "Replacing an orphan's property with something less valuable",
+    "Demanding an increase in a debt when extending its term"
+   ],
+   "answer": 0,
+   "info": "The prohibition includes exploiting judicial authority to obtain others' property wrongfully; a formal process does not justify deceit.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:188",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_spending_and_ruin",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Which three instructions are brought together in 2:195?",
+   "options": [
+    "Spend in Allah's cause, do not bring about your own ruin, and do good",
+    "Give from good things, avoid reminders of generosity, and avoid hurt",
+    "Give relatives their due, help the traveller, and avoid waste",
+    "Give secretly, seek Allah's pleasure, and expect no thanks"
+   ],
+   "answer": 0,
+   "info": "Spending is joined with a warning against self-destruction and a call to do good; the verse does not encourage recklessness.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:195",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_best_provision",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "What is called the best provision in the pilgrimage teaching of 2:197?",
+   "options": [
+    "God-consciousness",
+    "Knowledge of the roads",
+    "A supply of water",
+    "Funds for the return journey"
+   ],
+   "answer": 0,
+   "info": "After instructing people to take provisions, the verse identifies God-consciousness as the best provision; preparation is more than material.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:197",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_good_both_worlds",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which requests are joined in the prayer in 2:201?",
+   "options": [
+    "Good in both worlds and protection from the Fire",
+    "Knowledge, eloquence and a reliable helper",
+    "Mercy for parents and well-being for descendants",
+    "Acceptance of good deeds and firmness of feet"
+   ],
+   "answer": 0,
+   "info": "The prayer joins earthly good, good in the Hereafter and protection from punishment; it is not limited to material success.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:201",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_enter_wholly",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What appeal is addressed to believers in 2:208?",
+   "options": [
+    "Enter Islam fully and do not follow Satan's footsteps",
+    "Verify reports and do not act rashly",
+    "Hold together and do not become divided",
+    "Fulfil agreements and do not break oaths"
+   ],
+   "answer": 0,
+   "info": "The call to wholehearted commitment accompanies a warning against Satan's footsteps, not permission to select only what is convenient.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:208",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_dislike_and_good",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What contrast does 2:216 draw between a person's feelings and a matter's outcome?",
+   "options": [
+    "What is disliked may be good, while what is loved may be bad",
+    "An easy task may need time, while a difficult one may need a quick decision",
+    "The same action may be performed publicly or privately",
+    "A great reward may follow small but consistent efforts"
+   ],
+   "answer": 0,
+   "info": "The verse distinguishes personal feelings from actual benefit, ending with Allah's knowledge and the limits of human knowledge.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:216",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_faith_no_compulsion",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What explanation accompanies the absence of compulsion in religion in 2:256?",
+   "options": [
+    "Right guidance has become clearly distinct from error",
+    "Actions are assessed with regard to human ability",
+    "Messengers came speaking the language of their people",
+    "Each person bears the burden of their own action"
+   ],
+   "answer": 0,
+   "info": "The absence of compulsion is linked to clear distinction between guidance and error, not to treating every action as equivalent.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:256",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_quality_of_giving",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "What mistake in giving does 2:267 criticize?",
+   "options": [
+    "Offering inferior goods one would accept only reluctantly",
+    "Openly giving useful goods to someone in need",
+    "Giving good produce of the earth",
+    "Sharing part of honestly earned income"
+   ],
+   "answer": 0,
+   "info": "The quality of a gift is measured against what the giver would accept; another person's need does not justify disregard.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:267",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_poverty_threat",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which contrast about spending appears in 2:268?",
+   "options": [
+    "Satan's threat of poverty versus Allah's promise of forgiveness and bounty",
+    "Fear of people's criticism versus a promise of public honour",
+    "The threat of losing authority versus a promise of many supporters",
+    "Fear of a long journey versus a promise of a safe return"
+   ],
+   "answer": 0,
+   "info": "In the context of giving, the verse contrasts an induced fear of poverty with Allah's promise of forgiveness and bounty.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:268",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_hidden_charity",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "How does 2:271 compare public and concealed charity?",
+   "options": [
+    "Public charity is good; concealed giving to the poor is better for the giver",
+    "Public giving is always better than concealed aid to the poor",
+    "Concealed aid is good only if a witness is present",
+    "Public aid completely deprives the giver of reward"
+   ],
+   "answer": 0,
+   "info": "Public giving is not condemned, while discreet assistance to the poor is singled out as better for the giver.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:271",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_restrained_needy",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Why might the needy described in 2:273 be mistaken for wealthy people?",
+   "options": [
+    "They are restrained and do not beg insistently",
+    "They own land but have no cash",
+    "They necessarily refuse every form of help",
+    "They trade and are rarely at home"
+   ],
+   "answer": 0,
+   "info": "Outward restraint does not mean there is no need; the verse draws attention to those who do not insistently ask.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:273",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_love_and_following",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What response to a claim of loving Allah is given in 3:31?",
+   "options": [
+    "Follow the Messenger",
+    "Give only in secret",
+    "Leave trade for seclusion",
+    "Travel continuously in search of knowledge"
+   ],
+   "answer": 0,
+   "info": "Love is linked to following the Messenger, followed by Allah's love and forgiveness of sins.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:31",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_covenant_and_piety",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Which qualities are joined in 3:76?",
+   "options": [
+    "Keeping one's commitment and being God-conscious",
+    "Generosity to travellers and lowering one's voice",
+    "Night worship and reconciling neighbors",
+    "Accurate scales and guarding one's gaze"
+   ],
+   "answer": 0,
+   "info": "The verse highlights fulfilling a commitment together with God-consciousness, rather than outward signs of status.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:76",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_unity_rope",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "How is the collective appeal expressed in 3:103?",
+   "options": [
+    "Hold firmly together to Allah's rope and do not become divided",
+    "Reconcile those in dispute and restore justice",
+    "Consult before deciding and then place trust in Allah",
+    "Cooperate in righteousness and do not assist hostility"
+   ],
+   "answer": 0,
+   "info": "The call to hold together is accompanied by a reminder that former enemies became brothers through Allah's favor.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:103",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_community_call",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Which three actions describe the community in 3:104?",
+   "options": [
+    "Call to good, enjoin right and forbid wrong",
+    "Establish prayer, give zakat and perform pilgrimage",
+    "Give thanks, remember parents and help travellers",
+    "Listen to recitation, remain silent and reflect"
+   ],
+   "answer": 0,
+   "info": "The teaching combines a positive call with resisting wrong; the work is not reduced to condemnation alone.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:104",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_hasten_forgiveness",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What are people urged to hasten toward in 3:133?",
+   "options": [
+    "Their Lord's forgiveness and Paradise",
+    "Completing a journey and returning home",
+    "Acquiring knowledge and joining consultation",
+    "Preparing provisions and choosing companions"
+   ],
+   "answer": 0,
+   "info": "The call to hasten concerns forgiveness and Paradise prepared for the God-conscious, rather than earthly rivalry.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:133",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_sin_response",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Which sequence describes the response to sin in 3:135?",
+   "options": [
+    "Remember Allah, seek forgiveness, and not knowingly persist",
+    "Reconcile with people, give charity, and keep the good deed private",
+    "Endure a trial, give thanks, and fulfil a promise",
+    "Listen to advice, verify a report, and restrain anger"
+   ],
+   "answer": 0,
+   "info": "Remembrance, seeking forgiveness and not knowingly persisting are joined together; the response is more than verbal regret.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:135",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_do_not_lose_heart",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "With what condition does 3:139 join encouragement not to lose heart or grieve?",
+   "options": [
+    "If you are believers",
+    "If you are greater in number",
+    "If you have suffered no losses",
+    "If you have achieved earthly victory"
+   ],
+   "answer": 0,
+   "info": "The encouragement is tied to faith and does not promise that a believer will never face hardship.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:139",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_steadfast_companions",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which three negatives describe the steadfast people in 3:146?",
+   "options": [
+    "They did not lose heart, weaken, or submit",
+    "They did not quarrel, break promises, or conceal the truth",
+    "They did not squander, withhold, or reproach",
+    "They did not raise their voices, backbite, or harbour suspicions"
+   ],
+   "answer": 0,
+   "info": "Their steadfastness is described as maintaining resolve through what befell them in Allah's cause.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:146",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_help_and_trust",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What reason for placing trust in Allah is given in 3:160?",
+   "options": [
+    "With Allah's help none can overcome you; without Him no helper can be found",
+    "After consultation one should decide and place trust in Allah",
+    "The God-fearing will receive a way out and unexpected provision",
+    "One who is patient and forgives demonstrates resolve"
+   ],
+   "answer": 0,
+   "info": "The verse contrasts Allah's help with having no helper apart from Him, directing believers' trust toward Allah.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:160",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_hoarding_collar",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What image conveys the consequence of miserliness in 3:180?",
+   "options": [
+    "What was withheld becomes a burden around the neck",
+    "What was withheld becomes scattered dust",
+    "What was withheld is likened to foam on water",
+    "What was withheld becomes a garden on high ground"
+   ],
+   "answer": 0,
+   "info": "The verse rejects the idea that miserliness benefits its owner; the burden around the neck illustrates the opposite outcome.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:180",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_real_success",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What outcome is explicitly called success after the reminder of death in 3:185?",
+   "options": [
+    "Being kept away from the Fire and admitted into Paradise",
+    "Purifying one's soul",
+    "Being protected from one's own greed",
+    "Coming to judgment with a sound heart"
+   ],
+   "answer": 0,
+   "info": "After reminding people of death, the verse defines final success through salvation and Paradise, describing worldly enjoyment as deceptive.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:185",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_remembrance_reflection",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which two activities are combined in the description of people in 3:191?",
+   "options": [
+    "Remembering Allah in different postures and reflecting on the creation of the heavens and earth",
+    "Worshipping at night and spending from what has been provided",
+    "Listening to what is said and following the best of it",
+    "Reciting Scripture and teaching wisdom to others"
+   ],
+   "answer": 0,
+   "info": "Remembering while standing, sitting and lying down is joined with reflection on the heavens and earth and recognition of creation's purpose.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:191",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_patient_perseverance",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which instructions close the surah in 3:200?",
+   "options": [
+    "Patience, perseverance, readiness and God-consciousness",
+    "Prayer, zakat, fasting and pilgrimage",
+    "Remembrance, listening, silence and reflection",
+    "Forgiveness, hospitality, trade and travel"
+   ],
+   "answer": 0,
+   "info": "The closing call joins patience with active perseverance and God-consciousness rather than inactivity.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 3:200",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_not_covet_shares",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "What action does 4:32 direct people towards after forbidding desire for others' advantages?",
+   "options": [
+    "Asking Allah for His bounty",
+    "Remembering the blessings given to one's people",
+    "Consulting about distributing shared property",
+    "Giving a needy person the best of what one loves"
+   ],
+   "answer": 0,
+   "info": "The verse mentions men's and women's share in what they earn and directs requests toward Allah's bounty.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:32",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_equal_reward",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "How does the list of believing men and women in 33:35 conclude?",
+   "options": [
+    "With a promise of forgiveness and a great reward",
+    "With a promise of a double share of mercy and a light to walk by",
+    "With a promise of a way out and unexpected provision",
+    "With a promise of a good life and reward for the best of deeds"
+   ],
+   "answer": 0,
+   "info": "The verse repeatedly names men and women with qualities of faith and devotion, ending with a shared promise.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 33:35",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/33",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_conceal_bounty",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Which three behaviours are listed together in 4:37?",
+   "options": [
+    "Being stingy, urging stinginess, and concealing bestowed bounty",
+    "Squandering, reminding recipients of gifts, and hurting them",
+    "Taking entrusted property, hiding testimony, and breaking agreements",
+    "Taking extra when weighing, cheating in measure, and delaying payment"
+   ],
+   "answer": 0,
+   "info": "The rebuke concerns not only personal miserliness but encouraging it in others and concealing what Allah has granted.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:37",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_giving_for_show",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Which corrupt motive for spending is singled out in 4:38?",
+   "options": [
+    "Making a display before people",
+    "Obtaining a greater benefit in return",
+    "Reminding the recipient of their dependence",
+    "Disposing only of the unusable part of one's property"
+   ],
+   "answer": 0,
+   "info": "The verse describes spending for public display alongside disbelief in Allah and the Last Day; the outward act of spending is not the only concern.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:38",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_effective_admonition",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What kind of address is instructed at the end of 4:63?",
+   "options": [
+    "Admonish them and speak words that reach their souls",
+    "Require every future conversation to be recorded",
+    "Address them only through a relative as mediator",
+    "Delay all guidance until their situation changes"
+   ],
+   "answer": 0,
+   "info": "After mentioning Allah's knowledge of their hearts, the verse instructs meaningful admonition and effective speech.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:63",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_intercession_share",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "What link between intercession and the intercessor's portion is expressed in 4:85?",
+   "options": [
+    "Good intercession brings a share of good, while bad intercession brings a share of its burden",
+    "A good deed receives tenfold reward, while an evil deed receives an equivalent recompense",
+    "A person will see even the smallest good and evil",
+    "Good returns to one's soul, while evil turns against it"
+   ],
+   "answer": 0,
+   "info": "The verse distinguishes good and bad assistance and assigns a corresponding share to the participant, so participation is not neutral.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:85",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_defending_treachery",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "How does 4:107 describe those whose wrongdoing must not be defended?",
+   "options": [
+    "Those who betray themselves",
+    "Those who knowingly conceal testimony",
+    "Those who cheat when weighing",
+    "Those who squander orphans' property"
+   ],
+   "answer": 0,
+   "info": "The warning concerns defending treachery, not helping an innocent person or restoring justice.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:107",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_wrong_then_forgiveness",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Which two attributes of Allah conclude 4:110 about seeking forgiveness after wrongdoing?",
+   "options": [
+    "Forgiving, Merciful",
+    "Knowing, Wise",
+    "Hearing, Seeing",
+    "Mighty, Wise"
+   ],
+   "answer": 0,
+   "info": "After mentioning wrongdoing and seeking forgiveness, the verse describes Allah as Forgiving and Merciful.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:110",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_blame_innocent",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "What does blaming an innocent person add to one's guilt in 4:112?",
+   "options": [
+    "Slander and an evident sin",
+    "Miserliness and ingratitude",
+    "Hypocrisy and spending for display",
+    "Arrogance and extravagance"
+   ],
+   "answer": 0,
+   "info": "Shifting blame does not remove the original responsibility and itself becomes a further wrong against the innocent.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:112",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_good_private_talk",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Which private conversations are singled out as good in 4:114?",
+   "options": [
+    "Charity, good conduct or reconciliation",
+    "Fasting, pilgrimage or prayer",
+    "Testimony, agreements or keeping trusts",
+    "Knowledge, patience or gratitude"
+   ],
+   "answer": 0,
+   "info": "Both subject and intention matter: reward is tied to seeking Allah's pleasure, not merely to keeping a conversation private.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:114",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_reconciliation_good",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "What tendency of the soul is mentioned beside marital reconciliation in 4:128?",
+   "options": [
+    "Miserliness",
+    "Haste",
+    "Forgetfulness",
+    "Argumentativeness"
+   ],
+   "answer": 0,
+   "info": "Beside the good of reconciliation, the verse mentions the souls' tendency to miserliness and calls for good conduct and God-consciousness.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:128",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_wronged_speech_exception",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "For whom does 4:148 state an exception concerning public evil speech?",
+   "options": [
+    "Someone who has been wronged",
+    "Someone entrusted with property",
+    "Someone who possesses knowledge",
+    "Someone fulfilling a promise"
+   ],
+   "answer": 0,
+   "info": "The exception is connected to suffering injustice, not to social rank or a wish to insult.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:148",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_public_hidden_pardon",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Which actions precede the reminder of Allah's pardon in 4:149?",
+   "options": [
+    "Open good, hidden good and pardoning wrong",
+    "Prayer, zakat and keeping commitments",
+    "Patience, gratitude and night worship",
+    "Reconciliation, just testimony and consultation"
+   ],
+   "answer": 0,
+   "info": "Good may be open or concealed, and pardoning a wrong is mentioned alongside it.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:149",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_compete_good",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which two ideas accompany the call to excel in good deeds in 5:48?",
+   "options": [
+    "Being tested through what was given and everyone's return to Allah",
+    "Patience in hardship and gratitude in abundance",
+    "Accurate weighing and just speech",
+    "Recording debts and giving testimony"
+   ],
+   "answer": 0,
+   "info": "Differences are described in relation to a test through what was given; people are called to excel in good, with final judgment belonging to Allah.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:48",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_abundance_not_good",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which pair is contrasted in 5:100 with a remark about quantity?",
+   "options": [
+    "The bad and the good, despite abundance of the bad",
+    "Hidden and public charity, despite an equal amount",
+    "A wealthy and poor witness, despite different possessions",
+    "Patience and gratitude, despite different trials"
+   ],
+   "answer": 0,
+   "info": "The verse warns against being impressed by abundance: quantity does not change moral quality.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:100",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_lasting_abode",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which description of people is used in 6:32 when comparing the final abode with worldly life?",
+   "options": [
+    "The God-conscious",
+    "The patient",
+    "The grateful",
+    "The truthful"
+   ],
+   "answer": 0,
+   "info": "The contrast between worldly play and the Hereafter is tied to God-consciousness rather than earthly advantages.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:32",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_repent_and_reform",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Which actions after wrongdoing are linked with forgiveness in 6:54?",
+   "options": [
+    "Repentance and reform",
+    "Prayer and giving",
+    "Patience and gratitude",
+    "Remembrance and reliance"
+   ],
+   "answer": 0,
+   "info": "Mercy is mentioned together with repentance and reformed conduct, not just acknowledging a mistake.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:54",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_leave_mocking_talk",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Until when should one withdraw from improper talk about the signs in 6:68?",
+   "options": [
+    "Until the speakers turn to another subject",
+    "Until the speakers apologize",
+    "Until the entire gathering ends",
+    "Until the speakers withdraw their words"
+   ],
+   "answer": 0,
+   "info": "The limit concerns the conversation's content; if one forgets, one should not remain with the wrongdoers after remembering.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:68",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_visible_hidden_sin",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Which two kinds of sin are covered by the instruction in 6:120?",
+   "options": [
+    "Outward and hidden",
+    "Intentional and unintentional",
+    "Minor and major",
+    "Against Allah's rights and against people's rights"
+   ],
+   "answer": 0,
+   "info": "An action's secrecy does not remove moral responsibility; the instruction covers both kinds of sin.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:120",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_justice_relatives",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Which pair of requirements appears together in 6:152?",
+   "options": [
+    "Fair measure and just speech even about a relative",
+    "Recording a debt and calling two witnesses",
+    "Giving a needy debtor time and forgiving the debt",
+    "Family mediators and reconciliation between spouses"
+   ],
+   "answer": 0,
+   "info": "Kinship does not remove the requirement of just speech, listed among interconnected moral duties.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:152",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_one_path_other_paths",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What hoped-for quality closes 6:153 after the command to follow the straight path?",
+   "options": [
+    "God-consciousness",
+    "Gratitude",
+    "Patience",
+    "Humility"
+   ],
+   "answer": 0,
+   "info": "The verse commands following the straight path and avoiding paths that lead away from it; its closing appeal concerns God-consciousness.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:153",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_no_burden_transfer",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What principle of personal responsibility is expressed in 6:164?",
+   "options": [
+    "No soul bears another's burden",
+    "No one knows what they will earn tomorrow",
+    "A person has only what they strive for",
+    "Every soul will taste death"
+   ],
+   "answer": 0,
+   "info": "Personal responsibility cannot be transferred at will; the verse connects it with returning to the Lord.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:164",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_garment_piety",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What image of the inward surpassing the outward appears in 7:26?",
+   "options": [
+    "The garment of God-consciousness",
+    "The rope of common unity",
+    "Provisions for a journey",
+    "A lamp within glass"
+   ],
+   "answer": 0,
+   "info": "After bodily covering and adornment, the verse highlights God-consciousness, adding an inward dimension to the outward one.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 7:26",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/7",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_speak_without_knowledge",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Which prohibition closes the list in 7:33?",
+   "options": [
+    "Speaking about Allah without knowledge",
+    "Following Satan",
+    "Concealing truthful testimony",
+    "Ridiculing other people"
+   ],
+   "answer": 0,
+   "info": "The prohibition concerns attributing what is unknown to Allah, not seeking knowledge or honestly admitting uncertainty.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 7:33",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/7",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_fear_and_hope",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which two attitudes are joined in calling upon Allah in 7:56?",
+   "options": [
+    "Fear and hope",
+    "Patience and gratitude",
+    "Humility and generosity",
+    "Gentleness and resolve"
+   ],
+   "answer": 0,
+   "info": "After forbidding corruption following reform, the verse joins fear with hope; neither despair nor heedlessness is presented as the goal.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 7:56",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/7",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_pardon_right_ignore",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which three instructions appear in 7:199?",
+   "options": [
+    "Show forbearance, enjoin good and turn away from the ignorant",
+    "Give zakat, perform pilgrimage and fast",
+    "Weigh accurately, record debts and take collateral",
+    "Remember while standing, sitting and lying down"
+   ],
+   "answer": 0,
+   "info": "The instruction combines forbearance, a positive moral call and refusing to be drawn into ignorant behavior.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 7:199",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/7",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_temptation_remembrance",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What helps the God-conscious regain clarity when tempted in 7:201?",
+   "options": [
+    "Remembrance, followed by renewed clarity",
+    "Giving, followed by increased possessions",
+    "Travel, followed by knowledge",
+    "Consultation, followed by a joint decision"
+   ],
+   "answer": 0,
+   "info": "The sequence is temptation, remembering Allah and restored clarity; God-consciousness is not portrayed as absence of trials.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 7:201",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/7",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_recitation_increases_faith",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which sequence of believers' qualities appears in 8:2?",
+   "options": [
+    "Hearts trembling at remembrance, faith increasing at the signs, reliance",
+    "Joy at remembrance, knowledge increasing at the signs, patience",
+    "Humility at remembrance, gratitude increasing at the signs, generosity",
+    "Repentance at remembrance, hope increasing at the signs, justice"
+   ],
+   "answer": 0,
+   "info": "The verse joins hearts trembling at remembrance, faith increasing through recitation and trust in the Lord.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 8:2",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/8",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_knowing_betrayal",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "What does 8:27 forbid alongside betraying Allah and the Messenger?",
+   "options": [
+    "Knowingly betraying entrusted responsibilities",
+    "Knowingly concealing testimony",
+    "Knowingly using inaccurate scales",
+    "Knowingly using offensive nicknames"
+   ],
+   "answer": 0,
+   "info": "What is entrusted does not become personal property without duties; the prohibition emphasizes knowing betrayal.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 8:27",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/8",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_wealth_children_trial",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which two earthly blessings are explicitly called a test in 8:28?",
+   "options": [
+    "Wealth and children",
+    "Health and free time",
+    "Hearing and sight",
+    "Strength and knowledge"
+   ],
+   "answer": 0,
+   "info": "Beloved worldly blessings can be a test; the verse distinguishes them from the great reward with Allah.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 8:28",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/8",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_piety_discernment",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which gifts are linked to God-consciousness in 8:29?",
+   "options": [
+    "Discernment, expiation of sins and forgiveness",
+    "Discernment, reconciliation between people and agreement",
+    "Wisdom, patience and gratitude",
+    "Tranquillity, reliance and steadfastness"
+   ],
+   "answer": 0,
+   "info": "Alongside discernment, the verse mentions removal of misdeeds and forgiveness; it does not promise omniscience.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 8:29",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/8",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_believers_mutual_support",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What mutual relationship of believing men and women is stated in 9:71?",
+   "options": [
+    "Being allies and supporters of one another",
+    "Acting as witnesses for one another",
+    "Acting as mediators for one another",
+    "Inheriting from one another"
+   ],
+   "answer": 0,
+   "info": "Mutual support is expressed through shared duties: good conduct, resisting wrong, prayer, zakat and obedience.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 9:71",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/9",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_company_truthful",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "With whom should people be after the call to God-consciousness in 9:119?",
+   "options": [
+    "The truthful",
+    "The repentant",
+    "The patient",
+    "The humble"
+   ],
+   "answer": 0,
+   "info": "Truthfulness is the criterion for chosen company; status and numbers are not named as substitutes.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 9:119",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/9",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_healing_hearts",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which four descriptions of what came from the Lord are listed in 10:57?",
+   "options": [
+    "Admonition, healing for hearts, guidance and mercy",
+    "Admonition, law, justice and discernment",
+    "Light, proof, wisdom and reminder",
+    "Healing for hearts, patience, knowledge and gratitude"
+   ],
+   "answer": 0,
+   "info": "Alongside healing the inward condition, the verse names admonition, guidance and mercy for believers.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 10:57",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/10",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_joy_bounty_mercy",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What should people rejoice in as better than what they accumulate in 10:58?",
+   "options": [
+    "Allah's bounty and mercy",
+    "Justice and accurate measure",
+    "Patience and keeping commitments",
+    "Knowledge and eloquence"
+   ],
+   "answer": 0,
+   "info": "The verse moves the measure of joy from accumulated possessions to Allah's bounty and mercy.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 10:58",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/10",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_good_erases_bad",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which statement about good deeds follows the teaching on prayer in 11:114?",
+   "options": [
+    "Good deeds erase bad ones",
+    "No one carries another's burden",
+    "Good is returned tenfold",
+    "Words should be confirmed by deeds"
+   ],
+   "answer": 0,
+   "info": "After instruction about prayer, the verse recalls the cleansing role of good deeds; this is not permission to persist knowingly in sin.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 11:114",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_patience_for_lord",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which acts appear alongside patience for the Lord in 13:22?",
+   "options": [
+    "Prayer, giving secretly and openly, repelling evil with good",
+    "Prayer, fasting, pilgrimage",
+    "Fair measure, just testimony, recording debts",
+    "Remembrance, seeking knowledge, night vigil"
+   ],
+   "answer": 0,
+   "info": "Patience is listed with prayer, giving and answering evil with good; its orientation is toward the Lord.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 13:22",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/13",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_gratitude_increase",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which pairing of promise and warning expresses 14:7?",
+   "options": [
+    "Increase for the grateful; severe punishment for the ungrateful",
+    "Discernment for the grateful; loss of guidance for the ungrateful",
+    "Tranquillity for the grateful; a constricted heart for the ungrateful",
+    "Compensation for the grateful; fruitless work for the ungrateful"
+   ],
+   "answer": 0,
+   "info": "The verse promises an increase for the grateful without assigning a specific amount, deadline or exclusively material form.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 14:7",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/14",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_wrongdoing_delay",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which image describes the Day until which wrongdoers are granted respite in 14:42?",
+   "options": [
+    "Eyes staring fixedly",
+    "Mountains scattered",
+    "The sky split apart",
+    "Graves overturned"
+   ],
+   "answer": 0,
+   "info": "Respite is not forgetfulness or approval; the verse explicitly rejects treating Allah as unaware of injustice.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 14:42",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/14",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_lower_wing_believers",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Toward whom should one lower one's wing in the figurative teaching of 15:88?",
+   "options": [
+    "The believers",
+    "Parents",
+    "A traveller in need",
+    "A close relative"
+   ],
+   "answer": 0,
+   "info": "The image of humble gentleness toward believers follows a warning against longing for others' worldly enjoyments.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 15:88",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/15",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_oath_guarantor",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "What reminder concludes 16:91 after the prohibition on breaking confirmed oaths?",
+   "options": [
+    "Allah knows the actions people perform",
+    "Allah loves the patient",
+    "Allah increases provision for the grateful",
+    "Allah does not impose beyond capacity"
+   ],
+   "answer": 0,
+   "info": "The verse names Allah as the guarantor of the commitment and closes by recalling His knowledge of actions.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:91",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_unravelled_yarn",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What image is used for turning oaths into a means of deception in 16:92?",
+   "options": [
+    "Unravelling yarn after spinning it firmly",
+    "A garden yielding a double harvest",
+    "A lamp inside glass",
+    "A ship moving over the sea"
+   ],
+   "answer": 0,
+   "info": "Undoing one's completed work illustrates the destructive inconsistency of deception after a firmly made commitment.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:92",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_perishes_remains",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What is contrasted in 16:96?",
+   "options": [
+    "What people have that passes away and what remains with Allah",
+    "Grain in its ear and grain outside its ear",
+    "A garden on high ground and a garden in a valley",
+    "Public charity and concealed charity"
+   ],
+   "answer": 0,
+   "info": "The contrast between passing and enduring things accompanies a promise to reward the patient according to the best of their deeds.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:96",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_faith_deeds_goodlife",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What second promise follows the good life for a righteous believer in 16:97?",
+   "options": [
+    "Reward according to the best of their deeds",
+    "Compensation ten times the amount",
+    "A seven-hundredfold increase for every act",
+    "Increased provision until the end of earthly life"
+   ],
+   "answer": 0,
+   "info": "After promising a good life to believing men and women who do good, the verse promises reward according to the best of their deeds.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 16:97",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_quran_upright_guidance",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What good news for righteous believers follows the most upright guidance in 17:9?",
+   "options": [
+    "They will have a great reward",
+    "They will have a near victory",
+    "Their hearts will have tranquillity",
+    "Their possessions will increase"
+   ],
+   "answer": 0,
+   "info": "The verse speaks of the Quran's most upright guidance and a great reward for believers who do righteous deeds.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:9",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_unable_give_kindword",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "In what situation does 17:28 specifically call for a gentle word?",
+   "options": [
+    "When awaiting the Lord's mercy and unable for now to help those in need",
+    "When recording a debt until an agreed date",
+    "When relatives dispute an inheritance",
+    "When mediators reconcile spouses"
+   ],
+   "answer": 0,
+   "info": "Being unable to give immediately does not remove the duty of gentle speech; words remain part of dignified treatment.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:28",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_faculties_accountable",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which three faculties follow the prohibition of pursuing what is unknown in 17:36?",
+   "options": [
+    "Hearing, sight and the heart",
+    "Speech, memory and imagination",
+    "Sight, speech and the strength of hands",
+    "Hearing, memory and the ability to count"
+   ],
+   "answer": 0,
+   "info": "Responsibility is linked to perception and inward understanding; the prohibition concerns following without knowledge.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:36",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_best_words_discord",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What risk explains the call to say what is best in 17:53?",
+   "options": [
+    "Satan sows discord between people",
+    "Satan threatens people with poverty",
+    "Haste prevents listening to revelation fully",
+    "Assumptions replace verified knowledge"
+   ],
+   "answer": 0,
+   "info": "The choice of words is linked to preventing discord; Satan is described as a clear enemy of humankind.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 17:53",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_company_morning_evening",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What description is given in 18:28 of those with whom one is told to remain?",
+   "options": [
+    "They call upon their Lord morning and evening, seeking His countenance",
+    "They emigrate for their faith, leaving their possessions and homes",
+    "They help those in need, asking for neither payment nor thanks",
+    "They study Scripture and explain knowledge that people have concealed"
+   ],
+   "answer": 0,
+   "info": "Company is chosen for devotion to the Lord rather than attractive worldly status; heedlessness and desire are then warned against.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:28",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_adornment_enduring_deeds",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "How are adornment and enduring hope assigned in 18:46?",
+   "options": [
+    "Wealth and children are adornment; righteous deeds are better in reward and hope",
+    "Righteous deeds are adornment; wealth and children are better in reward and hope",
+    "Wealth is hope; children and righteous deeds are only adornment",
+    "Children are the sole reward; wealth and deeds are only a test"
+   ],
+   "answer": 0,
+   "info": "Worldly blessings are acknowledged as life's adornment, while enduring righteous deeds receive the higher valuation in reward and hope.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 18:46",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_glitter_and_provision",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which two qualities of the Lord's provision are contrasted with worldly splendor in 20:131?",
+   "options": [
+    "It is better and more lasting",
+    "It is more abundant and nearer",
+    "It is more visible and easier to attain",
+    "It is wider and arrives sooner"
+   ],
+   "answer": 0,
+   "info": "Others' worldly advantages are described as a test; the comparison is with the Lord's better and more lasting provision.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 20:131",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/20",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_good_and_bad_tests",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which two reminders surround the words about testing through good and adversity in 21:35?",
+   "options": [
+    "Every soul will taste death; people will return to Allah",
+    "Allah knows what is hidden; records of deeds will be disclosed",
+    "Humankind was created weak; no soul is burdened beyond its capacity",
+    "Earthly life is brief; the reward for patience is immeasurable"
+   ],
+   "answer": 0,
+   "info": "Good and adversity are joined between reminders of death and return to Allah; well-being can also test a person.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 21:35",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/21",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_sacrifice_reaches",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What inward quality is contrasted with a sacrifice's meat and blood in 22:37?",
+   "options": [
+    "The sacrificer's God-consciousness",
+    "Not expecting gratitude from people",
+    "Steadfastness in the face of danger",
+    "Faithfulness to a promise after concluding an agreement"
+   ],
+   "answer": 0,
+   "info": "The verse directs attention from the sacrifice's material aspect to God-consciousness and grateful glorification of Allah for guidance.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 22:37",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/22",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_giving_with_awe",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Why are the givers' hearts apprehensive in 23:60–61 although they hasten to good?",
+   "options": [
+    "They are aware of returning to their Lord",
+    "They are aware of the uncertainty of earthly promises",
+    "They fear an unjust assessment by witnesses",
+    "They fear forgetting a condition in an agreement"
+   ],
+   "answer": 0,
+   "info": "Doing good is joined with awareness of returning to the Lord; devotion is not turned into self-satisfaction.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 23:60, Quran 23:61",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/23",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_repel_with_best",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which instruction and reminder are combined in 23:96?",
+   "options": [
+    "Repel evil with what is best; Allah knows their assertions",
+    "Be patient; patience is possible only through Allah's help",
+    "Pardon and reconcile; the reward is with Allah",
+    "Turn away from the ignorant; seek protection from temptation"
+   ],
+   "answer": 0,
+   "info": "Choosing the better response is accompanied by a reminder of Allah's knowledge of what opponents allege.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 23:96",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/23",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_giving_after_hurt",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Which three groups should not be denied support by an oath in 24:22?",
+   "options": [
+    "Relatives, the poor and emigrants in Allah's cause",
+    "Zakat collectors, debtors and travellers",
+    "Orphans, neighbors and members of a council",
+    "Captives, farmers and custodians of property"
+   ],
+   "answer": 0,
+   "info": "The verse joins continued support for these groups with pardon and the desire for Allah's forgiveness.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 24:22",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_gaze_both_groups",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Which instruction is repeated for men and women in 24:30–31?",
+   "options": [
+    "Lower their gaze and guard their chastity",
+    "Record debts and appoint witnesses",
+    "Ask permission only three times a day",
+    "Lower their voices and walk moderately"
+   ],
+   "answer": 0,
+   "info": "Guarding the gaze and chastity is stated for both groups; further details in the next verse do not remove that shared obligation.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 24:30, Quran 24:31",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_maturity_permission",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "What changes for children on reaching maturity according to 24:59?",
+   "options": [
+    "They ask permission like the adults before them",
+    "They ask permission only before dawn",
+    "They ask permission only after the night prayer",
+    "They ask permission only from guests"
+   ],
+   "answer": 0,
+   "info": "The verse marks a transition to the adults' rule after maturity; the separately named hours are no longer the only boundary.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 24:58, 24:59",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_eating_and_greeting",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "What does 24:61 state about eating together and entering homes?",
+   "options": [
+    "One may eat together or separately; greet when entering",
+    "One may eat only together; greet only after eating",
+    "One may eat only separately; greet only the host",
+    "Eating together is allowed only while travelling; greet only guests"
+   ],
+   "answer": 0,
+   "info": "Permission to eat together or separately is paired with the teaching of a good greeting on entering.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 24:61",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_humble_walk_peace",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Which conduct and response are paired for the servants of the Most Merciful in 25:63?",
+   "options": [
+    "Humble walking and a peaceful response to the ignorant",
+    "A quiet voice and recording debts",
+    "Silence while travelling and relatives' advice",
+    "Walking quickly and public admonition"
+   ],
+   "answer": 0,
+   "info": "The verse joins everyday bearing with a dignified response when addressed ignorantly.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 25:63",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/25",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_passing_with_dignity",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Which two expressions of dignity are combined in 25:72?",
+   "options": [
+    "Avoid falsehood and pass idle talk with dignity",
+    "Restrain anger and pardon the offender",
+    "Verify a report and not judge by suspicion",
+    "Speak justly and not conceal testimony"
+   ],
+   "answer": 0,
+   "info": "Refusal to participate in falsehood stands alongside passing idle talk with dignity. Both clauses describe the conduct of the same people.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 25:72",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/25",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_not_deaf_blind",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What negative image does 25:73 use for what attentive listeners do not do?",
+   "options": [
+    "They do not remain deaf and blind to the verses",
+    "They do not become like scattered dust",
+    "They do not unravel tightly spun thread",
+    "They do not become like foam on a stream"
+   ],
+   "answer": 0,
+   "info": "Deafness and blindness depict failure to heed a reminder; the verse describes a meaningful response rather than mere presence.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 25:73",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/25",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_family_and_example",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which two requests are joined in the prayer in 25:74?",
+   "options": [
+    "Comfort in one's family and being an example for the God-conscious",
+    "Forgiveness for parents and believers on the Day of Reckoning",
+    "Acceptance of good deeds and guidance in rites",
+    "Steadfastness of the heart and mercy from the Lord"
+   ],
+   "answer": 0,
+   "info": "The prayer joins comfort through spouses and offspring with the request to be leaders for the God-conscious.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 25:74",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/25",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_double_reward_patience",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "For which quality does 28:54 explicitly mention a double reward?",
+   "options": [
+    "Patience",
+    "Humility",
+    "Gratitude",
+    "Justice"
+   ],
+   "answer": 0,
+   "info": "After the reason for the double reward, responding to evil with good and giving are mentioned; the question concerns the stated reason.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 28:54",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/28",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_prayer_restrains",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "From what does prayer restrain according to 29:45?",
+   "options": [
+    "Indecency and wrongdoing",
+    "Sadness and despondency",
+    "Forgetfulness and drowsiness",
+    "Doubt and haste"
+   ],
+   "answer": 0,
+   "info": "The verse connects prayer with moral conduct in life and ends by recalling Allah's knowledge of deeds.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 29:45",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/29",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_spouses_peace_mercy",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "What tranquility and relationship are called a sign in 30:21?",
+   "options": [
+    "Tranquility with spouses, love and mercy",
+    "Mutual consultation, truthfulness and justice",
+    "Restraining anger, pardon and patience",
+    "Entrusted property, a faithful contract and testimony"
+   ],
+   "answer": 0,
+   "info": "The sign of marriage is expressed through tranquility, love and mercy. This particular trio distinguishes the verse from other teachings.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 30:21",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/30",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_giving_recipient_trio",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which recipients of their due are explicitly listed in 30:38?",
+   "options": [
+    "A close relative, the poor and the traveller",
+    "A zakat collector, a debtor and a person being freed",
+    "A neighbor, a companion and the host",
+    "A teacher, a witness and a mediator"
+   ],
+   "answer": 0,
+   "info": "Giving these people their due is linked to seeking Allah's countenance; the question distinguishes this verse's specific list.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 30:38",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/30",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_gratitude_benefits_self",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which names of Allah close 31:12 after stating that gratitude benefits the grateful person?",
+   "options": [
+    "Self-sufficient and praiseworthy",
+    "All-hearing and all-knowing",
+    "Forgiving and merciful",
+    "Most high and great"
+   ],
+   "answer": 0,
+   "info": "The instruction to Luqman links gratitude with the grateful person's own good and emphasizes Allah's self-sufficiency.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 31:12",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/31",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_parents_limit_kindness",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "How does 31:15 combine rejecting shirk with treatment of parents urging it?",
+   "options": [
+    "Do not obey in that matter, but continue treating them kindly",
+    "Obey in that matter, but stop ordinary care",
+    "Refuse in that matter and necessarily end all contact",
+    "Postpone the choice until every relative agrees"
+   ],
+   "answer": 0,
+   "info": "The limit of obedience does not remove kind companionship with parents in this life; both instructions appear together.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 31:15",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/31",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_mustard_hidden_locations",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which locations for a hidden mustard seed are listed in Luqman's counsel in 31:16?",
+   "options": [
+    "In a rock, in the heavens or in the earth",
+    "In the sea, in a ship or in a garden",
+    "In an ear of grain, in a storehouse or in a sack",
+    "At home, on the road or at the city gates"
+   ],
+   "answer": 0,
+   "info": "An act's smallness and concealment do not hide it from Allah's knowledge; the listed locations emphasize that meaning.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 31:16",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/31",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_upright_speech_results",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which results follow God-consciousness and upright speech in 33:70–71?",
+   "options": [
+    "Rectification of deeds and forgiveness of sins",
+    "An increase in provision and a way out of difficulty",
+    "Reconciliation of enemies and gaining a close friend",
+    "An increase in faith and trembling of the heart"
+   ],
+   "answer": 0,
+   "info": "Upright speech is linked to rectifying deeds and forgiveness; the promise is not reduced to worldly status.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 33:70, Quran 33:71",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/33",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_words_and_deeds_rise",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "How are good words and righteous deeds related in 35:10?",
+   "options": [
+    "Good words ascend, and righteous deeds raise them",
+    "Good words are recorded, and deeds serve as collateral",
+    "Good words are weighed, and deeds set the measure",
+    "Good words sprout, and deeds count as the harvest"
+   ],
+   "answer": 0,
+   "info": "The verse links good words with righteous action and states that all honor belongs to Allah.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 35:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/35",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_night_fear_hope",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which fear and hope accompany night worship in 39:9?",
+   "options": [
+    "Fear of the Hereafter and hope for the Lord's mercy",
+    "Fear of losing provision and hope for its increase",
+    "Fear of marital estrangement and hope for reconciliation",
+    "Fear of forgetting an agreement and hope for witnesses' help"
+   ],
+   "answer": 0,
+   "info": "The description precedes the question of whether those who know equal those who do not; knowledge is tied to a thoughtful relationship with the Lord.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 39:9",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/39",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_enmity_close_friend",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "What change in relationship does 41:34 depict after responding with what is best?",
+   "options": [
+    "An enemy becomes like a close friend",
+    "The argument ends but the enmity remains unchanged",
+    "The enemy accepts the argument but friendship is not mentioned",
+    "Communication is replaced by complete estrangement"
+   ],
+   "answer": 0,
+   "info": "The image of a close friend shows the reconciling force of the better response; this is moral guidance, not a promise of control over another person.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 41:34",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/41",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_consultation_and_worship",
+   "cat": "quran",
+   "difficulty": 2,
+   "q": "Which group of believers' qualities is specifically listed in 42:38?",
+   "options": [
+    "Responding to the Lord, prayer, mutual consultation and giving",
+    "Night worship, lowering one's voice, reconciliation and fasting",
+    "Just testimony, pardon, repentance and pilgrimage",
+    "Remembrance, accurate measure, truthful speech and care for parents"
+   ],
+   "answer": 0,
+   "info": "Mutual consultation is included among believers' qualities, alongside responding to the Lord, prayer and giving.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 42:38",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/42",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l2x_equal_response_pardon",
+   "cat": "fiqh",
+   "difficulty": 2,
+   "q": "Which limit on recompense and condition of reward for pardon are paired in 42:40?",
+   "options": [
+    "An equal measure; pardon and put matters right",
+    "An equal measure; pardon and receive an apology in return",
+    "A double measure; pardon and put matters right",
+    "A double measure; pardon and receive an apology in return"
+   ],
+   "answer": 0,
+   "info": "The verse limits a response to equivalence and separately praises pardon accompanied by putting matters right; injustice is not endorsed.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 42:40",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/42",
+    "translationVersion": 1
+   }
+  },
+  {
    "id": "l3_grain_storage",
    "cat": "prophets",
    "difficulty": 3,
@@ -3957,6 +6697,2206 @@
    "source": {
     "reference": "Quran 63:10, 63:11",
     "url": "https://quranenc.com/en/browse/russian_rwwad/63",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_debt_dictation",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "Who dictates when the debtor is able to dictate, and who records the obligation? (2:282)",
+   "options": [
+    "The debtor dictates; the scribe records",
+    "The creditor dictates; the scribe records",
+    "The witness dictates; the scribe records",
+    "The guardian dictates; the scribe records"
+   ],
+   "answer": 0,
+   "info": "Dictation is assigned to the person who owes the obligation. A guardian replaces him if he cannot dictate; the scribe must record fairly. (2:282)",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:282",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_debt_guardian",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "Who dictates fairly if the debtor cannot? (2:282)",
+   "options": [
+    "The debtor’s guardian",
+    "The creditor",
+    "The scribe",
+    "One of the witnesses"
+   ],
+   "answer": 0,
+   "info": "If the debtor lacks understanding, is weak or cannot dictate, the verse assigns dictation to his guardian and explicitly requires fairness. (2:282)",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:282",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_spot_trade_exception",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "Which transaction is explicitly excepted from recording? (2:282)",
+   "options": [
+    "Trade completed by immediate exchange",
+    "A debt confirmed by two witnesses",
+    "A debt secured by a pledge",
+    "A small debt with a fixed term"
+   ],
+   "answer": 0,
+   "info": "The exception concerns immediate, hand-to-hand trade. For a debt with a term, the verse instead says to record both small and large amounts. (2:282)",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:282",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_debt_protection",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "Who is specifically to be protected from harm when recording a transaction? (2:282)",
+   "options": [
+    "The scribe and the witness",
+    "The debtor and creditor",
+    "The guardian and ward",
+    "The seller and buyer"
+   ],
+   "answer": 0,
+   "info": "Near the end of the verse, the scribe and witness are named specifically: they must not suffer harm in connection with recording the transaction. (2:282)",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:282",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_debt_record_scope",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "How are debt size and the term linked in recording? (2:282)",
+   "options": [
+    "Small and large debts are recorded with their term",
+    "Large debts are recorded; small debts confirmed by witnesses",
+    "Small debts are recorded; large debts secured by a pledge",
+    "The amount is recorded; the term confirmed by witnesses"
+   ],
+   "answer": 0,
+   "info": "The verse explicitly mentions small and large amounts and recording the term. A small amount is not given as an exception. (2:282)",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:282",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_pledge_context",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "Which two circumstances precede the mention of a pledge? (2:283)",
+   "options": [
+    "Travelling; no scribe found",
+    "Travelling; no witnesses found",
+    "A fixed term; no guardian present",
+    "Immediate trade; no scribe found"
+   ],
+   "answer": 0,
+   "info": "The circumstances named in 2:283 are travel and the lack of a scribe. A missing scribe should not be confused with missing witnesses.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:283",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_trust_obligation",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "Which instructions follow the mention of mutual trust between parties in 2:283?",
+   "options": [
+    "Return what was entrusted and fear Allah",
+    "The debtor dictates and the scribe records fairly",
+    "Record the debt amount and its term",
+    "Call witnesses and do not harm the scribe"
+   ],
+   "answer": 0,
+   "info": "After mentioning trust, 2:283 retains the duty to return what was entrusted and fear Allah. The other choices describe instructions in the preceding verse.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:282, 2:283",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_debtor_hardship",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "How does 2:280 relate respite for a debtor in hardship to forgiving the debt?",
+   "options": [
+    "Respite until ease; forgiving as charity is better",
+    "Respite until ease; forgiveness is compulsory",
+    "Respite until a fixed date; forgiving as charity is better",
+    "Respite until a pledge is received; forgiveness is compulsory"
+   ],
+   "answer": 0,
+   "info": "Respite is linked to an easing of circumstances. Forgiving the debt as charity is described as better, not as a compulsory condition of respite.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:280",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_repentant_lender",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "What remains after repenting of usury? (2:279)",
+   "options": [
+    "The principal without interest",
+    "Principal plus the previously agreed gain",
+    "Principal and part of the interest",
+    "The difference between principal and interest"
+   ],
+   "answer": 0,
+   "info": "On repentance, the verse preserves the principal and rejects wronging either side. It does not preserve the agreed interest or a portion of it.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:278, 2:279",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_will_witness_doubt",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "When are a will’s witnesses detained for an oath if doubt arises? (5:106)",
+   "options": [
+    "After prayer",
+    "Before prayer",
+    "After the will has been carried out",
+    "After the estate has been distributed"
+   ],
+   "answer": 0,
+   "info": "If doubt arises, both witnesses are detained after prayer for the oath. The verse does not postpone this oath until the estate has been distributed.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:106",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_orphan_maturity",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "What condition for handing over property accompanies an orphan reaching marriageable age? (4:6)",
+   "options": [
+    "Finding sound judgement in him",
+    "Waiting until he actually marries",
+    "Confirming a regular income",
+    "Teaching him to read and write"
+   ],
+   "answer": 0,
+   "info": "Age is mentioned alongside testing the orphans. Before handing over property, sound judgement must be observed, not merely an actual marriage.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:6",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_guardian_means",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "How does the verse distinguish wealthy and poor guardians in using an orphan’s property? (4:6)",
+   "options": [
+    "The wealthy abstains; the poor uses it reasonably",
+    "Both wealthy and poor abstain regardless of need",
+    "Both wealthy and poor use it reasonably",
+    "The wealthy uses it reasonably; the poor abstains"
+   ],
+   "answer": 0,
+   "info": "The instruction is not identical for both guardians: the wealthy is told to abstain, while the poor may use it in a reasonable manner.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:6",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_orphan_transfer_witnesses",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "What accompanies the handover of orphans’ property? (4:6)",
+   "options": [
+    "Calling witnesses",
+    "Inviting a scribe",
+    "Drawing up a will",
+    "Publicly announcing the handover"
+   ],
+   "answer": 0,
+   "info": "The verse calls for witnesses specifically when the property is handed over. Testing and checking sound judgement are mentioned earlier.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:6",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_estate_prior_conditions",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "When, relative to the will and debt, are the inheritance shares stated in 4:11–12?",
+   "options": [
+    "After the will is fulfilled and debts paid",
+    "After the will, but before debts are paid",
+    "After debts are paid, but before the will is fulfilled",
+    "Before fulfilling the will and paying debts"
+   ],
+   "answer": 0,
+   "info": "The stated shares are subject to the prior will-and-debt clause. The question concerns that clause, not a complete inheritance calculation.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:11, 4:12",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_husband_shares",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "Which pair of a husband’s shares is stated: wife leaves no child / leaves a child? (4:12)",
+   "options": [
+    "1/2 · 1/4",
+    "1/4 · 1/2",
+    "1/3 · 1/6",
+    "1/4 · 1/8"
+   ],
+   "answer": 0,
+   "info": "In 4:12 the husband’s share changes from a half to a quarter if his deceased wife leaves a child. The order of the conditions in the question therefore matters.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:12",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_wife_shares",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "Which pair of the wives’ shares is stated: husband leaves no child / leaves a child? (4:12)",
+   "options": [
+    "1/4 · 1/8",
+    "1/2 · 1/4",
+    "1/8 · 1/4",
+    "1/3 · 1/6"
+   ],
+   "answer": 0,
+   "info": "In 4:12 a quarter is stated first, and an eighth if there is a child. This pair concerns wives; it differs from the husband’s half and quarter.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:12",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_parents_with_child",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "What shares of father and mother are stated when the deceased leaves a child? (4:11)",
+   "options": [
+    "1/6 · 1/6",
+    "1/3 · 1/3",
+    "1/2 · 1/4",
+    "1/4 · 1/8"
+   ],
+   "answer": 0,
+   "info": "When there is a child, 4:11 explicitly assigns one sixth to each parent. The question asks about these stated shares, not a final calculation of the whole estate.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:11",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_mother_siblings",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "What share for the mother is stated when the deceased has siblings? (4:11)",
+   "options": [
+    "1/6",
+    "1/3",
+    "1/2",
+    "1/8"
+   ],
+   "answer": 0,
+   "info": "Where siblings are present, the verse states one sixth for the mother. One third belongs to a different stated condition: no child, with the parents inheriting.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 4:11",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_fast_makeup",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "Which three purposes are explicitly named at the end of 2:185 after the statement about ease?",
+   "options": [
+    "Complete the number of days; magnify Allah for guidance; be grateful",
+    "Complete the number of days; fear Allah; be grateful",
+    "Feed the poor; magnify Allah for guidance; be grateful",
+    "Complete the number of days; magnify Allah for guidance; give to travellers"
+   ],
+   "answer": 0,
+   "info": "The end of 2:185 links completing the prescribed number, magnifying Allah for His guidance, and gratitude. Replacing one part changes the stated list.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:185",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_fast_boundaries",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "How are the instruction about Allah’s limits and the purpose of explaining His signs linked at the end of 2:187?",
+   "options": [
+    "Do not approach them; mindfulness of Allah",
+    "Do not transgress them; gratitude",
+    "Do not approach them; gratitude",
+    "Do not transgress them; mindfulness of Allah"
+   ],
+   "answer": 0,
+   "info": "In 2:187 the wording is not to approach the limits, and the closing purpose is mindfulness of Allah. The question tests the exact pairing of these two clauses.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:187",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_itikaf_boundary",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "How do permission for marital intimacy at night and the retreat clause relate in 2:187?",
+   "options": [
+    "Retreat in the mosque retains the restriction despite the night-time permission",
+    "Night-time permission cancels the retreat restriction after sunset",
+    "The retreat restriction lasts only until food is taken at night",
+    "Night-time permission during retreat depends only on completing ablution"
+   ],
+   "answer": 0,
+   "info": "The verse permits intimacy on fasting nights, then separately restricts it during retreat in mosques. The night-time permission does not cancel that qualification.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:187",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_hajj_shaving",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "Which event ends the restriction on shaving the head in the prevented-pilgrimage case described in 2:196?",
+   "options": [
+    "The offering reaches its place of sacrifice",
+    "The standing at Arafat is completed",
+    "Seven circuits of the Kaaba are completed",
+    "The days of remembrance after sacrifice are completed"
+   ],
+   "answer": 0,
+   "info": "This clause makes the offering reaching its place of sacrifice the condition. It should not be replaced by another Hajj stage; illness or a head ailment is addressed separately afterwards.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:196",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_hajj_head_ransom",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "Which set of alternatives in 2:196 applies specifically to illness or a head ailment?",
+   "options": [
+    "Fasting, charity, or sacrifice",
+    "Feeding, clothing, or freeing a slave",
+    "Freeing a slave, continuous fasting, or feeding",
+    "Repeating Umrah, sacrifice, or feeding"
+   ],
+   "answer": 0,
+   "info": "The passage lists three alternative forms of compensation for this case. Later in the same verse, fasting is discussed on another basis: an unavailable offering for Umrah followed by Hajj.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:196",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_hajj_fast_partition",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "How does 2:196 distribute the ten fasting days when the offering for Umrah followed by Hajj is unavailable?",
+   "options": [
+    "Three during Hajj, seven after returning",
+    "Seven during Hajj, three after returning",
+    "Three before Hajj, seven after returning",
+    "Three during Hajj, seven before returning"
+   ],
+   "answer": 0,
+   "info": "The verse specifies both the total and two distinct periods. It emphasizes ten complete days after assigning three to Hajj and seven to the return.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:196",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_hajj_family_condition",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "What condition about the family's residence concludes this offering-or-fasting arrangement in 2:196?",
+   "options": [
+    "The family does not reside near the Sacred Mosque",
+    "The family resides near the Sacred Mosque",
+    "The family does not reside in Medina",
+    "The family does not accompany the pilgrim on this journey"
+   ],
+   "answer": 0,
+   "info": "The qualification concerns the family's residence near the Sacred Mosque, not children, citizenship, or travelling together. It concludes the described arrangement for Umrah followed by Hajj.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:196",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_mina_departure",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "How does 2:203 relate departure after two days, staying longer, and God-consciousness?",
+   "options": [
+    "Neither early departure nor staying longer is sinful for the God-conscious",
+    "Early departure requires an offering; staying longer requires no compensation",
+    "Early departure requires fasting; staying longer requires an offering",
+    "Departure after two days is permitted only to a local resident"
+   ],
+   "answer": 0,
+   "info": "Both choices are explicitly accompanied by the absence of sin, followed by God-consciousness. This verse assigns no separate compensation merely for choosing early departure.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:203",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_arafat_remembrance",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "To which place of remembrance does 2:198 direct people after departing from Arafat?",
+   "options": [
+    "To al-Mash‘ar al-Haram, the Sacred Monument",
+    "To the hills of Safa and Marwa",
+    "To the place of throwing pebbles in Mina",
+    "To the place of circumambulating the Kaaba"
+   ],
+   "answer": 0,
+   "info": "The verse links departure from Arafat with remembrance at the Sacred Monument and acknowledgment of bestowed guidance. The other locations belong to different pilgrimage actions.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:198",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_necessity_food",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "Which two qualifications does 2:173 attach to consuming forbidden food out of necessity?",
+   "options": [
+    "Not seeking the forbidden and not exceeding the limit",
+    "Being on a journey and having no companion",
+    "Having no property and making a vow beforehand",
+    "Finishing a fast and making it up later"
+   ],
+   "answer": 0,
+   "info": "The absence of sin in this necessity case is tied to two restrictions. The verse does not prescribe a fixed number of hungry days or replace those restrictions with traveller status.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:173",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_animal_rescue_exception",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "What condition distinguishes the exception in the list of injured animals in 5:3?",
+   "options": [
+    "The animal was slaughtered before it died",
+    "The animal was found alive, even if it later died without slaughter",
+    "The injury was small, regardless of the animal's subsequent death",
+    "The animal died without visible blood loss"
+   ],
+   "answer": 0,
+   "info": "The exception depends on slaughter having taken place before death. The time of discovery, kind of injury, or absence of visible blood does not replace that stated condition.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:3",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_oath_intention",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "What criterion distinguishes absence and presence of accountability for an oath at the start of 5:89?",
+   "options": [
+    "An unintended oath versus a deliberately binding oath",
+    "An oral oath versus a written oath",
+    "The presence versus absence of witnesses",
+    "A private versus public place of swearing"
+   ],
+   "answer": 0,
+   "info": "The verse distinguishes unintended speech from deliberately binding oaths. The list of expiations follows that distinction; written form or witness count is not given as its criterion.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:89",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_oath_initial_options",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "Which three options match the initial expiation for a broken oath? (5:89)",
+   "options": [
+    "Feed ten poor people, clothe them or free a slave",
+    "Feed sixty poor people, clothe them or free a slave",
+    "Feed ten poor people, fast two months or offer a sacrifice",
+    "Clothe ten poor people, fast three days or perform Umrah"
+   ],
+   "answer": 0,
+   "info": "Three material options come first. The subsequent three-day fast is linked to inability to fulfil them.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:89",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_oath_fast_condition",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "Which fast applies when material oath expiation is unaffordable, rather than to zihar? (5:89, 58:4)",
+   "options": [
+    "Three days",
+    "Two consecutive months",
+    "Three days in Hajj and seven after returning",
+    "One consecutive month"
+   ],
+   "answer": 0,
+   "info": "5:89 links three days to inability to afford the stated options. Two consecutive months in 58:4 concern another case: zihar.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:89, 58:4",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_oath_food_standard",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "What standard determines feeding the poor in oath expiation? (5:89)",
+   "options": [
+    "The average of what one feeds one’s family",
+    "The most expensive feast food",
+    "Minimum food even below family custom",
+    "An identical cost for everyone regardless of means"
+   ],
+   "answer": 0,
+   "info": "The standard is ordinary average family food, not the costliest feast or an arbitrarily low level.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:89",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_hunt_compensation",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "Who judges livestock equivalence for game killed intentionally during ihram? (5:95)",
+   "options": [
+    "Two just people from among the believers",
+    "The hunter alone",
+    "Any one travel companion",
+    "Two sellers regardless of integrity"
+   ],
+   "answer": 0,
+   "info": "Both number and character are specified: two, and just. The offender’s decision alone is not the procedure described.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:95",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_hunt_land_sea",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "Which pair correctly contrasts sea and land hunting during ihram? (5:96)",
+   "options": [
+    "Sea hunting allowed; land hunting forbidden while in ihram",
+    "Sea hunting allowed; land hunting forbidden until returning home",
+    "Both allowed outside the Sanctuary even in ihram",
+    "Sea hunting only for residents; land hunting for travellers"
+   ],
+   "answer": 0,
+   "info": "The distinction concerns the type of hunting. The land-hunting ban lasts during ihram, not until arrival home.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:96",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_tayammum_surfaces",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "Which body parts are wiped with clean earth when water is unavailable in the stated circumstances? (5:6)",
+   "options": [
+    "Face and hands",
+    "Head and feet",
+    "Face and feet",
+    "Head and hands"
+   ],
+   "answer": 0,
+   "info": "The verse first describes water ablution, then tayammum separately: clean earth, face and hands. The two lists are not identical.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 5:6",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_prayer_fear_security",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "Which sequence is given for fear and restored safety? (2:239)",
+   "options": [
+    "In fear, on foot or mounted; in safety, remember Allah as taught",
+    "In fear only mounted; in safety only on foot",
+    "In fear postpone prayer; in safety fast",
+    "In fear only silently; in safety only aloud"
+   ],
+   "answer": 0,
+   "info": "The concession in fear concerns the worshipper’s position. The verse then returns to remembrance according to Allah’s teaching.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:239",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_nursing_completion",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "What qualification accompanies two full years of nursing? (2:233)",
+   "options": [
+    "For whoever wishes to complete nursing",
+    "Only if the father is absent",
+    "Only when no wet nurse is available",
+    "For every child with no possible alternative decision"
+   ],
+   "answer": 0,
+   "info": "The full term relates to completing nursing; the same verse separately allows weaning by mutual consent and consultation.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:233",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_weaning_agreement",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "Which pair of conditions is stated for a decision to wean? (2:233)",
+   "options": [
+    "Mutual consent and consultation between parents",
+    "Mutual consent and written testimony",
+    "The mother’s consent and a guardian’s decision",
+    "Parental consultation and witnesses’ permission"
+   ],
+   "answer": 0,
+   "info": "The verse includes both consent and consultation between parents. One party’s decision alone does not express the stated pair.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:233",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_nurse_payment",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "What condition accompanies employing another wet nurse? (2:233)",
+   "options": [
+    "Pay what is due in a fair manner",
+    "Verify sound judgement and call witnesses",
+    "Set the share after fulfilling the will",
+    "Grant respite until circumstances ease"
+   ],
+   "answer": 0,
+   "info": "Permission to employ a wet nurse is linked to fair payment, not transfer of the child’s property.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:233",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_mahr_half_condition",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "Under which conditions is half the fixed bridal gift stated, absent a waiver? (2:237)",
+   "options": [
+    "Divorce before intimacy, with the gift already fixed",
+    "Divorce before intimacy, with no gift fixed",
+    "Divorce after intimacy, with the gift fixed",
+    "Husband’s death after intimacy, with the gift fixed"
+   ],
+   "answer": 0,
+   "info": "2:237 combines no intimacy with an already fixed gift. Half applies to that combination, subject to the stated waiver.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:237",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_unfixed_gift_means",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "If there was no intimacy and no fixed gift, what determines the parting provision in 2:236? (2:236, 2:237)",
+   "options": [
+    "The wealthy and poor each give according to their means",
+    "Always half the unspecified gift",
+    "Always a quarter of the husband’s estate",
+    "The same amount for everyone"
+   ],
+   "answer": 0,
+   "info": "2:236 links provision to means. Half of a fixed gift belongs to the neighbouring case in 2:237, where it was already specified.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:236, 2:237",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_waiting_proposal_contract",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "How are an indirect proposal and concluding marriage distinguished before the waiting term ends? (2:235)",
+   "options": [
+    "An indirect proposal is allowed; marriage waits until the term ends",
+    "Both hint and marriage contract are allowed before the term ends",
+    "A hint is forbidden; marriage waits until the term ends",
+    "A hint is allowed; a contract is allowed after a secret promise"
+   ],
+   "answer": 0,
+   "info": "The verse distinguishes permitted indirect speech from the marriage contract itself. Permission for a hint does not cancel the prescribed term.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:235",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_waiting_terms_contrast",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "Which terms are explicitly stated: widows in 2:234 / pregnant women in 65:4? (2:234, 65:4)",
+   "options": [
+    "Four months and ten days / until delivery",
+    "Three months / two years",
+    "Until delivery / four months and ten days",
+    "One year / three months"
+   ],
+   "answer": 0,
+   "info": "This compares the explicit wording of two verses. It does not calculate the combined case of a pregnant widow.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:234, 65:4",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_divorce_housing",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "Which pair describes provision of housing after divorce? (65:6)",
+   "options": [
+    "Where you live according to means; no oppressive harm",
+    "According to means in her guardian’s home; no oppressive harm",
+    "Where you live; an identical sum for everyone",
+    "Where you live according to means; pressure allowed after divorce"
+   ],
+   "answer": 0,
+   "info": "The provider’s means matter, but need does not become permission to harm or pressure the woman to leave.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 65:6",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/65",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_pregnant_maintenance",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "How does the verse link pregnancy, maintenance and later nursing? (65:6)",
+   "options": [
+    "Maintenance until delivery; payment for nursing",
+    "Maintenance until delivery; nursing included without separate pay",
+    "Maintenance until nursing ends; separate pay for delivery",
+    "Maintenance until three months end; separate nursing pay"
+   ],
+   "answer": 0,
+   "info": "Delivery is the stated boundary for supporting the pregnant woman in this sentence. The next sentence separately covers payment for nursing.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 65:6",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/65",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_limited_means_maintenance",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "How are spending and restricted means related in the maintenance verse? (65:7)",
+   "options": [
+    "Spend from what was given; no burden beyond what was given",
+    "Spend according to the general standard of affluent people",
+    "Spend only once all hardship has ended",
+    "Calculate spending from future means not yet received"
+   ],
+   "answer": 0,
+   "info": "Both affluent and constrained people have a measure related to means. Restricted provision changes the measure rather than imposing a wealthy standard.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 65:7",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/65",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_waiting_home_exception",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "What explicit exception accompanies the ban on expelling divorced women from their homes during the waiting term? (65:1)",
+   "options": [
+    "Their committing manifest indecency",
+    "Their having no separate income",
+    "Disagreement over the gift’s amount",
+    "Another vacant home being available"
+   ],
+   "answer": 0,
+   "info": "The named textual exception is manifest indecency. This tests the verse’s wording, not independent judgement of guilt in a particular case.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 65:1",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/65",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_divorce_witnesses",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "Which pair of testimony requirements follows the instruction to retain or release fairly? (65:2)",
+   "options": [
+    "Two just people; testimony for Allah",
+    "Two close relatives; testimony for the family",
+    "Two witnesses without an integrity condition; for Allah",
+    "One just witness; testimony for Allah"
+   ],
+   "answer": 0,
+   "info": "Both the two witnesses’ integrity and testimony for Allah are specified. Kinship or property interests do not replace these features.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 65:2",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/65",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_nursing_disagreement",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "What solution is stated if parents encounter difficulty agreeing on nursing? (65:6)",
+   "options": [
+    "Another woman will nurse the child",
+    "Agreement waits until two years have ended",
+    "Two witnesses set the final fee",
+    "Nursing ends immediately when agreement is absent"
+   ],
+   "answer": 0,
+   "info": "Parents are first told to agree fairly; in difficulty another nurse is named. The child’s need is not suspended by the dispute.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 65:6",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/65",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_zihar_words_reality",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "How does the verse contrast a zihar declaration with actual motherhood? (58:2)",
+   "options": [
+    "The words do not make wives mothers; mothers are those who bore them",
+    "The words make wives mothers until expiation",
+    "Motherhood depends on two witnesses confirming it",
+    "The words make wives mothers permanently"
+   ],
+   "answer": 0,
+   "info": "The verse denies that this speech creates motherhood and calls it objectionable and false. Later expiation does not mean recognising a wife as a mother.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 58:2",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/58",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_zihar_expiation_order",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "What is the sequence of zihar expiation when each preceding step is impossible? (58:3, 58:4)",
+   "options": [
+    "Free a slave → fast two consecutive months → feed 60 poor people",
+    "Feed 60 poor people → fast two months → free a slave",
+    "Free a slave → fast three days → feed 10 poor people",
+    "Fast two months → free a slave → feed 10 poor people"
+   ],
+   "answer": 0,
+   "info": "Each transition depends on inability to fulfil the preceding act; these are not three freely interchangeable options. The fast is two consecutive months.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 58:3, 58:4",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/58",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_zihar_before_touch",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "What timing condition is repeated for both freeing a slave and fasting for zihar? (58:3, 58:4)",
+   "options": [
+    "Before resuming marital intimacy",
+    "Immediately after intimacy resumes",
+    "After every new oath, even without zihar",
+    "Before the post-divorce waiting term ends"
+   ],
+   "answer": 0,
+   "info": "Both sentences repeat the condition before the spouses touch one another. Expiation is therefore not described as freely postponable until after intimacy.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 58:3, 58:4",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/58",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_will_change_responsibility",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "Who bears the sin of changing a heard will in 2:181, unlike corrective reconciliation in 2:182? (2:181, 2:182)",
+   "options": [
+    "Those who change it",
+    "The testator and the changers equally",
+    "All who heard it, even without taking part in the change",
+    "All heirs regardless of involvement"
+   ],
+   "answer": 0,
+   "info": "2:181 places the sin of alteration on those making it. The next verse separately describes reconciliation to correct feared injustice.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:181, 2:182",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_will_reconciliation",
+   "cat": "fiqh",
+   "difficulty": 3,
+   "q": "What combination describes the blameless reconciler in the will passage? (2:182)",
+   "options": [
+    "Fears injustice or sin by the testator and reconciles the parties",
+    "Fears injustice by the testator but changes shares without reconciliation",
+    "Reconciles the parties to increase his own share",
+    "Treats any unequal shares as grounds to change the will"
+   ],
+   "answer": 0,
+   "info": "The exception is not arbitrary permission to change a will. It names concern about injustice or sin and reconciliation between the parties.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:182",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_charity_bare_rock",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Which image in 2:264 accompanies the warning about reminders, hurt and spending for show? (2:264, 2:265)",
+   "options": [
+    "Heavy rain washes soil from a smooth rock, leaving it bare",
+    "Heavy rain doubles a hill-garden’s crop",
+    "A good tree bears fruit by its Lord’s permission",
+    "A fiery whirlwind burns an old man’s garden"
+   ],
+   "answer": 0,
+   "info": "In 2:264 rain leaves a bare rock. The garden with doubled yield is the contrasting image in 2:265 about giving for Allah’s pleasure.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:264, 2:265",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_hill_garden_rain",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "How are heavy rain and drizzle contrasted in the hill-garden parable? (2:265)",
+   "options": [
+    "Heavy rain yields double; if absent, drizzle suffices",
+    "Heavy rain yields double; without it the garden is barren",
+    "Heavy rain yields once; drizzle yields double",
+    "Both heavy rain and drizzle wash the crop away"
+   ],
+   "answer": 0,
+   "info": "The garden image conveys fruitful sincere giving: heavy rain yields double, yet even drizzle does not leave it barren.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:265",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_burned_garden_vulnerability",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Which circumstances of the owner heighten the image of a garden destroyed by fiery wind? (2:266)",
+   "options": [
+    "He has grown old and his offspring are weak",
+    "He is still young and his offspring are weak",
+    "He is old and his offspring are already independent",
+    "He is still young and has no offspring"
+   ],
+   "answer": 0,
+   "info": "The verse combines a rich garden, its owner’s old age and weak offspring, then the garden’s destruction. These details make the loss especially severe.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:266",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_good_word_tree",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Which three details belong to the tree compared to a good word? (14:24, 14:25)",
+   "options": [
+    "Firm root; branches in the sky; fruit by the Lord’s permission",
+    "Uprooted root; branches in the sky; uninterrupted fruit",
+    "Firm root; burned branches; lost fruit",
+    "No stability; branches on the ground; fruit after heavy rain"
+   ],
+   "answer": 0,
+   "info": "14:24 describes a firm root and high branches; 14:25 adds recurring fruit by the Lord’s permission. Together they depict a good word.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 14:24, 14:25",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/14",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_bad_word_tree",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Which feature distinguishes the bad-word tree from the good-word tree? (14:24, 14:26)",
+   "options": [
+    "It is uprooted from the ground and has no stability",
+    "The root is firm but branches do not rise to the sky",
+    "It is stable but bears no fruit after rain",
+    "The root is hidden under stone and branches bear fruit"
+   ],
+   "answer": 0,
+   "info": "The contrast concerns the foundation: the good tree has a firm root, the bad one no stability after uprooting. Height alone is not the criterion.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 14:24, 14:26",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/14",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_mirage_expectation",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "What contrast forms the mirage-in-a-lowland image? (24:39)",
+   "options": [
+    "The thirsty expect water but find none on arrival and face reckoning",
+    "The thirsty find water, but reckoning waits until it runs out",
+    "The thirsty find no water but are exempted from reckoning",
+    "The thirsty find water and consider it their reward"
+   ],
+   "answer": 0,
+   "info": "The mirage looks like water, but approaching disproves the expectation. The image then moves to full reckoning, not receiving real water.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 24:39",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_sea_darkness_layers",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "What layers lie above deep water in the image of compounded darkness? (24:40)",
+   "options": [
+    "A wave, another wave above it, clouds above that",
+    "Clouds, then a wave above them, then another wave",
+    "A wave, clouds above it, a second wave above them",
+    "One wave, two cloud layers above it"
+   ],
+   "answer": 0,
+   "info": "This is not the previous verse’s mirage: it names a deep sea, two waves above one another, and clouds. A hand can barely be seen.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 24:40",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_spider_patronage",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Who is represented by the spider making a frail house in the verse? (29:41)",
+   "options": [
+    "Those who take protectors besides Allah",
+    "Those entrusted with the Torah who did not fulfil its duty",
+    "Those who nullify charity through reminders and hurt",
+    "Those whose efforts were lost while they thought them good"
+   ],
+   "answer": 0,
+   "info": "The comparison concerns unreliable patronage. The verse explicitly calls the spider’s house frailest, not strong through many supports.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 29:41",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/29",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_divided_ownership",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Which two situations are compared in the parable of owners? (39:29)",
+   "options": [
+    "A man shared by quarrelling owners and a man belonging to one",
+    "A man with harmonious joint owners and a man with one disputing owner",
+    "Two men each with many quarrelling owners",
+    "A man belonging to one owner and a man without an owner"
+   ],
+   "answer": 0,
+   "info": "The key details are quarrelling joint owners for the first and exclusive belonging to one for the second. The parable asks whether the situations are equal.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 39:29",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/39",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_books_burden",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "What mismatch is conveyed by the donkey carrying books? (62:5)",
+   "options": [
+    "Entrusted with following the Torah, but failed to carry the duty",
+    "Concealed testimony after being trusted",
+    "Spent for show and hurt aid recipients",
+    "Took unreliable protectors besides Allah"
+   ],
+   "answer": 0,
+   "info": "The issue is carrying an entrusted duty, not physically transporting books. The image reproaches failure to follow the scripture received.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 62:5",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/62",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_wives_contrast",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Which contrast is correct: wives not saved through righteous husbands / a believing wife of an unjust ruler? (66:10, 66:11)",
+   "options": [
+    "Wives of Nuh and Lut / Pharaoh’s wife",
+    "Wives of Nuh and Ibrahim / Pharaoh’s wife",
+    "Wives of Lut and Zakariya / the Egyptian ruler’s wife",
+    "Pharaoh’s wife / wives of Nuh and Lut"
+   ],
+   "answer": 0,
+   "info": "66:10 gives Nuh’s and Lut’s wives as examples of disbelief; 66:11 gives Pharaoh’s wife as an example of faith. Marriage alone does not determine the outcome.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 66:10, 66:11",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/66",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_pharaoh_wife_prayer",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Which request for a home is paired with deliverance in Pharaoh’s wife’s prayer? (66:11)",
+   "options": [
+    "A home near Allah in Paradise; deliverance from Pharaoh and his deeds",
+    "A home near Allah in Paradise; rescue from debt and poverty",
+    "A home near Allah in Paradise; rescue from illness and physical pain",
+    "A home near Allah in Paradise; pardon for forgetfulness and error"
+   ],
+   "answer": 0,
+   "info": "The prayer joins nearness to Allah and Paradise with rescue from Pharaoh, his deeds and unjust people. It does not ask to retain an earthly palace.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 66:11",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/66",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_maryam_confirmation",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "Which two objects of affirmation and which quality of Maryam are named at the verse’s end? (66:12)",
+   "options": [
+    "Her Lord’s words and His scriptures; devout obedience",
+    "Her Lord’s words and scriptures; patience in material need",
+    "Her Lord’s signs and the Last Day; devout obedience",
+    "Her Lord’s words and promise; faithfulness to a vow of silence"
+   ],
+   "answer": 0,
+   "info": "The ending combines affirmation of the Lord’s words and scriptures with being devoutly obedient. One does not replace the other.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 66:12",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/66",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_fire_light_sequence",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "What is the sequence in the parable of someone lighting a fire? (2:17, 2:18)",
+   "options": [
+    "Fire lights the surroundings → light is taken away → they remain unable to see in darkness",
+    "Fire lights surroundings → people turn back → light is preserved",
+    "Light is taken before surroundings are lit → fire grows → darkness vanishes",
+    "Fire lights surroundings → sight is taken but the light remains"
+   ],
+   "answer": 0,
+   "info": "Light is lost after the fire has already lit the surroundings. Verse 18 continues with deafness, muteness and blindness, not a return to light.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:17, 2:18",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3x_lightning_movement",
+   "cat": "quran",
+   "difficulty": 3,
+   "q": "How are lightning, darkness and people’s movement related in the parable? (2:19, 2:20)",
+   "options": [
+    "They walk when it lights up and stop when it grows dark",
+    "They stop in the light and walk in darkness",
+    "They walk equally regardless of light or darkness",
+    "After the first flash they leave and never stop again"
+   ],
+   "answer": 0,
+   "info": "Movement depends on brief illumination: steps during lightning, a stop in darkness. This differs from covering ears against thunder in 2:19.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 2:19, 2:20",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_dream_bodies",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Which bodies and action appear together in Yusuf's dream in 12:4?",
+   "options": [
+    "Eleven stars, the sun and moon prostrate",
+    "Twelve stars, the sun and moon prostrate",
+    "Eleven stars circle the moon",
+    "Seven stars and the sun hide behind the moon"
+   ],
+   "answer": 0,
+   "info": "Yusuf describes eleven stars together with the sun and moon bowing before him.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:4",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_dream_warning",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Which three promises does Yaqub list after Yusuf's dream in 12:6?",
+   "options": [
+    "Being chosen, interpreting dreams, completed favour to him and Yaqub's family",
+    "Being chosen, interpreting dreams, completed favour to him and all Egyptians",
+    "Being chosen, managing storehouses, completed favour to him and Yaqub's family",
+    "Kingship, interpreting dreams, completed favour to him and Yaqub's family"
+   ],
+   "answer": 0,
+   "info": "The promises concern being chosen, learning interpretation, and completed favour to Yusuf and Yaqub's family.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:6",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_brother_alternative",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "What alternative to killing or banishing Yusuf is proposed in 12:9–10?",
+   "options": [
+    "Leave him in the well for a caravan to find",
+    "Send him to the king for appointment",
+    "Leave him with shepherds for work",
+    "Return him to his father for a decision"
+   ],
+   "answer": 0,
+   "info": "One brother suggests the well, expecting passing travellers to take Yusuf.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:9, 12:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_blood_patience",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "How are the shirt and the father's response linked in 12:18?",
+   "options": [
+    "False blood; beautiful patience and Allah's help",
+    "False blood; grief complained of only to Allah and knowledge the sons lack",
+    "A tear at the back of the shirt; beautiful patience and Allah's help",
+    "False blood; an order to seek Yusuf and not despair of Allah's mercy"
+   ],
+   "answer": 0,
+   "info": "The father rejects the account supported by false blood, turning to patience and Allah's help.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:18",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_caravan_discovery",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Who found Yusuf, and what then happened in 12:19?",
+   "options": [
+    "A water-drawer lowered a bucket; he was hidden as merchandise",
+    "A shepherd heard a voice; he was taken to his father",
+    "A guard inspected the well; he was brought to the king",
+    "A merchant saw the shirt; he was sent home"
+   ],
+   "answer": 0,
+   "info": "The caravan sent a water-drawer; after the discovery, the boy was concealed as merchandise.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:19",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_sale_valuation",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "How are Yusuf's price and the sellers' attitude linked in 12:20?",
+   "options": [
+    "A few dirhams; they valued him little",
+    "A few dinars; they valued him little",
+    "A few dirhams; they were reluctant to part with him",
+    "A high price in dirhams; they valued him little"
+   ],
+   "answer": 0,
+   "info": "The low price is linked to the sellers placing little value on Yusuf.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:20",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_shirt_test",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "How does the witness link the shirt's tear to truthfulness (12:26–27)?",
+   "options": [
+    "Front: she is truthful; back: Yusuf is truthful",
+    "Front: Yusuf is truthful; back: she is truthful",
+    "Either side: Yusuf is truthful",
+    "Either side: she is truthful"
+   ],
+   "answer": 0,
+   "info": "The witness gives two conditional conclusions: a front tear supports her, a back tear supports Yusuf.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:26, 12:27",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_prison_and_help",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Which two thoughts are joined in Yusuf's prayer in 12:33?",
+   "options": [
+    "Preferring prison and needing protection from their plot",
+    "Asking to die submitting to Allah and to be joined with the righteous",
+    "Asking that the plot be averted and asserting he could never yield to it himself",
+    "Preferring prison and asking to die submitting to Allah"
+   ],
+   "answer": 0,
+   "info": "Yusuf prefers prison to their sinful invitation and asks his Lord to avert their plot.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:33",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_prison_dreams",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Which pair of dreams belongs to the two prisoners in 12:36?",
+   "options": [
+    "Pressing grapes; carrying bread eaten by birds",
+    "Pressing grapes; gathering seven dry ears of grain",
+    "Carrying bread; seeing eleven stars",
+    "Herding cows; carrying bread eaten by birds"
+   ],
+   "answer": 0,
+   "info": "One young man describes pressing wine; the other describes bread on his head and birds.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:36",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_knowledge_source",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "What does Yusuf connect his knowledge with in 12:37?",
+   "options": [
+    "His Lord's teaching and rejecting disbelief in Allah and the Hereafter",
+    "His Lord's teaching and leaving his righteous ancestors' faith",
+    "His father's teaching and accepting the creed denying the Hereafter",
+    "The prisoners' teaching and returning to his former people's creed"
+   ],
+   "answer": 0,
+   "info": "Yusuf attributes his knowledge to his Lord and rejects the creed of those denying Allah and the Hereafter.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:37",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_king_dream_pair",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Which pair of images matches the king's dream in 12:43?",
+   "options": [
+    "Seven lean cows eat seven fat cows; seven green and seven dry ears",
+    "Seven fat cows eat seven lean cows; seven green and seven dry ears",
+    "Seven lean cows eat seven fat cows; eleven green ears",
+    "Twelve cows graze together; seven dry ears"
+   ],
+   "answer": 0,
+   "info": "The dream distinguishes which cows eat the others and two groups of seven ears.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:43",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_year_after_hardship",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "What does Yusuf foretell after seven hard years in 12:48–49?",
+   "options": [
+    "A rainy year when people will press produce",
+    "Seven more years without harvest",
+    "A year when sowing and trade cease",
+    "A year with only dry ears of grain"
+   ],
+   "answer": 0,
+   "info": "The difficult period is followed by rain and pressing produce, indicating renewed abundance.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:48, 12:49",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_women_testimony",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Which statements are combined in 12:51?",
+   "options": [
+    "The women know no evil of Yusuf; the wife admits pursuing him",
+    "The women accuse Yusuf; the wife confirms it",
+    "The women stay silent; the wife blames servants",
+    "The women blame the king; the wife requests another trial"
+   ],
+   "answer": 0,
+   "info": "The women deny knowing any evil of Yusuf; the wife admits she sought to seduce him.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:51",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_recognition_direction",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Who recognised whom at the meeting in 12:58?",
+   "options": [
+    "Yusuf recognised his brothers; they did not recognise him",
+    "The brothers recognised Yusuf; he did not recognise them",
+    "Both sides immediately recognised each other",
+    "Neither side recognised anyone"
+   ],
+   "answer": 0,
+   "info": "The verse stresses unequal recognition: Yusuf knows them, while his brothers do not yet know him.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:58",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_returned_goods",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Why does Yusuf order the brothers' goods put back in their packs (12:62)?",
+   "options": [
+    "So they recognise them at home and may return",
+    "So guards find them and detain the brothers",
+    "So their father recognises the lost shirt",
+    "So the brothers sell them to the king on the way"
+   ],
+   "answer": 0,
+   "info": "Their returned goods are to be discovered at home, encouraging another visit.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:62",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_cup_reward",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "What reward is offered for the king's cup, and how is it backed (12:72)?",
+   "options": [
+    "A camel-load of grain; the speaker guarantees it",
+    "Two camel-loads; the king gives a written contract",
+    "A silver cup; the brothers guarantee it",
+    "A year's harvest; the eldest brother guarantees it"
+   ],
+   "answer": 0,
+   "info": "A camel-load is offered, with the speaker personally acting as guarantor.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:72",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_eldest_stays",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Until what condition does the eldest brother decide to stay in 12:80?",
+   "options": [
+    "Until his father permits or Allah decides for him",
+    "Until the king dies or the ruler changes",
+    "Until the shirt is found or the goods returned",
+    "Until all the brothers remain beside him"
+   ],
+   "answer": 0,
+   "info": "Recalling his pledge to his father, the eldest awaits his permission or Allah's judgement.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:80",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_yaqub_complaint",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "To whom does Yaqub complain, and what does he add about knowledge in 12:86?",
+   "options": [
+    "To Allah alone; he knows from Him what his sons do not",
+    "To the king; he knows all his intentions",
+    "To the brothers; he knows nothing beyond their story",
+    "To travellers; he knows only the well's location"
+   ],
+   "answer": 0,
+   "info": "Yaqub joins his appeal to Allah with knowledge from Him unavailable to his listeners.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:86",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_no_reproach",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "How does Yusuf answer his brothers after their admission in 12:92?",
+   "options": [
+    "No reproach today, and a wish for Allah's forgiveness",
+    "No reproach after all payment is returned",
+    "Punishment first, then a promise to seek forgiveness",
+    "Forgiveness only after the king's decision"
+   ],
+   "answer": 0,
+   "info": "His response combines refraining from reproach with wishing Allah's forgiveness for them.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:92",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_dream_fulfilment",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Which event does Yusuf call the fulfilment of his earlier dream in 12:100?",
+   "options": [
+    "Raising his parents to the throne and the family's bowing",
+    "Returning the brothers' payment in their packs",
+    "Leaving prison at the king's summons",
+    "Being appointed over the storehouses"
+   ],
+   "answer": 0,
+   "info": "His words about fulfilment follow the family reunion, his parents' elevation and the bowing.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 12:100",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_ibrahim_certainty",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "What is shown to Ibrahim, and for what purpose, in 6:75?",
+   "options": [
+    "The dominion of heavens and earth, for certainty",
+    "The dominion of heavens and earth, for reckoning time",
+    "The alternation of day and night, to explain a dream to his father",
+    "The order of stars and moon, to choose the time of migration"
+   ],
+   "answer": 0,
+   "info": "The verse links seeing the dominion of heavens and earth with attaining certainty.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:75",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_celestial_order",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "In what order does Ibrahim observe celestial bodies in 6:76–78?",
+   "options": [
+    "Star, then moon, then sun",
+    "Moon, then star, then sun",
+    "Sun, then moon, then star",
+    "Star, then sun, then moon"
+   ],
+   "answer": 0,
+   "info": "The account moves from the star to the moon and sun, noting that each disappears.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:76, 6:77, 6:78",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_fear_condition",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "What qualification accompanies Ibrahim's lack of fear in 6:80?",
+   "options": [
+    "Unless his Lord wills something; His knowledge encompasses all",
+    "Unless his Lord wills; only knowledge of the past is mentioned",
+    "Without any qualification; the Lord's all-encompassing knowledge is mentioned",
+    "If the people bring evidence; his father's advice is mentioned"
+   ],
+   "answer": 0,
+   "info": "Not fearing idols does not negate the Lord's will or His all-encompassing knowledge.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:80",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_creator_orientation",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "To whom does Ibrahim turn, and what affiliation does he reject in 6:79?",
+   "options": [
+    "The Creator of heavens and earth; he is not among polytheists",
+    "The Creator of heavens and earth; he is not among the People of Scripture",
+    "The rising sun; he is not among polytheists",
+    "The Creator of heavens and earth; he denies belonging to his people"
+   ],
+   "answer": 0,
+   "info": "He declares devotion to the Creator of heavens and earth while rejecting partners with Allah.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:79",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_fear_comparison",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Which two attitudes to fear does Ibrahim compare in 6:81?",
+   "options": [
+    "His fear of their partners and their lack of fear in associating them without proof",
+    "His fear of their partners and their fear of associating them without proof",
+    "His lack of fear of Allah and their fear of Him",
+    "Their fear of partners and his demand to fear them more"
+   ],
+   "answer": 0,
+   "info": "He challenges those demanding fear of idols while not fearing association without evidence.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 6:81",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_father_faculties",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Which three inabilities does Ibrahim mention to his father in 19:42?",
+   "options": [
+    "It cannot hear, see or help",
+    "It cannot hear, see or speak",
+    "It cannot hear, eat or help",
+    "It cannot see, eat or answer"
+   ],
+   "answer": 0,
+   "info": "The argument concerns lack of hearing, sight and ability to benefit the worshipper.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 19:42",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/19",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_knowledge_following",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "How does Ibrahim support his request that his father follow him in 19:43?",
+   "options": [
+    "Knowledge has come to him, and he will guide to a straight path",
+    "His father received the same knowledge, and he asks his father to guide him",
+    "Knowledge came to him, and he asks for adherence to ancestral custom",
+    "Knowledge came only to the father, but the son appeals to youth"
+   ],
+   "answer": 0,
+   "info": "The request rests on received knowledge and guidance, rather than wealth or authority.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 19:43",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/19",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_father_threat_reply",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Which threat and reply follow one another in 19:46–47?",
+   "options": [
+    "Stoning; peace and a promise to seek forgiveness",
+    "Imprisonment; peace and a promise to seek forgiveness",
+    "Stoning; a promise to return after trading",
+    "Confiscation; a promise to migrate together"
+   ],
+   "answer": 0,
+   "info": "The father threatens stoning and demands separation; Ibrahim responds with peace and intended prayer for forgiveness.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 19:46, 19:47",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/19",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_withdrawal_prayer",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "What hope accompanies Ibrahim's intention to call on his Lord after withdrawing in 19:48?",
+   "options": [
+    "Not to be disappointed in calling on Him",
+    "For the city to be secure and himself and his sons to avoid idols",
+    "To receive wisdom and be joined with the righteous",
+    "For himself and his descendants to establish prayer and for his supplication to be accepted"
+   ],
+   "answer": 0,
+   "info": "Withdrawal is accompanied by prayer to the Lord and hope for a good outcome in calling on Him.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 19:48",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/19",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_ancestry_argument",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "How do the people's argument and Ibrahim's reply relate in 21:52–54?",
+   "options": [
+    "They appeal to their fathers; he rejects both generations' error",
+    "They appeal to their fathers; he condemns only the present generation",
+    "They appeal to their fathers; he accepts the ancestors' correctness",
+    "They appeal to their fathers; he postpones his reply until their return"
+   ],
+   "answer": 0,
+   "info": "An appeal to ancestral practice does not persuade Ibrahim; he identifies error in both generations.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 21:52, 21:53, 21:54",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/21",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_largest_spared",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Which idol is left intact, and for what stated purpose, in 21:58?",
+   "options": [
+    "The largest, so they might turn to it",
+    "The largest, to take it to his father",
+    "The smallest, so they might turn to it",
+    "The largest, to install it in place of all the others"
+   ],
+   "answer": 0,
+   "info": "The verse singles out the largest idol among the shattered ones so people might turn to it.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 21:58",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/21",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_idol_dialogue_order",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "What follows the challenge to question the idols in 21:63–65?",
+   "options": [
+    "The people reproach themselves, then admit the idols cannot speak",
+    "They admit the idols cannot speak, then reproach themselves for the first time",
+    "They reproach themselves, then assert that the idols can speak",
+    "They affirm that idols speak, then demand questioning the largest"
+   ],
+   "answer": 0,
+   "info": "First they turn on themselves with reproach; then they answer that the idols cannot speak.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 21:63, 21:64, 21:65",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/21",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_stars_departure",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "What sequence occurs in 37:88–90 before people leave Ibrahim?",
+   "options": [
+    "Looking at the stars, saying he is ill, their departure",
+    "Saying he is ill, their departure, looking at the stars",
+    "Their departure, saying he is ill, looking at the stars",
+    "Looking at the stars, their departure, saying he is ill"
+   ],
+   "answer": 0,
+   "info": "The passage mentions looking at the stars first, then illness, then the people's departure.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 37:88, 37:89, 37:90",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/37",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_son_response",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Which wording conveys Ibrahim's son's response in 37:102?",
+   "options": [
+    "Do what is commanded; Allah willing, I will be patient",
+    "Do what is commanded; Allah willing, I will be grateful",
+    "Do what is commanded; he promises patience without mentioning Allah's will",
+    "Delay the command; Allah willing, I will agree later"
+   ],
+   "answer": 0,
+   "info": "The son accepts fulfilment and connects his patience with Allah's will; this verse does not name him.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 37:102",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/37",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_ark_passengers",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "What exception qualifies the ark's passengers in 11:40?",
+   "options": [
+    "Family except those already decreed against; separately, the few believers",
+    "All family without exception; separately, the few believers",
+    "Family except those already decreed against; believers now form most of the people",
+    "Only family with the stated exception; other believers are not listed"
+   ],
+   "answer": 0,
+   "info": "The list includes pairs of creatures, family with an exception, and the few who believed.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 11:40",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_son_mountain",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "How do Nuh's son's hope and his father's response compare in 11:42–43?",
+   "options": [
+    "The son trusts a mountain; the father says only Allah's mercy offers protection",
+    "The son trusts a mountain; the father asks forgiveness for asking without knowledge",
+    "The son asks to board; the father says protection is only by Allah's mercy",
+    "The son trusts a mountain; the father appeals to the promise concerning his family"
+   ],
+   "answer": 0,
+   "info": "The son chooses a mountain over the ark; Nuh rejects that protection from Allah's command, and a wave separates them.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 11:42, 11:43",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_flood_commands",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "Which commands and resting place match 11:44?",
+   "options": [
+    "Earth swallows water, sky stops; the ark rests on al-Judi",
+    "Earth swallows water, sky stops; the ark rests on al-Tur",
+    "Sky swallows water, earth stops; the ark rests on al-Judi",
+    "Earth releases water, sky increases rain; the ark rests on Arafat"
+   ],
+   "answer": 0,
+   "info": "The verse distinguishes commands to earth and sky, then names al-Judi as the ark's resting place.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 11:44",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_family_promise",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "How is Nuh's appeal about his son qualified in 11:45–46?",
+   "options": [
+    "His appeal to family and promise meets a response about unrighteous conduct and asking without knowledge",
+    "His appeal to family and promise receives a reply that only mercy protects from the command",
+    "His appeal to family and promise receives the command to disembark in peace and blessings",
+    "His appeal to family and promise receives the command to board family with an exception and believers"
+   ],
+   "answer": 0,
+   "info": "Nuh appeals to family and the true promise; the reply points to unrighteousness and limits requests to knowledge.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 11:45, 11:46",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_nuh_refuge",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "From what does Nuh seek refuge, and what outcome does he fear in 11:47?",
+   "options": [
+    "Asking without knowledge; without forgiveness and mercy he will lose",
+    "Making any request for relatives; without forgiveness and mercy he will lose",
+    "Requesting new signs; without forgiveness and mercy he will lose",
+    "Asking without knowledge; without forgiveness he cannot build another ark"
+   ],
+   "answer": 0,
+   "info": "The prayer joins avoidance of requests without knowledge with the need for the Lord's forgiveness and mercy.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 11:47",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
+    "translationVersion": 1
+   }
+  },
+  {
+   "id": "l3n_landing_communities",
+   "cat": "prophets",
+   "difficulty": 3,
+   "q": "How are Nuh and the later communities addressed differently in 11:48?",
+   "options": [
+    "Nuh receives peace and blessings; some communities face punishment after enjoyment",
+    "Nuh receives peace and blessings; every future community is guaranteed safety",
+    "Nuh receives peace; communities face punishment before any enjoyment",
+    "Nuh receives blessings; later communities are not mentioned at all"
+   ],
+   "answer": 0,
+   "info": "The verse joins Nuh's peaceful landing with a warning about temporary enjoyment and later punishment for other communities.",
+   "contentVersion": 1,
+   "source": {
+    "reference": "Quran 11:48",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
     "translationVersion": 1
    }
   }

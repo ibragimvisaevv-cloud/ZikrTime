@@ -34,13 +34,18 @@ def level_questions(categories):
     result = []
     seen = set()
     for level, name in enumerate(["beginner", "intermediate", "advanced"], 1):
-        path = HERE / "levels" / f"{name}.json"
-        bank = json.loads(path.read_text(encoding="utf-8"))
+        paths = [HERE / "levels" / f"{name}.json", *sorted((HERE / "levels").glob(f"{name}_*.json"))]
+        bank = []
+        for path in paths:
+            authored = json.loads(path.read_text(encoding="utf-8"))
+            if not isinstance(authored, list) or not authored:
+                raise ValueError(f"{path.name}: expected a non-empty authored question list")
+            bank.extend(authored)
         if len(bank) < 40:
             raise ValueError(f"{name}: each level needs at least 40 new questions")
         for item in bank:
             qid = item["id"]
-            if qid in seen or not qid.startswith(f"l{level}_"):
+            if qid in seen or not qid.startswith((f"l{level}_", f"l{level}x_", f"l{level}n_")):
                 raise ValueError(f"Duplicate or invalid new question ID: {qid}")
             seen.add(qid)
             if item["difficulty"] != level or item["cat"] not in categories:
@@ -55,7 +60,7 @@ def level_questions(categories):
             for reference in item["sourceVerses"]:
                 surah, ayah = map(int, reference.split(":"))
                 source = HERE.parents[1] / f"app/src/main/assets/quran/sources/russian_rwwad/{surah}.json"
-                verses = json.loads(source.read_text())["result"]
+                verses = json.loads(source.read_text(encoding="utf-8"))["result"]
                 if not any(int(v["aya"]) == ayah for v in verses):
                     raise ValueError(f"{qid}: verse not found: {reference}")
             for lang, localized in item["locales"].items():
@@ -83,6 +88,9 @@ def main():
         raise ValueError("Legacy difficulty must classify every existing stable question ID")
     if set(m_by_id) & {q["id"] for q in levels}:
         raise ValueError("New questions cannot reuse a legacy learning identity")
+    counts = Counter([*difficulty.values(), *(q["difficulty"] for q in levels)])
+    if any(counts[level] != 150 for level in (1, 2, 3)):
+        raise ValueError(f"Expected exactly 150 questions per level, found {dict(counts)}")
     errors = []
     outputs = {}
     OUT.mkdir(parents=True, exist_ok=True)
