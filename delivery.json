@@ -1,0 +1,29 @@
+{
+  "source_sha": "31b2a1c8f8dc8629d50761e29f9c10314c9ffacd",
+  "verification_sha": "b6ab96cafb91c83b7b1ebf3c4a41a65235cc515d",
+  "run": 41857281901,
+  "scope": "topics-layout",
+  "full_ui_suite_executed": false,
+  "targeted_journey_completed": true,
+  "ui_step_outcome": "success",
+  "executed_ui_groups": [
+    "compact_dark_large_text",
+    "quran_topics_offline_search_navigation"
+  ],
+  "unit_tests": 12,
+  "unit_failures": 0,
+  "unit_errors": 0,
+  "previous_full_run": "https://github.com/ibragimvisaevv-cloud/ZikrTime/actions/runs/41834287495",
+  "previous_full_source_sha": "02cc5ec46fbae5ec51e08802a0c18c8b2808b3e9",
+  "changed_paths_since_full_run": [
+    ".github/workflows/learning-topics-layout.yml",
+    "app/src/main/java/com/zikrtime/app/ui/QuranReader.kt",
+    "tools/ci/learning_topics_layout_evidence.py",
+    "tools/ci/learning_topics_smoke.sh",
+    "tools/ci/learning_topics_ui.py"
+  ],
+  "debug_apk_sha256": "910ab53858d4f7cc7684dae7110dcc2f0340440f4175c9b4cdc1bc7a1c83906b",
+  "debug_apk_size": 102906960,
+  "release_apk_sha256": "40a0c2e07122e43f736923e52f4752255142b1a692ea769db0cc914f802cc6a9",
+  "release_apk_size": 61777634
+}

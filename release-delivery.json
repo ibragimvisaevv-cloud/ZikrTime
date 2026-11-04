@@ -1,0 +1,10 @@
+{
+  "version": "0.8.21",
+  "version_code": 33,
+  "source_sha": "31b2a1c8f8dc8629d50761e29f9c10314c9ffacd",
+  "run": 41838955090,
+  "apk_size": 61777634,
+  "apk_sha256": "40a0c2e07122e43f736923e52f4752255142b1a692ea769db0cc914f802cc6a9",
+  "certificate_sha256": "7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf",
+  "quran_assets_unchanged": true
+}
