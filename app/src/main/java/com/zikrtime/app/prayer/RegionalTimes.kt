@@ -37,7 +37,11 @@ object RegionalTimes {
         if (city == lastCity) return lastId
         val entries = Cities.load(context).second
         val match = entries.firstOrNull { entry ->
-            (if (city.id != null) entry.id == city.id else entry.names.values.any { it.equals(city.name.trim(), true) }) &&
+            (if (city.id != null) entry.id == city.id else entry.names.values.any { name ->
+                val reported = city.name.trim()
+                name.equals(reported, ignoreCase = true) ||
+                    name.substringBefore(" (").substringBefore(",").equals(reported, ignoreCase = true)
+            }) &&
                 sameLocality(city.latitude, city.longitude, entry.lat, entry.lon)
         }
         lastCity = city
