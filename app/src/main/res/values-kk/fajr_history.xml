@@ -1,0 +1,10 @@
+<resources>
+    <string name="fajr_history_title">Оятқыштың соңғы қоңырауы</string>
+    <string name="fajr_history_empty">Оятқыш әлі шырылдаған жоқ.</string>
+    <string name="fajr_history_daily">Таң намазына оятқыш</string>
+    <string name="fajr_history_test">Оятқышты тексеру</string>
+    <string name="fajr_history_snooze">Кейінге қалдырылған қоңырау</string>
+    <string name="fajr_history_planned">Жоспарланған уақыт — %1$s</string>
+    <string name="fajr_history_fired">Шырылдаған уақыт — %1$s</string>
+    <string name="fajr_history_delay">Кешігу — %1$d минут</string>
+</resources>

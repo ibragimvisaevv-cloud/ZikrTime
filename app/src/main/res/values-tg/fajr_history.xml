@@ -1,0 +1,10 @@
+<resources>
+    <string name="fajr_history_title">Занги охирини соат</string>
+    <string name="fajr_history_empty">Соати зангдор ҳанӯз занг назадааст.</string>
+    <string name="fajr_history_daily">Соати зангдори бомдод</string>
+    <string name="fajr_history_test">Санҷиши соати зангдор</string>
+    <string name="fajr_history_snooze">Занги ба таъхир гузошташуда</string>
+    <string name="fajr_history_planned">Вақти таъйиншуда — %1$s</string>
+    <string name="fajr_history_fired">Вақти занг — %1$s</string>
+    <string name="fajr_history_delay">Таъхир — %1$d дақиқа</string>
+</resources>

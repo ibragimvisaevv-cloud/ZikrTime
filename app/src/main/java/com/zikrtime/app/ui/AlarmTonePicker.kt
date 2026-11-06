@@ -42,8 +42,11 @@ internal fun AlarmTonePicker() {
     val selected = AlarmTone.selected()
     var importing by remember { mutableStateOf(false) }
     var failed by remember { mutableStateOf(false) }
-    val defaultTitle by produceState<String?>(null, selected, AppEvents.resumeCount) {
-        value = if (selected == null) withContext(Dispatchers.IO) { AlarmTone.defaultTitle(context) } else null
+    var defaultTitle by remember(context, selected) { mutableStateOf<String?>(null) }
+    LaunchedEffect(context, selected, AppEvents.resumeCount) {
+        if (selected == null) {
+            defaultTitle = withContext(Dispatchers.IO) { AlarmTone.defaultTitle(context) }
+        }
     }
 
     DisposableEffect(lifecycle, sample) {
