@@ -83,11 +83,11 @@ import kotlin.math.roundToInt
 fun HomeScreen() {
     val nav = LocalNav.current
     val context = LocalContext.current
-    val zone = CityZones.forCity(Store.location.id, OnlineTimes.day(java.time.LocalDate.now())?.zone ?: java.time.ZoneId.systemDefault())
+    val zone = PrayerSchedule.zone()
     var now by remember(zone) { mutableStateOf(ZonedDateTime.now(zone)) }
     val today = now.toLocalDate()
     val adjustments = Prayer.entries.map { Store.adjustment(it) }
-    val times = remember(today, zone, Store.location, Store.method, Store.madhab, Store.onlineTimes, OnlineTimes.version, adjustments) {
+    val times = remember(today, zone, Store.location, Store.method, Store.madhab, Store.onlineTimes, com.zikrtime.app.prayer.RegionalTimes.preferred, OnlineTimes.version, adjustments) {
         PrayerSchedule.forDate(today, zone)
     }
     val next = remember(now, times) { PrayerSchedule.next(now) }
@@ -120,6 +120,7 @@ fun HomeScreen() {
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Text(stringResource(R.string.home_today), style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier.weight(1f))
+                JournalHomeActions()
                 androidx.compose.material3.IconButton(onClick = { nav.open(Screen.PRAYER_SETTINGS) },
                     modifier = Modifier.testTag("prayer_notification_settings").semantics { testTagsAsResourceId = true }) {
                     Icon(Icons.Default.Notifications, stringResource(R.string.prayer_notifications),
@@ -135,22 +136,25 @@ fun HomeScreen() {
             Spacer(Modifier.height(12.dp))
             val prayed = Store.prayedOn(today)
             Prayer.entries.forEach { p ->
-                PrayerRow(p, clock(times[p]), p == current,
-                    next.second.toLocalDate() == today && p == next.first,
+                val dayOffset = times[p].toLocalDate().toEpochDay() - today.toEpochDay()
+                val clockLabel = when (dayOffset) {
+                    -1L -> stringResource(R.string.regional_previous_day, clock(times[p]))
+                    1L -> stringResource(R.string.regional_next_day, clock(times[p]))
+                    else -> clock(times[p])
+                }
+                PrayerRow(p, clockLabel, p == current,
+                    p == next.first && times[p].toInstant() == next.second.toInstant(),
                     !times[p].isAfter(now), p in prayed, onToggle = {
                         Store.setPrayed(today, p, p !in prayed)
                         com.zikrtime.app.widget.Widgets.updateAll(context)
                     })
             }
             Text(
-                if (Store.method == com.zikrtime.app.prayer.CalcMethod.MOSCOW_CATHEDRAL) stringResource(R.string.home_source_dumrf)
-                else stringResource(
-                    if (PrayerSchedule.isOnline(today)) R.string.home_source_online else R.string.home_source_local,
-                    methodName(Store.method),
-                ),
+                scheduleSourceLabel(today, times.polarEstimate),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 8.dp, bottom = 4.dp),
+                modifier = Modifier.testTag("prayer_schedule_source").semantics { testTagsAsResourceId = true }
+                    .padding(start = 8.dp, end = 8.dp, top = 8.dp, bottom = 4.dp),
             )
         }
 

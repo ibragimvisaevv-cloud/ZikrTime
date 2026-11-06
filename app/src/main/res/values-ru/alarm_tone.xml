@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tone_phone_default">Мелодия будильника по умолчанию</string>
+    <string name="tone_selected">Выбранная мелодия</string>
+    <string name="tone_hint">Можно выбрать ту же мелодию, что в приложении «Часы». Некоторые телефоны сохраняют её отдельно для каждого будильника.</string>
+    <string name="tone_choose">Выбрать мелодию</string>
+    <string name="tone_stop">Остановить</string>
+    <string name="tone_file">Аудиофайл</string>
+    <string name="tone_failed">Не удалось воспроизвести звук. Выберите другую мелодию или файл.</string>
+</resources>

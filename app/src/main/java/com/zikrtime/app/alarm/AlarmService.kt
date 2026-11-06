@@ -9,7 +9,8 @@ import android.content.pm.ServiceInfo
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
-import android.media.RingtoneManager
+import android.app.NotificationManager
+import androidx.core.app.NotificationManagerCompat
 import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
@@ -41,17 +42,29 @@ class AlarmService : Service() {
     private var player: MediaPlayer? = null
     private var vibrator: Vibrator? = null
     private var savedVolume = -1
+    private var testing = false
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Store.init(this)
         when (intent?.action) {
             ACTION_STOP -> stopAlarm()
             ACTION_SNOOZE -> {
-                Store.alarmSnoozeAt = System.currentTimeMillis() + SNOOZE_MINUTES * 60_000L
-                FajrAlarm.schedule(this)
+                if (!testing && AlarmState.ringing && Store.alarmEnabled && Store.alarmSnoozeAllowed) {
+                    Store.alarmSnoozeAt = System.currentTimeMillis() + SNOOZE_MINUTES * 60_000L
+                    FajrAlarm.schedule(this)
+                }
                 stopAlarm()
             }
-            else -> startAlarm(intent?.getBooleanExtra(FajrAlarm.EXTRA_TEST, false) == true)
+            FajrAlarm.ACTION_FIRE -> {
+                FajrAlarm.createChannel(this)
+                val visible = NotificationManagerCompat.from(this).areNotificationsEnabled() &&
+                    getSystemService(NotificationManager::class.java).getNotificationChannel(FajrAlarm.CHANNEL_ID)?.importance != NotificationManager.IMPORTANCE_NONE
+                if (Store.alarmEnabled && visible) {
+                    testing = intent.getBooleanExtra(FajrAlarm.EXTRA_TEST, false)
+                    startAlarm(testing)
+                } else stopSelf()
+            }
+            else -> stopSelf()
         }
         return START_NOT_STICKY
     }
@@ -115,17 +128,16 @@ class AlarmService : Service() {
             }
         }
 
-        val adhanId = if (Store.alarmSound == "system") 0 else AdhanSound.resId(this, AdhanSound.voice(Store.alarmSound).id)
-        player = if (adhanId != 0) {
-            play {
-                resources.openRawResourceFd(adhanId).use { setDataSource(it.fileDescriptor, it.startOffset, it.length) }
+        val sources = buildList {
+            if (Store.alarmSound == "system") {
+                addAll(AlarmTone.candidates(this@AlarmService))
+            } else {
+                AdhanSound.uri(this@AlarmService, Store.alarmSound)?.let { add(it) }
             }
-        } else {
-            null
-        } ?: run {
-            val uri = RingtoneManager.getActualDefaultRingtoneUri(this, RingtoneManager.TYPE_ALARM)
-                ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE)
-            uri?.let { u -> play { setDataSource(this@AlarmService, u) } }
+            AdhanSound.uri(this@AlarmService, AdhanSound.voices.first().id)?.let { add(it) }
+        }
+        player = sources.distinct().firstNotNullOfOrNull { uri ->
+            play { setDataSource(this@AlarmService, uri) }
         }
     }
 
@@ -171,7 +183,8 @@ class AlarmService : Service() {
         )
         val builder = NotificationCompat.Builder(this, FajrAlarm.CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
-            .setContentTitle(res.getString(R.string.alarm_ring_title))
+            .setContentTitle(res.getString(if (test) R.string.alarm_test_label else R.string.alarm_ring_title))
+            .setOnlyAlertOnce(true)
             .setContentText(res.getString(R.string.alarm_ring_text))
             .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setPriority(NotificationCompat.PRIORITY_MAX)
@@ -207,7 +220,7 @@ class AlarmService : Service() {
         const val AUTO_STOP_MINUTES = 20
 
         fun start(context: Context, test: Boolean, fajrMillis: Long) {
-            val intent = Intent(context, AlarmService::class.java)
+            val intent = Intent(context, AlarmService::class.java).setAction(FajrAlarm.ACTION_FIRE)
                 .putExtra(FajrAlarm.EXTRA_TEST, test)
                 .putExtra(FajrAlarm.EXTRA_FAJR, fajrMillis)
             ContextCompat.startForegroundService(context, intent)

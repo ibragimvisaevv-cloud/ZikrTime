@@ -1,6 +1,5 @@
 package com.zikrtime.app.prayer
 
-import com.zikrtime.app.data.City
 import com.zikrtime.app.data.Store
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -9,32 +8,15 @@ import java.net.URL
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZoneId
-import kotlin.math.abs
-import kotlin.math.cos
-import kotlin.math.sqrt
 
-/**
- * Официальное расписание Московской Соборной мечети (ДУМ РФ) с главной страницы dumrf.ru:
- * блок «Время намазов на сегодня … (Москва)».
- *
- * Сайт показывает только сегодняшний день, поэтому:
- *  - на сегодня берём время ровно как на сайте;
- *  - на другие дни считаем по формуле метода [CalcMethod.MOSCOW_CATHEDRAL]
- *    и добавляем сегодняшнюю разницу между сайтом и формулой (она меняется очень медленно).
- * Без интернета — просто формула, она подобрана по тому же расписанию.
- */
+/** Moscow Cathedral Mosque publishes today's row in Moscow time. */
 object DumrfLive {
     private const val URL_HOME = "https://dumrf.ru/"
-    private const val KEY = "dumrf_day" // "2026-10-24|05:15,07:14,12:19,14:34,17:12,18:50"
+    private const val KEY = "dumrf_dated_day_v2" // "2026-10-24|05:15,07:14,12:19,14:34,17:12,18:50"
     val MOSCOW_ZONE: ZoneId = ZoneId.of("Europe/Moscow")
     private val order = Prayer.entries
 
-    /** Москва и ближнее Подмосковье (до 60 км от центра) — там действует расписание Соборной мечети. */
-    fun isMoscow(city: City = Store.location): Boolean {
-        val dLat = (city.latitude - 55.7558) * 111.0
-        val dLon = (city.longitude - 37.6173) * 111.0 * cos(Math.toRadians(55.7558))
-        return sqrt(dLat * dLat + dLon * dLon) < 60.0
-    }
+    private fun isMoscow() = RegionalTimes.cityId() == "moscow"
 
     /** Сохранённое официальное время: дата и шесть времён. */
     private fun stored(): Pair<LocalDate, Map<Prayer, LocalTime>>? {
@@ -54,37 +36,27 @@ object DumrfLive {
         return if (day == date) times else null
     }
 
-    /** Разница «сайт минус формула» в минутах по каждому времени (если сверка была не позже недели назад). */
-    fun corrections(calculated: (LocalDate) -> Map<Prayer, LocalTime>): Map<Prayer, Long>? {
-        if (!isMoscow()) return null
-        val (day, times) = stored() ?: return null
-        if (abs(java.time.temporal.ChronoUnit.DAYS.between(day, LocalDate.now(MOSCOW_ZONE))) > 7) return null
-        val calc = calculated(day)
-        return order.associateWith { p ->
-            val diff = java.time.Duration.between(calc.getValue(p), times.getValue(p)).toMinutes()
-            diff.coerceIn(-10, 10)
-        }
-    }
-
     /** Загружает сегодняшнее расписание (не чаще раза в день, если не force). */
     suspend fun refresh(force: Boolean = false): Boolean {
         if (!isMoscow()) return false
         val today = LocalDate.now(MOSCOW_ZONE)
         if (!force && stored()?.first == today) return true
-        val html = withContext(Dispatchers.IO) { runCatching { download() }.getOrNull() } ?: return stored() != null
-        val times = parse(html) ?: return stored() != null
+        val html = withContext(Dispatchers.IO) { runCatching { download(today) }.getOrNull() } ?: return official(today) != null
+        val times = parse(html) ?: return official(today) != null
+        if (!RegionalTimes.preferred || !Store.onlineTimes || !isMoscow() || LocalDate.now(MOSCOW_ZONE) != today) return false
         Store.putRaw(KEY, today.toString() + "|" + order.joinToString(",") { times.getValue(it).toString() })
         Store.onlineUpdatedAt = System.currentTimeMillis()
         return true
     }
 
-    private fun download(): String {
+    private fun download(today: LocalDate): String {
         val conn = URL(URL_HOME).openConnection() as HttpURLConnection
         conn.connectTimeout = 10_000
         conn.readTimeout = 15_000
         conn.setRequestProperty("User-Agent", "ZikrTime (Android)")
         try {
             if (conn.responseCode != 200) error("HTTP ${conn.responseCode}")
+            require(conn.date > 0 && java.time.Instant.ofEpochMilli(conn.date).atZone(MOSCOW_ZONE).toLocalDate() == today)
             return conn.inputStream.bufferedReader(Charsets.UTF_8).use { it.readText() }
         } finally {
             conn.disconnect()
@@ -109,6 +81,7 @@ object DumrfLive {
             .replace(Regex("\\s+"), " ")
         val start = text.indexOf("Время намаз").takeIf { it >= 0 } ?: return null
         val block = text.substring(start, minOf(text.length, start + 1500))
+        if (!block.contains("(Москва)")) return null
         val result = LinkedHashMap<Prayer, LocalTime>()
         for ((prayer, name) in names) {
             val m = Regex("$name\\s*:?\\s*(\\d{1,2}):(\\d{2})").find(block) ?: return null

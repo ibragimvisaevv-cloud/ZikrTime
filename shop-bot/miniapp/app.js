@@ -103,7 +103,7 @@
   }
 
   function statusChip(s) {
-    const map = { approved: ["ok", "✅ Опубликована"], pending: ["wait", "⏳ На проверке"], rejected: ["bad", "❌ Отклонена"], hidden: ["", "🙈 Скрыта"] };
+    const map = { awaiting_payment: ["wait", "Одобрена · ожидает оплаты 200 ₽"], approved: ["ok", "✅ Опубликована"], pending: ["wait", "⏳ На проверке"], rejected: ["bad", "❌ Отклонена"], hidden: ["", "🙈 Скрыта"] };
     const [cls, txt] = map[s.status] || ["", s.status];
     let out = `<span class="chip ${cls}">${txt}</span>`;
     if (s.partner) out += `<span class="chip gold">⭐ Партнёр</span>`;
@@ -158,6 +158,7 @@
     let html = sellerCard(s).replace('class="card seller"', 'class="card seller" id="edit"');
     html += `<div class="row"><button class="btn ghost" id="editBtn">✏️ Изменить данные</button>
       ${s.status === "approved" ? `<button class="btn gold" id="promo">⬆️ Продвинуть</button>` : ""}</div>`;
+    if (s.orders && s.orders.length) html += `<div class="card"><h2>Операции</h2>${s.orders.map(o => `<p>${o.kind === "listing" ? "Размещение" : "Продвижение"} · ${money(o.amount / 100)} · ${esc(orderStatus(o.state))}</p>`).join("")}</div>`;
     if (s.status === "pending") html += `<p class="sub" style="margin-top:10px">Компания на проверке. Товары можно добавлять уже сейчас — они появятся вместе с компанией.</p>`;
     html += `<h2>Товары (${s.products.length}/${me.limits.products})</h2><div class="card">`;
     html += s.products.length ? s.products.map((p) => `<div class="product" data-pid="${esc(p.id)}">
@@ -198,7 +199,7 @@
     const f = scr.form || (scr.form = s ? Object.assign({}, s) : { name: "", category: "other", city: "", description: "", address: "", phone: "", whatsapp: false, telegram: (me.user.username || ""), instagram: "", logo: "", cover: "" });
     const cats = me.categories.map((c) => `<option value="${esc(c.id)}" ${c.id === f.category ? "selected" : ""}>${esc(c.name)}</option>`).join("");
     app.innerHTML = `<h1>${s ? "Данные компании" : "Новая компания"}</h1>
-      <p class="sub">${s ? "Изменения в опубликованной компании видны в приложении через пару минут." : "После проверки компания появится в магазине приложения."}</p>
+      <p class="sub">${s ? "Изменения в опубликованной компании видны в приложении через пару минут." : "Размещение карточки — 200 ₽ один раз после одобрения. Товары входят в стоимость."}</p>
       <div class="card">
         <label>Обложка</label><div class="pic wide" id="cover" style="${f.cover ? `background-image:url('${esc(f.cover)}')` : ""}">${f.cover ? "" : "🌄"}</div>
         <label>Логотип</label><div class="pics"><div class="pic" id="logo" style="${f.logo ? `background-image:url('${esc(f.logo)}')` : ""}">${f.logo ? "" : "🏪"}</div></div>
@@ -269,43 +270,13 @@
   // ---------------------------------------------------------------- продвижение
   function renderPromo(scr) {
     const s = sellerById(scr.sid);
-    const req = scr.request || (s.promo_request && s.promo_request.status === "new" ? s.promo_request : null);
-    const prices = Object.entries(me.prices).sort((a, b) => a[0] - b[0]);
-    let html = `<div class="hero"><h1>⬆️ Продвижение</h1><p>«${esc(s.name)}» будет показываться в приложении выше остальных компаний — с пометкой «Реклама». Остальные компании идут в случайном порядке, он меняется каждый день.</p></div>`;
-    if (s.promo_until) html += `<div class="card">Сейчас продвигается до <b>${date(s.promo_until)}</b>. Новый срок добавится к текущему.</div>`;
-    if (s.promo_request && s.promo_request.status === "claimed") {
-      html += `<div class="card">💰 Ваша оплата за ${s.promo_request.days} дн. проверяется. Мы пришлём сообщение в Telegram, как только включим продвижение.</div>`;
-    } else if (req) {
-      html += `<div class="card"><h2 style="margin-top:0">Оплата: ${money(req.price)} за ${req.days} дн.</h2>
-        <p>1. Переведите <b>${money(req.price)}</b>${me.pay_url ? " по кнопке ниже" : " владельцу магазина"}.</p>
-        <p>2. В комментарии к переводу укажите код: <span class="code" id="code">${esc(req.id)}</span></p>
-        <p>3. Нажмите «Я оплатил» — мы проверим перевод и включим продвижение.</p>
-        ${me.pay_url ? `<button class="btn gold" id="pay">💳 Перейти к оплате</button>` : ""}
-        <button class="btn primary" id="claim">✅ Я оплатил</button></div>`;
-    } else {
-      html += `<h2>Выберите срок</h2><div class="tariffs">${prices.map(([d, p], i) => `<div class="tariff ${i === prices.length - 1 ? "best" : ""}" data-days="${d}">
-        <div>${d} дней</div><b>${money(p)}</b><div class="muted">${Math.round(p / d)} ₽ в день</div></div>`).join("")}</div>`;
-    }
-    app.innerHTML = html;
-    app.querySelectorAll(".tariff").forEach((t) => t.onclick = () => run(null, async () => {
-      tap();
-      const r = await api("promo_request", { sid: s.id, days: +t.dataset.days });
-      scr.request = r.request;
-      render();
-    }));
-    const pay = document.getElementById("pay");
-    if (pay) pay.onclick = () => { if (tg) tg.openLink(me.pay_url); else window.open(me.pay_url); };
-    const code = document.getElementById("code");
-    if (code) code.onclick = () => { try { navigator.clipboard.writeText(code.textContent); toast("Код скопирован"); } catch (e) { /* нет */ } };
-    const claim = document.getElementById("claim");
-    if (claim) claim.onclick = (e) => run(e.target, async () => {
-      await api("promo_claim", { rid: req.id });
-      await api("me");
-      scr.request = null;
-      haptic("success");
-      toast("Спасибо! Проверим и включим 🙏");
-      render();
-    });
+    const rates = Object.entries(me.prices).map(([days, price]) => `<p>${esc(days)} дн. · ${money(price)}</p>`).join("");
+    const orders = (s.orders || []).map(o => `<p>${esc(o.kind === "listing" ? "Размещение" : "Продвижение")} · ${money(o.amount / 100)} · ${esc(orderStatus(o.state))}</p>`).join("");
+    app.innerHTML = `<div class="hero"><h1>Продвижение</h1><p>${esc(s.name)}</p></div><div class="card">${rates}</div>${orders ? '<div class="card">' + orders + '</div>' : ''}`;
+  }
+
+  function orderStatus(state) {
+    return ({initializing: "Создаётся", waiting: "Ожидает оплаты", paid: "Оплачено", failed: "Не оплачено", review: "На проверке", refund_review: "Возврат на проверке", refunded: "Возвращено"})[state] || state;
   }
 
   // ---------------------------------------------------------------- модерация (владелец и модераторы)
@@ -356,15 +327,13 @@
     return `<div class="card"><h2 style="margin-top:0">Тарифы продвижения</h2>
       <div class="row"><div style="flex:1"><label>7 дней, ₽</label><input id="p7" inputmode="numeric" value="${esc(me.prices["7"])}"></div>
       <div style="flex:1"><label>30 дней, ₽</label><input id="p30" inputmode="numeric" value="${esc(me.prices["30"])}"></div></div>
-      <label>Ссылка для оплаты (CloudTips, СБП)</label><input id="payurl" value="${esc(me.pay_url)}" placeholder="https://pay.cloudtips.ru/p/…">
-      <p class="muted">Продавцы переводят по этой ссылке и указывают код заявки в комментарии. Вы подтверждаете оплату во вкладке «Модерация» или кнопкой в боте.</p>
       <button class="btn primary" id="saveSettings">💾 Сохранить</button></div>`;
   }
 
   function bindSettings() {
     document.getElementById("saveSettings").onclick = (e) => run(e.target, async () => {
-      const r = await api("settings", { prices: { 7: +document.getElementById("p7").value, 30: +document.getElementById("p30").value }, pay_url: document.getElementById("payurl").value.trim() });
-      me.prices = r.prices; me.pay_url = r.pay_url;
+      const r = await api("settings", { prices: { 7: +document.getElementById("p7").value, 30: +document.getElementById("p30").value } });
+      me.prices = r.prices;
       haptic("success"); toast("Сохранено");
     });
   }

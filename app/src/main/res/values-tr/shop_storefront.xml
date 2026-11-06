@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_terms_title">Listeleme koşulları</string>
+    <string name="store_listing_terms">Başvurunuz onaylandıktan sonra yapacağınız tek seferlik ödeme işletme sayfanızı ve tüm ürünlerinizi kapsar.</string>
+    <string name="store_promotion_terms">İsteğe bağlı tanıtım için ayrıca ücret alınır.</string>
+    <string name="store_apply">Başvuru yap</string>
+    <string name="store_unavailable">Katalog yüklenemedi</string>
+    <string name="store_retry">Tekrar dene</string>
+    <string name="store_empty_catalog">Katalog şu an boş</string>
+    <string name="store_clear">Aramayı temizle</string>
+    <string name="store_more_products">Daha fazla ürün göster</string>
+    <string name="store_seller_portal">Satıcı paneli</string>
+    <string name="store_browser_unavailable">Tarayıcı açılamadı</string>
+</resources>

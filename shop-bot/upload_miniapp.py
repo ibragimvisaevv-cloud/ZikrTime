@@ -1,6 +1,8 @@
 """Выкладывает мини-приложение (кабинет продавца) в публичный бакет: miniapp/index.html, app.js, style.css, config.js.
 Нужны S3_KEY_ID, S3_SECRET, BUCKET и API_URL (адрес облачной функции API)."""
+import html
 import json
+import re
 import os
 import sys
 import urllib.request
@@ -28,6 +30,14 @@ def main():
         print("miniapp/" + name, len(data))
     print(index.MINIAPP_URL)
     upload_site(st)
+    url = os.environ["API_URL"]
+    if not re.fullmatch(r"https://functions\.yandexcloud\.net/[a-z0-9]+", url):
+        raise ValueError("Неожиданный адрес функции кабинета")
+    target = html.escape(url, quote=True)
+    landing = (f'<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="referrer" content="no-referrer">'
+               f'<meta http-equiv="refresh" content="0;url={target}"><title>Кабинет продавца</title>'
+               f'<a href="{target}">Открыть кабинет продавца Зикр-тайм</a></html>')
+    st.put("seller.html", landing.encode(), TYPES["html"], cache="no-cache")
 
 
 def bot_contact():

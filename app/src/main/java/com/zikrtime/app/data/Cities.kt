@@ -3,6 +3,7 @@ package com.zikrtime.app.data
 import android.content.Context
 import com.zikrtime.app.i18n.Lang
 import org.json.JSONObject
+import java.time.ZoneId
 
 /** Выбранное место: город из списка (id) или точка по геолокации (id = null). */
 data class City(val id: String?, val name: String, val latitude: Double, val longitude: Double)
@@ -11,7 +12,7 @@ data class City(val id: String?, val name: String, val latitude: Double, val lon
 object Cities {
 
     class Group(val id: String, val names: Map<String, String>)
-    class Entry(val id: String, val group: String, val lat: Double, val lon: Double, val names: Map<String, String>) {
+    class Entry(val id: String, val group: String, val lat: Double, val lon: Double, val names: Map<String, String>, val zone: ZoneId? = null) {
         fun toCity(lang: String) = City(id, names[lang] ?: names.getValue("en"), lat, lon)
     }
 
@@ -32,7 +33,23 @@ object Cities {
                 Entry(c.getString("id"), c.getString("group"), c.getDouble("lat"), c.getDouble("lon"), names(c.getJSONObject("names")))
             }
         }
-        return (groups to cities).also { data = it }
+        val regional = context.assets.open("cities_ru_regions.tsv").bufferedReader().useLines(::parseRegions)
+        val existing = cities.mapTo(mutableSetOf()) { it.id }
+        return (groups to (cities + regional.filter { existing.add(it.id) })).also { data = it }
+    }
+
+    /** Additional Russian regional centres have their own offline IANA zone. */
+    fun regionZone(id: String?): ZoneId? = if (id == null) null else data?.second?.firstOrNull { it.id == id }?.zone
+
+    internal fun parseRegions(lines: Sequence<String>): List<Entry> {
+        val languages = listOf("ru", "en", "az", "kk", "ky", "tg", "tr", "uz")
+        return lines.filter { it.isNotBlank() && !it.startsWith("#") }.map { line ->
+            // id, GeoNames id, WGS84 latitude/longitude, IANA zone, local names
+            val fields = line.split('\t', limit = 13)
+            require(fields.size == 13 && fields[5].isNotBlank() && fields[6].isNotBlank())
+            val names = languages.zip(fields.drop(5)).filter { it.second.isNotBlank() }.toMap()
+            Entry(fields[0], "russia", fields[2].toDouble(), fields[3].toDouble(), names, ZoneId.of(fields[4]))
+        }.toList()
     }
 
     val DEFAULT = City("moscow", "Moscow", 55.7558, 37.6173)

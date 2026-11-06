@@ -285,14 +285,15 @@ private fun DrawScope.moon(c: Offset) {
  */
 @Composable
 fun SkyHero(prayer: Prayer, at: ZonedDateTime, previous: java.time.Instant?, times: PrayerTimes, modifier: Modifier = Modifier) {
-    var now by remember { mutableStateOf(ZonedDateTime.now()) }
-    LaunchedEffect(Unit) {
+    val zone = times[Prayer.DHUHR].zone
+    var now by remember(zone) { mutableStateOf(ZonedDateTime.now(zone)) }
+    LaunchedEffect(zone) {
         while (true) {
             delay(1000 - System.currentTimeMillis() % 1000)
-            now = ZonedDateTime.now()
+            now = ZonedDateTime.now(zone)
         }
     }
-    val today = times[Prayer.FAJR].toLocalDate()
+    val today = times.date
     val yesterday = remember(times) { PrayerSchedule.forDate(today.minusDays(1)) }
     val tomorrow = remember(times) { PrayerSchedule.forDate(today.plusDays(1)) }
     val period = skyPeriod(now, times)

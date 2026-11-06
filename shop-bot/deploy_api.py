@@ -27,7 +27,7 @@ def call(method, url, body=None):
         with urllib.request.urlopen(req, timeout=60) as r:
             return json.loads(r.read() or b"{}")
     except urllib.error.HTTPError as e:
-        print(f"HTTP {e.code} {method} {url.split('?')[0]}: {e.read()[:500].decode(errors='replace')}", file=sys.stderr)
+        print(f"HTTP {e.code} {method} {url.split('?')[0]}", file=sys.stderr)
         raise
 
 
@@ -35,7 +35,7 @@ def wait(op):
     for _ in range(120):
         if op.get("done"):
             if op.get("error"):
-                raise SystemExit("операция не удалась: " + json.dumps(op["error"], ensure_ascii=False)[:500])
+                raise SystemExit("операция не удалась, код: " + str(op["error"].get("code", "")))
             return op.get("response", {})
         time.sleep(2)
         op = call("GET", OPS + op["id"])
@@ -64,9 +64,12 @@ def main():
 
     buf = io.BytesIO()
     with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
-        for f in ("index.py", "miniapi.py", "place_corrections.py", "feedback.py"):
+        for f in ("index.py", "miniapi.py", "acquiring.py", "seller.html", "place_corrections.py", "feedback.py"):
             z.write(os.path.join(os.path.dirname(__file__), f), f)
     env = {k: os.environ[k] for k in ("BOT_TOKEN", "BUCKET", "DATA_BUCKET", "S3_KEY_ID", "S3_SECRET")}
+    env.update({k: os.environ[k] for k in ("TBANK_ENABLED", "TBANK_TERMINAL", "TBANK_PASSWORD", "TBANK_TAXATION",
+                                          "TBANK_TAX", "SELLER_OFFER_URL") if os.getenv(k)})
+    env["SELLER_PORTAL_URL"] = f"https://functions.yandexcloud.net/{fid}"
     wait(call("POST", f"{API}/versions", {
         "functionId": fid,
         "runtime": "python312",

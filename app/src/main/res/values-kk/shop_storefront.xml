@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_terms_title">Жариялау шарттары</string>
+    <string name="store_listing_terms">Өтінім мақұлданғаннан кейінгі бір реттік төлем компания парақшасы мен оның барлық тауарларын қамтиды.</string>
+    <string name="store_promotion_terms">Қаласаңыз, жарнаманы бөлек ақыға қоса аласыз.</string>
+    <string name="store_apply">Өтінім беру</string>
+    <string name="store_unavailable">Каталогты жүктеу мүмкін болмады</string>
+    <string name="store_retry">Қайталап көру</string>
+    <string name="store_empty_catalog">Каталог әзірге бос</string>
+    <string name="store_clear">Іздеуді тазарту</string>
+    <string name="store_more_products">Тағы тауар көрсету</string>
+    <string name="store_seller_portal">Сатушы кабинеті</string>
+    <string name="store_browser_unavailable">Браузерді ашу мүмкін болмады</string>
+</resources>

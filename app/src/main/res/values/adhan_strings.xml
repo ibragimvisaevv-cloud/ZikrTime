@@ -11,9 +11,12 @@
     <string name="adhan_open_recording_source">Open original recording</string>
     <string name="adhan_open_license">License</string>
     <string name="adhan_close_source">Close</string>
-    <string name="adhan_recording_processing">Audio prepared for the app: volume adjusted and converted to Ogg Vorbis. Credits identify the recorder or source; the performer is named only where the source provides their name.</string>
+    <string name="adhan_recording_processing">Original recordings by Ahmed Khalaf for the Athan app. The opening pause was trimmed, low frequencies filtered, and loudness matched. Distributed under CC BY 4.0.</string>
     <string name="adhan_link_failed">Unable to open the link.</string>
     <string name="adhan_stop_preview">Stop preview</string>
     <string name="adhan_preview_failed">Unable to play this recording. Try another recording.</string>
     <string name="adhan_preview_volume">Preview uses your device’s media volume.</string>
+    <string name="adhan_khalaf_one">Ahmed Khalaf · Adhan I</string>
+    <string name="adhan_khalaf_two">Ahmed Khalaf · Adhan II</string>
+    <string name="adhan_khalaf_fajr">Ahmed Khalaf · Fajr</string>
 </resources>

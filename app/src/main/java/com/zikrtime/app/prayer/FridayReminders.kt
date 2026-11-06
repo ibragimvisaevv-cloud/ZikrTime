@@ -82,15 +82,15 @@ object FridayReminders {
 
     /** Ближайшее напоминание после момента [after]. */
     fun next(after: ZonedDateTime = ZonedDateTime.now()): Pair<Slot, ZonedDateTime> {
-        var friday = after.toLocalDate().with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY))
+        var friday = after.withZoneSameInstant(PrayerSchedule.zone()).toLocalDate().with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY))
         repeat(2) {
-            for (slot in Slot.entries) {
+            for (slot in listOf(Slot.JUMUAH, Slot.LAST_HOUR)) {
                 val t = timeOf(slot, friday)
                 if (t.isAfter(after)) return slot to t
             }
             friday = friday.plusWeeks(1)
         }
-        return Slot.MORNING to timeOf(Slot.MORNING, friday)
+        return Slot.JUMUAH to timeOf(Slot.JUMUAH, friday)
     }
 
     fun schedule(context: Context, after: ZonedDateTime = ZonedDateTime.now()) {
@@ -115,7 +115,7 @@ object FridayReminders {
 
     internal fun onAlarm(context: Context, intent: Intent) {
         val slot = intent.getStringExtra(EXTRA_SLOT)?.let { runCatching { Slot.valueOf(it) }.getOrNull() }
-        if (slot != null && Store.fridayReminders) show(context, slot)
+        if (slot != null && slot != Slot.MORNING && Store.fridayReminders) show(context, slot)
         schedule(context, ZonedDateTime.now().plusMinutes(1))
     }
 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_terms_title">Yerləşdirmə şərtləri</string>
+    <string name="store_listing_terms">Müraciət təsdiqləndikdən sonra birdəfəlik ödəniş şirkətin səhifəsini və bütün məhsullarını əhatə edir.</string>
+    <string name="store_promotion_terms">İstəyə görə ayrıca ödənişlə tanıtım sifariş edə bilərsiniz.</string>
+    <string name="store_apply">Müraciət göndər</string>
+    <string name="store_unavailable">Kataloqu yükləmək mümkün olmadı</string>
+    <string name="store_retry">Yenidən cəhd et</string>
+    <string name="store_empty_catalog">Kataloq hələlik boşdur</string>
+    <string name="store_clear">Axtarışı təmizlə</string>
+    <string name="store_more_products">Daha çox məhsul göstər</string>
+    <string name="store_seller_portal">Satıcı kabineti</string>
+    <string name="store_browser_unavailable">Brauzeri açmaq mümkün olmadı</string>
+</resources>

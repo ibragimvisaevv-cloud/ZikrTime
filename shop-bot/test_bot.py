@@ -153,13 +153,19 @@ check(p["price"] == 1500 and p["unit"] == "6 мл" and len(p["images"]) == 2, "�
 press(SELLER, f"mod:ok:{sid}")  # не админ — ничего
 check(db()["sellers"][sid]["status"] == "pending", "продавец не может одобрить себя")
 press(OWNER, f"mod:ok:{sid}")
+check(db()["sellers"][sid]["status"] == "awaiting_payment", "новая карточка ждёт банковского подтверждения")
+# The rest of this suite exercises pre-existing published cards; settlement is covered in test_acquiring.
+legacy_db = db()
+del legacy_db["sellers"][sid]["listing_fee"]
+storage.files["data/db.json"] = json.dumps(legacy_db).encode()
+press(OWNER, f"mod:ok:{sid}")
 c = catalog()
 check(db()["sellers"][sid]["status"] == "approved", "одобрено")
 check(len(c["sellers"]) == 1 and len(c["products"]) == 1, "в каталоге")
 check(c["seller_bot"] == "ZikrTimeShopBot" and c["demo"] is False, "ссылка на бота в каталоге")
 check(c["products"][0]["price"] == 1500 and c["products"][0]["title"]["ru"] == "Масляные духи «Уд»", "товар в каталоге")
 check(c["sellers"][0]["lat"] == 43.3178 and c["sellers"][0]["accent"] == "#8A5A2B", "координаты и цвет")
-check(any("одобрена" in (t or "") for t in tg.texts(SELLER)), "продавцу сообщили об одобрении")
+check(any("одобрена" in (t or "").lower() for t in tg.texts(SELLER)), "продавцу сообщили об одобрении")
 
 # Правка после одобрения публикуется сразу, владелец уведомлён
 before = len(tg.texts(OWNER))
@@ -213,7 +219,8 @@ press(OWNER, "skip")        # telegram
 press(OWNER, "skip")        # instagram
 press(OWNER, "skip")        # логотип
 press(OWNER, "skip")        # обложка
-check(len(catalog()["sellers"]) == 2, "компания владельца сразу в каталоге")
+check(len(catalog()["sellers"]) == 1 and any(s["status"] == "awaiting_payment" for s in db()["sellers"].values()),
+      "новая компания владельца тоже ожидает оплаты")
 
 # Каталог читается приложением (тот же разбор, что в Android/iOS: обязательные поля)
 for s_ in catalog()["sellers"]:
@@ -337,23 +344,10 @@ check(b2.db["owner"] == 7 and "data/db.json" in priv.files and "data/db.json" no
 # Продвижение: заявка → «Я оплатил» → владелец подтверждает → promo_until в каталоге
 msg(OWNER, "/prices 150 400")
 check(db()["promo_prices"] == {"7": 150, "30": 400}, "продвижение: владелец меняет тарифы")
-msg(OWNER, "/payurl https://pay.cloudtips.ru/p/abc")
-press(SELLER, f"promo:{sid}")
-check(f"pt:{sid}:7" in tg.last_buttons(SELLER), "продвижение: тарифы в меню")
 press(SELLER, f"pt:{sid}:7")
-_req = next(iter(db()["promo_requests"].values()))
-check(_req["price"] == 150 and "pay.cloudtips.ru" in tg.texts(SELLER)[-1], "продвижение: заявка и ссылка на оплату")
-press(FRIEND, f"pc:{_req['id']}")
-check(db()["promo_requests"][_req["id"]]["status"] == "new", "продвижение: чужой не подтверждает оплату")
-press(SELLER, f"pc:{_req['id']}")
-check(any("Заявка на продвижение" in (t or "") for t in tg.texts(OWNER)), "продвижение: владелец получил заявку")
-press(SELLER, f"pr:ok:{_req['id']}")
-check(db()["promo_requests"][_req["id"]]["status"] == "claimed", "продвижение: продавец сам не одобряет")
-press(OWNER, f"pr:ok:{_req['id']}")
-_s = next(x for x in catalog()["sellers"] if x["id"] == sid)
-check(_s.get("promo_until", 0) > __import__("time").time() + 6 * 86400, "продвижение: включено на 7 дней")
-press(OWNER, f"pr:ok:{_req['id']}")
-check("Эта заявка уже обработана." in tg.texts(OWNER), "продвижение: повторное нажатие")
+check(not db().get("promo_requests"), "старая кнопка не заводит заявку и не предлагает донат")
+msg(SELLER, "/webcode")
+check("portal_code" in db()["users"][str(SELLER)], "продавцу выдан код входа")
 
 # Условная запись: если базу изменили параллельно — Conflict
 class TaggedStorage(FakeStorage):
@@ -403,7 +397,7 @@ check(json.loads(_priv2.files["data/db.json"])["outbox"][0][1]["text"] == "в о
 
 # Удаление
 press(SELLER, f"del2:{sid}")
-check(sid not in db()["sellers"] and len(catalog()["sellers"]) == 1, "удаление")
+check(sid not in db()["sellers"] and not catalog()["sellers"], "удаление")
 
 # Подпись SigV4 — официальный пример AWS (GET Object с Range)
 from datetime import datetime as _dt, timezone as _tz

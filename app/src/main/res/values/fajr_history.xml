@@ -1,0 +1,10 @@
+<resources>
+    <string name="fajr_history_title">Last alarm</string>
+    <string name="fajr_history_empty">The alarm has not triggered yet.</string>
+    <string name="fajr_history_daily">Fajr alarm</string>
+    <string name="fajr_history_test">Test alarm</string>
+    <string name="fajr_history_snooze">Snoozed alarm</string>
+    <string name="fajr_history_planned">Scheduled for %1$s</string>
+    <string name="fajr_history_fired">Triggered at %1$s</string>
+    <string name="fajr_history_delay">Delivered %1$d min late</string>
+</resources>

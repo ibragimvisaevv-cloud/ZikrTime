@@ -39,7 +39,9 @@ jobs:
           python3 shop-bot/test_place_corrections.py
 
       - name: Проверка API кабинета
-        run: python3 shop-bot/test_miniapi.py
+        run: |
+          python3 shop-bot/test_miniapi.py
+          python3 shop-bot/test_acquiring.py
 
       - name: Проверка мини-приложения (синтаксис)
         run: node --check shop-bot/miniapp/app.js
@@ -146,6 +148,12 @@ jobs:
         if: steps.keys.outputs.ready == 'true'
         env:
           BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
+          TBANK_TERMINAL: ${{ secrets.TBANK_TERMINAL }}
+          TBANK_ENABLED: ${{ vars.TBANK_ENABLED }}
+          TBANK_PASSWORD: ${{ secrets.TBANK_PASSWORD }}
+          TBANK_TAXATION: ${{ vars.TBANK_TAXATION }}
+          TBANK_TAX: ${{ vars.TBANK_TAX }}
+          SELLER_OFFER_URL: ${{ vars.SELLER_OFFER_URL }}
         run: |
           export IAM_TOKEN=$(yc iam create-token)
           export SA_ID FOLDER BUCKET S3_KEY_ID S3_SECRET API_FUNCTION=shop-api DATA_BUCKET="$BUCKET-data"

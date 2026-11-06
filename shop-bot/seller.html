@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Кабинет продавца · Зикр-тайм</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,sans-serif;color:#edf4ee;background:#111a17}
+body{max-width:40rem;margin:auto;padding:1.6rem 1rem 4rem}h1{font-size:clamp(1.7rem,6vw,2.5rem);margin-bottom:1.4rem}
+h2{font-size:1.28rem;margin:0 0 .35rem}h3{font-size:1rem;color:#bdcdbf}p{line-height:1.5}
+section{padding:1.25rem;margin:1rem 0;border:1px solid #43574b;border-radius:1rem;background:#19251f}
+button,input{font:inherit;border-radius:.55rem;padding:.75rem;margin:.35rem .35rem .35rem 0}input{background:#101b16;border:1px solid #829c88;color:inherit;display:block;max-width:94%}button{border:0;background:#c5deb9;color:#13251a;cursor:pointer}button:disabled{opacity:.55}a{color:#b6e2c4}
+small{color:#c2cdc4}#message{position:sticky;bottom:1rem;background:#293d30;border-radius:.5rem;padding:.65rem}#message:empty{display:none}label{display:block;margin:.6rem 0}label input[type=checkbox]{display:inline;vertical-align:middle}
+</style>
+<main><small>Зикр-тайм · Магазин</small><h1>Кабинет продавца</h1><div id="view"></div><p id="message" role="status" aria-live="polite"></p></main>
+<script>
+"use strict";
+const view = document.getElementById("view"), message = document.getElementById("message");
+const labels = {approved:"Опубликована", pending:"На модерации", awaiting_payment:"Одобрена · к оплате 200 ₽",
+  hidden:"Скрыта", rejected:"На доработке", initializing:"Создаётся", waiting:"Ожидает оплаты",
+  paid:"Оплачено", failed:"Не оплачено", review:"На проверке", refund_review:"Возврат на проверке", refunded:"Возвращено"};
+let session = "";
+function add(parent, tag, text) {
+  const element = document.createElement(tag);
+  if (text !== undefined) element.textContent = text;
+  parent.append(element);
+  return element;
+}
+function button(parent, label, fn) {
+  const el = add(parent, "button", label);
+  el.onclick = async () => {
+    if (el.disabled) return;
+    el.disabled = true; message.textContent = "";
+    try { await fn(); } catch (e) { message.textContent = e.message; }
+    finally { el.disabled = false; }
+  };
+}
+async function request(op, fields={}) {
+  const r = await fetch(location.pathname, {method:"POST", headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({...fields, portal:true, op, session})});
+  const data = await r.json();
+  if (r.status === 401 && op !== "login") { session = ""; login(); }
+  if (!r.ok) throw Error(data.error || "Не удалось выполнить запрос. Попробуйте снова.");
+  return data;
+}
+function login() {
+  view.replaceChildren();
+  const card=add(view, "section"); add(card,"h2","Вход");
+  add(card,"p","Отправьте /webcode в личный чат с ботом магазина Зикр-тайм. Введите полученный одноразовый код.");
+  const label=add(card,"label","Код входа"); const input=add(label,"input"); input.autocomplete="one-time-code";
+  button(card,"Войти",async()=>{ const r=await request("login",{code:input.value.trim()}); session = r.session; await show(); });
+}
+async function show() {
+  const data=await request("list"); view.replaceChildren();
+  if (!data.shops.length) add(view,"p","Магазинов пока нет. Создайте карточку через раздел «Магазин» в приложении.");
+  if (!data.ready) add(view,"p","Приём платежей пока не подключён. Ваши карточки и история операций доступны ниже.");
+  for (const s of data.shops) {
+    const card=add(view,"section"); add(card,"h2",s.name); add(card,"p",labels[s.status] || s.status);
+    if (s.orders.length) add(card,"h3","История операций");
+    for (const o of s.orders) {
+      const title=o.kind==="listing"?"Размещение":"Продвижение на "+o.days+" дн.";
+      add(card,"p",title+" · "+(o.amount/100)+" ₽ · "+(labels[o.state] || o.state));
+      add(card,"small",new Date(o.created*1000).toLocaleString("ru-RU")+" · № "+o.id);
+      if (["waiting","initializing"].includes(o.state) && data.ready)
+        button(card,"Проверить в банке",async()=>{await request("sync",{id:o.id});await show();});
+    }
+    if (!data.ready || !["awaiting_payment","approved"].includes(s.status)) continue;
+    const email=add(add(card,"label","Электронная почта для чека"),"input"); email.type="email"; email.required=true; email.autocomplete="email";
+    const consent=add(card,"label"); const checked=add(consent,"input"); checked.type="checkbox";
+    consent.append("Принимаю условия "); const a=add(consent,"a","оферты"); a.href=data.offer; a.target="_blank"; a.rel="noopener noreferrer";
+    const options=s.status==="awaiting_payment"?[["listing",0,200]]:Object.entries(data.prices).map(([d,p])=>["promo",Number(d),p]);
+    for(const [kind,days,price] of options) {
+      const intent=crypto.randomUUID().replaceAll("-","");
+      const title=kind==="listing"?"Разместить магазин":"Продвинуть на "+days+" дн.";
+      button(card,title+" · "+price+" ₽",async()=>{
+        if (!email.reportValidity()) return;
+        if (!checked.checked) throw Error("Подтвердите условия оферты.");
+        const result=await request("buy",{sid:s.sid,kind,days,email:email.value.trim(),offer:data.offer,intent});
+        await show();
+        if (result.url) {
+          const payment = document.createElement("section");
+          view.prepend(payment);
+          add(payment, "h2", "Заказ · " + result.amount / 100 + " ₽");
+          const link = add(payment, "a", "Перейти к оплате в Т-Банк");
+          link.href = result.url; link.target = "_blank"; link.rel = "noopener noreferrer";
+          add(payment, "p", "После оплаты вернитесь в эту вкладку.");
+          button(payment, "Проверить оплату", async () => { await request("sync", {id:result.id}); await show(); });
+          link.focus();
+        } else { message.textContent="Проверьте историю и обновите статус банковского заказа."; }
+      });
+    }
+  }
+  button(view,"Обновить",show);
+  button(view,"Выйти",async()=>{await request("logout");session = "";login();});
+}
+login();
+</script></html>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="signal_short_title">Короткий сигнал</string>
+    <string name="signal_short_hint">Воспроизводить звук уведомления телефона, когда азан выключен.</string>
+    <string name="signal_last_title">Последний сигнал приложения</string>
+    <string name="signal_none">Срабатываний пока нет.</string>
+    <string name="signal_scheduled">Назначено на %1$s</string>
+    <string name="signal_delivered">Доставлено в %1$s</string>
+    <string name="signal_quiet">Без звука</string>
+    <string name="signal_blocked">Открыть заблокированный канал уведомлений</string>
+</resources>

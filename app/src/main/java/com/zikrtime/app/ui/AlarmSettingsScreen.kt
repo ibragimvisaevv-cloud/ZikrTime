@@ -96,6 +96,7 @@ fun AlarmSettingsScreen() {
             next = next,
             onToggle = ::toggleAlarm,
         )
+        FajrLastSignal(resume)
 
         if (!Store.alarmEnabled) {
             StatePanel(stringResource(R.string.state_off), stringResource(R.string.alarm_note), icon = R.drawable.ic_alarm,
@@ -139,6 +140,7 @@ fun AlarmSettingsScreen() {
             SectionLabel(stringResource(R.string.alarm_sound))
             ZCard(padding = PaddingValues(vertical = 6.dp, horizontal = 8.dp)) {
                 AdhanVoiceList(selected = Store.alarmSound, onSelect = { Store.alarmSound = it }, includeSystem = true)
+                if (Store.alarmSound == "system") AlarmTonePicker()
             }
 
             ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 6.dp)) {
@@ -163,7 +165,7 @@ fun AlarmSettingsScreen() {
                     title = stringResource(R.string.alarm_snooze_allow),
                     subtitle = stringResource(R.string.alarm_snooze_hint),
                     checked = Store.alarmSnoozeAllowed,
-                    onChange = { Store.alarmSnoozeAllowed = it },
+                    onChange = { Store.alarmSnoozeAllowed = it; changed() },
                 )
             }
 

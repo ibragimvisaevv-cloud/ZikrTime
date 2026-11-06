@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_terms_title">Listing terms</string>
+    <string name="store_listing_terms">One payment after approval covers your business listing and all its products.</string>
+    <string name="store_promotion_terms">Promotion is optional and paid for separately.</string>
+    <string name="store_apply">Apply to list a business</string>
+    <string name="store_unavailable">Could not load the catalogue</string>
+    <string name="store_retry">Try again</string>
+    <string name="store_empty_catalog">The catalogue is empty for now</string>
+    <string name="store_clear">Clear search</string>
+    <string name="store_more_products">Show more products</string>
+    <string name="store_seller_portal">Seller dashboard</string>
+    <string name="store_browser_unavailable">Could not open the browser</string>
+</resources>

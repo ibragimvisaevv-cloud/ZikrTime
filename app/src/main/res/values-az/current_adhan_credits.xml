@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about_current_audio_licenses">Amiri şrifti — SIL Open Font License 1.1. Əhməd Xələfin Athan tətbiqi üçün oxuduğu üç azan CC BY 4.0 lisenziyası ilə istifadə olunur. Orijinal yazılar və lisenziya səs seçimi bölməsində, cədvəlin mənbəyi isə namaz vaxtları bölməsində göstərilir.</string>
+    <string name="adhan_khalaf_one">Əhməd Xələf · Azan I</string>
+    <string name="adhan_khalaf_two">Əhməd Xələf · Azan II</string>
+    <string name="adhan_khalaf_fajr">Əhməd Xələf · Sübh azanı</string>
+    <string name="adhan_recording_processing">Əhməd Xələfin Athan üçün yazdığı azanın əvvəlindəki fasilə qısaldılıb, aşağı tezlikli küy azaldılıb və səs səviyyəsi tarazlanıb. CC BY 4.0.</string>
+</resources>

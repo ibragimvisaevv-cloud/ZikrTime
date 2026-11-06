@@ -43,12 +43,15 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 
 @Composable
-fun QuranScreen() {
-    QuranReadingTheme { QuranScreenContent() }
+fun QuranScreen(initialSurah: Int = 0, initialAyah: Int = 1) {
+    if (initialSurah == 0) QuranReadingTheme { QuranScreenContent(initialSurah, initialAyah) }
+    else Box(Modifier.fillMaxSize().testTag("reading_target_${initialSurah}_${initialAyah}")) {
+        QuranReadingTheme { QuranScreenContent(initialSurah, initialAyah) }
+    }
 }
 
 @Composable
-private fun QuranScreenContent() {
+private fun QuranScreenContent(initialSurah: Int, initialAyah: Int) {
     StandardSystemBars()
     val context = LocalContext.current
     val nav = LocalNav.current
@@ -56,8 +59,8 @@ private fun QuranScreenContent() {
     var book by remember { mutableStateOf<QuranBook?>(null) }
     var failed by remember { mutableStateOf(false) }
     var attempt by remember { mutableIntStateOf(0) }
-    var surahId by rememberSaveable { mutableIntStateOf(0) }
-    var startAyah by rememberSaveable { mutableIntStateOf(1) }
+    var surahId by rememberSaveable { mutableIntStateOf(initialSurah) }
+    var startAyah by rememberSaveable { mutableIntStateOf(initialAyah) }
     var sources by rememberSaveable { mutableStateOf(false) }
     var indexQuery by rememberSaveable { mutableStateOf("") }
     var indexTab by rememberSaveable { mutableIntStateOf(0) }

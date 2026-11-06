@@ -10,13 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.zikrtime.app.R
 
-/**
- * Записи азана (res/raw, свободные лицензии — см. «О приложении»):
- *  adhan   — «Beautiful adhan», Adam-synagda, CC0;
- *  adhan_2 — «Azan», Andrewler, CC BY-SA 4.0;
- *  adhan_3 — «The Adhan», Aaqib Azeez (запись Atcovi), CC BY-SA 4.0.
- * Ищем по имени, чтобы приложение собиралось и без файлов: тогда используется мелодия будильника телефона.
- */
+/** Credits and transformation details accompany each recording in the sound picker. */
 object AdhanSound {
 
     /** Идентификатор записи (он же имя файла в res/raw) и длительность в секундах. */
@@ -31,43 +25,36 @@ object AdhanSound {
         val fajrOnly: Boolean = false,
     )
 
+    private const val SOURCE = "https://github.com/nandxorandor/Athan/blob/ad2bf1799add51cca4aaf1f123b1c212378c7786/"
+    private const val LICENSE = "https://creativecommons.org/licenses/by/4.0/"
+    private const val AUTHOR = "Ahmed Khalaf · CC BY 4.0"
     val voices = listOf(
-        Voice("adhan", 1, 154, R.string.adhan_name_original,
-            "Adam-synagda · CC0 1.0", "https://commons.wikimedia.org/wiki/File:Beautiful_adhan.ogg",
-            "https://creativecommons.org/publicdomain/zero/1.0/"),
-        Voice("adhan_2", 2, 183, R.string.adhan_name_andrewler,
-            "Andrewler · CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:Azan.ogg",
-            "https://creativecommons.org/licenses/by-sa/4.0/"),
-        Voice("adhan_3", 3, 84, R.string.adhan_name_aaqib,
-            "Aaqib Azeez / Atcovi · CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:The_Adhan_-_Muslim_Call_to_Prayer_-_Aaqib_Azeez.mp3",
-            "https://creativecommons.org/licenses/by-sa/4.0/"),
-        Voice("adhan_madinah", 4, 187, R.string.adhan_name_madinah,
-            "ejaz215 · CC BY 3.0", "https://commons.wikimedia.org/wiki/File:33937_ejaz215_call-to-prayer-from-the-prophet-s-mo.ogg",
-            "https://creativecommons.org/licenses/by/3.0/"),
-        Voice("adhan_makkah", 5, 197, R.string.adhan_name_makkah,
-            "Seyfula Islam · CC BY 3.0", "https://commons.wikimedia.org/wiki/File:Adhan,_Great_Mosque_of_Mecca_-_Jan_21,_2013.webm",
-            "https://creativecommons.org/licenses/by/3.0/"),
-        Voice("adhan_fajr", 6, 248, R.string.adhan_name_fajr,
-            "Besim Azemi / Islamic Center Malmö · CC BY 3.0", "https://commons.wikimedia.org/wiki/File:Eid_al-Fitr_Fajr_azan_at_Malm%C3%B6_Mosque_-_19_August_2012.webm",
-            "https://creativecommons.org/licenses/by/3.0/", fajrOnly = true),
+        Voice("athan_khalaf_one", 1, 143, R.string.adhan_khalaf_one, AUTHOR,
+            SOURCE + "app/src/main/assets/athan/developer/Developer_Athan-1.mp3", LICENSE),
+        Voice("athan_khalaf_two", 2, 131, R.string.adhan_khalaf_two, AUTHOR,
+            SOURCE + "app/src/main/assets/athan/developer/Developer_Athan-2.mp3", LICENSE),
+        Voice("athan_khalaf_fajr", 3, 99, R.string.adhan_khalaf_fajr, AUTHOR,
+            SOURCE + "app/src/main/assets/athan/fajr/Developer_Athan-3_Fajr.mp3", LICENSE, fajrOnly = true),
     )
 
-    fun voice(id: String): Voice = voices.firstOrNull { it.id == id } ?: voices.first()
+    fun voice(id: String): Voice = when (id) {
+        "adhan_2", "adhan_makkah" -> voices[1]
+        "adhan_fajr" -> voices[2]
+        else -> voices.firstOrNull { it.id == id } ?: voices.first()
+    }
 
     @SuppressLint("DiscouragedApi")
-    fun resId(context: Context, id: String = "adhan"): Int = context.resources.getIdentifier(id, "raw", context.packageName)
+    fun resId(context: Context, id: String = voices.first().id): Int =
+        context.resources.getIdentifier(voice(id).id, "raw", context.packageName)
 
-    fun available(context: Context, id: String = "adhan"): Boolean = resId(context, id) != 0
+    fun available(context: Context, id: String = voices.first().id): Boolean = resId(context, id) != 0
 
-    fun uri(context: Context, id: String = "adhan"): Uri? =
-        resId(context, id).takeIf { it != 0 }?.let { Uri.parse("android.resource://${context.packageName}/$it") }
+    fun uri(context: Context, id: String): Uri? = if (available(context, id))
+        Uri.parse("android.resource://${context.packageName}/raw/${voice(id).id}") else null
 
-    /** Fajr includes the extra morning call and is offered only for the Fajr alarm. */
     fun eligibleVoices(forFajrAlarm: Boolean): List<Voice> = voices.filter { forFajrAlarm || !it.fajrOnly }
 
-    /** Preferences restored from backups must not route a Fajr-only recording to every prayer. */
-    fun notificationVoice(id: String): Voice = eligibleVoices(forFajrAlarm = false)
-        .firstOrNull { it.id == id } ?: voices.first()
+    fun notificationVoice(id: String): Voice = voice(id).takeUnless { it.fajrOnly } ?: voices.first()
 
     // Preview follows the device's media volume; it never changes the system volume.
 

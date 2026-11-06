@@ -35,9 +35,14 @@ object LocationHelper {
         val providers = listOf(LocationManager.NETWORK_PROVIDER, LocationManager.GPS_PROVIDER, LocationManager.PASSIVE_PROVIDER)
             .filter { runCatching { lm.isProviderEnabled(it) }.getOrDefault(false) }
 
-        val last = providers.mapNotNull { runCatching { lm.getLastKnownLocation(it) }.getOrNull() }.maxByOrNull { it.time }
-        // Для времени намаза достаточно точности до города, поэтому свежая «последняя» точка подходит.
-        if (last != null && System.currentTimeMillis() - last.time < 6 * 60 * 60 * 1000L) {
+        fun recent(fix: Location?): Location? = fix?.takeIf {
+            val age = android.os.SystemClock.elapsedRealtimeNanos() - it.elapsedRealtimeNanos
+            age in 0L..120_000_000_000L && (!it.hasAccuracy() || it.accuracy <= 10_000f)
+        }
+        val last = providers.mapNotNull {
+            recent(runCatching { lm.getLastKnownLocation(it) }.getOrNull())
+        }.maxByOrNull { it.elapsedRealtimeNanos }
+        if (last != null) {
             onResult(last)
             return
         }
@@ -52,7 +57,7 @@ object LocationHelper {
         fun deliver(loc: Location?) {
             if (delivered) return
             delivered = true
-            onResult(loc ?: last)
+            onResult(recent(loc))
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

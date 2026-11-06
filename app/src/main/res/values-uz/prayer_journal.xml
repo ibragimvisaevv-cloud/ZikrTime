@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="journal_title">Namoz kundaligi</string>
+    <string name="journal_done">O‘qildi</string>
+    <string name="journal_missed">O‘tkazib yuborildi</string>
+    <string name="journal_made_up">Qazosi o‘qildi</string>
+    <string name="journal_unmarked">Belgilanmagan</string>
+    <string name="journal_note">Qazo ro‘yxatiga faqat o‘zingiz o‘tkazib yuborilgan deb belgilagan namozlar kiradi. Vaqti hali kirmagan namozlar hisobga qo‘shilmaydi.</string>
+    <string name="journal_day">Sana bo‘yicha namoz belgilari</string>
+    <string name="journal_upcoming">Vaqti hali kirmagan</string>
+    <string name="journal_pending">Qazosi o‘qiladigan namozlar</string>
+    <string name="journal_no_pending">O‘tkazib yuborilgan deb belgilangan namoz yo‘q.</string>
+    <string name="journal_more">Ko‘proq sanalarni ko‘rsatish</string>
+    <string name="journal_previous">Oldingi kun</string>
+    <string name="journal_next">Keyingi kun</string>
+    <string name="journal_clear_progress_confirm">Namoz kundaligi va qazo ro‘yxati bilan birga shaxsiy statistika tozalansinmi? Joriy namoz belgilari, xatcho‘plar, bonuslar va sozlamalar saqlanadi.</string>
+    <string name="reading_title">Qur’on o‘qish eslatmalari</string>
+    <string name="reading_hint">Telefonning mahalliy vaqti bo‘yicha soatni tanlang. Eslatmalar ovozsiz keladi. Oyat yoki surani shu yerdan ham ochishingiz mumkin.</string>
+    <string name="reading_bedtime">Uxlashdan oldin</string>
+    <string name="reading_friday">Juma kuni o‘qish</string>
+    <string name="reading_kursi">Oyatul Kursiy · Qur’on 2:255</string>
+    <string name="reading_kahf">Kahf surasi · Qur’on 18</string>
+    <string name="reading_time">Vaqt · %1$s</string>
+    <string name="reading_open">Qur’onda ochish</string>
+    <string name="reading_bukhari">Sahih al-Buxoriy · 2311</string>
+    <string name="reading_ifta">Misr Dorul-ifto idorasi · juma kuni o‘qish</string>
+    <string name="reading_blocked">Telefon sozlamalarida o‘qish bildirishnomalari bloklangan.</string>
+    <string name="reading_other_friday">Juma namozi eslatmalari</string>
+    <string name="reading_other_friday_hint">Juma kunlari juma va shom namozlaridan oldin.</string>
+</resources>

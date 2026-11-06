@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="journal_title">Дневник намазов</string>
+    <string name="journal_done">Совершён</string>
+    <string name="journal_missed">Пропущен</string>
+    <string name="journal_made_up">Восполнен</string>
+    <string name="journal_unmarked">Без отметки</string>
+    <string name="journal_note">В список для восполнения попадают только намазы, которые вы отметили как пропущенные. Итоги учитывают намазы, время которых уже наступило.</string>
+    <string name="journal_day">Отметки по датам</string>
+    <string name="journal_upcoming">Время ещё не наступило</string>
+    <string name="journal_pending">К восполнению</string>
+    <string name="journal_no_pending">Намазов с отметкой «Пропущен» пока нет.</string>
+    <string name="journal_more">Показать ещё даты</string>
+    <string name="journal_previous">Предыдущий день</string>
+    <string name="journal_next">Следующий день</string>
+    <string name="journal_clear_progress_confirm">Очистить личную статистику, включая дневник намазов и список для восполнения? Текущие галочки намазов, закладки, бонусы и настройки сохранятся.</string>
+    <string name="reading_title">Напоминания о чтении Корана</string>
+    <string name="reading_hint">Выберите удобное время по часам телефона. Напоминания приходят без звука. Открыть аят или суру можно и отсюда.</string>
+    <string name="reading_bedtime">Перед сном</string>
+    <string name="reading_friday">Чтение в пятницу</string>
+    <string name="reading_kursi">Аят аль-Курси · Коран 2:255</string>
+    <string name="reading_kahf">Сура «Аль-Кахф» · Коран 18</string>
+    <string name="reading_time">Время · %1$s</string>
+    <string name="reading_open">Открыть в Коране</string>
+    <string name="reading_bukhari">Сахих аль-Бухари · 2311</string>
+    <string name="reading_ifta">Дар аль-Ифта Египта · чтение в пятницу</string>
+    <string name="reading_blocked">Уведомления о чтении заблокированы в настройках телефона.</string>
+    <string name="reading_other_friday">Напоминания о пятничной молитве</string>
+    <string name="reading_other_friday_hint">Перед джума и перед магрибом по пятницам.</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="signal_short_title">Кыска билдирүү үнү</string>
+    <string name="signal_short_hint">Азан өчүк болгондо телефондун билдирүү үнүн колдонуу.</string>
+    <string name="signal_last_title">Колдонмонун акыркы сигналы</string>
+    <string name="signal_none">Азырынча сигнал катталган жок.</string>
+    <string name="signal_scheduled">Белгиленген убакыт · %1$s</string>
+    <string name="signal_delivered">Жеткирилген убакыт · %1$s</string>
+    <string name="signal_quiet">Үнсүз</string>
+    <string name="signal_blocked">Бөгөттөлгөн билдирүү каналын ачуу</string>
+</resources>

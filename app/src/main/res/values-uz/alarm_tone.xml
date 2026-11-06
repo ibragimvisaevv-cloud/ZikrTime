@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tone_phone_default">Budilnikning standart ohangi</string>
+    <string name="tone_selected">Tanlangan ohang</string>
+    <string name="tone_hint">Soat ilovasidagi ohangni tanlashingiz mumkin. Ayrim telefonlar har bir budilnik ohangini alohida saqlaydi.</string>
+    <string name="tone_choose">Ohang tanlash</string>
+    <string name="tone_stop">Toʻxtatish</string>
+    <string name="tone_file">Audiofayl</string>
+    <string name="tone_failed">Ovozni ijro etib boʻlmadi. Boshqa ohang yoki faylni tanlang.</string>
+</resources>

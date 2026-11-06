@@ -74,7 +74,7 @@ fun AdhanVoiceList(selected: String, onSelect: (String) -> Unit, includeSystem: 
                     .padding(vertical = 4.dp, horizontal = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                RadioButton(selected = selected == voice.id, onClick = { onSelect(voice.id) })
+                RadioButton(selected = selected != "system" && AdhanSound.voice(selected).id == voice.id, onClick = { onSelect(voice.id) })
                 Column(Modifier.weight(1f)) {
                     Text(stringResource(voice.titleRes), style = MaterialTheme.typography.bodyLarge)
                     Text(

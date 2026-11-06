@@ -19,6 +19,7 @@ import time
 from urllib.parse import parse_qsl
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import acquiring
 import index  # noqa: E402
 from index import CAT_BY_ID, CATEGORIES, MAX_PHOTOS, MAX_PRODUCTS, MAX_SELLERS_PER_USER, PUBLIC_BASE, Conflict, btn, esc, kb, new_id  # noqa: E402
 
@@ -68,6 +69,7 @@ def seller_out(bot, s):
         "whatsapp": bool(s.get("whatsapp")), "telegram": s.get("telegram", ""), "instagram": s.get("instagram", ""),
         "logo": s.get("logo", ""), "cover": s.get("cover", ""), "status": s["status"], "partner": bool(s.get("partner")),
         "promo_until": int(s["promo_until"]) if bot.promo_active(s) else 0,
+        "orders": acquiring.history(bot, s["id"]),
         "promo_request": {k: last[k] for k in ("id", "days", "price", "status")} if last and last["status"] in ("new", "claimed") else None,
         "products": [
             {"id": p["id"], "title": p["title"], "price": p.get("price"), "old_price": p.get("old_price"),
@@ -89,7 +91,7 @@ def me(bot, uid, user):
         "admin": admin, "owner": uid == bot.db.get("owner"),
         "sellers": [seller_out(bot, s) for s in sorted(bot.my_sellers(uid), key=lambda x: x["created"])],
         "categories": [{"id": c["id"], "name": c["names"]["ru"]} for c in CATEGORIES],
-        "prices": bot.promo_prices(), "pay_url": bot.promo_pay_url(),
+        "prices": bot.promo_prices(),
         "limits": {"sellers": MAX_SELLERS_PER_USER, "products": MAX_PRODUCTS, "photos": MAX_PHOTOS},
         "bot": bot.db.get("bot_username", ""),
     }
@@ -198,7 +200,7 @@ def act_seller_save(bot, uid, req):
         raise ApiError(f"Не больше {MAX_SELLERS_PER_USER} компаний на одного продавца")
     sid = new_id("s")
     admin = bot.is_admin(uid)
-    s = dict(f, id=sid, lat=None, lon=None, status="approved" if admin else "pending", partner=False,
+    s = dict(f, id=sid, lat=None, lon=None, status="awaiting_payment" if admin else "pending", listing_fee="due", partner=False,
              owners=[uid], created=time.time(), products={})
     bot.db["sellers"][sid] = s
     bot.changed(s)
@@ -209,6 +211,8 @@ def act_seller_save(bot, uid, req):
 
 def act_seller_delete(bot, uid, req):
     s = own_seller(bot, uid, req.get("sid"))
+    if acquiring.active_order(bot, s["id"]):
+        raise ApiError("Дождитесь завершения банковского заказа перед удалением.", 409)
     del bot.db["sellers"][s["id"]]
     bot.dirty = bot.catalog_dirty = True
     if not bot.is_admin(uid):
@@ -220,7 +224,7 @@ def act_seller_visibility(bot, uid, req):
     s = own_seller(bot, uid, req.get("sid"))
     # Как в боте: продавец сам скрывает и снова показывает уже одобренную компанию
     if s["status"] in ("approved", "hidden"):
-        s["status"] = "hidden" if s["status"] == "approved" else "approved"
+        s["status"] = "hidden" if s["status"] == "approved" else ("awaiting_payment" if acquiring.unpaid(s) else "approved")
         bot.dirty = bot.catalog_dirty = True
     return {"seller": seller_out(bot, s)}
 
@@ -276,16 +280,6 @@ def act_photo(bot, uid, req):
     return {"url": PUBLIC_BASE + key}
 
 
-def act_promo_request(bot, uid, req):
-    s = own_seller(bot, uid, req.get("sid"))
-    if s["status"] != "approved":
-        raise ApiError("Продвигать можно опубликованную компанию")
-    r = bot.promo_create(uid, s["id"], req.get("days"))
-    if not r:
-        raise ApiError("Неизвестный тариф")
-    return {"request": {k: r[k] for k in ("id", "days", "price", "status")}, "pay_url": bot.promo_pay_url()}
-
-
 def act_promo_claim(bot, uid, req):
     r = bot.promo_claim(uid, str(req.get("rid") or ""))
     if not r:
@@ -324,19 +318,15 @@ def act_settings(bot, uid, req):
         raise ApiError("Цены — числа")
     if min(prices.values()) < 1:
         raise ApiError("Цены — больше нуля")
-    url = str(req.get("pay_url") or "").strip()
-    if url and not re.match(r"^https://[\w.-]+\.[a-z]{2,}(/\S*)?$", url):
-        raise ApiError("Ссылка для оплаты: https://…")
     bot.db["promo_prices"] = prices
-    bot.db["promo_pay_url"] = url
     bot.dirty = True
-    return {"prices": bot.promo_prices(), "pay_url": bot.promo_pay_url()}
+    return {"prices": bot.promo_prices()}
 
 
 ACTIONS = {
     "seller_save": act_seller_save, "seller_delete": act_seller_delete, "seller_visibility": act_seller_visibility,
     "product_save": act_product_save, "product_delete": act_product_delete, "photo": act_photo,
-    "promo_request": act_promo_request, "promo_claim": act_promo_claim,
+    "promo_claim": act_promo_claim,
     "mod_seller": act_mod_seller, "mod_promo": act_mod_promo, "mod_review": act_mod_review, "settings": act_settings,
 }
 
@@ -376,13 +366,34 @@ def handler(event, context):
     """Точка входа облачной функции Yandex Cloud (HTTP)."""
     if (event.get("httpMethod") or "POST").upper() == "OPTIONS":
         return {"statusCode": 204, "headers": CORS, "body": ""}
+    method = (event.get("httpMethod") or "POST").upper()
+    if method == "GET":
+        with open(os.path.join(os.path.dirname(__file__), "seller.html"), encoding="utf-8") as page:
+            return {"statusCode": 200, "headers": {"Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store",
+                    "Referrer-Policy": "no-referrer", "X-Frame-Options": "DENY",
+                    "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"}, "body": page.read()}
+    if method != "POST":
+        return {"statusCode": 405, "body": ""}
     body = event.get("body") or "{}"
     if event.get("isBase64Encoded"):
         body = base64.b64decode(body).decode("utf-8")
     try:
         req = json.loads(body)
         token = (getattr(context, "token", None) or {}).get("access_token", "") if context else ""
-        result = run(req, lambda bucket: index.make_storage(token, bucket), index.BOT_TOKEN)
+        def factory(bucket):
+            return index.make_storage(token, bucket)
+        query = event.get("queryStringParameters") or {}
+        if query.get("event") == "tbank" or req.get("portal") is True:
+            try:
+                result = acquiring.dispatch(factory, acquiring.Bank(), req, callback=query.get("event") == "tbank")
+                if result == "OK":
+                    return {"statusCode": 200, "headers": {"Content-Type": "text/plain"}, "body": "OK"}
+                return {"statusCode": 200, "headers": {"Content-Type": "application/json", "Cache-Control": "no-store"},
+                        "body": json.dumps(result, ensure_ascii=False)}
+            except acquiring.CheckoutError as exc:
+                return {"statusCode": exc.code, "headers": {"Content-Type": "application/json", "Cache-Control": "no-store"},
+                        "body": json.dumps({"error": str(exc)}, ensure_ascii=False)}
+        result = run(req, factory, index.BOT_TOKEN)
         code = 200
     except ApiError as e:
         result, code = {"error": str(e)}, e.code

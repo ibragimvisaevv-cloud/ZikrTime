@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tone_phone_default">Әдепкі оятқыш әуені</string>
+    <string name="tone_selected">Таңдалған әуен</string>
+    <string name="tone_hint">Сағат қолданбасындағы әуенді таңдай аласыз. Кей телефондар әр оятқыштың әуенін бөлек сақтайды.</string>
+    <string name="tone_choose">Әуен таңдау</string>
+    <string name="tone_stop">Тоқтату</string>
+    <string name="tone_file">Аудиофайл</string>
+    <string name="tone_failed">Дыбыс ойнатылмады. Басқа әуенді немесе файлды таңдаңыз.</string>
+</resources>

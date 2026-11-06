@@ -1,6 +1,5 @@
 package com.zikrtime.app.prayer
 
-import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.ZoneOffset
@@ -71,6 +70,7 @@ enum class AsrMadhab(val shadowFactor: Double) {
 data class PrayerTimes(
     val date: LocalDate,
     val times: Map<Prayer, ZonedDateTime>,
+    val polarEstimate: Boolean = false,
 ) {
     operator fun get(p: Prayer): ZonedDateTime = times.getValue(p)
 }
@@ -92,41 +92,44 @@ object PrayerCalculator {
         madhab: AsrMadhab,
         zone: ZoneId,
     ): PrayerTimes {
-        val jDate = julian(date.year, date.monthValue, date.dayOfMonth) - longitude / (15.0 * 24.0)
+        // The civil and mean-solar date can differ by a day across the international
+        // date line (e.g. Kiritimati, UTC+14 at 157°W). Anchor the solar cycle at local noon.
+        val solarDate = date.atTime(12, 0).atZone(zone).toInstant()
+            .plusSeconds((longitude * 240.0).roundToLong()).atZone(ZoneOffset.UTC).toLocalDate()
+        val jDate = julian(solarDate.year, solarDate.monthValue, solarDate.dayOfMonth) - longitude / (15.0 * 24.0)
 
         // Начальные приближения (часы местного солнечного времени), затем два шага уточнения:
         // на втором шаге положение солнца берётся уже на найденное время.
-        var t = doubleArrayOf(5.0, 6.0, 12.0, 13.0, 18.0, 18.0, 18.0)
-        repeat(2) {
-            t = compute(t.map { (if (it.isNaN()) 0.0 else it) / 24.0 }.toDoubleArray(), jDate, latitude, method, madhab)
+        fun positions(atLatitude: Double): DoubleArray {
+            var t = doubleArrayOf(5.0, 6.0, 12.0, 13.0, 18.0, 18.0, 18.0)
+            repeat(2) {
+                val dayPortion = t.map { if (it.isNaN()) 0.0 else it / 24.0 }.toDoubleArray()
+                t = compute(dayPortion, jDate, atLatitude, method, madhab)
+            }
+            val utc = t.map { it - longitude / 15.0 }.toDoubleArray()
+            adjustHighLatitudes(utc, method)
+            utc[MAGHRIB] = utc[SUNSET]
+            method.ishaMinutes?.let { utc[ISHA] = utc[MAGHRIB] + it / 60.0 }
+            return intArrayOf(FAJR, SUNRISE, DHUHR, ASR, MAGHRIB, ISHA).mapIndexed { i, field ->
+                (utc[field] + method.offsets[i] / 60.0) * 60.0
+            }.toDoubleArray()
         }
+        fun orderedAtMinutePrecision(values: DoubleArray): Boolean =
+            values.all { it.isFinite() } && (1 until values.size).all { values[it].roundToLong() > values[it - 1].roundToLong() }
 
-        // Перевод из местного солнечного времени в часы UTC для этой даты.
-        val utc = t.map { it - longitude / 15.0 }.toDoubleArray()
-        adjustHighLatitudes(utc, method)
-
-        // Магриб — сразу после захода солнца; иша по минутам, если метод так считает.
-        utc[MAGHRIB] = utc[SUNSET]
-        method.ishaMinutes?.let { utc[ISHA] = utc[MAGHRIB] + it / 60.0 }
-
-        val midnightUtc = date.atStartOfDay(ZoneOffset.UTC).toInstant()
-        fun at(hours: Double): ZonedDateTime {
-            val minutes = (hours * 60.0).roundToLong()
-            return Instant.ofEpochSecond(midnightUtc.epochSecond + minutes * 60).atZone(zone)
+        // Aqrab al-balad. Near polar night, solar formulae can also return finite
+        // but inverted times. Use the nearest latitude with six distinct, ordered events.
+        var effectiveLat = latitude
+        var minutes = positions(effectiveLat)
+        while (abs(effectiveLat) > 45.0 && !orderedAtMinutePrecision(minutes)) {
+            effectiveLat -= if (effectiveLat > 0) 0.5 else -0.5
+            minutes = positions(effectiveLat)
         }
-
-        val o = method.offsets
-        return PrayerTimes(
-            date = date,
-            times = mapOf(
-                Prayer.FAJR to at(utc[FAJR] + o[0] / 60.0),
-                Prayer.SUNRISE to at(utc[SUNRISE] + o[1] / 60.0),
-                Prayer.DHUHR to at(utc[DHUHR] + o[2] / 60.0),
-                Prayer.ASR to at(utc[ASR] + o[3] / 60.0),
-                Prayer.MAGHRIB to at(utc[MAGHRIB] + o[4] / 60.0),
-                Prayer.ISHA to at(utc[ISHA] + o[5] / 60.0),
-            ),
-        )
+        val midnightUtc = solarDate.atStartOfDay(ZoneOffset.UTC).toInstant()
+        val times = Prayer.entries.associateWith { prayer ->
+            midnightUtc.plusSeconds(minutes[prayer.ordinal].roundToLong() * 60).atZone(zone)
+        }
+        return PrayerTimes(date, times, polarEstimate = effectiveLat != latitude)
     }
 
     // Индексы во внутреннем массиве

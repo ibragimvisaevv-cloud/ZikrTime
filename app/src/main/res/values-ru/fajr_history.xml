@@ -1,0 +1,10 @@
+<resources>
+    <string name="fajr_history_title">Последний сигнал будильника</string>
+    <string name="fajr_history_empty">Будильник ещё не срабатывал.</string>
+    <string name="fajr_history_daily">Будильник на Фаджр</string>
+    <string name="fajr_history_test">Проверка будильника</string>
+    <string name="fajr_history_snooze">Повтор после «Отложить»</string>
+    <string name="fajr_history_planned">По расписанию — %1$s</string>
+    <string name="fajr_history_fired">Сработал — %1$s</string>
+    <string name="fajr_history_delay">Задержка — %1$d мин.</string>
+</resources>

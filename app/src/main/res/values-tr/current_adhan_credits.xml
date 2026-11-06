@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about_current_audio_licenses">Amiri yazı tipi — SIL Open Font License 1.1. Ahmed Khalaf’ın Athan uygulaması için okuduğu üç ezan CC BY 4.0 lisansıyla kullanılır. Özgün kayıtlara ve lisansa ses seçiminden ulaşabilirsiniz. Namaz vakitlerinin kaynağı vakitler bölümünde gösterilir.</string>
+    <string name="adhan_khalaf_one">Ahmed Khalaf · Ezan I</string>
+    <string name="adhan_khalaf_two">Ahmed Khalaf · Ezan II</string>
+    <string name="adhan_khalaf_fajr">Ahmed Khalaf · Sabah ezanı</string>
+    <string name="adhan_recording_processing">Ahmed Khalaf’ın Athan için yaptığı kayıtta başlangıçtaki sessizlik kısaltıldı, düşük frekanslı gürültü azaltıldı ve ses düzeyi dengelendi. CC BY 4.0.</string>
+</resources>

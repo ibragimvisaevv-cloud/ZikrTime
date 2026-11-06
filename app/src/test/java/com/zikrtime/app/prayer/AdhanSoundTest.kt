@@ -6,26 +6,19 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class AdhanSoundTest {
-    @Test fun fajrRecordingCannotBeChosenForAllPrayers() {
-        val regular = AdhanSound.eligibleVoices(forFajrAlarm = false)
-        assertFalse(regular.any { it.fajrOnly || it.id == "adhan_fajr" })
-        assertTrue(regular.any { it.id == "adhan_madinah" })
-        assertTrue(regular.any { it.id == "adhan_makkah" })
-        assertTrue(AdhanSound.eligibleVoices(forFajrAlarm = true).any { it.id == "adhan_fajr" && it.fajrOnly })
+    @Test fun morningRecordingIsRestrictedToMorningAlarm() {
+        assertEquals(2, AdhanSound.eligibleVoices(false).size)
+        assertFalse(AdhanSound.eligibleVoices(false).any { it.fajrOnly })
+        assertTrue(AdhanSound.voice("adhan_fajr").fajrOnly)
+        assertFalse(AdhanSound.notificationVoice("athan_khalaf_fajr").fajrOnly)
+        assertFalse(AdhanSound.notificationVoice("adhan_fajr").fajrOnly)
     }
 
-    @Test fun existingSavedSoundIdsStillResolveToTheirOriginalRecordings() {
-        listOf("adhan", "adhan_2", "adhan_3").forEachIndexed { index, id ->
-            assertEquals(id, AdhanSound.voice(id).id)
-            assertEquals(index + 1, AdhanSound.voice(id).number)
+    @Test fun oldSettingsResolveToBundledRecordings() {
+        listOf("adhan", "adhan_3", "adhan_madinah", "unknown").forEach {
+            assertEquals("athan_khalaf_one", AdhanSound.voice(it).id)
         }
-        assertEquals("adhan", AdhanSound.voice("unknown_saved_id").id)
-    }
-
-    @Test fun restoredFajrPreferenceFallsBackToRegularAdhanForNotifications() {
-        assertEquals("adhan", AdhanSound.notificationVoice("adhan_fajr").id)
-        assertEquals("adhan", AdhanSound.notificationVoice("unknown_saved_id").id)
-        assertEquals("adhan_madinah", AdhanSound.notificationVoice("adhan_madinah").id)
-        assertEquals("adhan_fajr", AdhanSound.voice("adhan_fajr").id)
+        listOf("adhan_2", "adhan_makkah").forEach { assertEquals("athan_khalaf_two", AdhanSound.voice(it).id) }
+        assertEquals("athan_khalaf_fajr", AdhanSound.voice("adhan_fajr").id)
     }
 }
