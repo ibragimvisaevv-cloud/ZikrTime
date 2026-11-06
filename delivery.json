@@ -1,0 +1,11 @@
+{
+  "apk_sha256": "0e5e69ab0acee3633ac757458c0d34423b98b02bacc18870f3da5b92384bf5f6",
+  "apk_size": 98519659,
+  "unit_tests": 140,
+  "unit_failures": 0,
+  "unit_errors": 0,
+  "source_sha": "17f7e54edccde0e2c5d0c5ff6ea4ca6115e12639",
+  "verification_sha": "17f7e54edccde0e2c5d0c5ff6ea4ca6115e12639",
+  "run": 42280497794,
+  "journey_completed": false
+}
