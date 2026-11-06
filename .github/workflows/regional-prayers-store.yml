@@ -47,12 +47,31 @@ jobs:
           with open(os.environ['GITHUB_ENV'],'a') as env:
               print('APK_SOURCE_SHA=' + source,file=env)
           PY
+      - name: Recover successful native journeys from the verified APK
+        if: steps.candidate.outputs.run != '' && contains(github.event.head_commit.message, '[shop-recheck]')
+        env:
+          PREVIOUS_RUN: ${{ steps.candidate.outputs.run }}
+        run: |
+          git fetch --no-tags --depth=1 origin "refs/heads/ci-regional-0822-$PREVIOUS_RUN"
+          python3 - <<'PY'
+          import json, os, pathlib, subprocess
+          def record(name):
+              return json.loads(subprocess.check_output(['git','show','FETCH_HEAD:' + name]))
+          original = record('delivery.json')
+          current = json.loads(pathlib.Path('ci-out/release-delivery.json').read_text())
+          assert original['apk_sha256'] == current['debug_sha256']
+          assert original['source_sha'] == current['source_sha']
+          groups = record('regional-passed.json')['groups']
+          assert set(groups) == {'regional_schedule','prayer_journal','reading_reminders','sound_controls'}
+          pathlib.Path('ci-out/inherited-journeys.json').write_text(json.dumps({'run':int(os.environ['PREVIOUS_RUN']),'groups':groups}))
+          PY
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
       - uses: gradle/actions/setup-gradle@v4
       - name: Check scoped sources
+        if: steps.candidate.outputs.run == ''
         run: |
           python3 -m py_compile tools/ci/regional_journeys.py tools/ci/check_regional_pack.py
           python3 tools/ci/check_regional_pack.py

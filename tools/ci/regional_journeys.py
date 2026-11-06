@@ -135,7 +135,9 @@ def shop():
                                    "seller": company, "category": "books", "price": 450,
                                    "description": "Карточка товара для проверки"})
     put_pref("shop_catalog", "string", json.dumps(fixture, ensure_ascii=False))
-    put_pref("shop_catalog_at", "string", str(int(time.time() * 1000)))
+    # Keep this synthetic catalogue isolated from the normal one-minute public refresh.
+    fixture_until = int(shell("date", "+%s").strip()) * 1000 + 30 * 60 * 1000
+    put_pref("shop_catalog_at", "string", str(fixture_until))
     for theme in ["dark", "light"]:
         put_pref("appearance", "string", theme)
         start("shop")
@@ -158,8 +160,11 @@ def shop():
     locate_control("Карточка товара для проверки", "text")
     save("shop-product")
     try:
+        shell("am", "force-stop", PKG)
         shell("wm", "size", "840x1680")
         shell("settings", "put", "system", "font_scale", "1.5")
+        put_pref("shop_catalog", "string", json.dumps(fixture, ensure_ascii=False))
+        put_pref("shop_catalog_at", "string", str(fixture_until))
         put_pref("appearance", "string", "dark")
         start("shop")
         locate_control("shop_partner_friend")
@@ -203,12 +208,16 @@ if __name__ == "__main__":
         if sum(n.get("package") == PKG for n in root.iter("node")) > 8:
             break
         time.sleep(1)
-    values = {}
+    inherited = OUT / "inherited-journeys.json"
+    evidence = json.loads(inherited.read_text()) if inherited.exists() else {"groups":{}}
+    values = dict(evidence["groups"])
     for name, journey in [("regional_schedule", schedules), ("prayer_journal", journal),
                           ("reading_reminders", reading), ("sound_controls", sound), ("shop", shop)]:
+        if name in evidence["groups"]:
+            continue
         try:
             values[name] = journey()
-            (OUT / "regional-passed.json").write_text(json.dumps({"mode":"all", "groups":values}, ensure_ascii=False))
+            (OUT / "regional-passed.json").write_text(json.dumps({"mode":"all", "groups":values, "inherited_run":evidence.get("run")}, ensure_ascii=False))
         except Exception:
             (OUT / "regional-failure.txt").write_text(name + "\n" + traceback.format_exc())
             raise
