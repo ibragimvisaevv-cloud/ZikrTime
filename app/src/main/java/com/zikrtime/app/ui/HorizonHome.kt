@@ -113,6 +113,7 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                     Text(stringResource(R.string.app_name), color = Porcelain, style = MaterialTheme.typography.titleLarge,
                         modifier = Modifier.weight(1f))
+                    ReadingHomeAction(Porcelain)
                     ThemeQuickButton(compact = true, onLandscape = true)
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -165,6 +166,7 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
                             maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
                     BigClock(at, if (large) 22.sp else 30.sp, scheme.onSurface, weight = FontWeight.Medium)
+                    ReadingHomeAction(scheme.onSurface)
                     ThemeQuickButton(compact = true)
                 }
             }

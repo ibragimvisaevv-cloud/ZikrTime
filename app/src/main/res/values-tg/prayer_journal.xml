@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="journal_title">Рӯзномаи намозҳо</string>
+    <string name="journal_done">Адо шуд</string>
+    <string name="journal_missed">Фавт шуд</string>
+    <string name="journal_made_up">Қазояш хонда шуд</string>
+    <string name="journal_unmarked">Бе қайд</string>
+    <string name="journal_note">Ба рӯйхати қазо танҳо намозҳое дохил мешаванд, ки худатон ҳамчун фавтшуда қайд кардаед. Намозҳое, ки вақташон ҳанӯз нарасидааст, ба ҷамъбаст дохил намешаванд.</string>
+    <string name="journal_day">Қайди намозҳо аз рӯи сана</string>
+    <string name="journal_upcoming">Вақташ ҳанӯз нарасидааст</string>
+    <string name="journal_pending">Намозҳои қазо</string>
+    <string name="journal_no_pending">Намозе ҳамчун фавтшуда қайд нашудааст.</string>
+    <string name="journal_more">Нишон додани санаҳои дигар</string>
+    <string name="journal_previous">Рӯзи гузашта</string>
+    <string name="journal_next">Рӯзи оянда</string>
+    <string name="journal_clear_progress_confirm">Омори шахсӣ, аз ҷумла рӯзномаи намозҳо ва рӯйхати қазо, пок карда шавад? Қайдҳои ҷории намоз, хатчӯбҳо, бонусҳо ва танзимот нигоҳ дошта мешаванд.</string>
+    <string name="reading_title">Ёдоварии қироати Қуръон</string>
+    <string name="reading_hint">Соатро аз рӯи вақти маҳаллии телефон интихоб кунед. Ёдовариҳо бе садо меоянд. Оят ё сураро аз ҳамин ҷо ҳам кушода метавонед.</string>
+    <string name="reading_bedtime">Пеш аз хоб</string>
+    <string name="reading_friday">Қироати рӯзи ҷумъа</string>
+    <string name="reading_kursi">Оятулкурсӣ · Қуръон 2:255</string>
+    <string name="reading_kahf">Сураи «Каҳф» · Қуръон 18</string>
+    <string name="reading_time">Вақт · %1$s</string>
+    <string name="reading_open">Кушодан дар Қуръон</string>
+    <string name="reading_bukhari">Саҳеҳи Бухорӣ · 2311</string>
+    <string name="reading_ifta">Дорулифтои Миср · қироати рӯзи ҷумъа</string>
+    <string name="reading_blocked">Огоҳиҳои қироат дар танзимоти телефон баста шудаанд.</string>
+    <string name="reading_other_friday">Ёдоварии намози ҷумъа</string>
+    <string name="reading_other_friday_hint">Рӯзҳои ҷумъа пеш аз намози ҷумъа ва пеш аз шом.</string>
+</resources>

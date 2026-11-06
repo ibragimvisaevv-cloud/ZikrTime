@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="regional_prefer">Use the city timetable</string>
+    <string name="regional_prefer_hint">Use the published times for the selected city when this date is available. The calculation below covers other dates and places.</string>
+    <string name="regional_fallback">Fallback calculation</string>
+    <string name="regional_network_hint">Download updates to the local timetable and calculated times when available.</string>
+    <string name="regional_published">City timetable · %1$s</string>
+    <string name="regional_calculated">Calculated · %1$s · %2$s</string>
+    <string name="regional_offline">on device</string>
+    <string name="regional_adjusted">%1$s · manual adjustments applied</string>
+    <string name="regional_polar">Polar estimate · nearest latitude with solar events · %1$s</string>
+    <string name="regional_gps_zone">GPS time zone (e.g. Europe/Moscow)</string>
+    <string name="regional_device_zone">%1$s · using device time zone (%2$s)</string>
+    <string name="regional_previous_day">%1$s (day before)</string>
+    <string name="regional_next_day">%1$s (next day)</string>
+</resources>

@@ -33,7 +33,7 @@ object ProgressMigration {
         }
     }
     fun isHistoricalKey(key: String): Boolean = key in setOf("total_correct", "total_answered", "quiz_days", "prayer_days") ||
-        key.startsWith("cat_correct_") || key.startsWith("tasbih_day_")
+        key.startsWith("prayer_journal_") || key.startsWith("cat_correct_") || key.startsWith("tasbih_day_")
 }
 
 data class QuizRewardLedger(

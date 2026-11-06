@@ -8,7 +8,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 
 /** Экраны второго уровня (поверх вкладок). */
-enum class Screen { LANGUAGE, CITY, PRAYER_SETTINGS, ALARM, QIBLA, TASBIH, QUIZ, APPS, ABOUT, SHOP_SELLER, SHOP_PRODUCT, PLACES, RAMADAN, ZAKAT, REVIEW, PROGRESS, AZKAR, QURAN, TRAINING }
+enum class Screen { LANGUAGE, CITY, PRAYER_SETTINGS, ALARM, QIBLA, TASBIH, QUIZ, APPS, ABOUT, SHOP_SELLER, SHOP_PRODUCT, PLACES, RAMADAN, ZAKAT, REVIEW, PROGRESS, AZKAR, QURAN, TRAINING, PRAYER_JOURNAL, READING_REMINDERS, READING_BEDTIME, READING_FRIDAY }
 
 /** Вкладки нижней панели. */
 enum class Tab { PRAYER, KNOWLEDGE, SHOP, FOCUS, MORE }
@@ -46,6 +46,12 @@ class Nav {
             (screen == Screen.SHOP_PRODUCT && old?.product != shopProduct)) {
             stack.add(NavEntry(screen, ++nextEntry, shopSeller, shopProduct))
         }
+    }
+
+    fun openReading(kind: com.zikrtime.app.prayer.ReadingKind) {
+        val route = if (kind == com.zikrtime.app.prayer.ReadingKind.BEDTIME) Screen.READING_BEDTIME else Screen.READING_FRIDAY
+        if (stack.lastOrNull()?.screen in setOf(Screen.READING_BEDTIME, Screen.READING_FRIDAY)) back()
+        open(route)
     }
 
     fun startQuiz(category: String?) {

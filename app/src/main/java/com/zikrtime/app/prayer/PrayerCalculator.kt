@@ -71,6 +71,7 @@ enum class AsrMadhab(val shadowFactor: Double) {
 data class PrayerTimes(
     val date: LocalDate,
     val times: Map<Prayer, ZonedDateTime>,
+    val polarEstimate: Boolean = false,
 ) {
     operator fun get(p: Prayer): ZonedDateTime = times.getValue(p)
 }
@@ -96,9 +97,21 @@ object PrayerCalculator {
 
         // Начальные приближения (часы местного солнечного времени), затем два шага уточнения:
         // на втором шаге положение солнца берётся уже на найденное время.
-        var t = doubleArrayOf(5.0, 6.0, 12.0, 13.0, 18.0, 18.0, 18.0)
-        repeat(2) {
-            t = compute(t.map { (if (it.isNaN()) 0.0 else it) / 24.0 }.toDoubleArray(), jDate, latitude, method, madhab)
+        fun positions(atLatitude: Double): DoubleArray {
+            var t = doubleArrayOf(5.0, 6.0, 12.0, 13.0, 18.0, 18.0, 18.0)
+            repeat(2) {
+                val dayPortion = t.map { if (it.isNaN()) 0.0 else it / 24.0 }.toDoubleArray()
+                t = compute(dayPortion, jDate, atLatitude, method, madhab)
+            }
+            return t
+        }
+        // Aqrab al-balad: during polar day/night, find the nearest latitude on this
+        // meridian where the daily events exist. These times are shown as estimates.
+        var effectiveLat = latitude
+        var t = positions(effectiveLat)
+        while (abs(effectiveLat) > 45.0 && listOf(SUNRISE, ASR, SUNSET).any { !t[it].isFinite() }) {
+            effectiveLat -= if (effectiveLat > 0) 0.5 else -0.5
+            t = positions(effectiveLat)
         }
 
         // Перевод из местного солнечного времени в часы UTC для этой даты.
@@ -118,6 +131,7 @@ object PrayerCalculator {
         val o = method.offsets
         return PrayerTimes(
             date = date,
+            polarEstimate = effectiveLat != latitude,
             times = mapOf(
                 Prayer.FAJR to at(utc[FAJR] + o[0] / 60.0),
                 Prayer.SUNRISE to at(utc[SUNRISE] + o[1] / 60.0),

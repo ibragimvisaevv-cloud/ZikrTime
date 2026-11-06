@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
+
 package com.zikrtime.app.ui
 
 import android.Manifest
@@ -73,9 +75,11 @@ import com.zikrtime.app.prayer.Prayer
 import com.zikrtime.app.prayer.PrayerAlarms
 import com.zikrtime.app.prayer.PrayerSchedule
 import kotlinx.coroutines.launch
-import java.time.Instant
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
+import com.zikrtime.app.prayer.RegionalTimes
+import java.time.LocalDate
 
 /** Вкладка «Ещё»: все настройки и дополнительные функции. */
 @Composable
@@ -218,17 +222,12 @@ fun RadioLine(text: String, selected: Boolean, subtitle: String? = null, onClick
 fun CityScreen() {
     val nav = LocalNav.current
     val context = LocalContext.current
-    val scope = rememberCoroutineScope()
     ScreenScaffold(title = stringResource(R.string.settings_city), onBack = { nav.back() }, scene = R.drawable.horizon_dawn) {
         CityPicker(onPicked = { city ->
             Store.setLocation(city)
             PrayerAlarms.scheduleNext(context)
             FajrAlarm.schedule(context)
-            scope.launch {
-                OnlineTimes.refresh()
-                PrayerAlarms.scheduleNext(context)
-                FajrAlarm.schedule(context)
-            }
+            OnlineTimes.refreshSchedule(context)
             nav.back()
         })
     }
@@ -336,23 +335,55 @@ fun PrayerSettingsScreen() {
     fun reload(force: Boolean = false) {
         PrayerAlarms.scheduleNext(context)
         FajrAlarm.schedule(context)
+        val refresh = OnlineTimes.refreshSchedule(context, force)
         scope.launch {
             refreshing = true
-            OnlineTimes.refresh(force)
+            refresh.join()
             refreshing = false
-            PrayerAlarms.scheduleNext(context)
-            FajrAlarm.schedule(context)
         }
     }
 
     ScreenScaffold(title = stringResource(R.string.settings_prayer_times), onBack = { nav.back() }) {
-        SectionLabel(stringResource(R.string.prayer_method))
+        SectionLabel(stringResource(R.string.prayer_source))
+        ZCard {
+            Column(Modifier.testTag("prayer_regional_mode").semantics { testTagsAsResourceId = true }) {
+                SwitchRow(
+                    title = stringResource(R.string.regional_prefer),
+                    subtitle = stringResource(R.string.regional_prefer_hint),
+                    checked = RegionalTimes.preferred,
+                    onChange = { RegionalTimes.preferred = it; reload() },
+                )
+            }
+            OnlineTimes.version // Recompose after the source refresh completes.
+            val today = LocalDate.now(PrayerSchedule.zone())
+            Text(scheduleSourceLabel(today, PrayerSchedule.forDate(today).polarEstimate), style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 8.dp))
+        }
+        if (RegionalTimes.cityId() == null) {
+            var input by remember(Store.location, OnlineTimes.manualZone()) {
+                mutableStateOf(OnlineTimes.manualZone()?.id.orEmpty())
+            }
+            val parsed = remember(input) { runCatching { java.time.ZoneId.of(input.trim()) }.getOrNull() }
+            ZCard {
+                OutlinedTextField(value = input, onValueChange = { input = it },
+                    label = { Text(stringResource(R.string.regional_gps_zone)) },
+                    placeholder = { Text(PrayerSchedule.zone().id) }, singleLine = true,
+                    isError = input.isNotBlank() && parsed == null, modifier = Modifier.fillMaxWidth())
+                Row {
+                    TextButton(onClick = { OnlineTimes.setManualZone(parsed); reload() },
+                        enabled = parsed != null && parsed != OnlineTimes.manualZone()) { Text(stringResource(R.string.action_done)) }
+                    if (OnlineTimes.manualZone() != null) TextButton(onClick = { OnlineTimes.setManualZone(null); reload() }) {
+                        Text(stringResource(R.string.action_reset))
+                    }
+                }
+            }
+        }
+        SectionLabel(stringResource(if (RegionalTimes.preferred) R.string.regional_fallback else R.string.prayer_method))
         ZCard(padding = PaddingValues(vertical = 6.dp, horizontal = 8.dp)) {
             CalcMethod.entries.forEach { m ->
                 RadioLine(
                     text = methodName(m),
-                    subtitle = if (m == CalcMethod.MOSCOW_CATHEDRAL) stringResource(R.string.method_moscow_note)
-                    else m.ishaAngle?.let { stringResource(R.string.method_angles, fmtAngle(m.fajrAngle), fmtAngle(it)) }
+                    subtitle = m.ishaAngle?.let { stringResource(R.string.method_angles, fmtAngle(m.fajrAngle), fmtAngle(it)) }
                         ?: stringResource(R.string.method_angles_minutes, fmtAngle(m.fajrAngle), m.ishaMinutes ?: 0),
                     selected = Store.method == m,
                     onClick = {
@@ -362,7 +393,6 @@ fun PrayerSettingsScreen() {
                 )
             }
         }
-        Text(stringResource(R.string.prayer_method_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
 
         SectionLabel(stringResource(R.string.prayer_asr_section))
         ZCard(padding = PaddingValues(vertical = 6.dp, horizontal = 8.dp)) {
@@ -374,11 +404,10 @@ fun PrayerSettingsScreen() {
             }
         }
 
-        SectionLabel(stringResource(R.string.prayer_source))
         ZCard {
             SwitchRow(
                 title = stringResource(R.string.prayer_source_online),
-                subtitle = stringResource(R.string.prayer_source_online_hint),
+                subtitle = stringResource(R.string.regional_network_hint),
                 checked = Store.onlineTimes,
                 onChange = {
                     Store.onlineTimes = it
@@ -386,22 +415,7 @@ fun PrayerSettingsScreen() {
                 },
             )
             if (Store.onlineTimes) {
-                val updated = Store.onlineUpdatedAt
-                val online = remember(OnlineTimes.version, Store.location, Store.method, Store.madhab) { PrayerSchedule.isOnline() }
-                val locale = Lang.locale(context)
-                Text(
-                    when {
-                        refreshing -> stringResource(R.string.prayer_source_loading)
-                        online && updated > 0 -> stringResource(
-                            R.string.prayer_source_updated,
-                            Instant.ofEpochMilli(updated).atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("d MMMM, HH:mm", locale)),
-                        )
-                        else -> stringResource(R.string.prayer_source_failed)
-                    },
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(start = 4.dp),
-                )
+                if (refreshing) Text(stringResource(R.string.prayer_source_loading), style = MaterialTheme.typography.bodySmall)
                 TextButton(onClick = { reload(force = true) }, enabled = !refreshing) { Text(stringResource(R.string.action_refresh)) }
             }
         }
@@ -435,8 +449,8 @@ fun PrayerSettingsScreen() {
                 }
             }
             SwitchRow(
-                title = stringResource(R.string.friday_notify),
-                subtitle = stringResource(R.string.friday_notify_hint),
+                title = stringResource(R.string.reading_other_friday),
+                subtitle = stringResource(R.string.reading_other_friday_hint),
                 checked = Store.fridayReminders,
                 onChange = {
                     Store.fridayReminders = it

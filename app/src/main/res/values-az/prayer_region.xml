@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="regional_prefer">Şəhərin namaz cədvəli</string>
+    <string name="regional_prefer_hint">Seçilmiş şəhər və tarix üçün yayımlanmış vaxtlardan istifadə edilir. Digər yerlər və tarixlər üçün aşağıdakı hesablama tətbiq olunur.</string>
+    <string name="regional_fallback">Cədvəl olmadıqda hesablama üsulu</string>
+    <string name="regional_network_hint">İnternet olduqda şəhər cədvəlini və hesablanmış vaxtları yenilə.</string>
+    <string name="regional_published">Şəhər cədvəli · %1$s</string>
+    <string name="regional_calculated">Hesablama · %1$s · %2$s</string>
+    <string name="regional_offline">telefonda</string>
+    <string name="regional_adjusted">%1$s · şəxsi düzəlişlərlə</string>
+    <string name="regional_polar">Qütb bölgəsi üçün təxmini vaxt · ən yaxın uyğun enlik · %1$s</string>
+    <string name="regional_gps_zone">GPS məntəqəsinin saat qurşağı, məsələn Europe/Moscow</string>
+    <string name="regional_device_zone">%1$s · telefonun saat qurşağı (%2$s)</string>
+    <string name="regional_previous_day">%1$s (əvvəlki gün)</string>
+    <string name="regional_next_day">%1$s (sabah)</string>
+</resources>

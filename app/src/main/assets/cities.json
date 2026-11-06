@@ -1094,6 +1094,196 @@
     "az": "Nyu-York",
     "tr": "New York"
    }
+  },
+  {
+   "id": "agidel",
+   "group": "russia",
+   "lat": 55.899043,
+   "lon": 53.933439,
+   "names": {
+    "ru": "Агидель",
+    "en": "Agidel"
+   }
+  },
+  {
+   "id": "baymak",
+   "group": "russia",
+   "lat": 52.5912,
+   "lon": 58.3112,
+   "names": {
+    "ru": "Баймак",
+    "en": "Baymak"
+   }
+  },
+  {
+   "id": "belebey",
+   "group": "russia",
+   "lat": 54.1112,
+   "lon": 54.1034,
+   "names": {
+    "ru": "Белебей",
+    "en": "Belebey"
+   }
+  },
+  {
+   "id": "beloretsk",
+   "group": "russia",
+   "lat": 53.9592,
+   "lon": 58.3904,
+   "names": {
+    "ru": "Белорецк",
+    "en": "Beloretsk"
+   }
+  },
+  {
+   "id": "birsk",
+   "group": "russia",
+   "lat": 55.417531,
+   "lon": 55.530716,
+   "names": {
+    "ru": "Бирск",
+    "en": "Birsk"
+   }
+  },
+  {
+   "id": "blagoveshchensk_rb",
+   "group": "russia",
+   "lat": 55.0311,
+   "lon": 55.9818,
+   "names": {
+    "ru": "Благовещенск",
+    "en": "Blagoveshchensk, Bashkortostan"
+   }
+  },
+  {
+   "id": "davlekanovo",
+   "group": "russia",
+   "lat": 54.2227,
+   "lon": 55.0312,
+   "names": {
+    "ru": "Давлеканово",
+    "en": "Davlekanovo"
+   }
+  },
+  {
+   "id": "ishimbay",
+   "group": "russia",
+   "lat": 53.454626,
+   "lon": 56.04395,
+   "names": {
+    "ru": "Ишимбай",
+    "en": "Ishimbay"
+   }
+  },
+  {
+   "id": "kumertau",
+   "group": "russia",
+   "lat": 52.7565,
+   "lon": 55.7969,
+   "names": {
+    "ru": "Кумертау",
+    "en": "Kumertau"
+   }
+  },
+  {
+   "id": "mezhgorye",
+   "group": "russia",
+   "lat": 54.2373,
+   "lon": 57.947,
+   "names": {
+    "ru": "Межгорье",
+    "en": "Mezhgorye"
+   }
+  },
+  {
+   "id": "meleuz",
+   "group": "russia",
+   "lat": 52.9589,
+   "lon": 55.9283,
+   "names": {
+    "ru": "Мелеуз",
+    "en": "Meleuz"
+   }
+  },
+  {
+   "id": "neftekamsk",
+   "group": "russia",
+   "lat": 56.0992,
+   "lon": 54.2615,
+   "names": {
+    "ru": "Нефтекамск",
+    "en": "Neftekamsk"
+   }
+  },
+  {
+   "id": "oktyabrsky_rb",
+   "group": "russia",
+   "lat": 54.452,
+   "lon": 53.3381,
+   "names": {
+    "ru": "Октябрьский",
+    "en": "Oktyabrsky, Bashkortostan"
+   }
+  },
+  {
+   "id": "salavat",
+   "group": "russia",
+   "lat": 53.3616,
+   "lon": 55.9245,
+   "names": {
+    "ru": "Салават",
+    "en": "Salavat"
+   }
+  },
+  {
+   "id": "sibay",
+   "group": "russia",
+   "lat": 52.72039,
+   "lon": 58.665665,
+   "names": {
+    "ru": "Сибай",
+    "en": "Sibay"
+   }
+  },
+  {
+   "id": "sterlitamak",
+   "group": "russia",
+   "lat": 53.6323,
+   "lon": 55.9522,
+   "names": {
+    "ru": "Стерлитамак",
+    "en": "Sterlitamak"
+   }
+  },
+  {
+   "id": "tuymazy",
+   "group": "russia",
+   "lat": 54.5999,
+   "lon": 53.6949,
+   "names": {
+    "ru": "Туймазы",
+    "en": "Tuymazy"
+   }
+  },
+  {
+   "id": "uchaly",
+   "group": "russia",
+   "lat": 54.3191,
+   "lon": 59.3785,
+   "names": {
+    "ru": "Учалы",
+    "en": "Uchaly"
+   }
+  },
+  {
+   "id": "yanaul",
+   "group": "russia",
+   "lat": 56.2713,
+   "lon": 54.9331,
+   "names": {
+    "ru": "Янаул",
+    "en": "Yanaul"
+   }
   }
  ]
 }

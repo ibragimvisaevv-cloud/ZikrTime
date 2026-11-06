@@ -85,6 +85,7 @@ class MainActivity : ComponentActivity() {
 
     private val nav = Nav()
     private var qaHandled = false
+    private var lastReadingDelivery = Long.MIN_VALUE
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(Lang.wrap(newBase))
@@ -94,6 +95,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         Store.init(this)
         nav.restore(savedInstanceState)
+        lastReadingDelivery = savedInstanceState?.getLong("last_reading_delivery", Long.MIN_VALUE) ?: Long.MIN_VALUE
         // Названия каналов уведомлений — на текущем языке.
         PrayerAlarms.createChannels(this)
         qaHandled = savedInstanceState?.getBoolean("qa_handled") ?: false
@@ -108,7 +110,7 @@ class MainActivity : ComponentActivity() {
         val showSplash = savedInstanceState == null && com.zikrtime.app.ui.LiveFlags.splash &&
             (intent?.hasExtra("qa_screen") != true || intent?.getBooleanExtra("qa_splash", false) == true)
         setContent {
-            val natural = Store.onboarded && (nav.stack.lastOrNull()?.screen in setOf(Screen.TASBIH, Screen.AZKAR, Screen.QURAN, Screen.PROGRESS, Screen.REVIEW, Screen.TRAINING) || (nav.stack.isEmpty() && nav.tab == Tab.PRAYER))
+            val natural = Store.onboarded && (nav.stack.lastOrNull()?.screen in setOf(Screen.TASBIH, Screen.AZKAR, Screen.QURAN, Screen.READING_BEDTIME, Screen.READING_FRIDAY, Screen.PROGRESS, Screen.REVIEW, Screen.TRAINING) || (nav.stack.isEmpty() && nav.tab == Tab.PRAYER))
             com.zikrtime.app.ui.ThemeRevealHost {
                 ZikrTheme(natural = natural) {
                     val tilt = com.zikrtime.app.ui.rememberTilt(enabled = false)
@@ -146,6 +148,14 @@ class MainActivity : ComponentActivity() {
 
     private fun handleOpen(intent: Intent?) {
         if (intent?.getBooleanExtra("open_focus", false) == true) { nav.stack.clear(); nav.tab = Tab.FOCUS }
+        val reading = com.zikrtime.app.prayer.ReadingKind.entries.firstOrNull { it.route == intent?.getStringExtra(EXTRA_OPEN) }
+        if (reading != null) {
+            val delivery = intent?.getLongExtra("reading_delivery", Long.MIN_VALUE) ?: Long.MIN_VALUE
+            if (delivery == Long.MIN_VALUE || delivery != lastReadingDelivery) nav.openReading(reading)
+            lastReadingDelivery = delivery
+            intent?.removeExtra(EXTRA_OPEN)
+            return
+        }
         when (intent?.getStringExtra(EXTRA_OPEN)) {
             "prayer" -> { nav.stack.clear(); nav.tab = Tab.PRAYER }
             "city" -> { nav.stack.clear(); nav.tab = Tab.PRAYER; if (Store.onboarded) nav.open(Screen.CITY) }
@@ -156,6 +166,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putBoolean("qa_handled", qaHandled)
+        outState.putLong("last_reading_delivery", lastReadingDelivery)
         nav.save(outState)
         super.onSaveInstanceState(outState)
     }
@@ -168,6 +179,7 @@ class MainActivity : ComponentActivity() {
             PrayerAlarms.scheduleNext(this)
             FajrAlarm.schedule(this)
             com.zikrtime.app.prayer.FridayReminders.schedule(this)
+            com.zikrtime.app.prayer.ReadingReminders.reschedule(this)
             GuardService.sync(this)
             com.zikrtime.app.widget.Widgets.updateAll(this)
             lifecycleScope.launch {
@@ -234,6 +246,10 @@ private fun AppRoot() {
             Screen.PROGRESS -> com.zikrtime.app.ui.ProgressScreen()
             Screen.AZKAR -> com.zikrtime.app.ui.AzkarScreen()
             Screen.QURAN -> com.zikrtime.app.ui.QuranScreen()
+            Screen.PRAYER_JOURNAL -> com.zikrtime.app.ui.PrayerJournalScreen()
+            Screen.READING_REMINDERS -> com.zikrtime.app.ui.ReadingRemindersScreen()
+            Screen.READING_BEDTIME -> com.zikrtime.app.ui.QuranScreen(2, 255)
+            Screen.READING_FRIDAY -> com.zikrtime.app.ui.QuranScreen(18, 1)
             Screen.APPS -> AppsScreen()
             Screen.ABOUT -> AboutScreen()
             Screen.SHOP_SELLER -> com.zikrtime.app.ui.SellerScreen(entry?.seller)

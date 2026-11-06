@@ -2,71 +2,62 @@ package com.zikrtime.app.prayer
 
 import com.zikrtime.app.data.Store
 import com.zikrtime.app.screentime.PrayerStart
+import com.zikrtime.app.ui.CityZones
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.ZonedDateTime
 
-/** Время намаза для выбранного города и метода расчёта. */
 object PrayerSchedule {
+    private fun locationZone(): ZoneId = CityZones.known(RegionalTimes.cityId()) ?: OnlineTimes.manualZone() ?: OnlineTimes.cachedZone() ?: ZoneId.systemDefault()
 
-    /**
-     * Время на дату: из интернета, если данные загружены, иначе расчёт на телефоне.
-     * К результату добавляются ручные поправки пользователя.
-     */
-    fun forDate(date: LocalDate, zone: ZoneId = ZoneId.systemDefault()): PrayerTimes {
-        val base = if (Store.method == CalcMethod.MOSCOW_CATHEDRAL) moscow(date, zone)
-        else OnlineTimes.day(date)?.let { fromOnline(date, it, zone) } ?: calculated(date, zone)
-        val adjusted = base.times.mapValues { (p, t) -> t.plusMinutes(Store.adjustment(p).toLong()) }
-        return PrayerTimes(date, adjusted)
+    fun zone(): ZoneId {
+        val zone = locationZone()
+        return CityZones.civil(zone, LocalDate.now(zone))
     }
 
-    /** Источник данных для подписи на экране. */
-    fun isOnline(date: LocalDate = LocalDate.now()): Boolean =
-        if (Store.method == CalcMethod.MOSCOW_CATHEDRAL) Store.onlineTimes && DumrfLive.isMoscow() && moscowCorrections() != null
-        else OnlineTimes.day(date) != null
-
-    /** Московская Соборная мечеть: на сегодня — как на сайте dumrf.ru, на другие дни — формула с поправкой по сайту. */
-    private fun moscow(date: LocalDate, zone: ZoneId): PrayerTimes {
-        val calc = calculated(date, zone)
-        // В расписании ДУМ РФ аср стандартный; если выбран ханафитский аср — его берём из расчёта.
-        val hanafi = Store.madhab == AsrMadhab.HANAFI
-        if (!Store.onlineTimes) return calc
-        DumrfLive.official(date)?.let { official ->
-            return PrayerTimes(date, official.mapValues { (p, t) ->
-                if (hanafi && p == Prayer.ASR) calc[p] else date.atTime(t).atZone(DumrfLive.MOSCOW_ZONE).withZoneSameInstant(zone)
-            })
+    /** Priority applies to the exact city and date; a calculation is always labelled as such. */
+    private fun published(date: LocalDate): OnlineTimes.Day? {
+        RegionalTimes.day(date)?.let { return it }
+        if (RegionalTimes.preferred && RegionalTimes.cityId() == "moscow") {
+            DumrfLive.official(date)?.let { return OnlineTimes.Day(DumrfLive.MOSCOW_ZONE, it) }
         }
-        val corr = moscowCorrections() ?: return calc
-        return PrayerTimes(date, calc.times.mapValues { (p, t) -> if (hanafi && p == Prayer.ASR) t else t.plusMinutes(corr[p] ?: 0L) })
+        return null
     }
 
-    private fun moscowCorrections(): Map<Prayer, Long>? = DumrfLive.corrections { d ->
-        calculated(d, DumrfLive.MOSCOW_ZONE).times.mapValues { it.value.toLocalTime() }
+    fun publisher(date: LocalDate): String? {
+        if (published(date) == null) return null
+        return RegionalTimes.source()?.name ?: "dumrf.ru"
     }
 
-    private fun calculated(date: LocalDate, zone: ZoneId): PrayerTimes {
+    fun forDate(date: LocalDate, zone: ZoneId = CityZones.civil(locationZone(), date)): PrayerTimes {
         val loc = Store.location
-        return PrayerCalculator.calculate(date, loc.latitude, loc.longitude, Store.method, Store.madhab, zone)
+        val day = published(date) ?: OnlineTimes.day(date)
+        val base = if (day == null) {
+            PrayerCalculator.calculate(date, loc.latitude, loc.longitude, Store.method, Store.madhab, zone)
+        } else fromOnline(date, day, zone)
+        val adjusted = base.times.mapValues { (prayer, time) -> time.plusMinutes(Store.adjustment(prayer).toLong()) }
+        return base.copy(times = adjusted)
     }
 
-    private fun fromOnline(date: LocalDate, day: OnlineTimes.Day, zone: ZoneId): PrayerTimes {
-        var previous: ZonedDateTime? = null
-        val times = LinkedHashMap<Prayer, ZonedDateTime>()
-        for (p in Prayer.entries) {
-            var t = date.atTime(day.times.getValue(p)).atZone(day.zone)
-            // Летом на севере иша бывает после полуночи — значит, это уже следующие сутки.
-            if (previous != null && !t.isAfter(previous)) t = t.plusDays(1)
-            previous = t
-            times[p] = t.withZoneSameInstant(zone)
+    internal fun fromOnline(date: LocalDate, day: OnlineTimes.Day, zone: ZoneId): PrayerTimes {
+        val times = Prayer.entries.associateWith { prayer ->
+            val clock = day.times.getValue(prayer)
+            val localDate = when {
+                prayer == Prayer.FAJR && clock > day.times.getValue(Prayer.SUNRISE) -> date.minusDays(1)
+                prayer == Prayer.ISHA && clock < day.times.getValue(Prayer.MAGHRIB) -> date.plusDays(1)
+                else -> date
+            }
+            localDate.atTime(clock).atZone(CityZones.civil(day.zone, localDate)).withZoneSameInstant(zone)
         }
         return PrayerTimes(date, times)
     }
 
-    fun today(): PrayerTimes = forDate(LocalDate.now())
+    fun today(): PrayerTimes = forDate(LocalDate.now(zone()))
 
-    /** Ближайший обязательный намаз строго после момента [after]. */
-    fun next(after: ZonedDateTime = ZonedDateTime.now()): Pair<Prayer, ZonedDateTime> =
-        nextFrom(after) { date -> forDate(date, after.zone) }
+    fun next(after: ZonedDateTime = ZonedDateTime.now()): Pair<Prayer, ZonedDateTime> {
+        val local = after.withZoneSameInstant(zone())
+        return nextFrom(local) { date -> forDate(date, local.zone) }
+    }
 
     /** Same selection for UI/alarms; provider keeps the midnight boundary independently testable. */
     internal fun nextFrom(after: ZonedDateTime, timesForDate: (LocalDate) -> PrayerTimes): Pair<Prayer, ZonedDateTime> {
@@ -82,12 +73,14 @@ object PrayerSchedule {
         return Prayer.FAJR to timesForDate(date.plusDays(1))[Prayer.FAJR]
     }
 
-    /** Окна намазов за вчера и сегодня — для блокировки соцсетей (иша может перейти за полночь). */
+    /** Prayer dates follow the selected city even if the OS clock displays another zone. */
     fun recentStarts(now: ZonedDateTime = ZonedDateTime.now()): List<PrayerStart> {
-        val zone = now.zone
-        val yesterday = forDate(now.toLocalDate().minusDays(1), zone)
-        val today = forDate(now.toLocalDate(), zone)
+        val local = now.withZoneSameInstant(zone())
+        val yesterday = forDate(local.toLocalDate().minusDays(1), local.zone)
+        val today = forDate(local.toLocalDate(), local.zone)
+        val tomorrow = forDate(local.toLocalDate().plusDays(1), local.zone)
         return listOf(PrayerStart(yesterday.date, Prayer.ISHA, yesterday[Prayer.ISHA].toInstant())) +
-            Prayer.obligatory.map { PrayerStart(today.date, it, today[it].toInstant()) }
+            Prayer.obligatory.map { PrayerStart(today.date, it, today[it].toInstant()) } +
+            PrayerStart(tomorrow.date, Prayer.FAJR, tomorrow[Prayer.FAJR].toInstant())
     }
 }

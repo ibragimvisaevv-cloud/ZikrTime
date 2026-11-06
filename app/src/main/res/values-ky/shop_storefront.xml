@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_terms_title">Жарыялоо шарттары</string>
+    <string name="store_listing_terms">Өтүнмө жактырылгандан кийинки бир жолку төлөмгө компаниянын баракчасы жана анын бардык товарлары кирет.</string>
+    <string name="store_promotion_terms">Кааласаңыз, кошумча акы төлөп жарнама бере аласыз.</string>
+    <string name="store_apply">Өтүнмө берүү</string>
+    <string name="store_unavailable">Каталог жүктөлгөн жок</string>
+    <string name="store_retry">Кайра аракет кылуу</string>
+    <string name="store_empty_catalog">Каталог азырынча бош</string>
+    <string name="store_clear">Издөөнү тазалоо</string>
+    <string name="store_more_products">Дагы товарларды көрсөтүү</string>
+    <string name="store_seller_portal">Сатуучунун кабинети</string>
+    <string name="store_browser_unavailable">Браузер ачылган жок</string>
+</resources>

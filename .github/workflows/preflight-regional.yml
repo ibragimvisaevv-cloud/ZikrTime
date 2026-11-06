@@ -1,0 +1,19 @@
+name: Compile integrated regional and journal changes
+on:
+  push:
+    branches: [ci-regional-preflight-0822]
+permissions:
+  contents: read
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - run: python3 tools/ci/check_regional_pack.py
+      - run: chmod +x gradlew && ./gradlew compileDebugKotlin compileDebugUnitTestKotlin --console=plain

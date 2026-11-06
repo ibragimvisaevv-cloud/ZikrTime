@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="journal_title">Намаз күндөлүгү</string>
+    <string name="journal_done">Окулду</string>
+    <string name="journal_missed">Каза болду</string>
+    <string name="journal_made_up">Казасы окулду</string>
+    <string name="journal_unmarked">Белги жок</string>
+    <string name="journal_note">Казасын окуй турган намаздардын тизмесине өзүңүз каза болду деп белгилеген намаздар гана кирет. Убактысы кире элек намаздар жыйынтыкка кошулбайт.</string>
+    <string name="journal_day">Күнү боюнча намаз белгилери</string>
+    <string name="journal_upcoming">Убактысы кире элек</string>
+    <string name="journal_pending">Казасы окула турган намаздар</string>
+    <string name="journal_no_pending">Каза болду деп белгиленген намаз жок.</string>
+    <string name="journal_more">Дагы күндөрдү көрсөтүү</string>
+    <string name="journal_previous">Мурунку күн</string>
+    <string name="journal_next">Кийинки күн</string>
+    <string name="journal_clear_progress_confirm">Намаз күндөлүгү жана каза тизмеси менен кошо жеке статистика тазалансынбы? Учурдагы намаз белгилери, кыстармалар, бонустар жана жөндөөлөр сакталат.</string>
+    <string name="reading_title">Куран окууну эскертүү</string>
+    <string name="reading_hint">Телефондун жергиликтүү убактысы боюнча саатты тандаңыз. Эскертүүлөр үнсүз келет. Аятты же сүрөнү ушул жерден да ача аласыз.</string>
+    <string name="reading_bedtime">Уктаар алдында</string>
+    <string name="reading_friday">Жума күнү окуу</string>
+    <string name="reading_kursi">Аятул Курси · Куран 2:255</string>
+    <string name="reading_kahf">«Кахф» сүрөсү · Куран 18</string>
+    <string name="reading_time">Убакыт · %1$s</string>
+    <string name="reading_open">Курандан ачуу</string>
+    <string name="reading_bukhari">Сахих аль-Бухари · 2311</string>
+    <string name="reading_ifta">Египеттин Дар аль-Ифта мекемеси · жума күнү окуу</string>
+    <string name="reading_blocked">Телефондун жөндөөлөрүндө окуу тууралуу билдирүүлөр бөгөттөлгөн.</string>
+    <string name="reading_other_friday">Жума намазын эскертүү</string>
+    <string name="reading_other_friday_hint">Жума күндөрү жума жана шам намаздарынын алдында.</string>
+</resources>

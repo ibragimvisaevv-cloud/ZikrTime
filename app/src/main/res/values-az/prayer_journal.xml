@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="journal_title">Namaz gündəliyi</string>
+    <string name="journal_done">Qılınıb</string>
+    <string name="journal_missed">Buraxılıb</string>
+    <string name="journal_made_up">Qəzası qılınıb</string>
+    <string name="journal_unmarked">Qeyd yoxdur</string>
+    <string name="journal_note">Yalnız buraxılmış kimi qeyd etdiyiniz namazlar qəza siyahısına düşür. Vaxtı çatmamış namazlar cəmə daxil edilmir.</string>
+    <string name="journal_day">Tarixə görə namaz qeydləri</string>
+    <string name="journal_upcoming">Vaxtı hələ çatmayıb</string>
+    <string name="journal_pending">Qəzası qılınacaq namazlar</string>
+    <string name="journal_no_pending">Buraxılmış kimi qeyd edilən namaz yoxdur.</string>
+    <string name="journal_more">Daha çox tarix göstər</string>
+    <string name="journal_previous">Əvvəlki gün</string>
+    <string name="journal_next">Növbəti gün</string>
+    <string name="journal_clear_progress_confirm">Namaz gündəliyi və qəza siyahısı daxil olmaqla şəxsi statistika silinsin? Cari namaz qeydləri, əlfəcinlər, bonuslar və ayarlar saxlanılır.</string>
+    <string name="reading_title">Quran oxuma xatırlatmaları</string>
+    <string name="reading_hint">Telefonun yerli vaxtına görə saat seçin. Xatırlatmalar səssiz gəlir. Ayəni və ya surəni buradan da aça bilərsiniz.</string>
+    <string name="reading_bedtime">Yatmazdan əvvəl</string>
+    <string name="reading_friday">Cümə günü oxuma</string>
+    <string name="reading_kursi">Ayətəl-Kürsi · Quran 2:255</string>
+    <string name="reading_kahf">Kəhf surəsi · Quran 18</string>
+    <string name="reading_time">Vaxt · %1$s</string>
+    <string name="reading_open">Quranda aç</string>
+    <string name="reading_bukhari">Səhih əl-Buxari · 2311</string>
+    <string name="reading_ifta">Misir Darül-İfta qurumu · cümə günü oxuma</string>
+    <string name="reading_blocked">Telefon ayarlarında oxuma bildirişləri bloklanıb.</string>
+    <string name="reading_other_friday">Cümə namazı xatırlatmaları</string>
+    <string name="reading_other_friday_hint">Cümə günləri cümə namazından və məğribdən əvvəl.</string>
+</resources>
