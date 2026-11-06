@@ -1,0 +1,11 @@
+shop
+Traceback (most recent call last):
+  File "/home/runner/work/ZikrTime/ZikrTime/tools/ci/regional_journeys.py", line 210, in <module>
+    values[name] = journey()
+                   ~~~~~~~^^
+  File "/home/runner/work/ZikrTime/ZikrTime/tools/ci/regional_journeys.py", line 165, in shop
+    locate_control("shop_partner_friend")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "tools/ci/features_controls.py", line 145, in locate_control
+    raise AssertionError('UI control not found: ' + identifier)
+AssertionError: UI control not found: shop_partner_friend
