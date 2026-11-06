@@ -1,0 +1,11 @@
+{
+  "version": "0.8.22",
+  "version_code": 34,
+  "source_sha": "4619d91266f82781d88470462aff2eabd9a19188",
+  "run": 42281825864,
+  "apk_size": 57228602,
+  "apk_sha256": "8a092890c7a95244bf696d7e7942c3bb2d42a1e40abb8673c2121f2b33d8e498",
+  "debug_sha256": "71f241c6998d420e93b2cb35960a705c279d87cca20470ae4d6a51ac1226457d",
+  "certificate_sha256": "7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf",
+  "quran_assets_unchanged": true
+}
