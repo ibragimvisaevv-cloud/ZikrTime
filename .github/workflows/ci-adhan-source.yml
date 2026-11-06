@@ -1,0 +1,21 @@
+name: Prepare licensed adhan recordings
+on:
+  push:
+    branches: [ci-adhan-source-0822]
+permissions:
+  contents: write
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify source recordings and normalise levels
+        run: |
+          if ! command -v ffmpeg >/dev/null; then sudo apt-get -qq update && sudo apt-get -qq install -y ffmpeg; fi
+          python3 tools/audio/download_adhan.py
+      - name: Preserve the processed audio and measurements
+        run: |
+          git add -- app/src/main/res/raw/athan_khalaf_*.ogg tools/audio/adhan_manifest.json
+          git -c user.name=ci -c user.email=ci@local commit -m "Prepared three validated licensed recordings [skip ci]"
+          git push origin HEAD:refs/heads/ci-adhan-recordings-0822
