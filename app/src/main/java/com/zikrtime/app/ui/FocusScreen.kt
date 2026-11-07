@@ -108,7 +108,7 @@ fun FocusScreen() {
     val used = (usedMillis ?: 0L) / 60_000
     val allowed = Store.allowedMinutes()
     val remaining = (allowed - used).coerceAtLeast(0)
-    HorizonSection(title = sectionCopy(SectionClarity.Limits), subtitle = sectionCopy(SectionClarity.LimitsIntro),
+    HorizonSection(title = clarityCopy(UiClarity0825.Limits), subtitle = sectionCopy(SectionClarity.LimitsIntro),
         image = R.drawable.focus_courtyard, heroHeight = 270.dp,
         hero = {
             Spacer(Modifier.height(8.dp))

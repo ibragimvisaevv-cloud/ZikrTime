@@ -35,13 +35,43 @@ def clipped_bounds(root, node):
     return left, top, right, bottom
 
 
+def uncovered_bounds(root, node):
+    """Exclude the floating nav bar from the scroll content's tappable area.
+
+    Compose exposes the full scrolling viewport behind the separate nav overlay.
+    Its semantic bounds alone do not prove that a point receives content taps.
+    Identify the actual five-tab container, not a guessed screen fraction.
+    """
+    area = clipped_bounds(root, node)
+    required = {"Намаз", "Знания", "Магазин", "Лимиты", "Настройки"}
+    vl, vt, vr, vb = bounds(next(root.iter("node")))
+    bars = []
+    for candidate in root.iter("node"):
+        l, t, r, b = bounds(candidate)
+        if t <= vt + (vb - vt) / 2 or b - t >= (vb - vt) / 3:
+            continue
+        if required <= {n.get("text", "") for n in candidate.iter("node")}:
+            bars.append(((r-l)*(b-t), candidate))
+    if bars:
+        _, bar = min(bars, key=lambda pair: pair[0])
+        # Nav controls themselves remain tappable. Modal sheets expose no tab
+        # container in their window, so their bounds are unchanged as well.
+        if not any(n is node for n in bar.iter("node")):
+            nl, nt, nr, nb = bounds(bar)
+            l, t, r, b = area
+            if l < nr and r > nl and b > nt:
+                area = (l, t, r, min(b, nt - 12))
+    return area
+
+
 def locate_control(identifier, attribute="resource-id"):
     for _ in range(16):
         root = ui()
         node = find_control(root, identifier, attribute)
         if node is not None:
-            l, t, r, b = clipped_bounds(root, node)
-            if r - l >= 12 and b - t >= 12:
+            l, t, r, b = uncovered_bounds(root, node)
+            raw_height = bounds(node)[3] - bounds(node)[1]
+            if r - l >= 24 and b - t >= min(48, max(24, raw_height)):
                 node.set("bounds", f"[{l},{t}][{r},{b}]")
                 return node
         owner = None
@@ -50,7 +80,7 @@ def locate_control(identifier, attribute="resource-id"):
             if owner is not None:
                 break
         if owner is None:
-            candidates = [(clipped_bounds(root, n), n) for n in root.iter("node")
+            candidates = [(uncovered_bounds(root, n), n) for n in root.iter("node")
                           if n.get("scrollable") == "true"]
             candidates = [(area, n) for area, n in candidates if area[3] - area[1] > 72]
             if not candidates:
@@ -60,7 +90,7 @@ def locate_control(identifier, attribute="resource-id"):
                 time.sleep(.5)
                 continue
             _, owner = max(candidates, key=lambda pair: pair[0][3] - pair[0][1])
-        l, t, r, b = clipped_bounds(root, owner)
+        l, t, r, b = uncovered_bounds(root, owner)
         assert b - t >= 72, ("Unusable scroll area", identifier, (l, t, r, b))
         # A page drag must START below the map. The outer gutter may lie outside
         # the LazyColumn itself; dragging there would test an inert area.
@@ -74,6 +104,20 @@ def locate_control(identifier, attribute="resource-id"):
             x = l + min(16, (r - l) // 4)
         shell("input", "swipe", x, start_y, x, int(t + (b - t) * .2), 350)
     raise AssertionError("Control not reachable: " + identifier)
+
+
+def tap_control(identifier, attribute="resource-id"):
+    node = locate_control(identifier, attribute)
+    l, t, r, b = bounds(node)
+    point = [(l+r)//2, (t+b)//2]
+    # Reuse the locator's last dump for diagnostics; no additional UI roundtrip.
+    (OUT / "tap-last.xml").write_bytes((OUT / "last-ui.xml").read_bytes())
+    trace = {"identifier": identifier, "attribute": attribute, "bounds": [l,t,r,b], "point": point}
+    (OUT / "tap-last.json").write_text(json.dumps(trace, ensure_ascii=False))
+    with (OUT / "tap-actions.jsonl").open("a") as handle:
+        handle.write(json.dumps(trace, ensure_ascii=False) + "\n")
+    shell("input", "tap", *point)
+    time.sleep(.7)
 
 
 def camera(root):
@@ -260,7 +304,7 @@ def navigation():
     start("home")
     label_at("home_set_limits", "Настроить лимит")
     tap_control("home_set_limits")
-    locate_control("Лимиты приложений", "text")
+    locate_control("Лимиты", "text")
     locate_control("focus_choose_apps")
     capture("clarity-limits-actions")
     tap_control("focus_choose_apps")
@@ -354,7 +398,7 @@ if __name__ == "__main__":
                    "rotation": rotation_preview, "search": search_flow, "navigation": navigation}
         if __import__("os").environ.get("NAVIGATION_ONLY") == "true":
             inherited = json.loads((OUT / "inherited-clarity.json").read_text())
-            assert inherited["verified_same_apks"] and inherited["map_assertions_unchanged"]
+            assert inherited["map_inputs_unchanged"] and inherited["map_assertions_unchanged"]
             assert set(inherited["groups"]) == {"map_gestures", "preview_profiles", "rotation", "search"}
             report["groups"].update(inherited["groups"])
             report["inherited_evidence"] = {k: v for k, v in inherited.items() if k != "groups"}

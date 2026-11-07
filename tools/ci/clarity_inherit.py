@@ -1,4 +1,4 @@
-"""Carry forward the exact successful map checks on identical APKs.
+"""Carry forward successful map checks with explicit APK/source provenance.
 
 The previous run's navigation failed on a transient loading view. Its four
 completed map/search groups are retained, not represented as a new execution.
@@ -20,7 +20,9 @@ APK_HASH = "986f60c174c9f76fd6275177a54e09305173483f4e6f215e7fa2fe9505e37d41"
 DEBUG_HASH = "69cd21efdd8826c4469e335fb843f887c4558893f8341b3898fd94f0cb171400"
 groups = {"map_gestures", "preview_profiles", "rotation", "search"}
 
-assert os.environ["REUSE_RUN"] == str(RUN)
+label_finish = os.environ.get("LABEL_FINISH") == "true"
+if not label_finish:
+    assert os.environ["REUSE_RUN"] == str(RUN)
 metadata = json.loads(Path("ci-inherited/artifact.json").read_text())
 assert metadata["id"] == ARTIFACT and not metadata["expired"]
 assert metadata["name"] == "ZikrTime-0.8.25-clarity-check"
@@ -41,12 +43,31 @@ assert not re.search(r"FATAL EXCEPTION|Fatal signal", (evidence / "crashes.txt")
 
 old_delivery = json.loads((evidence / "release-delivery.json").read_text())
 current_delivery = json.loads(Path("ci-out/release-delivery.json").read_text())
-assert old_delivery == current_delivery
 assert old_delivery["source_sha"] == APK_SOURCE
 assert (old_delivery["apk_sha256"], old_delivery["debug_sha256"]) == (APK_HASH, DEBUG_HASH)
-for variant, digest in [("release", APK_HASH), ("debug", DEBUG_HASH)]:
+for variant, key in [("release", "apk_sha256"), ("debug", "debug_sha256")]:
     apk = Path(f"app/build/outputs/apk/{variant}/app-{variant}.apk")
-    assert hashlib.sha256(apk.read_bytes()).hexdigest() == digest
+    assert hashlib.sha256(apk.read_bytes()).hexdigest() == current_delivery[key]
+if label_finish:
+    # A narrower Focus heading fixes a real visual defect. The new APK is not
+    # the previous APK: allow precisely this one UI expression and nothing else
+    # in Android/build inputs before inheriting the unaffected map journeys.
+    focus_path = "app/src/main/java/com/zikrtime/app/ui/FocusScreen.kt"
+    old_focus = subprocess.check_output(["git", "show", APK_SOURCE + ":" + focus_path], text=True)
+    before = "HorizonSection(title = sectionCopy(SectionClarity.Limits),"
+    after = "HorizonSection(title = clarityCopy(UiClarity0825.Limits),"
+    assert old_focus.count(before) == 1
+    assert old_focus.replace(before, after) == Path(focus_path).read_text()
+    changed = subprocess.check_output(["git", "diff", "--name-only", APK_SOURCE, "HEAD", "--",
+        "app/", "build.gradle.kts", "settings.gradle.kts", "gradle.properties", "gradle/",
+        "gradlew", "gradlew.bat", "keystore/release.jks.enc"], text=True).splitlines()
+    assert changed == [focus_path], changed
+    if not os.environ["REUSE_RUN"]:
+        assert current_delivery["source_sha"] == os.environ["GITHUB_SHA"]
+    for key in ("version", "version_code", "certificate_sha256", "quran_assets_unchanged", "camera_permission"):
+        assert current_delivery[key] == old_delivery[key], key
+else:
+    assert old_delivery == current_delivery
 old_recheck = json.loads((evidence / "recheck.json").read_text())
 assert old_recheck["verification_run"] == RUN
 assert old_recheck["verification_source_sha"] == CHECK_SOURCE
@@ -68,9 +89,14 @@ assert all(old[name] == current[name] for name in protected), "Previously passed
 
 provenance = {"source_run": RUN, "artifact_id": ARTIFACT, "verification_source_sha": CHECK_SOURCE,
               "apk_source_sha": APK_SOURCE, "apk_sha256": APK_HASH, "debug_sha256": DEBUG_HASH,
-              "verified_same_apks": True, "map_assertions_unchanged": True,
+              "current_apk_source_sha": current_delivery["source_sha"],
+              "current_apk_sha256": current_delivery["apk_sha256"],
+              "current_debug_sha256": current_delivery["debug_sha256"],
+              "verified_same_apks": not label_finish, "map_inputs_unchanged": True,
+              "map_assertions_unchanged": True,
               "groups": previous["groups"],
-              "note": "Map, previews, rotation and search passed in the cited earlier run; only navigation rerun."}
+              "note": ("Map evidence comes from the cited earlier APK. The current APK differs only in the exact Focus heading expression; navigation is rerun."
+                       if label_finish else "Map, previews, rotation and search passed in the cited earlier run on identical APKs; only navigation rerun.")}
 Path("ci-out/inherited-clarity.json").write_text(json.dumps(provenance, ensure_ascii=False, indent=2))
 destination = Path("ci-out/inherited-map-check")
 destination.mkdir(parents=True, exist_ok=True)
@@ -83,4 +109,4 @@ for path in (evidence / "screens").glob("clarity-*.png"):
     if not any(word in path.name for word in ("failure", "home")):
         (destination / "screens").mkdir(exist_ok=True)
         shutil.copy2(path, destination / "screens" / path.name)
-print("Verified earlier map evidence on identical APKs; run only remaining navigation.")
+print("Verified earlier map evidence and exact Android change scope; run only remaining navigation.")

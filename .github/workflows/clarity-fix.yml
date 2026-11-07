@@ -26,6 +26,7 @@ jobs:
     env:
       REUSE_RUN: ${{ inputs.reuse_run || '' }}
       NAVIGATION_ONLY: ${{ inputs.navigation_only == true || contains(github.event.head_commit.message, 'navigation-only') }}
+      LABEL_FINISH: ${{ contains(github.event.head_commit.message, 'label-finish') }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -89,7 +90,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          test "$REUSE_RUN" = '42390466804'
+          if [ "$LABEL_FINISH" != 'true' ]; then test "$REUSE_RUN" = '42390466804'; fi
           mkdir -p ci-inherited
           gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/13581197812" > ci-inherited/artifact.json
           gh run download 42390466804 --repo "$GITHUB_REPOSITORY" -n ZikrTime-0.8.25-clarity-check -D ci-inherited
