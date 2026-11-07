@@ -11,7 +11,7 @@ import time
 import urllib.parse
 import urllib.request
 
-from places_sources import distance_km, merge_import, valid_coordinates, wikidata_id
+from places_sources import distance_km, merge_import, publish_import, valid_coordinates, wikidata_id
 
 ENDPOINT = "https://query.wikidata.org/sparql"
 QUERY = """
@@ -88,3 +88,15 @@ def merge(db, rows):
             item["possible_duplicate"] = nearby[0]["id"]
         candidates.append(item)
     return merge_import(db, candidates, "wikidata")
+
+
+def main():
+    rows = fetch()
+    if not isinstance(rows, list) or not rows:
+        raise SystemExit("Wikidata returned no records; current places preserved")
+    added, updated, _ = publish_import(lambda db: merge(db, rows))
+    print(f"Wikidata prayer places: {added} new moderation candidates, {updated} refreshed")
+
+
+if __name__ == "__main__":
+    main()

@@ -18,7 +18,7 @@ import urllib.request
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import index  # noqa: E402
-from places_sources import merge_import, valid_coordinates, wikidata_id
+from places_sources import merge_import, publish_import, valid_coordinates, wikidata_id
 
 OVERPASS = [
     "https://overpass-api.de/api/interpreter",
@@ -166,14 +166,13 @@ def main():
         wikidata_rows = import_wikidata.fetch()
     except (OSError, ValueError, KeyError, TypeError) as exc:
         print("Wikidata unavailable; previous records retained:", type(exc).__name__)
-    storage = index.make_storage()
-    bot = index.Bot(storage, index.Telegram(index.BOT_TOKEN), data=index.make_storage(bucket=index.DATA_BUCKET))
-    added, updated, removed = merge(bot.db, items)
+    def apply(db):
+        osm_result = merge(db, items)
+        wd_result = import_wikidata.merge(db, wikidata_rows) if wikidata_rows is not None else (0, 0, 0)
+        return osm_result, wd_result
+    (added, updated, removed), (wd_added, wd_updated, _) = publish_import(apply)
     if wikidata_rows is not None:
-        wd_added, wd_updated, _ = import_wikidata.merge(bot.db, wikidata_rows)
         print(f"Wikidata: на проверку {wd_added}, обновлено {wd_updated}")
-    bot.dirty = bot.places_dirty = True
-    bot.save()
     kinds = {}
     for it in items:
         kinds[it["kind"]] = kinds.get(it["kind"], 0) + 1

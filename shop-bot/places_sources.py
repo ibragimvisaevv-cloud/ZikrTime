@@ -42,7 +42,7 @@ def publish_source_fields(place):
 
 
 def remember_removed(db, place):
-    if place.get("source") not in ("osm", "wikidata"):
+    if place.get("source") not in ("osm", "wikidata", "curated"):
         return
     pid = place.get("id")
     if not isinstance(pid, str) or not pid:
@@ -99,3 +99,53 @@ def merge_import(db, items, source):
         places[item["id"]] = {**item, **keep}
         updated += 1
     return added, updated, 0
+
+
+class _NoTelegram:
+    def call(self, method, **params):
+        raise RuntimeError("Place imports do not make Telegram requests")
+
+
+class _ImportSnapshot:
+    """Give Bot one existing tagged snapshot, without its legacy migration path."""
+    def __init__(self, storage, key):
+        self.storage = storage
+        self.key = key
+        self.raw, self.etag = storage.get_tagged(key)
+        if self.raw is None or not self.etag:
+            raise RuntimeError("Place import requires an existing private database with ETag")
+
+    def get_tagged(self, key):
+        if key != self.key:
+            raise RuntimeError("Unexpected import database key")
+        return self.raw, self.etag
+
+    def put(self, key, *args, **kwargs):
+        if key != self.key or kwargs.get("if_match") != self.etag:
+            raise RuntimeError("Place import requires a conditional database write")
+        return self.storage.put(key, *args, **kwargs)
+
+
+def publish_import(apply, storage=None, data=None):
+    """Save an additive import with CAS and preserve deferred Telegram messages.
+
+    Provider reads must finish before calling this function. A CAS conflict is
+    propagated, so the caller can retry against a fresh database. If publication
+    fails after the private save, retrying the idempotent import republishes it.
+    """
+    import index
+    storage = storage if storage is not None else index.make_storage()
+    data = data if data is not None else index.make_storage(bucket=index.DATA_BUCKET)
+    snapshot = _ImportSnapshot(data, index.DB_KEY)
+    bot = index.Bot(storage, _NoTelegram(), data=snapshot)
+    if not re.fullmatch(r"[A-Za-z0-9_]{5,32}", str(bot.db.get("bot_username", ""))):
+        raise RuntimeError("Stored bot_username is required for offline place publication")
+    # Compatible with older Bot initializers which removed the persisted queue
+    # even for an unbuffered Telegram client. Importers must never consume it.
+    if bot.outbox_out:
+        bot.db["outbox"] = bot.outbox_out + bot.db.get("outbox", [])
+        bot.outbox_out = []
+    result = apply(bot.db)
+    bot.dirty = bot.places_dirty = True
+    bot.save()
+    return result
