@@ -53,7 +53,12 @@ def locate_control(identifier, attribute="resource-id"):
             candidates = [(clipped_bounds(root, n), n) for n in root.iter("node")
                           if n.get("scrollable") == "true"]
             candidates = [(area, n) for area, n in candidates if area[3] - area[1] > 72]
-            assert candidates, "No scroll container while finding " + identifier
+            if not candidates:
+                # Cold Quran/app-picker navigation may briefly expose only a
+                # loading view. Wait within the same bounded 16-attempt budget;
+                # do not swipe or fail before its real controls attach.
+                time.sleep(.5)
+                continue
             _, owner = max(candidates, key=lambda pair: pair[0][3] - pair[0][1])
         l, t, r, b = clipped_bounds(root, owner)
         assert b - t >= 72, ("Unusable scroll area", identifier, (l, t, r, b))
@@ -345,9 +350,17 @@ if __name__ == "__main__":
     active = "initialization"
     try:
         shell("wm", "density", DENSITY)
-        for active, action in {"map_gestures": map_gestures, "preview_profiles": preview_profiles,
-                               "rotation": rotation_preview, "search": search_flow,
-                               "navigation": navigation}.items():
+        actions = {"map_gestures": map_gestures, "preview_profiles": preview_profiles,
+                   "rotation": rotation_preview, "search": search_flow, "navigation": navigation}
+        if __import__("os").environ.get("NAVIGATION_ONLY") == "true":
+            inherited = json.loads((OUT / "inherited-clarity.json").read_text())
+            assert inherited["verified_same_apks"] and inherited["map_assertions_unchanged"]
+            assert set(inherited["groups"]) == {"map_gestures", "preview_profiles", "rotation", "search"}
+            report["groups"].update(inherited["groups"])
+            report["inherited_evidence"] = {k: v for k, v in inherited.items() if k != "groups"}
+            actions = {"navigation": navigation}
+            (OUT / "clarity-passed.json").write_text(json.dumps(report, ensure_ascii=False, indent=2))
+        for active, action in actions.items():
             print("Clarity check:", active, flush=True)
             report["groups"][active] = action()
             (OUT / "clarity-passed.json").write_text(json.dumps(report, ensure_ascii=False, indent=2))

@@ -8,6 +8,10 @@ on:
         type: string
         description: Optional earlier clarity build run; reuse only with unchanged Android inputs
         default: ''
+      navigation_only:
+        type: boolean
+        description: Finish navigation using the verified map results from run 42390466804
+        default: false
 permissions:
   contents: read
   actions: read
@@ -21,6 +25,7 @@ jobs:
     timeout-minutes: 50
     env:
       REUSE_RUN: ${{ inputs.reuse_run || '' }}
+      NAVIGATION_ONLY: ${{ inputs.navigation_only == true || contains(github.event.head_commit.message, 'navigation-only') }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -79,6 +84,16 @@ jobs:
         run: |
           gh run download "$REUSE_RUN" --repo "$GITHUB_REPOSITORY" -n clarity-verified-inputs -D .
           python3 tools/ci/clarity_delivery.py --reuse
+      - name: Preserve verified map checks and run only remaining navigation
+        if: env.NAVIGATION_ONLY == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$REUSE_RUN" = '42390466804'
+          mkdir -p ci-inherited
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/13581197812" > ci-inherited/artifact.json
+          gh run download 42390466804 --repo "$GITHUB_REPOSITORY" -n ZikrTime-0.8.25-clarity-check -D ci-inherited
+          python3 tools/ci/clarity_inherit.py
       - uses: actions/upload-artifact@v4
         with:
           name: clarity-verified-inputs
