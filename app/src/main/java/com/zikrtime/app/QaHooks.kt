@@ -42,7 +42,10 @@ object QaHooks {
         val screen = intent.getStringExtra("qa_screen") ?: return false
         nav.stack.clear()
         nav.onboardingStep = 0
-        if (intent.getBooleanExtra("qa_onboarded", false)) Store.onboarded = true
+        if (intent.getBooleanExtra("qa_onboarded", false)) {
+            Store.onboarded = true
+            Store.guideDismissed = true
+        }
         if (intent.getBooleanExtra("qa_demo", false)) seed(activity)
         when (screen) {
             "onboarding" -> Store.onboarded = false
@@ -73,6 +76,7 @@ object QaHooks {
             "qibla" -> nav.open(Screen.QIBLA)
             "tasbih" -> nav.open(Screen.TASBIH)
             "about" -> nav.open(Screen.ABOUT)
+            "guide" -> nav.open(Screen.GUIDE)
             "apps" -> nav.open(Screen.APPS)
             "review" -> nav.startReview()
             "training" -> nav.openTraining()

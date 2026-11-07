@@ -4,6 +4,32 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class NavigationTest {
+    @Test fun openingAFeatureFromTheGuidePreservesItsEntry() {
+        val nav = Nav()
+        nav.tab = Tab.MORE
+        nav.open(Screen.GUIDE)
+        val guide = nav.stack.last()
+        nav.open(Screen.QURAN)
+        assertTrue(nav.back())
+        assertEquals(guide, nav.stack.last())
+        assertEquals(Tab.MORE, nav.tab)
+    }
+
+    @Test fun visitingATabAndItsChildReturnsToTheSameGuide() {
+        val nav = Nav()
+        nav.tab = Tab.MORE
+        nav.open(Screen.GUIDE)
+        val guide = nav.stack.last()
+        nav.openGuideTab(Tab.FOCUS)
+        assertEquals(Tab.FOCUS, nav.tab)
+        nav.open(Screen.APPS)
+        assertTrue(nav.back())
+        assertEquals(Screen.GUIDE_DESTINATION, nav.stack.last().screen)
+        assertTrue(nav.back())
+        assertEquals(guide, nav.stack.last())
+        assertEquals(Tab.MORE, nav.tab)
+    }
+
     @Test fun sellerProductSellerBackRestoresTheOriginalEntry() {
         val nav = Nav()
         nav.shopSeller = "first"; nav.open(Screen.SHOP_SELLER)

@@ -28,6 +28,9 @@ object Store {
     fun init(context: Context) {
         if (::prefs.isInitialized) return
         prefs = context.applicationContext.getSharedPreferences("zikrtime", Context.MODE_PRIVATE)
+        if (!prefs.contains(GuidePolicy.DISMISSED)) {
+            prefs.edit().putBoolean(GuidePolicy.DISMISSED, GuidePolicy.initialDismissed(prefs.all)).apply()
+        }
         com.zikrtime.app.prayer.RegionalTimes.init(context.applicationContext)
         if (!prefs.getBoolean("prayer_history_migrated_v1", false)) {
             val snapshot = prefs.all
@@ -53,6 +56,11 @@ object Store {
     var onboarded: Boolean
         get() = bool(K_ONBOARDED, false)
         set(v) = put(K_ONBOARDED, v)
+
+    /** Skipping the guide and finishing it both leave it available in Settings. */
+    var guideDismissed: Boolean
+        get() = bool(GuidePolicy.DISMISSED, false)
+        set(v) = put(GuidePolicy.DISMISSED, v)
 
     val location: City
         get() = City(

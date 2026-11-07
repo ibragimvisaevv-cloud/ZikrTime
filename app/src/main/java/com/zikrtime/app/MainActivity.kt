@@ -49,6 +49,7 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.Column
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.lifecycleScope
@@ -72,6 +73,8 @@ import com.zikrtime.app.ui.LocalNav
 import com.zikrtime.app.ui.MoreScreen
 import com.zikrtime.app.ui.Nav
 import com.zikrtime.app.ui.OnboardingScreen
+import com.zikrtime.app.ui.AppGuideScreen
+import com.zikrtime.app.ui.GuideTopic
 import com.zikrtime.app.ui.PrayerSettingsScreen
 import com.zikrtime.app.ui.QiblaScreen
 import com.zikrtime.app.ui.QuizScreen
@@ -224,6 +227,11 @@ private fun AppRoot() {
         return
     }
 
+    if (!Store.guideDismissed) {
+        AppGuideScreen(firstRun = true, onFinish = { Store.guideDismissed = true }, onOpenTopic = {})
+        return
+    }
+
     val motion = com.zikrtime.app.ui.motionEnabled()
     val screensState = androidx.compose.runtime.saveable.rememberSaveableStateHolder()
     BackHandler(enabled = nav.stack.isNotEmpty()) { nav.back() }
@@ -266,6 +274,35 @@ private fun AppRoot() {
             Screen.PLACES -> com.zikrtime.app.ui.PlacesScreen()
             Screen.RAMADAN -> com.zikrtime.app.ui.RamadanScreen()
             Screen.ZAKAT -> com.zikrtime.app.ui.ZakatScreen()
+            Screen.GUIDE -> AppGuideScreen(
+                firstRun = false,
+                onFinish = { nav.back() },
+                onOpenTopic = { topic ->
+                    when (topic) {
+                        GuideTopic.WELCOME -> nav.openGuideTab(Tab.PRAYER)
+                        GuideTopic.PRAYER -> nav.open(Screen.PRAYER_SETTINGS)
+                        GuideTopic.JOURNAL -> nav.open(Screen.PRAYER_JOURNAL)
+                        GuideTopic.QURAN -> nav.open(Screen.QURAN)
+                        GuideTopic.LIMITS, GuideTopic.PERMISSIONS -> nav.openGuideTab(Tab.FOCUS)
+                        GuideTopic.KNOWLEDGE -> nav.openGuideTab(Tab.KNOWLEDGE)
+                        GuideTopic.PLACES -> nav.open(Screen.PLACES)
+                        GuideTopic.TOOLS -> nav.openGuideTab(Tab.MORE)
+                        GuideTopic.SHOP -> nav.openGuideTab(Tab.SHOP)
+                    }
+                },
+            )
+            Screen.GUIDE_DESTINATION -> Column(Modifier.fillMaxSize()) {
+                Surface {
+                    androidx.compose.material3.TextButton(
+                        onClick = { nav.back() },
+                        modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars)
+                            .padding(horizontal = 12.dp)
+                            .semantics { testTagsAsResourceId = true }
+                            .testTag("guide_return"),
+                    ) { Text(stringResource(R.string.guide_return)) }
+                }
+                Box(Modifier.weight(1f)) { Tabs() }
+            }
         }
         }
     }

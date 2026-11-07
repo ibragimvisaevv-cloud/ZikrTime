@@ -100,6 +100,16 @@ fun MoreScreen() {
             Text(sectionCopy(SectionClarity.Appearance), style = MaterialTheme.typography.labelLarge, color = Porcelain)
             AppearanceSegments()
         }) {
+        ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
+            Column(Modifier.testTag("settings_guide").semantics { testTagsAsResourceId = true }) {
+                SettingRow(
+                    title = stringResource(R.string.guide_title),
+                    subtitle = stringResource(R.string.guide_settings_hint),
+                    icon = rememberVectorPainter(Icons.Default.Info),
+                    onClick = { nav.open(Screen.GUIDE) },
+                )
+            }
+        }
         SectionLabel(uiCopy(UiCopy0823.PrayerSettings))
         ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
             SettingRow(
