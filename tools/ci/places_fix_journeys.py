@@ -35,6 +35,50 @@ def bounds(node):
     return tuple(map(int, re.findall(r"-?\d+", node.get("bounds", ""))))
 
 
+def locate_control(identifier, attribute="resource-id"):
+    """Use this page's actual scroll owner, including wide landscape sheets.
+
+    The general app locator rejects viewports shorter than 35% of their width.
+    A valid landscape details viewport violates that ratio; swiping a guessed
+    screen position instead hits the fixed route button and cannot scroll it.
+    """
+    for _ in range(16):
+        root = ui()
+        viewport = bounds(next(root.iter("node")))
+        parents = {child: parent for parent in root.iter() for child in parent}
+        matches = [n for n in root.iter("node") if n.get(attribute) == identifier or
+                   (attribute == "resource-id" and (n.get(attribute, "").endswith("/" + identifier)
+                    or n.get("content-desc") == identifier))]
+        for node in matches:
+            left, top, right, bottom = bounds(node)
+            left, top = max(left, viewport[0]), max(top, viewport[1])
+            right, bottom = min(right, viewport[2]), min(bottom, viewport[3])
+            parent = parents.get(node)
+            while parent is not None:
+                if parent.get("scrollable") == "true":
+                    pl, pt, pr, pb = bounds(parent)
+                    left, top, right, bottom = max(left, pl), max(top, pt), min(right, pr), min(bottom, pb)
+                parent = parents.get(parent)
+            if right - left >= 12 and bottom - top >= 12:
+                node.set("bounds", f"[{left},{top}][{right},{bottom}]")
+                return node
+        # Modal details take precedence over the page behind the modal window.
+        scroll = find_control(root, "place_details_scroll")
+        if scroll is None:
+            scroll = find_control(root, "places_scroll")
+        assert scroll is not None, "No places scroll owner while looking for " + identifier
+        left, top, right, bottom = bounds(scroll)
+        left, top = max(left, viewport[0]), max(top, viewport[1])
+        right, bottom = min(right, viewport[2]), min(bottom, viewport[3])
+        assert bottom - top >= 72, ("Unusable scroll viewport", bounds(scroll))
+        # The center avoids edge navigation and belongs to the visible scroll
+        # body, never to the fixed route/close buttons outside its bounds.
+        x = (left + right) // 2
+        shell("input", "swipe", x, int(top + (bottom - top) * .82),
+              x, int(top + (bottom - top) * .18), 350)
+    raise AssertionError("UI control not found: " + identifier)
+
+
 def assert_visible(root, identifier, width, height, minimum_dp=24):
     node = find_control(root, identifier)
     left, top, right, bottom = bounds(node)
@@ -84,13 +128,16 @@ def start():
 
 def sheet_geometry(name, width, height):
     root = capture(name)
+    # wm's requested size may be constrained by the emulator's physical surface.
+    # Measure actual visible bounds instead of assuming the request was applied.
+    _, _, width, height = bounds(next(root.iter("node")))
     sheet = assert_visible(root, "place_details_sheet", width, height)
     left, top, right, bottom = bounds(sheet)
     assert bottom - top >= height * .65, ("Sheet is still collapsed", bounds(sheet), height)
     assert_visible(root, "place_details_close", width, height)
     assert_visible(root, "place_details_route", width, height)
     scroll = assert_visible(root, "place_details_scroll", width, height, minimum_dp=48)
-    return {"sheet_bounds": bounds(sheet), "scroll_bounds": bounds(scroll)}
+    return {"actual_viewport_px": [width, height], "sheet_bounds": bounds(sheet), "scroll_bounds": bounds(scroll)}
 
 
 def open_marker(width, height):
@@ -145,6 +192,7 @@ def close_sheet(back=False):
 
 def inspect_details(name, width, height, sparse=True):
     geometry = sheet_geometry(name + "-open", width, height)
+    width, height = geometry["actual_viewport_px"]
     if sparse:
         locate_control(russian("place_unknown"), "text")
     locate_control("place_details_reviews")
@@ -185,7 +233,8 @@ def profile(name, width, height, font, theme):
         list_entry(EMPTY_ID)
         sheet_geometry("places-" + name + "-reopened", width, height)
         close_sheet()
-    return {"size_px": [width, height], "density": DENSITY, "font_scale": font,
+    return {"requested_size_px": [width, height], "actual_viewport_px": result["actual_viewport_px"],
+            "density": DENSITY, "font_scale": font,
             "theme": theme, "map_enabled": True, "list_opened": True,
             "missing_data_reached_reviews": True, "close_works": True,
             "different_place_data_and_back_and_reopen": name == "dark",
