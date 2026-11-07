@@ -174,6 +174,21 @@ def permission_button(allow):
 
 
 def camera():
+    def wait_for_preview():
+        deadline = time.monotonic() + 45
+        while time.monotonic() < deadline:
+            root = ui()
+            if find_control(root, russian("qibla_camera_error"), "text") is not None:
+                capture("qibla-camera-error")
+                raise AssertionError("Camera preview reported an error")
+            if (find_control(root, russian("qibla_camera_close"), "text") is not None and
+                    find_control(root, russian("qibla_camera_note"), "text") is not None and
+                    find_control(root, russian("qibla_camera_loading"), "text") is None):
+                return
+            time.sleep(1)
+        capture("qibla-camera-timeout")
+        raise AssertionError("Camera preview did not reach STREAMING within 45 seconds")
+
     permission = "android.permission.CAMERA"
     shell("pm", "revoke", PKG, permission)
     shell("pm", "clear-permission-flags", PKG, permission, "user-set", "user-fixed")
@@ -181,13 +196,17 @@ def camera():
     tap_control(russian("qibla_camera_open"), "text")
     permission_button(allow=True)
     locate_control(russian("qibla_camera_close"), "text")
+    wait_for_preview()
     root = capture("qibla-camera")
-    error = find_control(root, russian("qibla_camera_error"), "text") is not None
+    assert find_control(root, russian("qibla_camera_note"), "text") is not None, "Captured camera overlay is missing"
+    assert find_control(root, russian("qibla_camera_loading"), "text") is None, "Captured preview is still loading"
+    assert find_control(root, russian("qibla_camera_error"), "text") is None, "Captured preview has an error"
     assert re.search(r"android\.permission\.CAMERA:\s+granted=true", shell("dumpsys", "package", PKG))
     tap_control(russian("qibla_camera_close"), "text")
     locate_control(russian("qibla_camera_open"), "text")
     tap_control(russian("qibla_camera_open"), "text")
     locate_control(russian("qibla_camera_close"), "text")
+    wait_for_preview()
     shell("input", "keyevent", "KEYCODE_BACK")
     locate_control(russian("qibla_camera_open"), "text")
     shell("pm", "revoke", PKG, permission)
@@ -201,7 +220,8 @@ def camera():
     locate_control(russian("qibla_camera_open"), "text")
     return {"runtime_permission_requested": True, "granted_and_opened": True,
             "close_and_back_return_to_compass": True, "denial_explained": True,
-            "preview_error_on_emulator": error}
+            "preview_error_on_emulator": False, "preview_streaming": True,
+            "preview_reopened": True}
 
 
 ROUTES = ("home", "focus", "knowledge", "more", "prayer_settings", "alarm",

@@ -164,7 +164,7 @@
     const mod = me.moderation;
     const modCount = mod ? mod.pending.length + (me.inbox_counts ? me.inbox_counts.places + me.inbox_counts.tickets : 0) : 0;
     const tabs = [["overview", "Обзор"], ["mine", "Компании"], ["requests", "Обращения"]];
-    if (me.admin) tabs.push(["manage", "Управление"]);
+    if (me.admin) tabs.push(["manage", "Админ"]);
     let html = `<header class="hero"><div class="eyebrow">Зикр-тайм</div><h1>${{overview: "Личный кабинет", mine: "Мои компании", requests: "Предложения и помощь", manage: "Управление"}[tab]}</h1><p>${tab === "overview" ? `Ассаляму алейкум, ${esc(me.user.first_name || "")}!` : tab === "mine" ? "Карточки, товары и продвижение" : tab === "requests" ? "Помогите сделать приложение лучше" : "Заявки и работа приложения"}</p></header>`;
     html += `<nav class="tabs" aria-label="Разделы кабинета">${tabs.map(([id, title]) => `<button data-tab="${id}" aria-current="${tab === id ? "page" : "false"}" class="${tab === id ? "on" : ""}">${title}${id === "manage" && modCount ? `<span class="badge">${modCount}</span>` : ""}</button>`).join("")}</nav>`;
     if (tab === "manage" && me.admin) {

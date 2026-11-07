@@ -165,7 +165,8 @@ textarea { min-height: 116px; }
 .stat-grid span { font-size: 13px; color: var(--hint); }
 .empty { padding: 28px 18px; }
 .empty h2 { margin-top: 0; color: var(--text); }
-.toast { bottom: max(24px, env(safe-area-inset-bottom)); pointer-events: none; transition: transform .18s ease; }
+.toast { bottom: max(24px, env(safe-area-inset-bottom)); pointer-events: none; opacity: 0; transition: transform .18s ease, opacity .18s ease; }
+.toast.show { opacity: 1; }
 @media (prefers-reduced-motion: no-preference) {
   button, [role="button"] { transition: transform .14s ease, background-color .14s ease; }
   button:active:not(:disabled), [role="button"]:active { transform: scale(.985); }

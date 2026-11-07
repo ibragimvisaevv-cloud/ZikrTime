@@ -77,9 +77,10 @@ async function scenario(browser, base, owner, theme) {
   await page.getByRole("heading", { name: "Личный кабинет" }).waitFor();
   assert.equal(await page.locator('[data-tab="manage"]').count(), owner ? 1 : 0);
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+  assert.equal(await page.locator("#toast").evaluate(element => getComputedStyle(element).opacity), "0");
   await page.screenshot({ path: path.join(output, `miniapp-${owner ? "owner" : "user"}-${theme}.png`), fullPage: true });
   if (owner) {
-    await page.getByRole("button", { name: "Управление", exact: true }).click();
+    await page.getByRole("button", { name: "Админ", exact: true }).click();
     await page.getByRole("button", { name: "Пользователи", exact: true }).click();
     await page.getByText("128", { exact: true }).waitFor();
     await page.screenshot({ path: path.join(output, `miniapp-admin-stats-${theme}.png`), fullPage: true });
@@ -107,6 +108,7 @@ async function scenario(browser, base, owner, theme) {
   }
   await page.setViewportSize({ width: 320, height: 700 });
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+  await page.screenshot({ path: path.join(output, `miniapp-${owner ? "owner" : "user"}-${theme}-320.png`), fullPage: true });
   assert.deepEqual(errors, []);
   await context.close();
 }
