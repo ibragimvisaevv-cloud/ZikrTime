@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prayer_check_title">Namazı qeyd etmək xatırlatması</string>
+    <string name="prayer_check_hint">Namaz qeyd edilməyibsə, bir dəfə səssiz xatırladacağıq. Bildirişə toxunduqda jurnalda həmin namaz açılır.</string>
+    <string name="prayer_check_delay">Namaz vaxtı başladıqdan sonra</string>
+    <string name="prayer_check_minutes">%1$d dəq</string>
+    <string name="prayer_check_progress">Bu xatırlatmalar üçün şəxsi irəliləyişi aktivləşdirin.</string>
+    <string name="prayer_check_notification">Siz hələ %1$s namazını qeyd etməmisiniz.</string>
+    <string name="prayer_check_open">Jurnalı aç</string>
+</resources>

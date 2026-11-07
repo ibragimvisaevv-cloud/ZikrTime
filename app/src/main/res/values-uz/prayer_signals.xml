@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="signal_short_title">Qisqa bildirishnoma ovozi</string>
+    <string name="signal_short_hint">Azon o‘chirilganda telefonning bildirishnoma ovozidan foydalanish.</string>
+    <string name="signal_last_title">Ilovaning oxirgi signali</string>
+    <string name="signal_none">Hali signal qayd etilmagan.</string>
+    <string name="signal_scheduled">Belgilangan vaqt · %1$s</string>
+    <string name="signal_delivered">Yetkazilgan vaqt · %1$s</string>
+    <string name="signal_quiet">Ovozsiz</string>
+    <string name="signal_blocked">Bloklangan bildirishnoma kanalini ochish</string>
+</resources>

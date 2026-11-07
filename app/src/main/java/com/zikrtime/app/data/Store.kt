@@ -28,8 +28,18 @@ object Store {
     fun init(context: Context) {
         if (::prefs.isInitialized) return
         prefs = context.applicationContext.getSharedPreferences("zikrtime", Context.MODE_PRIVATE)
+        com.zikrtime.app.prayer.RegionalTimes.init(context.applicationContext)
+        if (!prefs.getBoolean("prayer_history_migrated_v1", false)) {
+            val snapshot = prefs.all
+            val editor = prefs.edit()
+            PrayerJournal.legacy(snapshot, includeRecentChecks = snapshot["personal_progress_enabled"] != false)
+                .forEach { (day, marks) -> editor.putStringSet(PrayerJournal.PREFIX + day, marks) }
+            editor.putBoolean("reading_enabled_FRIDAY", snapshot[K_FRIDAY] == true)
+            editor.putBoolean("prayer_history_migrated_v1", true).apply()
+        }
         cleanupOldDailyKeys()
         cache.putAll(prefs.all)
+        migratePrayerAdjustments()
         ProgressMigration.additions(prefs.all).forEach { (key, value) -> put(key, value) }
     }
 
@@ -61,14 +71,15 @@ object Store {
     }
 
     var method: CalcMethod
-        get() = runCatching { CalcMethod.valueOf(str(K_METHOD, CalcMethod.RUSSIA.name)) }.getOrDefault(CalcMethod.RUSSIA)
+        get() = (cache[K_METHOD] as? String)?.let { runCatching { CalcMethod.valueOf(it) }.getOrNull() }
+            ?: com.zikrtime.app.prayer.RegionalTimes.defaultMethod()
         set(v) = put(K_METHOD, v.name)
 
     var madhab: AsrMadhab
         get() = runCatching { AsrMadhab.valueOf(str(K_MADHAB, AsrMadhab.STANDARD.name)) }.getOrDefault(AsrMadhab.STANDARD)
         set(v) = put(K_MADHAB, v.name)
 
-    /** Брать время намаза из интернета (aladhan.com), если есть связь. */
+    /** Разрешить сетевые обновления расписаний и определение часового пояса GPS-точки. */
     var onlineTimes: Boolean
         get() = bool(K_ONLINE, true)
         set(v) = put(K_ONLINE, v)
@@ -79,9 +90,19 @@ object Store {
         set(v) = put(K_ONLINE_AT, v)
 
     /** Ручная поправка в минутах для каждого времени (−30…+30), чтобы совпасть с расписанием мечети. */
-    fun adjustment(prayer: Prayer): Int = int(K_ADJ + prayer.name, 0)
+    fun adjustment(prayer: Prayer): Int = int(PrayerAdjustments.key(location, prayer), 0)
 
-    fun setAdjustment(prayer: Prayer, minutes: Int) = put(K_ADJ + prayer.name, minutes.coerceIn(-30, 30))
+    fun setAdjustment(prayer: Prayer, minutes: Int) = put(PrayerAdjustments.key(location, prayer), minutes.coerceIn(-30, 30))
+
+    private fun migratePrayerAdjustments() {
+        if (prefs.getBoolean(PrayerAdjustments.migrated, false)) return
+        val migrated = PrayerAdjustments.migrate(prefs.all, location)
+        val editor = prefs.edit().putBoolean(PrayerAdjustments.migrated, true)
+        migrated.forEach { (key, minutes) -> editor.putInt(key, minutes) }
+        editor.apply()
+        cache.putAll(migrated)
+        cache[PrayerAdjustments.migrated] = true
+    }
 
     // ---------------- Уведомления о намазе ----------------
 
@@ -101,7 +122,7 @@ object Store {
 
     /** Пятничные напоминания (сура «Аль-Кахф», салават, час принятия дуа). */
     var fridayReminders: Boolean
-        get() = bool(K_FRIDAY, true)
+        get() = bool(K_FRIDAY, false)
         set(v) = put(K_FRIDAY, v)
 
     // ---------------- Будильник на фаджр ----------------
@@ -187,16 +208,57 @@ object Store {
     fun prayedOn(date: LocalDate): Set<Prayer> =
         strSet(K_PRAYED + date).mapNotNull { runCatching { Prayer.valueOf(it) }.getOrNull() }.toSet()
 
-    fun setPrayed(date: LocalDate, prayer: Prayer, done: Boolean) {
-        val updated = prayedOn(date).toMutableSet().apply { if (done) add(prayer) else remove(prayer) }
-        put(K_PRAYED + date, updated.map { it.name }.toSet())
+    fun prayerMarks(date: LocalDate) = PrayerJournal.decode(strSet(PrayerJournal.PREFIX + date))
 
-        if (!personalProgressEnabled) return
-        // День засчитывается в серию, когда отмечены все пять намазов.
-        val days = prayerDays.toMutableSet()
-        if (updated.containsAll(Prayer.obligatory)) days.add(date) else days.remove(date)
-        put(K_PRAYER_DAYS, Streaks.trim(days).map { it.toString() }.toSet())
+    fun pendingPrayerDates(): List<LocalDate> = cache.keys.asSequence()
+        .filter { it.startsWith(PrayerJournal.PREFIX) }
+        .mapNotNull { runCatching { LocalDate.parse(it.removePrefix(PrayerJournal.PREFIX)) }.getOrNull() }
+        .filter { PrayerMark.MISSED in prayerMarks(it).values }
+        .sortedDescending().toList()
+
+    fun setPrayed(date: LocalDate, prayer: Prayer, done: Boolean) {
+        val old = prayerMarks(date)[prayer]
+        val mark = if (done) {
+            if (old == PrayerMark.MISSED || old == PrayerMark.MADE_UP) PrayerMark.MADE_UP else PrayerMark.DONE
+        } else if (old == PrayerMark.MADE_UP) PrayerMark.MISSED else PrayerMark.UNMARKED
+        setPrayerMark(date, prayer, mark)
     }
+
+    fun setPrayerMark(date: LocalDate, prayer: Prayer, mark: PrayerMark) {
+        if (!prayer.isPrayer) return
+        val done = mark == PrayerMark.DONE || mark == PrayerMark.MADE_UP
+        val dayKey = K_PRAYED + date
+        val recorded = prayerMarks(date)
+        val previousChecks = if (cache.containsKey(dayKey) || !personalProgressEnabled) strSet(dayKey)
+            else recorded.filterValues { it == PrayerMark.DONE || it == PrayerMark.MADE_UP }.keys.map { it.name }.toSet()
+        val checks = previousChecks.toMutableSet().apply { if (done) add(prayer.name) else remove(prayer.name) }
+        val changes = mutableMapOf(dayKey to checks.toSet())
+        if (personalProgressEnabled) {
+            val marks = recorded.toMutableMap().apply {
+                if (mark == PrayerMark.UNMARKED) remove(prayer) else put(prayer, mark)
+            }
+            changes[PrayerJournal.PREFIX + date] = PrayerJournal.encode(marks)
+            val days = prayerDays.toMutableSet()
+            if (Prayer.obligatory.all { marks[it] == PrayerMark.DONE || marks[it] == PrayerMark.MADE_UP }) {
+                days.add(date)
+            } else days.remove(date)
+            changes[K_PRAYER_DAYS] = Streaks.trim(days).map { it.toString() }.toSet()
+        }
+        val editor = prefs.edit()
+        for ((key, values) in changes) {
+            if (values.isEmpty()) { editor.remove(key); cache.remove(key) }
+            else { editor.putStringSet(key, values); cache[key] = values }
+        }
+        editor.apply()
+    }
+
+    fun readingEnabled(kind: com.zikrtime.app.prayer.ReadingKind) = bool("reading_enabled_" + kind.name, false)
+    fun setReadingEnabled(kind: com.zikrtime.app.prayer.ReadingKind, enabled: Boolean) =
+        put("reading_enabled_" + kind.name, enabled)
+    fun readingMinute(kind: com.zikrtime.app.prayer.ReadingKind) =
+        int("reading_time_" + kind.name, kind.defaultMinute).coerceIn(0, 1439)
+    fun setReadingMinute(kind: com.zikrtime.app.prayer.ReadingKind, minute: Int) =
+        put("reading_time_" + kind.name, minute.coerceIn(0, 1439))
 
     /** Намазы, после которых пользователь нажал «Я совершил намаз» — блокировка для них снята. */
     fun lockDismissed(date: LocalDate): Set<Prayer> =
@@ -318,6 +380,7 @@ object Store {
         cache.keys.toList().filter(ProgressMigration::isHistoricalKey).forEach { key -> editor.remove(key); cache.remove(key) }
         editor.apply()
         saveProgress(ledger)
+        QuranStatistics.clear()
     }
 
     /** Recover the receipt if the process stopped after awarding minutes but before saving RESULT. */
@@ -425,7 +488,6 @@ object Store {
     private const val K_FRIDAY = "friday_reminders"
     private const val K_ONLINE = "online_times"
     private const val K_ONLINE_AT = "online_updated_at"
-    private const val K_ADJ = "adj_"
     private const val K_ALARM_ON = "alarm_on"
     private const val K_ALARM_OFFSET = "alarm_offset"
     private const val K_ALARM_DAYS = "alarm_days"

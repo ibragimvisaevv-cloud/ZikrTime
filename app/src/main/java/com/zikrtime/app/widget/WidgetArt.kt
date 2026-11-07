@@ -34,12 +34,12 @@ object WidgetArt {
         val canvas = Canvas(bitmap); val p = Paint(Paint.ANTI_ALIAS_FLAG)
         val r = 24 * s
         canvas.clipPath(Path().apply { addRoundRect(RectF(0f,0f,w,h),r,r,Path.Direction.CW) })
-        val colors = if (dark) intArrayOf(0xFF1C4438.toInt(), 0xFF102C26.toInt()) else intArrayOf(0xFFFAF5E9.toInt(), 0xFFE9E2D1.toInt())
+        val colors = if (dark) intArrayOf(0xFF252923.toInt(), 0xFF1D211C.toInt()) else intArrayOf(0xFFFFFEFA.toInt(), 0xFFF3F0E9.toInt())
         p.shader = LinearGradient(0f,0f,w,h,colors,null,Shader.TileMode.CLAMP)
         canvas.drawRect(0f,0f,w,h,p)
-        p.shader = RadialGradient(w*.95f,h*.1f,w*.7f,if(dark)0x285FC397 else 0x55FFFFFF,0x00FFFFFF,Shader.TileMode.CLAMP)
+        p.shader = RadialGradient(w*.95f,h*.1f,w*.7f,if(dark)0x18D6BD8E else 0x55FFFFFF,0x00FFFFFF,Shader.TileMode.CLAMP)
         canvas.drawRect(0f,0f,w,h,p); p.shader=null
-        val color = if (dark) 0xFFE8CB90.toInt() else 0xFF8D7648.toInt()
+        val color = if (dark) 0xFFD6BD8E.toInt() else 0xFF796039.toInt()
         p.color = alpha(color, if (arch) .18f else .09f)
         p.style = Paint.Style.STROKE; p.strokeWidth = 1.3f*s
         if (arch) {
@@ -53,7 +53,7 @@ object WidgetArt {
         canvas.drawRoundRect(RectF(.5f*s,.5f*s,w-.5f*s,h-.5f*s),r,r,p)
         return bitmap
     }
-    const val GOLD = 0xFFD9B77B.toInt()
+    const val GOLD = 0xFFD6BD8E.toInt()
     const val GOLD_LIGHT = 0xFFF0D5A4.toInt()
     const val GOLD_DARK = 0xFF956B3E.toInt()
     const val CREAM = 0xFFF7F2EA.toInt()
@@ -134,8 +134,8 @@ object WidgetArt {
         c.drawBitmap(source, null, RectF((w - dw) / 2f, (h - dh) / 2f, (w + dw) / 2f, (h + dh) / 2f), p)
         source.recycle()
         if (warm) { p.color = 0x33B36443; c.drawRect(rect, p) }
-        if (dim) { p.color = 0x30051D18; c.drawRect(rect, p) }
-        p.shader = LinearGradient(0f, 0f, 0f, h.toFloat(), intArrayOf(0x33051D18, 0x77051D18, 0xEE051D18.toInt()), null, Shader.TileMode.CLAMP)
+        if (dim) { p.color = 0x30171B18; c.drawRect(rect, p) }
+        p.shader = LinearGradient(0f, 0f, 0f, h.toFloat(), intArrayOf(0x33171B18, 0x77171B18, 0xEE171B18.toInt()), null, Shader.TileMode.CLAMP)
         c.drawRect(rect, p)
         return bmp
     }
@@ -332,8 +332,8 @@ object WidgetArt {
 
     /** Чётки для виджета тасбиха: 33 бусины по кругу, отсчитанные — золотые, текущая — крупнее. */
     fun beads(context: Context, sizeDp: Int, count: Int, target: Int, light: Boolean = false): Bitmap {
-        val beadInk = if (light) 0xFF124C40.toInt() else CREAM
-        val beadLit = if (light) 0xFF124C40.toInt() else GOLD_LIGHT
+        val beadInk = if (light) 0xFF235D4C.toInt() else CREAM
+        val beadLit = if (light) 0xFF235D4C.toInt() else GOLD_LIGHT
         val s = px(context)
         val size = max(1, (sizeDp * s).toInt())
         val bmp = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)

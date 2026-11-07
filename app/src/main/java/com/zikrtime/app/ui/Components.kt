@@ -138,7 +138,7 @@ fun ScreenScaffold(
             .let { if (scrollable) it.verticalScroll(scroll) else it }.padding(horizontal = 20.dp)
         Column(body, verticalArrangement = Arrangement.spacedBy(20.dp)) {
             Spacer(Modifier.height(0.dp))
-            if (showHeading && scrollable) PageHeading(title, scene = scene)
+            if (showHeading && scrollable && scene != null) PageHeading(title, scene = scene)
             content()
             Spacer(Modifier.height(12.dp))
             Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
@@ -184,7 +184,7 @@ fun ZCard(
     padding: PaddingValues = PaddingValues(20.dp),
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    val shape = RoundedCornerShape(24.dp)
+    val shape = MaterialTheme.shapes.large
     val base = if (color == Color.Unspecified) modifier.fillMaxWidth().glass(shape) else modifier
         .fillMaxWidth()
         .shadow(0.dp, shape)
@@ -196,7 +196,7 @@ fun ZCard(
         Column(
             base
                 .pressScale(interaction, 0.98f)
-                .clickable(interactionSource = interaction, indication = androidx.compose.material3.ripple(), onClick = onClick)
+                .clickable(interactionSource = interaction, indication = androidx.compose.material3.ripple(), role = Role.Button, onClick = onClick)
                 .padding(padding),
             content = content,
         )
@@ -210,8 +210,8 @@ fun SectionLabel(text: String, modifier: Modifier = Modifier) {
     Text(
         text,
         style = MaterialTheme.typography.labelLarge,
-        color = MaterialTheme.colorScheme.primary,
-        modifier = modifier.padding(start = 4.dp, top = 4.dp),
+        color = MaterialTheme.colorScheme.onSurface,
+        modifier = modifier.padding(start = 4.dp, top = 6.dp),
     )
 }
 
@@ -220,7 +220,7 @@ fun IconBadge(
     painter: Painter,
     modifier: Modifier = Modifier,
     tint: Color = MaterialTheme.colorScheme.primary,
-    container: Color = MaterialTheme.colorScheme.primaryContainer,
+    container: Color = MaterialTheme.colorScheme.surfaceContainerHigh,
     size: Dp = 40.dp,
 ) {
     val shape = RoundedCornerShape(size * 0.4f)
@@ -247,18 +247,18 @@ fun SettingRow(
     Row(
         Modifier
             .fillMaxWidth()
-            .heightIn(min = 48.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .let { if (onClick != null) it.clickable(onClick = onClick) else it }
-            .padding(vertical = 10.dp, horizontal = 4.dp),
+            .heightIn(min = 64.dp)
+            .clip(MaterialTheme.shapes.medium)
+            .let { if (onClick != null) it.clickable(role = Role.Button, onClick = onClick) else it }
+            .padding(vertical = 12.dp, horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (icon != null) {
             IconBadge(icon)
             Spacer(Modifier.width(14.dp))
         }
-        Column(Modifier.weight(1f)) {
-            Text(title, style = MaterialTheme.typography.bodyLarge)
+        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            Text(title, style = MaterialTheme.typography.titleSmall)
             if (subtitle != null) {
                 Text(subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
@@ -285,13 +285,22 @@ fun SwitchRow(
     icon: Painter? = null,
     enabled: Boolean = true,
 ) {
-    SettingRow(
-        title = title,
-        subtitle = subtitle,
-        icon = icon,
-        onClick = if (enabled) ({ onChange(!checked) }) else null,
-        trailing = { Switch(checked = checked, onCheckedChange = if (enabled) onChange else null, enabled = enabled) },
-    )
+    Row(
+        Modifier.fillMaxWidth().heightIn(min = 64.dp)
+            .clip(MaterialTheme.shapes.medium)
+            .toggleable(value = checked, enabled = enabled, role = Role.Switch, onValueChange = onChange)
+            .padding(vertical = 12.dp, horizontal = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(14.dp),
+    ) {
+        if (icon != null) IconBadge(icon)
+        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            Text(title, style = MaterialTheme.typography.titleSmall)
+            if (subtitle != null) Text(subtitle, style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        Switch(checked = checked, onCheckedChange = null, enabled = enabled)
+    }
 }
 
 /** Ползунок со значением справа от заголовка. */
@@ -326,44 +335,35 @@ fun PrimaryButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifi
 @Composable
 fun TonalButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true) {
     val interaction = remember { MutableInteractionSource() }
-    val shape = RoundedCornerShape(18.dp)
-    Box(
-        modifier
-            .fillMaxWidth()
-            .heightIn(min = 52.dp)
-            .alpha(if (enabled) 1f else .55f)
-            .pressScale(interaction)
-            .glass(shape, elevation = 4.dp)
-            .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.45f))
-            .clickable(interactionSource = interaction, indication = androidx.compose.material3.ripple(), enabled = enabled, onClick = onClick),
-        contentAlignment = Alignment.Center,
+    FilledTonalButton(
+        onClick = onClick,
+        enabled = enabled,
+        interactionSource = interaction,
+        modifier = modifier.fillMaxWidth().heightIn(min = 52.dp).pressScale(interaction),
+        shape = MaterialTheme.shapes.medium,
+        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 14.dp),
+        colors = ButtonDefaults.filledTonalButtonColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+        ),
     ) {
-        Text(
-            text,
-            style = MaterialTheme.typography.titleSmall,
-            color = MaterialTheme.colorScheme.primary,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-        )
+        Text(text, style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center)
     }
 }
 
 @Composable
 fun GhostButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, color: Color = MaterialTheme.colorScheme.primary) {
     val interaction = remember { MutableInteractionSource() }
-    val shape = RoundedCornerShape(18.dp)
-    Box(
-        modifier
-            .fillMaxWidth()
-            .heightIn(min = 50.dp)
-            .pressScale(interaction)
-            .clip(shape)
-            .background(color.copy(alpha = 0.06f))
-            .border(BorderStroke(1.dp, Brush.linearGradient(listOf(color.copy(alpha = 0.7f), color.copy(alpha = 0.2f)))), shape)
-            .clickable(interactionSource = interaction, indication = androidx.compose.material3.ripple(), onClick = onClick),
-        contentAlignment = Alignment.Center,
+    OutlinedButton(
+        onClick = onClick,
+        interactionSource = interaction,
+        modifier = modifier.fillMaxWidth().heightIn(min = 52.dp).pressScale(interaction),
+        shape = MaterialTheme.shapes.medium,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 14.dp),
+        colors = ButtonDefaults.outlinedButtonColors(contentColor = color),
     ) {
-        Text(text, style = MaterialTheme.typography.titleSmall, color = color, textAlign = TextAlign.Center, modifier = Modifier.padding(12.dp))
+        Text(text, style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center)
     }
 }
 

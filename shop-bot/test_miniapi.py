@@ -117,21 +117,10 @@ check(r["seller"]["products"][0]["old_price"] == 1300, "товар изменё�
 code, r = call(5, "mod_seller", sid=sid, do="ok")
 check(code == 403, "продавец не модерирует")
 code, r = call(1, "mod_seller", sid=sid, do="ok")
-check(code == 200 and db()["sellers"][sid]["status"] == "approved", "владелец одобрил")
-check("catalog.json" in pub.files and json.loads(pub.files["catalog.json"])["sellers"][0]["id"] == sid, "каталог обновлён")
-
-# Продвижение
+check(code == 200 and db()["sellers"][sid]["status"] == "awaiting_payment", "ожидание оплаты после модерации")
+check(not pub.files.get("catalog.json") or not json.loads(pub.files["catalog.json"])["sellers"], "до оплаты карточки в каталоге нет")
 code, r = call(5, "promo_request", sid=sid, days=7)
-check(code == 200 and r["request"]["price"] == 100, "заявка на продвижение")
-rid = r["request"]["id"]
-code, r = call(5, "promo_claim", rid=rid)
-check(r["request"]["status"] == "claimed", "«Я оплатил»")
-code, r = call(1, "me")
-check(len(r["moderation"]["promo"]) == 1, "владелец видит заявку")
-code, r = call(1, "mod_promo", rid=rid, do="ok")
-check(json.loads(pub.files["catalog.json"])["sellers"][0].get("promo_until", 0) > time.time(), "продвижение в каталоге")
-check(not any(m[1].get("chat_id") == 1 and m[1].get("text", "").startswith("✅ Продвижение") for m in db().get("outbox", [])), "владельцу из кабинета лишних сообщений нет")
-check(any(m[1].get("chat_id") == 5 and "Оплата получена" in m[1].get("text", "") for m in db().get("outbox", [])), "продавцу — сообщение об оплате")
+check(code == 400, "старое приложение не может создать ручную оплату")
 
 # Настройки владельца
 code, r = call(5, "settings", prices={"7": 1, "30": 2})

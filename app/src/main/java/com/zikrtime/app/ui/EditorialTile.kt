@@ -25,7 +25,7 @@ fun EditorialTile(title: String, icon: Int, warm: Boolean, modifier: Modifier = 
         androidx.compose.foundation.Image(painterResource(if (warm) com.zikrtime.app.R.drawable.azkar_morning else com.zikrtime.app.R.drawable.azkar_evening),
             null, Modifier.matchParentSize(), contentScale = androidx.compose.ui.layout.ContentScale.Crop)
         Box(Modifier.matchParentSize().background(androidx.compose.ui.graphics.Brush.verticalGradient(listOf(
-            androidx.compose.ui.graphics.Color(0x22051D18), androidx.compose.ui.graphics.Color(0xDD051D18)))))
+            androidx.compose.ui.graphics.Color(0x22171B18), androidx.compose.ui.graphics.Color(0xDD171B18)))))
         Column(Modifier.fillMaxWidth().heightIn(min = if (prominent) 232.dp else 154.dp).padding(18.dp), verticalArrangement = Arrangement.SpaceBetween) {
             Icon(painterResource(icon), null, tint = Sand, modifier = Modifier.size(24.dp))
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {

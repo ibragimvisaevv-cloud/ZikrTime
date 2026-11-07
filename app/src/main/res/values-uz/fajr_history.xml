@@ -1,0 +1,10 @@
+<resources>
+    <string name="fajr_history_title">Oxirgi budilnik signali</string>
+    <string name="fajr_history_empty">Budilnik hali chalinmagan.</string>
+    <string name="fajr_history_daily">Bomdod budilnigi</string>
+    <string name="fajr_history_test">Sinov signali</string>
+    <string name="fajr_history_snooze">Kechiktirilgan signal</string>
+    <string name="fajr_history_planned">Belgilangan vaqt — %1$s</string>
+    <string name="fajr_history_fired">Chalingan vaqt — %1$s</string>
+    <string name="fajr_history_delay">Kechikish — %1$d daqiqa</string>
+</resources>

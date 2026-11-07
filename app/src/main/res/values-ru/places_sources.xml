@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="places_search_label">Название мечети или адрес</string>
+    <string name="places_yandex_search">Найти ещё мечети в Яндекс Картах</string>
+    <string name="places_search_empty">Ничего не найдено. Попробуйте другое название или поиск в Яндекс Картах.</string>
+    <string name="places_wikidata_credit">Дополнительные сведения — Wikidata, CC0</string>
+    <string name="places_less">Свернуть</string>
+    <string name="places_details">Подробнее</string>
+    <string name="places_access_check">Перед поездкой уточните доступ в мечеть.</string>
+    <string name="places_open_source">Открыть источник</string>
+</resources>

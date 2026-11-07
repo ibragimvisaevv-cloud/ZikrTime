@@ -67,5 +67,17 @@ object CityZones {
         "paris" to "Europe/Paris",
         "new_york" to "America/New_York",
     )
-    fun forCity(id: String?, fallback: ZoneId = ZoneId.systemDefault()): ZoneId = zones[id]?.let(ZoneId::of) ?: fallback
+    fun known(id: String?): ZoneId? = zones[id]?.let(ZoneId::of) ?: com.zikrtime.app.data.Cities.regionZone(id)
+        ?: id?.let { com.zikrtime.app.prayer.RegionalFeeds.source(it)?.zone }
+
+    /** Old Android tzdata predates Kazakhstan's switch on 1 March 2024.
+     * Respect updated IANA rules whenever the database knows that transition. */
+    internal fun civil(zone: ZoneId, date: LocalDate): ZoneId {
+        if (zone.id !in setOf("Asia/Almaty", "Asia/Qostanay") || date < LocalDate.of(2024, 3, 1)) return zone
+        val expected = ZoneOffset.ofHours(5)
+        return if (zone.rules.getOffset(Instant.parse("2024-07-01T00:00:00Z")) == expected) zone else expected
+    }
+
+    fun forCity(id: String?, fallback: ZoneId? = null): ZoneId =
+        known(id)?.let { civil(it, LocalDate.now(it)) } ?: fallback ?: com.zikrtime.app.prayer.PrayerSchedule.zone()
 }

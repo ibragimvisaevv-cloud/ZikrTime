@@ -63,11 +63,11 @@ fun KnowledgeScreen() {
     val zone = CityZones.forCity(Store.location.id, java.time.ZoneId.systemDefault())
     val morning = java.time.ZonedDateTime.now(zone).hour < 15
     HorizonSection(title = stringResource(R.string.knowledge_title),
-        subtitle = stringResource(R.string.knowledge_subtitle),
+        subtitle = sectionCopy(SectionClarity.KnowledgeIntro),
         image = if (morning) R.drawable.azkar_morning else R.drawable.azkar_evening,
-        heroHeight = 370.dp,
+        heroHeight = 230.dp,
         hero = {
-            Spacer(Modifier.height(56.dp))
+            Spacer(Modifier.height(16.dp))
             HorizonFeature(stringResource(if (morning) R.string.azkar_morning else R.string.azkar_evening),
                 if (morning) R.drawable.ic_prayer_fajr else R.drawable.ic_prayer_isha) {
                 nav.openAzkar(if (morning) "morning" else "evening")
@@ -80,58 +80,60 @@ fun KnowledgeScreen() {
             PrimaryButton(stringResource(R.string.learning_resume), onClick = { nav.resumeLearning(context) },
                 modifier = Modifier.testTag("learning_resume").semantics { testTagsAsResourceId = true })
         }
+        SectionLabel(uiCopy(UiCopy0823.ReadAndRemember))
         DestinationRow(stringResource(if (morning) R.string.azkar_evening else R.string.azkar_morning),
             if (morning) R.drawable.ic_prayer_isha else R.drawable.ic_prayer_fajr) {
             nav.openAzkar(if (morning) "evening" else "morning")
         }
-        Text(stringResource(R.string.knowledge_topics), style = MaterialTheme.typography.headlineSmall)
-        val columns = if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 1 else 2
-        bank.categories.toList().chunked(columns).forEach { pair ->
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                pair.forEach { (id, name) ->
-                    HorizonDestination(name, categoryIcon(id), Modifier.weight(1f), prominent = id == "quran") { nav.startQuiz(id) }
+        Column(Modifier.testTag("quran_open").semantics { testTagsAsResourceId = true }) {
+            DestinationRow(stringResource(R.string.quran_title), R.drawable.ic_nav_knowledge,
+                sectionCopy(SectionClarity.QuranHint)) { nav.open(Screen.QURAN) }
+        }
+        SectionLabel(uiCopy(UiCopy0823.PracticeKnowledge))
+        KnowledgeLevelGate(bank) { level ->
+            KnowledgeLevelControl(bank)
+            ZCard {
+                Text(uiCopy(UiCopy0823.StudyIntro), style = MaterialTheme.typography.bodyLarge)
+                Spacer(Modifier.height(14.dp))
+                PrimaryButton(sectionCopy(SectionClarity.Questions), onClick = { nav.startQuiz(null) },
+                    modifier = Modifier.testTag("learning_start").semantics { testTagsAsResourceId = true })
+                Spacer(Modifier.height(14.dp))
+                Text(stringResource(R.string.knowledge_round_title, Store.CORRECT_ANSWERS_PER_ROUND, Store.BONUS_MINUTES_PER_ROUND),
+                    style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+                Spacer(Modifier.height(6.dp))
+                Text(stringResource(R.string.learning_bonus_rule, Store.MAX_BONUS_MINUTES_PER_DAY),
+                    style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Spacer(Modifier.height(6.dp))
+                Text(sectionCopy(SectionClarity.BonusMeaning), style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Spacer(Modifier.height(10.dp))
+                LinearProgressIndicator(progress = { bonus / Store.MAX_BONUS_MINUTES_PER_DAY.toFloat() },
+                    modifier = Modifier.fillMaxWidth().height(6.dp), strokeCap = StrokeCap.Round, drawStopIndicator = {})
+                Text(stringResource(R.string.knowledge_bonus_today, bonus, Store.MAX_BONUS_MINUTES_PER_DAY),
+                    style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(top = 6.dp))
+            }
+            SectionLabel(stringResource(R.string.knowledge_topics))
+            Text(uiCopy(UiCopy0823.TopicHint), style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant)
+            val columns = if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 1 else 2
+            bank.categories.filter { (id, _) -> bank.questionsFor(id,level.id).isNotEmpty() }
+                .chunked(columns).forEach { pair ->
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    pair.forEach { (id, name) ->
+                        HorizonDestination(if (id == "quran") stringResource(R.string.quran_quiz) else name,
+                            categoryIcon(id), Modifier.weight(1f)) { nav.startQuiz(id) }
+                    }
                 }
             }
-        }
-
-        MotifPanel {
-          Column(Modifier.padding(22.dp)) {
-            Text(
-                stringResource(R.string.knowledge_round_title, Store.CORRECT_ANSWERS_PER_ROUND, Store.BONUS_MINUTES_PER_ROUND),
-                style = MaterialTheme.typography.titleLarge,
-                color = androidx.compose.ui.graphics.Color(0xFFF7F2EA),
-            )
-            Spacer(Modifier.height(6.dp))
-            Text(
-                stringResource(R.string.learning_bonus_rule, Store.MAX_BONUS_MINUTES_PER_DAY),
-                style = MaterialTheme.typography.bodyMedium,
-                color = androidx.compose.ui.graphics.Color(0xFFF7F2EA).copy(alpha = 0.85f),
-            )
-            Spacer(Modifier.height(14.dp))
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                LinearProgressIndicator(
-                    progress = { bonus / Store.MAX_BONUS_MINUTES_PER_DAY.toFloat() },
-                    modifier = Modifier.weight(1f).height(8.dp),
-                    strokeCap = StrokeCap.Round,
-                    drawStopIndicator = {},
-                )
-                Spacer(Modifier.width(12.dp))
-                Text(
-                    stringResource(R.string.knowledge_bonus_today, bonus, Store.MAX_BONUS_MINUTES_PER_DAY),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = androidx.compose.ui.graphics.Color(0xFFF7F2EA),
-                )
-            }
-            Spacer(Modifier.height(16.dp))
-            GoldButton(stringResource(R.string.knowledge_start), onClick = { nav.startQuiz(null) })
-        }
+            WeakTopicsOverview(bank)
         }
 
         ZCard {
-            Text(stringResource(R.string.learning_review), style = MaterialTheme.typography.titleLarge)
+            Text(sectionCopy(SectionClarity.Review), style = MaterialTheme.typography.titleLarge)
             Text(stringResource(R.string.learning_review_hint), style = MaterialTheme.typography.bodyMedium)
             Spacer(Modifier.height(10.dp))
-            TonalButton(stringResource(R.string.learning_review), onClick = { nav.startReview() },
+            TonalButton(sectionCopy(SectionClarity.Review), onClick = { nav.startReview() },
                 modifier = Modifier.testTag("learning_review_start").semantics { testTagsAsResourceId = true })
             TextButton(onClick = { clearLearning = true },
                 modifier = Modifier.testTag("learning_clear").semantics { testTagsAsResourceId = true }) {
@@ -140,10 +142,9 @@ fun KnowledgeScreen() {
         }
         if (Store.personalProgressEnabled) {
             val summary = Store.personalProgressSummary()
-            ZCard(onClick = { nav.open(Screen.PROGRESS) }) {
-                Text(stringResource(R.string.progress_title), style = MaterialTheme.typography.titleMedium)
-                Text(stringResource(R.string.progress_home_summary, summary.sessions, summary.activeDays),
-                    color = MaterialTheme.colorScheme.onSurfaceVariant)
+            ZCard {
+                DestinationRow(stringResource(R.string.progress_title), R.drawable.ic_nav_knowledge,
+                    stringResource(R.string.progress_home_summary, summary.sessions, summary.activeDays)) { nav.open(Screen.PROGRESS) }
             }
         }
         Text(
@@ -182,16 +183,23 @@ fun QuizScreen() {
     val category = nav.quizCategory
     val title = category?.let { bank.categoryName(it) } ?: stringResource(R.string.knowledge_title)
     var readingScale by rememberReadingScale()
-    val sessionKey = LearningStore.session("normal")?.let { "${it.stage}-${it.index}-${it.cardIndex}" }
-    ScreenScaffold(title = title, onBack = { nav.back() }, showHeading = false, scrollKey = sessionKey,
+    val session = LearningStore.session("normal")
+    val sessionKey = "${LearningStore.selectedLevel?.id}-${session?.id}-${session?.stage}-${session?.index}-${session?.cardIndex}"
+    ScreenScaffold(title = title, onBack = {
+        if(LearningStore.session("normal")?.stage == "RESULT") LearningStore.clearSession("normal")
+        nav.back()
+    }, showHeading = false, scrollKey = sessionKey,
         actions = { ReadingTools(readingScale) { readingScale = it } }) {
-        androidx.compose.runtime.key(nav.quizRound) {
-            QuizFlow(
-                bank = bank,
-                category = category,
-                onDone = { nav.back() },
-                onAgain = { nav.quizRound++ },
-            )
+        KnowledgeLevelGate(bank) { level ->
+            KnowledgeLevelControl(bank)
+            androidx.compose.runtime.key(nav.quizRound, level.id) {
+                QuizFlow(
+                    bank = bank,
+                    category = category,
+                    onDone = { LearningStore.clearSession("normal"); nav.back() },
+                    onAgain = { nav.quizRound++ },
+                )
+            }
         }
     }
 }
@@ -200,18 +208,22 @@ fun QuizScreen() {
 @Composable
 private fun QuizFlow(bank: QuizBank, category: String?, onDone: () -> Unit, onAgain: () -> Unit) {
     val nav = LocalNav.current
-    val initial = remember(bank, category, nav.quizRound) { LearningStore.begin(bank, category, cards = nav.quizStartWithCards) }
-    val session = LearningStore.session("normal") ?: initial ?: return
+    remember(bank, category, nav.quizRound) { LearningStore.begin(bank, category, cards = nav.quizStartWithCards) }
+    val session = LearningStore.activeSession(bank,"normal",category)
+    if (session == null) {
+        StatePanel(stringResource(R.string.learning_level_empty), stringResource(R.string.learning_level_empty_hint))
+        return
+    }
     val cards = session.questionIds.take(PREP_CARDS).mapNotNull { id -> bank.questions.firstOrNull { it.id == id } }
     when (session.stage) {
         "ASK" -> PrepOffer(
-            onRead = { LearningStore.update(session.copy(stage = "CARDS")) },
-            onSkip = { LearningStore.update(session.copy(stage = "QUIZ")) },
+            onRead = { LearningStore.update(session.copy(stage = "CARDS"), expected = session) },
+            onSkip = { LearningStore.update(session.copy(stage = "QUIZ"), expected = session) },
         )
         "CARDS" -> StudyCards(bank, cards, session,
-            onReady = { LearningStore.update(session.copy(stage = "QUIZ")) })
+            onReady = { LearningStore.update(session.copy(stage = "QUIZ"), expected = session) })
         "QUIZ" -> QuizRound(bank = bank, category = category, sessionScope = "normal",
-            onFinished = { LearningStore.completeCurrent("normal") })
+            onFinished = { LearningStore.completeCurrent("normal", expectedSessionId = session.id) })
         "RESULT" -> RoundResult(addedMinutes = session.addedMinutes, onAgain = {
             LearningStore.clearSession("normal"); onAgain()
         }, onDone = onDone)
@@ -223,19 +235,30 @@ fun ReviewScreen() {
     val nav = LocalNav.current
     val context = LocalContext.current
     val bank = remember { QuestionBank.load(context) }
-    val initial = remember(bank) { LearningStore.begin(bank, null, scope = "review") }
-    val session = LearningStore.session("review") ?: initial
-    ScreenScaffold(title = stringResource(R.string.learning_review), onBack = { nav.back() }, scrollKey = "${session?.stage}-${session?.index}") {
-        when {
-            session == null -> StatePanel(stringResource(R.string.learning_none_due), stringResource(R.string.learning_none_due_hint), action = stringResource(R.string.knowledge_start), onAction = { nav.startQuiz(null) })
-            session.stage == "RESULT" -> {
-                Text(stringResource(R.string.learning_complete), style = MaterialTheme.typography.headlineSmall)
-                Text(stringResource(R.string.learning_review_done), style = MaterialTheme.typography.bodyLarge)
-                PrimaryButton(stringResource(R.string.action_done), onClick = { nav.back() })
-            }
-            else -> QuizRound(bank = bank, category = null, sessionScope = "review", reviewMode = true,
-                onFinished = { LearningStore.completeCurrent("review") })
+    val session = LearningStore.session("review")
+    ScreenScaffold(title = stringResource(R.string.learning_review), onBack = { nav.back() },
+        scrollKey = "${LearningStore.selectedLevel?.id}-${session?.id}-${session?.stage}-${session?.index}") {
+        KnowledgeLevelGate(bank) { level ->
+            KnowledgeLevelControl(bank)
+            androidx.compose.runtime.key(level.id) { ReviewFlow(bank) }
         }
+    }
+}
+
+@Composable
+private fun ReviewFlow(bank: QuizBank) {
+    val nav = LocalNav.current
+    remember(bank) { LearningStore.begin(bank, null, scope = "review") }
+    val session = LearningStore.activeSession(bank,"review",null)
+    when {
+        session == null -> StatePanel(stringResource(R.string.learning_none_due), stringResource(R.string.learning_none_due_hint), action = stringResource(R.string.knowledge_start), onAction = { nav.startQuiz(null) })
+        session.stage == "RESULT" -> {
+            Text(stringResource(R.string.learning_complete), style = MaterialTheme.typography.headlineSmall)
+            Text(stringResource(R.string.learning_review_done), style = MaterialTheme.typography.bodyLarge)
+            PrimaryButton(stringResource(R.string.action_done), onClick = { LearningStore.clearSession("review"); nav.back() })
+        }
+        else -> QuizRound(bank = bank, category = null, sessionScope = "review", reviewMode = true,
+            onFinished = { LearningStore.completeCurrent("review", expectedSessionId = session.id) })
     }
 }
 
@@ -299,7 +322,7 @@ private fun StudyCards(bank: QuizBank, cards: List<com.zikrtime.app.quiz.Questio
             q.arabic?.let { arabic ->
                 Text(
                     arabic,
-                    style = com.zikrtime.app.ui.theme.ArabicStyle.copy(fontSize = (30 * readingScale).sp, lineHeight = (52 * readingScale).sp, textDirection = androidx.compose.ui.text.style.TextDirection.Rtl),
+                    style = com.zikrtime.app.ui.theme.ArabicStyle.copy(fontSize = (30 * readingScale).sp, textDirection = androidx.compose.ui.text.style.TextDirection.Rtl),
                     color = MaterialTheme.colorScheme.primary,
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                     modifier = Modifier.fillMaxWidth(),
@@ -312,7 +335,7 @@ private fun StudyCards(bank: QuizBank, cards: List<com.zikrtime.app.quiz.Questio
         }
     }
     if (index < cards.size - 1) {
-        ShimmerButton(stringResource(R.string.prep_next), onClick = { LearningStore.update(session.copy(cardIndex = index + 1)) }, modifier = Modifier.testTag("learning_card_next").semantics { testTagsAsResourceId = true })
+        ShimmerButton(stringResource(R.string.prep_next), onClick = { LearningStore.update(session.copy(cardIndex = index + 1), expected = session) }, modifier = Modifier.testTag("learning_card_next").semantics { testTagsAsResourceId = true })
     } else {
         ShimmerButton(stringResource(R.string.prep_start_quiz), onClick = onReady, modifier = Modifier.testTag("learning_card_quiz").semantics { testTagsAsResourceId = true })
     }

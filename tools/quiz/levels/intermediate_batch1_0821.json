@@ -1,0 +1,3682 @@
+[
+  {
+    "id": "l2x_truth_not_mixed",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 2:42",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:42"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие два действия с истиной запрещены именно в 2:42?",
+        "options": [
+          "Смешивать её с ложью и сознательно скрывать",
+          "Передавать непроверенную весть и распространять подозрения",
+          "Искажать свидетельство и отказываться от его записи",
+          "Клясться ради выгоды и нарушать заключённый договор"
+        ],
+        "info": "Запрет касается и искажения истины, и её сознательного сокрытия; одной правдивой части сообщения недостаточно."
+      },
+      "en": {
+        "q": "Which two ways of treating truth are forbidden specifically in 2:42?",
+        "options": [
+          "Mixing it with falsehood and knowingly concealing it",
+          "Passing on unverified news and spreading suspicions",
+          "Distorting testimony and refusing to record it",
+          "Swearing for gain and breaking a concluded covenant"
+        ],
+        "info": "The verse forbids both distortion and deliberate concealment of truth; including one truthful detail is not enough."
+      },
+      "uz": {
+        "q": "2:42 da haqiqatga nisbatan aynan qaysi ikki ish taqiqlanadi?",
+        "options": [
+          "Uni yolg‘on bilan aralashtirish va bila turib yashirish",
+          "Tekshirilmagan xabarni yetkazish va gumon tarqatish",
+          "Guvohlikni buzib ko‘rsatish va uni yozishdan bosh tortish",
+          "Foyda uchun qasam ichish va tuzilgan ahdni buzish"
+        ],
+        "info": "Taqiq haqiqatni buzib ko‘rsatishga ham, uni ataylab yashirishga ham tegishli; xabarning bir qismi rost bo‘lishi yetarli emas."
+      },
+      "tg": {
+        "q": "Дар 2:42 маҳз кадом ду амал нисбат ба ҳақиқат манъ шудаанд?",
+        "options": [
+          "Онро бо ботил омехтан ва дидаву дониста пинҳон кардан",
+          "Хабари насанҷидаро расондан ва гумонҳоро паҳн кардан",
+          "Шаҳодатро таҳриф кардан ва аз навиштани он саркашӣ кардан",
+          "Барои фоида қасам хӯрдан ва аҳди бастаро шикастан"
+        ],
+        "info": "Манъ ҳам таҳрифи ҳақиқат ва ҳам пинҳон кардани огоҳонаи онро фаро мегирад; як ҷузъи рост дар хабар кофӣ нест."
+      },
+      "kk": {
+        "q": "2:42-де ақиқатқа қатысты нақты қандай екі іс тыйым салынған?",
+        "options": [
+          "Оны жалғанмен араластыру және біле тұра жасыру",
+          "Тексерілмеген хабарды жеткізу және күдік тарату",
+          "Куәлікті бұрмалау және оны жазудан бас тарту",
+          "Пайда үшін ант ету және жасалған келісімді бұзу"
+        ],
+        "info": "Тыйым ақиқатты бұрмалауға да, оны әдейі жасыруға да қатысты; хабардың бір бөлігінің шын болуы жеткіліксіз."
+      },
+      "ky": {
+        "q": "2:42де чындыкка карата кайсы эки ишке так тыюу салынган?",
+        "options": [
+          "Аны жалган менен аралаштыруу жана билип туруп жашыруу",
+          "Текшерилбеген кабарды жеткирүү жана күмөн таратуу",
+          "Күбөлүктү бурмалоо жана аны жазуудан баш тартуу",
+          "Пайда үчүн ант берүү жана түзүлгөн келишимди бузуу"
+        ],
+        "info": "Тыюу чындыкты бурмалоого да, аны атайылап жашырууга да тиешелүү; кабардын бир бөлүгүнүн чын болушу жетишсиз."
+      },
+      "az": {
+        "q": "2:42-də həqiqətlə bağlı məhz hansı iki əməl qadağan olunur?",
+        "options": [
+          "Onu yalanla qarışdırmaq və bilərək gizlətmək",
+          "Yoxlanmamış xəbəri çatdırmaq və şübhə yaymaq",
+          "Şahidliyi təhrif etmək və onu yazmaqdan imtina etmək",
+          "Mənfəət üçün and içmək və bağlanmış əhdi pozmaq"
+        ],
+        "info": "Qadağa həm həqiqətin təhrifinə, həm də qəsdən gizlədilməsinə aiddir; xəbərin bir hissəsinin doğru olması kifayət etmir."
+      },
+      "tr": {
+        "q": "2:42'de hakikatle ilgili özellikle hangi iki davranış yasaklanır?",
+        "options": [
+          "Onu bâtılla karıştırmak ve bile bile gizlemek",
+          "Doğrulanmamış haberi aktarmak ve kuşku yaymak",
+          "Tanıklığı çarpıtmak ve onu yazmayı reddetmek",
+          "Çıkar için yemin etmek ve yapılan sözleşmeyi bozmak"
+        ],
+        "info": "Yasak, hakikati hem çarpıtmayı hem de bilerek gizlemeyi kapsar; bir haberin tek bir doğru ayrıntı içermesi yeterli değildir."
+      }
+    }
+  },
+  {
+    "id": "l2x_advice_and_self",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 2:44",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:44"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какое противоречие между наставлением и поведением осуждается в 2:44?",
+        "options": [
+          "Призывать других к добру, забывая о себе",
+          "Скрывать знания, ожидая платы за объяснение",
+          "Просить справедливости, но отказывать в свидетельстве",
+          "Напоминать о щедрости, укоряя получателя дара"
+        ],
+        "info": "Упрёк обращён к разрыву между наставлением других и собственным поведением, несмотря на знание Писания."
+      },
+      "en": {
+        "q": "What contradiction between advice and conduct is condemned in 2:44?",
+        "options": [
+          "Urging others to do good while forgetting oneself",
+          "Concealing knowledge while awaiting payment for explaining it",
+          "Demanding justice but refusing to testify",
+          "Speaking of generosity while reproaching a gift's recipient"
+        ],
+        "info": "The rebuke concerns the gap between advising others and one's own conduct despite knowledge of Scripture."
+      },
+      "uz": {
+        "q": "2:44 da nasihat bilan xulq o‘rtasidagi qaysi ziddiyat qoralanadi?",
+        "options": [
+          "O‘zini unutib, boshqalarni yaxshilikka chaqirish",
+          "Tushuntirish uchun haq kutib, bilimni yashirish",
+          "Adolat talab qilib, guvohlik berishdan bosh tortish",
+          "Saxiylikni eslatib, hadya oluvchiga minnat qilish"
+        ],
+        "info": "Tanbeh Kitobni bilgan holda boshqalarga nasihat qilish bilan o‘z xulqi o‘rtasidagi uzilishga qaratilgan."
+      },
+      "tg": {
+        "q": "Дар 2:44 кадом зиддият байни насиҳат ва рафтор маҳкум мешавад?",
+        "options": [
+          "Дигаронро ба некӣ даъват кардану худро фаромӯш кардан",
+          "Донишро пинҳон карда, барои шарҳ подош интизор шудан",
+          "Адолат талаб кардану аз шаҳодат саркашӣ намудан",
+          "Саховатро ёдовар шуда, ба гирандаи туҳфа миннат гузоштан"
+        ],
+        "info": "Сарзаниш ба фарқи байни насиҳати дигарон ва рафтори худ, бо вуҷуди донистани Китоб, равона шудааст."
+      },
+      "kk": {
+        "q": "2:44-те өсиет пен іс-әрекет арасындағы қандай қайшылық айыпталады?",
+        "options": [
+          "Өзін ұмытып, өзгелерді жақсылыққа шақыру",
+          "Түсіндіргені үшін ақы күтіп, білімді жасыру",
+          "Әділдік талап етіп, куәлік беруден бас тарту",
+          "Жомарттығын еске салып, сый алған адамға міндетсіну"
+        ],
+        "info": "Кітапты біле тұра өзгеге айтқан өсиет пен өзінің іс-әрекеті арасындағы алшақтық сөгіледі."
+      },
+      "ky": {
+        "q": "2:44тө насаат менен жүрүм-турумдун ортосундагы кайсы карама-каршылык айыпталат?",
+        "options": [
+          "Өзүн унутуп, башкаларды жакшылыкка чакыруу",
+          "Түшүндүргөнү үчүн акы күтүп, билимди жашыруу",
+          "Адилеттик талап кылып, күбөлүк берүүдөн баш тартуу",
+          "Берешендигин эскертип, белек алганга милдет кылуу"
+        ],
+        "info": "Китепти билгенине карабай, башкаларга айткан насааты менен өз жүрүм-турумунун ортосундагы ажырым сындалат."
+      },
+      "az": {
+        "q": "2:44-də nəsihətlə davranış arasındakı hansı ziddiyyət qınanır?",
+        "options": [
+          "Özünü unudaraq başqalarını yaxşılığa çağırmaq",
+          "İzah üçün haqq gözləyib biliyi gizlətmək",
+          "Ədalət tələb edib şahidlikdən imtina etmək",
+          "Səxavəti xatırladıb hədiyyə alanın başına qaxmaq"
+        ],
+        "info": "Kitabı bildikləri halda başqalarına verdikləri nəsihətlə öz davranışları arasındakı uyğunsuzluq qınanır."
+      },
+      "tr": {
+        "q": "2:44'te öğüt ile davranış arasındaki hangi çelişki kınanır?",
+        "options": [
+          "Kendini unutup başkalarına iyiliği emretmek",
+          "Açıklama için ücret bekleyerek bilgiyi gizlemek",
+          "Adalet isteyip tanıklık etmeyi reddetmek",
+          "Cömertliğini hatırlatıp hediyeyi alanın başına kakmak"
+        ],
+        "info": "Kınama, Kitap bilgisine rağmen başkalarına verilen öğüt ile kişinin kendi davranışı arasındaki tutarsızlığa yöneliktir."
+      }
+    }
+  },
+  {
+    "id": "l2x_prayer_humility",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 2:45",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:45"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Для кого молитва названа не тяжкой в 2:45?",
+        "options": [
+          "Для смиренных",
+          "Для странствующих",
+          "Для обладающих имуществом",
+          "Для изучающих историю"
+        ],
+        "info": "Аят связывает отношение к молитве со смирением, а не с общественным положением человека."
+      },
+      "en": {
+        "q": "For whom is prayer not burdensome in 2:45?",
+        "options": [
+          "The humble",
+          "Travellers",
+          "Property owners",
+          "Students of history"
+        ],
+        "info": "The verse relates one's attitude to prayer to humility, rather than social status."
+      },
+      "uz": {
+        "q": "2:45 da namoz kimlar uchun og‘ir emas deb aytilgan?",
+        "options": [
+          "Xushu’li kishilar uchun",
+          "Safarda yurganlar uchun",
+          "Mol-mulk egalari uchun",
+          "Tarixni o‘rganuvchilar uchun"
+        ],
+        "info": "Oyat namozga munosabatni insonning ijtimoiy mavqeiga emas, xushu’siga bog‘laydi."
+      },
+      "tg": {
+        "q": "Дар 2:45 намоз барои кӣ вазнин нест?",
+        "options": [
+          "Барои фурӯтанон",
+          "Барои мусофирон",
+          "Барои соҳибони мол",
+          "Барои омӯзандагони таърих"
+        ],
+        "info": "Оят муносибат ба намозро бо фурӯтанӣ мепайвандад, на бо мақоми иҷтимоии шахс."
+      },
+      "kk": {
+        "q": "2:45-те намаз кімдерге ауыр емес деп айтылған?",
+        "options": [
+          "Кішіпейілдікпен бойсұнушыларға",
+          "Сапар шегушілерге",
+          "Дүние-мүлкі барларға",
+          "Тарихты зерттеушілерге"
+        ],
+        "info": "Аят намазға деген қатынасты адамның қоғамдық мәртебесіне емес, кішіпейілдігіне байланыстырады."
+      },
+      "ky": {
+        "q": "2:45те намаз кимдерге оор эмес деп айтылган?",
+        "options": [
+          "Ыклас менен моюн сунгандарга",
+          "Сапарда жүргөндөргө",
+          "Мүлкү барларга",
+          "Тарыхты изилдегендерге"
+        ],
+        "info": "Аят намазга болгон мамилени адамдын коомдогу абалына эмес, кичипейилдик менен моюн сунуусуна байланыштырат."
+      },
+      "az": {
+        "q": "2:45-də namazın kimlər üçün ağır olmadığı bildirilir?",
+        "options": [
+          "Xüşu içində olanlar üçün",
+          "Səfərdə olanlar üçün",
+          "Mal-mülk sahibləri üçün",
+          "Tarixi öyrənənlər üçün"
+        ],
+        "info": "Ayə namaza münasibəti insanın ictimai mövqeyi ilə deyil, xüşu və təvazökarlığı ilə əlaqələndirir."
+      },
+      "tr": {
+        "q": "2:45'te namazın kimlere ağır gelmediği belirtilir?",
+        "options": [
+          "Huşû duyanlara",
+          "Yolculara",
+          "Mal sahiplerine",
+          "Tarih öğrenenlere"
+        ],
+        "info": "Ayet, namaza yaklaşımı kişinin toplumsal konumuna değil, huşûsuna bağlar."
+      }
+    }
+  },
+  {
+    "id": "l2x_covenant_speech",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 2:83",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:83"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какое требование к речи входит в завет из 2:83?",
+        "options": [
+          "Говорить людям доброе",
+          "Понижать голос при ходьбе",
+          "Удостоверяться в каждой вести",
+          "Записывать долговые обязательства"
+        ],
+        "info": "Наставление о доброй речи обращено к отношению с людьми; оно перечислено рядом с поклонением и заботой о нуждающихся."
+      },
+      "en": {
+        "q": "What requirement for speech appears in the covenant in 2:83?",
+        "options": [
+          "Speak kindly to people",
+          "Lower one's voice when walking",
+          "Verify every report",
+          "Record debt obligations"
+        ],
+        "info": "Kind speech toward people is listed alongside worship and care for those in need."
+      },
+      "uz": {
+        "q": "2:83 dagi ahdda nutqqa oid qaysi talab bor?",
+        "options": [
+          "Odamlarga yaxshi so‘z aytish",
+          "Yurganda ovozni pasaytirish",
+          "Har bir xabarni tekshirish",
+          "Qarz majburiyatlarini yozib qo‘yish"
+        ],
+        "info": "Yaxshi so‘z haqidagi ko‘rsatma odamlar bilan munosabatga tegishli bo‘lib, ibodat va muhtojlarga g‘amxo‘rlik bilan birga sanaladi."
+      },
+      "tg": {
+        "q": "Дар аҳди 2:83 кадом талаб ба гуфтор омадааст?",
+        "options": [
+          "Ба мардум сухани нек гуфтан",
+          "Ҳангоми роҳ рафтан овозро паст кардан",
+          "Ҳар хабарро санҷидан",
+          "Уҳдадориҳои қарзиро навиштан"
+        ],
+        "info": "Дастур ба сухани нек ба муносибат бо мардум дахл дорад ва дар баробари ибодат ва ғамхорӣ ба ниёзмандон омадааст."
+      },
+      "kk": {
+        "q": "2:83-тегі уәдеде сөйлеуге қатысты қандай талап бар?",
+        "options": [
+          "Адамдарға жақсы сөз айту",
+          "Жүргенде дауысты бәсеңдету",
+          "Әр хабарды тексеру",
+          "Қарыз міндеттемелерін жазып қою"
+        ],
+        "info": "Жақсы сөз айту өсиеті адамдармен қарым-қатынасқа арналған; ол құлшылық пен мұқтаждарға қамқорлықпен қатар аталады."
+      },
+      "ky": {
+        "q": "2:83төгү келишимде сөзгө байланыштуу кандай талап бар?",
+        "options": [
+          "Адамдарга жакшы сөз айтуу",
+          "Басып баратканда үндү басаңдатуу",
+          "Ар бир кабарды текшерүү",
+          "Карыз милдеттенмелерин жазып коюу"
+        ],
+        "info": "Жакшы сүйлөө насааты адамдарга мамилеге тиешелүү; ал ибадат жана муктаждарга кам көрүү менен катар айтылат."
+      },
+      "az": {
+        "q": "2:83-dəki əhddə danışıqla bağlı hansı tələb var?",
+        "options": [
+          "İnsanlara xoş söz söyləmək",
+          "Yeriyərkən səsi alçaltmaq",
+          "Hər xəbəri yoxlamaq",
+          "Borc öhdəliklərini yazmaq"
+        ],
+        "info": "Xoş söz haqqında göstəriş insanlarla münasibətə aiddir; ibadət və ehtiyaclılara qayğı ilə yanaşı sadalanır."
+      },
+      "tr": {
+        "q": "2:83'teki ahitte söz söylemeye ilişkin hangi şart yer alır?",
+        "options": [
+          "İnsanlara güzel söz söylemek",
+          "Yürürken sesi alçaltmak",
+          "Her haberi doğrulamak",
+          "Borç yükümlülüklerini yazmak"
+        ],
+        "info": "Güzel söz öğüdü insanlarla ilişkilere yöneliktir; ibadet ve ihtiyaç sahiplerine destekle birlikte sayılır."
+      }
+    }
+  },
+  {
+    "id": "l2x_good_sent_ahead",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 2:110",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:110"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Что 2:110 говорит о добре, которое человек заранее совершает для себя?",
+        "options": [
+          "Он найдёт его у Аллаха",
+          "Оно непременно вернётся равным имуществом",
+          "Оно непременно даст общественную известность",
+          "Оно исключит любые последующие испытания"
+        ],
+        "info": "Добрые дела не теряются: аят связывает их с встречей результата у Аллаха, Который видит поступки."
+      },
+      "en": {
+        "q": "What does 2:110 say about good a person sends ahead?",
+        "options": [
+          "They will find it with Allah",
+          "It will necessarily return as equal wealth",
+          "It will necessarily bring public fame",
+          "It will rule out every later trial"
+        ],
+        "info": "Good deeds are not lost: the verse connects them with finding their result with Allah, who sees actions."
+      },
+      "uz": {
+        "q": "2:110 inson o‘zi uchun oldindan yuborgan yaxshilik haqida nima deydi?",
+        "options": [
+          "Uni Alloh huzurida topadi",
+          "U albatta teng miqdordagi mol bo‘lib qaytadi",
+          "U albatta odamlar orasida shuhrat keltiradi",
+          "U keyingi barcha sinovlarni istisno qiladi"
+        ],
+        "info": "Yaxshi ishlar yo‘qolmaydi: oyat ularning natijasini amallarni ko‘rib turuvchi Alloh huzurida topishga bog‘laydi."
+      },
+      "tg": {
+        "q": "2:110 дар бораи некие, ки инсон барои худ пеш мефиристад, чӣ мегӯяд?",
+        "options": [
+          "Онро назди Аллоҳ хоҳад ёфт",
+          "Он ҳатман ба ҳамон миқдор мол бармегардад",
+          "Он ҳатман шуҳрати ҷамъиятӣ меорад",
+          "Он ҳама озмоишҳои баъдиро бартараф мекунад"
+        ],
+        "info": "Амалҳои нек гум намешаванд: оят натиҷаи онҳоро назди Аллоҳ, ки амалҳоро мебинад, пайванд медиҳад."
+      },
+      "kk": {
+        "q": "2:110-да адамның өзі үшін алдын ала жасаған жақсылығы туралы не айтылған?",
+        "options": [
+          "Оны Алланың құзырынан табады",
+          "Ол міндетті түрде сондай мөлшердегі мүлік болып қайтады",
+          "Ол міндетті түрде елге танымал етеді",
+          "Ол кейінгі барлық сынақты болдырмайды"
+        ],
+        "info": "Жақсы істер жоғалмайды: аят олардың нәтижесін амалдарды көріп тұратын Алланың құзырынан табумен байланыстырады."
+      },
+      "ky": {
+        "q": "2:110 адам өзү үчүн алдын ала жасаган жакшылык жөнүндө эмне дейт?",
+        "options": [
+          "Аны Аллахтын алдында табат",
+          "Ал сөзсүз ошол өлчөмдөгү мүлк болуп кайтат",
+          "Ал сөзсүз элге таанымал кылат",
+          "Ал кийинки бардык сыноолорду жокко чыгарат"
+        ],
+        "info": "Жакшы иштер жоголбойт: аят алардын натыйжасын амалдарды көрүп турган Аллахтын алдында табууга байланыштырат."
+      },
+      "az": {
+        "q": "2:110 insanın özü üçün əvvəlcədən etdiyi yaxşılıq barədə nə deyir?",
+        "options": [
+          "Onu Allahın yanında tapacaq",
+          "O, mütləq eyni miqdarda mal kimi qayıdacaq",
+          "O, mütləq ictimai şöhrət gətirəcək",
+          "O, sonrakı bütün sınaqları istisna edəcək"
+        ],
+        "info": "Yaxşı əməllər itmir: ayə onların nəticəsini əməlləri görən Allahın yanında tapmaqla əlaqələndirir."
+      },
+      "tr": {
+        "q": "2:110, kişinin kendisi için önceden gönderdiği iyilik hakkında ne söyler?",
+        "options": [
+          "Onu Allah katında bulacaktır",
+          "Mutlaka eşit miktarda servet olarak geri dönecektir",
+          "Mutlaka toplumda ün kazandıracaktır",
+          "Daha sonraki bütün sınavları ortadan kaldıracaktır"
+        ],
+        "info": "İyi işler kaybolmaz; ayet, onların sonucunu yapılanları gören Allah katında bulmaya bağlar."
+      }
+    }
+  },
+  {
+    "id": "l2x_remember_and_thank",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 2:152",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:152"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие два обращения объединены в 2:152?",
+        "options": [
+          "Поминайте Меня и благодарите Меня",
+          "Просите прощения и примиряйте людей",
+          "Советуйтесь и исполняйте обязательства",
+          "Слушайте чтение и соблюдайте молчание"
+        ],
+        "info": "Поминание и благодарность названы вместе; вслед за этим запрещается неблагодарность."
+      },
+      "en": {
+        "q": "Which two calls are combined in 2:152?",
+        "options": [
+          "Remember Me and be grateful to Me",
+          "Seek forgiveness and reconcile people",
+          "Consult one another and fulfill commitments",
+          "Listen to recitation and remain silent"
+        ],
+        "info": "Remembrance and gratitude are joined together, followed by a warning against ingratitude."
+      },
+      "uz": {
+        "q": "2:152 da qaysi ikki murojaat birga keladi?",
+        "options": [
+          "Meni eslang va Menga shukr qiling",
+          "Mag‘firat so‘rang va odamlarni yarashtiring",
+          "Maslahatlashing va majburiyatlarni bajaring",
+          "Qiroatni tinglang va sukut saqlang"
+        ],
+        "info": "Zikr va shukr birga tilga olinadi; shundan so‘ng noshukrlik taqiqlanadi."
+      },
+      "tg": {
+        "q": "Дар 2:152 кадом ду даъват якҷо омадаанд?",
+        "options": [
+          "Маро ёд кунед ва ба Ман шукр гӯед",
+          "Омурзиш бихоҳед ва мардумро оштӣ диҳед",
+          "Машварат кунед ва уҳдадориҳоро иҷро намоед",
+          "Қироатро гӯш кунед ва хомӯш бошед"
+        ],
+        "info": "Ёдоварӣ ва шукр якҷо омадаанд; сипас носипосӣ манъ мешавад."
+      },
+      "kk": {
+        "q": "2:152-де қандай екі үндеу бірге берілген?",
+        "options": [
+          "Мені еске алыңдар және Маған шүкір етіңдер",
+          "Кешірім сұраңдар және адамдарды татуластырыңдар",
+          "Кеңесіңдер және міндеттемелерді орындаңдар",
+          "Оқылғанды тыңдаңдар және үнсіз болыңдар"
+        ],
+        "info": "Зікір мен шүкір қатар аталады; одан кейін шүкірсіздікке тыйым салынады."
+      },
+      "ky": {
+        "q": "2:152де кайсы эки чакырык бирге айтылган?",
+        "options": [
+          "Мени эстегиле жана Мага шүгүр кылгыла",
+          "Кечирим сурагыла жана адамдарды жараштыргыла",
+          "Кеңешкиле жана милдеттенмелерди аткаргыла",
+          "Кыраатты уккула жана унчукпагыла"
+        ],
+        "info": "Зикир менен шүгүр бирге айтылат; андан кийин шүгүрсүздүккө тыюу салынат."
+      },
+      "az": {
+        "q": "2:152-də hansı iki çağırış birləşdirilir?",
+        "options": [
+          "Məni yad edin və Mənə şükür edin",
+          "Bağışlanma diləyin və insanları barışdırın",
+          "Məsləhətləşin və öhdəlikləri yerinə yetirin",
+          "Qiraəti dinləyin və susun"
+        ],
+        "info": "Zikr və şükür birlikdə qeyd olunur; ardınca nankorluq qadağan edilir."
+      },
+      "tr": {
+        "q": "2:152'de hangi iki çağrı birlikte yer alır?",
+        "options": [
+          "Beni anın ve Bana şükredin",
+          "Bağışlanma dileyin ve insanları barıştırın",
+          "Danışın ve yükümlülükleri yerine getirin",
+          "Okunanı dinleyin ve sessiz kalın"
+        ],
+        "info": "Zikir ve şükür birlikte anılır; ardından nankörlük yasaklanır."
+      }
+    }
+  },
+  {
+    "id": "l2x_forms_of_trial",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 2:155",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:155"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какая группа испытаний прямо перечислена в 2:155?",
+        "options": [
+          "Страх, голод и потери имущества, людей и плодов",
+          "Богатство, дети и общественный почёт",
+          "Болезнь, путешествие и семейные споры",
+          "Бессонница, тяжёлый труд и задержка торговли"
+        ],
+        "info": "Аят перечисляет разные виды лишений и обращает благую весть к терпеливым; испытания не сведены к одной области жизни."
+      },
+      "en": {
+        "q": "Which set of trials is explicitly listed in 2:155?",
+        "options": [
+          "Fear, hunger, and loss of wealth, lives and fruits",
+          "Wealth, children and public honor",
+          "Illness, travel and family disputes",
+          "Sleeplessness, hard work and delayed trade"
+        ],
+        "info": "The verse lists several kinds of loss and gives good news to the patient; trials are not limited to one part of life."
+      },
+      "uz": {
+        "q": "2:155 da qaysi sinovlar guruhi bevosita sanalgan?",
+        "options": [
+          "Qo‘rquv, ochlik, mol, jon va hosildagi yo‘qotishlar",
+          "Boylik, farzandlar va jamiyatdagi obro‘",
+          "Kasallik, safar va oilaviy nizolar",
+          "Uyqusizlik, og‘ir mehnat va savdoning kechikishi"
+        ],
+        "info": "Oyat turli yo‘qotishlarni sanaydi va sabrlilarga xushxabar beradi; sinovlar hayotning bir sohasigagina tegishli emas."
+      },
+      "tg": {
+        "q": "Дар 2:155 кадом гурӯҳи озмоишҳо бевосита номбар шудааст?",
+        "options": [
+          "Тарс, гуруснагӣ ва кам шудани мол, ҷонҳо ва меваҳо",
+          "Сарват, фарзандон ва эҳтироми ҷамъиятӣ",
+          "Беморӣ, сафар ва баҳсҳои оилавӣ",
+          "Бехобӣ, меҳнати вазнин ва таъхири савдо"
+        ],
+        "info": "Оят навъҳои гуногуни талафотро номбар карда, ба сабркунандагон башорат медиҳад; озмоиш танҳо як соҳаи ҳаётро фаро намегирад."
+      },
+      "kk": {
+        "q": "2:155-те сынақтардың қай тобы тікелей аталған?",
+        "options": [
+          "Қорқыныш, аштық және мал-мүлік, жан мен өнімнің кемуі",
+          "Байлық, балалар және қоғамдық құрмет",
+          "Ауру, сапар және отбасылық даулар",
+          "Ұйқысыздық, ауыр еңбек және сауданың кешігуі"
+        ],
+        "info": "Аят түрлі жоғалтуларды атайды және сабырлыларды қуантады; сынақтар өмірдің бір ғана саласымен шектелмейді."
+      },
+      "ky": {
+        "q": "2:155те сыноолордун кайсы тобу түздөн-түз саналган?",
+        "options": [
+          "Коркунуч, ачкачылык жана мал-мүлктүн, жандардын, түшүмдүн азайышы",
+          "Байлык, балдар жана коомдук урмат",
+          "Оору, сапар жана үй-бүлөлүк талаштар",
+          "Уйкусуздук, оор эмгек жана сооданын кечигиши"
+        ],
+        "info": "Аят жоготуунун ар кандай түрлөрүн атап, сабырдууларга сүйүнчү берет; сыноолор жашоонун бир эле тармагы менен чектелбейт."
+      },
+      "az": {
+        "q": "2:155-də hansı sınaqlar qrupu açıq şəkildə sadalanır?",
+        "options": [
+          "Qorxu, aclıq, mal, can və məhsul itkisi",
+          "Sərvət, övladlar və ictimai hörmət",
+          "Xəstəlik, səfər və ailə mübahisələri",
+          "Yuxusuzluq, ağır əmək və ticarətin gecikməsi"
+        ],
+        "info": "Ayə müxtəlif itkiləri sadalayır və səbir edənləri müjdələyir; sınaqlar həyatın tək bir sahəsi ilə məhdudlaşmır."
+      },
+      "tr": {
+        "q": "2:155'te hangi sınavlar açıkça sıralanır?",
+        "options": [
+          "Korku, açlık, mallardan, canlardan ve ürünlerden eksilme",
+          "Servet, çocuklar ve toplumda saygınlık",
+          "Hastalık, yolculuk ve aile anlaşmazlıkları",
+          "Uykusuzluk, ağır iş ve ticaretin gecikmesi"
+        ],
+        "info": "Ayet farklı kayıpları sıralar ve sabredenleri müjdeler; sınavlar hayatın tek bir alanıyla sınırlı değildir."
+      }
+    }
+  },
+  {
+    "id": "l2x_calamity_return",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 2:156",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:156"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какая мысль лежит в ответе терпеливых на бедствие в 2:156?",
+        "options": [
+          "Мы принадлежим Аллаху и возвращаемся к Нему",
+          "Каждый труд обязательно приносит земное богатство",
+          "Терпеливому не придётся пережить новую потерю",
+          "Размер потери определяет достоинство человека"
+        ],
+        "info": "Ответ выражает принадлежность Аллаху и возвращение к Нему, помещая бедствие в более широкий смысл жизни."
+      },
+      "en": {
+        "q": "What conviction underlies the patient response to calamity in 2:156?",
+        "options": [
+          "We belong to Allah and return to Him",
+          "Every effort necessarily brings earthly wealth",
+          "The patient will never face another loss",
+          "The size of a loss determines a person's worth"
+        ],
+        "info": "The response affirms belonging to Allah and returning to Him, placing calamity within life's wider meaning."
+      },
+      "uz": {
+        "q": "2:156 da sabrlilarning musibatga javobi asosida qanday e’tiqod yotadi?",
+        "options": [
+          "Biz Allohnikimiz va Unga qaytamiz",
+          "Har bir mehnat albatta dunyoviy boylik keltiradi",
+          "Sabrli odam boshqa yo‘qotishga duch kelmaydi",
+          "Yo‘qotish miqdori insonning qadrini belgilaydi"
+        ],
+        "info": "Javob Allohga tegishli bo‘lish va Unga qaytishni ifodalab, musibatni hayotning kengroq mazmuni doirasida ko‘rsatadi."
+      },
+      "tg": {
+        "q": "Дар 2:156 кадом боварӣ асоси посухи сабркунандагон ба мусибат аст?",
+        "options": [
+          "Мо аз они Аллоҳ ҳастем ва ба сӯи Ӯ бозмегардем",
+          "Ҳар меҳнат ҳатман сарвати дунёӣ меорад",
+          "Шахси сабркунанда дигар талафот намебинад",
+          "Андозаи талафот қадри инсонро муайян мекунад"
+        ],
+        "info": "Посух аз они Аллоҳ будан ва ба Ӯ бозгаштанро баён карда, мусибатро дар доираи васеътари маънои ҳаёт ҷой медиҳад."
+      },
+      "kk": {
+        "q": "2:156-да сабырлылардың қайғыға берген жауабының негізінде қандай сенім жатыр?",
+        "options": [
+          "Біз Аллаға тиесіліміз және Оған қайтамыз",
+          "Әр еңбек міндетті түрде дүниелік байлық әкеледі",
+          "Сабырлы адам енді ештеңе жоғалтпайды",
+          "Жоғалтудың көлемі адамның қадірін анықтайды"
+        ],
+        "info": "Жауап Аллаға тиесілі болуды және Оған қайтуды білдіріп, қайғыны өмірдің кеңірек мағынасы аясында қарастырады."
+      },
+      "ky": {
+        "q": "2:156да сабырдуулардын кырсыкка берген жообунун негизинде кандай ишеним жатат?",
+        "options": [
+          "Биз Аллахка таандыкпыз жана Ага кайтабыз",
+          "Ар бир эмгек сөзсүз дүйнөлүк байлык алып келет",
+          "Сабырдуу адам башка жоготууга кабылбайт",
+          "Жоготуунун көлөмү адамдын кадырын аныктайт"
+        ],
+        "info": "Жооп Аллахка таандык болууну жана Ага кайтууну билдирип, кырсыкты жашоонун кеңири мааниси менен байланыштырат."
+      },
+      "az": {
+        "q": "2:156-da səbir edənlərin müsibətə cavabının əsasında hansı inam dayanır?",
+        "options": [
+          "Biz Allaha məxsusuq və Ona qayıdırıq",
+          "Hər əmək mütləq dünyəvi sərvət gətirir",
+          "Səbirli insan daha itki ilə üzləşməyəcək",
+          "İtkinin miqdarı insanın dəyərini müəyyən edir"
+        ],
+        "info": "Cavab Allaha məxsus olmağı və Ona qayıtmağı ifadə edərək müsibəti həyatın daha geniş mənası daxilində göstərir."
+      },
+      "tr": {
+        "q": "2:156'da sabredenlerin musibete verdiği cevabın temelinde hangi inanç vardır?",
+        "options": [
+          "Biz Allah'a aidiz ve O'na döneceğiz",
+          "Her emek mutlaka dünyalık servet getirir",
+          "Sabreden kişi bir daha kayıp yaşamaz",
+          "Kaybın büyüklüğü insanın değerini belirler"
+        ],
+        "info": "Cevap, Allah'a ait olmayı ve O'na dönüşü ifade ederek musibeti hayatın daha geniş anlamı içinde ele alır."
+      }
+    }
+  },
+  {
+    "id": "l2x_food_and_steps",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 2:168",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:168"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какое наставление сопровождает дозволенную и благую пищу в 2:168?",
+        "options": [
+          "Не следовать по стопам шайтана",
+          "Отдавать должное от урожая в день сбора",
+          "Записывать всякую торговую сделку",
+          "Брать припасы для предстоящего паломничества"
+        ],
+        "info": "Разрешение есть благое соседствует с предостережением против следования шайтану, названному явным врагом."
+      },
+      "en": {
+        "q": "What instruction accompanies lawful, wholesome food in 2:168?",
+        "options": [
+          "Do not follow Satan's footsteps",
+          "Give the harvest's due on harvest day",
+          "Record every trade transaction",
+          "Take provisions for the coming pilgrimage"
+        ],
+        "info": "Permission to eat wholesome food is paired with a warning against Satan, described as an open enemy."
+      },
+      "uz": {
+        "q": "2:168 da halol va pok oziq-ovqat haqidagi so‘zlarga qaysi nasihat hamroh?",
+        "options": [
+          "Shaytonning izidan ergashmaslik",
+          "Hosil yig‘ilgan kuni uning haqqini berish",
+          "Har bir savdo bitimini yozib qo‘yish",
+          "Bo‘lajak haj uchun oziq-ovqat olish"
+        ],
+        "info": "Pok narsalarni yeyishga ruxsat ochiq dushman deb atalgan shaytonga ergashishdan ogohlantirish bilan birga keladi."
+      },
+      "tg": {
+        "q": "Дар 2:168 ҳамроҳи сухан дар бораи ғизои ҳалолу пок кадом дастур омадааст?",
+        "options": [
+          "Аз паи қадамҳои шайтон нарафтан",
+          "Рӯзи дарав ҳаққи ҳосилро додан",
+          "Ҳар муомилаи савдоро навиштан",
+          "Барои ҳаҷҷи пешомад тӯша гирифтан"
+        ],
+        "info": "Иҷозаи хӯрдани покизаҳо бо ҳушдор аз пайравии шайтон, ки душмани ошкор номида шудааст, ҳамроҳ аст."
+      },
+      "kk": {
+        "q": "2:168-де адал әрі таза ас туралы сөзбен бірге қандай өсиет берілген?",
+        "options": [
+          "Шайтанның ізіне ермеу",
+          "Өнім жиналған күні оның ақысын беру",
+          "Әр сауда мәмілесін жазып қою",
+          "Алдағы қажылыққа азық алу"
+        ],
+        "info": "Таза асты жеуге рұқсат айқын дұшпан деп аталған шайтанға еруден сақтандырумен қатар келеді."
+      },
+      "ky": {
+        "q": "2:168де адал жана таза азык тууралуу сөзгө кайсы насаат коштолот?",
+        "options": [
+          "Шайтандын изине түшпөө",
+          "Түшүм жыйналган күнү анын акысын берүү",
+          "Ар бир соода келишимин жазып коюу",
+          "Алдыдагы ажылыкка азык алуу"
+        ],
+        "info": "Таза азыктан жегенге уруксат ачык душман деп аталган шайтанды ээрчүүдөн эскертүү менен коштолот."
+      },
+      "az": {
+        "q": "2:168-də halal və təmiz qida barədə göstərişə hansı nəsihət qoşulur?",
+        "options": [
+          "Şeytanın izi ilə getməmək",
+          "Məhsulun haqqını yığım günü vermək",
+          "Hər ticarət əqdini yazmaq",
+          "Qarşıdakı həcc üçün azuqə götürmək"
+        ],
+        "info": "Təmiz qidadan yeməyə icazə açıq düşmən adlandırılan şeytana uymaqdan çəkindirmə ilə yanaşı verilir."
+      },
+      "tr": {
+        "q": "2:168'de helal ve temiz yiyeceklerle ilgili öğüde hangi talimat eşlik eder?",
+        "options": [
+          "Şeytanın adımlarını izlememek",
+          "Hasat gününde ürünün hakkını vermek",
+          "Her ticari işlemi yazıya geçirmek",
+          "Yaklaşan hac için azık almak"
+        ],
+        "info": "Temiz yiyecekleri yeme izni, açık düşman olarak nitelenen şeytana uymama uyarısıyla birlikte verilir."
+      }
+    }
+  },
+  {
+    "id": "l2x_ancestors_reasoning",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 2:170",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:170"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какой довод приведён в 2:170 против слепого следования предкам?",
+        "options": [
+          "Предки могли не разуметь и не следовать верному пути",
+          "У разных народов существуют разные обычаи",
+          "Новое поколение отвечает за собственное имущество",
+          "Родство не заменяет свидетельства при споре"
+        ],
+        "info": "Аят подвергает сомнению обычай как достаточное основание, когда предкам недоставало разумения и верного руководства."
+      },
+      "en": {
+        "q": "What argument does 2:170 give against blindly following ancestors?",
+        "options": [
+          "The ancestors may have lacked understanding and guidance",
+          "Different peoples have different customs",
+          "A new generation is responsible for its own property",
+          "Kinship cannot replace testimony in a dispute"
+        ],
+        "info": "An inherited custom is challenged as sufficient justification when the ancestors lacked understanding and right guidance."
+      },
+      "uz": {
+        "q": "2:170 da ajdodlarga ko‘r-ko‘rona ergashishga qarshi qaysi dalil keltiriladi?",
+        "options": [
+          "Ajdodlar anglamagan va to‘g‘ri yo‘ldan yurmagan bo‘lishi mumkin",
+          "Turli xalqlarda turli urf-odatlar bor",
+          "Yangi avlod o‘z mol-mulki uchun javobgar",
+          "Qarindoshlik nizoda guvohlik o‘rnini bosmaydi"
+        ],
+        "info": "Oyat ajdodlarda tushunish va to‘g‘ri hidoyat bo‘lmaganida, odatning o‘zi yetarli asos bo‘lishini shubha ostiga qo‘yadi."
+      },
+      "tg": {
+        "q": "Дар 2:170 бар зидди пайравии кӯр-кӯрона аз ниёгон кадом далел омадааст?",
+        "options": [
+          "Ниёгон метавонистанд нафаҳманд ва роҳи ростро пайравӣ накунанд",
+          "Мардумони гуногун расму оинҳои гуногун доранд",
+          "Насли нав барои моли худ масъул аст",
+          "Хешовандӣ дар баҳс ҷойи шаҳодатро намегирад"
+        ],
+        "info": "Оят кофӣ будани одатро ҳамчун далел зери суол мебарад, вақте ниёгон фаҳмиш ва ҳидояти дуруст надоштанд."
+      },
+      "kk": {
+        "q": "2:170-те ата-бабаға соқыр ілесуге қарсы қандай дәлел келтірілген?",
+        "options": [
+          "Ата-бабалары түсінбеген әрі тура жолда болмаған болуы мүмкін",
+          "Әр халықтың салт-дәстүрі әртүрлі",
+          "Жаңа ұрпақ өз мүлкіне жауап береді",
+          "Туыстық дауда куәліктің орнын баспайды"
+        ],
+        "info": "Ата-бабада түсінік пен дұрыс басшылық болмағанда, аят дәстүрдің өзін жеткілікті дәлел санауды күмәнға салады."
+      },
+      "ky": {
+        "q": "2:170те ата-бабаларды сокур ээрчүүгө каршы кандай далил келтирилет?",
+        "options": [
+          "Ата-бабалар түшүнбөгөн жана туура жолдо болбогон болушу мүмкүн",
+          "Ар элдин салты ар башка",
+          "Жаңы муун өз мүлкү үчүн жооп берет",
+          "Туугандык талашта күбөлүктүн ордун баспайт"
+        ],
+        "info": "Ата-бабаларда түшүнүк жана туура багыт болбогондо, аят салттын өзүн жетиштүү негиз деп эсептөөгө шек келтирет."
+      },
+      "az": {
+        "q": "2:170-də əcdadlara kor-koranə tabe olmağa qarşı hansı dəlil gətirilir?",
+        "options": [
+          "Əcdadlar anlamamış və doğru yolda olmamış ola bilərdilər",
+          "Müxtəlif xalqların müxtəlif adətləri var",
+          "Yeni nəsil öz malına görə cavabdehdir",
+          "Qohumluq mübahisədə şahidliyi əvəz etmir"
+        ],
+        "info": "Əcdadların anlayış və doğru rəhbərlikdən məhrum olduğu halda adətin özünün kifayət edən əsas sayılması sorğulanır."
+      },
+      "tr": {
+        "q": "2:170'te ataları körü körüne izlemeye karşı hangi gerekçe sunulur?",
+        "options": [
+          "Atalar anlamamış ve doğru yolu bulmamış olabilir",
+          "Farklı halkların farklı gelenekleri vardır",
+          "Yeni kuşak kendi malından sorumludur",
+          "Akrabalık anlaşmazlıkta tanıklığın yerini tutmaz"
+        ],
+        "info": "Atalar anlayış ve doğru rehberlikten yoksunken, miras alınan geleneğin tek başına yeterli gerekçe sayılması sorgulanır."
+      }
+    }
+  },
+  {
+    "id": "l2x_unjust_gain_judges",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 2:188",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:188"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какой способ неправомерного присвоения имущества выделен в 2:188?",
+        "options": [
+          "Добиваться его через судей, зная о неправоте",
+          "Уменьшать вес товара при расчёте с покупателем",
+          "Подменять имущество сироты менее ценным",
+          "Требовать прибавку к долгу при его продлении"
+        ],
+        "info": "Запрет охватывает использование судебной власти ради неправомерного получения части чужого имущества; формальная процедура не оправдывает обман."
+      },
+      "en": {
+        "q": "Which way of wrongfully taking property is singled out in 2:188?",
+        "options": [
+          "Seeking it through judges while knowing the claim is wrongful",
+          "Reducing a product's weight when settling with a buyer",
+          "Replacing an orphan's property with something less valuable",
+          "Demanding an increase in a debt when extending its term"
+        ],
+        "info": "The prohibition includes exploiting judicial authority to obtain others' property wrongfully; a formal process does not justify deceit."
+      },
+      "uz": {
+        "q": "2:188 da molni nohaq egallashning qaysi yo‘li alohida ko‘rsatilgan?",
+        "options": [
+          "Nohaqligini bilib, sudyalar orqali uni qo‘lga kiritish",
+          "Xaridor bilan hisoblashganda mol vaznini kamaytirish",
+          "Yetimning molini qiymati pastroq molga almashtirish",
+          "Qarz muddati uzaytirilganda qo‘shimcha haq talab qilish"
+        ],
+        "info": "Taqiq o‘zganing molini nohaq olish uchun sud hokimiyatidan foydalanishni ham qamraydi; rasmiy tartib aldovni oqlamaydi."
+      },
+      "tg": {
+        "q": "Дар 2:188 кадом роҳи ноҳақ гирифтани мол махсус зикр шудааст?",
+        "options": [
+          "Бо донистани ноҳақии худ онро тавассути доварон ба даст овардан",
+          "Ҳангоми ҳисоб бо харидор вазни молро кам кардан",
+          "Моли ятимро ба чизи камарзиштар иваз кардан",
+          "Ҳангоми дароз кардани муҳлати қарз зиёдатӣ талаб кардан"
+        ],
+        "info": "Манъ истифодаи ҳокимияти судиро барои ноҳақ гирифтани моли дигарон низ фаро мегирад; расмиёти расмӣ фиребро сафед намекунад."
+      },
+      "kk": {
+        "q": "2:188-де мүлікті заңсыз иемденудің қай тәсілі ерекше аталған?",
+        "options": [
+          "Өзінің теріс екенін біле тұра оны билер арқылы алу",
+          "Сатып алушымен есептескенде тауар салмағын кеміту",
+          "Жетімнің мүлкін құны төмен мүлікке ауыстыру",
+          "Қарыз мерзімін ұзартқанда үстеме талап ету"
+        ],
+        "info": "Тыйым өзгенің мүлкін заңсыз алу үшін сот билігін пайдалануды да қамтиды; ресми рәсім алдауды ақтамайды."
+      },
+      "ky": {
+        "q": "2:188де мүлктү адилетсиз ээлөөнүн кайсы жолу өзгөчө айтылган?",
+        "options": [
+          "Өзүнүн туура эмес экенин билип, аны казы аркылуу алуу",
+          "Сатып алуучу менен эсептешкенде товардын салмагын азайтуу",
+          "Жетимдин мүлкүн баасы төмөнүрөөк мүлккө алмаштыруу",
+          "Карыздын мөөнөтүн узартканда үстөк талап кылуу"
+        ],
+        "info": "Тыюу башканын мүлкүн адилетсиз алуу үчүн сот бийлигин пайдаланууну да камтыйт; расмий жол-жобо алдамчылыкты актабайт."
+      },
+      "az": {
+        "q": "2:188-də malı haqsız mənimsəməyin hansı yolu xüsusi qeyd olunur?",
+        "options": [
+          "Haqsız olduğunu bilə-bilə onu hakimlər vasitəsilə əldə etmək",
+          "Alıcı ilə hesablaşarkən malın çəkisini azaltmaq",
+          "Yetimin malını daha az dəyərli malla əvəz etmək",
+          "Borcun müddətini uzadarkən əlavə məbləğ tələb etmək"
+        ],
+        "info": "Qadağa başqasının malını haqsız əldə etmək üçün məhkəmə hakimiyyətindən istifadəni də əhatə edir; rəsmi prosedur aldatmağa bəraət qazandırmır."
+      },
+      "tr": {
+        "q": "2:188'de malı haksız edinmenin hangi yolu özellikle belirtilir?",
+        "options": [
+          "Haksız olduğunu bilerek onu hâkimler aracılığıyla elde etmek",
+          "Alıcıyla hesaplaşırken malın ağırlığını eksiltmek",
+          "Yetimin malını daha değersiz malla değiştirmek",
+          "Borç süresini uzatırken ek ödeme istemek"
+        ],
+        "info": "Yasak, başkasının malını haksız almak için yargı gücünü kullanmayı da kapsar; resmî bir süreç aldatmayı haklı çıkarmaz."
+      }
+    }
+  },
+  {
+    "id": "l2x_spending_and_ruin",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 2:195",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:195"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие три наставления объединены в 2:195?",
+        "options": [
+          "Расходовать на пути Аллаха, не губить себя и делать добро",
+          "Расходовать из благого, не попрекать и не причинять обиды",
+          "Отдавать близким положенное, помогать путнику и не расточать",
+          "Давать тайно, искать довольства Аллаха и не ждать благодарности"
+        ],
+        "info": "Расходование связано с предостережением от собственной гибели и призывом к добродеянию; аят не поощряет безрассудство."
+      },
+      "en": {
+        "q": "Which three instructions are brought together in 2:195?",
+        "options": [
+          "Spend in Allah's cause, do not bring about your own ruin, and do good",
+          "Give from good things, avoid reminders of generosity, and avoid hurt",
+          "Give relatives their due, help the traveller, and avoid waste",
+          "Give secretly, seek Allah's pleasure, and expect no thanks"
+        ],
+        "info": "Spending is joined with a warning against self-destruction and a call to do good; the verse does not encourage recklessness."
+      },
+      "uz": {
+        "q": "2:195 da qaysi uch nasihat birlashtirilgan?",
+        "options": [
+          "Alloh yo‘lida sarflash, o‘zini halokatga tashlamaslik va yaxshilik qilish",
+          "Yaxshi moldan sarflash, minnat qilmaslik va ozor bermaslik",
+          "Yaqinlarning haqqini berish, yo‘lovchiga yordam berish va isrof qilmaslik",
+          "Yashirin berish, Alloh roziligini istash va tashakkur kutmaslik"
+        ],
+        "info": "Sarflash o‘zini halok qilishdan ogohlantirish va yaxshilikka chaqiriq bilan bog‘langan; oyat o‘ylamasdan ish tutishni rag‘batlantirmaydi."
+      },
+      "tg": {
+        "q": "Дар 2:195 кадом се дастур якҷо омадаанд?",
+        "options": [
+          "Дар роҳи Аллоҳ харҷ кардан, худро ба ҳалокат наандохтан ва некӣ кардан",
+          "Аз моли хуб харҷ кардан, миннат нагузоштан ва озор надодан",
+          "Ҳаққи наздиконро додан, ба роҳгузар кумак кардан ва исроф накардан",
+          "Пинҳонӣ додан, ризои Аллоҳро ҷустан ва ташаккур интизор нашудан"
+        ],
+        "info": "Харҷ кардан бо ҳушдор аз ҳалокати худ ва даъват ба некӣ пайваст аст; оят беандешагиро ташвиқ намекунад."
+      },
+      "kk": {
+        "q": "2:195-те қандай үш өсиет біріктірілген?",
+        "options": [
+          "Алла жолында жұмсау, өзін құрдымға тастамау және жақсылық жасау",
+          "Жақсы мүліктен жұмсау, міндетсінбеу және ренжітпеу",
+          "Жақындардың ақысын беру, жолаушыға көмектесу және ысырап етпеу",
+          "Жасырын беру, Алланың разылығын іздеу және алғыс күтпеу"
+        ],
+        "info": "Жұмсау өзін құрдымға ұшыратудан сақтандырумен және жақсылыққа үндеумен байланысады; аят ойсыздықты қолдамайды."
+      },
+      "ky": {
+        "q": "2:195те кайсы үч насаат бириктирилген?",
+        "options": [
+          "Аллах жолунда сарптоо, өзүн кыйроого түртпөө жана жакшылык кылуу",
+          "Жакшы малдан сарптоо, милдет кылбоо жана таарынтпоо",
+          "Жакындардын акысын берүү, жолоочуга жардам берүү жана ысырап кылбоо",
+          "Жашыруун берүү, Аллахтын ыраазылыгын издөө жана алкыш күтпөө"
+        ],
+        "info": "Сарптоо өзүн кыйроого алып баруудан эскертүү жана жакшылыкка чакыруу менен байланышкан; аят ойлонбой иш кылууга үндөбөйт."
+      },
+      "az": {
+        "q": "2:195-də hansı üç nəsihət birləşdirilir?",
+        "options": [
+          "Allah yolunda xərcləmək, özünü həlakətə atmamaq və yaxşılıq etmək",
+          "Yaxşı maldan xərcləmək, başa qaxmamaq və incitməmək",
+          "Yaxınların haqqını vermək, yolçuya yardım etmək və israf etməmək",
+          "Gizli vermək, Allahın razılığını istəmək və təşəkkür gözləməmək"
+        ],
+        "info": "Xərcləmək özünü həlakətə atmaqdan çəkindirmə və yaxşılıq çağırışı ilə bağlıdır; ayə düşüncəsizliyi təşviq etmir."
+      },
+      "tr": {
+        "q": "2:195'te hangi üç öğüt birlikte verilir?",
+        "options": [
+          "Allah yolunda harcamak, kendini tehlikeye atmamak ve iyilik yapmak",
+          "İyi maldan harcamak, başa kakmamak ve incitmemek",
+          "Yakınlara haklarını vermek, yolcuya yardım etmek ve savurmamak",
+          "Gizlice vermek, Allah'ın rızasını aramak ve teşekkür beklememek"
+        ],
+        "info": "Harcama, kişinin kendini yıkıma sürüklememesi ve iyilik yapmasıyla birlikte anılır; ayet düşüncesizliği teşvik etmez."
+      }
+    }
+  },
+  {
+    "id": "l2x_best_provision",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 2:197",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:197"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Что названо лучшим припасом в наставлении о хадже, 2:197?",
+        "options": [
+          "Богобоязненность",
+          "Знание дорог",
+          "Запас воды",
+          "Средства на обратный путь"
+        ],
+        "info": "После повеления брать припасы аят выделяет богобоязненность как лучший припас; материальная подготовка не исчерпывает подготовку к хаджу."
+      },
+      "en": {
+        "q": "What is called the best provision in the pilgrimage teaching of 2:197?",
+        "options": [
+          "God-consciousness",
+          "Knowledge of the roads",
+          "A supply of water",
+          "Funds for the return journey"
+        ],
+        "info": "After instructing people to take provisions, the verse identifies God-consciousness as the best provision; preparation is more than material."
+      },
+      "uz": {
+        "q": "2:197 dagi haj haqidagi nasihatda eng yaxshi ozuqa nima deb ataladi?",
+        "options": [
+          "Taqvo",
+          "Yo‘llarni bilish",
+          "Suv zaxirasi",
+          "Qaytish yo‘liga mablag‘"
+        ],
+        "info": "Ozuqa olish buyurilgach, oyat taqvoni eng yaxshi ozuqa deb ajratadi; hajga tayyorgarlik faqat moddiy hozirlikdan iborat emas."
+      },
+      "tg": {
+        "q": "Дар дастури ҳаҷҷи 2:197 беҳтарин тӯша чӣ номида шудааст?",
+        "options": [
+          "Тақво",
+          "Донистани роҳҳо",
+          "Захираи об",
+          "Маблағи роҳи бозгашт"
+        ],
+        "info": "Баъд аз амри тӯша гирифтан оят тақворо беҳтарин тӯша мешуморад; омодагӣ ба ҳаҷ танҳо моддӣ нест."
+      },
+      "kk": {
+        "q": "2:197-дегі қажылық туралы өсиетте ең жақсы азық не деп аталған?",
+        "options": [
+          "Тақуалық",
+          "Жолдарды білу",
+          "Су қоры",
+          "Қайту жолына қаражат"
+        ],
+        "info": "Азық алу бұйырылғаннан кейін аят тақуалықты ең жақсы азық деп атайды; қажылыққа дайындық тек материалдық қамданумен шектелмейді."
+      },
+      "ky": {
+        "q": "2:197деги ажылык тууралуу насаатта эң жакшы азык эмне деп аталган?",
+        "options": [
+          "Такыбалык",
+          "Жолдорду билүү",
+          "Суунун кору",
+          "Кайтуу жолуна каражат"
+        ],
+        "info": "Азык алуу буйрулган соң аят такыбалыкты эң жакшы азык деп атайт; ажылыкка даярдык материалдык камылга менен гана чектелбейт."
+      },
+      "az": {
+        "q": "2:197-də həcc haqqında nəsihətdə ən yaxşı azuqə nə adlandırılır?",
+        "options": [
+          "Təqva",
+          "Yolları bilmək",
+          "Su ehtiyatı",
+          "Geri dönüş üçün vəsait"
+        ],
+        "info": "Azuqə götürmək əmrindən sonra ayə təqvanı ən yaxşı azuqə sayır; həccə hazırlıq yalnız maddi hazırlıqdan ibarət deyil."
+      },
+      "tr": {
+        "q": "2:197'de hacla ilgili öğütte en hayırlı azık ne olarak belirtilir?",
+        "options": [
+          "Takvâ",
+          "Yolları bilmek",
+          "Su stoku",
+          "Dönüş yolculuğu için para"
+        ],
+        "info": "Azık alma emrinin ardından ayet takvâyı en hayırlı azık olarak belirtir; hacca hazırlık maddi hazırlıkla sınırlı değildir."
+      }
+    }
+  },
+  {
+    "id": "l2x_good_both_worlds",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 2:201",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:201"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие просьбы соединены в молитве из 2:201?",
+        "options": [
+          "Благо в обоих мирах и защита от Огня",
+          "Знание, красноречие и надёжный помощник",
+          "Милость родителям и благополучие потомков",
+          "Принятие добрых дел и укрепление ног"
+        ],
+        "info": "Молитва объединяет земное благо, благо Последней жизни и спасение от наказания; она не ограничена материальным успехом."
+      },
+      "en": {
+        "q": "Which requests are joined in the prayer in 2:201?",
+        "options": [
+          "Good in both worlds and protection from the Fire",
+          "Knowledge, eloquence and a reliable helper",
+          "Mercy for parents and well-being for descendants",
+          "Acceptance of good deeds and firmness of feet"
+        ],
+        "info": "The prayer joins earthly good, good in the Hereafter and protection from punishment; it is not limited to material success."
+      },
+      "uz": {
+        "q": "2:201 dagi duoda qaysi so‘rovlar birlashgan?",
+        "options": [
+          "Har ikki dunyoda yaxshilik va do‘zaxdan himoya",
+          "Bilim, ravon nutq va ishonchli yordamchi",
+          "Ota-onaga rahmat va avlodlarga farovonlik",
+          "Yaxshi amallarning qabuli va oyoqlarning sobit bo‘lishi"
+        ],
+        "info": "Duo dunyo yaxshiligi, oxirat yaxshiligi va azobdan najotni birlashtiradi; u moddiy muvaffaqiyat bilan cheklanmaydi."
+      },
+      "tg": {
+        "q": "Дар дуои 2:201 кадом дархостҳо якҷо омадаанд?",
+        "options": [
+          "Некӣ дар ҳар ду ҷаҳон ва ҳифз аз Оташ",
+          "Дониш, суханварӣ ва ёвари боэътимод",
+          "Раҳмат ба падару модар ва осоиши наслҳо",
+          "Қабули амалҳои нек ва устувории қадамҳо"
+        ],
+        "info": "Дуо некии дунё, некии охират ва раҳоӣ аз азобро дар бар мегирад; он бо комёбии моддӣ маҳдуд нест."
+      },
+      "kk": {
+        "q": "2:201-дегі дұғада қандай тілектер біріктірілген?",
+        "options": [
+          "Екі дүниенің жақсылығы және Оттан қорғану",
+          "Білім, шешендік және сенімді көмекші",
+          "Ата-анаға рақым және ұрпаққа амандық",
+          "Ізгі амалдардың қабыл болуы және аяқтың нық тұруы"
+        ],
+        "info": "Дұға дүниелік жақсылықты, ақырет жақсылығын және азаптан құтылуды біріктіреді; ол материалдық табыспен шектелмейді."
+      },
+      "ky": {
+        "q": "2:201деги дубада кайсы тилектер бириктирилген?",
+        "options": [
+          "Эки дүйнөнүн жакшылыгы жана Оттон коргонуу",
+          "Билим, чечендик жана ишенимдүү жардамчы",
+          "Ата-энеге ырайым жана урпактарга бакубаттык",
+          "Жакшы амалдардын кабыл болушу жана кадамдардын бекемдиги"
+        ],
+        "info": "Дуба бул дүйнөнүн жана акыреттин жакшылыгын, азаптан кутулууну бириктирет; ал материалдык ийгилик менен чектелбейт."
+      },
+      "az": {
+        "q": "2:201-dəki duada hansı istəklər birləşdirilir?",
+        "options": [
+          "Hər iki dünyada yaxşılıq və Oddan qorunmaq",
+          "Bilik, bəlağətli nitq və etibarlı köməkçi",
+          "Valideynlərə mərhəmət və nəslin rifahı",
+          "Yaxşı əməllərin qəbulu və ayaqların möhkəmliyi"
+        ],
+        "info": "Dua dünya yaxşılığını, axirət yaxşılığını və əzabdan qurtuluşu birləşdirir; maddi uğurla məhdudlaşmır."
+      },
+      "tr": {
+        "q": "2:201'deki duada hangi istekler birleştirilir?",
+        "options": [
+          "İki dünyada iyilik ve ateşten korunma",
+          "Bilgi, güzel konuşma ve güvenilir yardımcı",
+          "Anne babaya merhamet ve nesillerin esenliği",
+          "İyi işlerin kabulü ve ayakların sağlam basması"
+        ],
+        "info": "Dua, dünya iyiliği, ahiret iyiliği ve azaptan kurtuluşu birleştirir; maddi başarıyla sınırlı değildir."
+      }
+    }
+  },
+  {
+    "id": "l2x_enter_wholly",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 2:208",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:208"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какой призыв обращён к верующим в 2:208?",
+        "options": [
+          "Войти в ислам полностью и не следовать по стопам шайтана",
+          "Проверять вести и не поступать необдуманно",
+          "Держаться вместе и не разделяться",
+          "Исполнять договоры и не нарушать клятвы"
+        ],
+        "info": "Призыв к полноте следования сопровождается запретом следовать по стопам шайтана, а не разрешением выбирать только удобное."
+      },
+      "en": {
+        "q": "What appeal is addressed to believers in 2:208?",
+        "options": [
+          "Enter Islam fully and do not follow Satan's footsteps",
+          "Verify reports and do not act rashly",
+          "Hold together and do not become divided",
+          "Fulfil agreements and do not break oaths"
+        ],
+        "info": "The call to wholehearted commitment accompanies a warning against Satan's footsteps, not permission to select only what is convenient."
+      },
+      "uz": {
+        "q": "2:208 da mo‘minlarga qanday chaqiriq qilingan?",
+        "options": [
+          "Islomga to‘liq kirish va shaytonning izidan ergashmaslik",
+          "Xabarlarni tekshirish va o‘ylamasdan ish tutmaslik",
+          "Birga bo‘lish va bo‘linmaslik",
+          "Ahdlarni bajarish va qasamlarni buzmaslik"
+        ],
+        "info": "To‘liq ergashishga chaqiriq faqat qulay narsani tanlashga ruxsat bilan emas, shaytonning izidan yurmaslik haqidagi taqiq bilan birga keladi."
+      },
+      "tg": {
+        "q": "Дар 2:208 ба мӯъминон чӣ даъват шудааст?",
+        "options": [
+          "Ба ислом комилан даромадан ва аз паи қадамҳои шайтон нарафтан",
+          "Хабарҳоро санҷидан ва беандеша амал накардан",
+          "Якҷо будан ва пароканда нашудан",
+          "Аҳдҳоро иҷро кардан ва қасамҳоро нашикастан"
+        ],
+        "info": "Даъват ба пайравии комил бо манъи пайравии шайтон ҳамроҳ аст, на бо иҷозаи интихоб кардани танҳо чизи осон."
+      },
+      "kk": {
+        "q": "2:208-де мүміндерге қандай үндеу жасалған?",
+        "options": [
+          "Исламға толық кіру және шайтанның ізіне ермеу",
+          "Хабарларды тексеру және ойланбай әрекет етпеу",
+          "Бірге болу және бөлінбеу",
+          "Келісімдерді орындау және антты бұзбау"
+        ],
+        "info": "Толық ұстануға үндеу тек ыңғайлысын таңдауға рұқсатпен емес, шайтанның ізіне еруге тыйыммен қатар келеді."
+      },
+      "ky": {
+        "q": "2:208де момундарга кандай чакырык айтылган?",
+        "options": [
+          "Исламга толук кирүү жана шайтандын изине түшпөө",
+          "Кабарларды текшерүү жана ойлонбой иш кылбоо",
+          "Бирге болуу жана бөлүнбөө",
+          "Келишимдерди аткаруу жана анттарды бузбоо"
+        ],
+        "info": "Толук ээрчүүгө чакырык ыңгайлуусун гана тандоого уруксат менен эмес, шайтандын изине түшүүгө тыюу менен коштолот."
+      },
+      "az": {
+        "q": "2:208-də möminlərə hansı çağırış edilir?",
+        "options": [
+          "İslama bütövlükdə daxil olmaq və şeytanın izi ilə getməmək",
+          "Xəbərləri yoxlamaq və düşünmədən davranmamaq",
+          "Birlikdə olmaq və parçalanmamaq",
+          "Əhdləri yerinə yetirmək və andları pozmamaq"
+        ],
+        "info": "Tam tabeçilik çağırışı yalnız rahat olanı seçmək icazəsi ilə deyil, şeytanın izi ilə getməmək qadağası ilə yanaşı verilir."
+      },
+      "tr": {
+        "q": "2:208'de müminlere hangi çağrı yapılır?",
+        "options": [
+          "İslâm'a bütünüyle girmek ve şeytanın adımlarını izlememek",
+          "Haberleri doğrulamak ve düşünmeden davranmamak",
+          "Birlikte olmak ve ayrılığa düşmemek",
+          "Sözleşmeleri yerine getirmek ve yeminleri bozmamak"
+        ],
+        "info": "Bütünüyle uyma çağrısı, yalnızca kolay olanı seçme izniyle değil, şeytanın adımlarını izleme yasağıyla birlikte gelir."
+      }
+    }
+  },
+  {
+    "id": "l2x_dislike_and_good",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 2:216",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:216"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какая противоположность показана в 2:216 между отношением человека и исходом дела?",
+        "options": [
+          "Ненавистное может быть благом, а любимое — злом",
+          "Лёгкое дело может требовать времени, а трудное — быстрого решения",
+          "Одинаковый поступок может быть явным или скрытым",
+          "Большая награда может следовать за малым, но постоянным трудом"
+        ],
+        "info": "Аят различает личное отношение к событию и его действительную пользу; завершается указанием на знание Аллаха и ограниченность человеческого знания."
+      },
+      "en": {
+        "q": "What contrast does 2:216 draw between a person's feelings and a matter's outcome?",
+        "options": [
+          "What is disliked may be good, while what is loved may be bad",
+          "An easy task may need time, while a difficult one may need a quick decision",
+          "The same action may be performed publicly or privately",
+          "A great reward may follow small but consistent efforts"
+        ],
+        "info": "The verse distinguishes personal feelings from actual benefit, ending with Allah's knowledge and the limits of human knowledge."
+      },
+      "uz": {
+        "q": "2:216 da insonning munosabati bilan ish oqibati o‘rtasida qanday qarama-qarshilik ko‘rsatilgan?",
+        "options": [
+          "Yoqmagan narsa yaxshilik, yoqqan narsa esa yomonlik bo‘lishi mumkin",
+          "Oson ish vaqt, qiyin ish esa tez qaror talab qilishi mumkin",
+          "Bir xil amal oshkora yoki yashirin bo‘lishi mumkin",
+          "Kichik, ammo doimiy mehnat ortidan katta mukofot kelishi mumkin"
+        ],
+        "info": "Oyat voqeaga shaxsiy munosabatni uning haqiqiy foydasidan ajratadi; oxirida Allohning bilimi va inson bilimining cheklangani eslatiladi."
+      },
+      "tg": {
+        "q": "Дар 2:216 байни муносибати инсон ва натиҷаи кор кадом муқобилият нишон дода мешавад?",
+        "options": [
+          "Чизи нохуш метавонад хайр ва чизи дӯстдошта шар бошад",
+          "Кори осон метавонад вақт ва кори душвор қарори зуд талаб кунад",
+          "Як амал метавонад ошкор ё пинҳон бошад",
+          "Музди бузург метавонад пас аз кори кам, вале пайваста биёяд"
+        ],
+        "info": "Оят муносибати шахсӣ ба рӯйдодро аз фоидаи воқеии он ҷудо мекунад; дар анҷом дониши Аллоҳ ва маҳдудияти дониши инсон ёд мешавад."
+      },
+      "kk": {
+        "q": "2:216-да адамның көзқарасы мен істің нәтижесі арасындағы қандай қарама-қайшылық көрсетілген?",
+        "options": [
+          "Ұнатпаған нәрсе қайырлы, ал ұнатқан нәрсе жаман болуы мүмкін",
+          "Оңай іс уақытты, ал қиын іс шұғыл шешімді талап етуі мүмкін",
+          "Бірдей амал ашық та, жасырын да болуы мүмкін",
+          "Аз, бірақ тұрақты еңбекке үлкен сый берілуі мүмкін"
+        ],
+        "info": "Аят оқиғаға жеке көзқарасты оның шынайы пайдасынан ажыратады; соңында Алланың білімі мен адам білімінің шектеулілігі көрсетіледі."
+      },
+      "ky": {
+        "q": "2:216да адамдын мамилеси менен иштин жыйынтыгынын ортосунда кандай карама-каршылык көрсөтүлгөн?",
+        "options": [
+          "Жакпаган нерсе жакшылык, жаккан нерсе жамандык болушу мүмкүн",
+          "Жеңил иш убакытты, кыйын иш тез чечимди талап кылышы мүмкүн",
+          "Бир эле иш ачык же жашыруун болушу мүмкүн",
+          "Аз, бирок туруктуу эмгекке чоң сыйлык берилиши мүмкүн"
+        ],
+        "info": "Аят окуяга болгон жеке мамилени анын чыныгы пайдасынан айырмалайт; аягында Аллахтын билими жана адамдын билиминин чектелгени эске салынат."
+      },
+      "az": {
+        "q": "2:216-da insanın münasibəti ilə işin nəticəsi arasında hansı ziddiyyət göstərilir?",
+        "options": [
+          "Sevilməyən şey xeyir, sevilən şey isə şər ola bilər",
+          "Asan iş vaxt, çətin iş isə tez qərar tələb edə bilər",
+          "Eyni əməl açıq və ya gizli ola bilər",
+          "Az, lakin davamlı zəhmətin ardınca böyük mükafat gələ bilər"
+        ],
+        "info": "Ayə hadisəyə şəxsi münasibəti onun həqiqi faydasından ayırır; sonda Allahın elmi və insan biliyinin məhdudluğu vurğulanır."
+      },
+      "tr": {
+        "q": "2:216'da kişinin yaklaşımı ile işin sonucu arasında hangi karşıtlık gösterilir?",
+        "options": [
+          "Hoşlanılmayan şey hayırlı, sevilen şey ise kötü olabilir",
+          "Kolay iş zaman, zor iş ise hızlı karar gerektirebilir",
+          "Aynı davranış açık veya gizli olabilir",
+          "Az fakat sürekli çabayı büyük bir ödül izleyebilir"
+        ],
+        "info": "Ayet, bir olaya kişisel yaklaşımı onun gerçek yararından ayırır; sonunda Allah'ın bilgisi ve insan bilgisinin sınırlılığı belirtilir."
+      }
+    }
+  },
+  {
+    "id": "l2x_faith_no_compulsion",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 2:256",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:256"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Каким пояснением в 2:256 сопровождается отсутствие принуждения в религии?",
+        "options": [
+          "Верный путь уже ясно отличился от заблуждения",
+          "Поступки оцениваются с учётом человеческих возможностей",
+          "Посланники приходили на языке своего народа",
+          "Каждый человек несёт бремя собственного поступка"
+        ],
+        "info": "Аят связывает отсутствие принуждения с ясным различением руководства и заблуждения; это не утверждение о равенстве всех поступков."
+      },
+      "en": {
+        "q": "What explanation accompanies the absence of compulsion in religion in 2:256?",
+        "options": [
+          "Right guidance has become clearly distinct from error",
+          "Actions are assessed with regard to human ability",
+          "Messengers came speaking the language of their people",
+          "Each person bears the burden of their own action"
+        ],
+        "info": "The absence of compulsion is linked to clear distinction between guidance and error, not to treating every action as equivalent."
+      },
+      "uz": {
+        "q": "2:256 da dinda majburlash yo‘qligi qanday izoh bilan birga keladi?",
+        "options": [
+          "To‘g‘ri yo‘l adashishdan aniq ajralib bo‘lgan",
+          "Amallar inson imkoniyatlarini hisobga olib baholanadi",
+          "Payg‘ambarlar o‘z xalqlarining tilida kelgan",
+          "Har kim o‘z amalining yukini ko‘taradi"
+        ],
+        "info": "Oyat majburlash yo‘qligini hidoyat bilan adashishning aniq ajralishiga bog‘laydi; bu barcha amallar teng degani emas."
+      },
+      "tg": {
+        "q": "Дар 2:256 набудани маҷбуркунӣ дар дин бо кадом шарҳ ҳамроҳ аст?",
+        "options": [
+          "Роҳи рост аз гумроҳӣ равшан ҷудо шудааст",
+          "Амалҳо бо назардошти тавоноии инсон арзёбӣ мешаванд",
+          "Паёмбарон бо забони қавми худ меомаданд",
+          "Ҳар кас бори амали худро мебардорад"
+        ],
+        "info": "Оят набудани маҷбуркуниро бо фарқи равшани ҳидоят ва гумроҳӣ мепайвандад; ин баробар донистани ҳамаи амалҳо нест."
+      },
+      "kk": {
+        "q": "2:256-да дінде мәжбүрлеудің жоқтығы қандай түсіндірмемен бірге беріледі?",
+        "options": [
+          "Тура жол адасудан анық ажыратылды",
+          "Амалдар адамның мүмкіндігі ескеріліп бағаланады",
+          "Елшілер өз халқының тілінде келген",
+          "Әркім өз ісінің жүгін көтереді"
+        ],
+        "info": "Аят мәжбүрлеудің жоқтығын тура жол мен адасудың анық ажыратылуымен байланыстырады; бұл барлық іс бірдей деген тұжырым емес."
+      },
+      "ky": {
+        "q": "2:256да динде мажбурлоо жоктугу кандай түшүндүрмө менен коштолот?",
+        "options": [
+          "Туура жол адашуудан ачык айырмаланды",
+          "Амалдар адамдын мүмкүнчүлүгүн эске алып бааланат",
+          "Элчилер өз элинин тилинде келишкен",
+          "Ар ким өз ишинин жүгүн көтөрөт"
+        ],
+        "info": "Аят мажбурлоо жоктугун туура жол менен адашуунун ачык айырмаланышына байланыштырат; бул бардык иштер бирдей дегенди билдирбейт."
+      },
+      "az": {
+        "q": "2:256-da dində məcburiyyətin olmaması hansı izahla müşayiət olunur?",
+        "options": [
+          "Doğru yol azğınlıqdan artıq aydın seçilmişdir",
+          "Əməllər insanın imkanları nəzərə alınaraq qiymətləndirilir",
+          "Elçilər öz xalqlarının dilində gəlmişlər",
+          "Hər insan öz əməlinin yükünü daşıyır"
+        ],
+        "info": "Ayə məcburiyyətin olmamasını doğru yolun azğınlıqdan aydın fərqlənməsi ilə bağlayır; bu, bütün əməllərin bərabərliyi iddiası deyil."
+      },
+      "tr": {
+        "q": "2:256'da dinde zorlama olmamasına hangi açıklama eşlik eder?",
+        "options": [
+          "Doğruluk sapıklıktan açıkça ayrılmıştır",
+          "Ameller insanın gücü dikkate alınarak değerlendirilir",
+          "Elçiler kendi halklarının diliyle gelmiştir",
+          "Her insan kendi davranışının yükünü taşır"
+        ],
+        "info": "Ayet, zorlamanın olmamasını doğru yol ile sapıklığın açık ayrımına bağlar; bütün davranışların eşit olduğunu söylemez."
+      }
+    }
+  },
+  {
+    "id": "l2x_quality_of_giving",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 2:267",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:267"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какую ошибку при пожертвовании порицает 2:267?",
+        "options": [
+          "Отдавать плохое, чего сам не принял бы без уступки",
+          "Открыто отдавать пригодное нуждающемуся",
+          "Отдавать хорошее из плодов земли",
+          "Делиться частью честного заработка"
+        ],
+        "info": "Качество дара соотнесено с тем, что даритель согласился бы принять сам; нужда другого не оправдывает пренебрежение."
+      },
+      "en": {
+        "q": "What mistake in giving does 2:267 criticize?",
+        "options": [
+          "Offering inferior goods one would accept only reluctantly",
+          "Openly giving useful goods to someone in need",
+          "Giving good produce of the earth",
+          "Sharing part of honestly earned income"
+        ],
+        "info": "The quality of a gift is measured against what the giver would accept; another person's need does not justify disregard."
+      },
+      "uz": {
+        "q": "2:267 da ehson qilishdagi qaysi xato qoralanadi?",
+        "options": [
+          "O‘zi kamchiligiga ko‘z yummasdan olmaydigan yomon narsani berish",
+          "Muhtojga yaroqli narsani oshkora berish",
+          "Yer hosilining yaxshisidan berish",
+          "Halol daromadning bir qismini ulashish"
+        ],
+        "info": "Hadya sifati beruvchining o‘zi nimani olishga rozi bo‘lishi bilan qiyoslanadi; birovning muhtojligi bepisandlikni oqlamaydi."
+      },
+      "tg": {
+        "q": "Дар 2:267 кадом иштибоҳ ҳангоми садақа танқид мешавад?",
+        "options": [
+          "Чизи бадеро додан, ки худ бе чашмпӯшӣ намепазируфт",
+          "Ба ниёзманд чизи қобили истифода ошкоро додан",
+          "Аз ҳосили хуби замин додан",
+          "Қисме аз даромади ҳалолро бахшидан"
+        ],
+        "info": "Сифати ҳадя бо он чизе муқоиса мешавад, ки диҳанда худаш қабул мекард; ниёзи дигарон беэътиноиро сафед намекунад."
+      },
+      "kk": {
+        "q": "2:267-де садақа берудегі қандай қателік айыпталады?",
+        "options": [
+          "Өзі кемшілігіне көз жұмбай қабылдамайтын нашар нәрсені беру",
+          "Мұқтажға жарамды нәрсені ашық беру",
+          "Жер өнімінің жақсысын беру",
+          "Адал табысының бір бөлігін бөлісу"
+        ],
+        "info": "Сыйдың сапасы берушінің өзі қабылдауға келісетін нәрсемен салыстырылады; өзгенің мұқтаждығы немқұрайдылықты ақтамайды."
+      },
+      "ky": {
+        "q": "2:267де садака берүүдөгү кайсы ката сындалат?",
+        "options": [
+          "Өзү кемчилигине көз жуммайынча албай турган начар нерсени берүү",
+          "Муктажга жарактуу нерсени ачык берүү",
+          "Жердин жакшы түшүмүнөн берүү",
+          "Адал кирешенин бир бөлүгүн бөлүшүү"
+        ],
+        "info": "Белектин сапаты берүүчү өзү алууга макул боло турган нерсе менен салыштырылат; башка бирөөнүн муктаждыгы кайдыгерликти актабайт."
+      },
+      "az": {
+        "q": "2:267-də ianə verərkən hansı səhv qınanır?",
+        "options": [
+          "Özünün güzəştsiz qəbul etməyəcəyi pis malı vermək",
+          "Ehtiyaclıya yararlı şeyi açıq vermək",
+          "Torpaq məhsulunun yaxşısından vermək",
+          "Halal qazancın bir hissəsini bölüşmək"
+        ],
+        "info": "Hədiyyənin keyfiyyəti verənin özünün qəbul etməyə razı olacağı şeylə müqayisə edilir; başqasının ehtiyacı etinasızlığa bəraət qazandırmır."
+      },
+      "tr": {
+        "q": "2:267'de bağış yaparken hangi hata kınanır?",
+        "options": [
+          "Kendisinin ancak kusuruna göz yumarak alacağı kötü malı vermek",
+          "İhtiyaç sahibine kullanılabilir malı açıkça vermek",
+          "Toprak ürünlerinin iyisinden vermek",
+          "Helal kazancın bir kısmını paylaşmak"
+        ],
+        "info": "Verilenin niteliği, verenin kendisinin kabul edeceği şeyle karşılaştırılır; başkasının ihtiyacı özensizliği haklı çıkarmaz."
+      }
+    }
+  },
+  {
+    "id": "l2x_poverty_threat",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 2:268",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:268"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какое противопоставление в вопросе расходования содержится в 2:268?",
+        "options": [
+          "Угроза бедности от шайтана — обещание прощения и щедрости от Аллаха",
+          "Страх людского осуждения — обещание почёта среди людей",
+          "Угроза утраты власти — обещание многочисленных сторонников",
+          "Страх длительного пути — обещание безопасного возвращения"
+        ],
+        "info": "В контексте расходования аят противопоставляет внушаемый страх бедности обещанию прощения и милости от Аллаха."
+      },
+      "en": {
+        "q": "Which contrast about spending appears in 2:268?",
+        "options": [
+          "Satan's threat of poverty versus Allah's promise of forgiveness and bounty",
+          "Fear of people's criticism versus a promise of public honour",
+          "The threat of losing authority versus a promise of many supporters",
+          "Fear of a long journey versus a promise of a safe return"
+        ],
+        "info": "In the context of giving, the verse contrasts an induced fear of poverty with Allah's promise of forgiveness and bounty."
+      },
+      "uz": {
+        "q": "2:268 da sarflash masalasida qanday qarama-qarshilik bor?",
+        "options": [
+          "Shaytonning faqirlik bilan qo‘rqitishi — Allohning mag‘firat va fazl va’dasi",
+          "Odamlar tanqididan qo‘rqish — xalq orasida obro‘ va’dasi",
+          "Hokimiyatni yo‘qotish tahdidi — ko‘p tarafdorlar va’dasi",
+          "Uzoq yo‘ldan qo‘rqish — xavfsiz qaytish va’dasi"
+        ],
+        "info": "Sarflash haqidagi bu oyat faqirlik qo‘rquvini singdirishga Allohning mag‘firat va marhamat va’dasini qarshi qo‘yadi."
+      },
+      "tg": {
+        "q": "Дар 2:268 оид ба харҷ кардан кадом муқобилият омадааст?",
+        "options": [
+          "Тарсонидани шайтон аз фақр — ваъдаи омурзишу фазли Аллоҳ",
+          "Тарс аз маломати мардум — ваъдаи обрӯ миёни онҳо",
+          "Таҳдиди аз даст додани қудрат — ваъдаи тарафдорони зиёд",
+          "Тарс аз роҳи дароз — ваъдаи бозгашти бехатар"
+        ],
+        "info": "Дар заминаи харҷ кардан оят тарси талқинии фақрро ба ваъдаи омурзишу раҳмати Аллоҳ муқобил мегузорад."
+      },
+      "kk": {
+        "q": "2:268-де жұмсау мәселесінде қандай қарама-қарсылық берілген?",
+        "options": [
+          "Шайтанның кедейлікпен қорқытуы — Алланың кешірім мен кеңшілік уәдесі",
+          "Елдің сөгісінен қорқу — адамдар арасындағы құрмет уәдесі",
+          "Биліктен айырылу қаупі — көп қолдаушы уәдесі",
+          "Ұзақ жолдан қорқу — аман оралу уәдесі"
+        ],
+        "info": "Жұмсау жайындағы аят кедейлікпен қорқытуды Алланың кешірім және рақым уәдесіне қарама-қарсы қояды."
+      },
+      "ky": {
+        "q": "2:268де сарптоо маселесинде кандай карама-каршылык келтирилген?",
+        "options": [
+          "Шайтандын жакырчылык менен коркутуусу — Аллахтын кечирим жана берешендик убадасы",
+          "Элдин сынынан коркуу — адамдар арасындагы урмат убадасы",
+          "Бийликтен айрылуу коркунучу — көп тарапташтын убадасы",
+          "Узак жолдон коркуу — аман кайтуу убадасы"
+        ],
+        "info": "Сарптоо тууралуу аят жакырчылыктан коркутууну Аллахтын кечирим жана ырайым убадасына карама-каршы коёт."
+      },
+      "az": {
+        "q": "2:268-də xərcləmək barədə hansı qarşılaşdırma var?",
+        "options": [
+          "Şeytanın yoxsulluqla qorxutması — Allahın bağışlanma və lütf vədi",
+          "İnsanların qınağından qorxu — insanlar arasında hörmət vədi",
+          "Hakimiyyəti itirmək təhdidi — çoxlu tərəfdar vədi",
+          "Uzun yoldan qorxu — təhlükəsiz qayıdış vədi"
+        ],
+        "info": "Xərcləmək mövzusunda ayə təlqin edilən yoxsulluq qorxusunu Allahın bağışlanma və mərhəmət vədi ilə qarşılaşdırır."
+      },
+      "tr": {
+        "q": "2:268'de harcamayla ilgili hangi karşıtlık yer alır?",
+        "options": [
+          "Şeytanın yoksullukla korkutması — Allah'ın bağışlanma ve lütuf vaadi",
+          "İnsanların kınamasından korku — insanlar arasında saygınlık vaadi",
+          "İktidarı kaybetme tehdidi — çok sayıda destekçi vaadi",
+          "Uzun yoldan korku — güvenli dönüş vaadi"
+        ],
+        "info": "Harcama bağlamındaki ayet, telkin edilen yoksulluk korkusunun karşısına Allah'ın bağışlanma ve rahmet vaadini koyar."
+      }
+    }
+  },
+  {
+    "id": "l2x_hidden_charity",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 2:271",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:271"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как 2:271 соотносит явную и скрытую милостыню?",
+        "options": [
+          "Явная хороша; скрытая помощь бедным лучше для дающего",
+          "Явная всегда лучше скрытой помощи бедным",
+          "Скрытая помощь хороша лишь при наличии свидетеля",
+          "Открытая помощь полностью лишает дарителя награды"
+        ],
+        "info": "Открытое пожертвование не осуждается, но скрытая передача бедным выделяется как более предпочтительная для дающего."
+      },
+      "en": {
+        "q": "How does 2:271 compare public and concealed charity?",
+        "options": [
+          "Public charity is good; concealed giving to the poor is better for the giver",
+          "Public giving is always better than concealed aid to the poor",
+          "Concealed aid is good only if a witness is present",
+          "Public aid completely deprives the giver of reward"
+        ],
+        "info": "Public giving is not condemned, while discreet assistance to the poor is singled out as better for the giver."
+      },
+      "uz": {
+        "q": "2:271 oshkora va yashirin sadaqani qanday qiyoslaydi?",
+        "options": [
+          "Oshkora berish yaxshi; faqirlarga yashirin yordam beruvchi uchun yaxshiroq",
+          "Oshkora berish faqirlarga yashirin yordamdan doimo yaxshiroq",
+          "Yashirin yordam faqat guvoh bo‘lganda yaxshi",
+          "Oshkora yordam beruvchini butunlay ajrdan mahrum qiladi"
+        ],
+        "info": "Oshkora ehson qoralanmaydi, ammo faqirlarga yashirin berish beruvchi uchun afzalroq deb ko‘rsatiladi."
+      },
+      "tg": {
+        "q": "2:271 садақаи ошкору пинҳониро чӣ гуна муқоиса мекунад?",
+        "options": [
+          "Ошкоро додан хуб аст; пинҳонӣ ба фақирон додан барои диҳанда беҳтар аст",
+          "Ошкоро додан ҳамеша аз кумаки пинҳонӣ ба фақирон беҳтар аст",
+          "Кумаки пинҳонӣ танҳо бо ҳузури шоҳид хуб аст",
+          "Кумаки ошкор диҳандаро комилан аз подош маҳрум мекунад"
+        ],
+        "info": "Садақаи ошкор маҳкум намешавад, аммо пинҳонӣ ба фақирон додан барои диҳанда афзалтар дониста шудааст."
+      },
+      "kk": {
+        "q": "2:271 ашық және жасырын садақаны қалай салыстырады?",
+        "options": [
+          "Ашық беру жақсы; кедейлерге жасырын беру берушіге жақсырақ",
+          "Ашық беру кедейлерге жасырын көмектен әрдайым жақсырақ",
+          "Жасырын көмек куәгер болғанда ғана жақсы",
+          "Ашық көмек берушіні сыйдан толық айырады"
+        ],
+        "info": "Ашық садақа айыпталмайды, бірақ кедейлерге жасырын беру беруші үшін артық деп көрсетіледі."
+      },
+      "ky": {
+        "q": "2:271 ачык жана жашыруун садаканы кантип салыштырат?",
+        "options": [
+          "Ачык берүү жакшы; кедейлерге жашыруун берүү берүүчүгө жакшыраак",
+          "Ачык берүү кедейлерге жашыруун жардамдан дайыма жакшыраак",
+          "Жашыруун жардам күбө болгондо гана жакшы",
+          "Ачык жардам берүүчүнү сыйлыктан толук ажыратат"
+        ],
+        "info": "Ачык садака айыпталбайт, бирок кедейлерге жашыруун берүү берүүчү үчүн артыкчылыктуу деп көрсөтүлөт."
+      },
+      "az": {
+        "q": "2:271 açıq və gizli sədəqəni necə müqayisə edir?",
+        "options": [
+          "Açıq vermək yaxşıdır; yoxsullara gizli yardım verən üçün daha yaxşıdır",
+          "Açıq vermək yoxsullara gizli yardımdan həmişə yaxşıdır",
+          "Gizli yardım yalnız şahid olduqda yaxşıdır",
+          "Açıq yardım verəni mükafatdan tam məhrum edir"
+        ],
+        "info": "Açıq ianə qınanmır, lakin yoxsullara gizli vermək verən üçün daha üstün göstərilir."
+      },
+      "tr": {
+        "q": "2:271 açık ve gizli sadakayı nasıl karşılaştırır?",
+        "options": [
+          "Açık vermek iyidir; yoksullara gizli vermek veren için daha hayırlıdır",
+          "Açık vermek yoksullara gizli yardımdan her zaman iyidir",
+          "Gizli yardım ancak tanık varsa iyidir",
+          "Açık yardım vereni ödülden tamamen mahrum bırakır"
+        ],
+        "info": "Açık bağış kınanmaz; fakat yoksullara gizlice vermek veren için daha hayırlı olarak belirtilir."
+      }
+    }
+  },
+  {
+    "id": "l2x_restrained_needy",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 2:273",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:273"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Почему нуждающихся, описанных в 2:273, можно ошибочно принять за богатых?",
+        "options": [
+          "Они сдержанны и не выпрашивают настойчиво",
+          "Они владеют землями, но не имеют наличных",
+          "Они обязательно отказываются от любой помощи",
+          "Они заняты торговлей и редко бывают дома"
+        ],
+        "info": "Внешняя сдержанность не означает отсутствия нужды: аят обращает внимание на тех, кто не настаивает на просьбах."
+      },
+      "en": {
+        "q": "Why might the needy described in 2:273 be mistaken for wealthy people?",
+        "options": [
+          "They are restrained and do not beg insistently",
+          "They own land but have no cash",
+          "They necessarily refuse every form of help",
+          "They trade and are rarely at home"
+        ],
+        "info": "Outward restraint does not mean there is no need; the verse draws attention to those who do not insistently ask."
+      },
+      "uz": {
+        "q": "2:273 da tasvirlangan muhtojlarni nega adashib boy deb o‘ylash mumkin?",
+        "options": [
+          "Ular iffatli bo‘lib, qayta-qayta tilanmaydi",
+          "Ularning yerlari bor, ammo naqd puli yo‘q",
+          "Ular har qanday yordamni albatta rad etadi",
+          "Ular savdo bilan band bo‘lib, kamdan-kam uyda bo‘ladi"
+        ],
+        "info": "Tashqi iffat ehtiyoj yo‘qligini anglatmaydi: oyat o‘z iltimosida qattiq turib olmaydiganlarga e’tibor qaratadi."
+      },
+      "tg": {
+        "q": "Чаро ниёзмандони дар 2:273 тасвиршударо метавон иштибоҳан сарватманд донист?",
+        "options": [
+          "Онҳо худро нигоҳ медоранд ва бо исрор намепурсанд",
+          "Онҳо замин доранд, вале пули нақд надоранд",
+          "Онҳо ҳатман ҳар гуна ёриро рад мекунанд",
+          "Онҳо ба тиҷорат машғуланд ва кам дар хона мешаванд"
+        ],
+        "info": "Худдорӣ дар зоҳир маънои бениёзиро надорад: оят ба касоне таваҷҷуҳ медиҳад, ки дар дархост исрор намекунанд."
+      },
+      "kk": {
+        "q": "2:273-те сипатталған мұқтаждарды неге қателесіп бай деп ойлауға болады?",
+        "options": [
+          "Олар ұстамды әрі қайта-қайта сұранбайды",
+          "Олардың жері бар, бірақ қолма-қол ақшасы жоқ",
+          "Олар кез келген көмектен міндетті түрде бас тартады",
+          "Олар саудамен айналысып, үйде сирек болады"
+        ],
+        "info": "Сырттай ұстамды болу мұқтаждық жоқ дегенді білдірмейді; аят қайта-қайта сұрамайтын адамдарға назар аударады."
+      },
+      "ky": {
+        "q": "2:273тө сүрөттөлгөн муктаждарды эмне үчүн жаңылыш бай деп ойлошу мүмкүн?",
+        "options": [
+          "Алар өзүн кармайт жана өжөрлүк менен суранышпайт",
+          "Алардын жери бар, бирок накталай акчасы жок",
+          "Алар кандай гана жардам болбосун сөзсүз четке кагат",
+          "Алар соода менен алек болуп, үйдө сейрек болушат"
+        ],
+        "info": "Сыртынан өзүн кармоо муктаждык жоктугун билдирбейт; аят өжөрлүк менен сурабагандарга көңүл бурат."
+      },
+      "az": {
+        "q": "2:273-də təsvir edilən ehtiyaclıları niyə səhvən varlı saymaq olar?",
+        "options": [
+          "Onlar özlərini saxlayır və israrla dilənmirlər",
+          "Onların torpaqları var, amma nağd pulları yoxdur",
+          "Onlar mütləq hər cür yardımdan imtina edirlər",
+          "Onlar ticarətlə məşğuldur və evdə az olurlar"
+        ],
+        "info": "Zahiri təmkin ehtiyacın olmaması demək deyil; ayə israrla istəməyənlərə diqqət yönəldir."
+      },
+      "tr": {
+        "q": "2:273'te anlatılan ihtiyaç sahipleri neden yanlışlıkla varlıklı sanılabilir?",
+        "options": [
+          "İffetli davranır ve ısrarla istemezler",
+          "Toprakları vardır ama nakit paraları yoktur",
+          "Her türlü yardımı mutlaka reddederler",
+          "Ticaretle meşguldürler ve evde az bulunurlar"
+        ],
+        "info": "Dışarıdan görülen çekingenlik, ihtiyacın yokluğu demek değildir; ayet ısrarla istemeyenlere dikkat çeker."
+      }
+    }
+  },
+  {
+    "id": "l2x_love_and_following",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 3:31",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "sourceVerses": [
+      "3:31"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какой ответ на утверждение о любви к Аллаху дан в 3:31?",
+        "options": [
+          "Следовать Посланнику",
+          "Расходовать только тайно",
+          "Оставить торговлю ради уединения",
+          "Непрерывно путешествовать в поиске знаний"
+        ],
+        "info": "Любовь связана со следованием Посланнику; вслед за этим названы любовь Аллаха и прощение грехов."
+      },
+      "en": {
+        "q": "What response to a claim of loving Allah is given in 3:31?",
+        "options": [
+          "Follow the Messenger",
+          "Give only in secret",
+          "Leave trade for seclusion",
+          "Travel continuously in search of knowledge"
+        ],
+        "info": "Love is linked to following the Messenger, followed by Allah's love and forgiveness of sins."
+      },
+      "uz": {
+        "q": "3:31 da Allohni sevish haqidagi da’voga qanday javob berilgan?",
+        "options": [
+          "Payg‘ambarga ergashish",
+          "Faqat yashirin sarflash",
+          "Yolg‘izlik uchun savdoni tark etish",
+          "Ilm izlab tinimsiz safar qilish"
+        ],
+        "info": "Muhabbat Payg‘ambarga ergashish bilan bog‘lanadi; keyin Allohning muhabbati va gunohlarning mag‘firati tilga olinadi."
+      },
+      "tg": {
+        "q": "Дар 3:31 ба иддаои муҳаббат ба Аллоҳ чӣ посух дода мешавад?",
+        "options": [
+          "Ба Паёмбар пайравӣ кардан",
+          "Танҳо пинҳонӣ харҷ кардан",
+          "Тиҷоратро барои хилват тарк кардан",
+          "Пайваста дар ҷустуҷӯи дониш сафар кардан"
+        ],
+        "info": "Муҳаббат бо пайравӣ ба Паёмбар вобаста аст; пас аз он муҳаббати Аллоҳ ва омурзиши гуноҳҳо зикр мешаванд."
+      },
+      "kk": {
+        "q": "3:31-де Алланы сүю туралы мәлімдемеге қандай жауап берілген?",
+        "options": [
+          "Елшіге еру",
+          "Тек жасырын жұмсау",
+          "Оңашалану үшін сауданы тастау",
+          "Білім іздеп үздіксіз сапар шегу"
+        ],
+        "info": "Сүйіспеншілік Елшіге ерумен байланыстырылады; одан кейін Алланың сүйіспеншілігі мен күнәларды кешіруі аталады."
+      },
+      "ky": {
+        "q": "3:31де Аллахты сүйүү тууралуу билдирүүгө кандай жооп берилген?",
+        "options": [
+          "Элчини ээрчүү",
+          "Жашыруун гана сарптоо",
+          "Жалгыздык үчүн сооданы таштоо",
+          "Билим издеп тынымсыз сапар тартуу"
+        ],
+        "info": "Сүйүү Элчини ээрчүүгө байланышкан; андан кийин Аллахтын сүйүүсү жана күнөөлөрдүн кечирилиши айтылат."
+      },
+      "az": {
+        "q": "3:31-də Allahı sevmək iddiasına hansı cavab verilir?",
+        "options": [
+          "Elçiyə tabe olmaq",
+          "Yalnız gizli xərcləmək",
+          "Tənhalığa çəkilmək üçün ticarəti tərk etmək",
+          "Bilik axtarışında fasiləsiz səfər etmək"
+        ],
+        "info": "Sevgi Elçiyə tabeçiliklə əlaqələndirilir; ardınca Allahın sevgisi və günahların bağışlanması qeyd olunur."
+      },
+      "tr": {
+        "q": "3:31'de Allah'ı sevme iddiasına hangi karşılık verilir?",
+        "options": [
+          "Elçiye uymak",
+          "Yalnızca gizlice harcamak",
+          "İnzivaya çekilmek için ticareti bırakmak",
+          "Bilgi aramak için sürekli yolculuk etmek"
+        ],
+        "info": "Sevgi, Elçiye uymayla ilişkilendirilir; ardından Allah'ın sevgisi ve günahları bağışlaması anılır."
+      }
+    }
+  },
+  {
+    "id": "l2x_covenant_and_piety",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 3:76",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "sourceVerses": [
+      "3:76"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие качества соединены в 3:76?",
+        "options": [
+          "Верность обязательству и богобоязненность",
+          "Щедрость к путнику и снижение голоса",
+          "Ночное поклонение и примирение соседей",
+          "Точность весов и охрана взгляда"
+        ],
+        "info": "Аят выделяет исполнение обязательства вместе с богобоязненностью, а не внешние признаки положения."
+      },
+      "en": {
+        "q": "Which qualities are joined in 3:76?",
+        "options": [
+          "Keeping one's commitment and being God-conscious",
+          "Generosity to travellers and lowering one's voice",
+          "Night worship and reconciling neighbors",
+          "Accurate scales and guarding one's gaze"
+        ],
+        "info": "The verse highlights fulfilling a commitment together with God-consciousness, rather than outward signs of status."
+      },
+      "uz": {
+        "q": "3:76 da qaysi fazilatlar birlashtirilgan?",
+        "options": [
+          "Ahdga sadoqat va taqvo",
+          "Yo‘lovchiga saxiylik va ovozni pasaytirish",
+          "Tungi ibodat va qo‘shnilarni yarashtirish",
+          "Tarozining aniqligi va nigohni tiyish"
+        ],
+        "info": "Oyat mavqening tashqi belgilarini emas, majburiyatni bajarish bilan taqvoni alohida ko‘rsatadi."
+      },
+      "tg": {
+        "q": "Дар 3:76 кадом сифатҳо якҷо омадаанд?",
+        "options": [
+          "Вафо ба аҳд ва тақво",
+          "Саховат ба роҳгузар ва паст кардани овоз",
+          "Ибодати шабона ва оштӣ додани ҳамсояҳо",
+          "Дурустии тарозу ва нигоҳ доштани чашм"
+        ],
+        "info": "Оят иҷрои уҳдадориро бо тақво ҷудо мекунад, на нишонаҳои зоҳирии мақомро."
+      },
+      "kk": {
+        "q": "3:76-да қандай қасиеттер қатар аталады?",
+        "options": [
+          "Уәдеге беріктік және тақуалық",
+          "Жолаушыға жомарттық және дауысты бәсеңдету",
+          "Түнгі құлшылық және көршілерді татуластыру",
+          "Таразының дәлдігі және көзді сақтау"
+        ],
+        "info": "Аят мәртебенің сыртқы белгілерін емес, міндеттемені орындау мен тақуалықты ерекшелейді."
+      },
+      "ky": {
+        "q": "3:76да кайсы сапаттар бириктирилген?",
+        "options": [
+          "Убадага бекемдик жана такыбалык",
+          "Жолоочуга берешендик жана үндү басаңдатуу",
+          "Түнкү ибадат жана кошуналарды жараштыруу",
+          "Таразанын тактыгы жана көздү сактоо"
+        ],
+        "info": "Аят абалдын сырткы белгилерин эмес, милдеттенмени аткаруу менен такыбалыкты өзгөчө белгилейт."
+      },
+      "az": {
+        "q": "3:76-da hansı xüsusiyyətlər birləşdirilir?",
+        "options": [
+          "Əhdə sədaqət və təqva",
+          "Yolçuya səxavət və səsi alçaltmaq",
+          "Gecə ibadəti və qonşuları barışdırmaq",
+          "Tərəzinin düzgünlüyü və baxışı qorumaq"
+        ],
+        "info": "Ayə mövqenin zahiri əlamətlərini deyil, öhdəliyə vəfanı təqva ilə birlikdə vurğulayır."
+      },
+      "tr": {
+        "q": "3:76'da hangi özellikler birlikte anılır?",
+        "options": [
+          "Ahde bağlılık ve takvâ",
+          "Yolcuya cömertlik ve sesi alçaltmak",
+          "Gece ibadeti ve komşuları barıştırmak",
+          "Terazinin doğruluğu ve bakışı korumak"
+        ],
+        "info": "Ayet, statünün dış işaretlerini değil, yükümlülüğü yerine getirmeyi ve takvâyı öne çıkarır."
+      }
+    }
+  },
+  {
+    "id": "l2x_unity_rope",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 3:103",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "sourceVerses": [
+      "3:103"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Каким образом выражен общий призыв в 3:103?",
+        "options": [
+          "Всем держаться за вервь Аллаха и не разделяться",
+          "Примирять спорящих и восстанавливать справедливость",
+          "Советоваться перед решением и затем уповать",
+          "Содействовать благочестию и не помогать во вражде"
+        ],
+        "info": "Призыв к общему следованию сопровождается напоминанием, что прежние враги стали братьями по милости Аллаха."
+      },
+      "en": {
+        "q": "How is the collective appeal expressed in 3:103?",
+        "options": [
+          "Hold firmly together to Allah's rope and do not become divided",
+          "Reconcile those in dispute and restore justice",
+          "Consult before deciding and then place trust in Allah",
+          "Cooperate in righteousness and do not assist hostility"
+        ],
+        "info": "The call to hold together is accompanied by a reminder that former enemies became brothers through Allah's favor."
+      },
+      "uz": {
+        "q": "3:103 dagi umumiy chaqiriq qanday ifodalangan?",
+        "options": [
+          "Barchaning Allohning arqonini mahkam tutishi va bo‘linmasligi",
+          "Nizolashganlarni yarashtirish va adolatni tiklash",
+          "Qarordan oldin maslahatlashish, keyin tavakkul qilish",
+          "Yaxshilikda hamkorlik qilish va adovatda yordam bermaslik"
+        ],
+        "info": "Birgalikda ergashish chaqirig‘i ilgari dushman bo‘lganlar Allohning marhamati bilan birodar bo‘lganini eslatish bilan birga keladi."
+      },
+      "tg": {
+        "q": "Даъвати умумӣ дар 3:103 чӣ гуна баён шудааст?",
+        "options": [
+          "Ҳама ба ресмони Аллоҳ чанг зананд ва пароканда нашаванд",
+          "Баҳскунандагонро оштӣ додан ва адолатро барқарор кардан",
+          "Пеш аз қарор машварат карда, сипас таваккал кардан",
+          "Дар некӣ ҳамкорӣ кардан ва дар душманӣ ёрӣ надодан"
+        ],
+        "info": "Даъват ба пайравии якҷоя бо ёдоварии он ҳамроҳ аст, ки душманони пешин бо раҳмати Аллоҳ бародар шуданд."
+      },
+      "kk": {
+        "q": "3:103-тегі жалпы үндеу қалай білдірілген?",
+        "options": [
+          "Барлығы Алланың жібінен берік ұстап, бөлінбеу",
+          "Дауласқандарды татуластыру және әділдікті қалпына келтіру",
+          "Шешім алдында кеңесіп, содан кейін тәуекел ету",
+          "Ізгілікте жәрдемдесу және дұшпандыққа көмектеспеу"
+        ],
+        "info": "Бірге ұстануға үндеу бұрынғы жаулардың Алланың рақымымен бауыр болғанын еске салумен қатар беріледі."
+      },
+      "ky": {
+        "q": "3:103төгү жалпы чакырык кантип айтылган?",
+        "options": [
+          "Баары Аллахтын жибин бекем кармап, бөлүнбөшү",
+          "Талашкандарды жараштыруу жана адилеттикти калыбына келтирүү",
+          "Чечимден мурда кеңешип, андан соң тобокел кылуу",
+          "Жакшылыкта көмөктөшүү жана душмандыкта жардам бербөө"
+        ],
+        "info": "Бирге ээрчүүгө чакырык мурдагы душмандар Аллахтын ырайымы менен бир тууган болгонун эскертүү менен коштолот."
+      },
+      "az": {
+        "q": "3:103-də ümumi çağırış necə ifadə olunur?",
+        "options": [
+          "Hamılıqla Allahın ipindən möhkəm yapışmaq və parçalanmamaq",
+          "Mübahisə edənləri barışdırmaq və ədaləti bərpa etmək",
+          "Qərardan əvvəl məsləhətləşmək, sonra təvəkkül etmək",
+          "Yaxşılıqda əməkdaşlıq etmək və düşmənçilikdə kömək etməmək"
+        ],
+        "info": "Birgə tabeçilik çağırışı keçmiş düşmənlərin Allahın mərhəməti ilə qardaş olmasının xatırladılması ilə müşayiət olunur."
+      },
+      "tr": {
+        "q": "3:103'te ortak çağrı nasıl ifade edilir?",
+        "options": [
+          "Hep birlikte Allah'ın ipine sımsıkı sarılmak ve bölünmemek",
+          "Çekişenleri barıştırmak ve adaleti yeniden kurmak",
+          "Karardan önce danışmak, sonra tevekkül etmek",
+          "İyilikte yardımlaşmak ve düşmanlıkta yardım etmemek"
+        ],
+        "info": "Birlikte bağlılık çağrısına, önceden düşman olanların Allah'ın lütfuyla kardeş hâline geldiği hatırlatması eşlik eder."
+      }
+    }
+  },
+  {
+    "id": "l2x_community_call",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 3:104",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "sourceVerses": [
+      "3:104"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какая тройка действий описывает общину в 3:104?",
+        "options": [
+          "Звать к благу, велеть одобряемое и удерживать от дурного",
+          "Выстаивать молитву, давать закят и совершать хадж",
+          "Благодарить, помнить родителей и помогать путнику",
+          "Слушать чтение, хранить молчание и размышлять"
+        ],
+        "info": "Наставление объединяет положительный призыв и противодействие дурному; деятельность не сведена к одному осуждению."
+      },
+      "en": {
+        "q": "Which three actions describe the community in 3:104?",
+        "options": [
+          "Call to good, enjoin right and forbid wrong",
+          "Establish prayer, give zakat and perform pilgrimage",
+          "Give thanks, remember parents and help travellers",
+          "Listen to recitation, remain silent and reflect"
+        ],
+        "info": "The teaching combines a positive call with resisting wrong; the work is not reduced to condemnation alone."
+      },
+      "uz": {
+        "q": "3:104 da jamoani qaysi uch amal tasvirlaydi?",
+        "options": [
+          "Yaxshilikka chaqirish, ma’rufni buyurish va munkardan qaytarish",
+          "Namozni ado etish, zakot berish va haj qilish",
+          "Shukr qilish, ota-onani eslash va yo‘lovchiga yordam berish",
+          "Qiroatni tinglash, sukut saqlash va tafakkur qilish"
+        ],
+        "info": "Nasihat yaxshi narsaga chaqirish bilan yomonlikni to‘sishni birlashtiradi; faoliyat faqat qoralashdan iborat emas."
+      },
+      "tg": {
+        "q": "Дар 3:104 кадом се амал ҷамоатро тавсиф мекунанд?",
+        "options": [
+          "Ба хайр даъват кардан, ба маъруф амр намудан ва аз мункар боздоштан",
+          "Намоз барпо кардан, закот додан ва ҳаҷ анҷом додан",
+          "Шукр гуфтан, падару модарро ёд кардан ва ба роҳгузар ёрӣ додан",
+          "Қироатро шунидан, хомӯшӣ нигоҳ доштан ва тафаккур кардан"
+        ],
+        "info": "Дастур даъвати мусбатро бо пешгирии бадӣ муттаҳид мекунад; фаъолият танҳо сарзаниш нест."
+      },
+      "kk": {
+        "q": "3:104-те қауым қандай үш амалмен сипатталады?",
+        "options": [
+          "Жақсылыққа шақыру, дұрысқа бұйыру және жамандықтан тыю",
+          "Намаз оқу, зекет беру және қажылық жасау",
+          "Шүкір ету, ата-ананы еске алу және жолаушыға көмектесу",
+          "Оқылғанды тыңдау, үнсіз болу және ойлану"
+        ],
+        "info": "Өсиет жақсылыққа шақыруды жамандыққа қарсы тұрумен біріктіреді; қызмет тек айыптаумен шектелмейді."
+      },
+      "ky": {
+        "q": "3:104тө жамаат кайсы үч иш менен сүрөттөлөт?",
+        "options": [
+          "Жакшылыкка чакыруу, туура ишке буюруу жана жамандыктан тыюу",
+          "Намаз окуу, зекет берүү жана ажылык кылуу",
+          "Шүгүр кылуу, ата-энени эскерүү жана жолоочуга жардам берүү",
+          "Кыраатты угуу, унчукпоо жана ой жүгүртүү"
+        ],
+        "info": "Насаат жакшылыкка чакырууну жамандыкты токтотуу менен бириктирет; иш-аракет айыптоо менен гана чектелбейт."
+      },
+      "az": {
+        "q": "3:104-də icma hansı üç əməllə təsvir olunur?",
+        "options": [
+          "Xeyrə çağırmaq, yaxşılığı əmr etmək və pislikdən çəkindirmək",
+          "Namaz qılmaq, zəkat vermək və həcc etmək",
+          "Şükür etmək, valideynləri yad etmək və yolçuya yardım etmək",
+          "Qiraəti dinləmək, susmaq və düşünmək"
+        ],
+        "info": "Nəsihət müsbət çağırışı pisliyə qarşı durmaqla birləşdirir; fəaliyyət yalnız qınamaqdan ibarət deyil."
+      },
+      "tr": {
+        "q": "3:104'te topluluk hangi üç davranışla tanımlanır?",
+        "options": [
+          "Hayra çağırmak, iyiliği emretmek ve kötülükten alıkoymak",
+          "Namaz kılmak, zekât vermek ve hac yapmak",
+          "Şükretmek, anne babayı anmak ve yolcuya yardım etmek",
+          "Tilaveti dinlemek, susmak ve düşünmek"
+        ],
+        "info": "Öğüt, olumlu çağrıyı kötülüğü önlemeyle birleştirir; faaliyet yalnızca kınamaya indirgenmez."
+      }
+    }
+  },
+  {
+    "id": "l2x_hasten_forgiveness",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 3:133",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "sourceVerses": [
+      "3:133"
+    ],
+    "locales": {
+      "ru": {
+        "q": "К чему велено спешить в 3:133?",
+        "options": [
+          "К прощению Господа и Раю",
+          "К завершению путешествия и возвращению домой",
+          "К приобретению знаний и участию в совете",
+          "К подготовке припасов и выбору спутников"
+        ],
+        "info": "Образ устремления направлен к прощению и Раю, приготовленному для богобоязненных, а не к земному соперничеству."
+      },
+      "en": {
+        "q": "What are people urged to hasten toward in 3:133?",
+        "options": [
+          "Their Lord's forgiveness and Paradise",
+          "Completing a journey and returning home",
+          "Acquiring knowledge and joining consultation",
+          "Preparing provisions and choosing companions"
+        ],
+        "info": "The call to hasten concerns forgiveness and Paradise prepared for the God-conscious, rather than earthly rivalry."
+      },
+      "uz": {
+        "q": "3:133 da nimaga shoshilish buyurilgan?",
+        "options": [
+          "Robbning mag‘firati va jannatga",
+          "Safarni tugatish va uyga qaytishga",
+          "Bilim olish va kengashda qatnashishga",
+          "Ozuqa tayyorlash va hamroh tanlashga"
+        ],
+        "info": "Intilish dunyoviy raqobatga emas, mag‘firat va taqvodorlar uchun tayyorlangan jannatga qaratilgan."
+      },
+      "tg": {
+        "q": "Дар 3:133 ба сӯи чӣ шитофтан фармуда шудааст?",
+        "options": [
+          "Ба омурзиши Парвардигор ва Биҳишт",
+          "Ба анҷоми сафар ва бозгашт ба хона",
+          "Ба дониш гирифтан ва иштирок дар машварат",
+          "Ба омода кардани тӯша ва интихоби ҳамсафарон"
+        ],
+        "info": "Шитоб ба омурзиш ва Биҳиште нигаронида шудааст, ки барои парҳезгорон омода аст, на ба рақобати дунёӣ."
+      },
+      "kk": {
+        "q": "3:133-те неге асығу бұйырылған?",
+        "options": [
+          "Раббының кешіріміне және Жәннатқа",
+          "Сапарды аяқтап, үйге қайтуға",
+          "Білім алуға және кеңеске қатысуға",
+          "Азық дайындауға және серік таңдауға"
+        ],
+        "info": "Ұмтылыс дүниелік бәсекеге емес, кешірімге және тақуалар үшін әзірленген Жәннатқа бағытталған."
+      },
+      "ky": {
+        "q": "3:133тө эмнеге шашылуу буюрулган?",
+        "options": [
+          "Раббинин кечиримине жана Бейишке",
+          "Сапарды бүтүрүп, үйгө кайтууга",
+          "Билим алууга жана кеңешке катышууга",
+          "Азык даярдоого жана жолдош тандоого"
+        ],
+        "info": "Умтулуу дүйнөлүк атаандаштыкка эмес, кечиримге жана такыбалар үчүн даярдалган Бейишке багытталган."
+      },
+      "az": {
+        "q": "3:133-də nəyə tələsmək əmr olunur?",
+        "options": [
+          "Rəbbin bağışlamasına və Cənnətə",
+          "Səfəri bitirməyə və evə qayıtmağa",
+          "Bilik qazanmağa və məsləhətləşmədə iştiraka",
+          "Azuqə hazırlamağa və yol yoldaşı seçməyə"
+        ],
+        "info": "Tələsmək dünyəvi rəqabətə deyil, bağışlanmaya və təqvalılar üçün hazırlanmış Cənnətə yönəldilir."
+      },
+      "tr": {
+        "q": "3:133'te neye koşmak emredilir?",
+        "options": [
+          "Rabbin bağışlamasına ve cennete",
+          "Yolculuğu tamamlamaya ve eve dönmeye",
+          "Bilgi edinmeye ve danışmaya katılmaya",
+          "Azık hazırlamaya ve yol arkadaşı seçmeye"
+        ],
+        "info": "Yöneliş, dünyalık rekabete değil, bağışlanmaya ve takvâ sahipleri için hazırlanmış cennete doğrudur."
+      }
+    }
+  },
+  {
+    "id": "l2x_sin_response",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 3:135",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "sourceVerses": [
+      "3:135"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какая последовательность описывает ответ на грех в 3:135?",
+        "options": [
+          "Вспомнить Аллаха, просить прощения и сознательно не упорствовать",
+          "Примириться с людьми, дать милостыню и скрыть доброе дело",
+          "Выдержать испытание, поблагодарить и исполнить обещание",
+          "Выслушать наставление, проверить сообщение и удержать гнев"
+        ],
+        "info": "Здесь соединены поминание, просьба о прощении и отказ сознательно продолжать грех; это больше, чем словесное сожаление."
+      },
+      "en": {
+        "q": "Which sequence describes the response to sin in 3:135?",
+        "options": [
+          "Remember Allah, seek forgiveness, and not knowingly persist",
+          "Reconcile with people, give charity, and keep the good deed private",
+          "Endure a trial, give thanks, and fulfil a promise",
+          "Listen to advice, verify a report, and restrain anger"
+        ],
+        "info": "Remembrance, seeking forgiveness and not knowingly persisting are joined together; the response is more than verbal regret."
+      },
+      "uz": {
+        "q": "3:135 da gunohga javob qaysi ketma-ketlikda tasvirlangan?",
+        "options": [
+          "Allohni eslash, mag‘firat so‘rash va bila turib gunohda turib olmaslik",
+          "Odamlar bilan yarashish, sadaqa berish va yaxshi ishni yashirish",
+          "Sinovga chidash, shukr qilish va va’dani bajarish",
+          "Nasihatni tinglash, xabarni tekshirish va g‘azabni tiyish"
+        ],
+        "info": "Bu yerda zikr, mag‘firat so‘rash va gunohni bila turib davom ettirmaslik birlashadi; bu og‘zaki afsusdan ko‘proqdir."
+      },
+      "tg": {
+        "q": "Дар 3:135 посух ба гуноҳ бо кадом пайдарпайӣ тасвир шудааст?",
+        "options": [
+          "Аллоҳро ёд кардан, омурзиш хостан ва дидаву дониста исрор накардан",
+          "Бо мардум оштӣ кардан, садақа додан ва кори некро пинҳон доштан",
+          "Озмоишро таҳаммул кардан, шукр гуфтан ва ваъдаро иҷро намудан",
+          "Насиҳатро шунидан, хабарро санҷидан ва хашмро фурӯ бурдан"
+        ],
+        "info": "Дар ин ҷо ёдоварӣ, талаби омурзиш ва идома надодани огоҳонаи гуноҳ якҷо омадаанд; ин аз пушаймонии забонӣ бештар аст."
+      },
+      "kk": {
+        "q": "3:135-те күнәдан кейінгі әрекет қандай ретпен сипатталған?",
+        "options": [
+          "Алланы еске алу, кешірім сұрау және біле тұра күнәға табандамау",
+          "Адамдармен татуласу, садақа беру және ізгі істі жасыру",
+          "Сынаққа төзу, шүкір ету және уәдені орындау",
+          "Өсиетті тыңдау, хабарды тексеру және ашуды тежеу"
+        ],
+        "info": "Мұнда зікір, кешірім тілеу және күнәні саналы түрде жалғастырмау біріктірілген; бұл ауызша өкініштен артық."
+      },
+      "ky": {
+        "q": "3:135те күнөөгө жооп кайсы ыраат менен сүрөттөлгөн?",
+        "options": [
+          "Аллахты эстөө, кечирим суроо жана билип туруп күнөөнү улантпоо",
+          "Адамдар менен жарашуу, садака берүү жана жакшы ишти жашыруу",
+          "Сыноого чыдоо, шүгүр кылуу жана убаданы аткаруу",
+          "Насаатты угуу, кабарды текшерүү жана ачууну басуу"
+        ],
+        "info": "Мында зикир, кечирим суроо жана күнөөнү билип туруп улантпоого чечим бириккен; бул сөз жүзүндөгү өкүнүүдөн көбүрөөк."
+      },
+      "az": {
+        "q": "3:135-də günaha cavab hansı ardıcıllıqla təsvir olunur?",
+        "options": [
+          "Allahı yad etmək, bağışlanma diləmək və bilərək günahda israr etməmək",
+          "İnsanlarla barışmaq, sədəqə vermək və yaxşı əməli gizlətmək",
+          "Sınağa dözmək, şükür etmək və vədi yerinə yetirmək",
+          "Nəsihəti dinləmək, xəbəri yoxlamaq və qəzəbi saxlamaq"
+        ],
+        "info": "Burada zikr, bağışlanma istəyi və günahı bilərək davam etdirməmək birləşir; bu, sözlə peşmanlıqdan daha artıqdır."
+      },
+      "tr": {
+        "q": "3:135'te günah karşısındaki tutum hangi sırayla anlatılır?",
+        "options": [
+          "Allah'ı anmak, bağışlanma dilemek ve bile bile günahta ısrar etmemek",
+          "İnsanlarla barışmak, sadaka vermek ve iyi işi gizlemek",
+          "Sınava dayanmak, şükretmek ve sözü yerine getirmek",
+          "Öğüdü dinlemek, haberi doğrulamak ve öfkeyi tutmak"
+        ],
+        "info": "Burada zikir, bağışlanma isteği ve günahı bilerek sürdürmeme birleşir; bu, sözlü pişmanlıktan fazlasıdır."
+      }
+    }
+  },
+  {
+    "id": "l2x_do_not_lose_heart",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 3:139",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "sourceVerses": [
+      "3:139"
+    ],
+    "locales": {
+      "ru": {
+        "q": "С каким условием 3:139 соединяет ободрение не слабеть и не печалиться?",
+        "options": [
+          "Если вы верующие",
+          "Если вас численно больше",
+          "Если вы не понесли потерь",
+          "Если вы добились земной победы"
+        ],
+        "info": "Ободрение связано с верой и не обещает, что верующий вовсе не столкнётся с трудностями."
+      },
+      "en": {
+        "q": "With what condition does 3:139 join encouragement not to lose heart or grieve?",
+        "options": [
+          "If you are believers",
+          "If you are greater in number",
+          "If you have suffered no losses",
+          "If you have achieved earthly victory"
+        ],
+        "info": "The encouragement is tied to faith and does not promise that a believer will never face hardship."
+      },
+      "uz": {
+        "q": "3:139 da tushkunlikka tushmaslik va g‘am chekmaslikka da’vat qaysi shart bilan bog‘langan?",
+        "options": [
+          "Agar mo‘min bo‘lsangiz",
+          "Agar son jihatdan ko‘p bo‘lsangiz",
+          "Agar yo‘qotish ko‘rmagan bo‘lsangiz",
+          "Agar dunyoviy g‘alabaga erishgan bo‘lsangiz"
+        ],
+        "info": "Dalda imonga bog‘liq bo‘lib, mo‘min hech qanday qiyinchilikka duch kelmaydi degan va’dani bermaydi."
+      },
+      "tg": {
+        "q": "Дар 3:139 рӯҳбаландӣ ба суст нашудан ва андӯҳгин набудан бо кадом шарт пайваст аст?",
+        "options": [
+          "Агар мӯъмин бошед",
+          "Агар шумораатон бештар бошад",
+          "Агар талафот надида бошед",
+          "Агар ба пирӯзии дунёӣ расида бошед"
+        ],
+        "info": "Рӯҳбаландӣ ба имон вобаста аст ва ваъда намедиҳад, ки мӯъмин ҳеҷ мушкил намебинад."
+      },
+      "kk": {
+        "q": "3:139-да мойымау және қайғырмау туралы жігерлендіру қандай шартпен байланысқан?",
+        "options": [
+          "Егер мүмін болсаңдар",
+          "Егер саны жағынан басым болсаңдар",
+          "Егер ештеңе жоғалтпаған болсаңдар",
+          "Егер дүниелік жеңіске жетсеңдер"
+        ],
+        "info": "Жігерлендіру иманға байланысты және мүмін мүлде қиындық көрмейді деп уәде етпейді."
+      },
+      "ky": {
+        "q": "3:139да алсырабай, кайгырбай турууга үндөө кайсы шартка байланышкан?",
+        "options": [
+          "Эгер момун болсоңор",
+          "Эгер саны жагынан көп болсоңор",
+          "Эгер жоготууга учурабаган болсоңор",
+          "Эгер дүйнөлүк жеңишке жеткен болсоңор"
+        ],
+        "info": "Дем берүү ыйманга байланышкан жана момун эч кандай кыйынчылыкка кабылбайт деп убада кылбайт."
+      },
+      "az": {
+        "q": "3:139-da ruhdan düşməmək və kədərlənməmək təşviqi hansı şərtlə bağlıdır?",
+        "options": [
+          "Əgər möminsinizsə",
+          "Əgər sayca çoxsunuzsa",
+          "Əgər itki verməmisinizsə",
+          "Əgər dünyəvi qələbə qazanmısınızsa"
+        ],
+        "info": "Ruhlandırma imanla bağlıdır və möminin heç vaxt çətinliklə üzləşməyəcəyini vəd etmir."
+      },
+      "tr": {
+        "q": "3:139'da gevşememe ve üzülmeme teşviki hangi şarta bağlanır?",
+        "options": [
+          "Eğer mümin iseniz",
+          "Eğer sayıca daha çok iseniz",
+          "Eğer hiç kayıp vermediyseniz",
+          "Eğer dünyalık zafer kazandıysanız"
+        ],
+        "info": "Cesaretlendirme imanla bağlantılıdır; müminin hiç güçlük yaşamayacağını vaat etmez."
+      }
+    }
+  },
+  {
+    "id": "l2x_steadfast_companions",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 3:146",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "sourceVerses": [
+      "3:146"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какими тремя отрицаниями описана стойкость благочестивых людей в 3:146?",
+        "options": [
+          "Не пали духом, не ослабли и не покорились",
+          "Не стали спорить, не нарушили обещаний и не скрыли правду",
+          "Не расточали, не скупились и не попрекали",
+          "Не возвысили голос, не злословили и не подозревали"
+        ],
+        "info": "Их стойкость описана через сохранение решимости перед тем, что постигло их на пути Аллаха."
+      },
+      "en": {
+        "q": "Which three negatives describe the steadfast people in 3:146?",
+        "options": [
+          "They did not lose heart, weaken, or submit",
+          "They did not quarrel, break promises, or conceal the truth",
+          "They did not squander, withhold, or reproach",
+          "They did not raise their voices, backbite, or harbour suspicions"
+        ],
+        "info": "Their steadfastness is described as maintaining resolve through what befell them in Allah's cause."
+      },
+      "uz": {
+        "q": "3:146 da taqvodorlarning matonati qaysi uch inkor bilan tasvirlangan?",
+        "options": [
+          "Ruhan tushmadilar, zaiflashmadilar va bo‘ysunmadilar",
+          "Bahslashmadilar, va’dalarni buzmadilar va haqiqatni yashirmadilar",
+          "Isrof qilmadilar, baxillik qilmadilar va minnat qilmadilar",
+          "Ovoz ko‘tarmadilar, g‘iybat qilmadilar va gumon qilmadilar"
+        ],
+        "info": "Ularning matonati Alloh yo‘lida boshlariga tushgan narsalar qarshisida qat’iyatni saqlash orqali tasvirlanadi."
+      },
+      "tg": {
+        "q": "Дар 3:146 устувории парҳезгорон бо кадом се инкор тасвир шудааст?",
+        "options": [
+          "Рӯҳафтода нашуданд, суст нагаштанд ва таслим нашуданд",
+          "Баҳс накарданд, ваъдаҳоро нашикастанд ва ҳақиқатро пинҳон накарданд",
+          "Исроф накарданд, бахилӣ накарданд ва миннат нагузоштанд",
+          "Овоз баланд накарданд, ғайбат накарданд ва гумон набурданд"
+        ],
+        "info": "Устувории онҳо бо нигоҳ доштани азм дар баробари он чи дар роҳи Аллоҳ ба сарашон омад, тасвир мешавад."
+      },
+      "kk": {
+        "q": "3:146-да ізгі жандардың беріктігі қандай үш терістеу арқылы сипатталған?",
+        "options": [
+          "Жасымай, әлсіремей және мойынсұнбай тұрды",
+          "Даулыспады, уәдесін бұзбады және ақиқатты жасырмады",
+          "Ысырап етпеді, сараңдық жасамады және міндетсінбеді",
+          "Дауысын көтермеді, ғайбат айтпады және күдік келтірмеді"
+        ],
+        "info": "Олардың беріктігі Алла жолында бастарына түскен жағдайларға қарамастан жігерін сақтауы арқылы сипатталады."
+      },
+      "ky": {
+        "q": "3:146да такыба адамдардын туруктуулугу кайсы үч тануу менен сүрөттөлөт?",
+        "options": [
+          "Көңүлү чөккөн жок, алсырашкан жок жана моюн сунушкан жок",
+          "Талашкан жок, убадасын бузган жок жана чындыкты жашырган жок",
+          "Ысырап кылган жок, сараңдык кылган жок жана милдет кылган жок",
+          "Үнүн көтөргөн жок, ушактаган жок жана шектенген жок"
+        ],
+        "info": "Алардын туруктуулугу Аллах жолунда башына түшкөн нерселерге карабастан чечкиндүүлүгүн сакташы аркылуу сүрөттөлөт."
+      },
+      "az": {
+        "q": "3:146-da təqvalı insanların dözümü hansı üç inkarla təsvir edilir?",
+        "options": [
+          "Ruhdan düşmədilər, zəifləmədilər və boyun əymədilər",
+          "Mübahisə etmədilər, vədlərini pozmadılar və həqiqəti gizlətmədilər",
+          "İsraf etmədilər, xəsislik etmədilər və başa qaxmadılar",
+          "Səslərini ucaltmadılar, qeybət etmədilər və şübhələnmədilər"
+        ],
+        "info": "Onların dözümü Allah yolunda başlarına gələnlər qarşısında qətiyyətlərini saxlamaları ilə təsvir olunur."
+      },
+      "tr": {
+        "q": "3:146'da dindar insanların sebatı hangi üç olumsuz ifadeyle anlatılır?",
+        "options": [
+          "Yılmadılar, zayıflık göstermediler ve boyun eğmediler",
+          "Tartışmadılar, sözlerini bozmadılar ve gerçeği gizlemediler",
+          "İsraf etmediler, cimrilik yapmadılar ve başa kakmadılar",
+          "Seslerini yükseltmediler, gıybet etmediler ve zan beslemediler"
+        ],
+        "info": "Sebatları, Allah yolunda başlarına gelenler karşısında kararlılıklarını korumalarıyla anlatılır."
+      }
+    }
+  },
+  {
+    "id": "l2x_help_and_trust",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 3:160",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "sourceVerses": [
+      "3:160"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какой довод для упования приведён в 3:160?",
+        "options": [
+          "При помощи Аллаха никто не одолеет; без Него не найдётся помощника",
+          "После совета следует принять решение и положиться на Аллаха",
+          "Богобоязненному будет дан выход и пропитание оттуда, откуда он не ждёт",
+          "Тот, кто терпит и прощает, проявляет решимость"
+        ],
+        "info": "Аят сопоставляет помощь Аллаха и отсутствие помощника без Него, направляя упование верующих к Аллаху."
+      },
+      "en": {
+        "q": "What reason for placing trust in Allah is given in 3:160?",
+        "options": [
+          "With Allah's help none can overcome you; without Him no helper can be found",
+          "After consultation one should decide and place trust in Allah",
+          "The God-fearing will receive a way out and unexpected provision",
+          "One who is patient and forgives demonstrates resolve"
+        ],
+        "info": "The verse contrasts Allah's help with having no helper apart from Him, directing believers' trust toward Allah."
+      },
+      "uz": {
+        "q": "3:160 da tavakkul uchun qaysi dalil keltirilgan?",
+        "options": [
+          "Alloh yordam bersa, hech kim yenga olmaydi; Usiz yordamchi topilmaydi",
+          "Maslahatdan so‘ng qaror qilib, Allohga suyanish kerak",
+          "Taqvodorga chiqish yo‘li va kutmagan joyidan rizq beriladi",
+          "Sabr qilib kechirgan kishi qat’iyat ko‘rsatadi"
+        ],
+        "info": "Oyat Allohning yordamini Usiz yordamchi bo‘lmasligi bilan qiyoslab, mo‘minlarning tavakkulini Allohga yo‘naltiradi."
+      },
+      "tg": {
+        "q": "Дар 3:160 барои таваккал кадом далел оварда шудааст?",
+        "options": [
+          "Бо ёрии Аллоҳ ҳеҷ кас бар шумо ғолиб намешавад; бе Ӯ ёваре ёфт намешавад",
+          "Баъд аз машварат бояд қарор гирифта, ба Аллоҳ такя кард",
+          "Ба парҳезгор роҳи раҳоӣ ва ризқ аз ҷои ногаҳонӣ дода мешавад",
+          "Касе, ки сабр ва афв мекунад, азми қавӣ нишон медиҳад"
+        ],
+        "info": "Оят ёрии Аллоҳ ва набудани ёвар бе Ӯро муқоиса карда, таваккали мӯъминонро ба Аллоҳ равона месозад."
+      },
+      "kk": {
+        "q": "3:160-та тәуекел етуге қандай дәлел келтірілген?",
+        "options": [
+          "Алла көмектессе, ешкім жеңе алмайды; Онсыз көмекші табылмайды",
+          "Кеңестен кейін шешім қабылдап, Аллаға сүйену керек",
+          "Тақуаға шығар жол және күтпеген жерден ризық беріледі",
+          "Сабыр етіп, кешірген адам табандылық танытады"
+        ],
+        "info": "Аят Алланың көмегін Онсыз көмекші жоқтығымен салыстырып, мүміндердің тәуекелін Аллаға бағыттайды."
+      },
+      "ky": {
+        "q": "3:160та тобокел кылууга кандай далил келтирилген?",
+        "options": [
+          "Аллах жардам берсе, эч ким жеңе албайт; Ансыз жардамчы табылбайт",
+          "Кеңештен кийин чечим кабыл алып, Аллахка таянуу керек",
+          "Такыбага чыгуу жолу жана күтпөгөн жерден ырыскы берилет",
+          "Сабыр кылып кечирген адам чечкиндүүлүк көрсөтөт"
+        ],
+        "info": "Аят Аллахтын жардамын Ансыз жардамчы жоктугу менен салыштырып, момундардын тобокелин Аллахка багыттайт."
+      },
+      "az": {
+        "q": "3:160-da təvəkkül üçün hansı dəlil gətirilir?",
+        "options": [
+          "Allah yardım etsə, heç kəs qalib gələ bilməz; Onsuz köməkçi tapılmaz",
+          "Məsləhətləşmədən sonra qərar verib Allaha güvənmək lazımdır",
+          "Təqvalıya çıxış yolu və gözləmədiyi yerdən ruzi verilər",
+          "Səbir edib bağışlayan qətiyyət göstərir"
+        ],
+        "info": "Ayə Allahın yardımını Onsuz köməkçi olmaması ilə qarşılaşdıraraq möminlərin təvəkkülünü Allaha yönəldir."
+      },
+      "tr": {
+        "q": "3:160'ta tevekkül için hangi gerekçe sunulur?",
+        "options": [
+          "Allah yardım ederse kimse yenemez; O'nsuz yardımcı bulunmaz",
+          "Danıştıktan sonra karar verip Allah'a güvenmek gerekir",
+          "Takvâ sahibine çıkış yolu ve ummadığı yerden rızık verilir",
+          "Sabredip bağışlayan kişi kararlılık gösterir"
+        ],
+        "info": "Ayet, Allah'ın yardımı ile O'ndan başka yardımcı bulunmamasını karşılaştırarak müminlerin güvenini Allah'a yöneltir."
+      }
+    }
+  },
+  {
+    "id": "l2x_hoarding_collar",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 3:180",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "sourceVerses": [
+      "3:180"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какой образ передаёт последствие скупости в 3:180?",
+        "options": [
+          "Удержанное имущество станет бременем на шее",
+          "Удержанное станет рассеянной пылью",
+          "Удержанное уподобится пене на воде",
+          "Удержанное станет садом на возвышенности"
+        ],
+        "info": "Аят опровергает мысль, что скупость полезна владельцу; образ шейного бремени показывает обратный итог."
+      },
+      "en": {
+        "q": "What image conveys the consequence of miserliness in 3:180?",
+        "options": [
+          "What was withheld becomes a burden around the neck",
+          "What was withheld becomes scattered dust",
+          "What was withheld is likened to foam on water",
+          "What was withheld becomes a garden on high ground"
+        ],
+        "info": "The verse rejects the idea that miserliness benefits its owner; the burden around the neck illustrates the opposite outcome."
+      },
+      "uz": {
+        "q": "3:180 da baxillikning oqibati qaysi obraz bilan ifodalanadi?",
+        "options": [
+          "Qizg‘angan mol bo‘yindagi yuk bo‘ladi",
+          "Qizg‘angan narsa sochilgan chang bo‘ladi",
+          "Qizg‘angan narsa suvdagi ko‘pikka o‘xshatiladi",
+          "Qizg‘angan narsa tepalikdagi bog‘ bo‘ladi"
+        ],
+        "info": "Oyat baxillik egasiga foyda degan fikrni rad etadi; bo‘yindagi yuk obrazi teskari oqibatni ko‘rsatadi."
+      },
+      "tg": {
+        "q": "Дар 3:180 оқибати бахилӣ бо кадом тасвир баён мешавад?",
+        "options": [
+          "Моли дареғдошта бори гардан мешавад",
+          "Чизи дареғдошта хоки пароканда мешавад",
+          "Чизи дареғдошта ба кафки рӯи об монанд мешавад",
+          "Чизи дареғдошта боғе дар баландӣ мешавад"
+        ],
+        "info": "Оят фикри фоидаовар будани бахилиро рад мекунад; бори гардан натиҷаи баръаксро нишон медиҳад."
+      },
+      "kk": {
+        "q": "3:180-де сараңдықтың салдары қандай бейнемен берілген?",
+        "options": [
+          "Қимай ұстаған мүлік мойынға жүк болады",
+          "Қимай ұстағаны шашылған тозаңға айналады",
+          "Қимай ұстағаны су бетіндегі көбікке ұқсайды",
+          "Қимай ұстағаны биіктегі баққа айналады"
+        ],
+        "info": "Аят сараңдық иесіне пайдалы деген ойды теріске шығарады; мойындағы жүк кері нәтижені көрсетеді."
+      },
+      "ky": {
+        "q": "3:180де сараңдыктын кесепети кайсы элес менен берилген?",
+        "options": [
+          "Аяп кармаган мүлк моюнга жүк болот",
+          "Аяп кармаганы чачылган чаңга айланат",
+          "Аяп кармаганы суудагы көбүккө окшотулат",
+          "Аяп кармаганы бийиктеги бакка айланат"
+        ],
+        "info": "Аят сараңдык ээсине пайдалуу деген ойду четке кагат; моюндагы жүк тескери жыйынтыкты көрсөтөт."
+      },
+      "az": {
+        "q": "3:180-də xəsisliyin nəticəsi hansı təsvirlə verilir?",
+        "options": [
+          "Saxlanılan mal boyunda yükə çevriləcək",
+          "Saxlanılan şey səpələnmiş toza çevriləcək",
+          "Saxlanılan şey su üzərindəki köpüyə bənzədiləcək",
+          "Saxlanılan şey yüksəklikdəki bağa çevriləcək"
+        ],
+        "info": "Ayə xəsisliyin sahibinə faydalı olması fikrini rədd edir; boyundakı yük əks nəticəni göstərir."
+      },
+      "tr": {
+        "q": "3:180'de cimriliğin sonucu hangi imgeyle anlatılır?",
+        "options": [
+          "Esirgenen mal boyunda bir yük olacaktır",
+          "Esirgenen şey dağılmış toza dönüşecektir",
+          "Esirgenen şey su üzerindeki köpüğe benzetilecektir",
+          "Esirgenen şey yüksek yerde bir bahçeye dönüşecektir"
+        ],
+        "info": "Ayet, cimriliğin sahibine yararlı olduğu düşüncesini reddeder; boyundaki yük bunun tersini gösterir."
+      }
+    }
+  },
+  {
+    "id": "l2x_real_success",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 3:185",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "sourceVerses": [
+      "3:185"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какой итог прямо назван успехом после напоминания о смерти в 3:185?",
+        "options": [
+          "Быть удалённым от Огня и введённым в Рай",
+          "Очистить свою душу",
+          "Избавиться от собственной скупости",
+          "Принести на Суд здоровое сердце"
+        ],
+        "info": "После напоминания о смерти аят определяет окончательный успех через спасение и Рай, а земное наслаждение называет обманчивым."
+      },
+      "en": {
+        "q": "What outcome is explicitly called success after the reminder of death in 3:185?",
+        "options": [
+          "Being kept away from the Fire and admitted into Paradise",
+          "Purifying one's soul",
+          "Being protected from one's own greed",
+          "Coming to judgment with a sound heart"
+        ],
+        "info": "After reminding people of death, the verse defines final success through salvation and Paradise, describing worldly enjoyment as deceptive."
+      },
+      "uz": {
+        "q": "3:185 da o‘lim eslatilgach, qaysi natija bevosita muvaffaqiyat deb ataladi?",
+        "options": [
+          "Do‘zaxdan uzoqlashtirilib, jannatga kiritilish",
+          "O‘z nafsini poklash",
+          "O‘z baxilligidan xalos bo‘lish",
+          "Hisob kuniga sog‘lom qalb bilan kelish"
+        ],
+        "info": "O‘lim eslatilgach, oyat yakuniy muvaffaqiyatni najot va jannat orqali belgilaydi, dunyo rohatini esa aldamchi deb ataydi."
+      },
+      "tg": {
+        "q": "Пас аз ёдоварии марг дар 3:185 кадом натиҷа бевосита комёбӣ номида шудааст?",
+        "options": [
+          "Аз Оташ дур гардонида шудан ва ба Биҳишт даромадан",
+          "Нафси худро пок кардан",
+          "Аз бахилии худ раҳо шудан",
+          "Бо дили солим ба Доварӣ омадан"
+        ],
+        "info": "Пас аз ёдоварии марг оят комёбии ниҳоиро бо наҷот ва Биҳишт муайян карда, баҳраи дунёро фиребанда меномад."
+      },
+      "kk": {
+        "q": "3:185-те өлім еске салынғаннан кейін қандай нәтиже нақты жетістік деп аталады?",
+        "options": [
+          "Оттан алыстатылып, Жәннатқа кіргізілу",
+          "Өз жанын тазарту",
+          "Өз сараңдығынан арылу",
+          "Есеп күніне таза жүрекпен келу"
+        ],
+        "info": "Өлімді еске салғаннан кейін аят түпкі жетістікті құтқарылу мен Жәннат арқылы анықтайды, ал дүниелік ләззатты алдамшы деп атайды."
+      },
+      "ky": {
+        "q": "3:185те өлүм эске салынгандан кийин кайсы жыйынтык түздөн-түз ийгилик деп аталат?",
+        "options": [
+          "Оттон алыстатылып, Бейишке киргизилүү",
+          "Өз жанын тазалоо",
+          "Өз сараңдыгынан арылуу",
+          "Эсеп күнүнө таза жүрөк менен келүү"
+        ],
+        "info": "Өлүм эске салынгандан кийин аят акыркы ийгиликти кутулуу жана Бейиш аркылуу аныктап, дүйнөлүк ырахатты алдамчы деп атайт."
+      },
+      "az": {
+        "q": "3:185-də ölüm xatırladıldıqdan sonra hansı nəticə birbaşa uğur adlandırılır?",
+        "options": [
+          "Oddan uzaqlaşdırılmaq və Cənnətə daxil edilmək",
+          "Öz nəfsini təmizləmək",
+          "Öz xəsisliyindən qurtulmaq",
+          "Haqq-hesaba sağlam qəlblə gəlmək"
+        ],
+        "info": "Ölümü xatırlatdıqdan sonra ayə son uğuru qurtuluş və Cənnətlə müəyyən edir, dünya zövqünü isə aldadıcı adlandırır."
+      },
+      "tr": {
+        "q": "3:185'te ölüm hatırlatıldıktan sonra hangi sonuç açıkça kurtuluş sayılır?",
+        "options": [
+          "Ateşten uzaklaştırılıp cennete konulmak",
+          "Nefsini arındırmak",
+          "Kendi cimriliğinden kurtulmak",
+          "Hesaba temiz bir kalple gelmek"
+        ],
+        "info": "Ölümü hatırlattıktan sonra ayet, nihai başarıyı kurtuluş ve cennetle tanımlar; dünya zevkini ise aldatıcı olarak niteler."
+      }
+    }
+  },
+  {
+    "id": "l2x_remembrance_reflection",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 3:191",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "sourceVerses": [
+      "3:191"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие два занятия соединены в описании людей в 3:191?",
+        "options": [
+          "Поминание в разных положениях и размышление о сотворении небес и земли",
+          "Ночное поклонение и расходование из дарованного",
+          "Слушание лучшего слова и следование ему",
+          "Чтение Писания и обучение других мудрости"
+        ],
+        "info": "Поминание стоя, сидя и лёжа соседствует с размышлением о небесах и земле и признанием осмысленности творения."
+      },
+      "en": {
+        "q": "Which two activities are combined in the description of people in 3:191?",
+        "options": [
+          "Remembering Allah in different postures and reflecting on the creation of the heavens and earth",
+          "Worshipping at night and spending from what has been provided",
+          "Listening to what is said and following the best of it",
+          "Reciting Scripture and teaching wisdom to others"
+        ],
+        "info": "Remembering while standing, sitting and lying down is joined with reflection on the heavens and earth and recognition of creation's purpose."
+      },
+      "uz": {
+        "q": "3:191 da tasvirlangan odamlar qaysi ikki ishni birlashtiradi?",
+        "options": [
+          "Turli holatlarda zikr qilish va osmonlaru yer yaratilishi haqida tafakkur",
+          "Tungi ibodat va berilgan rizqdan sarflash",
+          "Eng yaxshi so‘zni tinglash va unga ergashish",
+          "Kitobni o‘qish va boshqalarga hikmat o‘rgatish"
+        ],
+        "info": "Tik turgan, o‘tirgan va yotgan holda zikr qilish osmonlaru yer haqida tafakkur va yaratilishning ma’noli ekanini e’tirof etish bilan yonma-yon keladi."
+      },
+      "tg": {
+        "q": "Дар тавсифи одамон дар 3:191 кадом ду машғулият якҷо омадааст?",
+        "options": [
+          "Ёдоварӣ дар ҳолатҳои гуногун ва тафаккур дар офариниши осмонҳою замин",
+          "Ибодати шабона ва харҷ аз ризқи додашуда",
+          "Шунидани беҳтарин сухан ва пайравӣ ба он",
+          "Хондани Китоб ва ба дигарон омӯхтани ҳикмат"
+        ],
+        "info": "Ёд кардан дар ҳолати истода, нишаста ва хобида бо тафаккур дар осмонҳою замин ва эътирофи ҳадафи офариниш якҷо омадааст."
+      },
+      "kk": {
+        "q": "3:191-де адамдардың сипаттамасында қандай екі іс қатар берілген?",
+        "options": [
+          "Түрлі қалыпта зікір ету және аспандар мен жердің жаратылуы туралы ойлану",
+          "Түнгі құлшылық және берілгеннен жұмсау",
+          "Ең жақсы сөзді тыңдап, соған еру",
+          "Кітапты оқу және өзгелерге даналық үйрету"
+        ],
+        "info": "Тұрып, отырып және жатып зікір ету аспандар мен жер туралы ойланумен әрі жаратылыстың мағыналы екенін мойындаумен қатар келеді."
+      },
+      "ky": {
+        "q": "3:191де адамдарды сүрөттөөдө кайсы эки иш бириктирилген?",
+        "options": [
+          "Ар түрдүү абалда зикир кылуу жана асмандар менен жердин жаралышы жөнүндө ой жүгүртүү",
+          "Түнкү ибадат жана берилгенден сарптоо",
+          "Эң жакшы сөздү угуу жана аны ээрчүү",
+          "Китепти окуу жана башкаларга даанышмандык үйрөтүү"
+        ],
+        "info": "Туруп, отуруп жана жатып зикир кылуу асмандар менен жер тууралуу ой жүгүртүү жана жаратуунун маанисин таануу менен катар келет."
+      },
+      "az": {
+        "q": "3:191-də insanların təsvirində hansı iki məşğuliyyət birləşdirilir?",
+        "options": [
+          "Müxtəlif vəziyyətlərdə zikr və göylərin, yerin yaradılması barədə düşünmək",
+          "Gecə ibadəti və veriləndən xərcləmək",
+          "Ən yaxşı sözü dinləmək və ona tabe olmaq",
+          "Kitabı oxumaq və başqalarına hikmət öyrətmək"
+        ],
+        "info": "Ayaq üstə, oturaraq və uzanaraq zikr etmək göylər və yer haqqında düşüncə, yaradılışın məqsədini qəbul etmə ilə yanaşı gəlir."
+      },
+      "tr": {
+        "q": "3:191'de insanların anlatımında hangi iki uğraş birleştirilir?",
+        "options": [
+          "Farklı hâllerde zikir ve göklerle yerin yaratılışı üzerine düşünmek",
+          "Gece ibadeti ve verilenden harcamak",
+          "En güzel sözü dinlemek ve ona uymak",
+          "Kitabı okumak ve başkalarına hikmet öğretmek"
+        ],
+        "info": "Ayakta, otururken ve yatarken anma; göklerle yer üzerine düşünme ve yaratılışın amaçlı olduğunu kabul etmeyle birlikte anılır."
+      }
+    }
+  },
+  {
+    "id": "l2x_patient_perseverance",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 3:200",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "sourceVerses": [
+      "3:200"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие наставления завершают суру в 3:200?",
+        "options": [
+          "Терпение, стойкость, готовность и богобоязненность",
+          "Молитва, закят, пост и паломничество",
+          "Поминание, слушание, молчание и размышление",
+          "Прощение, гостеприимство, торговля и путешествие"
+        ],
+        "info": "Заключительный призыв объединяет терпение с активной стойкостью и богобоязненностью, а не с бездействием."
+      },
+      "en": {
+        "q": "Which instructions close the surah in 3:200?",
+        "options": [
+          "Patience, perseverance, readiness and God-consciousness",
+          "Prayer, zakat, fasting and pilgrimage",
+          "Remembrance, listening, silence and reflection",
+          "Forgiveness, hospitality, trade and travel"
+        ],
+        "info": "The closing call joins patience with active perseverance and God-consciousness rather than inactivity."
+      },
+      "uz": {
+        "q": "3:200 da surani qaysi nasihatlar yakunlaydi?",
+        "options": [
+          "Sabr, matonat, shaylik va taqvo",
+          "Namoz, zakot, ro‘za va haj",
+          "Zikr, tinglash, sukut va tafakkur",
+          "Kechirish, mehmondo‘stlik, savdo va safar"
+        ],
+        "info": "Yakuniy chaqiriq sabrni harakatsizlik bilan emas, faol matonat va taqvo bilan birlashtiradi."
+      },
+      "tg": {
+        "q": "Дар 3:200 кадом насиҳатҳо сураро анҷом медиҳанд?",
+        "options": [
+          "Сабр, устуворӣ, омодагӣ ва тақво",
+          "Намоз, закот, рӯза ва ҳаҷ",
+          "Ёдоварӣ, шунидан, хомӯшӣ ва тафаккур",
+          "Афв, меҳмоннавозӣ, тиҷорат ва сафар"
+        ],
+        "info": "Даъвати хотимавӣ сабрро бо устувории фаъол ва тақво муттаҳид мекунад, на бо беамалӣ."
+      },
+      "kk": {
+        "q": "3:200-де сүре қандай өсиеттермен аяқталады?",
+        "options": [
+          "Сабыр, табандылық, дайындық және тақуалық",
+          "Намаз, зекет, ораза және қажылық",
+          "Зікір, тыңдау, үнсіздік және ойлану",
+          "Кешіру, қонақжайлық, сауда және сапар"
+        ],
+        "info": "Қорытынды үндеу сабырды әрекетсіздікпен емес, белсенді табандылықпен және тақуалықпен біріктіреді."
+      },
+      "ky": {
+        "q": "3:200дө сүрө кайсы насааттар менен аяктайт?",
+        "options": [
+          "Сабыр, туруктуулук, даярдык жана такыбалык",
+          "Намаз, зекет, орозо жана ажылык",
+          "Зикир, угуу, унчукпоо жана ой жүгүртүү",
+          "Кечирүү, меймандостук, соода жана сапар"
+        ],
+        "info": "Акыркы чакырык сабырды аракетсиздик менен эмес, жигердүү туруктуулук жана такыбалык менен бириктирет."
+      },
+      "az": {
+        "q": "3:200-də surə hansı nəsihətlərlə yekunlaşır?",
+        "options": [
+          "Səbir, dözümlülük, hazırlıq və təqva",
+          "Namaz, zəkat, oruc və həcc",
+          "Zikr, dinləmə, sükut və düşüncə",
+          "Bağışlama, qonaqpərvərlik, ticarət və səfər"
+        ],
+        "info": "Son çağırış səbri fəaliyyətsizliklə deyil, fəal dözüm və təqva ilə birləşdirir."
+      },
+      "tr": {
+        "q": "3:200'de sûre hangi öğütlerle tamamlanır?",
+        "options": [
+          "Sabır, sebat, hazırlıklı olma ve takvâ",
+          "Namaz, zekât, oruç ve hac",
+          "Zikir, dinleme, sessizlik ve düşünme",
+          "Bağışlama, misafirperverlik, ticaret ve yolculuk"
+        ],
+        "info": "Son çağrı sabrı hareketsizlikle değil, etkin sebat ve takvâyla birleştirir."
+      }
+    }
+  },
+  {
+    "id": "l2x_not_covet_shares",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 4:32",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "sourceVerses": [
+      "4:32"
+    ],
+    "locales": {
+      "ru": {
+        "q": "К какому действию направляет 4:32 после запрета желать чужих преимуществ?",
+        "options": [
+          "Просить Аллаха о Его щедрости",
+          "Вспоминать блага, данные своему народу",
+          "Советоваться о распределении общего имущества",
+          "Отдавать нуждающемуся лучшее из любимого"
+        ],
+        "info": "Аят напоминает о доле мужчин и женщин в приобретённом ими и направляет просьбу к щедрости Аллаха."
+      },
+      "en": {
+        "q": "What action does 4:32 direct people towards after forbidding desire for others' advantages?",
+        "options": [
+          "Asking Allah for His bounty",
+          "Remembering the blessings given to one's people",
+          "Consulting about distributing shared property",
+          "Giving a needy person the best of what one loves"
+        ],
+        "info": "The verse mentions men's and women's share in what they earn and directs requests toward Allah's bounty."
+      },
+      "uz": {
+        "q": "4:32 boshqalarning ustunliklarini havas bilan istashni taqiqlagach, qaysi amalga yo‘naltiradi?",
+        "options": [
+          "Allohdan Uning fazlini so‘rash",
+          "O‘z xalqiga berilgan ne’matlarni eslash",
+          "Umumiy molni taqsimlash haqida maslahatlashish",
+          "Muhtojga suyukli narsalarning eng yaxshisini berish"
+        ],
+        "info": "Oyat erkak va ayollarning qilgan ishlaridan ulushi borligini eslatib, so‘rovni Allohning fazliga yo‘naltiradi."
+      },
+      "tg": {
+        "q": "4:32 пас аз манъи орзу кардани бартариҳои дигарон ба кадом амал равона мекунад?",
+        "options": [
+          "Аз Аллоҳ фазли Ӯро пурсидан",
+          "Неъматҳои ба қавми худ додашударо ёд кардан",
+          "Дар бораи тақсими моли умумӣ машварат намудан",
+          "Ба ниёзманд беҳтарини чизи дӯстдоштаро додан"
+        ],
+        "info": "Оят ҳиссаи мардон ва занонро аз он чи ба даст меоранд, ёдовар шуда, дархостро ба фазли Аллоҳ равона мекунад."
+      },
+      "kk": {
+        "q": "4:32 өзгелердің артықшылығына қызығуға тыйым салғаннан кейін қандай іске бағыттайды?",
+        "options": [
+          "Алладан Оның кеңшілігін сұрауға",
+          "Өз халқына берілген игіліктерді еске алуға",
+          "Ортақ мүлікті бөлу туралы кеңесуге",
+          "Мұқтажға жақсы көретінінің ең жақсысын беруге"
+        ],
+        "info": "Аят ерлер мен әйелдердің тапқанынан үлесі барын еске салып, тілек-өтінішті Алланың кеңшілігіне бағыттайды."
+      },
+      "ky": {
+        "q": "4:32 башкалардын артыкчылыгын эңсөөгө тыюу салгандан кийин кайсы ишке багыттайт?",
+        "options": [
+          "Аллахтан Анын берешендигин суроого",
+          "Өз элине берилген жакшылыктарды эстөөгө",
+          "Жалпы мүлктү бөлүштүрүү жөнүндө кеңешүүгө",
+          "Муктажга жакшы көргөн нерсенин эң жакшысын берүүгө"
+        ],
+        "info": "Аят эркектер менен аялдардын тапканынан үлүшү бар экенин эскертип, тилекти Аллахтын берешендигине багыттайт."
+      },
+      "az": {
+        "q": "4:32 başqalarının üstünlüklərini arzulamağı qadağan etdikdən sonra hansı əmələ yönəldir?",
+        "options": [
+          "Allahdan Onun lütfünü istəməyə",
+          "Öz xalqına verilmiş nemətləri xatırlamağa",
+          "Ümumi malın bölünməsi barədə məsləhətləşməyə",
+          "Sevilən şeyin ən yaxşısını ehtiyaclıya verməyə"
+        ],
+        "info": "Ayə kişilərlə qadınların qazandıqlarından payı olduğunu xatırladaraq istəyi Allahın lütfünə yönəldir."
+      },
+      "tr": {
+        "q": "4:32, başkalarının üstünlüklerine göz dikmeyi yasakladıktan sonra hangi davranışa yöneltir?",
+        "options": [
+          "Allah'tan O'nun lütfunu istemeye",
+          "Kendi halkına verilen nimetleri anmaya",
+          "Ortak malın paylaşımı üzerine danışmaya",
+          "Sevilen şeylerin en iyisini ihtiyaç sahibine vermeye"
+        ],
+        "info": "Ayet, erkeklerin ve kadınların kazandıklarından payı olduğunu hatırlatır ve istekleri Allah'ın lütfuna yöneltir."
+      }
+    }
+  },
+  {
+    "id": "l2x_equal_reward",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 33:35",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/33",
+    "sourceVerses": [
+      "33:35"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Чем завершается перечисление верующих мужчин и женщин в 33:35?",
+        "options": [
+          "Обещанием прощения и великой награды",
+          "Обещанием двойной доли милости и света для пути",
+          "Обещанием выхода из затруднения и неожиданного пропитания",
+          "Обещанием доброй жизни и воздаяния за лучшее из дел"
+        ],
+        "info": "Аят последовательно называет мужчин и женщин с качествами веры и благочестия и завершает общим обещанием."
+      },
+      "en": {
+        "q": "How does the list of believing men and women in 33:35 conclude?",
+        "options": [
+          "With a promise of forgiveness and a great reward",
+          "With a promise of a double share of mercy and a light to walk by",
+          "With a promise of a way out and unexpected provision",
+          "With a promise of a good life and reward for the best of deeds"
+        ],
+        "info": "The verse repeatedly names men and women with qualities of faith and devotion, ending with a shared promise."
+      },
+      "uz": {
+        "q": "33:35 da mo‘min erkak va ayollar sanalgach, oyat nima bilan tugaydi?",
+        "options": [
+          "Mag‘firat va ulug‘ ajr va’dasi bilan",
+          "Rahmatdan ikki hissa va yo‘lni yorituvchi nur va’dasi bilan",
+          "Qiyinchilikdan chiqish va kutilmagan rizq va’dasi bilan",
+          "Yaxshi hayot va eng yaxshi amallariga ko‘ra mukofot va’dasi bilan"
+        ],
+        "info": "Oyat imon va taqvo sifatlariga ega erkak hamda ayollarni ketma-ket sanab, umumiy va’da bilan yakunlanadi."
+      },
+      "tg": {
+        "q": "Дар 33:35 номбар кардани мардону занони мӯъмин бо чӣ анҷом меёбад?",
+        "options": [
+          "Бо ваъдаи омурзиш ва подоши бузург",
+          "Бо ваъдаи ду ҳиссаи раҳмат ва нури роҳ",
+          "Бо ваъдаи раҳоӣ аз тангӣ ва ризқи ногаҳонӣ",
+          "Бо ваъдаи зиндагии хуб ва подоши беҳтарин амалҳо"
+        ],
+        "info": "Оят мардону занони дорои сифатҳои имон ва парҳезгориро пайдарпай номбар карда, бо ваъдаи умумӣ хотима меёбад."
+      },
+      "kk": {
+        "q": "33:35-тегі мүмін ерлер мен әйелдерді тізу немен аяқталады?",
+        "options": [
+          "Кешірім және ұлы сый уәдесімен",
+          "Рақымның екі еселік үлесі және жолға жарық уәдесімен",
+          "Қиындықтан шығу және күтпеген ризық уәдесімен",
+          "Жақсы өмір және ең жақсы амалдарына сай сый уәдесімен"
+        ],
+        "info": "Аят иман мен ізгілік қасиеттері бар ерлер мен әйелдерді кезекпен атап, ортақ уәдемен аяқталады."
+      },
+      "ky": {
+        "q": "33:35теги момун эркектер менен аялдарды саноо эмне менен аяктайт?",
+        "options": [
+          "Кечирим жана улуу сыйлык убадасы менен",
+          "Ырайымдан эки үлүш жана жолду жарыткан нур убадасы менен",
+          "Кыйынчылыктан чыгуу жана күтүлбөгөн ырыскы убадасы менен",
+          "Жакшы жашоо жана эң жакшы амалдарга жараша сыйлык убадасы менен"
+        ],
+        "info": "Аят ыйман жана такыбалык сапаттары бар эркектер менен аялдарды ирети менен атап, жалпы убада менен аяктайт."
+      },
+      "az": {
+        "q": "33:35-də mömin kişi və qadınların sadalanması nə ilə bitir?",
+        "options": [
+          "Bağışlanma və böyük mükafat vədi ilə",
+          "İkiqat mərhəmət payı və yol üçün nur vədi ilə",
+          "Çətinlikdən çıxış və gözlənilməz ruzi vədi ilə",
+          "Gözəl həyat və ən yaxşı əməllərə görə əvəz vədi ilə"
+        ],
+        "info": "Ayə iman və təqva xüsusiyyətləri olan kişi və qadınları ardıcıl sadalayaraq ümumi vədlə bitir."
+      },
+      "tr": {
+        "q": "33:35'te mümin erkeklerle kadınların sayılması neyle son bulur?",
+        "options": [
+          "Bağışlanma ve büyük ödül vaadiyle",
+          "İki kat rahmet payı ve yolu aydınlatan nur vaadiyle",
+          "Sıkıntıdan çıkış ve beklenmedik rızık vaadiyle",
+          "Güzel hayat ve en iyi amellere göre karşılık vaadiyle"
+        ],
+        "info": "Ayet, iman ve bağlılık nitelikleri taşıyan erkeklerle kadınları art arda sayar ve ortak bir vaatle biter."
+      }
+    }
+  },
+  {
+    "id": "l2x_conceal_bounty",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 4:37",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "sourceVerses": [
+      "4:37"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие три поступка перечислены вместе в 4:37?",
+        "options": [
+          "Скупиться, побуждать к скупости и скрывать дарованное благо",
+          "Расточать, попрекать получателя и причинять ему обиду",
+          "Присваивать доверенное, скрывать свидетельство и нарушать договор",
+          "Брать лишнее при взвешивании, обманывать в мере и задерживать плату"
+        ],
+        "info": "Порицается не только личная скупость, но и её распространение среди людей, вместе с сокрытием дарованного Аллахом."
+      },
+      "en": {
+        "q": "Which three behaviours are listed together in 4:37?",
+        "options": [
+          "Being stingy, urging stinginess, and concealing bestowed bounty",
+          "Squandering, reminding recipients of gifts, and hurting them",
+          "Taking entrusted property, hiding testimony, and breaking agreements",
+          "Taking extra when weighing, cheating in measure, and delaying payment"
+        ],
+        "info": "The rebuke concerns not only personal miserliness but encouraging it in others and concealing what Allah has granted."
+      },
+      "uz": {
+        "q": "4:37 da qaysi uch xulq birga sanaladi?",
+        "options": [
+          "Baxillik qilish, baxillikka undash va berilgan ne’matni yashirish",
+          "Isrof qilish, oluvchiga minnat qilish va ozor berish",
+          "Omonatni o‘zlashtirish, guvohlikni yashirish va ahdni buzish",
+          "Tortishda ortiq olish, o‘lchovda aldash va haqni kechiktirish"
+        ],
+        "info": "Faqat shaxsiy baxillik emas, balki uni odamlar orasida targ‘ib qilish va Alloh bergan ne’matni yashirish ham qoralanadi."
+      },
+      "tg": {
+        "q": "Дар 4:37 кадом се рафтор якҷо номбар шудаанд?",
+        "options": [
+          "Бахилӣ кардан, ба бахилӣ ташвиқ намудан ва неъмати додашударо пинҳон кардан",
+          "Исроф кардан, ба гиранда миннат гузоштан ва ӯро озор додан",
+          "Амонатро аз худ кардан, шаҳодатро пинҳон кардан ва аҳдро шикастан",
+          "Ҳангоми баркашидан зиёдатӣ гирифтан, дар паймона фиреб додан ва муздро дер додан"
+        ],
+        "info": "На танҳо бахилии шахсӣ, балки ташвиқи он миёни мардум ва пинҳон кардани неъмати Аллоҳ низ сарзаниш мешавад."
+      },
+      "kk": {
+        "q": "4:37-де қандай үш мінез қатар тізілген?",
+        "options": [
+          "Сараңдық жасау, сараңдыққа үгіттеу және берілген игілікті жасыру",
+          "Ысырап ету, алушыға міндетсіну және оны ренжіту",
+          "Аманатты иемдену, куәлікті жасыру және келісімді бұзу",
+          "Таразыда артық алу, өлшемде алдау және ақыны кешіктіру"
+        ],
+        "info": "Жеке сараңдық қана емес, оны адамдар арасында тарату және Алла бергенді жасыру да айыпталады."
+      },
+      "ky": {
+        "q": "4:37де кайсы үч жүрүм-турум бирге саналган?",
+        "options": [
+          "Сараңдык кылуу, сараңдыкка үндөө жана берилген жакшылыкты жашыруу",
+          "Ысырап кылуу, алганга милдет кылуу жана аны таарынтуу",
+          "Аманатты өзүнө алуу, күбөлүктү жашыруу жана келишимди бузуу",
+          "Таразыда ашык алуу, өлчөмдө алдоо жана акыны кечиктирүү"
+        ],
+        "info": "Жеке сараңдык гана эмес, аны адамдарга жайылтуу жана Аллах берген жакшылыкты жашыруу да айыпталат."
+      },
+      "az": {
+        "q": "4:37-də hansı üç davranış birlikdə sadalanır?",
+        "options": [
+          "Xəsislik etmək, xəsisliyə təşviq etmək və verilmiş neməti gizlətmək",
+          "İsraf etmək, alanın başına qaxmaq və onu incitmək",
+          "Əmanəti mənimsəmək, şahidliyi gizlətmək və əhdi pozmaq",
+          "Çəkidə artıq almaq, ölçüdə aldatmaq və haqqı gecikdirmək"
+        ],
+        "info": "Təkcə şəxsi xəsislik deyil, onu insanlar arasında yaymaq və Allahın verdiyi neməti gizlətmək də qınanır."
+      },
+      "tr": {
+        "q": "4:37'de hangi üç davranış birlikte sayılır?",
+        "options": [
+          "Cimrilik etmek, cimriliği öğütlemek ve verilen nimeti gizlemek",
+          "Savurmak, alanın başına kakmak ve onu incitmek",
+          "Emaneti sahiplenmek, tanıklığı gizlemek ve sözleşmeyi bozmak",
+          "Tartıda fazla almak, ölçüde aldatmak ve ödemeyi geciktirmek"
+        ],
+        "info": "Yalnızca kişisel cimrilik değil, onu başkalarına öğütlemek ve Allah'ın verdiği nimeti gizlemek de kınanır."
+      }
+    }
+  },
+  {
+    "id": "l2x_giving_for_show",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 4:38",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "sourceVerses": [
+      "4:38"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какой порочный мотив расходования выделен в 4:38?",
+        "options": [
+          "Выставить себя перед людьми",
+          "Получить большую ответную выгоду",
+          "Напомнить получателю о его зависимости",
+          "Избавиться только от негодной части имущества"
+        ],
+        "info": "Аят описывает расходование ради людского взгляда в сочетании с неверием в Аллаха и Последний день; важен не только внешний факт траты."
+      },
+      "en": {
+        "q": "Which corrupt motive for spending is singled out in 4:38?",
+        "options": [
+          "Making a display before people",
+          "Obtaining a greater benefit in return",
+          "Reminding the recipient of their dependence",
+          "Disposing only of the unusable part of one's property"
+        ],
+        "info": "The verse describes spending for public display alongside disbelief in Allah and the Last Day; the outward act of spending is not the only concern."
+      },
+      "uz": {
+        "q": "4:38 da sarflashning qaysi yomon niyati alohida ko‘rsatilgan?",
+        "options": [
+          "O‘zini odamlarga ko‘rsatish",
+          "Kattaroq javob foydasi olish",
+          "Oluvchiga uning qaramligini eslatish",
+          "Molning faqat yaroqsiz qismidan qutulish"
+        ],
+        "info": "Oyat odamlar ko‘rishi uchun sarflashni Alloh va oxirat kuniga ishonmaslik bilan birga tasvirlaydi; faqat sarflashning tashqi ko‘rinishi muhim emas."
+      },
+      "tg": {
+        "q": "Дар 4:38 кадом нияти бади харҷ кардан махсус зикр шудааст?",
+        "options": [
+          "Худро ба мардум нишон додан",
+          "Манфиати бештари ҷавобӣ гирифтан",
+          "Ба гиранда вобастагии ӯро ёдовар шудан",
+          "Танҳо аз қисми корношоями мол халос шудан"
+        ],
+        "info": "Оят харҷро барои назари мардум бо беимонӣ ба Аллоҳ ва рӯзи охират якҷо тасвир мекунад; танҳо зоҳири харҷ муҳим нест."
+      },
+      "kk": {
+        "q": "4:38-де жұмсаудың қандай теріс ниеті ерекше аталған?",
+        "options": [
+          "Өзін адамдарға көрсету",
+          "Қайтарымнан көбірек пайда алу",
+          "Алушыға оның тәуелділігін еске салу",
+          "Мүліктің тек жарамсыз бөлігінен құтылу"
+        ],
+        "info": "Аят көзге түсу үшін жұмсауды Аллаға және Ақырет күніне сенбеумен қатар сипаттайды; жұмсаудың сыртқы көрінісі ғана маңызды емес."
+      },
+      "ky": {
+        "q": "4:38де сарптоонун кайсы жаман ниети өзгөчө айтылган?",
+        "options": [
+          "Өзүн адамдарга көрсөтүү",
+          "Жооп катары көбүрөөк пайда алуу",
+          "Алуучуга анын көз карандылыгын эскертүү",
+          "Мүлктүн жараксыз бөлүгүнөн гана кутулуу"
+        ],
+        "info": "Аят элге көрүнүш үчүн сарптоону Аллахка жана Акырет күнүнө ишенбөө менен бирге сүрөттөйт; сарптоонун сырткы көрүнүшү гана маанилүү эмес."
+      },
+      "az": {
+        "q": "4:38-də xərcləməyin hansı pis niyyəti xüsusi vurğulanır?",
+        "options": [
+          "Özünü insanlara göstərmək",
+          "Qarşılığında daha böyük mənfəət əldə etmək",
+          "Alana onun asılılığını xatırlatmaq",
+          "Malın yalnız yararsız hissəsindən qurtulmaq"
+        ],
+        "info": "Ayə insanlar görsün deyə xərcləməyi Allaha və Axirət gününə inanmamaqla birlikdə təsvir edir; təkcə zahiri xərc faktı mühüm deyil."
+      },
+      "tr": {
+        "q": "4:38'de harcamanın hangi kötü amacı özellikle belirtilir?",
+        "options": [
+          "İnsanlara gösteriş yapmak",
+          "Karşılığında daha büyük çıkar elde etmek",
+          "Alana bağımlılığını hatırlatmak",
+          "Malın yalnızca işe yaramaz kısmından kurtulmak"
+        ],
+        "info": "Ayet, insanlara gösteriş için harcamayı Allah'a ve ahiret gününe inanmamakla birlikte anlatır; yalnızca harcamanın dış görünüşü önemli değildir."
+      }
+    }
+  },
+  {
+    "id": "l2x_effective_admonition",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 4:63",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "sourceVerses": [
+      "4:63"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какое обращение к людям предписано в конце 4:63?",
+        "options": [
+          "Наставить их и сказать проникающее в душу слово",
+          "Потребовать записать все дальнейшие разговоры",
+          "Обратиться только через родственника-посредника",
+          "Отложить всякое наставление до перемены положения"
+        ],
+        "info": "После упоминания знания Аллахом их сердец велено увещевать и обращаться убедительно; речь должна иметь смысл для слушателя."
+      },
+      "en": {
+        "q": "What kind of address is instructed at the end of 4:63?",
+        "options": [
+          "Admonish them and speak words that reach their souls",
+          "Require every future conversation to be recorded",
+          "Address them only through a relative as mediator",
+          "Delay all guidance until their situation changes"
+        ],
+        "info": "After mentioning Allah's knowledge of their hearts, the verse instructs meaningful admonition and effective speech."
+      },
+      "uz": {
+        "q": "4:63 oxirida odamlarga qanday murojaat buyurilgan?",
+        "options": [
+          "Ularga nasihat qilish va qalbiga yetib boradigan so‘z aytish",
+          "Keyingi barcha suhbatlarni yozishni talab qilish",
+          "Faqat qarindosh vositachi orqali murojaat qilish",
+          "Vaziyat o‘zgarguncha barcha nasihatni kechiktirish"
+        ],
+        "info": "Alloh ularning qalblarini bilishi aytilgach, ta’sirli nasihat qilish buyuriladi; so‘z tinglovchi uchun mazmunli bo‘lishi kerak."
+      },
+      "tg": {
+        "q": "Дар охири 4:63 ба мардум чӣ гуна муроҷиат фармуда шудааст?",
+        "options": [
+          "Онҳоро насиҳат карда, сухани ба ҷон таъсиркунанда гуфтан",
+          "Талаб кардани сабти ҳамаи суҳбатҳои минбаъда",
+          "Танҳо тавассути хешованди миёнарав муроҷиат кардан",
+          "Ҳар насиҳатро то тағйири вазъ ба таъхир гузоштан"
+        ],
+        "info": "Пас аз зикри огоҳии Аллоҳ аз дилҳояшон амри панд додан ва сухани муассир омадааст; сухан бояд барои шунаванда маъно дошта бошад."
+      },
+      "kk": {
+        "q": "4:63-тің соңында адамдарға қалай үндеу бұйырылған?",
+        "options": [
+          "Оларға өсиет айтып, жүрегіне жететін сөз айту",
+          "Кейінгі барлық әңгімені жазып алуды талап ету",
+          "Тек туысқан делдал арқылы үндеу",
+          "Жағдай өзгергенше барлық өсиетті кейінге қалдыру"
+        ],
+        "info": "Алланың олардың жүрегін білетіні аталғаннан кейін әсерлі өсиет айту бұйырылады; сөз тыңдаушыға мағыналы болуы керек."
+      },
+      "ky": {
+        "q": "4:63түн аягында адамдарга кантип кайрылуу буюрулган?",
+        "options": [
+          "Аларга насаат айтып, жүрөгүнө жете турган сөз сүйлөө",
+          "Кийинки бардык сүйлөшүүлөрдү жазууну талап кылуу",
+          "Тууган ортомчу аркылуу гана кайрылуу",
+          "Абал өзгөргөнчө бардык насаатты кечиктирүү"
+        ],
+        "info": "Аллах алардын жүрөгүн билери айтылгандан кийин таасирдүү насаат айтуу буюрулат; сөз угуучуга маанилүү болушу керек."
+      },
+      "az": {
+        "q": "4:63-ün sonunda insanlara necə müraciət etmək əmr olunur?",
+        "options": [
+          "Onlara nəsihət edib ruhlarına nüfuz edən söz söyləmək",
+          "Sonrakı bütün söhbətlərin yazılmasını tələb etmək",
+          "Yalnız qohum vasitəçi ilə müraciət etmək",
+          "Vəziyyət dəyişənədək bütün nəsihətləri təxirə salmaq"
+        ],
+        "info": "Allahın onların qəlblərini bildiyi qeyd ediləndən sonra təsirli nəsihət və söz əmr olunur; danışıq dinləyici üçün mənalı olmalıdır."
+      },
+      "tr": {
+        "q": "4:63'ün sonunda insanlara nasıl hitap edilmesi emredilir?",
+        "options": [
+          "Onlara öğüt vermek ve ruhlarına işleyen söz söylemek",
+          "Gelecekteki bütün konuşmaların kaydedilmesini istemek",
+          "Yalnızca aracı bir akraba yoluyla hitap etmek",
+          "Durum değişene kadar bütün öğütleri ertelemek"
+        ],
+        "info": "Allah'ın kalplerini bildiği belirtildikten sonra öğüt ve etkili söz emredilir; konuşma dinleyici için anlamlı olmalıdır."
+      }
+    }
+  },
+  {
+    "id": "l2x_intercession_share",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 4:85",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "sourceVerses": [
+      "4:85"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какая связь между содействием и участью содействующего выражена в 4:85?",
+        "options": [
+          "Благое содействие даёт долю блага, дурное — долю бремени",
+          "За благое дело даётся десятикратное, за дурное — равное воздаяние",
+          "Малое добро и малое зло непременно будут увидены человеком",
+          "Добро возвращается душе, а зло обращается против неё"
+        ],
+        "info": "Аят различает доброе и дурное содействие: участник получает соответствующую долю, поэтому само участие не является нейтральным."
+      },
+      "en": {
+        "q": "What link between intercession and the intercessor's portion is expressed in 4:85?",
+        "options": [
+          "Good intercession brings a share of good, while bad intercession brings a share of its burden",
+          "A good deed receives tenfold reward, while an evil deed receives an equivalent recompense",
+          "A person will see even the smallest good and evil",
+          "Good returns to one's soul, while evil turns against it"
+        ],
+        "info": "The verse distinguishes good and bad assistance and assigns a corresponding share to the participant, so participation is not neutral."
+      },
+      "uz": {
+        "q": "4:85 da ko‘mak bilan ko‘maklashuvchining ulushi o‘rtasida qanday bog‘lanish aytilgan?",
+        "options": [
+          "Yaxshi ko‘mak yaxshilikdan, yomon ko‘mak esa yukidan ulush beradi",
+          "Yaxshi ishga o‘n barobar, yomon ishga teng jazo beriladi",
+          "Inson kichik yaxshilik va kichik yomonlikni albatta ko‘radi",
+          "Yaxshilik o‘z joniga qaytadi, yomonlik esa o‘ziga qarshi bo‘ladi"
+        ],
+        "info": "Oyat yaxshi va yomon ko‘makni farqlaydi: ishtirokchi tegishli ulushni oladi, demak ishtirokning o‘zi betaraf emas."
+      },
+      "tg": {
+        "q": "Дар 4:85 байни ёрӣ ва насиби ёрирасон чӣ робита баён шудааст?",
+        "options": [
+          "Ёрии нек ҳиссаи некӣ ва ёрии бад ҳиссаи бори онро медиҳад",
+          "Барои некӣ даҳчанд ва барои бадӣ ҷазои баробар дода мешавад",
+          "Инсон ҳатман некии хурд ва бадии хурдро мебинад",
+          "Некӣ ба нафс бармегардад ва бадӣ бар зидди он мешавад"
+        ],
+        "info": "Оят ёрии хубу бадро фарқ мекунад: иштироккунанда ҳиссаи мувофиқ мегирад, бинобар ин иштирок бетараф нест."
+      },
+      "kk": {
+        "q": "4:85-те жәрдем мен жәрдемдесушінің үлесі арасында қандай байланыс берілген?",
+        "options": [
+          "Жақсы жәрдем жақсылықтан, жаман жәрдем оның жүгінен үлес береді",
+          "Ізгі іске он есе, жаман іске тең қайтарым беріледі",
+          "Адам кішкентай жақсылық пен жамандықты міндетті түрде көреді",
+          "Жақсылық жанға қайтады, жамандық оған қарсы болады"
+        ],
+        "info": "Аят жақсы және жаман жәрдемді ажыратады: қатысушы тиісті үлесін алады, сондықтан қатысудың өзі бейтарап емес."
+      },
+      "ky": {
+        "q": "4:85те көмөк менен көмөкчүнүн үлүшүнүн ортосунда кандай байланыш айтылган?",
+        "options": [
+          "Жакшы көмөк жакшылыктан, жаман көмөк анын жүгүнөн үлүш берет",
+          "Жакшы ишке он эсе, жаман ишке тең кайтарым берилет",
+          "Адам кичине жакшылык менен жамандыкты сөзсүз көрөт",
+          "Жакшылык жанга кайтат, жамандык ага каршы болот"
+        ],
+        "info": "Аят жакшы жана жаман көмөктү айырмалайт: катышуучу тиешелүү үлүшүн алат, демек катышуунун өзү бейтарап эмес."
+      },
+      "az": {
+        "q": "4:85-də yardım ilə yardım edənin payı arasında hansı əlaqə ifadə olunur?",
+        "options": [
+          "Yaxşı yardım xeyirdən, pis yardım isə onun yükündən pay gətirir",
+          "Yaxşı əmələ onqat, pis əmələ bərabər əvəz verilir",
+          "İnsan kiçik yaxşılığı və kiçik pisliyi mütləq görəcək",
+          "Yaxşılıq insanın özünə qayıdır, pislik isə onun əleyhinə olur"
+        ],
+        "info": "Ayə yaxşı və pis yardımı ayırır: iştirakçı uyğun pay alır, buna görə iştirakın özü neytral deyil."
+      },
+      "tr": {
+        "q": "4:85'te destek ile destek verenin payı arasında nasıl bir bağ kurulur?",
+        "options": [
+          "İyi destek iyilikten, kötü destek ise onun yükünden pay getirir",
+          "İyi işe on kat, kötü işe eşit karşılık verilir",
+          "İnsan küçük iyiliği ve küçük kötülüğü mutlaka görecektir",
+          "İyilik kişinin kendine döner, kötülük onun aleyhine olur"
+        ],
+        "info": "Ayet iyi ve kötü desteği ayırır; katılan kişi uygun bir pay alır, dolayısıyla katılımın kendisi tarafsız değildir."
+      }
+    }
+  }
+]

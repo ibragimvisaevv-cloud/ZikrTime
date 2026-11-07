@@ -12,8 +12,8 @@ android {
         applicationId = "com.zikrtime.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 25
-        versionName = "0.8.13"
+        versionCode = 37
+        versionName = "0.8.25"
         // Ключ Яндекс Карт (MapKit): из gradle.properties или переменной окружения YANDEX_MAPKIT_KEY
         val mapkitKey = (project.findProperty("yandexMapkitKey") as String?) ?: System.getenv("YANDEX_MAPKIT_KEY") ?: ""
         buildConfigField("String", "MAPKIT_KEY", "\"$mapkitKey\"")
@@ -83,6 +83,7 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.15.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
     implementation("androidx.activity:activity-compose:1.9.3")
 
     implementation("androidx.compose.ui:ui")
@@ -100,3 +101,4 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.json:json:20240303")
 }
+

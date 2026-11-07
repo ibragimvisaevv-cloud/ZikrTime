@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qt_note">Note</string>
+    <string name="qt_save_note">Save note</string>
+    <string name="qt_save_place">Save reading place</string>
+    <string name="qt_remove_bookmark">Remove bookmark</string>
+    <string name="qt_copy">Copy ayah</string>
+    <string name="qt_touch_hint">Tap an ayah to select it; hold it to add a note. Save your place with the bookmark at the top.</string>
+    <string name="qt_ayah_actions">Actions for ayah %1$d</string>
+    <string name="qt_bookmark_added">Reading place saved</string>
+    <string name="qt_bookmark_removed">Bookmark removed</string>
+</resources>

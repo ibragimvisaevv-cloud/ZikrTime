@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_terms_title">Условия размещения</string>
+    <string name="store_listing_terms">Разовый платёж после одобрения заявки покрывает карточку компании и все её товары.</string>
+    <string name="store_promotion_terms">Продвижение можно подключить отдельно за дополнительную плату.</string>
+    <string name="store_apply">Подать заявку</string>
+    <string name="store_unavailable">Не удалось загрузить каталог</string>
+    <string name="store_retry">Попробовать снова</string>
+    <string name="store_empty_catalog">Каталог пока пуст</string>
+    <string name="store_clear">Очистить поиск</string>
+    <string name="store_more_products">Показать ещё товары</string>
+    <string name="store_seller_portal">Кабинет продавца</string>
+    <string name="store_browser_unavailable">Не удалось открыть браузер</string>
+</resources>

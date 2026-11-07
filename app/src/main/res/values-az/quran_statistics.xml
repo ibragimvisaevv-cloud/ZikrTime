@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qs_today">Bu gün</string>
+    <string name="qs_paused">Qeydiyyat dayandırılıb</string>
+    <string name="qs_enable_progress">Şəxsi irəliləyişi aktivləşdir</string>
+    <string name="qs_goal_complete">Bugünkü hədəfə çatdınız</string>
+    <string name="qs_today_start">Öz tempinizdə oxuyun. Vaxt burada görünəcək.</string>
+    <string name="qs_goal_remaining">Hədəfə %1$d dəq qalıb</string>
+    <string name="qs_change_goal">Hədəfi dəyiş</string>
+    <string name="qs_empty_title">Oxu tarixçəniz buradan başlayır</string>
+    <string name="qs_empty_body">Oxuduqdan sonra vaxt və qeydə alınan ayələr burada avtomatik görünəcək.</string>
+    <string name="qs_period">Seçilmiş dövr</string>
+    <string name="qs_reading_time">Oxu vaxtı</string>
+    <string name="qs_observed_ayahs">Qeydə alınan fərqli ayələr</string>
+    <string name="qs_active_days">Oxunan günlər</string>
+    <string name="qs_unique_hint">Eyni ayəni yenidən oxumaq bu sayğacı artırmır.</string>
+    <string name="qs_all_time">Ümumi irəliləyiş</string>
+    <string name="qs_complete_surahs">Bütün ayələri qeydə alınan surələr</string>
+    <string name="qs_less_minute">Bir dəqiqədən az</string>
+    <string name="qs_duration_minutes">%1$d dəq</string>
+    <string name="qs_duration_hours">%1$d saat %2$d dəq</string>
+    <string name="qs_week_minutes">Günlər üzrə oxu dəqiqələri</string>
+    <string name="qs_goal_title">Gündəlik oxu hədəfi</string>
+    <string name="qs_goal_hint">Sizə uyğun vaxt seçin. Hədəfi istənilən vaxt dəyişə bilərsiniz.</string>
+    <string name="qs_goal_minutes">Gündə dəqiqə</string>
+    <string name="qs_goal_save">Hədəfi saxla</string>
+</resources>

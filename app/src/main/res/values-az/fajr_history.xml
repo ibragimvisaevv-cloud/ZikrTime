@@ -1,0 +1,10 @@
+<resources>
+    <string name="fajr_history_title">Son zəng</string>
+    <string name="fajr_history_empty">Zəngli saat hələ çalmayıb.</string>
+    <string name="fajr_history_daily">Sübh namazı üçün zəngli saat</string>
+    <string name="fajr_history_test">Sınaq zəngi</string>
+    <string name="fajr_history_snooze">Təxirə salınmış zəng</string>
+    <string name="fajr_history_planned">Planlaşdırılan vaxt — %1$s</string>
+    <string name="fajr_history_fired">Çaldığı vaxt — %1$s</string>
+    <string name="fajr_history_delay">Gecikmə — %1$d dəqiqə</string>
+</resources>

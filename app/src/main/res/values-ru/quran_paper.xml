@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qp_index_title">Священный Коран</string>
+    <string name="qp_reading_mode">Чтение</string>
+    <string name="qp_translation_mode">С переводом</string>
+    <string name="qp_selected_ayah">Аят %1$d:%2$d</string>
+    <string name="qp_ayah_menu">Действия с аятом %1$d</string>
+    <string name="qp_clear_selection">Снять выделение</string>
+    <string name="qp_selection_hint">Нажмите на аят, чтобы открыть действия</string>
+    <string name="qp_copied">Аят скопирован</string>
+    <string name="qp_note_saved">Заметка сохранена</string>
+    <string name="qp_discard_note_title">Не сохранять изменения?</string>
+    <string name="qp_discard_note_body">Изменения в заметке будут потеряны.</string>
+    <string name="qp_keep_editing">Продолжить редактирование</string>
+    <string name="qp_discard">Не сохранять</string>
+    <string name="qp_delete_note">Удалить заметку</string>
+    <string name="qp_delete_note_title">Удалить эту заметку?</string>
+    <string name="qp_delete_note_body">Текст заметки будет удалён. Закладка останется.</string>
+    <string name="qp_note_deleted">Заметка удалена</string>
+    <string name="qp_delete">Удалить</string>
+    <string name="qp_copy_arabic">Арабский текст</string>
+    <string name="qp_copy_translation">Перевод</string>
+    <string name="qp_copy_both">Арабский текст и перевод</string>
+    <string name="qp_copy_title">Копировать аят</string>
+    <string name="qp_note_counter">%1$d / 2000</string>
+    <string name="qp_action_close">Вернуться к чтению</string>
+    <string name="qp_surah_total">%1$d сур</string>
+    <string name="qp_index_subtitle">Арабский текст и перевод смыслов</string>
+    <string name="qp_clear_search">Очистить поиск</string>
+    <string name="qp_bookmark_short">Закладка</string>
+    <string name="qp_copy_short">Копировать</string>
+    <string name="qp_note_delete_cancel">Отмена</string>
+</resources>

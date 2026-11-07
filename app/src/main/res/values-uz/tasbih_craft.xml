@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tb_choose_phrase">Zikrni tanlash</string>
+    <string name="tb_total_count">Jami takrorlar</string>
+    <string name="tb_completed_laps">Tugallangan davralar</string>
+    <string name="tb_unlimited">Cheksiz</string>
+    <string name="tb_cycle_complete">Davra tugallandi</string>
+    <string name="tb_gesture_hint">Sanash uchun tasbehni bosing yoki pastga torting.</string>
+    <string name="tb_phrase_change_hint">Boshqa zikr tanlansa, bu hisoblagich nolga qaytadi. Kunlik natija saqlanadi.</string>
+</resources>

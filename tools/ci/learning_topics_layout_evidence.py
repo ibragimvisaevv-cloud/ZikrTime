@@ -1,0 +1,64 @@
+"""Publish the focused reader-layout rerun without claiming a repeated full suite."""
+import hashlib
+import json
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import xml.etree.ElementTree as ET
+
+PREVIOUS_FULL_RUN = json.loads("{\"run\":41834287495,\"url\":\"https://github.com/ibragimvisaevv-cloud/ZikrTime/actions/runs/41834287495\",\"evidence_branch\":\"ci-learning-0821-41834287495\",\"release\":{\"version\":\"0.8.21\",\"version_code\":33,\"source_sha\":\"02cc5ec46fbae5ec51e08802a0c18c8b2808b3e9\",\"run\":41834287495,\"apk_size\":61777634,\"apk_sha256\":\"2275be7cb6c96eea098a7b6e31420a0039382d57a770ffe0ff6f22116dc43e8a\",\"certificate_sha256\":\"7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf\",\"quran_assets_unchanged\":true},\"verification\":{\"apk_sha256\":\"6cf804636c21a66ce1678ba1bdc8cbcbdb030094dd6bfb482c75e287334af427\",\"apk_size\":102906960,\"unit_tests\":47,\"unit_failures\":0,\"unit_errors\":0,\"source_sha\":\"02cc5ec46fbae5ec51e08802a0c18c8b2808b3e9\",\"verification_sha\":\"02cc5ec46fbae5ec51e08802a0c18c8b2808b3e9\",\"run\":41834287495,\"journey_completed\":true},\"ui\":{\"mode\":\"all\",\"groups\":{\"real_error_focus_resume_and_no_bonus\":{\"initial_level_required\":true,\"no_history_state\":true,\"question_id\":\"l2x_dislike_and_good\",\"answered_only_pool\":true,\"pending_answer_survived_process_restart\":true,\"normal_round_preserved\":true,\"training_minutes\":0,\"result_recreation_preserved\":true},\"training_replacement_dialog\":{\"from_category\":\"quran\",\"to_category\":\"prophets\",\"old_answer_preserved_on_cancel\":true,\"confirmed_only_training_replaced\":true,\"normal_and_review_sessions_preserved\":true,\"answer_history_preserved\":true,\"nonempty_reward_ledger_and_ten_bonus_minutes_preserved\":true},\"ranking_full_round_and_level_isolation\":{\"selected_level\":2,\"ordered_question_ids\":[\"l2_safa_marwa_signs\",\"l2_witnesses\",\"l2_grain_parable\",\"l2_river_exception\",\"l2_harm_comparison\"],\"wrong_answers_first\":true,\"five_question_round_completed\":true,\"stale_version_and_foreign_level_excluded\":true,\"cancel_kept_round\":true,\"confirmed_change_kept_history_and_reward_guard\":true},\"quran_topics_offline_search_navigation\":{\"offline\":true,\"topic\":\"patience\",\"passage\":\"2:153-157\",\"opened_exact_ayah\":\"2:153\",\"empty_search_and_clear\":true,\"reader_back_kept_topic\":true,\"recreation_kept_topic_and_query\":true,\"bookmarks_notes_and_stop_preserved\":true},\"compact_dark_large_text\":{\"width_dp\":320,\"font_scale\":1.5,\"theme\":\"dark\",\"dashboard_answers_feedback_sources_and_reader_back_reachable\":true,\"screens_require_visual_review\":true}},\"screens\":[{\"image\":\"learn-training-empty.png\",\"captured\":true,\"visually_reviewed\":false},{\"image\":\"learn-training-dashboard-light.png\",\"captured\":true,\"visually_reviewed\":false},{\"image\":\"learn-training-resumed-feedback.png\",\"captured\":true,\"visually_reviewed\":false},{\"image\":\"learn-training-result.png\",\"captured\":true,\"visually_reviewed\":false},{\"image\":\"learn-training-replace-dialog.png\",\"captured\":true,\"visually_reviewed\":false},{\"image\":\"learn-training-selected-level-empty.png\",\"captured\":true,\"visually_reviewed\":false},{\"image\":\"learn-topics-catalog-light.png\",\"captured\":true,\"visually_reviewed\":false},{\"image\":\"learn-topics-patience-light.png\",\"captured\":true,\"visually_reviewed\":false},{\"image\":\"learn-topic-passage-bookmark-note.png\",\"captured\":true,\"visually_reviewed\":false},{\"image\":\"learn-topics-search-empty.png\",\"captured\":true,\"visually_reviewed\":false},{\"image\":\"learn-training-dashboard-dark.png\",\"captured\":true,\"visually_reviewed\":false},{\"image\":\"learn-topics-catalog-dark.png\",\"captured\":true,\"visually_reviewed\":false},{\"image\":\"learn-training-dashboard-dark-320dp-150.png\",\"captured\":true,\"visually_reviewed\":false},{\"image\":\"learn-training-question-dark-320dp-150.png\",\"captured\":true,\"visually_reviewed\":false},{\"image\":\"learn-training-feedback-dark-320dp-150.png\",\"captured\":true,\"visually_reviewed\":false},{\"image\":\"learn-topics-detail-dark-320dp-150.png\",\"captured\":true,\"visually_reviewed\":false},{\"image\":\"learn-topics-reader-dark-320dp-150.png\",\"captured\":true,\"visually_reviewed\":false},{\"image\":\"learn-topics-search-dark-320dp-150.png\",\"captured\":true,\"visually_reviewed\":false}],\"question_counts\":{\"1\":150,\"2\":150,\"3\":150},\"elapsed_seconds\":545.3}}")
+folder = Path("learning-topics-layout-evidence")
+folder.mkdir(exist_ok=True)
+(folder / "previous-full-run.json").write_text(json.dumps(PREVIOUS_FULL_RUN, indent=2))
+for name in ["learning-topics-failure.txt", "learning-topics-passed.json", "release-delivery.json",
+             "release-signature.txt", "crashes.txt", "last-ui.xml"]:
+    source = Path("ci-out") / name
+    if source.exists():
+        shutil.copyfile(source, folder / name)
+for source in [*Path("ci-out/screens").glob("learn-*.png"), *Path("ci-out").glob("learn-*.xml")]:
+    shutil.copyfile(source, folder / source.name)
+result_path = Path("ci-out/learning-topics-passed.json")
+result = json.loads(result_path.read_text()) if result_path.exists() else {}
+expected_groups = {"quran_topics_offline_search_navigation", "compact_dark_large_text"}
+complete = (
+    result.get("mode") == "topics-layout"
+    and set(result.get("groups", {})) == expected_groups
+    and not Path("ci-out/learning-topics-failure.txt").exists()
+    and os.environ.get("TARGETED_UI_OUTCOME") == "success"
+)
+tests = [ET.parse(p).getroot() for p in Path("app/build/test-results/testDebugUnitTest").glob("TEST-*.xml")]
+changed_paths = subprocess.check_output(
+    ["git", "diff", "--name-only", PREVIOUS_FULL_RUN["verification"]["source_sha"], os.environ["GITHUB_SHA"]],
+    text=True,
+).splitlines()
+report = {
+    "source_sha": os.environ.get("APK_SOURCE_SHA", os.environ["GITHUB_SHA"]),
+    "verification_sha": os.environ["GITHUB_SHA"], "run": int(os.environ["GITHUB_RUN_ID"]),
+    "scope": "topics-layout", "full_ui_suite_executed": False,
+    "targeted_journey_completed": complete, "ui_step_outcome": os.environ.get("TARGETED_UI_OUTCOME"),
+    "executed_ui_groups": sorted(result.get("groups", {})),
+    "unit_tests": sum(int(t.get("tests", 0)) for t in tests),
+    "unit_failures": sum(int(t.get("failures", 0)) for t in tests),
+    "unit_errors": sum(int(t.get("errors", 0)) for t in tests),
+    "previous_full_run": PREVIOUS_FULL_RUN["url"],
+    "previous_full_source_sha": PREVIOUS_FULL_RUN["verification"]["source_sha"],
+    "changed_paths_since_full_run": changed_paths,
+}
+for kind in ("debug", "release"):
+    apk = Path("app/build/outputs/apk") / kind / ("app-" + kind + ".apk")
+    if apk.exists():
+        report[kind + "_apk_sha256"] = hashlib.sha256(apk.read_bytes()).hexdigest()
+        report[kind + "_apk_size"] = apk.stat().st_size
+(folder / "delivery.json").write_text(json.dumps(report, indent=2))
+print(json.dumps(report))
+branch = "ci-learning-layout-0821-" + os.environ["GITHUB_RUN_ID"]
+def git(*args):
+    subprocess.run(["git", *args], cwd=folder, check=True, stdout=subprocess.DEVNULL)
+git("init", "-q")
+git("add", ".")
+git("-c", "user.name=ci", "-c", "user.email=ci@local", "commit", "-qm",
+    "Focused Quran reader layout evidence [skip ci]")
+git("push", "-q", "https://x-access-token:" + os.environ["GH_TOKEN"] + "@github.com/" +
+    os.environ["GITHUB_REPOSITORY"] + ".git", "HEAD:refs/heads/" + branch)
+print("Evidence branch: " + branch)

@@ -1,0 +1,178 @@
+name: Regional schedules, prayer alarms and merchant checkout
+on:
+  push:
+    branches: [codex/quran-reader-0814]
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: regional-prayers-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  check:
+    if: ${{ contains(github.event.head_commit.message, '[regional-release]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Identify a reusable candidate
+        id: candidate
+        env:
+          HEAD_MESSAGE: ${{ github.event.head_commit.message }}
+        run: |
+          python3 - <<'PY'
+          import os, re
+          found = re.search(r'\[reuse-apk:(\d+)\]', os.environ['HEAD_MESSAGE'])
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              print('run=' + (found[1] if found else ''), file=output)
+          PY
+      - uses: actions/download-artifact@v4
+        if: steps.candidate.outputs.run != ''
+        with:
+          name: regional-verified-inputs
+          run-id: ${{ steps.candidate.outputs.run }}
+          github-token: ${{ github.token }}
+      - name: Check immutable Android inputs before reuse
+        if: steps.candidate.outputs.run != ''
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, subprocess
+          delivery = json.loads(pathlib.Path('ci-out/release-delivery.json').read_text())
+          source = delivery['source_sha']
+          subprocess.run(['git','diff','--exit-code',source,'HEAD','--','app','gradle','gradlew','build.gradle.kts','settings.gradle.kts','gradle.properties','keystore/release.jks.enc'],check=True)
+          for path, key in [('release/app-release.apk','apk_sha256'), ('debug/app-debug.apk','debug_sha256')]:
+              assert hashlib.sha256((pathlib.Path('app/build/outputs/apk') / path).read_bytes()).hexdigest() == delivery[key], path
+          with open(os.environ['GITHUB_ENV'],'a') as env:
+              print('APK_SOURCE_SHA=' + source,file=env)
+          PY
+      - name: Recover successful native journeys from the verified APK
+        if: steps.candidate.outputs.run != '' && contains(github.event.head_commit.message, '[shop-recheck]')
+        env:
+          PREVIOUS_RUN: ${{ steps.candidate.outputs.run }}
+        run: |
+          git fetch --no-tags --depth=1 origin "refs/heads/ci-regional-0822-$PREVIOUS_RUN"
+          python3 - <<'PY'
+          import json, os, pathlib, subprocess
+          def record(name):
+              return json.loads(subprocess.check_output(['git','show','FETCH_HEAD:' + name]))
+          original = record('delivery.json')
+          current = json.loads(pathlib.Path('ci-out/release-delivery.json').read_text())
+          assert original['apk_sha256'] == current['debug_sha256']
+          assert original['source_sha'] == current['source_sha']
+          groups = record('regional-passed.json')['groups']
+          assert set(groups) == {'regional_schedule','prayer_journal','reading_reminders','sound_controls'}
+          pathlib.Path('ci-out/inherited-journeys.json').write_text(json.dumps({'run':int(os.environ['PREVIOUS_RUN']),'groups':groups}))
+          PY
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Check scoped sources
+        if: steps.candidate.outputs.run == ''
+        run: |
+          python3 -m py_compile tools/ci/regional_journeys.py tools/ci/check_regional_pack.py
+          python3 tools/ci/check_regional_pack.py
+          python3 shop-bot/test_acquiring.py
+          python3 shop-bot/test_bot.py
+          python3 shop-bot/test_miniapi.py
+          node --check shop-bot/miniapp/app.js
+          git diff --exit-code 51d96ad342e41ffbd50c84c9b08520a612f0d37d -- app/src/main/assets/quran app/src/main/java/com/zikrtime/app/data/QuranContent.kt
+      - name: Restore original signing key
+        if: steps.candidate.outputs.run == ''
+        env:
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          test -n "$RELEASE_KEY_PASSWORD"
+          test -f keystore/release.jks.enc
+          openssl enc -d -aes-256-cbc -pbkdf2 -iter 300000 -in keystore/release.jks.enc -out keystore/release.jks -pass env:RELEASE_KEY_PASSWORD
+      - name: Prayer, reminder, audio, shop tests and signed candidate
+        if: steps.candidate.outputs.run == ''
+        env:
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          chmod +x gradlew
+          ./gradlew testDebugUnitTest lintDebug assembleDebug assembleRelease --console=plain
+      - name: Verify candidate certificate and payload
+        if: steps.candidate.outputs.run == ''
+        run: |
+          mkdir -p ci-out
+          SIGNER=$(find "$ANDROID_HOME/build-tools" -name apksigner | sort -V | tail -1)
+          "$SIGNER" verify --verbose --print-certs app/build/outputs/apk/release/app-release.apk > ci-out/release-signature.txt
+          grep -q 'certificate SHA-256 digest: 7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf' ci-out/release-signature.txt
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, zipfile
+          apk = pathlib.Path('app/build/outputs/apk/release/app-release.apk')
+          source = pathlib.Path('app/src/main/assets/quran')
+          with zipfile.ZipFile(apk) as archive:
+              asset = pathlib.Path('app/src/main/assets')
+              for name in ['prayer/regional.tsv','prayer/published-2026.tsv','cities_ru_regions.tsv']:
+                  assert archive.read('assets/' + name) == (asset / name).read_bytes(), name
+              raw = pathlib.Path('app/src/main/res/raw')
+              tones = sorted(raw.glob('athan_khalaf_*.ogg'))
+              assert len(tones) == 3 and not list(raw.glob('adhan*.ogg'))
+              packaged = {hashlib.sha256(archive.read(entry)).digest() for entry in archive.namelist() if entry.endswith('.ogg')}
+              assert all(hashlib.sha256(tone.read_bytes()).digest() in packaged for tone in tones), 'missing adhan audio'
+              for file in source.rglob('*'):
+                  if file.is_file():
+                      assert archive.read('assets/quran/' + file.relative_to(source).as_posix()) == file.read_bytes(), str(file)
+          pathlib.Path('ci-out/release-delivery.json').write_text(json.dumps({
+              'version': '0.8.22', 'version_code': 34, 'source_sha': os.environ['GITHUB_SHA'],
+              'run': int(os.environ['GITHUB_RUN_ID']), 'apk_size': apk.stat().st_size,
+              'apk_sha256': hashlib.sha256(apk.read_bytes()).hexdigest(),
+              'debug_sha256': hashlib.sha256(pathlib.Path('app/build/outputs/apk/debug/app-debug.apk').read_bytes()).hexdigest(),
+              'certificate_sha256': '7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf',
+              'quran_assets_unchanged': True,
+          }, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: steps.candidate.outputs.run == ''
+        with:
+          name: regional-verified-inputs
+          compression-level: 0
+          path: |
+            app/build/outputs/apk/debug/app-debug.apk
+            app/build/outputs/apk/release/app-release.apk
+            app/build/test-results/
+            ci-out/release-delivery.json
+            ci-out/release-signature.txt
+      - run: python3 -m pip install 'Pillow>=11,<13'
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-quran.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Regional, journal, reminders, sound and shop flows on Android 15
+        timeout-minutes: 24
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: bash tools/ci/regional_smoke.sh
+      - name: Preserve synthetic emulator evidence
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/ci/regional_evidence.py
+      - name: Prepare signed candidate
+        if: success()
+        run: cp app/build/outputs/apk/release/app-release.apk ZikrTime-0.8.22.apk
+      - uses: actions/upload-artifact@v7.0.2
+        if: success()
+        with:
+          path: ZikrTime-0.8.22.apk
+          archive: false
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ZikrTime-0.8.22-check
+          path: |
+            app/build/reports/
+            app/build/test-results/
+            ci-out/

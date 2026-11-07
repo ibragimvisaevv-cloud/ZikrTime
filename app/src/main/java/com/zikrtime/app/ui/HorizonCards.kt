@@ -9,6 +9,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,8 +25,8 @@ import androidx.compose.ui.unit.dp
 fun LandscapePanel(@DrawableRes art: Int, modifier: Modifier = Modifier, content: @Composable BoxScope.() -> Unit) {
     Box(modifier.fillMaxWidth().clip(RoundedCornerShape(28.dp))) {
         Image(painterResource(art), null, Modifier.matchParentSize(), contentScale = ContentScale.Crop)
-        Box(Modifier.matchParentSize().background(Brush.horizontalGradient(listOf(Color(0xB805211A), Color(0x1805211A)))))
-        Box(Modifier.matchParentSize().background(Brush.verticalGradient(listOf(Color.Transparent, Color(0xDA05211A)))))
+        Box(Modifier.matchParentSize().background(Brush.horizontalGradient(listOf(Color(0xB8171B18), Color(0x18171B18)))))
+        Box(Modifier.matchParentSize().background(Brush.verticalGradient(listOf(Color.Transparent, Color(0xDA171B18)))))
         CompositionLocalProvider(LocalContentColor provides Porcelain) { content() }
     }
 }
@@ -37,14 +38,14 @@ fun FeatureTile(title: String, icon: Int, modifier: Modifier = Modifier, detail:
     val interaction = remember { MutableInteractionSource() }
     val shape = RoundedCornerShape(24.dp)
     Column(modifier.pressScale(interaction).clip(shape)
-        .background(Brush.linearGradient(listOf(scheme.surfaceContainer, scheme.surfaceContainerHigh)))
+        .background(scheme.surfaceContainerLow)
         .border(1.dp, scheme.outlineVariant.copy(alpha = .65f), shape)
-        .clickable(interactionSource = interaction, indication = ripple(), onClick = onClick)
+        .clickable(interactionSource = interaction, indication = ripple(), role = androidx.compose.ui.semantics.Role.Button, onClick = onClick)
         .heightIn(min = 132.dp).padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             IconBadge(painterResource(icon), size = 36.dp)
             Spacer(Modifier.weight(1f))
-            Text("↗", color = scheme.primary, style = MaterialTheme.typography.titleMedium)
+            Icon(androidx.compose.material.icons.Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = scheme.onSurfaceVariant)
         }
         Text(title, style = MaterialTheme.typography.titleMedium)
         if (detail != null) Text(detail, style = MaterialTheme.typography.bodySmall, color = scheme.onSurfaceVariant)
@@ -64,7 +65,7 @@ fun DestinationRow(title: String, icon: Int, detail: String? = null, onClick: ()
             Text(title, style = MaterialTheme.typography.titleMedium)
             if (detail != null) Text(detail, style = MaterialTheme.typography.bodySmall, color = scheme.onSurfaceVariant)
         }
-        Text("›", style = MaterialTheme.typography.headlineSmall, color = scheme.onSurfaceVariant)
+        Icon(androidx.compose.material.icons.Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = scheme.onSurfaceVariant)
     }
     HorizontalDivider(color = scheme.outlineVariant.copy(alpha = .5f))
 }
@@ -77,6 +78,6 @@ fun ReadingRow(title: String, art: Int, onClick: () -> Unit) {
         horizontalArrangement = Arrangement.spacedBy(16.dp)) {
         Image(painterResource(art), null, Modifier.size(78.dp).clip(RoundedCornerShape(14.dp)), contentScale = ContentScale.Crop)
         Text(title, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
-        Text("›", style = MaterialTheme.typography.headlineSmall, color = scheme.onSurfaceVariant, modifier = Modifier.padding(end = 8.dp))
+        Icon(androidx.compose.material.icons.Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = scheme.onSurfaceVariant, modifier = Modifier.padding(end = 8.dp))
     }
 }

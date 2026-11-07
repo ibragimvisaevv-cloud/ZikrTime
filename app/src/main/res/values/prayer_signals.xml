@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="signal_short_title">Short notification sound</string>
+    <string name="signal_short_hint">Use the phone’s notification tone when the adhan is off.</string>
+    <string name="signal_last_title">Last signal from the app</string>
+    <string name="signal_none">No signals recorded yet.</string>
+    <string name="signal_scheduled">Scheduled for %1$s</string>
+    <string name="signal_delivered">Posted at %1$s</string>
+    <string name="signal_quiet">Silent</string>
+    <string name="signal_blocked">Open the blocked notification channel</string>
+</resources>

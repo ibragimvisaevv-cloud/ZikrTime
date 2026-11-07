@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="places_search_label">Мешіт атауы немесе мекенжайы</string>
+    <string name="places_yandex_search">Яндекс Карталардан басқа мешіттерді табу</string>
+    <string name="places_search_empty">Орын табылмады. Басқа атауды енгізіңіз немесе Яндекс Карталардан іздеңіз.</string>
+    <string name="places_wikidata_credit">Қосымша мәліметтер — Wikidata, CC0</string>
+    <string name="places_less">Жию</string>
+    <string name="places_details">Толығырақ</string>
+    <string name="places_access_check">Барар алдында мешітке кіру мүмкіндігін нақтылаңыз.</string>
+    <string name="places_open_source">Дереккөзді ашу</string>
+</resources>

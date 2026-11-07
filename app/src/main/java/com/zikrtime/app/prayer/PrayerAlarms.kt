@@ -21,7 +21,6 @@ import com.zikrtime.app.screentime.GuardService
 import com.zikrtime.app.ui.clockFormatter
 import com.zikrtime.app.ui.prayerName
 import java.time.Instant
-import java.time.ZoneId
 import java.time.ZonedDateTime
 
 /**
@@ -30,7 +29,9 @@ import java.time.ZonedDateTime
  */
 object PrayerAlarms {
 
-    const val CHANNEL_ID = "prayer_times"
+    const val CHANNEL_ID = "prayer_quiet_v1"
+    const val CHANNEL_BRIEF = "prayer_brief_v1"
+    private const val LEGACY_CHANNEL = "prayer_times"
     const val CHANNEL_ADHAN_ID = "prayer_adhan"
     private const val REQUEST_CODE = 1001
     private const val EXTRA_PRAYER = "prayer"
@@ -40,14 +41,21 @@ object PrayerAlarms {
         val res = Lang.wrap(context).resources
         val nm = context.getSystemService(NotificationManager::class.java)
         nm.createNotificationChannel(
-            NotificationChannel(CHANNEL_ID, res.getString(R.string.channel_prayer), NotificationManager.IMPORTANCE_HIGH)
-                .apply { description = res.getString(R.string.channel_prayer_desc) },
+            NotificationChannel(CHANNEL_ID, res.getString(R.string.channel_prayer), NotificationManager.IMPORTANCE_LOW)
+                .apply { setSound(null, null); enableVibration(false) },
+        )
+        nm.createNotificationChannel(
+            NotificationChannel(CHANNEL_BRIEF, res.getString(R.string.signal_short_title), NotificationManager.IMPORTANCE_DEFAULT)
+                .apply {
+                    setSound(android.provider.Settings.System.DEFAULT_NOTIFICATION_URI,
+                        AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_NOTIFICATION).build())
+                },
         )
         // Отдельный канал на каждую запись азана (звук канала нельзя поменять после создания).
-        for (voice in AdhanSound.voices) {
+        for (voice in AdhanSound.eligibleVoices(forFajrAlarm = false)) {
             val uri = AdhanSound.uri(context, voice.id) ?: continue
             nm.createNotificationChannel(
-                NotificationChannel(adhanChannel(voice.id), res.getString(R.string.channel_prayer_adhan) + " · " + res.getString(R.string.adhan_voice, voice.number), NotificationManager.IMPORTANCE_HIGH).apply {
+                NotificationChannel(adhanChannel(voice.id), res.getString(R.string.channel_prayer_adhan) + " · " + res.getString(voice.titleRes), NotificationManager.IMPORTANCE_HIGH).apply {
                     description = res.getString(R.string.channel_prayer_desc)
                     setSound(
                         uri,
@@ -75,7 +83,7 @@ object PrayerAlarms {
         val am = context.getSystemService(AlarmManager::class.java)
         // Будильник на время намаза нужен и для уведомления, и чтобы вовремя закрыть соцсети.
         val lockNeeded = Store.blockingEnabled && Store.prayerLockEnabled
-        if (!Store.prayerNotifications && !lockNeeded) {
+        if (!Store.onboarded || (!Store.prayerNotifications && !lockNeeded)) {
             am.cancel(pendingIntent(context, null, 0L))
             return
         }
@@ -83,7 +91,8 @@ object PrayerAlarms {
         val trigger = time.toInstant().toEpochMilli()
         val pi = pendingIntent(context, prayer, trigger)
         if (canScheduleExact(context)) {
-            am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, trigger, pi)
+            try { am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, trigger, pi) }
+            catch (_: SecurityException) { am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, trigger, pi) }
         } else {
             // Без разрешения на точные будильники система может задержать уведомление на несколько минут.
             am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, trigger, pi)
@@ -105,19 +114,27 @@ object PrayerAlarms {
 
     internal fun onAlarm(context: Context, intent: Intent) {
         val prayer = intent.getStringExtra(EXTRA_PRAYER)?.let { runCatching { Prayer.valueOf(it) }.getOrNull() }
-        val trigger = intent.getLongExtra(EXTRA_TIME, System.currentTimeMillis())
-        val firedAt = Instant.ofEpochMilli(trigger).atZone(ZoneId.systemDefault())
-
-        if (prayer != null && Store.prayerNotifications) {
-            showNotification(context, prayer, firedAt)
+        val trigger = intent.getLongExtra(EXTRA_TIME, 0L)
+        val now = ZonedDateTime.now(PrayerSchedule.zone())
+        val due = Instant.ofEpochMilli(trigger).atZone(now.zone)
+        val recent = PrayerSignals.inWindow(trigger, now.toInstant().toEpochMilli())
+        val current = if (Store.onboarded && prayer?.isPrayer == true && recent) {
+            val (scheduledPrayer, time) = PrayerSchedule.next(due.minusSeconds(1))
+            prayer == scheduledPrayer && time.toInstant().toEpochMilli() == trigger
+        } else false
+        if (current && prayer != null) {
+            if (Store.prayerNotifications && !PrayerSignals.wasPosted(prayer, trigger)) showNotification(context, prayer, due)
+            if (Store.blockingEnabled && Store.prayerLockEnabled) GuardService.sync(context, checkNow = true)
         }
-        // Наступил намаз: будим защиту соцсетей (её могла остановить экономия батареи) и сразу проверяем.
-        if (Store.blockingEnabled && Store.prayerLockEnabled) {
-            com.zikrtime.app.screentime.GuardService.sync(context, checkNow = true)
-        }
-        // Следующий будильник — строго после только что сработавшего намаза.
-        scheduleNext(context, after = firedAt.plusSeconds(30))
+        // A delayed receiver must not rearm every occurrence it has missed.
+        scheduleNext(context, after = now)
         com.zikrtime.app.widget.Widgets.updateAll(context)
+    }
+
+    fun blockedLegacyChannel(context: Context, adhan: Boolean): String? {
+        val previous = if (adhan) adhanChannel(Store.notificationVoice) else LEGACY_CHANNEL
+        val system = context.getSystemService(NotificationManager::class.java)
+        return previous.takeIf { system.getNotificationChannel(it)?.importance == NotificationManager.IMPORTANCE_NONE }
     }
 
     private fun showNotification(context: Context, prayer: Prayer, time: ZonedDateTime) {
@@ -141,20 +158,31 @@ object PrayerAlarms {
                 append(res.getString(R.string.notify_prayer_lock, Store.prayerLockMinutes))
             }
         }
-        val voice = Store.notificationVoice
-        val channel = if (Store.notificationAdhan && AdhanSound.available(context, voice)) adhanChannel(voice) else CHANNEL_ID
+        val voice = AdhanSound.notificationVoice(Store.notificationVoice).id
+        val mode = when {
+            Store.notificationAdhan && AdhanSound.available(context, voice) -> "adhan"
+            PrayerSignals.brief -> "brief"
+            else -> "quiet"
+        }
+        val channel = when (mode) { "adhan" -> adhanChannel(voice); "brief" -> CHANNEL_BRIEF; else -> CHANNEL_ID }
+        val manager = context.getSystemService(NotificationManager::class.java)
+        if (manager.getNotificationChannel(channel) == null) createChannels(context)
+        if (manager.getNotificationChannel(channel)?.importance == NotificationManager.IMPORTANCE_NONE ||
+            blockedLegacyChannel(context, mode == "adhan") != null) return
         val notification = NotificationCompat.Builder(context, channel)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(res.getString(R.string.notify_prayer_title, prayerName(res, prayer)))
             .setContentText(text)
             .setStyle(NotificationCompat.BigTextStyle().bigText(text))
             .setCategory(NotificationCompat.CATEGORY_REMINDER)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setPriority(if (mode == "adhan") NotificationCompat.PRIORITY_HIGH else NotificationCompat.PRIORITY_DEFAULT)
+            .apply { if (mode == "quiet") setSilent(true) }
             .setContentIntent(open)
             .setAutoCancel(true)
             .build()
         try {
             nm.notify(prayer.ordinal + 100, notification)
+            PrayerSignals.posted("prayer", prayer.name, time.toInstant().toEpochMilli(), mode = mode)
         } catch (_: SecurityException) {
             // Разрешение на уведомления отозвано — просто пропускаем.
         }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about_current_audio_licenses">Ҳуруфи Amiri — SIL Open Font License 1.1. Се сабти азони Аҳмад Халаф барои барномаи Athan бо иҷозатномаи CC BY 4.0 истифода мешаванд. Пайвандҳои сабтҳои аслӣ ва иҷозатнома дар бахши интихоби садо ҷой доранд. Манбаи ҷадвал дар бахши вақтҳои намоз нишон дода мешавад.</string>
+    <string name="adhan_khalaf_one">Аҳмад Халаф · Азони I</string>
+    <string name="adhan_khalaf_two">Аҳмад Халаф · Азони II</string>
+    <string name="adhan_khalaf_fajr">Аҳмад Халаф · Азони бомдод</string>
+    <string name="adhan_recording_processing">Танаффуси аввали сабти Аҳмад Халаф барои Athan кӯтоҳ карда шуд, ғавғои басомади паст кам ва баландии садо ҳамсон карда шуд. CC BY 4.0.</string>
+</resources>

@@ -1,0 +1,1845 @@
+[
+  {
+    "id": "l2x_gaze_both_groups",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 24:30, Quran 24:31",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "sourceVerses": [
+      "24:30",
+      "24:31"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какое наставление повторено для мужчин и женщин в 24:30–31?",
+        "options": [
+          "Опускать взоры и хранить целомудрие",
+          "Записывать долги и назначать свидетелей",
+          "Спрашивать разрешения только трижды в день",
+          "Снижать голос и выбирать умеренную походку"
+        ],
+        "info": "Общая обязанность охраны взгляда и целомудрия названа для обеих групп; дополнительные подробности следующего аята не отменяют этой общности."
+      },
+      "en": {
+        "q": "Which instruction is repeated for men and women in 24:30–31?",
+        "options": [
+          "Lower their gaze and guard their chastity",
+          "Record debts and appoint witnesses",
+          "Ask permission only three times a day",
+          "Lower their voices and walk moderately"
+        ],
+        "info": "Guarding the gaze and chastity is stated for both groups; further details in the next verse do not remove that shared obligation."
+      },
+      "uz": {
+        "q": "24:30–31 da erkak va ayollarga qaysi ko‘rsatma takrorlanadi?",
+        "options": [
+          "Nigohlarini tushirish va iffatlarini saqlash",
+          "Qarzlarni yozish va guvoh tayinlash",
+          "Kuniga faqat uch marta ruxsat so‘rash",
+          "Ovozni pasaytirish va o‘rtacha yurish"
+        ],
+        "info": "Nigoh va iffatni saqlash har ikki guruhga aytilgan. Keyingi oyatning qo‘shimcha tafsilotlari bu umumiy vazifani bekor qilmaydi."
+      },
+      "tg": {
+        "q": "Дар 24:30–31 кадом дастур барои мардон ва занон такрор шудааст?",
+        "options": [
+          "Паст кардани нигоҳ ва нигоҳ доштани покдоманӣ",
+          "Навиштани қарзҳо ва таъйини шоҳидон",
+          "Танҳо се бор дар рӯз иҷозат пурсидан",
+          "Паст кардани овоз ва мӯътадил роҳ рафтан"
+        ],
+        "info": "Нигоҳ доштани нигоҳ ва покдоманӣ барои ҳар ду гурӯҳ гуфта шудааст. Ҷузъиёти иловагии ояти баъдӣ ин вазифаи умумиро бекор намекунанд."
+      },
+      "kk": {
+        "q": "24:30–31-де ерлер мен әйелдерге қандай нұсқау қайталанады?",
+        "options": [
+          "Көздерін төмен салып, ар-намысын сақтау",
+          "Қарызды жазып, куәлар тағайындау",
+          "Күніне тек үш рет рұқсат сұрау",
+          "Дауысты бәсеңдетіп, орташа жүру"
+        ],
+        "info": "Көз бен ар-намысты сақтау екі топқа да айтылады. Келесі аяттағы қосымша мәліметтер бұл ортақ міндетті жоймайды."
+      },
+      "ky": {
+        "q": "24:30–31-де эркектер менен аялдарга кайсы көрсөтмө кайталанат?",
+        "options": [
+          "Көздөрүн төмөн салып, абийирин сактоо",
+          "Карыздарды жазып, күбөлөрдү дайындоо",
+          "Күнүнө үч жолу гана уруксат суроо",
+          "Үндү басаңдатып, орточо басуу"
+        ],
+        "info": "Көздү жана абийирди сактоо эки топко тең айтылган. Кийинки аяттагы кошумча жагдайлар бул жалпы милдетти жокко чыгарбайт."
+      },
+      "az": {
+        "q": "24:30–31-də kişilər və qadınlar üçün hansı göstəriş təkrarlanır?",
+        "options": [
+          "Baxışlarını aşağı salmaq və iffətlərini qorumaq",
+          "Borcları yazmaq və şahid təyin etmək",
+          "Gündə yalnız üç dəfə icazə istəmək",
+          "Səsi azaltmaq və orta yerişlə yerimək"
+        ],
+        "info": "Baxışı və iffəti qorumaq hər iki qrupa deyilir. Sonrakı ayənin əlavə təfərrüatları bu ortaq vəzifəni aradan qaldırmır."
+      },
+      "tr": {
+        "q": "24:30–31’de erkekler ve kadınlar için hangi öğüt tekrarlanır?",
+        "options": [
+          "Bakışlarını indirmek ve iffetlerini korumak",
+          "Borçları yazmak ve şahit belirlemek",
+          "Günde yalnız üç kez izin istemek",
+          "Sesi alçaltmak ve ölçülü yürümek"
+        ],
+        "info": "Bakışı ve iffeti koruma iki gruba da bildirilir. Sonraki âyetin ek ayrıntıları bu ortak görevi ortadan kaldırmaz."
+      }
+    }
+  },
+  {
+    "id": "l2x_maturity_permission",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 24:58, 24:59",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "sourceVerses": [
+      "24:58",
+      "24:59"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Что меняется для детей при достижении зрелости согласно 24:59?",
+        "options": [
+          "Они просят разрешения подобно взрослым до них",
+          "Они спрашивают разрешения только перед рассветом",
+          "Они спрашивают разрешения только после ночной молитвы",
+          "Они спрашивают разрешения лишь у гостей"
+        ],
+        "info": "Аят указывает переход к правилу взрослых после зрелости; ранее названные отдельные часы не остаются единственной границей."
+      },
+      "en": {
+        "q": "What changes for children on reaching maturity according to 24:59?",
+        "options": [
+          "They ask permission like the adults before them",
+          "They ask permission only before dawn",
+          "They ask permission only after the night prayer",
+          "They ask permission only from guests"
+        ],
+        "info": "The verse marks a transition to the adults' rule after maturity; the separately named hours are no longer the only boundary."
+      },
+      "uz": {
+        "q": "24:59 ga ko‘ra bolalar balog‘atga yetganda nima o‘zgaradi?",
+        "options": [
+          "Oldingi kattalar kabi ruxsat so‘raydilar",
+          "Faqat tongdan oldin ruxsat so‘raydilar",
+          "Faqat xufton namozidan keyin ruxsat so‘raydilar",
+          "Faqat mehmonlardan ruxsat so‘raydilar"
+        ],
+        "info": "Oyat balog‘atdan keyin kattalar qoidasiga o‘tishni ko‘rsatadi. Oldin alohida aytilgan soatlar endi yagona chegara bo‘lib qolmaydi."
+      },
+      "tg": {
+        "q": "Мувофиқи 24:59 ҳангоми ба балоғат расидани кӯдакон чӣ тағйир меёбад?",
+        "options": [
+          "Мисли калонсолони пеш аз худ иҷозат мепурсанд",
+          "Танҳо пеш аз субҳ иҷозат мепурсанд",
+          "Танҳо пас аз намози хуфтан иҷозат мепурсанд",
+          "Танҳо аз меҳмонон иҷозат мепурсанд"
+        ],
+        "info": "Оят баъди балоғат гузаштан ба қоидаи калонсолонро нишон медиҳад. Соатҳои алоҳидаи пештар гуфташуда дигар ягона ҳад нестанд."
+      },
+      "kk": {
+        "q": "24:59 бойынша балалар балиғатқа жеткенде не өзгереді?",
+        "options": [
+          "Өздерінен бұрынғы ересектер сияқты рұқсат сұрайды",
+          "Тек таң алдында рұқсат сұрайды",
+          "Тек құптан намазынан кейін рұқсат сұрайды",
+          "Тек қонақтардан рұқсат сұрайды"
+        ],
+        "info": "Аят балиғаттан кейін ересектер ережесіне көшуді көрсетеді. Бұрын бөлек аталған уақыттар енді жалғыз шек болып қалмайды."
+      },
+      "ky": {
+        "q": "24:59 боюнча балдар балагатка жеткенде эмне өзгөрөт?",
+        "options": [
+          "Өздөрүнөн мурдагы чоңдор сыяктуу уруксат сурашат",
+          "Таң алдында гана уруксат сурашат",
+          "Куптан намазынан кийин гана уруксат сурашат",
+          "Коноктордон гана уруксат сурашат"
+        ],
+        "info": "Аят балагаттан кийин чоңдордун эрежесине өтүүнү көрсөтөт. Мурда өзүнчө аталган убактар эми жалгыз чек болуп калбайт."
+      },
+      "az": {
+        "q": "24:59-a görə uşaqlar yetkinlik yaşına çatdıqda nə dəyişir?",
+        "options": [
+          "Özlərindən əvvəlki böyüklər kimi icazə istəyirlər",
+          "Yalnız sübhdən əvvəl icazə istəyirlər",
+          "Yalnız işa namazından sonra icazə istəyirlər",
+          "Yalnız qonaqlardan icazə istəyirlər"
+        ],
+        "info": "Ayə yetkinlikdən sonra böyüklərin qaydasına keçidi göstərir. Əvvəl ayrıca deyilən saatlar artıq yeganə hədd deyil."
+      },
+      "tr": {
+        "q": "24:59’a göre çocuklar ergenliğe ulaşınca ne değişir?",
+        "options": [
+          "Kendilerinden önceki yetişkinler gibi izin isterler",
+          "Yalnız şafaktan önce izin isterler",
+          "Yalnız yatsı namazından sonra izin isterler",
+          "Yalnız misafirlerden izin isterler"
+        ],
+        "info": "Âyet ergenlikten sonra yetişkinlerin kuralına geçişi gösterir. Daha önce ayrıca belirtilen saatler artık tek sınır değildir."
+      }
+    }
+  },
+  {
+    "id": "l2x_eating_and_greeting",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 24:61",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "sourceVerses": [
+      "24:61"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие положения о совместной еде и входе в дома названы в 24:61?",
+        "options": [
+          "Можно есть вместе или отдельно; при входе следует приветствовать",
+          "Можно есть только вместе; приветствуют только после еды",
+          "Можно есть только отдельно; приветствуют лишь хозяина",
+          "Есть вместе можно только в пути; приветствуют только гостей"
+        ],
+        "info": "Допустимость совместной и отдельной еды соседствует с наставлением о благом приветствии при входе."
+      },
+      "en": {
+        "q": "What does 24:61 state about eating together and entering homes?",
+        "options": [
+          "One may eat together or separately; greet when entering",
+          "One may eat only together; greet only after eating",
+          "One may eat only separately; greet only the host",
+          "Eating together is allowed only while travelling; greet only guests"
+        ],
+        "info": "Permission to eat together or separately is paired with the teaching of a good greeting on entering."
+      },
+      "uz": {
+        "q": "24:61 da birga ovqatlanish va uylarga kirish haqida nimalar aytilgan?",
+        "options": [
+          "Birga yoki alohida yeyish mumkin; kirishda salom beriladi",
+          "Faqat birga yeyish mumkin; faqat ovqatdan keyin salom beriladi",
+          "Faqat alohida yeyish mumkin; faqat mezbonga salom beriladi",
+          "Faqat safarda birga yeyish mumkin; faqat mehmonlarga salom beriladi"
+        ],
+        "info": "Birga yoki alohida ovqatlanishga ruxsat kirishda yaxshi salom berish ko‘rsatmasi bilan birga keladi."
+      },
+      "tg": {
+        "q": "Дар 24:61 дар бораи якҷоя хӯрдан ва ба хонаҳо даромадан чӣ гуфта мешавад?",
+        "options": [
+          "Якҷоя ё ҷудогона хӯрдан мумкин; ҳангоми даромадан салом диҳед",
+          "Танҳо якҷоя хӯрдан мумкин; танҳо баъди хӯрок салом диҳед",
+          "Танҳо ҷудогона хӯрдан мумкин; фақат ба соҳибхона салом диҳед",
+          "Танҳо дар сафар якҷоя хӯрдан мумкин; фақат ба меҳмонон салом диҳед"
+        ],
+        "info": "Иҷозати якҷоя ё ҷудогона хӯрдан бо дастури саломи нек ҳангоми даромадан ҳамроҳ аст."
+      },
+      "kk": {
+        "q": "24:61-де бірге тамақтану мен үйлерге кіру туралы не айтылады?",
+        "options": [
+          "Бірге не бөлек жеуге болады; кіргенде сәлем беру керек",
+          "Тек бірге жеуге болады; сәлем тек астан кейін беріледі",
+          "Тек бөлек жеуге болады; сәлем тек үй иесіне беріледі",
+          "Тек сапарда бірге жеуге болады; сәлем тек қонақтарға беріледі"
+        ],
+        "info": "Бірге не бөлек тамақтануға рұқсат кіргенде игі сәлем беру нұсқауымен қатар келеді."
+      },
+      "ky": {
+        "q": "24:61-де чогуу тамактануу жана үйлөргө кирүү жөнүндө эмне айтылат?",
+        "options": [
+          "Чогуу же өзүнчө жесе болот; киргенде салам берүү керек",
+          "Чогуу гана жесе болот; тамактан кийин гана салам берилет",
+          "Өзүнчө гана жесе болот; үй ээсине гана салам берилет",
+          "Сапарда гана чогуу жесе болот; конокторго гана салам берилет"
+        ],
+        "info": "Чогуу же өзүнчө тамактанууга уруксат киргенде жакшы салам берүү көрсөтмөсү менен кошо келет."
+      },
+      "az": {
+        "q": "24:61-də birlikdə yemək və evlərə girmək barədə nə deyilir?",
+        "options": [
+          "Birlikdə və ya ayrı yemək olar; girəndə salam verilməlidir",
+          "Yalnız birlikdə yemək olar; yalnız yeməkdən sonra salam verilir",
+          "Yalnız ayrı yemək olar; yalnız ev sahibinə salam verilir",
+          "Yalnız səfərdə birlikdə yemək olar; yalnız qonaqlara salam verilir"
+        ],
+        "info": "Birlikdə və ya ayrı yeməyə icazə girərkən gözəl salam vermək göstərişi ilə yanaşı gəlir."
+      },
+      "tr": {
+        "q": "24:61’de birlikte yemek ve evlere girmek hakkında ne belirtilir?",
+        "options": [
+          "Birlikte veya ayrı yenebilir; girerken selam verilir",
+          "Yalnız birlikte yenebilir; yalnız yemekten sonra selam verilir",
+          "Yalnız ayrı yenebilir; yalnız ev sahibine selam verilir",
+          "Yalnız yolculukta birlikte yenebilir; yalnız misafirlere selam verilir"
+        ],
+        "info": "Birlikte veya ayrı yeme izni, eve girerken güzel bir selam verme öğüdüyle yan yana gelir."
+      }
+    }
+  },
+  {
+    "id": "l2x_humble_walk_peace",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 25:63",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/25",
+    "sourceVerses": [
+      "25:63"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие внешнее поведение и ответ соединены у рабов Всемилостивого в 25:63?",
+        "options": [
+          "Смиренная походка и мирный ответ невеждам",
+          "Тихий голос и запись долгов",
+          "Молчание в дороге и совет родственников",
+          "Быстрая походка и публичное наставление"
+        ],
+        "info": "Аят соединяет повседневную манеру держаться с достойным ответом при невежественном обращении."
+      },
+      "en": {
+        "q": "Which conduct and response are paired for the servants of the Most Merciful in 25:63?",
+        "options": [
+          "Humble walking and a peaceful response to the ignorant",
+          "A quiet voice and recording debts",
+          "Silence while travelling and relatives' advice",
+          "Walking quickly and public admonition"
+        ],
+        "info": "The verse joins everyday bearing with a dignified response when addressed ignorantly."
+      },
+      "uz": {
+        "q": "25:63 da Rahmon bandalarining qaysi yurish-turishi va javobi birga aytilgan?",
+        "options": [
+          "Kamtarona yurish va johillarga tinch javob",
+          "Past ovoz va qarzlarni yozish",
+          "Safarda sukut va qarindoshlar maslahati",
+          "Tez yurish va ommaviy nasihat"
+        ],
+        "info": "Oyat kundalik o‘zini tutish bilan johilona murojaatga munosib javobni birlashtiradi."
+      },
+      "tg": {
+        "q": "Дар 25:63 кадом рафтор ва ҷавоби бандагони Раҳмон якҷоя омадаанд?",
+        "options": [
+          "Хоксорона роҳ рафтан ва ҷавоби осоишта ба ҷоҳилон",
+          "Овози паст ва навиштани қарзҳо",
+          "Хомӯшӣ дар сафар ва маслиҳати хешовандон",
+          "Зуд роҳ рафтан ва насиҳати оммавӣ"
+        ],
+        "info": "Оят тарзи рафтори ҳаррӯзаро бо ҷавоби шоиста ба муроҷиати ҷоҳилона мепайвандад."
+      },
+      "kk": {
+        "q": "25:63-те Рахманның құлдарының қандай жүріс-тұрысы мен жауабы қатар аталады?",
+        "options": [
+          "Кішіпейіл жүру және надандарға бейбіт жауап",
+          "Бәсең дауыс және қарызды жазу",
+          "Сапарда үнсіздік және туыстар кеңесі",
+          "Жылдам жүру және көпшілік алдында насихат"
+        ],
+        "info": "Аят күнделікті мінезді надандықпен айтылған сөзге лайықты жауаппен байланыстырады."
+      },
+      "ky": {
+        "q": "25:63-те Рахмандын кулдарынын кайсы жүрүм-туруму менен жообу бирге айтылат?",
+        "options": [
+          "Момун басуу жана наадандарга тынч жооп",
+          "Акырын үн жана карыздарды жазуу",
+          "Сапарда унчукпоо жана туугандардын кеңеши",
+          "Тез басуу жана эл алдында насаат"
+        ],
+        "info": "Аят күнүмдүк жүрүм-турумду наадандык менен кайрылгандарга татыктуу жооп менен бириктирет."
+      },
+      "az": {
+        "q": "25:63-də Rəhmanın qullarının hansı davranışı və cavabı birləşdirilir?",
+        "options": [
+          "Təvazökar yeriş və cahillərə dinc cavab",
+          "Alçaq səs və borcları yazmaq",
+          "Səfərdə sükut və qohumların məsləhəti",
+          "Sürətli yeriş və ictimai nəsihət"
+        ],
+        "info": "Ayə gündəlik davranışı cahilcə müraciətə ləyaqətli cavabla birləşdirir."
+      },
+      "tr": {
+        "q": "25:63’te Rahmân’ın kullarının hangi davranışı ve cevabı bir arada anılır?",
+        "options": [
+          "Alçak gönüllü yürüyüş ve cahillere barışçı cevap",
+          "Alçak ses ve borçları yazmak",
+          "Yolculukta sessizlik ve akrabaların öğüdü",
+          "Hızlı yürüyüş ve topluluk önünde nasihat"
+        ],
+        "info": "Âyet günlük tavrı, cahilce hitaba verilen onurlu cevapla birleştirir."
+      }
+    }
+  },
+  {
+    "id": "l2x_passing_with_dignity",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 25:72",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/25",
+    "sourceVerses": [
+      "25:72"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие два проявления достоинства соединены в 25:72?",
+        "options": [
+          "Не участвовать в ложном и проходить пустословие с достоинством",
+          "Сдерживать гнев и прощать обидевшего",
+          "Проверять весть и не судить по подозрению",
+          "Говорить справедливо и не скрывать свидетельство"
+        ],
+        "info": "В аяте рядом стоят отказ от участия в ложном и достойное прохождение мимо пустословия. Обе части описывают поведение одних и тех же людей."
+      },
+      "en": {
+        "q": "Which two expressions of dignity are combined in 25:72?",
+        "options": [
+          "Avoid falsehood and pass idle talk with dignity",
+          "Restrain anger and pardon the offender",
+          "Verify a report and not judge by suspicion",
+          "Speak justly and not conceal testimony"
+        ],
+        "info": "Refusal to participate in falsehood stands alongside passing idle talk with dignity. Both clauses describe the conduct of the same people."
+      },
+      "uz": {
+        "q": "25:72 da qaysi ikki munosib xulq birlashtirilgan?",
+        "options": [
+          "Yolg‘onga qo‘shilmaslik va behuda so‘z yonidan munosib o‘tish",
+          "G‘azabni tiyish va ozor berganni kechirish",
+          "Xabarni tekshirish va gumon bilan hukm qilmaslik",
+          "Adolatli gapirish va guvohlikni yashirmaslik"
+        ],
+        "info": "Yolg‘onga qo‘shilmaslik behuda so‘z yonidan munosib o‘tish bilan yonma-yon keladi. Ikkala qism bir xil kishilarning xulqini tasvirlaydi."
+      },
+      "tg": {
+        "q": "Дар 25:72 кадом ду рафтори шоиста якҷоя омадаанд?",
+        "options": [
+          "Дар ботил иштирок накардан ва аз беҳудагӯӣ бо виқор гузаштан",
+          "Хашмро фурӯ бурдан ва озордиҳандаро бахшидан",
+          "Хабарро санҷидан ва бо гумон ҳукм накардан",
+          "Одилона сухан гуфтан ва шаҳодатро пинҳон накардан"
+        ],
+        "info": "Дурӣ аз иштирок дар ботил бо гузаштани бовиқор аз беҳудагӯӣ якҷоя аст. Ҳар ду қисм рафтори ҳамон одамонро тасвир мекунанд."
+      },
+      "kk": {
+        "q": "25:72-де қандай екі лайықты мінез қатар аталады?",
+        "options": [
+          "Жалғанға қатыспау және бос сөздің жанынан абыроймен өту",
+          "Ашуды басу және ренжіткенді кешіру",
+          "Хабарды тексеру және күдікпен үкім шығармау",
+          "Әділ сөйлеу және куәлікті жасырмау"
+        ],
+        "info": "Жалғанға қатысудан бас тарту бос сөздің жанынан абыроймен өтумен қатар тұрады. Екі бөлік те сол адамдардың мінезін сипаттайды."
+      },
+      "ky": {
+        "q": "25:72-де кайсы эки татыктуу жүрүм-турум бирге айтылат?",
+        "options": [
+          "Жалганга катышпоо жана куру сөздүн жанынан кадыр менен өтүү",
+          "Ачууну басуу жана таарынтканды кечирүү",
+          "Кабарды текшерүү жана шек менен өкүм чыгарбоо",
+          "Адилет сүйлөө жана күбөлүктү жашырбоо"
+        ],
+        "info": "Жалганга катышуудан баш тартуу куру сөздүн жанынан кадыр менен өтүү менен бирге келет. Эки бөлүк тең ошол адамдардын жүрүм-турумун сүрөттөйт."
+      },
+      "az": {
+        "q": "25:72-də ləyaqətin hansı iki ifadəsi birləşdirilir?",
+        "options": [
+          "Yalana qatılmamaq və boş sözün yanından ləyaqətlə keçmək",
+          "Qəzəbi cilovlamaq və incidəni bağışlamaq",
+          "Xəbəri yoxlamaq və şübhə ilə hökm verməmək",
+          "Ədalətlə danışmaq və şahidliyi gizlətməmək"
+        ],
+        "info": "Yalana qatılmaqdan imtina boş sözün yanından ləyaqətlə keçməklə yanaşıdır. Hər iki hissə eyni insanların davranışını təsvir edir."
+      },
+      "tr": {
+        "q": "25:72’de hangi iki onurlu tutum birleştirilir?",
+        "options": [
+          "Yalana katılmamak ve boş sözün yanından onurla geçmek",
+          "Öfkeyi tutmak ve inciteni bağışlamak",
+          "Haberi araştırmak ve zanla hükmetmemek",
+          "Adaletli konuşmak ve şahitliği gizlememek"
+        ],
+        "info": "Yalana katılmama, boş sözün yanından onurla geçmeyle birlikte anılır. İki bölüm de aynı kişilerin davranışını anlatır."
+      }
+    }
+  },
+  {
+    "id": "l2x_not_deaf_blind",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 25:73",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/25",
+    "sourceVerses": [
+      "25:73"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Каким отрицательным образом 25:73 описывает то, чего не делают внимающие аятам?",
+        "options": [
+          "Не остаются перед ними глухими и слепыми",
+          "Не становятся подобны рассыпанной пыли",
+          "Не распускают крепко спрядённую нить",
+          "Не оказываются подобны пене потока"
+        ],
+        "info": "Образ глухоты и слепоты касается невнимания к напоминанию; аят описывает осмысленный отклик, а не только присутствие."
+      },
+      "en": {
+        "q": "What negative image does 25:73 use for what attentive listeners do not do?",
+        "options": [
+          "They do not remain deaf and blind to the verses",
+          "They do not become like scattered dust",
+          "They do not unravel tightly spun thread",
+          "They do not become like foam on a stream"
+        ],
+        "info": "Deafness and blindness depict failure to heed a reminder; the verse describes a meaningful response rather than mere presence."
+      },
+      "uz": {
+        "q": "25:73 oyatlarga quloq soluvchilar qilmaydigan ishni qaysi salbiy obraz bilan tasvirlaydi?",
+        "options": [
+          "Oyatlar qarshisida kar va ko‘r bo‘lib qolmaydilar",
+          "Sochilgan changga o‘xshab qolmaydilar",
+          "Mahkam yigirilgan ipni yechmaydilar",
+          "Oqim ko‘pigiga o‘xshab qolmaydilar"
+        ],
+        "info": "Karlik va ko‘rlik eslatmaga e’tiborsizlikni ifodalaydi. Oyat shunchaki hozir bo‘lishni emas, anglab javob berishni tasvirlaydi."
+      },
+      "tg": {
+        "q": "25:73 кори накардаи гӯшдиҳандагони оятҳоро бо кадом тасвири манфӣ баён мекунад?",
+        "options": [
+          "Дар баробари оятҳо кару кӯр намемонанд",
+          "Мисли чанги пароканда намешаванд",
+          "Риштаи маҳкам бофтаро намекушоянд",
+          "Мисли кафки ҷӯй намешаванд"
+        ],
+        "info": "Карӣ ва кӯрӣ беэътиноӣ ба ёдовариро тасвир мекунанд. Оят танҳо ҳузурро не, балки посухи бофаҳмро баён мекунад."
+      },
+      "kk": {
+        "q": "25:73 аяттарға құлақ асатындардың не істемейтінін қандай теріс бейнемен сипаттайды?",
+        "options": [
+          "Аяттардың алдында керең және соқыр болып қалмайды",
+          "Шашылған шаңға айналмайды",
+          "Мықтап иірілген жіпті тарқатпайды",
+          "Ағынның көбігіне ұқсамайды"
+        ],
+        "info": "Кереңдік пен соқырлық еске салуға немқұрайдылықты бейнелейді. Аят жай қатысуды емес, түсініп үн қатуды сипаттайды."
+      },
+      "ky": {
+        "q": "25:73 аяттарды уккандар жасабаган нерсени кайсы терс образ менен сүрөттөйт?",
+        "options": [
+          "Аяттардын алдында дүлөй жана сокур бойдон калбайт",
+          "Чачылган чаңга айланбайт",
+          "Бекем ийрилген жипти чечпейт",
+          "Агымдын көбүгүнө окшобойт"
+        ],
+        "info": "Дүлөйлүк менен сокурдук эскертүүгө көңүл бурбоону билдирет. Аят жөн гана катышууну эмес, аңдап жооп берүүнү сүрөттөйт."
+      },
+      "az": {
+        "q": "25:73 ayələrə diqqətlə qulaq asanların etmədiyini hansı mənfi obrazla təsvir edir?",
+        "options": [
+          "Ayələr qarşısında kar və kor qalmırlar",
+          "Səpələnmiş toza bənzəmirlər",
+          "Möhkəm əyrilmiş sapı açmırlar",
+          "Axının köpüyünə bənzəmirlər"
+        ],
+        "info": "Karlıq və korluq xatırlatmaya diqqətsizliyi göstərir. Ayə sadəcə orada olmağı deyil, düşünülmüş cavabı təsvir edir."
+      },
+      "tr": {
+        "q": "25:73 âyetlere kulak verenlerin yapmadığını hangi olumsuz benzetmeyle anlatır?",
+        "options": [
+          "Âyetlere karşı sağır ve kör kalmazlar",
+          "Dağılmış toz gibi olmazlar",
+          "Sağlam eğrilmiş ipliği çözmezler",
+          "Akarsuyun köpüğü gibi olmazlar"
+        ],
+        "info": "Sağırlık ve körlük hatırlatmayı dinlememeyi anlatır. Âyet yalnız orada bulunmayı değil, anlamlı bir karşılığı tasvir eder."
+      }
+    }
+  },
+  {
+    "id": "l2x_family_and_example",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 25:74",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/25",
+    "sourceVerses": [
+      "25:74"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие две просьбы объединены в молитве 25:74?",
+        "options": [
+          "Услада в семье и пример для богобоязненных",
+          "Прощение родителей и верующих в День расчёта",
+          "Принятие добрых дел и наставление обрядам",
+          "Стойкость сердца и милость от Господа"
+        ],
+        "info": "Мольба объединяет усладу очей в супругах и потомстве с просьбой быть предводителями для богобоязненных."
+      },
+      "en": {
+        "q": "Which two requests are joined in the prayer in 25:74?",
+        "options": [
+          "Comfort in one's family and being an example for the God-conscious",
+          "Forgiveness for parents and believers on the Day of Reckoning",
+          "Acceptance of good deeds and guidance in rites",
+          "Steadfastness of the heart and mercy from the Lord"
+        ],
+        "info": "The prayer joins comfort through spouses and offspring with the request to be leaders for the God-conscious."
+      },
+      "uz": {
+        "q": "25:74 dagi duoda qaysi ikki so‘rov birlashtirilgan?",
+        "options": [
+          "Oilada ko‘z quvonchi va taqvodorlarga o‘rnak bo‘lish",
+          "Hisob kunida ota-ona va mo‘minlar kechirilishi",
+          "Yaxshi amallar qabul bo‘lishi va marosimlar o‘rgatilishi",
+          "Qalb sobitligi va Rabbidan rahmat"
+        ],
+        "info": "Duo juftlar va zurriyotdan ko‘z quvonchi topish bilan taqvodorlarga peshvo bo‘lishni so‘rashni birlashtiradi."
+      },
+      "tg": {
+        "q": "Дар дуои 25:74 кадом ду дархост якҷоя омадаанд?",
+        "options": [
+          "Равшании чашм дар оила ва намуна барои парҳезгорон",
+          "Омурзиши падару модар ва мӯъминон дар Рӯзи ҳисоб",
+          "Қабули корҳои нек ва таълими маросимҳо",
+          "Устувории дил ва раҳмат аз Парвардигор"
+        ],
+        "info": "Дуо равшании чашм аз ҳамсарон ва фарзандонро бо дархости пешвоӣ барои парҳезгорон мепайвандад."
+      },
+      "kk": {
+        "q": "25:74-тегі дұғада қандай екі тілек біріктірілген?",
+        "options": [
+          "Отбасынан қуаныш және тақуаларға үлгі болу",
+          "Есеп күні ата-ана мен мүміндердің кешірілуі",
+          "Ізгі істердің қабыл болуы және рәсімдерге үйрету",
+          "Жүректің беріктігі және Раббыдан рақым"
+        ],
+        "info": "Дұға жұбайлар мен ұрпақтан көз қуанышын табуды тақуаларға жетекші болу тілегімен біріктіреді."
+      },
+      "ky": {
+        "q": "25:74-төгү дубада кайсы эки өтүнүч бириктирилген?",
+        "options": [
+          "Үй-бүлөдөн көз кубанычы жана такыбаларга үлгү болуу",
+          "Эсеп күнүндө ата-эне менен момундардын кечирилиши",
+          "Жакшы иштердин кабыл болушу жана жөрөлгөлөргө үйрөтүү",
+          "Жүрөктүн бекемдиги жана Раббиден ырайым"
+        ],
+        "info": "Дуба жубайлар менен урпактардан көз кубанычын табууну такыбаларга жол башчы болуу өтүнүчү менен бириктирет."
+      },
+      "az": {
+        "q": "25:74-dəki duada hansı iki istək birləşdirilir?",
+        "options": [
+          "Ailədə göz aydınlığı və təqvalılara nümunə olmaq",
+          "Haqq-hesab günündə valideynlərin və möminlərin bağışlanması",
+          "Yaxşı əməllərin qəbulu və ayinlərin öyrədilməsi",
+          "Qəlbin sabitliyi və Rəbdən rəhmət"
+        ],
+        "info": "Dua həyat yoldaşları və övladlardan göz aydınlığını təqvalılara rəhbər olmaq istəyi ilə birləşdirir."
+      },
+      "tr": {
+        "q": "25:74’teki duada hangi iki istek birleşir?",
+        "options": [
+          "Ailede göz aydınlığı ve takvâ sahiplerine örnek olmak",
+          "Hesap gününde anne baba ve müminlerin bağışlanması",
+          "İyi amellerin kabulü ve ibadet usullerinin öğretilmesi",
+          "Kalbin sebatı ve Rab’den rahmet"
+        ],
+        "info": "Dua eşler ve çocuklardan göz aydınlığı bulmayı takvâ sahiplerine önder olma isteğiyle birleştirir."
+      }
+    }
+  },
+  {
+    "id": "l2x_double_reward_patience",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 28:54",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/28",
+    "sourceVerses": [
+      "28:54"
+    ],
+    "locales": {
+      "ru": {
+        "q": "За какое качество в 28:54 прямо названа двойная награда?",
+        "options": [
+          "Терпение",
+          "Смирение",
+          "Благодарность",
+          "Справедливость"
+        ],
+        "info": "После причины двойной награды названы ответ добром на зло и расходование дарованного; вопрос касается именно указанной причины."
+      },
+      "en": {
+        "q": "For which quality does 28:54 explicitly mention a double reward?",
+        "options": [
+          "Patience",
+          "Humility",
+          "Gratitude",
+          "Justice"
+        ],
+        "info": "After the reason for the double reward, responding to evil with good and giving are mentioned; the question concerns the stated reason."
+      },
+      "uz": {
+        "q": "28:54 da qaysi sifat uchun ikki karra mukofot ochiq aytilgan?",
+        "options": [
+          "Sabr",
+          "Kamtarlik",
+          "Shukr",
+          "Adolat"
+        ],
+        "info": "Ikki karra mukofot sababidan so‘ng yomonlikni yaxshilik bilan qaytarish va berilgan narsadan sarflash aytiladi. Savol aynan aytilgan sababni so‘raydi."
+      },
+      "tg": {
+        "q": "Дар 28:54 барои кадом сифат мукофоти дукарата равшан гуфта шудааст?",
+        "options": [
+          "Сабр",
+          "Фурӯтанӣ",
+          "Шукр",
+          "Адолат"
+        ],
+        "info": "Пас аз сабаби мукофоти дукарата ҷавоби нек ба бадӣ ва харҷ кардани додаҳо омадааст. Савол маҳз сабаби гуфташударо мепурсад."
+      },
+      "kk": {
+        "q": "28:54-те қандай қасиет үшін екі есе сый тікелей аталады?",
+        "options": [
+          "Сабыр",
+          "Кішіпейілділік",
+          "Шүкір",
+          "Әділдік"
+        ],
+        "info": "Екі есе сыйдың себебінен кейін жамандыққа жақсылықпен жауап беру және берілгеннен жұмсау айтылады. Сұрақ дәл аталған себеп туралы."
+      },
+      "ky": {
+        "q": "28:54-те кайсы сапат үчүн эки эселенген сыйлык ачык айтылат?",
+        "options": [
+          "Сабыр",
+          "Момундук",
+          "Шүгүр",
+          "Адилеттүүлүк"
+        ],
+        "info": "Эки эселенген сыйлыктын себебинен кийин жамандыкты жакшылык менен кайтаруу жана берилгенден сарптоо айтылат. Суроо так аталган себеп жөнүндө."
+      },
+      "az": {
+        "q": "28:54-də hansı xüsusiyyətə görə ikiqat mükafat açıq qeyd olunur?",
+        "options": [
+          "Səbir",
+          "Təvazökarlıq",
+          "Şükür",
+          "Ədalət"
+        ],
+        "info": "İkiqat mükafatın səbəbindən sonra pisliyə yaxşılıqla cavab və veriləndən xərcləmək qeyd edilir. Sual məhz göstərilən səbəbi soruşur."
+      },
+      "tr": {
+        "q": "28:54’te hangi özellik için iki kat ödül açıkça belirtilir?",
+        "options": [
+          "Sabır",
+          "Tevazu",
+          "Şükür",
+          "Adalet"
+        ],
+        "info": "İki kat ödülün sebebinden sonra kötülüğü iyilikle savma ve verilenden harcama anılır. Soru özellikle belirtilen sebebi sorar."
+      }
+    }
+  },
+  {
+    "id": "l2x_prayer_restrains",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 29:45",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/29",
+    "sourceVerses": [
+      "29:45"
+    ],
+    "locales": {
+      "ru": {
+        "q": "От чего молитва удерживает согласно 29:45?",
+        "options": [
+          "От мерзости и предосудительного",
+          "От печали и уныния",
+          "От забвения и сонливости",
+          "От сомнения и поспешности"
+        ],
+        "info": "Аят связывает молитву с нравственным действием в жизни и завершает напоминанием, что Аллах знает поступки."
+      },
+      "en": {
+        "q": "From what does prayer restrain according to 29:45?",
+        "options": [
+          "Indecency and wrongdoing",
+          "Sadness and despondency",
+          "Forgetfulness and drowsiness",
+          "Doubt and haste"
+        ],
+        "info": "The verse connects prayer with moral conduct in life and ends by recalling Allah's knowledge of deeds."
+      },
+      "uz": {
+        "q": "29:45 ga ko‘ra namoz nimadan qaytaradi?",
+        "options": [
+          "Fahsh va yomon ishlardan",
+          "G‘am va tushkunlikdan",
+          "Unutish va uyquchanlikdan",
+          "Shubha va shoshilishdan"
+        ],
+        "info": "Oyat namozni hayotdagi axloqiy xatti-harakat bilan bog‘laydi va Alloh amallarni bilishini eslatib tugaydi."
+      },
+      "tg": {
+        "q": "Мувофиқи 29:45 намоз аз чӣ бозмедорад?",
+        "options": [
+          "Аз фаҳш ва кори нописанд",
+          "Аз ғам ва ноумедӣ",
+          "Аз фаромӯшӣ ва хоболудӣ",
+          "Аз шубҳа ва шитоб"
+        ],
+        "info": "Оят намозро бо рафтори ахлоқӣ дар зиндагӣ мепайвандад ва дар охир донистани амалҳо аз ҷониби Аллоҳро ёд мекунад."
+      },
+      "kk": {
+        "q": "29:45 бойынша намаз неден тыяды?",
+        "options": [
+          "Арсыздық пен жамандықтан",
+          "Қайғы мен түңілуден",
+          "Ұмытшақтық пен ұйқышылдықтан",
+          "Күмән мен асығыстықтан"
+        ],
+        "info": "Аят намазды өмірдегі адамгершілік әрекетпен байланыстырып, Алланың істерді білетінін еске салумен аяқталады."
+      },
+      "ky": {
+        "q": "29:45 боюнча намаз эмнеден тыят?",
+        "options": [
+          "Уятсыздык менен жаман иштерден",
+          "Кайгы менен көңүл чөгүүдөн",
+          "Унутчаактык менен уйкусуроодон",
+          "Шек менен шашылыштан"
+        ],
+        "info": "Аят намазды жашоодогу адептүү жүрүм-турум менен байланыштырып, Аллах иштерди билерин эске салуу менен бүтөт."
+      },
+      "az": {
+        "q": "29:45-ə görə namaz nədən çəkindirir?",
+        "options": [
+          "Əxlaqsızlıq və pis əməllərdən",
+          "Kədər və ruh düşkünlüyündən",
+          "Unutqanlıq və yuxululuqdan",
+          "Şübhə və tələskənlikdən"
+        ],
+        "info": "Ayə namazı həyatdakı əxlaqi davranışla bağlayır və Allahın əməlləri bildiyini xatırladaraq bitir."
+      },
+      "tr": {
+        "q": "29:45’e göre namaz neden alıkoyar?",
+        "options": [
+          "Hayâsızlık ve kötülükten",
+          "Üzüntü ve karamsarlıktan",
+          "Unutkanlık ve uykululuktan",
+          "Şüphe ve aceleden"
+        ],
+        "info": "Âyet namazı yaşamdaki ahlâkî davranışa bağlar ve Allah’ın yapılanları bildiğini hatırlatarak biter."
+      }
+    }
+  },
+  {
+    "id": "l2x_spouses_peace_mercy",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 30:21",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/30",
+    "sourceVerses": [
+      "30:21"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие покой и отношения названы знамением в 30:21?",
+        "options": [
+          "Покой с супругами, любовь и милость",
+          "Общий совет, правдивость и справедливость",
+          "Сдерживание гнева, прощение и терпение",
+          "Доверенное имущество, верный договор и свидетельство"
+        ],
+        "info": "Знамение супружества раскрывается через покой, любовь и милость. Именно эта тройка отличает аят от других наставлений."
+      },
+      "en": {
+        "q": "What tranquility and relationship are called a sign in 30:21?",
+        "options": [
+          "Tranquility with spouses, love and mercy",
+          "Mutual consultation, truthfulness and justice",
+          "Restraining anger, pardon and patience",
+          "Entrusted property, a faithful contract and testimony"
+        ],
+        "info": "The sign of marriage is expressed through tranquility, love and mercy. This particular trio distinguishes the verse from other teachings."
+      },
+      "uz": {
+        "q": "30:21 da qaysi xotirjamlik va munosabatlar alomat deb aytilgan?",
+        "options": [
+          "Juftlar bilan xotirjamlik, muhabbat va rahmat",
+          "O‘zaro maslahat, rostgo‘ylik va adolat",
+          "G‘azabni tiyish, kechirish va sabr",
+          "Omonat mol, sodiq ahd va guvohlik"
+        ],
+        "info": "Juftlik alomati xotirjamlik, muhabbat va rahmat orqali ochiladi. Aynan shu uchlik oyatni boshqa ko‘rsatmalardan ajratadi."
+      },
+      "tg": {
+        "q": "Дар 30:21 кадом оромӣ ва муносибатҳо нишона номида шудаанд?",
+        "options": [
+          "Оромӣ бо ҳамсарон, муҳаббат ва раҳмат",
+          "Машварати умумӣ, ростгӯӣ ва адолат",
+          "Фурӯ бурдани хашм, бахшиш ва сабр",
+          "Моли амонат, аҳди вафодор ва шаҳодат"
+        ],
+        "info": "Нишонаи ҳамсарӣ тавассути оромӣ, муҳаббат ва раҳмат баён мешавад. Маҳз ин сегона оятро аз дастурҳои дигар фарқ мекунад."
+      },
+      "kk": {
+        "q": "30:21-де қандай тыныштық пен қатынастар белгі деп аталады?",
+        "options": [
+          "Жұбайлармен тыныштық, сүйіспеншілік және рақым",
+          "Өзара кеңес, шыншылдық және әділдік",
+          "Ашуды басу, кешірім және сабыр",
+          "Аманат мүлік, адал келісім және куәлік"
+        ],
+        "info": "Жұбайлық белгісі тыныштық, сүйіспеншілік және рақым арқылы ашылады. Дәл осы үшеуі аятты өзге нұсқаулардан ажыратады."
+      },
+      "ky": {
+        "q": "30:21-де кайсы тынчтык жана мамилелер белги деп аталат?",
+        "options": [
+          "Жубайлар менен тынчтык, сүйүү жана ырайым",
+          "Өз ара кеңеш, чынчылдык жана адилеттүүлүк",
+          "Ачууну басуу, кечирим жана сабыр",
+          "Аманат мүлк, бекем келишим жана күбөлүк"
+        ],
+        "info": "Жубайлыктын белгиси тынчтык, сүйүү жана ырайым аркылуу ачылат. Так ушул үчөө аятты башка көрсөтмөлөрдөн айырмалайт."
+      },
+      "az": {
+        "q": "30:21-də hansı rahatlıq və münasibətlər bir əlamət adlandırılır?",
+        "options": [
+          "Həyat yoldaşları ilə rahatlıq, sevgi və mərhəmət",
+          "Qarşılıqlı məsləhət, doğruluq və ədalət",
+          "Qəzəbi cilovlamaq, bağışlamaq və səbir",
+          "Əmanət mal, vəfalı əhd və şahidlik"
+        ],
+        "info": "Evlilik əlaməti rahatlıq, sevgi və mərhəmətlə ifadə olunur. Məhz bu üçlük ayəni digər göstərişlərdən fərqləndirir."
+      },
+      "tr": {
+        "q": "30:21’de hangi huzur ve ilişkiler bir işaret olarak anılır?",
+        "options": [
+          "Eşlerle huzur, sevgi ve merhamet",
+          "Karşılıklı danışma, doğruluk ve adalet",
+          "Öfkeyi tutma, bağışlama ve sabır",
+          "Emanet mal, sadık anlaşma ve şahitlik"
+        ],
+        "info": "Evlilik işareti huzur, sevgi ve merhametle açıklanır. Bu üçlü âyeti diğer öğütlerden ayırır."
+      }
+    }
+  },
+  {
+    "id": "l2x_giving_recipient_trio",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 30:38",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/30",
+    "sourceVerses": [
+      "30:38"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие получатели должного прямо перечислены в 30:38?",
+        "options": [
+          "Близкий родственник, бедняк и путник",
+          "Сборщик закята, должник и освобождаемый раб",
+          "Сосед, товарищ и хозяин дома",
+          "Учитель, свидетель и посредник"
+        ],
+        "info": "Помощь указанным людям связана со стремлением к Лику Аллаха; вопрос различает конкретный перечень этого аята."
+      },
+      "en": {
+        "q": "Which recipients of their due are explicitly listed in 30:38?",
+        "options": [
+          "A close relative, the poor and the traveller",
+          "A zakat collector, a debtor and a person being freed",
+          "A neighbor, a companion and the host",
+          "A teacher, a witness and a mediator"
+        ],
+        "info": "Giving these people their due is linked to seeking Allah's countenance; the question distinguishes this verse's specific list."
+      },
+      "uz": {
+        "q": "30:38 da kimlarga haqlarini berish ochiq sanalgan?",
+        "options": [
+          "Yaqin qarindosh, kambag‘al va musofir",
+          "Zakot yig‘uvchi, qarzdor va ozod qilinayotgan qul",
+          "Qo‘shni, hamroh va mezbon",
+          "Ustoz, guvoh va vositachi"
+        ],
+        "info": "Bu kishilarga haqlarini berish Allohning roziligini istash bilan bog‘langan. Savol shu oyatdagi aniq ro‘yxatni ajratadi."
+      },
+      "tg": {
+        "q": "Дар 30:38 кадом гирандагони ҳақ равшан номбар шудаанд?",
+        "options": [
+          "Хешованди наздик, камбағал ва мусофир",
+          "Ҷамъкунандаи закот, қарздор ва ғуломи озодшаванда",
+          "Ҳамсоя, ҳамроҳ ва соҳибхона",
+          "Устод, шоҳид ва миёнарав"
+        ],
+        "info": "Додани ҳаққи ин одамон бо ҷустани ризои Аллоҳ пайваст аст. Савол рӯйхати муайяни ҳамин оятро ҷудо мекунад."
+      },
+      "kk": {
+        "q": "30:38-де тиесілі ақысын алатын кімдер тікелей аталады?",
+        "options": [
+          "Жақын туыс, кедей және жолаушы",
+          "Зекет жинаушы, борышкер және азат етілетін құл",
+          "Көрші, серік және үй иесі",
+          "Ұстаз, куә және араағайын"
+        ],
+        "info": "Осы адамдарға тиесілісін беру Алланың разылығын іздеумен байланысты. Сұрақ осы аяттың нақты тізімін ажыратады."
+      },
+      "ky": {
+        "q": "30:38-де акысын алууга тийиш болгон кимдер ачык саналат?",
+        "options": [
+          "Жакын тууган, кедей жана жолоочу",
+          "Зекет жыйноочу, карызкор жана бошотулуп жаткан кул",
+          "Кошуна, жолдош жана үй ээси",
+          "Устат, күбө жана ортомчу"
+        ],
+        "info": "Бул адамдарга акысын берүү Аллахтын ыраазылыгын көздөө менен байланышкан. Суроо ушул аяттагы так тизмени айырмалайт."
+      },
+      "az": {
+        "q": "30:38-də haqqı veriləcək kimlər açıq sadalanır?",
+        "options": [
+          "Yaxın qohum, kasıb və yolçu",
+          "Zəkat toplayan, borclu və azad edilən qul",
+          "Qonşu, yoldaş və ev sahibi",
+          "Müəllim, şahid və vasitəçi"
+        ],
+        "info": "Bu insanlara haqlarını vermək Allahın rizasını istəməklə bağlanır. Sual məhz bu ayənin siyahısını fərqləndirir."
+      },
+      "tr": {
+        "q": "30:38’de hakkı verilecek kimler açıkça sıralanır?",
+        "options": [
+          "Yakın akraba, yoksul ve yolcu",
+          "Zekât toplayan, borçlu ve özgürleştirilen köle",
+          "Komşu, arkadaş ve ev sahibi",
+          "Öğretmen, şahit ve aracı"
+        ],
+        "info": "Bu kişilere haklarını vermek Allah’ın rızasını aramakla ilişkilendirilir. Soru bu âyetin özel listesini ayırt eder."
+      }
+    }
+  },
+  {
+    "id": "l2x_gratitude_benefits_self",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 31:12",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/31",
+    "sourceVerses": [
+      "31:12"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие имена Аллаха завершают 31:12 после слов о пользе благодарности для самого человека?",
+        "options": [
+          "Богатый и славный",
+          "Слышащий и знающий",
+          "Прощающий и милующий",
+          "Возвышенный и великий"
+        ],
+        "info": "Наставление Лукману связывает благодарность с благом самого благодарящего и подчёркивает независимость Аллаха."
+      },
+      "en": {
+        "q": "Which names of Allah close 31:12 after stating that gratitude benefits the grateful person?",
+        "options": [
+          "Self-sufficient and praiseworthy",
+          "All-hearing and all-knowing",
+          "Forgiving and merciful",
+          "Most high and great"
+        ],
+        "info": "The instruction to Luqman links gratitude with the grateful person's own good and emphasizes Allah's self-sufficiency."
+      },
+      "uz": {
+        "q": "31:12 da shukrning odamning o‘ziga foydasi aytilgach, Allohning qaysi ismlari bilan tugaydi?",
+        "options": [
+          "Behojat va maqtovga loyiq",
+          "Eshituvchi va biluvchi",
+          "Kechiruvchi va rahmli",
+          "Yuksak va buyuk"
+        ],
+        "info": "Luqmonga nasihat shukrni shukr qiluvchining o‘z foydasi bilan bog‘lab, Allohning behojatligini ta’kidlaydi."
+      },
+      "tg": {
+        "q": "31:12 пас аз фоидаи шукр барои худи инсон бо кадом номҳои Аллоҳ анҷом меёбад?",
+        "options": [
+          "Бениёз ва сутуда",
+          "Шунаво ва доно",
+          "Омурзанда ва меҳрубон",
+          "Баландмартаба ва бузург"
+        ],
+        "info": "Насиҳат ба Луқмон шукрро бо хайри худи шукргузор мепайвандад ва бениёзии Аллоҳро таъкид мекунад."
+      },
+      "kk": {
+        "q": "31:12-де шүкірдің адамның өзіне пайдасы айтылғаннан кейін Алланың қандай есімдері келеді?",
+        "options": [
+          "Мұқтажсыз және мақтауға лайық",
+          "Естуші және білуші",
+          "Кешіруші және мейірімді",
+          "Аса жоғары және ұлы"
+        ],
+        "info": "Лұқманға өсиет шүкірді шүкір етушінің өз игілігімен байланыстырып, Алланың мұқтажсыздығын атап көрсетеді."
+      },
+      "ky": {
+        "q": "31:12-де шүгүрдүн адамдын өзүнө пайдасы айтылгандан кийин Аллахтын кайсы ысымдары келет?",
+        "options": [
+          "Беймуктаж жана мактоого татыктуу",
+          "Угуучу жана билүүчү",
+          "Кечиримдүү жана ырайымдуу",
+          "Бийик жана улуу"
+        ],
+        "info": "Лукманга насаат шүгүрдү шүгүр кылуучунун өз пайдасы менен байланыштырып, Аллахтын беймуктаждыгын баса белгилейт."
+      },
+      "az": {
+        "q": "31:12-də şükrün insanın özünə faydası deyildikdən sonra Allahın hansı adları gəlir?",
+        "options": [
+          "Ehtiyacsız və tərifə layiq",
+          "Eşidən və bilən",
+          "Bağışlayan və mərhəmətli",
+          "Uca və böyük"
+        ],
+        "info": "Loğmana nəsihət şükrü şükür edənin öz xeyri ilə bağlayır və Allahın ehtiyacsızlığını vurğulayır."
+      },
+      "tr": {
+        "q": "31:12’de şükrün insanın kendisine yararı anlatıldıktan sonra Allah’ın hangi isimleri gelir?",
+        "options": [
+          "Hiçbir şeye muhtaç olmayan ve övgüye lâyık",
+          "İşiten ve bilen",
+          "Bağışlayan ve merhametli",
+          "Yüce ve büyük"
+        ],
+        "info": "Lokman’a öğüt, şükrü şükredenin kendi iyiliğine bağlar ve Allah’ın hiçbir şeye muhtaç olmadığını vurgular."
+      }
+    }
+  },
+  {
+    "id": "l2x_parents_limit_kindness",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 31:15",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/31",
+    "sourceVerses": [
+      "31:15"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как 31:15 сочетает отказ от ширка с отношением к склоняющим к нему родителям?",
+        "options": [
+          "Не повиноваться в этом, но сохранять доброе обращение",
+          "Повиноваться в этом, но прекратить обычную заботу",
+          "Отказаться в этом и обязательно прекратить всякое общение",
+          "Отложить выбор до получения согласия всех родственников"
+        ],
+        "info": "Граница послушания не отменяет доброго сопровождения родителей в земной жизни; оба наставления присутствуют вместе."
+      },
+      "en": {
+        "q": "How does 31:15 combine rejecting shirk with treatment of parents urging it?",
+        "options": [
+          "Do not obey in that matter, but continue treating them kindly",
+          "Obey in that matter, but stop ordinary care",
+          "Refuse in that matter and necessarily end all contact",
+          "Postpone the choice until every relative agrees"
+        ],
+        "info": "The limit of obedience does not remove kind companionship with parents in this life; both instructions appear together."
+      },
+      "uz": {
+        "q": "31:15 shirkni rad etishni unga undayotgan ota-onaga muomala bilan qanday birlashtiradi?",
+        "options": [
+          "Bu ishda bo‘ysunmaslik, ammo yaxshi muomalani saqlash",
+          "Bu ishda bo‘ysunish, ammo odatiy g‘amxo‘rlikni to‘xtatish",
+          "Bu ishni rad etib, albatta barcha aloqani uzish",
+          "Hamma qarindoshlar rozi bo‘lguncha qarorni kechiktirish"
+        ],
+        "info": "Itoat chegarasi bu hayotda ota-onaga yaxshi hamrohlikni bekor qilmaydi. Ikkala ko‘rsatma birga keltirilgan."
+      },
+      "tg": {
+        "q": "31:15 рад кардани ширкро бо муносибат ба волидони водоркунанда чӣ гуна якҷо мекунад?",
+        "options": [
+          "Дар ин кор итоат накардан, вале муомилаи некро нигоҳ доштан",
+          "Дар ин кор итоат кардан, вале ғамхории одиро қатъ кардан",
+          "Инро рад кардан ва ҳатман ҳама робитаро буридан",
+          "То ризояти ҳамаи хешовандон қарорро ба таъхир гузоштан"
+        ],
+        "info": "Ҳадди итоат ҳамроҳии нек бо падару модарро дар ин дунё бекор намекунад. Ҳар ду дастур якҷо омадаанд."
+      },
+      "kk": {
+        "q": "31:15 ширктен бас тартуды соған шақырған ата-анаға қатынаспен қалай біріктіреді?",
+        "options": [
+          "Бұл істе бағынбау, бірақ жақсы қарым-қатынасты сақтау",
+          "Бұл істе бағыну, бірақ қалыпты қамқорлықты тоқтату",
+          "Бұл істен бас тартып, барлық байланысты міндетті түрде үзу",
+          "Барлық туыс келіскенше шешімді кейінге қалдыру"
+        ],
+        "info": "Бағынудың шегі бұл өмірде ата-анамен жақсы қатынасты жоймайды. Екі нұсқау бірге беріледі."
+      },
+      "ky": {
+        "q": "31:15 ширкти четке кагууну ага үндөгөн ата-энеге мамиле менен кантип бириктирет?",
+        "options": [
+          "Бул иште баш ийбөө, бирок жакшы мамилени сактоо",
+          "Бул иште баш ийүү, бирок кадимки камкордукту токтотуу",
+          "Бул иштен баш тартып, бардык байланышты сөзсүз үзүү",
+          "Бардык тууган макул болгончо чечимди кийинкиге калтыруу"
+        ],
+        "info": "Баш ийүүнүн чеги бул жашоодо ата-энеге жакшы мамилени жокко чыгарбайт. Эки көрсөтмө бирге берилген."
+      },
+      "az": {
+        "q": "31:15 şirki rədd etməyi buna çağıran valideynlərlə münasibətlə necə birləşdirir?",
+        "options": [
+          "Bu işdə itaət etməmək, lakin yaxşı rəftarı saxlamaq",
+          "Bu işdə itaət etmək, lakin adi qayğını dayandırmaq",
+          "Bu işi rədd edib mütləq bütün əlaqəni kəsmək",
+          "Bütün qohumlar razılaşanadək qərarı təxirə salmaq"
+        ],
+        "info": "İtaətin həddi bu həyatda valideynlərlə yaxşı yoldaşlığı aradan qaldırmır. Hər iki göstəriş birlikdə verilir."
+      },
+      "tr": {
+        "q": "31:15 şirki reddetmeyi, buna çağıran anne babaya davranışla nasıl birleştirir?",
+        "options": [
+          "Bu konuda itaat etmemek, fakat iyi davranmayı sürdürmek",
+          "Bu konuda itaat etmek, fakat olağan ilgiyi kesmek",
+          "Bunu reddedip mutlaka bütün ilişkiyi kesmek",
+          "Bütün akrabalar onaylayana kadar kararı ertelemek"
+        ],
+        "info": "İtaatin sınırı, dünya hayatında anne babaya iyi eşlik etmeyi ortadan kaldırmaz. İki öğüt birlikte bulunur."
+      }
+    }
+  },
+  {
+    "id": "l2x_mustard_hidden_locations",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 31:16",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/31",
+    "sourceVerses": [
+      "31:16"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие места скрытого горчичного зерна перечислены в наставлении Лукмана, 31:16?",
+        "options": [
+          "В скале, на небесах или на земле",
+          "В море, в корабле или в саду",
+          "В колосе, в хранилище или в мешке",
+          "В доме, в дороге или у городских ворот"
+        ],
+        "info": "Малость и скрытость деяния не скрывают его от знания Аллаха; перечисленные места усиливают этот смысл."
+      },
+      "en": {
+        "q": "Which locations for a hidden mustard seed are listed in Luqman's counsel in 31:16?",
+        "options": [
+          "In a rock, in the heavens or in the earth",
+          "In the sea, in a ship or in a garden",
+          "In an ear of grain, in a storehouse or in a sack",
+          "At home, on the road or at the city gates"
+        ],
+        "info": "An act's smallness and concealment do not hide it from Allah's knowledge; the listed locations emphasize that meaning."
+      },
+      "uz": {
+        "q": "Luqmonning 31:16 dagi nasihatida yashirin xantal doni uchun qaysi joylar sanalgan?",
+        "options": [
+          "Qoya ichida, osmonlarda yoki yerda",
+          "Dengizda, kemada yoki bog‘da",
+          "Boshoqda, omborda yoki qopda",
+          "Uyda, yo‘lda yoki shahar darvozasida"
+        ],
+        "info": "Amalning kichikligi va yashirinligi uni Allohning ilmidan yashirmaydi. Sanalgan joylar shu ma’noni kuchaytiradi."
+      },
+      "tg": {
+        "q": "Дар насиҳати Луқмон, 31:16, барои донаи пинҳони хардал кадом ҷойҳо зикр шудаанд?",
+        "options": [
+          "Дар санг, дар осмонҳо ё дар замин",
+          "Дар баҳр, дар киштӣ ё дар боғ",
+          "Дар хӯша, дар анбор ё дар халта",
+          "Дар хона, дар роҳ ё назди дарвозаи шаҳр"
+        ],
+        "info": "Хурдӣ ва пинҳонии амал онро аз дониши Аллоҳ пинҳон намекунанд. Ҷойҳои номбаршуда ин маъниро қавӣ мекунанд."
+      },
+      "kk": {
+        "q": "Лұқманның 31:16 өсиетінде жасырын қыша дәніне қатысты қандай орындар аталады?",
+        "options": [
+          "Жартаста, көктерде немесе жерде",
+          "Теңізде, кемеде немесе бақта",
+          "Масақта, қоймада немесе қапта",
+          "Үйде, жолда немесе қала қақпасында"
+        ],
+        "info": "Істің кішілігі мен жасырын болуы оны Алланың білімінен жасырмайды. Аталған орындар осы мағынаны күшейтеді."
+      },
+      "ky": {
+        "q": "Лукмандын 31:16 насаатында жашыруун кычы даны үчүн кайсы жерлер саналат?",
+        "options": [
+          "Асканын ичинде, асмандарда же жерде",
+          "Деңизде, кемеде же бакта",
+          "Машакта, кампада же капта",
+          "Үйдө, жолдо же шаардын дарбазасында"
+        ],
+        "info": "Иштин майдалыгы жана жашыруундугу аны Аллахтын илиминен жашырбайт. Аталган жерлер ушул маанини күчөтөт."
+      },
+      "az": {
+        "q": "Loğmanın 31:16 nəsihətində gizli xardal dənəsi üçün hansı yerlər sayılır?",
+        "options": [
+          "Qayada, göylərdə və ya yerdə",
+          "Dənizdə, gəmidə və ya bağda",
+          "Sünbüldə, anbarda və ya kisədə",
+          "Evdə, yolda və ya şəhər qapısında"
+        ],
+        "info": "Əməlin kiçikliyi və gizliliyi onu Allahın elmindən gizlətmir. Sadalanan yerlər bu mənanı gücləndirir."
+      },
+      "tr": {
+        "q": "Lokman’ın 31:16’daki öğüdünde gizli hardal tanesi için hangi yerler sıralanır?",
+        "options": [
+          "Bir kayanın içinde, göklerde veya yerde",
+          "Denizde, gemide veya bahçede",
+          "Başakta, depoda veya çuvalda",
+          "Evde, yolda veya şehir kapısında"
+        ],
+        "info": "Bir işin küçüklüğü ve gizliliği onu Allah’ın bilgisinden saklamaz. Sıralanan yerler bu anlamı güçlendirir."
+      }
+    }
+  },
+  {
+    "id": "l2x_upright_speech_results",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 33:70, Quran 33:71",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/33",
+    "sourceVerses": [
+      "33:70",
+      "33:71"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие результаты следуют за богобоязненностью и правильной речью в 33:70–71?",
+        "options": [
+          "Исправление дел и прощение грехов",
+          "Увеличение удела и выход из затруднения",
+          "Примирение врагов и обретение близкого друга",
+          "Возрастание веры и трепет сердца"
+        ],
+        "info": "Правильная речь связана с исправлением дел и прощением; обещание не сводится к земному положению."
+      },
+      "en": {
+        "q": "Which results follow God-consciousness and upright speech in 33:70–71?",
+        "options": [
+          "Rectification of deeds and forgiveness of sins",
+          "An increase in provision and a way out of difficulty",
+          "Reconciliation of enemies and gaining a close friend",
+          "An increase in faith and trembling of the heart"
+        ],
+        "info": "Upright speech is linked to rectifying deeds and forgiveness; the promise is not reduced to worldly status."
+      },
+      "uz": {
+        "q": "33:70–71 da taqvo va to‘g‘ri so‘zdan keyin qaysi natijalar keladi?",
+        "options": [
+          "Amallarning tuzatilishi va gunohlarning kechirilishi",
+          "Rizqning ko‘payishi va qiyinchilikdan chiqish",
+          "Dushmanlarning yarashishi va yaqin do‘st topish",
+          "Imonning ortishi va qalbning titrashi"
+        ],
+        "info": "To‘g‘ri so‘z amallarni tuzatish va kechirim bilan bog‘langan. Va’da faqat dunyoviy mavqega cheklanmaydi."
+      },
+      "tg": {
+        "q": "Дар 33:70–71 пас аз тақво ва сухани дуруст кадом натиҷаҳо меоянд?",
+        "options": [
+          "Ислоҳи амалҳо ва омурзиши гуноҳҳо",
+          "Афзоиши ризқ ва раҳоӣ аз душворӣ",
+          "Оштии душманон ва пайдо кардани дӯсти наздик",
+          "Афзоиши имон ва ларзиши дил"
+        ],
+        "info": "Сухани дуруст бо ислоҳи амалҳо ва омурзиш пайваст аст. Ваъда танҳо ба мақоми дунявӣ маҳдуд нест."
+      },
+      "kk": {
+        "q": "33:70–71-де тақуалық пен тура сөзден кейін қандай нәтижелер келеді?",
+        "options": [
+          "Істердің түзелуі және күнәлардың кешірілуі",
+          "Ризықтың артуы және қиындықтан шығу",
+          "Жаулардың татуласуы және жақын дос табу",
+          "Иманның артуы және жүректің дірілі"
+        ],
+        "info": "Тура сөз істердің түзелуі және кешіріммен байланысты. Уәде тек дүниелік дәрежеге тірелмейді."
+      },
+      "ky": {
+        "q": "33:70–71-де такыбалык менен түз сөздөн кийин кайсы натыйжалар келет?",
+        "options": [
+          "Иштердин оңдолушу жана күнөөлөрдүн кечирилиши",
+          "Ырыскынын көбөйүшү жана кыйынчылыктан чыгуу",
+          "Душмандардын жарашуусу жана жакын дос табуу",
+          "Ыймандын артышы жана жүрөктүн титиреши"
+        ],
+        "info": "Түз сөз иштердин оңдолушу жана кечирим менен байланышкан. Убада дүйнөлүк абалга гана чектелбейт."
+      },
+      "az": {
+        "q": "33:70–71-də təqva və doğru sözdən sonra hansı nəticələr gəlir?",
+        "options": [
+          "Əməllərin düzəlməsi və günahların bağışlanması",
+          "Ruzinin artması və çətinlikdən çıxış",
+          "Düşmənlərin barışması və yaxın dost qazanmaq",
+          "İmanın artması və qəlbin titrəməsi"
+        ],
+        "info": "Doğru söz əməllərin düzəlməsi və bağışlanma ilə bağlıdır. Vəd yalnız dünyəvi mövqeyə endirilmir."
+      },
+      "tr": {
+        "q": "33:70–71’de takvâ ve doğru sözden sonra hangi sonuçlar gelir?",
+        "options": [
+          "Amellerin düzeltilmesi ve günahların bağışlanması",
+          "Rızkın artması ve sıkıntıdan çıkış",
+          "Düşmanların barışması ve yakın dost kazanma",
+          "İmanın artması ve kalbin ürpermesi"
+        ],
+        "info": "Doğru söz, amellerin düzeltilmesi ve bağışlanmayla ilişkilidir. Vaat yalnız dünya konumuna indirgenmez."
+      }
+    }
+  },
+  {
+    "id": "l2x_words_and_deeds_rise",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 35:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/35",
+    "sourceVerses": [
+      "35:10"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как в 35:10 соотносятся благое слово и праведное деяние?",
+        "options": [
+          "Благое слово восходит, праведное деяние возносит его",
+          "Благое слово записывается, а деяние служит залогом",
+          "Благое слово взвешивается, а деяние задаёт меру",
+          "Благое слово прорастает, а деяние считается урожаем"
+        ],
+        "info": "Аят соединяет благое слово с праведным действием, указывая, что всё величие принадлежит Аллаху."
+      },
+      "en": {
+        "q": "How are good words and righteous deeds related in 35:10?",
+        "options": [
+          "Good words ascend, and righteous deeds raise them",
+          "Good words are recorded, and deeds serve as collateral",
+          "Good words are weighed, and deeds set the measure",
+          "Good words sprout, and deeds count as the harvest"
+        ],
+        "info": "The verse links good words with righteous action and states that all honor belongs to Allah."
+      },
+      "uz": {
+        "q": "35:10 da yaxshi so‘z va solih amal qanday bog‘langan?",
+        "options": [
+          "Yaxshi so‘z ko‘tariladi, solih amal uni yuksaltiradi",
+          "Yaxshi so‘z yoziladi, amal esa garov bo‘ladi",
+          "Yaxshi so‘z tortiladi, amal esa o‘lchovni belgilaydi",
+          "Yaxshi so‘z unib chiqadi, amal esa hosil hisoblanadi"
+        ],
+        "info": "Oyat yaxshi so‘zni solih amal bilan bog‘laydi va barcha izzat Allohga tegishli ekanini bildiradi."
+      },
+      "tg": {
+        "q": "Дар 35:10 сухани нек ва амали солеҳ чӣ гуна бо ҳам пайванд доранд?",
+        "options": [
+          "Сухани нек боло меравад ва амали солеҳ онро боло мебарад",
+          "Сухани нек навишта мешавад ва амал гарав мегардад",
+          "Сухани нек баркашида мешавад ва амал меъёрро муайян мекунад",
+          "Сухани нек месабзад ва амал ҳосил ба шумор меравад"
+        ],
+        "info": "Оят сухани некро бо амали солеҳ мепайвандад ва мегӯяд, ки тамоми иззат аз они Аллоҳ аст."
+      },
+      "kk": {
+        "q": "35:10 аятында жақсы сөз бен ізгі іс қалай байланыстырылған?",
+        "options": [
+          "Жақсы сөз жоғары көтеріледі, ізгі іс оны көтереді",
+          "Жақсы сөз жазылады, ал іс кепіл болады",
+          "Жақсы сөз өлшенеді, ал іс өлшемді белгілейді",
+          "Жақсы сөз көктейді, ал іс өнім саналады"
+        ],
+        "info": "Аят жақсы сөзді ізгі іспен байланыстырып, бүкіл абырой Аллаға тән екенін білдіреді."
+      },
+      "ky": {
+        "q": "35:10 аятында жакшы сөз менен жакшы амал кандай байланышта?",
+        "options": [
+          "Жакшы сөз көтөрүлөт, жакшы амал аны жогорулатат",
+          "Жакшы сөз жазылат, амал болсо күрөө болот",
+          "Жакшы сөз таразага тартылат, амал өлчөмдү белгилейт",
+          "Жакшы сөз өнүп чыгат, амал түшүм деп эсептелет"
+        ],
+        "info": "Аят жакшы сөздү жакшы амал менен байланыштырып, бардык урмат-сый Аллахка таандык экенин билдирет."
+      },
+      "az": {
+        "q": "35:10-da gözəl sözlə saleh əməl necə əlaqələndirilir?",
+        "options": [
+          "Gözəl söz yüksəlir, saleh əməl onu yüksəldir",
+          "Gözəl söz yazılır, əməl isə girov olur",
+          "Gözəl söz çəkilir, əməl isə ölçünü müəyyən edir",
+          "Gözəl söz cücərir, əməl isə məhsul sayılır"
+        ],
+        "info": "Ayə gözəl sözü saleh əməllə əlaqələndirir və bütün izzətin Allaha məxsus olduğunu bildirir."
+      },
+      "tr": {
+        "q": "35:10'da güzel söz ve salih amel nasıl ilişkilendirilir?",
+        "options": [
+          "Güzel söz yükselir, salih amel onu yükseltir",
+          "Güzel söz kaydedilir, amel ise rehin olur",
+          "Güzel söz tartılır, amel ise ölçüyü belirler",
+          "Güzel söz filizlenir, amel ise ürün sayılır"
+        ],
+        "info": "Ayet güzel sözle salih ameli ilişkilendirir ve bütün izzetin Allah'a ait olduğunu bildirir."
+      }
+    }
+  },
+  {
+    "id": "l2x_night_fear_hope",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 39:9",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/39",
+    "sourceVerses": [
+      "39:9"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие страх и надежда сопровождают ночное поклонение в 39:9?",
+        "options": [
+          "Опасение Последней жизни и надежда на милость Господа",
+          "Опасение потери удела и надежда на его приумножение",
+          "Опасение семейного отчуждения и надежда на примирение",
+          "Опасение забыть договор и надежда на помощь свидетелей"
+        ],
+        "info": "Описание поклоняющегося предшествует вопросу о равенстве знающих и незнающих; знание связано с осмысленным отношением к Господу."
+      },
+      "en": {
+        "q": "Which fear and hope accompany night worship in 39:9?",
+        "options": [
+          "Fear of the Hereafter and hope for the Lord's mercy",
+          "Fear of losing provision and hope for its increase",
+          "Fear of marital estrangement and hope for reconciliation",
+          "Fear of forgetting an agreement and hope for witnesses' help"
+        ],
+        "info": "The description precedes the question of whether those who know equal those who do not; knowledge is tied to a thoughtful relationship with the Lord."
+      },
+      "uz": {
+        "q": "39:9 da tungi ibodat qaysi qo‘rquv va umid bilan birga zikr qilinadi?",
+        "options": [
+          "Oxiratdan qo‘rqish va Rabbining rahmatidan umidvor bo‘lish",
+          "Rizqni yo‘qotishdan qo‘rqish va uning ko‘payishidan umidvor bo‘lish",
+          "Er-xotin begonalashishidan qo‘rqish va yarashishdan umidvor bo‘lish",
+          "Kelishuvni unutishdan qo‘rqish va guvohlar yordamidan umidvor bo‘lish"
+        ],
+        "info": "Bu tasvirdan keyin biladiganlar bilan bilmaydiganlar tengmi, degan savol keladi; bilim Rabbiga ongli munosabat bilan bog‘lanadi."
+      },
+      "tg": {
+        "q": "Дар 39:9 ибодати шабона бо кадом тарс ва умед ҳамроҳ аст?",
+        "options": [
+          "Тарс аз охират ва умед ба раҳмати Парвардигор",
+          "Тарс аз аз даст додани ризқ ва умед ба афзоиши он",
+          "Тарс аз дурии зану шавҳар ва умед ба оштӣ",
+          "Тарс аз фаромӯш кардани аҳд ва умед ба кумаки шоҳидон"
+        ],
+        "info": "Пас аз ин тасвир савол меояд, ки оё доноён ва нодонон баробаранд; дониш бо муносибати огоҳона ба Парвардигор пайванд дорад."
+      },
+      "kk": {
+        "q": "39:9 аятында түнгі ғибадат қандай қорқыныш пен үмітпен қатар сипатталады?",
+        "options": [
+          "Ақыреттен қорқу және Раббысының рақымынан үміт ету",
+          "Ризықтан айырылудан қорқу және оның көбеюінен үміт ету",
+          "Ерлі-зайыптылардың алыстауынан қорқу және татуласудан үміт ету",
+          "Келісімді ұмытудан қорқу және куәлардың көмегінен үміт ету"
+        ],
+        "info": "Бұл сипаттамадан кейін білетіндер мен білмейтіндер тең бе деген сұрақ қойылады; білім Раббысына саналы қатынаспен байланыстырылады."
+      },
+      "ky": {
+        "q": "39:9 аятында түнкү ибадат кайсы коркуу жана үмүт менен сүрөттөлөт?",
+        "options": [
+          "Акыреттен коркуу жана Раббисинин ырайымынан үмүт кылуу",
+          "Ырыскыдан ажыроодон коркуу жана анын көбөйүшүнөн үмүт кылуу",
+          "Жубайлардын алыстоосунан коркуу жана жарашуудан үмүт кылуу",
+          "Келишимди унутуудан коркуу жана күбөлөрдүн жардамынан үмүт кылуу"
+        ],
+        "info": "Бул сүрөттөөгө удаа билгендер менен билбегендер теңби деген суроо келет; билим Раббисине аң-сезимдүү мамиле менен байланышат."
+      },
+      "az": {
+        "q": "39:9-da gecə ibadəti hansı qorxu və ümidlə müşayiət olunur?",
+        "options": [
+          "Axirətdən qorxmaq və Rəbbinin mərhəmətinə ümid etmək",
+          "Ruzini itirməkdən qorxmaq və onun artmasına ümid etmək",
+          "Ər-arvadın uzaqlaşmasından qorxmaq və barışığa ümid etmək",
+          "Razılaşmanı unutmaqdan qorxmaq və şahidlərin köməyinə ümid etmək"
+        ],
+        "info": "Bu təsvirdən sonra bilənlərlə bilməyənlərin bərabər olub-olmadığı soruşulur; bilik Rəbbə şüurlu münasibətlə əlaqələndirilir."
+      },
+      "tr": {
+        "q": "39:9'da gece ibadetine hangi korku ve umut eşlik eder?",
+        "options": [
+          "Ahiretten korkmak ve Rabbinin rahmetini ummak",
+          "Rızkını kaybetmekten korkmak ve onun artmasını ummak",
+          "Eşlerin uzaklaşmasından korkmak ve barışmayı ummak",
+          "Anlaşmayı unutmaktan korkmak ve şahitlerin yardımını ummak"
+        ],
+        "info": "Bu tasvirden sonra bilenlerle bilmeyenlerin bir olup olmadığı sorulur; bilgi, Rabbe karşı bilinçli bir tutumla ilişkilendirilir."
+      }
+    }
+  },
+  {
+    "id": "l2x_enmity_close_friend",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 41:34",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/41",
+    "sourceVerses": [
+      "41:34"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какую перемену отношений изображает 41:34 после ответа тем, что лучше?",
+        "options": [
+          "Враг становится словно близкий друг",
+          "Спор прекращается, но вражда остаётся неизменной",
+          "Враг признаёт довод, но дружба не упоминается",
+          "Вместо общения устанавливается полное отчуждение"
+        ],
+        "info": "Аят показывает примиряющее действие лучшего ответа через образ близкого друга; это нравственное наставление, а не обещание контроля над другим человеком."
+      },
+      "en": {
+        "q": "What change in relationship does 41:34 depict after responding with what is best?",
+        "options": [
+          "An enemy becomes like a close friend",
+          "The argument ends but the enmity remains unchanged",
+          "The enemy accepts the argument but friendship is not mentioned",
+          "Communication is replaced by complete estrangement"
+        ],
+        "info": "The image of a close friend shows the reconciling force of the better response; this is moral guidance, not a promise of control over another person."
+      },
+      "uz": {
+        "q": "41:34 da eng yaxshi yo‘l bilan javob berilgach, munosabatlarda qanday o‘zgarish tasvirlanadi?",
+        "options": [
+          "Dushman go‘yo yaqin do‘stga aylanadi",
+          "Bahs tugaydi, ammo adovat o‘zgarmay qoladi",
+          "Dushman dalilni tan oladi, ammo do‘stlik tilga olinmaydi",
+          "Muloqot o‘rnini butunlay begonalashish egallaydi"
+        ],
+        "info": "Yaqin do‘st obrazi yaxshiroq javobning yarashtiruvchi ta’sirini ko‘rsatadi; bu boshqa odamni boshqarish va’dasi emas, axloqiy yo‘l-yo‘riqdir."
+      },
+      "tg": {
+        "q": "Дар 41:34 баъди посух додан бо беҳтарин роҳ чӣ тағйири муносибат тасвир мешавад?",
+        "options": [
+          "Душман гӯё дӯсти наздик мегардад",
+          "Баҳс тамом мешавад, вале душманӣ бетағйир мемонад",
+          "Душман далелро мепазирад, вале дӯстӣ зикр намешавад",
+          "Ҷойи муоширатро бегонагии комил мегирад"
+        ],
+        "info": "Тасвири дӯсти наздик таъсири оштиовари посухи беҳтарро нишон медиҳад; ин роҳнамоии ахлоқист, на ваъдаи идора кардани шахси дигар."
+      },
+      "kk": {
+        "q": "41:34 аятында ең жақсы жолмен жауап бергеннен кейін қарым-қатынастың қандай өзгерісі суреттеледі?",
+        "options": [
+          "Дұшпан жақын дос сияқты болады",
+          "Дау аяқталады, бірақ дұшпандық өзгермейді",
+          "Дұшпан дәлелді мойындайды, бірақ достық айтылмайды",
+          "Қарым-қатынастың орнын толық жатсыну басады"
+        ],
+        "info": "Жақын дос бейнесі жақсы жауаптың татуластыратын әсерін көрсетеді; бұл өзге адамды басқаруға уәде емес, адамгершілікке бағыт беретін өсиет."
+      },
+      "ky": {
+        "q": "41:34 аятында эң жакшы жол менен жооп бергенден кийин мамиле кандай өзгөрөрү сүрөттөлөт?",
+        "options": [
+          "Душман жакын дос сыяктуу болуп калат",
+          "Талаш бүтөт, бирок душмандык өзгөрбөйт",
+          "Душман далилди кабыл алат, бирок достук айтылбайт",
+          "Баарлашуунун ордун толук жатташуу ээлейт"
+        ],
+        "info": "Жакын достун образы жакшыраак жооптун жараштыруучу таасирин көрсөтөт; бул башка адамды башкарууга убада эмес, адептик насаат."
+      },
+      "az": {
+        "q": "41:34-də ən yaxşı şəkildə cavab verildikdən sonra münasibətin hansı dəyişikliyi təsvir olunur?",
+        "options": [
+          "Düşmən sanki yaxın dosta çevrilir",
+          "Mübahisə bitir, amma düşmənçilik dəyişməz qalır",
+          "Düşmən dəlili qəbul edir, amma dostluqdan danışılmır",
+          "Ünsiyyətin yerini tam yadlaşma tutur"
+        ],
+        "info": "Yaxın dost obrazı daha yaxşı cavabın barışdırıcı təsirini göstərir; bu, başqa insanı idarə etmək vədi deyil, əxlaqi göstərişdir."
+      },
+      "tr": {
+        "q": "41:34'te en güzel şekilde karşılık verildikten sonra ilişkide hangi değişim tasvir edilir?",
+        "options": [
+          "Düşman, sanki yakın bir dost olur",
+          "Tartışma biter fakat düşmanlık değişmeden kalır",
+          "Düşman delili kabul eder fakat dostluktan söz edilmez",
+          "İletişimin yerini tam bir yabancılaşma alır"
+        ],
+        "info": "Yakın dost tasviri, daha güzel karşılığın barıştırıcı etkisini gösterir; bu, başkasını kontrol etme vaadi değil, ahlaki bir öğüttür."
+      }
+    }
+  },
+  {
+    "id": "l2x_consultation_and_worship",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 42:38",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/42",
+    "sourceVerses": [
+      "42:38"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какая группа качеств верующих перечислена именно в 42:38?",
+        "options": [
+          "Ответ Господу, молитва, взаимный совет и расходование",
+          "Ночное поклонение, снижение голоса, примирение и пост",
+          "Справедливое свидетельство, прощение, покаяние и паломничество",
+          "Поминание, точная мера, правдивая речь и забота о родителях"
+        ],
+        "info": "Совет между людьми включён в описание верующих наряду с ответом Господу, молитвой и расходованием дарованного."
+      },
+      "en": {
+        "q": "Which group of believers' qualities is specifically listed in 42:38?",
+        "options": [
+          "Responding to the Lord, prayer, mutual consultation and giving",
+          "Night worship, lowering one's voice, reconciliation and fasting",
+          "Just testimony, pardon, repentance and pilgrimage",
+          "Remembrance, accurate measure, truthful speech and care for parents"
+        ],
+        "info": "Mutual consultation is included among believers' qualities, alongside responding to the Lord, prayer and giving."
+      },
+      "uz": {
+        "q": "Aynan 42:38 da mo‘minlarning qaysi sifatlari sanaladi?",
+        "options": [
+          "Rabbiga javob berish, namoz, o‘zaro maslahat va ehson",
+          "Tungi ibodat, ovozni pasaytirish, yarashish va ro‘za",
+          "Adolatli guvohlik, kechirish, tavba va haj",
+          "Zikr, to‘g‘ri o‘lchash, rost so‘z va ota-onaga g‘amxo‘rlik"
+        ],
+        "info": "O‘zaro maslahat mo‘minlarning sifatlari qatorida Rabbiga javob berish, namoz va berilgan rizqdan ehson qilish bilan birga keltiriladi."
+      },
+      "tg": {
+        "q": "Маҳз дар 42:38 кадом гурӯҳи сифатҳои мӯъминон зикр мешавад?",
+        "options": [
+          "Иҷобати Парвардигор, намоз, машварати байниҳамдигарӣ ва инфоқ",
+          "Ибодати шабона, паст кардани овоз, оштӣ ва рӯза",
+          "Шаҳодати одилона, бахшиш, тавба ва ҳаҷ",
+          "Зикр, ченаки дуруст, сухани рост ва ғамхорӣ ба падару модар"
+        ],
+        "info": "Машварати байниҳамдигарӣ дар қатори сифатҳои мӯъминон бо иҷобати Парвардигор, намоз ва инфоқ аз ризқи додашуда оварда мешавад."
+      },
+      "kk": {
+        "q": "Дәл 42:38 аятында мүміндердің қай қасиеттер тобы аталады?",
+        "options": [
+          "Раббысының үндеуіне жауап беру, намаз, өзара кеңесу және қаражат жұмсау",
+          "Түнгі ғибадат, дауысты бәсеңдету, татуласу және ораза",
+          "Әділ куәлік, кешірім, тәубе және қажылық",
+          "Зікір, дұрыс өлшем, шын сөз және ата-анаға қамқорлық"
+        ],
+        "info": "Өзара кеңесу мүміндердің қасиеттері қатарында Раббысының үндеуіне жауап беру, намаз және берілген ризықтан жұмсаумен бірге аталады."
+      },
+      "ky": {
+        "q": "Дал 42:38 аятында момундардын кайсы сапаттары саналат?",
+        "options": [
+          "Раббисинин чакырыгына жооп берүү, намаз, өз ара кеңешүү жана каражат сарптоо",
+          "Түнкү ибадат, үндү басаңдатуу, жарашуу жана орозо",
+          "Адилет күбөлүк, кечирим, тооба жана ажылык",
+          "Зикир, туура өлчөм, чын сөз жана ата-энеге камкордук"
+        ],
+        "info": "Өз ара кеңешүү момундардын сапаттарынын катарында Раббисинин чакырыгына жооп берүү, намаз жана берилген ырыскыдан сарптоо менен бирге аталат."
+      },
+      "az": {
+        "q": "Məhz 42:38-də möminlərin hansı xüsusiyyətləri sadalanır?",
+        "options": [
+          "Rəbbin çağırışına cavab, namaz, qarşılıqlı məsləhət və xərcləmək",
+          "Gecə ibadəti, səsi alçaltmaq, barışıq və oruc",
+          "Ədalətli şahidlik, əfv, tövbə və həcc",
+          "Zikr, düzgün ölçü, doğru söz və valideynlərə qayğı"
+        ],
+        "info": "Qarşılıqlı məsləhət möminlərin xüsusiyyətləri arasında Rəbbin çağırışına cavab, namaz və verilən ruzidən xərcləməklə yanaşı qeyd olunur."
+      },
+      "tr": {
+        "q": "Özellikle 42:38'de müminlerin hangi özellikleri sıralanır?",
+        "options": [
+          "Rabbin çağrısına cevap, namaz, aralarında danışma ve infak",
+          "Gece ibadeti, sesi alçaltma, barışma ve oruç",
+          "Adil şahitlik, bağışlama, tövbe ve hac",
+          "Zikir, doğru ölçü, doğru söz ve anne babaya özen"
+        ],
+        "info": "Aralarında danışma, Rabbin çağrısına cevap verme, namaz ve verilen rızıktan infak etme ile birlikte müminlerin özellikleri arasında sayılır."
+      }
+    }
+  },
+  {
+    "id": "l2x_equal_response_pardon",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 42:40",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/42",
+    "sourceVerses": [
+      "42:40"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие предел воздаяния и условие награды за прощение соединены в 42:40?",
+        "options": [
+          "Равная мера; простить и исправить положение",
+          "Равная мера; простить и получить встречное извинение",
+          "Двойная мера; простить и исправить положение",
+          "Двойная мера; простить и получить встречное извинение"
+        ],
+        "info": "Аят ограничивает ответ равной мерой и отдельно выделяет прощение, сопровождаемое исправлением; несправедливость не одобряется."
+      },
+      "en": {
+        "q": "Which limit on recompense and condition of reward for pardon are paired in 42:40?",
+        "options": [
+          "An equal measure; pardon and put matters right",
+          "An equal measure; pardon and receive an apology in return",
+          "A double measure; pardon and put matters right",
+          "A double measure; pardon and receive an apology in return"
+        ],
+        "info": "The verse limits a response to equivalence and separately praises pardon accompanied by putting matters right; injustice is not endorsed."
+      },
+      "uz": {
+        "q": "42:40 da javob chorasi chegarasi va kechirish uchun mukofot sharti qanday birlashtirilgan?",
+        "options": [
+          "Teng miqdor; kechirish va vaziyatni o‘nglash",
+          "Teng miqdor; kechirish va buning evaziga uzr eshitish",
+          "Ikki baravar miqdor; kechirish va vaziyatni o‘nglash",
+          "Ikki baravar miqdor; kechirish va buning evaziga uzr eshitish"
+        ],
+        "info": "Oyat javobni teng miqdor bilan cheklaydi va vaziyatni o‘nglash bilan birga bo‘lgan kechirishni alohida ta’kidlaydi; zulm ma’qullanmaydi."
+      },
+      "tg": {
+        "q": "Дар 42:40 кадом ҳадди ҷазо ва шарти подош барои бахшиш якҷо омадаанд?",
+        "options": [
+          "Меъёри баробар; бахшидан ва ислоҳ кардан",
+          "Меъёри баробар; бахшидан ва дар иваз узрхоҳӣ шунидан",
+          "Меъёри дучанд; бахшидан ва ислоҳ кардан",
+          "Меъёри дучанд; бахшидан ва дар иваз узрхоҳӣ шунидан"
+        ],
+        "info": "Оят ҷавобро ба меъёри баробар маҳдуд мекунад ва бахшишро, ки бо ислоҳ ҳамроҳ аст, алоҳида меситояд; ситам пазируфта нест."
+      },
+      "kk": {
+        "q": "42:40 аятында қарымта қайтарудың қандай шегі мен кешірім үшін сыйдың қандай шарты қатар берілген?",
+        "options": [
+          "Тең мөлшер; кешіру және жағдайды түзету",
+          "Тең мөлшер; кешіру және екінші жақтың кешірім сұрауы",
+          "Екі есе мөлшер; кешіру және жағдайды түзету",
+          "Екі есе мөлшер; кешіру және екінші жақтың кешірім сұрауы"
+        ],
+        "info": "Аят қарымтаны тең мөлшермен шектеп, жағдайды түзетумен қатар жүретін кешірімді ерекше атайды; әділетсіздік құпталмайды."
+      },
+      "ky": {
+        "q": "42:40 аятында жооп кайтаруунун кайсы чеги жана кечирим үчүн сыйлыктын кайсы шарты бирге айтылат?",
+        "options": [
+          "Тең өлчөм; кечирүү жана абалды оңдоо",
+          "Тең өлчөм; кечирүү жана жооп катары кечирим сураган сөздү угуу",
+          "Эки эсе өлчөм; кечирүү жана абалды оңдоо",
+          "Эки эсе өлчөм; кечирүү жана жооп катары кечирим сураган сөздү угуу"
+        ],
+        "info": "Аят жоопту тең өлчөм менен чектеп, абалды оңдоо менен коштолгон кечиримди өзгөчө белгилейт; адилетсиздик жактырылбайт."
+      },
+      "az": {
+        "q": "42:40-da qarşılığın hansı həddi və əfvə görə mükafatın hansı şərti birlikdə verilir?",
+        "options": [
+          "Bərabər ölçü; əfv etmək və vəziyyəti düzəltmək",
+          "Bərabər ölçü; əfv etmək və əvəzində üzr eşitmək",
+          "İkiqat ölçü; əfv etmək və vəziyyəti düzəltmək",
+          "İkiqat ölçü; əfv etmək və əvəzində üzr eşitmək"
+        ],
+        "info": "Ayə cavabı bərabər ölçü ilə məhdudlaşdırır və vəziyyəti düzəltməklə müşayiət olunan əfvi ayrıca tərifləyir; zülm bəyənilmir."
+      },
+      "tr": {
+        "q": "42:40'ta karşılığın hangi sınırı ve bağışlamanın ödülü için hangi şart birlikte belirtilir?",
+        "options": [
+          "Eşit ölçü; bağışlamak ve durumu düzeltmek",
+          "Eşit ölçü; bağışlamak ve karşılığında özür almak",
+          "İki kat ölçü; bağışlamak ve durumu düzeltmek",
+          "İki kat ölçü; bağışlamak ve karşılığında özür almak"
+        ],
+        "info": "Ayet karşılığı eşit ölçüyle sınırlar ve düzeltmeyle birlikte olan bağışlamayı ayrıca över; zulüm onaylanmaz."
+      }
+    }
+  }
+]

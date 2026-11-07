@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ux_places_map_hint">Двигайте карту одним пальцем. Нажмите на метку, чтобы увидеть место.</string>
+    <string name="ux_places_preview_title">О месте</string>
+    <string name="ux_places_details_title">Условия и отзывы</string>
+    <string name="ux_places_route_short">Маршрут</string>
+    <string name="ux_places_address_missing">Адрес не указан. Маршрут ведёт к метке на карте.</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qm_saved_here">Сохранённое в суре</string>
+    <string name="qm_in_surah">Сохранено аятов в этой суре: %1$d</string>
+    <string name="qm_your_note">Ваша заметка</string>
+    <string name="qm_empty">Здесь появятся закладки и заметки этой суры. Добавьте их через меню аята.</string>
+    <string name="qm_go_to_ayah">К аяту</string>
+    <string name="qm_open_note">Открыть заметку</string>
+</resources>

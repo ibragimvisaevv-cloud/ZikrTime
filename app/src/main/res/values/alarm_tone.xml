@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tone_phone_default">Default alarm tone</string>
+    <string name="tone_selected">Selected audio</string>
+    <string name="tone_hint">Choose the same sound you use in Clock. Some phones save a separate sound for each alarm.</string>
+    <string name="tone_choose">Choose tone</string>
+    <string name="tone_stop">Stop</string>
+    <string name="tone_file">Audio file</string>
+    <string name="tone_failed">Could not play this audio. Choose another tone or file.</string>
+</resources>

@@ -1,6 +1,7 @@
 package com.zikrtime.app.data
 
 import android.content.Context
+import com.zikrtime.app.BuildConfig
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -20,6 +21,7 @@ import java.net.URL
 object Shop {
     /** Каталог и фото собирает бот продавцов в Yandex Object Storage (быстро в России и Средней Азии). */
     const val CONTENT_BASE = "https://storage.yandexcloud.net/zikrtime-shop/"
+    private const val SELLER_PORTAL = CONTENT_BASE + "seller.html"
     private const val REMOTE = CONTENT_BASE + "catalog.json"
     private const val KEY = "shop_catalog"
     private const val KEY_TAG = "shop_catalog_etag"
@@ -81,6 +83,7 @@ object Shop {
         val categories: List<Category>,
         val sellers: List<Seller>,
         val products: List<Product>,
+        val sellerPortal: String? = null,
     ) {
         fun seller(id: String?) = sellers.firstOrNull { it.id == id }
         fun product(id: String?) = products.firstOrNull { it.id == id }
@@ -91,6 +94,9 @@ object Shop {
     var catalog by mutableStateOf<Catalog?>(null)
         private set
     var offline by mutableStateOf(false)
+        private set
+
+    var refreshFailed by mutableStateOf(false)
         private set
 
     fun load(context: Context): Catalog {
@@ -111,6 +117,7 @@ object Shop {
         val result = withContext(Dispatchers.IO) { runCatching { Net.getIfChanged(REMOTE, etag) } }
         if (result.isSuccess && result.getOrNull() == null) {
             // Каталог не изменился — ничего не скачивали
+            refreshFailed = false
             offline = false
             Store.putRaw(KEY_AT, System.currentTimeMillis().toString())
             return
@@ -119,9 +126,11 @@ object Shop {
         val parsed = text?.let { runCatching { parse(it) }.getOrNull() }
         if (parsed == null) {
             // «Нет интернета» — только если не было связи (а не, например, ответ 404).
+            refreshFailed = true
             offline = result.exceptionOrNull() is java.io.IOException
             return
         }
+        refreshFailed = false
         offline = false
         Store.putRaw(KEY, text)
         Store.putRaw(KEY_TAG, result.getOrNull()?.etag.orEmpty())
@@ -210,9 +219,14 @@ object Shop {
                 images = strings(it.optJSONArray("images")),
             )
         }.filter { p -> sellers.any { it.id == p.seller } }
+        // Old releases cached an example directory. Only debug builds may render its fictitious shops.
+        val demo = root.optBoolean("demo")
+        val visible = !demo || BuildConfig.DEBUG
         return Catalog(
-            root.optBoolean("demo"), root.optString("contact_telegram").removePrefix("@"),
-            root.optString("seller_bot").removePrefix("@"), root.optString("donate_url"), categories, sellers, products,
+            demo && visible, root.optString("contact_telegram").removePrefix("@"),
+            root.optString("seller_bot").removePrefix("@"), root.optString("donate_url"), categories,
+            if (visible) sellers else emptyList(), if (visible) products else emptyList(),
+            root.optString("seller_portal").takeIf { it == SELLER_PORTAL },
         )
     }
 

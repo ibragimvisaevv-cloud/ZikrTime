@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="learning_level_title">Choose your knowledge level</string>
+    <string name="learning_level_intro">Questions will match your preparation. You can change the level later.</string>
+    <string name="learning_level_label">Knowledge level</string>
+    <string name="learning_level_not_selected">Not selected yet</string>
+    <string name="learning_level_choose">Choose</string>
+    <string name="learning_level_change">Change</string>
+    <string name="learning_level_beginner">Beginner</string>
+    <string name="learning_level_intermediate">Intermediate</string>
+    <string name="learning_level_advanced">Advanced</string>
+    <string name="learning_level_beginner_hint">Core concepts and familiar facts.</string>
+    <string name="learning_level_intermediate_hint">Connections, context and meanings.</string>
+    <string name="learning_level_advanced_hint">Precise details and close answer choices.</string>
+    <string name="learning_level_count">Questions in this level: %1$d</string>
+    <string name="learning_level_change_hint">Changing the level restarts unfinished rounds. Learning history and earned minutes are kept.</string>
+    <string name="learning_level_confirm">Confirm level</string>
+    <string name="learning_level_empty">No questions in this topic at this level</string>
+    <string name="learning_level_empty_hint">Choose another topic or change the level.</string>
+</resources>

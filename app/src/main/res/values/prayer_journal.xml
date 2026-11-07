@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="journal_title">Prayer journal</string>
+    <string name="journal_done">Performed</string>
+    <string name="journal_missed">Missed</string>
+    <string name="journal_made_up">Made up</string>
+    <string name="journal_unmarked">Unmarked</string>
+    <string name="journal_note">Only prayers you mark as missed appear in the make-up list. Times that have yet to begin are excluded from the totals.</string>
+    <string name="journal_day">Prayer marks by date</string>
+    <string name="journal_upcoming">Upcoming</string>
+    <string name="journal_pending">Prayers to make up</string>
+    <string name="journal_no_pending">You have no prayers marked as missed.</string>
+    <string name="journal_more">Show more dates</string>
+    <string name="journal_previous">Previous day</string>
+    <string name="journal_next">Next day</string>
+    <string name="journal_clear_progress_confirm">Clear personal statistics, including the prayer journal and make-up list? Current prayer checkmarks, bookmarks, bonuses and app settings are kept.</string>
+    <string name="reading_title">Quran reading reminders</string>
+    <string name="reading_hint">Choose a time on your phone’s local clock. Reading reminders arrive silently. You can also open either passage here.</string>
+    <string name="reading_bedtime">Before sleep</string>
+    <string name="reading_friday">Friday reading</string>
+    <string name="reading_kursi">Ayat al-Kursi · Quran 2:255</string>
+    <string name="reading_kahf">Surah al-Kahf · Quran 18</string>
+    <string name="reading_time">Time · %1$s</string>
+    <string name="reading_open">Open in the Quran</string>
+    <string name="reading_bukhari">Sahih al-Bukhari · 2311</string>
+    <string name="reading_ifta">Egypt’s Dar al-Ifta · Friday reading</string>
+    <string name="reading_blocked">Reading notifications are blocked in your phone settings.</string>
+    <string name="reading_other_friday">Friday prayer reminders</string>
+    <string name="reading_other_friday_hint">Before Jumu’ah and before Maghrib on Fridays.</string>
+</resources>

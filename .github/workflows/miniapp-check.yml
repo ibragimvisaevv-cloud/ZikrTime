@@ -1,0 +1,42 @@
+name: Mini App visual checks
+on:
+  push:
+    branches: [codex/quran-reader-0814]
+permissions:
+  contents: write
+concurrency:
+  group: miniapp-check-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  check:
+    if: ${{ contains(github.event.head_commit.message, '[miniapp-check]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check JavaScript syntax
+        run: |
+          node --check shop-bot/miniapp/app.js
+          node --check tools/ci/miniapp_design_check.cjs
+      - name: Mini App browser journeys
+        env:
+          NODE_PATH: ${{ runner.temp }}/miniapp-qa/node_modules
+        run: |
+          npm install --prefix "$RUNNER_TEMP/miniapp-qa" playwright
+          "$RUNNER_TEMP/miniapp-qa/node_modules/.bin/playwright" install --with-deps chromium
+          node tools/ci/miniapp_design_check.cjs
+      - name: Preserve screenshots and result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ZikrTime-MiniApp-check
+          path: ci-out/miniapp/
+          if-no-files-found: warn
+      - name: Publish review evidence
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/ci/design_evidence.py

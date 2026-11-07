@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tb_choose_phrase">Zikir seç</string>
+    <string name="tb_total_count">Toplam tekrar</string>
+    <string name="tb_completed_laps">Tamamlanan turlar</string>
+    <string name="tb_unlimited">Sınırsız</string>
+    <string name="tb_cycle_complete">Tur tamamlandı</string>
+    <string name="tb_gesture_hint">Saymak için tesbihe dokunun veya aşağı çekin.</string>
+    <string name="tb_phrase_change_hint">Başka bir zikir seçildiğinde bu sayaç sıfırlanır. Günlük ilerlemeniz korunur.</string>
+</resources>

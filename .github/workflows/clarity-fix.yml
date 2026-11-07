@@ -1,0 +1,138 @@
+name: Android clarity and map gestures 0.8.25
+on:
+  push:
+    branches: [codex/quran-reader-0814]
+  workflow_dispatch:
+    inputs:
+      reuse_run:
+        type: string
+        description: Optional earlier clarity build run; reuse only with unchanged Android inputs
+        default: ''
+      navigation_only:
+        type: boolean
+        description: Finish navigation using the verified map results from run 42390466804
+        default: false
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: clarity-fix-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  check:
+    if: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[clarity-fix]') || contains(github.event.head_commit.message, '[clarity-recheck]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    env:
+      REUSE_RUN: ${{ inputs.reuse_run || '' }}
+      NAVIGATION_ONLY: ${{ inputs.navigation_only == true || contains(github.event.head_commit.message, 'navigation-only') }}
+      LABEL_FINISH: ${{ contains(github.event.head_commit.message, 'label-finish') }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Resolve optional test-only recheck
+        run: |
+          python3 - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          message = json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text()).get('head_commit', {}).get('message', '')
+          match = re.search(r'\[clarity-recheck\]\s+reuse=(\d+)', message)
+          run = os.environ['REUSE_RUN'] or (match.group(1) if match else '')
+          assert not run or run.isdecimal(), 'reuse_run must be a numeric Actions run ID'
+          if '[clarity-recheck]' in message:
+              assert run, 'A recheck must name its verified build: [clarity-recheck] reuse=RUN_ID'
+          with open(os.environ['GITHUB_ENV'], 'a') as out:
+              out.write('REUSE_RUN=' + run + '\n')
+          PY
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        if: env.REUSE_RUN == ''
+      - name: Verify protected Quran inputs
+        run: git diff --exit-code ba0fc7f3b51ff1c838e480361b9020fe4a594044 -- app/src/main/assets/quran app/src/main/java/com/zikrtime/app/data/QuranContent.kt
+      - name: Restore original signing key
+        if: env.REUSE_RUN == ''
+        env:
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          test -n "$RELEASE_KEY_PASSWORD"
+          openssl enc -d -aes-256-cbc -pbkdf2 -iter 300000 -in keystore/release.jks.enc -out keystore/release.jks -pass env:RELEASE_KEY_PASSWORD
+      - name: Build candidate and check affected data logic
+        if: env.REUSE_RUN == ''
+        env:
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          chmod +x gradlew
+          ./gradlew testDebugUnitTest --tests 'com.zikrtime.app.data.PlacesTest' --tests 'com.zikrtime.app.ui.NavigationTest' --console=plain
+          ./gradlew lintDebug assembleDebug assembleRelease --console=plain
+      - name: Verify signed candidate
+        if: env.REUSE_RUN == ''
+        run: |
+          mkdir -p ci-out/screens
+          SIGNER=$(find "$ANDROID_HOME/build-tools" -name apksigner | sort -V | tail -1)
+          AAPT=$(find "$ANDROID_HOME/build-tools" -name aapt | sort -V | tail -1)
+          "$SIGNER" verify --verbose --print-certs app/build/outputs/apk/release/app-release.apk > ci-out/release-signature.txt
+          grep -q 'certificate SHA-256 digest: 7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf' ci-out/release-signature.txt
+          "$AAPT" dump badging app/build/outputs/apk/release/app-release.apk > ci-out/release-badging.txt
+          python3 tools/ci/clarity_delivery.py
+      - name: Reuse previously signed APKs after verifying their inputs
+        if: env.REUSE_RUN != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download "$REUSE_RUN" --repo "$GITHUB_REPOSITORY" -n clarity-verified-inputs -D .
+          python3 tools/ci/clarity_delivery.py --reuse
+      - name: Preserve verified map checks and run only remaining navigation
+        if: env.NAVIGATION_ONLY == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "$LABEL_FINISH" != 'true' ]; then test "$REUSE_RUN" = '42390466804'; fi
+          mkdir -p ci-inherited
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/13581197812" > ci-inherited/artifact.json
+          gh run download 42390466804 --repo "$GITHUB_REPOSITORY" -n ZikrTime-0.8.25-clarity-check -D ci-inherited
+          python3 tools/ci/clarity_inherit.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: clarity-verified-inputs
+          compression-level: 0
+          path: |
+            app/build/outputs/apk/debug/app-debug.apk
+            app/build/outputs/apk/release/app-release.apk
+            ci-out/release-delivery.json
+            ci-out/release-signature.txt
+            app/build/test-results/
+      - run: python3 -m pip install 'Pillow>=11,<13'
+      - name: Enable emulator acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-clarity.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Map gestures, mosque previews and navigation on Android 15
+        timeout-minutes: 25
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -camera-back none -camera-front none
+          script: bash tools/ci/clarity_smoke.sh
+      - name: Prepare signed update
+        run: cp app/build/outputs/apk/release/app-release.apk ZikrTime-0.8.25.apk
+      - uses: actions/upload-artifact@v7.0.2
+        with:
+          path: ZikrTime-0.8.25.apk
+          archive: false
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ZikrTime-0.8.25-clarity-check
+          path: |
+            app/build/reports/
+            app/build/test-results/
+            ci-out/

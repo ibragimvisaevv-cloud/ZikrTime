@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qt_note">Ёддошт</string>
+    <string name="qt_save_note">Захира кардани ёддошт</string>
+    <string name="qt_save_place">Захира кардани ҷойи хониш</string>
+    <string name="qt_remove_bookmark">Нест кардани хатчӯб</string>
+    <string name="qt_copy">Нусхаи оят</string>
+    <string name="qt_touch_hint">Барои интихоб оятро пахш кунед; барои ёддошт пахш карда нигоҳ доред. Ҷойи хонишро бо хатчӯби боло захира кунед.</string>
+    <string name="qt_ayah_actions">Амалҳо барои ояти %1$d</string>
+    <string name="qt_bookmark_added">Ҷойи хониш захира шуд</string>
+    <string name="qt_bookmark_removed">Хатчӯб нест шуд</string>
+</resources>

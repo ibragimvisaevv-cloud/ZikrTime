@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tb_choose_phrase">Зикирди тандоо</string>
+    <string name="tb_total_count">Жалпы кайталоолор</string>
+    <string name="tb_completed_laps">Аяктаган айлампалар</string>
+    <string name="tb_unlimited">Чексиз</string>
+    <string name="tb_cycle_complete">Айлампа аяктады</string>
+    <string name="tb_gesture_hint">Санаш үчүн теспени басыңыз же ылдый тартыңыз.</string>
+    <string name="tb_phrase_change_hint">Башка зикир тандалганда эсептегич нөлгө түшөт. Күндүк жыйынтык сакталат.</string>
+</resources>

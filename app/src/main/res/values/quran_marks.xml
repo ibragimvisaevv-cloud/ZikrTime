@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qm_saved_here">Saved in this surah</string>
+    <string name="qm_in_surah">Saved ayahs in this surah: %1$d</string>
+    <string name="qm_your_note">Your note</string>
+    <string name="qm_empty">Bookmarks and notes from this surah will appear here. Save one from the ayah menu.</string>
+    <string name="qm_go_to_ayah">Go to ayah</string>
+    <string name="qm_open_note">Open note</string>
+</resources>

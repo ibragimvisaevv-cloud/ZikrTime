@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="places_search_label">Mosque name or address</string>
+    <string name="places_yandex_search">Find more mosques in Yandex Maps</string>
+    <string name="places_search_empty">No places found. Try another name or search in Yandex Maps.</string>
+    <string name="places_wikidata_credit">Additional data © Wikidata, CC0</string>
+    <string name="places_less">Less</string>
+    <string name="places_details">Details</string>
+    <string name="places_access_check">Check current access before visiting.</string>
+    <string name="places_open_source">Open source</string>
+</resources>

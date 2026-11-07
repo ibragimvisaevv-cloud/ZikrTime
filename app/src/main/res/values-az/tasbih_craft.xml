@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tb_choose_phrase">Zikr seçin</string>
+    <string name="tb_total_count">Ümumi təkrarlar</string>
+    <string name="tb_completed_laps">Tamamlanan dövrlər</string>
+    <string name="tb_unlimited">Limitsiz</string>
+    <string name="tb_cycle_complete">Dövr tamamlandı</string>
+    <string name="tb_gesture_hint">Saymaq üçün təsbehə toxunun və ya aşağı çəkin.</string>
+    <string name="tb_phrase_change_hint">Başqa zikr seçildikdə bu sayğac sıfırlanır. Gündəlik nəticə saxlanılır.</string>
+</resources>

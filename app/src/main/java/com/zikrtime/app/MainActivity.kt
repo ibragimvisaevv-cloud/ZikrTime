@@ -84,6 +84,8 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
 
     private val nav = Nav()
+    private var qaHandled = false
+    private var lastReadingDelivery = Long.MIN_VALUE
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(Lang.wrap(newBase))
@@ -93,15 +95,22 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         Store.init(this)
         nav.restore(savedInstanceState)
+        lastReadingDelivery = savedInstanceState?.getLong("last_reading_delivery", Long.MIN_VALUE) ?: Long.MIN_VALUE
         // Названия каналов уведомлений — на текущем языке.
         PrayerAlarms.createChannels(this)
-        if (BuildConfig.DEBUG && QaHooks.handle(this, intent, nav)) return
+        qaHandled = savedInstanceState?.getBoolean("qa_handled") ?: false
+        if (BuildConfig.DEBUG && !qaHandled) {
+            // Language selection recreates before applying the requested QA route.
+            // Rotation after that must preserve the reader instead of reopening its index.
+            if (QaHooks.handle(this, intent, nav)) return
+            qaHandled = true
+        }
         handleOpen(intent)
         enableEdgeToEdge()
         val showSplash = savedInstanceState == null && com.zikrtime.app.ui.LiveFlags.splash &&
             (intent?.hasExtra("qa_screen") != true || intent?.getBooleanExtra("qa_splash", false) == true)
         setContent {
-            val natural = Store.onboarded && (nav.stack.lastOrNull()?.screen in setOf(Screen.TASBIH, Screen.AZKAR, Screen.PROGRESS, Screen.REVIEW) || (nav.stack.isEmpty() && nav.tab == Tab.PRAYER))
+            val natural = Store.onboarded && (nav.stack.lastOrNull()?.screen in setOf(Screen.TASBIH, Screen.AZKAR, Screen.QURAN, Screen.READING_BEDTIME, Screen.READING_FRIDAY, Screen.PROGRESS, Screen.REVIEW, Screen.TRAINING) || (nav.stack.isEmpty() && nav.tab == Tab.PRAYER))
             com.zikrtime.app.ui.ThemeRevealHost {
                 ZikrTheme(natural = natural) {
                     val tilt = com.zikrtime.app.ui.rememberTilt(enabled = false)
@@ -139,7 +148,23 @@ class MainActivity : ComponentActivity() {
 
     private fun handleOpen(intent: Intent?) {
         if (intent?.getBooleanExtra("open_focus", false) == true) { nav.stack.clear(); nav.tab = Tab.FOCUS }
+        val reading = com.zikrtime.app.prayer.ReadingKind.entries.firstOrNull { it.route == intent?.getStringExtra(EXTRA_OPEN) }
+        if (reading != null) {
+            val delivery = intent?.getLongExtra("reading_delivery", Long.MIN_VALUE) ?: Long.MIN_VALUE
+            if (delivery == Long.MIN_VALUE || delivery != lastReadingDelivery) nav.openReading(reading)
+            lastReadingDelivery = delivery
+            intent?.removeExtra(EXTRA_OPEN)
+            return
+        }
         when (intent?.getStringExtra(EXTRA_OPEN)) {
+            com.zikrtime.app.prayer.PrayerCheckReminders.ROUTE -> {
+                val day = runCatching { java.time.LocalDate.parse(intent?.getStringExtra(com.zikrtime.app.prayer.PrayerCheckReminders.EXTRA_DAY)) }.getOrNull()
+                val prayer = com.zikrtime.app.prayer.Prayer.obligatory.firstOrNull {
+                    it.name == intent?.getStringExtra(com.zikrtime.app.prayer.PrayerCheckReminders.EXTRA_PRAYER)
+                }
+                nav.openJournal(day?.toString(), prayer?.name)
+                intent?.removeExtra(EXTRA_OPEN)
+            }
             "prayer" -> { nav.stack.clear(); nav.tab = Tab.PRAYER }
             "city" -> { nav.stack.clear(); nav.tab = Tab.PRAYER; if (Store.onboarded) nav.open(Screen.CITY) }
             "alarm" -> nav.open(Screen.ALARM)
@@ -148,6 +173,8 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
+        outState.putBoolean("qa_handled", qaHandled)
+        outState.putLong("last_reading_delivery", lastReadingDelivery)
         nav.save(outState)
         super.onSaveInstanceState(outState)
     }
@@ -160,6 +187,8 @@ class MainActivity : ComponentActivity() {
             PrayerAlarms.scheduleNext(this)
             FajrAlarm.schedule(this)
             com.zikrtime.app.prayer.FridayReminders.schedule(this)
+            com.zikrtime.app.prayer.ReadingReminders.reschedule(this)
+            com.zikrtime.app.prayer.PrayerCheckReminders.reschedule(this)
             GuardService.sync(this)
             com.zikrtime.app.widget.Widgets.updateAll(this)
             lifecycleScope.launch {
@@ -222,8 +251,14 @@ private fun AppRoot() {
             Screen.TASBIH -> TasbihScreen()
             Screen.QUIZ -> QuizScreen()
             Screen.REVIEW -> com.zikrtime.app.ui.ReviewScreen()
+            Screen.TRAINING -> com.zikrtime.app.ui.TrainingScreen()
             Screen.PROGRESS -> com.zikrtime.app.ui.ProgressScreen()
             Screen.AZKAR -> com.zikrtime.app.ui.AzkarScreen()
+            Screen.QURAN -> com.zikrtime.app.ui.QuranScreen()
+            Screen.PRAYER_JOURNAL -> com.zikrtime.app.ui.PrayerJournalScreen(entry?.journalDay, entry?.journalPrayer)
+            Screen.READING_REMINDERS -> com.zikrtime.app.ui.ReadingRemindersScreen()
+            Screen.READING_BEDTIME -> com.zikrtime.app.ui.QuranScreen(2, 255)
+            Screen.READING_FRIDAY -> com.zikrtime.app.ui.QuranScreen(18, 1)
             Screen.APPS -> AppsScreen()
             Screen.ABOUT -> AboutScreen()
             Screen.SHOP_SELLER -> com.zikrtime.app.ui.SellerScreen(entry?.seller)
@@ -281,21 +316,27 @@ private fun Tabs() {
                     1f to MaterialTheme.colorScheme.background))
                 .windowInsetsPadding(WindowInsets.navigationBars)
                 .padding(horizontal = 0.dp, vertical = 0.dp),
-        ) { (_, icon, label), selected ->
+        ) { (tab, icon, label), selected ->
             val color = if (selected) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
+            val title = when (tab) {
+                Tab.FOCUS -> com.zikrtime.app.ui.clarityCopy(com.zikrtime.app.ui.UiClarity0825.Limits)
+                Tab.MORE -> com.zikrtime.app.ui.clarityCopy(com.zikrtime.app.ui.UiClarity0825.Settings)
+                else -> stringResource(label)
+            }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Icon(
                     painterResource(icon),
-                    contentDescription = stringResource(label),
+                    contentDescription = null,
                     tint = color,
                     modifier = Modifier.size(24.dp),
                 )
-                if (androidx.compose.ui.platform.LocalDensity.current.fontScale <= 1.3f) Text(
-                    stringResource(label),
+                Text(
+                    title,
                     style = MaterialTheme.typography.labelSmall,
                     color = color,
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-                    maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                    minLines = if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 2 else 1,
+                    maxLines = 2,
                 )
             }
         }

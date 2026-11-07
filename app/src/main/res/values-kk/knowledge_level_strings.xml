@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="learning_level_title">Білім деңгейін таңдаңыз</string>
+    <string name="learning_level_intro">Сұрақтар дайындығыңызға сай болады. Деңгейді кейін өзгерте аласыз.</string>
+    <string name="learning_level_label">Білім деңгейі</string>
+    <string name="learning_level_not_selected">Әлі таңдалмаған</string>
+    <string name="learning_level_choose">Таңдау</string>
+    <string name="learning_level_change">Өзгерту</string>
+    <string name="learning_level_beginner">Бастапқы</string>
+    <string name="learning_level_intermediate">Орта</string>
+    <string name="learning_level_advanced">Жоғары</string>
+    <string name="learning_level_beginner_hint">Негізгі ұғымдар мен таныс деректер.</string>
+    <string name="learning_level_intermediate_hint">Байланыстар, мәнмәтін және мағыналар.</string>
+    <string name="learning_level_advanced_hint">Нақты мәліметтер мен бір-біріне ұқсас жауаптар.</string>
+    <string name="learning_level_count">Деңгейдегі сұрақтар: %1$d</string>
+    <string name="learning_level_change_hint">Деңгейді өзгерткенде аяқталмаған раундтар қайта басталады. Оқу тарихы мен жиналған минуттар сақталады.</string>
+    <string name="learning_level_confirm">Деңгейді растау</string>
+    <string name="learning_level_empty">Бұл деңгейде осы тақырыпқа сұрақ жоқ</string>
+    <string name="learning_level_empty_hint">Басқа тақырып таңдаңыз немесе деңгейді өзгертіңіз.</string>
+</resources>

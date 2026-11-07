@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="signal_short_title">Qısa bildiriş səsi</string>
+    <string name="signal_short_hint">Azan söndürüldükdə telefonun bildiriş səsindən istifadə et.</string>
+    <string name="signal_last_title">Tətbiqin son siqnalı</string>
+    <string name="signal_none">Hələ heç bir qeyd yoxdur.</string>
+    <string name="signal_scheduled">Təyin edilən vaxt · %1$s</string>
+    <string name="signal_delivered">Göndərilən vaxt · %1$s</string>
+    <string name="signal_quiet">Səssiz</string>
+    <string name="signal_blocked">Bloklanmış bildiriş kanalını aç</string>
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="regional_prefer">Ҷадвали намози шаҳр</string>
+    <string name="regional_prefer_hint">Барои шаҳр ва рӯзи интихобшуда вақти нашршуда истифода мешавад. Барои дигар ҷойҳо ва рӯзҳо вақт бо усули зер ҳисоб мешавад.</string>
+    <string name="regional_fallback">Усули ҳисоб ҳангоми набудани ҷадвал</string>
+    <string name="regional_network_hint">Ҳангоми дастрас будани интернет ҷадвали шаҳр ва вақтҳои ҳисобшударо нав кунед.</string>
+    <string name="regional_published">Ҷадвали шаҳр · %1$s</string>
+    <string name="regional_calculated">Вақти ҳисобшуда · %1$s · %2$s</string>
+    <string name="regional_offline">дар телефон</string>
+    <string name="regional_adjusted">%1$s · бо ислоҳҳои шахсӣ</string>
+    <string name="regional_polar">Тахмин барои минтақаи қутбӣ · арзи ҷуғрофии наздиктарин · %1$s</string>
+    <string name="regional_gps_zone">Минтақаи вақти нуқтаи GPS, масалан Europe/Moscow</string>
+    <string name="regional_device_zone">%1$s · минтақаи вақти телефон (%2$s)</string>
+    <string name="regional_previous_day">%1$s (рӯзи пеш)</string>
+    <string name="regional_next_day">%1$s (фардо)</string>
+</resources>

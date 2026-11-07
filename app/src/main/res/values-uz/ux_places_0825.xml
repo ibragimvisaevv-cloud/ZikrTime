@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ux_places_map_hint">Xaritani bir barmoq bilan suring. Joyni ko‘rish uchun belgini bosing.</string>
+    <string name="ux_places_preview_title">Joy haqida</string>
+    <string name="ux_places_details_title">Sharoitlar va fikrlar</string>
+    <string name="ux_places_route_short">Yo‘nalish</string>
+    <string name="ux_places_address_missing">Manzil ko‘rsatilmagan. Yo‘nalish xaritadagi belgiga olib boradi.</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ux_places_map_hint">Xəritəni bir barmaqla hərəkət etdirin. Məkanı görmək üçün işarəyə toxunun.</string>
+    <string name="ux_places_preview_title">Məkan haqqında</string>
+    <string name="ux_places_details_title">Şərtlər və rəylər</string>
+    <string name="ux_places_route_short">Marşrut</string>
+    <string name="ux_places_address_missing">Ünvan göstərilməyib. Marşrut xəritədəki işarəyə aparır.</string>
+</resources>

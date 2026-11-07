@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tone_phone_default">Standart zəngli saat səsi</string>
+    <string name="tone_selected">Seçilmiş səs</string>
+    <string name="tone_hint">Saat tətbiqindəki səsi seçə bilərsiniz. Bəzi telefonlar hər zəngli saat üçün ayrıca səs saxlayır.</string>
+    <string name="tone_choose">Səs seç</string>
+    <string name="tone_stop">Dayandır</string>
+    <string name="tone_file">Audio fayl</string>
+    <string name="tone_failed">Səsi oxutmaq mümkün olmadı. Başqa səs və ya fayl seçin.</string>
+</resources>

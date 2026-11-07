@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tb_choose_phrase">Choose dhikr</string>
+    <string name="tb_total_count">Total repetitions</string>
+    <string name="tb_completed_laps">Completed rounds</string>
+    <string name="tb_unlimited">No limit</string>
+    <string name="tb_cycle_complete">Round complete</string>
+    <string name="tb_gesture_hint">Tap the beads or pull down to count.</string>
+    <string name="tb_phrase_change_hint">Choosing another dhikr resets this counter. Your daily progress is kept.</string>
+</resources>

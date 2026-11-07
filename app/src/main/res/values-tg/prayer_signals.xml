@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="signal_short_title">Садои кӯтоҳи огоҳӣ</string>
+    <string name="signal_short_hint">Ҳангоми хомӯш будани азон садои огоҳии телефонро истифода баред.</string>
+    <string name="signal_last_title">Охирин огоҳии барнома</string>
+    <string name="signal_none">Ҳанӯз огоҳие сабт нашудааст.</string>
+    <string name="signal_scheduled">Вақти таъиншуда · %1$s</string>
+    <string name="signal_delivered">Вақти расидан · %1$s</string>
+    <string name="signal_quiet">Бе садо</string>
+    <string name="signal_blocked">Кушодани канали басташудаи огоҳиҳо</string>
+</resources>

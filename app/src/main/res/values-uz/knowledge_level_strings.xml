@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="learning_level_title">Bilim darajangizni tanlang</string>
+    <string name="learning_level_intro">Savollar tayyorgarligingizga mos boʻladi. Darajani keyin oʻzgartirishingiz mumkin.</string>
+    <string name="learning_level_label">Bilim darajasi</string>
+    <string name="learning_level_not_selected">Hali tanlanmagan</string>
+    <string name="learning_level_choose">Tanlash</string>
+    <string name="learning_level_change">Oʻzgartirish</string>
+    <string name="learning_level_beginner">Boshlangʻich</string>
+    <string name="learning_level_intermediate">Oʻrta</string>
+    <string name="learning_level_advanced">Yuqori</string>
+    <string name="learning_level_beginner_hint">Asosiy tushunchalar va tanish maʼlumotlar.</string>
+    <string name="learning_level_intermediate_hint">Bogʻliqliklar, kontekst va maʼnolar.</string>
+    <string name="learning_level_advanced_hint">Aniq tafsilotlar va bir-biriga yaqin javoblar.</string>
+    <string name="learning_level_count">Darajadagi savollar: %1$d</string>
+    <string name="learning_level_change_hint">Daraja oʻzgarganda tugallanmagan raundlar qaytadan boshlanadi. Oʻrganish tarixi va yigʻilgan daqiqalar saqlanadi.</string>
+    <string name="learning_level_confirm">Darajani tasdiqlash</string>
+    <string name="learning_level_empty">Bu darajada ushbu mavzu boʻyicha savol yoʻq</string>
+    <string name="learning_level_empty_hint">Boshqa mavzuni tanlang yoki darajani oʻzgartiring.</string>
+</resources>

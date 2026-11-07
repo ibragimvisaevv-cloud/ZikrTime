@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qs_today">Имрӯз</string>
+    <string name="qs_paused">Ҳисоб хомӯш аст</string>
+    <string name="qs_enable_progress">Пешрафти шахсиро фаъол кардан</string>
+    <string name="qs_goal_complete">Ҳадафи имрӯза иҷро шуд</string>
+    <string name="qs_today_start">Бо суръати худ бихонед. Вақт дар ин ҷо пайдо мешавад.</string>
+    <string name="qs_goal_remaining">То ҳадаф %1$d дақ монд</string>
+    <string name="qs_change_goal">Тағйири ҳадаф</string>
+    <string name="qs_empty_title">Таърихи хониши шумо аз ин ҷо оғоз мешавад</string>
+    <string name="qs_empty_body">Пас аз хониш вақт ва оятҳои ҳисобшуда худкор дар ин ҷо пайдо мешаванд.</string>
+    <string name="qs_period">Давраи интихобшуда</string>
+    <string name="qs_reading_time">Вақти хониш</string>
+    <string name="qs_observed_ayahs">Оятҳои гуногуни ҳисобшуда</string>
+    <string name="qs_active_days">Рӯзҳои хониш</string>
+    <string name="qs_unique_hint">Хониши такрории як оят ин ҳисобро зиёд намекунад.</string>
+    <string name="qs_all_time">Пешрафти умумӣ</string>
+    <string name="qs_complete_surahs">Сураҳое, ки ҳамаи оятҳояшон ҳисоб шудаанд</string>
+    <string name="qs_less_minute">Камтар аз як дақиқа</string>
+    <string name="qs_duration_minutes">%1$d дақ</string>
+    <string name="qs_duration_hours">%1$d соат %2$d дақ</string>
+    <string name="qs_week_minutes">Дақиқаҳои хониш аз рӯйи рӯзҳо</string>
+    <string name="qs_goal_title">Ҳадафи ҳаррӯзаи хониш</string>
+    <string name="qs_goal_hint">Вақти муносибро интихоб кунед. Ҳадафро ҳар вақт тағйир додан мумкин аст.</string>
+    <string name="qs_goal_minutes">Дақиқа дар рӯз</string>
+    <string name="qs_goal_save">Сабти ҳадаф</string>
+</resources>

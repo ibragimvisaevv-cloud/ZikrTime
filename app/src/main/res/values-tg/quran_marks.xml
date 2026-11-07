@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qm_saved_here">Захирашудаҳо дар сура</string>
+    <string name="qm_in_surah">Оятҳои захирашуда дар ин сура: %1$d</string>
+    <string name="qm_your_note">Ёддошти шумо</string>
+    <string name="qm_empty">Нишонаҳо ва ёддоштҳои ин сура дар ин ҷо пайдо мешаванд. Онҳоро аз менюи оят илова кунед.</string>
+    <string name="qm_go_to_ayah">Ба оят</string>
+    <string name="qm_open_note">Кушодани ёддошт</string>
+</resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="training_title">Машқ аз рӯйи мавзӯъҳо</string>
+    <string name="training_first_hint">Ба чанд саволи сатҳи интихобшуда ҷавоб диҳед. Аз рӯйи ҷавобҳои шумо саволҳо барои такрор интихоб мешаванд.</string>
+    <string name="training_overview_hint">Бубинед, ки кадом мавод мустаҳкам шудааст ва ба кадом саволҳо бояд баргашт. Машқи кӯтоҳро аз рӯйи ҷавобҳоятон оғоз кунед.</string>
+    <string name="training_overview_counts">Ҷавоб дода шуд: %1$d · Хатоҳо барои такрор: %2$d</string>
+    <string name="training_open">Кушодани мавзӯъҳои ман</string>
+    <string name="training_personal_plan">Нақшаи такрори шумо</string>
+    <string name="training_method">То 5 саволи шинос: аввал хатоҳо, сипас мавод барои мустаҳкамкунӣ. Пас аз ҳар ҷавоб шарҳ ва манбаъ меояд.</string>
+    <string name="training_no_data">Ҳоло маълумот кофӣ нест</string>
+    <string name="training_start">Оғози машқ</string>
+    <string name="training_no_bonus">Бе дақиқаҳои иловагӣ. Ҷавобҳо дар таърихи омӯзиш нигоҳ дошта мешаванд.</string>
+    <string name="training_topics">Мавзӯъҳои ман</string>
+    <string name="training_scope_note">Нишондодҳо танҳо ба саволҳои ҷавобдодашудаи сатҳи интихобшуда дахл доранд. Хат фарогирии мавзӯъро нишон медиҳад, на баҳои донишро.</string>
+    <string name="training_status_new">Ҳанӯз омӯхта нашудааст</string>
+    <string name="training_status_limited">Барои хулоса ҷавобҳо каманд</string>
+    <string name="training_status_practice">Такрор кардан лозим</string>
+    <string name="training_status_building">Мустаҳкам мекунем</string>
+    <string name="training_status_retained">Хуб мустаҳкам шудааст</string>
+    <string name="training_coverage">Ҷавоб дода шуд: %1$d аз %2$d</string>
+    <string name="training_error_count">Ҷавобҳои охирини нодуруст: %1$d</string>
+    <string name="training_retained_count">Бо такрор дар рӯзҳои гуногун мустаҳкам шудааст: %1$d</string>
+    <string name="training_topic_action">Машқ дар ин мавзӯъ</string>
+    <string name="training_discover">Омӯхтани мавзӯъ</string>
+    <string name="training_back_topics">Ба мавзӯъҳои ман</string>
+    <string name="training_complete">Машқ анҷом ёфт</string>
+    <string name="training_result_score">Ҷавобҳои дуруст: %1$d аз %2$d</string>
+    <string name="training_result_success">Дар ин давр хато нест. Баъдтар боз такрор кунед: як даври муваффақ ҳанӯз маънои дарозмуддат дар хотир монданро надорад.</string>
+    <string name="training_result_repeat">Дар поён саволҳои ҷавобашон нодуруст омадаанд. Шарҳҳоро хонед ва баъдтар ба онҳо баргардед.</string>
+    <string name="training_review_errors">Таҳлили хатоҳо</string>
+    <string name="training_again">Боз як давр</string>
+    <string name="training_round_hint">Ором ҷавоб диҳед. Ҳамаи саволҳои ин даврро гузаред; дақиқаҳои иловагӣ дода намешаванд.</string>
+    <string name="training_question_progress">Саволи %1$d аз %2$d</string>
+    <string name="training_replace_title">Машқи дигар оғоз шавад?</string>
+    <string name="training_replace_hint">Даври нотамом иваз мешавад. Ҷавобҳои сабтшуда, викторинаи одӣ ва дақиқаҳои иловагӣ нигоҳ дошта мешаванд.</string>
+    <string name="training_replace_confirm">Оғози машқи нав</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_terms_title">Шартҳои ҷойгиркунӣ</string>
+    <string name="store_listing_terms">Пардохти якдафъаина пас аз тасдиқи дархост саҳифаи ширкат ва ҳамаи молҳои онро фаро мегирад.</string>
+    <string name="store_promotion_terms">Таблиғ ихтиёрӣ аст ва алоҳида пардохт мешавад.</string>
+    <string name="store_apply">Фиристодани дархост</string>
+    <string name="store_unavailable">Каталог бор нашуд</string>
+    <string name="store_retry">Кӯшиши дубора</string>
+    <string name="store_empty_catalog">Каталог ҳоло холӣ аст</string>
+    <string name="store_clear">Тоза кардани ҷустуҷӯ</string>
+    <string name="store_more_products">Нишон додани молҳои бештар</string>
+    <string name="store_seller_portal">Ҳуҷраи фурӯшанда</string>
+    <string name="store_browser_unavailable">Браузер кушода нашуд</string>
+</resources>

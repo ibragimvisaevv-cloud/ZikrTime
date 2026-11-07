@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qs_today">Бүгүн</string>
+    <string name="qs_paused">Эсептөө өчүрүлгөн</string>
+    <string name="qs_enable_progress">Жеке илгерилөөнү күйгүзүү</string>
+    <string name="qs_goal_complete">Бүгүнкү максат аткарылды</string>
+    <string name="qs_today_start">Өз темпиңизде окуңуз. Убакыт бул жерде көрүнөт.</string>
+    <string name="qs_goal_remaining">Максатка чейин %1$d мүн калды</string>
+    <string name="qs_change_goal">Максатты өзгөртүү</string>
+    <string name="qs_empty_title">Окуу тарыхыңыз ушул жерден башталат</string>
+    <string name="qs_empty_body">Окугандан кийин убакыт жана эсептелген аяттар бул жерде автоматтык түрдө көрүнөт.</string>
+    <string name="qs_period">Тандалган мезгил</string>
+    <string name="qs_reading_time">Окуу убактысы</string>
+    <string name="qs_observed_ayahs">Эсептелген ар башка аяттар</string>
+    <string name="qs_active_days">Окуган күндөр</string>
+    <string name="qs_unique_hint">Бир аятты кайра окуу бул санды көбөйтпөйт.</string>
+    <string name="qs_all_time">Жалпы илгерилөө</string>
+    <string name="qs_complete_surahs">Бардык аяттары эсептелген сүрөлөр</string>
+    <string name="qs_less_minute">Бир мүнөттөн аз</string>
+    <string name="qs_duration_minutes">%1$d мүн</string>
+    <string name="qs_duration_hours">%1$d саат %2$d мүн</string>
+    <string name="qs_week_minutes">Күн сайын окуган мүнөттөр</string>
+    <string name="qs_goal_title">Күнүмдүк окуу максаты</string>
+    <string name="qs_goal_hint">Өзүңүзгө ыңгайлуу убакытты тандаңыз. Максатты каалаган убакта өзгөртө аласыз.</string>
+    <string name="qs_goal_minutes">Күнүнө мүнөт</string>
+    <string name="qs_goal_save">Максатты сактоо</string>
+</resources>

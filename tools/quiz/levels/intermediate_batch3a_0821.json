@@ -1,0 +1,923 @@
+[
+  {
+    "id": "l2x_faculties_accountable",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 17:36",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "sourceVerses": [
+      "17:36"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие три способности названы после запрета следовать неизвестному в 17:36?",
+        "options": [
+          "Слух, зрение и сердце",
+          "Речь, память и воображение",
+          "Зрение, речь и сила рук",
+          "Слух, память и способность считать"
+        ],
+        "info": "Ответственность связана со средствами восприятия и внутреннего осмысления; запрет касается следования без знания."
+      },
+      "en": {
+        "q": "Which three faculties follow the prohibition of pursuing what is unknown in 17:36?",
+        "options": [
+          "Hearing, sight and the heart",
+          "Speech, memory and imagination",
+          "Sight, speech and the strength of hands",
+          "Hearing, memory and the ability to count"
+        ],
+        "info": "Responsibility is linked to perception and inward understanding; the prohibition concerns following without knowledge."
+      },
+      "uz": {
+        "q": "17:36 da bilmagan narsaga ergashmaslik amridan keyin qaysi uch qobiliyat sanaladi?",
+        "options": [
+          "Eshitish, ko‘rish va qalb",
+          "Nutq, xotira va tasavvur",
+          "Ko‘rish, nutq va qo‘l kuchi",
+          "Eshitish, xotira va sanash qobiliyati"
+        ],
+        "info": "Mas’uliyat idrok va ichki anglash vositalariga bog‘lanadi; oyat bilimsiz ergashishni taqiqlaydi."
+      },
+      "tg": {
+        "q": "Дар 17:36 пас аз манъи пайравӣ аз чизи нодониста кадом се қобилият ном бурда мешаванд?",
+        "options": [
+          "Шунавоӣ, биноӣ ва дил",
+          "Гуфтор, хотира ва тасаввур",
+          "Биноӣ, гуфтор ва неруи даст",
+          "Шунавоӣ, хотира ва қобилияти ҳисоб"
+        ],
+        "info": "Масъулият ба воситаҳои дарк ва фаҳмиши дарунӣ вобаста аст; оят пайравии бе донишро манъ мекунад."
+      },
+      "kk": {
+        "q": "17:36-да білмейтін нәрсеге ермеу тыйымынан кейін қандай үш қабілет аталады?",
+        "options": [
+          "Есту, көру және жүрек",
+          "Сөйлеу, есте сақтау және қиял",
+          "Көру, сөйлеу және қол күші",
+          "Есту, есте сақтау және санау"
+        ],
+        "info": "Жауапкершілік қабылдау мен ішкі түсіну құралдарына қатысты; аят білімсіз еруді тыйым салады."
+      },
+      "ky": {
+        "q": "17:36-аятта билбеген нерсени ээрчүүгө тыюудан кийин кайсы үч жөндөм аталат?",
+        "options": [
+          "Угуу, көрүү жана жүрөк",
+          "Сүйлөө, эс тутум жана элестетүү",
+          "Көрүү, сүйлөө жана колдун күчү",
+          "Угуу, эс тутум жана саноо"
+        ],
+        "info": "Жоопкерчилик кабыл алуу жана ички түшүнүү каражаттарына байланыштуу; аят билимсиз ээрчүүгө тыюу салат."
+      },
+      "az": {
+        "q": "17:36-da bilmədiyinin ardınca getmək qadağasından sonra hansı üç qabiliyyət sadalanır?",
+        "options": [
+          "Eşitmə, görmə və qəlb",
+          "Nitq, yaddaş və təxəyyül",
+          "Görmə, nitq və əllərin gücü",
+          "Eşitmə, yaddaş və saymaq qabiliyyəti"
+        ],
+        "info": "Məsuliyyət qavrayış və daxili anlama vasitələri ilə əlaqələndirilir; ayət bilik olmadan ardınca getməyi qadağan edir."
+      },
+      "tr": {
+        "q": "17:36'da bilinmeyenin peşine düşme yasağından sonra hangi üç yeti sayılır?",
+        "options": [
+          "İşitme, görme ve kalp",
+          "Konuşma, hafıza ve hayal gücü",
+          "Görme, konuşma ve ellerin gücü",
+          "İşitme, hafıza ve sayma yeteneği"
+        ],
+        "info": "Sorumluluk, algılama ve içten kavrama araçlarıyla ilişkilendirilir; yasak, bilgi olmadan bir şeyin peşine düşmekle ilgilidir."
+      }
+    }
+  },
+  {
+    "id": "l2x_best_words_discord",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 17:53",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/17",
+    "sourceVerses": [
+      "17:53"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какой риск объясняет призыв говорить наилучшее в 17:53?",
+        "options": [
+          "Шайтан вносит между людьми раздор",
+          "Шайтан пугает людей бедностью",
+          "Поспешность мешает дослушать откровение",
+          "Предположения подменяют проверенное знание"
+        ],
+        "info": "Выбор слов связан с предотвращением раздора; в аяте шайтан назван явным врагом человека."
+      },
+      "en": {
+        "q": "What risk explains the call to say what is best in 17:53?",
+        "options": [
+          "Satan sows discord between people",
+          "Satan threatens people with poverty",
+          "Haste prevents listening to revelation fully",
+          "Assumptions replace verified knowledge"
+        ],
+        "info": "The choice of words is linked to preventing discord; Satan is described as a clear enemy of humankind."
+      },
+      "uz": {
+        "q": "17:53 da eng yaxshi so‘zni aytishga chaqiriq qaysi xavf bilan izohlanadi?",
+        "options": [
+          "Shayton odamlar orasiga nizo soladi",
+          "Shayton odamlarni qashshoqlik bilan qo‘rqitadi",
+          "Shoshilish vahiyni oxirigacha tinglashga xalaqit beradi",
+          "Taxminlar tekshirilgan bilimning o‘rnini egallaydi"
+        ],
+        "info": "So‘z tanlash nizoning oldini olish bilan bog‘liq; oyatda shayton insonning ochiq dushmani deyiladi."
+      },
+      "tg": {
+        "q": "Дар 17:53 даъват ба гуфтани беҳтарин сухан бо кадом хатар шарҳ дода мешавад?",
+        "options": [
+          "Шайтон миёни мардум низоъ меандозад",
+          "Шайтон мардумро аз фақр метарсонад",
+          "Шитоб ба пурра шунидани ваҳй халал мерасонад",
+          "Гумонҳо ҷойи дониши санҷидаро мегиранд"
+        ],
+        "info": "Интихоби сухан бо пешгирии низоъ пайванд дорад; дар оят шайтон душмани ошкори инсон номида шудааст."
+      },
+      "kk": {
+        "q": "17:53-те ең жақсы сөзді айтуға шақыру қандай қауіппен түсіндіріледі?",
+        "options": [
+          "Шайтан адамдардың арасына алауыздық салады",
+          "Шайтан адамдарды кедейлікпен қорқытады",
+          "Асығыстық уахиды толық тыңдауға кедергі болады",
+          "Жорамалдар тексерілген білімнің орнын басады"
+        ],
+        "info": "Сөз таңдау алауыздықтың алдын алумен байланысты; аятта шайтан адамның ашық дұшпаны деп аталады."
+      },
+      "ky": {
+        "q": "17:53-аятта эң жакшы сөздү айтууга чакырык кайсы коркунуч менен түшүндүрүлөт?",
+        "options": [
+          "Шайтан адамдардын ортосуна араздашуу салат",
+          "Шайтан адамдарды жакырчылык менен коркутат",
+          "Шашылыштык вахийди толук угууга тоскоол болот",
+          "Божомолдор текшерилген билимдин ордун басат"
+        ],
+        "info": "Сөз тандоо араздашуунун алдын алуу менен байланыштуу; аятта шайтан адамдын ачык душманы деп аталат."
+      },
+      "az": {
+        "q": "17:53-də ən yaxşı sözü deməyə çağırış hansı təhlükə ilə izah olunur?",
+        "options": [
+          "Şeytan insanlar arasında nifaq salır",
+          "Şeytan insanları yoxsulluqla qorxudur",
+          "Tələskənlik vəhyi sona qədər dinləməyə mane olur",
+          "Ehtimallar yoxlanılmış biliyi əvəz edir"
+        ],
+        "info": "Söz seçimi nifaqın qarşısını almaqla bağlıdır; ayətdə şeytan insanın açıq düşməni adlandırılır."
+      },
+      "tr": {
+        "q": "17:53'te en güzel sözü söyleme çağrısı hangi tehlikeyle açıklanır?",
+        "options": [
+          "Şeytan insanlar arasında anlaşmazlık çıkarır",
+          "Şeytan insanları yoksullukla korkutur",
+          "Acelecilik vahyi sonuna kadar dinlemeyi engeller",
+          "Varsayımlar doğrulanmış bilginin yerini alır"
+        ],
+        "info": "Söz seçimi, anlaşmazlığı önlemekle ilişkilidir; ayette şeytan insanın apaçık düşmanı olarak nitelenir."
+      }
+    }
+  },
+  {
+    "id": "l2x_company_morning_evening",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 18:28",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "sourceVerses": [
+      "18:28"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какая характеристика людей, с которыми велено оставаться, дана в 18:28?",
+        "options": [
+          "Они взывают к Господу утром и вечером, стремясь к Его Лику",
+          "Они переселяются ради веры, оставляя имущество и жилища",
+          "Они помогают нуждающимся, не требуя платы и благодарности",
+          "Они изучают Писание и объясняют людям скрытое ими знание"
+        ],
+        "info": "Общество выбирается по обращению к Господу, а не по привлекательности земного положения; далее запрещено следовать беспечности и прихоти."
+      },
+      "en": {
+        "q": "What description is given in 18:28 of those with whom one is told to remain?",
+        "options": [
+          "They call upon their Lord morning and evening, seeking His countenance",
+          "They emigrate for their faith, leaving their possessions and homes",
+          "They help those in need, asking for neither payment nor thanks",
+          "They study Scripture and explain knowledge that people have concealed"
+        ],
+        "info": "Company is chosen for devotion to the Lord rather than attractive worldly status; heedlessness and desire are then warned against."
+      },
+      "uz": {
+        "q": "18:28 da birga bo‘lish buyurilgan kishilar qanday tavsiflanadi?",
+        "options": [
+          "Ular Robbilarining roziligini istab, ertayu kech Unga iltijo qiladilar",
+          "Ular mol-mulk va uylarini qoldirib, imonlari uchun hijrat qiladilar",
+          "Ular haq va rahmat kutmay, muhtojlarga yordam beradilar",
+          "Ular Kitobni o‘rganib, odamlar yashirgan bilimni tushuntiradilar"
+        ],
+        "info": "Hamrohlar dunyoviy mavqega emas, Robbiga yuzlanishiga qarab tanlanadi; keyin g‘aflat va havoyi nafsga ergashishdan qaytariladi."
+      },
+      "tg": {
+        "q": "Дар 18:28 касоне, ки ҳамроҳашон мондан амр шудааст, чӣ гуна тавсиф мешаванд?",
+        "options": [
+          "Онҳо субҳу шом Парвардигорашонро ба умеди ризои Ӯ мехонанд",
+          "Онҳо барои имон молу манзили худро гузошта ҳиҷрат мекунанд",
+          "Онҳо ба ниёзмандон бе интизори музду сипос ёрӣ медиҳанд",
+          "Онҳо Китобро меомӯзанд ва дониши пинҳонкардаи мардумро мефаҳмонанд"
+        ],
+        "info": "Ҳамнишинон аз рӯи рӯй овардан ба Парвардигор интихоб мешаванд, на ҷозибаи мақоми дунявӣ; баъд аз ғафлату ҳавопарастӣ манъ мешавад."
+      },
+      "kk": {
+        "q": "18:28-де бірге болу бұйырылған адамдар қалай сипатталады?",
+        "options": [
+          "Олар Раббысының разылығын іздеп, Оған таңертең және кешке жалбарынады",
+          "Олар иманы үшін дүние-мүлкі мен үйлерін тастап қоныс аударады",
+          "Олар мұқтаждарға ақы да, алғыс та күтпей көмектеседі",
+          "Олар Кітапты оқып, адамдар жасырған білімді түсіндіреді"
+        ],
+        "info": "Серіктестік дүниелік мәртебеге емес, Раббысына бет бұруға негізделеді; кейін ғапылдық пен нәпсіге еруден сақтандырылады."
+      },
+      "ky": {
+        "q": "18:28-аятта бирге болуу буйрулган адамдар кандай сүрөттөлөт?",
+        "options": [
+          "Алар Раббисинин ыраазылыгын издеп, эртең менен жана кечинде Ага жалбарышат",
+          "Алар ыйманы үчүн мал-мүлкүн жана үйлөрүн таштап көчүшөт",
+          "Алар муктаждарга акы да, ыраазычылык да күтпөй жардам беришет",
+          "Алар Китепти үйрөнүп, адамдар жашырган билимди түшүндүрүшөт"
+        ],
+        "info": "Жолдоштук дүйнөлүк макамга эмес, Раббиге жүз бурууга негизделет; андан кийин кайдыгерликти жана каалоону ээрчүүдөн кайтарылат."
+      },
+      "az": {
+        "q": "18:28-də birlikdə qalmaq əmr edilən insanlar necə təsvir olunur?",
+        "options": [
+          "Onlar Rəbbinin rizasını istəyərək səhər-axşam Ona dua edirlər",
+          "Onlar imanları üçün evlərini və mallarını tərk edib hicrət edirlər",
+          "Onlar nə əvəz, nə də təşəkkür gözləmədən ehtiyaclılara kömək edirlər",
+          "Onlar Kitabı öyrənir və insanların gizlətdiyi biliyi izah edirlər"
+        ],
+        "info": "Yoldaşlıq dünyəvi mövqenin cazibəsinə deyil, Rəbbə yönəlməyə əsaslanır; sonra qəflət və həvəsə tabe olmaqdan çəkindirilir."
+      },
+      "tr": {
+        "q": "18:28'de birlikte kalınması emredilen kişiler nasıl tanımlanır?",
+        "options": [
+          "Rablerinin rızasını isteyerek sabah akşam O'na dua ederler",
+          "İmanları için mallarını ve evlerini bırakıp hicret ederler",
+          "Karşılık ve teşekkür beklemeden ihtiyaç sahiplerine yardım ederler",
+          "Kitabı öğrenir ve insanların gizlediği bilgiyi açıklarlar"
+        ],
+        "info": "Beraberlik, çekici dünyevi konuma değil, Rabbe yönelişe dayanır; ardından gaflet ve hevaya uymaktan sakındırılır."
+      }
+    }
+  },
+  {
+    "id": "l2x_adornment_enduring_deeds",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 18:46",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/18",
+    "sourceVerses": [
+      "18:46"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как распределены украшение и прочная надежда в 18:46?",
+        "options": [
+          "Имущество и дети — украшение; праведные дела лучше по награде и надежде",
+          "Праведные дела — украшение; имущество и дети лучше по награде и надежде",
+          "Имущество — надежда; дети и праведные дела названы только украшением",
+          "Дети — единственная награда; имущество и дела названы только испытанием"
+        ],
+        "info": "Земные блага признаются украшением жизни, но непреходящим праведным делам дана более высокая оценка награды и надежды."
+      },
+      "en": {
+        "q": "How are adornment and enduring hope assigned in 18:46?",
+        "options": [
+          "Wealth and children are adornment; righteous deeds are better in reward and hope",
+          "Righteous deeds are adornment; wealth and children are better in reward and hope",
+          "Wealth is hope; children and righteous deeds are only adornment",
+          "Children are the sole reward; wealth and deeds are only a test"
+        ],
+        "info": "Worldly blessings are acknowledged as life's adornment, while enduring righteous deeds receive the higher valuation in reward and hope."
+      },
+      "uz": {
+        "q": "18:46 da ziynat, ajr va umid qanday taqqoslanadi?",
+        "options": [
+          "Mol-mulk va farzandlar ziynat; solih amallar ajr va umid jihatidan yaxshiroq",
+          "Solih amallar ziynat; mol-mulk va farzandlar ajr va umid jihatidan yaxshiroq",
+          "Mol-mulk umid; farzandlar va solih amallar faqat ziynat",
+          "Farzandlar yagona ajr; mol-mulk va amallar faqat sinov"
+        ],
+        "info": "Dunyoviy ne’matlar hayot ziynati deb tan olinadi, lekin boqiy solih amallar ajr va umid jihatidan ustun qo‘yiladi."
+      },
+      "tg": {
+        "q": "Дар 18:46 зинат, подош ва умед чӣ гуна муқоиса мешаванд?",
+        "options": [
+          "Молу фарзандон зинатанд; корҳои нек аз ҷиҳати подошу умед беҳтаранд",
+          "Корҳои нек зинатанд; молу фарзандон аз ҷиҳати подошу умед беҳтаранд",
+          "Мол умед аст; фарзандону корҳои нек танҳо зинатанд",
+          "Фарзандон ягона подошанд; молу корҳо танҳо озмоишанд"
+        ],
+        "info": "Неъматҳои дунявӣ зинати зиндагӣ эътироф мешаванд, аммо корҳои неки пойдор аз ҷиҳати подошу умед бартар дониста мешаванд."
+      },
+      "kk": {
+        "q": "18:46-да сән, сый және үміт қалай салыстырылады?",
+        "options": [
+          "Дүние-мүлік пен балалар — сән; ізгі істер сыйы мен үміті жағынан жақсырақ",
+          "Ізгі істер — сән; дүние-мүлік пен балалар сыйы мен үміті жағынан жақсырақ",
+          "Дүние-мүлік — үміт; балалар мен ізгі істер тек сән",
+          "Балалар — жалғыз сый; дүние-мүлік пен істер тек сынақ"
+        ],
+        "info": "Дүниелік игіліктер өмірдің сәні деп танылады, ал мәңгі қалатын ізгі істердің сыйы мен үміті жоғары бағаланады."
+      },
+      "ky": {
+        "q": "18:46-аятта көрк, сооп жана үмүт кандай салыштырылат?",
+        "options": [
+          "Мал-мүлк жана балдар — көрк; жакшы иштер сообу жана үмүтү жагынан жакшыраак",
+          "Жакшы иштер — көрк; мал-мүлк жана балдар сообу жана үмүтү жагынан жакшыраак",
+          "Мал-мүлк — үмүт; балдар жана жакшы иштер болгону көрк",
+          "Балдар — жалгыз сооп; мал-мүлк жана иштер болгону сыноо"
+        ],
+        "info": "Дүйнөлүк жакшылыктар жашоонун көркү деп таанылат, ал эми түбөлүк кала турган жакшы иштердин сообу менен үмүтү жогору бааланат."
+      },
+      "az": {
+        "q": "18:46-da zinət, mükafat və ümid necə müqayisə olunur?",
+        "options": [
+          "Mal və övladlar zinətdir; saleh əməllər mükafat və ümid baxımından daha yaxşıdır",
+          "Saleh əməllər zinətdir; mal və övladlar mükafat və ümid baxımından daha yaxşıdır",
+          "Mal ümiddir; övladlar və saleh əməllər yalnız zinətdir",
+          "Övladlar yeganə mükafatdır; mal və əməllər yalnız sınaqdır"
+        ],
+        "info": "Dünyəvi nemətlər həyatın zinəti kimi qəbul olunur, lakin qalıcı saleh əməllərin mükafatı və ümidi daha üstün tutulur."
+      },
+      "tr": {
+        "q": "18:46'da süs, karşılık ve ümit nasıl karşılaştırılır?",
+        "options": [
+          "Mal ve çocuklar süstür; kalıcı iyi işler karşılık ve ümit bakımından daha iyidir",
+          "Kalıcı iyi işler süstür; mal ve çocuklar karşılık ve ümit bakımından daha iyidir",
+          "Mal ümittir; çocuklar ve iyi işler yalnızca süstür",
+          "Çocuklar tek karşılıktır; mal ve işler yalnızca sınamadır"
+        ],
+        "info": "Dünyevi nimetler hayatın süsü olarak kabul edilir, fakat kalıcı iyi işler karşılık ve ümit bakımından daha üstün tutulur."
+      }
+    }
+  },
+  {
+    "id": "l2x_glitter_and_provision",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 20:131",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/20",
+    "sourceVerses": [
+      "20:131"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие два качества удела Господа противопоставлены мирскому блеску в 20:131?",
+        "options": [
+          "Он лучше и долговечнее",
+          "Он многочисленнее и ближе",
+          "Он явнее и легче достижим",
+          "Он шире и быстрее приходит"
+        ],
+        "info": "Мирские преимущества других названы испытанием; мерой сравнения служит лучший и более долговечный удел Господа."
+      },
+      "en": {
+        "q": "Which two qualities of the Lord's provision are contrasted with worldly splendor in 20:131?",
+        "options": [
+          "It is better and more lasting",
+          "It is more abundant and nearer",
+          "It is more visible and easier to attain",
+          "It is wider and arrives sooner"
+        ],
+        "info": "Others' worldly advantages are described as a test; the comparison is with the Lord's better and more lasting provision."
+      },
+      "uz": {
+        "q": "20:131 da Robbining rizqi dunyo jilvasiga qarshi qaysi ikki sifat bilan tavsiflanadi?",
+        "options": [
+          "Yaxshiroq va boqiyroq",
+          "Ko‘proq va yaqinroq",
+          "Ochiqroq va erishish osonroq",
+          "Kengroq va tezroq keladigan"
+        ],
+        "info": "Boshqalarning dunyoviy ustunliklari sinov deb ataladi; ularga Robbining yaxshiroq va boqiyroq rizqi qiyoslanadi."
+      },
+      "tg": {
+        "q": "Дар 20:131 ризқи Парвардигор бо кадом ду сифат ба ҷилваи дунё муқоиса мешавад?",
+        "options": [
+          "Беҳтар ва пойдортар",
+          "Бештар ва наздиктар",
+          "Ошкортар ва осонтар дастрас",
+          "Васеътар ва зудтар расанда"
+        ],
+        "info": "Бартариҳои дунявии дигарон озмоиш номида мешаванд; меъёри муқоиса ризқи беҳтару пойдортари Парвардигор аст."
+      },
+      "kk": {
+        "q": "20:131-де Раббының ризығы дүниенің жылтырына қарсы қандай екі қасиетпен аталады?",
+        "options": [
+          "Жақсырақ және тұрақтырақ",
+          "Көбірек және жақынырақ",
+          "Айқынырақ және қол жеткізу оңайырақ",
+          "Кеңірек және тезірек келетін"
+        ],
+        "info": "Өзгелердің дүниелік артықшылықтары сынақ деп аталады; олар Раббының жақсырақ әрі тұрақтырақ ризығымен салыстырылады."
+      },
+      "ky": {
+        "q": "20:131-аятта Раббинин ырыскысы дүйнөнүн жалтырагына каршы кайсы эки сапат менен аталат?",
+        "options": [
+          "Жакшыраак жана туруктуураак",
+          "Көбүрөөк жана жакыныраак",
+          "Ачыгыраак жана жетүү оңоюраак",
+          "Кеңирээк жана тезирээк келүүчү"
+        ],
+        "info": "Башкалардын дүйнөлүк артыкчылыктары сыноо деп аталат; алар Раббинин жакшыраак жана туруктуураак ырыскысы менен салыштырылат."
+      },
+      "az": {
+        "q": "20:131-də Rəbbin ruzisi dünya bərbəzəyindən hansı iki xüsusiyyəti ilə fərqləndirilir?",
+        "options": [
+          "Daha yaxşı və daha qalıcıdır",
+          "Daha bol və daha yaxındır",
+          "Daha aşkar və əldə edilməsi daha asandır",
+          "Daha genişdir və daha tez gəlir"
+        ],
+        "info": "Başqalarının dünyəvi üstünlükləri sınaq adlandırılır; bunlar Rəbbin daha yaxşı və daha qalıcı ruzisi ilə müqayisə edilir."
+      },
+      "tr": {
+        "q": "20:131'de Rabbin rızkı dünya hayatının çekiciliğiyle hangi iki niteliği üzerinden karşılaştırılır?",
+        "options": [
+          "Daha hayırlı ve daha kalıcıdır",
+          "Daha çok ve daha yakındır",
+          "Daha görünür ve ulaşılması daha kolaydır",
+          "Daha geniştir ve daha çabuk gelir"
+        ],
+        "info": "Başkalarına verilen dünyevi üstünlükler bir sınama olarak anılır; karşılaştırma, Rabbin daha hayırlı ve daha kalıcı rızkıyladır."
+      }
+    }
+  },
+  {
+    "id": "l2x_good_and_bad_tests",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 21:35",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/21",
+    "sourceVerses": [
+      "21:35"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие два напоминания окружают слова об испытании добром и злом в 21:35?",
+        "options": [
+          "Каждая душа вкусит смерть; люди возвратятся к Аллаху",
+          "Аллах знает скрытое; записи дел будут раскрыты",
+          "Человек создан слабым; ему не возлагают непосильного",
+          "Земная жизнь кратка; награда за терпение безмерна"
+        ],
+        "info": "Добро и трудности упомянуты вместе, между напоминанием о смерти и возвращении к Аллаху; благополучие тоже может испытывать человека."
+      },
+      "en": {
+        "q": "Which two reminders surround the words about testing through good and adversity in 21:35?",
+        "options": [
+          "Every soul will taste death; people will return to Allah",
+          "Allah knows what is hidden; records of deeds will be disclosed",
+          "Humankind was created weak; no soul is burdened beyond its capacity",
+          "Earthly life is brief; the reward for patience is immeasurable"
+        ],
+        "info": "Good and adversity are joined between reminders of death and return to Allah; well-being can also test a person."
+      },
+      "uz": {
+        "q": "21:35 da yaxshilik va yomonlik bilan sinash so‘zlaridan oldin va keyin nimalar eslatiladi?",
+        "options": [
+          "Har bir jon o‘limni totadi; odamlar Allohga qaytariladi",
+          "Alloh yashirinni biladi; amallar yozuvi ochiladi",
+          "Inson zaif yaratilgan; unga kuchidan ortiq yuk yuklanmaydi",
+          "Dunyo hayoti qisqa; sabrning ajri cheksiz"
+        ],
+        "info": "Yaxshilik va qiyinchilik o‘lim hamda Allohga qaytish eslatmalari orasida birga tilga olinadi; farovonlik ham insonni sinashi mumkin."
+      },
+      "tg": {
+        "q": "Дар 21:35 пешу паси сухан дар бораи озмоиш бо некиву бадӣ кадом ду ёдоварӣ омадааст?",
+        "options": [
+          "Ҳар ҷон маргро мечашад; мардум ба Аллоҳ баргардонда мешаванд",
+          "Аллоҳ пинҳонро медонад; номаҳои аъмол кушода мешаванд",
+          "Инсон нотавон офарида шудааст; бар ӯ бори тоқатфарсо нест",
+          "Зиндагии дунё кӯтоҳ аст; подоши сабр беандоза аст"
+        ],
+        "info": "Некӣ ва душворӣ дар миёни ёдоварии марг ва бозгашт ба Аллоҳ якҷо омадаанд; осоиш низ метавонад инсонро биозмояд."
+      },
+      "kk": {
+        "q": "21:35-те жақсылықпен және жамандықпен сынау сөздерінің алдында және соңында не ескертіледі?",
+        "options": [
+          "Әрбір жан өлімді татады; адамдар Аллаға қайтарылады",
+          "Алла жасырынды біледі; амал дәптерлері ашылады",
+          "Адам әлсіз жаратылған; оған шамадан тыс жүк артылмайды",
+          "Дүниелік өмір қысқа; сабырдың сыйы шексіз"
+        ],
+        "info": "Жақсылық пен қиындық өлім және Аллаға қайту туралы ескертулердің арасында бірге аталады; береке де адамды сынауы мүмкін."
+      },
+      "ky": {
+        "q": "21:35-аятта жакшылык жана жамандык менен сыноо сөздөрүнүн алдында жана соңунда эмне эскертилет?",
+        "options": [
+          "Ар бир жан өлүмдү татат; адамдар Аллахка кайтарылат",
+          "Аллах жашыруунду билет; амал китептери ачылат",
+          "Адам алсыз жаратылган; ага күчүнөн ашык жүк жүктөлбөйт",
+          "Дүйнө жашоосу кыска; сабырдын сообу чексиз"
+        ],
+        "info": "Жакшылык менен кыйынчылык өлүм жана Аллахка кайтуу тууралуу эскертүүлөрдүн ортосунда бирге айтылат; бакубатчылык да адамды сынашы мүмкүн."
+      },
+      "az": {
+        "q": "21:35-də xeyir və şərlə sınaq sözlərinin əvvəlində və sonunda hansı iki xatırlatma verilir?",
+        "options": [
+          "Hər can ölümü dadacaq; insanlar Allaha qaytarılacaq",
+          "Allah gizlini bilir; əməl dəftərləri açılacaq",
+          "İnsan zəif yaradılıb; ona gücündən artıq yük verilməz",
+          "Dünya həyatı qısadır; səbrin mükafatı hədsizdir"
+        ],
+        "info": "Xeyir və çətinlik ölüm və Allaha dönüş xatırlatmaları arasında birlikdə sadalanır; firavanlıq da insanı sınaya bilər."
+      },
+      "tr": {
+        "q": "21:35'te iyilik ve kötülükle sınama sözlerinin önünde ve sonunda hangi iki hatırlatma vardır?",
+        "options": [
+          "Her can ölümü tadacaktır; insanlar Allah'a döndürülecektir",
+          "Allah gizliyi bilir; amel defterleri açılacaktır",
+          "İnsan zayıf yaratılmıştır; kimseye gücünün üstünde yük yüklenmez",
+          "Dünya hayatı kısadır; sabrın karşılığı sınırsızdır"
+        ],
+        "info": "İyilik ve zorluk, ölüm ve Allah'a dönüş hatırlatmaları arasında birlikte anılır; refah da insanı sınayabilir."
+      }
+    }
+  },
+  {
+    "id": "l2x_sacrifice_reaches",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 22:37",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/22",
+    "sourceVerses": [
+      "22:37"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какое внутреннее качество противопоставлено мясу и крови жертвы в 22:37?",
+        "options": [
+          "Богобоязненность совершающего жертву",
+          "Отсутствие ожидания благодарности людей",
+          "Стойкость перед лицом опасности",
+          "Верность обещанию после заключения договора"
+        ],
+        "info": "Аят переносит внимание с материальной стороны жертвы на богобоязненность и благодарное возвеличивание Аллаха за руководство."
+      },
+      "en": {
+        "q": "What inward quality is contrasted with a sacrifice's meat and blood in 22:37?",
+        "options": [
+          "The sacrificer's God-consciousness",
+          "Not expecting gratitude from people",
+          "Steadfastness in the face of danger",
+          "Faithfulness to a promise after concluding an agreement"
+        ],
+        "info": "The verse directs attention from the sacrifice's material aspect to God-consciousness and grateful glorification of Allah for guidance."
+      },
+      "uz": {
+        "q": "22:37 da qurbonlik go‘shti va qoniga qaysi ichki sifat qarama-qarshi qo‘yiladi?",
+        "options": [
+          "Qurbonlik qiluvchining taqvosi",
+          "Odamlardan rahmat kutmaslik",
+          "Xavf qarshisida matonat",
+          "Ahd tuzilgach, va’daga sodiqlik"
+        ],
+        "info": "Oyat e’tiborni qurbonlikning moddiy tomoniga emas, taqvoga va hidoyat uchun Allohni shukr bilan ulug‘lashga qaratadi."
+      },
+      "tg": {
+        "q": "Дар 22:37 ба гӯшту хуни қурбонӣ кадом сифати ботинӣ муқобил гузошта мешавад?",
+        "options": [
+          "Тақвои қурбоникунанда",
+          "Интизор набудани сипоси мардум",
+          "Пойдорӣ дар баробари хатар",
+          "Вафо ба ваъда пас аз бастани аҳд"
+        ],
+        "info": "Оят диққатро аз ҷанбаи моддии қурбонӣ ба тақво ва бузургдошти шукронаи Аллоҳ барои ҳидоят равона мекунад."
+      },
+      "kk": {
+        "q": "22:37-де құрбандықтың еті мен қанына қандай ішкі қасиет қарсы қойылады?",
+        "options": [
+          "Құрбандық шалушының тақуалығы",
+          "Адамдардың алғысын күтпеу",
+          "Қауіп алдында табанды болу",
+          "Келісім жасалғаннан кейін уәдеге адал болу"
+        ],
+        "info": "Аят назарды құрбандықтың материалдық жағына емес, тақуалыққа және тура жол үшін Алланы шүкірлікпен ұлықтауға аударады."
+      },
+      "ky": {
+        "q": "22:37-аятта курмандыктын этине жана канына кайсы ички сапат каршы коюлат?",
+        "options": [
+          "Курмандык чалуучунун такыбалыгы",
+          "Адамдардан ыраазычылык күтпөө",
+          "Коркунуч алдында бекем туруу",
+          "Келишим түзгөндөн кийин убадага бек болуу"
+        ],
+        "info": "Аят көңүлдү курмандыктын заттык жагынан такыбалыкка жана туура жол үчүн Аллахты шүгүр менен улуктоого бурат."
+      },
+      "az": {
+        "q": "22:37-də qurbanın əti və qanının qarşısına hansı daxili xüsusiyyət qoyulur?",
+        "options": [
+          "Qurban kəsənin təqvası",
+          "İnsanlardan təşəkkür gözləməmək",
+          "Təhlükə qarşısında mətanət",
+          "Əhd bağladıqdan sonra vədə sədaqət"
+        ],
+        "info": "Ayət diqqəti qurbanın maddi tərəfindən təqvaya və hidayətə görə Allahı şükürlə ucaltmağa yönəldir."
+      },
+      "tr": {
+        "q": "22:37'de kurbanın eti ve kanıyla hangi iç nitelik karşılaştırılır?",
+        "options": [
+          "Kurban kesenin takvası",
+          "İnsanlardan teşekkür beklememek",
+          "Tehlike karşısında dirençli olmak",
+          "Anlaşma yaptıktan sonra söze sadık kalmak"
+        ],
+        "info": "Ayet, dikkati kurbanın maddi yönünden takvaya ve hidayete karşılık Allah'ı şükürle yüceltmeye yöneltir."
+      }
+    }
+  },
+  {
+    "id": "l2x_giving_with_awe",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 23:60, Quran 23:61",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/23",
+    "sourceVerses": [
+      "23:60",
+      "23:61"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Почему сердца дающих исполнены тревоги в 23:60–61, хотя они спешат к добру?",
+        "options": [
+          "Они осознают возвращение к своему Господу",
+          "Они осознают ненадёжность любых земных обещаний",
+          "Они опасаются несправедливой оценки свидетелей",
+          "Они опасаются забыть условие заключённого договора"
+        ],
+        "info": "Совершение доброго дела соединено с сознанием возвращения к Господу; благочестие здесь не превращается в самодовольство."
+      },
+      "en": {
+        "q": "Why are the givers' hearts apprehensive in 23:60–61 although they hasten to good?",
+        "options": [
+          "They are aware of returning to their Lord",
+          "They are aware of the uncertainty of earthly promises",
+          "They fear an unjust assessment by witnesses",
+          "They fear forgetting a condition in an agreement"
+        ],
+        "info": "Doing good is joined with awareness of returning to the Lord; devotion is not turned into self-satisfaction."
+      },
+      "uz": {
+        "q": "23:60–61 da yaxshilikka shoshilayotgan ehson qiluvchilarning qalbi nega xavotirda?",
+        "options": [
+          "Ular Robbilariga qaytishlarini biladilar",
+          "Ular dunyoviy va’dalarning ishonchsizligini biladilar",
+          "Ular guvohlarning nohaq bahosidan qo‘rqadilar",
+          "Ular kelishuv shartini unutishdan qo‘rqadilar"
+        ],
+        "info": "Yaxshilik qilish Robbiga qaytishni anglash bilan birga keladi; taqvodorlik o‘zidan mamnunlikka aylantirilmaydi."
+      },
+      "tg": {
+        "q": "Дар 23:60–61 чаро дили бахшандагон нигарон аст, ҳарчанд ба некӣ мешитобанд?",
+        "options": [
+          "Онҳо бозгашт ба Парвардигорашонро дарк мекунанд",
+          "Онҳо ноустувории ваъдаҳои дунявиро дарк мекунанд",
+          "Онҳо аз баҳодиҳии ноодилонаи шоҳидон метарсанд",
+          "Онҳо аз фаромӯш кардани шарти аҳд метарсанд"
+        ],
+        "info": "Кори нек бо дарки бозгашт ба Парвардигор пайвастааст; парҳезгорӣ ба худписандӣ табдил намеёбад."
+      },
+      "kk": {
+        "q": "23:60–61-де жақсылыққа асығатын берушілердің жүрегі неліктен алаңдайды?",
+        "options": [
+          "Олар Раббысына қайтатынын біледі",
+          "Олар дүниелік уәделердің сенімсіздігін біледі",
+          "Олар куәлардың әділетсіз бағасынан қорқады",
+          "Олар келісім шартын ұмытып қалудан қорқады"
+        ],
+        "info": "Ізгі іс жасау Раббысына қайтуды ұғынумен ұштасады; тақуалық өзіне риза болуға айналмайды."
+      },
+      "ky": {
+        "q": "23:60–61-аяттарда жакшылыкка шашылган берүүчүлөрдүн жүрөгү эмне үчүн тынчсызданат?",
+        "options": [
+          "Алар Раббисине кайтарын түшүнүшөт",
+          "Алар дүйнөлүк убадалардын ишенимсиздигин түшүнүшөт",
+          "Алар күбөлөрдүн адилетсиз баасынан коркушат",
+          "Алар келишимдин шартын унутуудан коркушат"
+        ],
+        "info": "Жакшы иш кылуу Раббиге кайтууну түшүнүү менен айкалышат; такыбалык өзүнө ыраазы болуп калууга айланбайт."
+      },
+      "az": {
+        "q": "23:60–61-də yaxşılığa tələsən verənlərin qəlbi nə üçün narahatdır?",
+        "options": [
+          "Onlar Rəbbinə qayıdacaqlarını dərk edirlər",
+          "Onlar dünyəvi vədlərin etibarsızlığını dərk edirlər",
+          "Onlar şahidlərin ədalətsiz qiymətləndirməsindən qorxurlar",
+          "Onlar razılaşmanın şərtini unutmaqdan qorxurlar"
+        ],
+        "info": "Yaxşı əməl Rəbbə qayıdış şüuru ilə birləşir; dindarlıq özündən razılığa çevrilmir."
+      },
+      "tr": {
+        "q": "23:60–61'de iyiliğe koşanların verdiklerini verirken kalpleri neden ürperir?",
+        "options": [
+          "Rablerine döneceklerini bilirler",
+          "Dünyevi vaatlerin belirsizliğini bilirler",
+          "Şahitlerin adaletsiz değerlendirmesinden korkarlar",
+          "Bir anlaşmanın şartını unutmaktan korkarlar"
+        ],
+        "info": "İyilik yapmak, Rabbe dönüş bilinciyle birleşir; dindarlık kendini beğenmişliğe dönüştürülmez."
+      }
+    }
+  },
+  {
+    "id": "l2x_repel_with_best",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 23:96",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/23",
+    "sourceVerses": [
+      "23:96"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какая пара повеления и напоминания соединена в 23:96?",
+        "options": [
+          "Отвечай на зло лучшим; Аллах знает их утверждения",
+          "Терпи; терпение возможно лишь с помощью Аллаха",
+          "Прощай и примиряй; награда будет у Аллаха",
+          "Отстранись от невежд; ищи защиты от наущения"
+        ],
+        "info": "Повеление выбирать лучший ответ сопровождается указанием на знание Аллахом того, что приписывают противники."
+      },
+      "en": {
+        "q": "Which instruction and reminder are combined in 23:96?",
+        "options": [
+          "Repel evil with what is best; Allah knows their assertions",
+          "Be patient; patience is possible only through Allah's help",
+          "Pardon and reconcile; the reward is with Allah",
+          "Turn away from the ignorant; seek protection from temptation"
+        ],
+        "info": "Choosing the better response is accompanied by a reminder of Allah's knowledge of what opponents allege."
+      },
+      "uz": {
+        "q": "23:96 da qaysi amr va eslatma birga keladi?",
+        "options": [
+          "Yomonlikni eng yaxshi narsa bilan qaytar; Alloh ularning da’volarini biladi",
+          "Sabr qil; sabr faqat Allohning yordami bilan bo‘ladi",
+          "Kechir va yarashtir; ajr Alloh huzuridadir",
+          "Johillardan yuz o‘gir; vasvasadan panoh so‘ra"
+        ],
+        "info": "Eng yaxshi javobni tanlash amri dushmanlar aytayotgan narsalarni Alloh bilishi haqidagi eslatma bilan keladi."
+      },
+      "tg": {
+        "q": "Дар 23:96 кадом амр ва ёдоварӣ якҷо омадаанд?",
+        "options": [
+          "Бадиро бо беҳтарин роҳ дафъ кун; Аллоҳ иддаои онҳоро медонад",
+          "Сабр кун; сабр танҳо бо ёрии Аллоҳ аст",
+          "Бубахш ва оштӣ кун; подош назди Аллоҳ аст",
+          "Аз нодонон рӯй гардон; аз васваса паноҳ бихоҳ"
+        ],
+        "info": "Амри интихоби беҳтарин посух бо ёдоварии дониши Аллоҳ дар бораи нисбатҳои мухолифон ҳамроҳ аст."
+      },
+      "kk": {
+        "q": "23:96-да қандай бұйрық пен ескерту қатар берілген?",
+        "options": [
+          "Жамандықты ең жақсы жолмен қайтар; Алла олардың айтқандарын біледі",
+          "Сабыр ет; сабыр тек Алланың жәрдемімен болады",
+          "Кешір және татуластыр; сый Алланың алдында",
+          "Надандардан теріс бұрыл; азғырудан пана сұра"
+        ],
+        "info": "Ең жақсы жауапты таңдау бұйрығы қарсыластардың таққан сөздерін Алла білетінін ескертумен қатар келеді."
+      },
+      "ky": {
+        "q": "23:96-аятта кайсы буйрук жана эскертүү чогуу берилген?",
+        "options": [
+          "Жамандыкты эң жакшы жол менен кайтар; Аллах алардын айткандарын билет",
+          "Сабыр кыл; сабыр Аллахтын жардамы менен гана болот",
+          "Кечир жана жараштыр; сооп Аллахтын алдында",
+          "Наадандардан жүз бур; азгырыктан башпаанек сура"
+        ],
+        "info": "Эң жакшы жоопту тандоо буйругу каршылаштардын айткандарын Аллах билерин эскертүү менен коштолот."
+      },
+      "az": {
+        "q": "23:96-da hansı əmr və xatırlatma birləşdirilir?",
+        "options": [
+          "Pisliyi ən yaxşı yolla dəf et; Allah onların iddialarını bilir",
+          "Səbr et; səbr yalnız Allahın köməyi ilə mümkündür",
+          "Bağışla və barışdır; mükafat Allah yanındadır",
+          "Cahillərdən üz döndər; vəsvəsədən sığınacaq dilə"
+        ],
+        "info": "Ən yaxşı cavabı seçmək əmri müxaliflərin isnadlarını Allahın bilməsi barədə xatırlatma ilə verilir."
+      },
+      "tr": {
+        "q": "23:96'da hangi emir ve hatırlatma bir araya gelir?",
+        "options": [
+          "Kötülüğü en güzel yolla sav; Allah onların iddialarını bilir",
+          "Sabret; sabır ancak Allah'ın yardımıyla mümkündür",
+          "Affet ve barıştır; karşılık Allah katındadır",
+          "Cahillerden yüz çevir; vesveseden korunma dile"
+        ],
+        "info": "En güzel karşılığı seçme emrine, karşı çıkanların yakıştırmalarını Allah'ın bildiği hatırlatması eşlik eder."
+      }
+    }
+  },
+  {
+    "id": "l2x_giving_after_hurt",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 24:22",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "sourceVerses": [
+      "24:22"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие три группы не следует лишать помощи по зароку в 24:22?",
+        "options": [
+          "Родственников, бедняков и переселенцев на пути Аллаха",
+          "Сборщиков закята, должников и путников",
+          "Сирот, соседей и участников совета",
+          "Пленников, земледельцев и хранителей имущества"
+        ],
+        "info": "Аят соединяет продолжение помощи этим группам с прощением и вопросом о желании получить прощение Аллаха."
+      },
+      "en": {
+        "q": "Which three groups should not be denied support by an oath in 24:22?",
+        "options": [
+          "Relatives, the poor and emigrants in Allah's cause",
+          "Zakat collectors, debtors and travellers",
+          "Orphans, neighbors and members of a council",
+          "Captives, farmers and custodians of property"
+        ],
+        "info": "The verse joins continued support for these groups with pardon and the desire for Allah's forgiveness."
+      },
+      "uz": {
+        "q": "24:22 da qasam sababli qaysi uch guruh yordamdan mahrum qilinmasligi kerak?",
+        "options": [
+          "Qarindoshlar, miskinlar va Alloh yo‘lidagi muhojirlar",
+          "Zakot yig‘uvchilar, qarzdorlar va yo‘lovchilar",
+          "Yetimlar, qo‘shnilar va maslahat a’zolari",
+          "Asirlar, dehqonlar va mulkni saqlovchilar"
+        ],
+        "info": "Oyat bu guruhlarga yordamni davom ettirishni kechirish va Allohning mag‘firatini istash bilan bog‘laydi."
+      },
+      "tg": {
+        "q": "Дар 24:22 кадом се гурӯҳро бо сабаби қасам аз ёрӣ маҳрум набояд кард?",
+        "options": [
+          "Хешовандон, ниёзмандон ва муҳоҷирони роҳи Аллоҳ",
+          "Ҷамъкунандагони закот, қарздорон ва мусофирон",
+          "Ятимон, ҳамсояҳо ва аъзои машварат",
+          "Асирон, кишоварзон ва нигаҳбонони мол"
+        ],
+        "info": "Оят идомаи ёрӣ ба ин гурӯҳҳоро бо бахшидан ва хоҳиши омурзиши Аллоҳ пайванд медиҳад."
+      },
+      "kk": {
+        "q": "24:22-де ант себебімен қандай үш топты көмектен айыруға болмайды?",
+        "options": [
+          "Туыстарды, кедейлерді және Алла жолында қоныс аударғандарды",
+          "Зекет жинаушыларды, борышкерлерді және жолаушыларды",
+          "Жетімдерді, көршілерді және кеңес мүшелерін",
+          "Тұтқындарды, егіншілерді және мүлік сақтаушыларын"
+        ],
+        "info": "Аят осы топтарға көмекті жалғастыруды кешірумен және Алланың кешіріміне ұмтылумен байланыстырады."
+      },
+      "ky": {
+        "q": "24:22-аятта анттын айынан кайсы үч топту жардамдан ажыратууга болбойт?",
+        "options": [
+          "Туугандарды, жакырларды жана Аллах жолунда көчүп кеткендерди",
+          "Зекет жыйноочуларды, карызкорлорду жана жолоочуларды",
+          "Жетимдерди, кошуналарды жана кеңештин мүчөлөрүн",
+          "Туткундарды, дыйкандарды жана мүлк сактоочуларды"
+        ],
+        "info": "Аят бул топторго жардамды улантууну кечирүү жана Аллахтын кечиримин каалоо менен байланыштырат."
+      },
+      "az": {
+        "q": "24:22-də and səbəbilə hansı üç qrupu yardımdan məhrum etmək olmaz?",
+        "options": [
+          "Qohumları, yoxsulları və Allah yolunda hicrət edənləri",
+          "Zəkat yığanları, borcluları və yolçuları",
+          "Yetimləri, qonşuları və şura üzvlərini",
+          "Əsirləri, əkinçiləri və malı qoruyanları"
+        ],
+        "info": "Ayət bu qruplara yardımı davam etdirməyi bağışlama və Allahın bağışlamasını istəməklə əlaqələndirir."
+      },
+      "tr": {
+        "q": "24:22'de hangi üç grup bir yemin nedeniyle yardımdan yoksun bırakılmamalıdır?",
+        "options": [
+          "Akrabalar, yoksullar ve Allah yolunda hicret edenler",
+          "Zekât toplayanlar, borçlular ve yolcular",
+          "Yetimler, komşular ve danışma üyeleri",
+          "Esirler, çiftçiler ve malları koruyanlar"
+        ],
+        "info": "Ayet, bu gruplara yardımı sürdürmeyi affetme ve Allah'ın bağışlamasını istemeyle ilişkilendirir."
+      }
+    }
+  }
+]

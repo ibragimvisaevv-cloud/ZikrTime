@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_terms_title">Joylashtirish shartlari</string>
+    <string name="store_listing_terms">Ariza tasdiqlangandan keyingi bir martalik to‘lov korxona sahifasi va uning barcha mahsulotlarini qamrab oladi.</string>
+    <string name="store_promotion_terms">Reklama ixtiyoriy va alohida to‘lanadi.</string>
+    <string name="store_apply">Ariza yuborish</string>
+    <string name="store_unavailable">Katalogni yuklab bo‘lmadi</string>
+    <string name="store_retry">Qayta urinish</string>
+    <string name="store_empty_catalog">Katalog hozircha bo‘sh</string>
+    <string name="store_clear">Qidiruvni tozalash</string>
+    <string name="store_more_products">Ko‘proq mahsulot ko‘rsatish</string>
+    <string name="store_seller_portal">Sotuvchi kabineti</string>
+    <string name="store_browser_unavailable">Brauzerni ochib bo‘lmadi</string>
+</resources>

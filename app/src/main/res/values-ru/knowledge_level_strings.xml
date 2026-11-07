@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="learning_level_title">Выберите уровень знаний</string>
+    <string name="learning_level_intro">Вопросы будут соответствовать вашей подготовке. Позже уровень можно изменить.</string>
+    <string name="learning_level_label">Уровень знаний</string>
+    <string name="learning_level_not_selected">Ещё не выбран</string>
+    <string name="learning_level_choose">Выбрать</string>
+    <string name="learning_level_change">Изменить</string>
+    <string name="learning_level_beginner">Начальный</string>
+    <string name="learning_level_intermediate">Средний</string>
+    <string name="learning_level_advanced">Продвинутый</string>
+    <string name="learning_level_beginner_hint">Основные понятия и знакомые факты.</string>
+    <string name="learning_level_intermediate_hint">Связи, контекст и понимание смыслов.</string>
+    <string name="learning_level_advanced_hint">Точные детали и близкие варианты ответа.</string>
+    <string name="learning_level_count">Вопросов на уровне: %1$d</string>
+    <string name="learning_level_change_hint">При смене уровня незавершённые раунды начнутся заново. История обучения и заработанные минуты сохранятся.</string>
+    <string name="learning_level_confirm">Подтвердить уровень</string>
+    <string name="learning_level_empty">На этом уровне в теме пока нет вопросов</string>
+    <string name="learning_level_empty_hint">Выберите другую тему или измените уровень.</string>
+</resources>

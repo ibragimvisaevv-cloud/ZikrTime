@@ -18,7 +18,13 @@
 Владелец назначается командой /owner <код>; код печатается при развёртывании (GitHub Actions).
 Обновления от Telegram идут по одному (setWebhook max_connections=1), поэтому база — один файл.
 """
+import acquiring
+import community
+from feedback import FeedbackMixin
+from places_sources import publish_source_fields, remember_removed
+
 import base64
+import copy
 import hashlib
 import html
 import json
@@ -76,6 +82,7 @@ STATUS_TEXT = {
     "pending": "⏳ на проверке",
     "approved": "✅ опубликована",
     "rejected": "❌ не прошла проверку",
+    "awaiting_payment": "🧾 одобрена, ожидает оплаты",
     "hidden": "🙈 скрыта",
 }
 
@@ -539,9 +546,7 @@ class PlacesMixin(PlaceCorrectionsMixin):
             p["status"] = "hidden"
             self.send(uid, f"🙈 «{esc(p['name'])}» скрыто с карты.")
         elif action == "del":
-            if p.get("source") == "osm":
-                # чтобы ежемесячный импорт из OpenStreetMap не вернул удалённое место
-                self.db.setdefault("osm_removed", []).append(pid)
+            remember_removed(self.db, p)
             del self.db["places"][pid]
             self.send(uid, "🗑 Удалено.")
         self.dirty = True
@@ -562,11 +567,11 @@ class PlacesMixin(PlaceCorrectionsMixin):
             for field in EXTRA_FIELDS:
                 if p.get(field):
                     item[field] = p[field]
-            if p.get("source") == "osm":
-                item["src"] = "osm"
+            item.update(publish_source_fields(p))
             items.append(item)
         return {"version": 1, "updated": int(time.time()), "seller_bot": self.bot_username(),
-                "donate_url": self.db.get("donate_url", ""), "corrections_enabled": True, "places": items}
+                "donate_url": self.db.get("donate_url", ""),
+            "seller_portal": PUBLIC_BASE + "seller.html", "corrections_enabled": True, "places": items}
 
     def write_places(self):
         import gzip
@@ -704,16 +709,12 @@ class ReviewsMixin:
 
 
 class PromoMixin:
-    """Продвижение компании: продавец выбирает срок и переводит деньги по ссылке владельца,
-    владелец подтверждает перевод кнопкой — компания показывается в приложении выше остальных."""
+    """Тарифы продвижения и обработка старых заявок на ручную сверку."""
     DEFAULT_PRICES = {"7": 100, "30": 300}
 
     def promo_prices(self):
         p = self.db.get("promo_prices") or self.DEFAULT_PRICES
         return {str(k): int(v) for k, v in p.items()}
-
-    def promo_pay_url(self):
-        return self.db.get("promo_pay_url") or self.db.get("donate_url", "")
 
     def promo_active(self, s):
         return (s.get("promo_until") or 0) > time.time()
@@ -722,18 +723,6 @@ class PromoMixin:
         if self.promo_active(s):
             return "⬆️ Продвигается до " + time.strftime("%d.%m.%Y", time.localtime(s["promo_until"]))
         return ""
-
-    def promo_create(self, uid, sid, days):
-        """Новая заявка. Возвращает её (или None, если тариф неизвестен)."""
-        price = self.promo_prices().get(str(days))
-        s = self.db["sellers"].get(sid)
-        if price is None or not self.can_edit(uid, s):
-            return None
-        rid = new_id("pr")
-        req = {"id": rid, "sid": sid, "uid": uid, "days": int(days), "price": price, "status": "new", "created": time.time()}
-        self.db.setdefault("promo_requests", {})[rid] = req
-        self.dirty = True
-        return req
 
     def promo_claim(self, uid, rid):
         """Продавец нажал «Я оплатил» — заявка уходит владельцу на подтверждение."""
@@ -794,16 +783,8 @@ class PromoMixin:
         st = self.promo_status_text(s)
         if st:
             lines.append("\n" + st + " — можно продлить.")
-        rows = [[btn(f"{d} дн. — {p} ₽", f"pt:{sid}:{d}")] for d, p in sorted(self.promo_prices().items(), key=lambda x: int(x[0]))]
-        rows.append([btn("⬅️ Назад", f"s:{sid}")])
-        self.send(uid, "\n".join(lines), {"inline_keyboard": rows})
-
-    def promo_pay_text(self, req):
-        url = self.promo_pay_url()
-        text = (f"Переведите <b>{req['price']} ₽</b>" + (f" по ссылке:\n{esc(url)}" if url else " владельцу магазина")
-                + f"\n\nВ комментарии к переводу укажите: <code>{req['id']}</code>\n"
-                  "После перевода нажмите «Я оплатил» — мы проверим и включим продвижение.")
-        return text
+        lines.extend(f"{d} дн. — {p} ₽" for d, p in self.promo_prices().items())
+        self.send(uid, "\n".join(lines), kb([btn("⬅️ Назад", f"s:{sid}")]))
 
     def promo_pending_list(self, uid):
         reqs = [r for r in self.db.get("promo_requests", {}).values() if r["status"] == "claimed"]
@@ -822,16 +803,8 @@ class PromoMixin:
         self.dirty = True
         self.send(uid, f"✅ Тарифы: 7 дней — {nums[0]} ₽, 30 дней — {nums[1]} ₽.")
 
-    def set_pay_url(self, uid, url):
-        url = url.strip()
-        if url and not re.match(r"^https://[\w.-]+\.[a-z]{2,}(/\S*)?$", url):
-            return self.send(uid, "Нужна ссылка вида https://… (CloudTips, СБП-ссылка банка и т.п.).")
-        self.db["promo_pay_url"] = url
-        self.dirty = True
-        self.send(uid, "✅ Ссылка для оплаты продвижения: " + (url or "как у кнопки «Поддержать проект»"))
 
-
-class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
+class Bot(FeedbackMixin, PlacesMixin, ReviewsMixin, PromoMixin):
     def __init__(self, storage, tg, token=None, data=None):
         self.st = storage
         # Закрытое хранилище для базы; в тестах — то же, что и публичное
@@ -934,7 +907,7 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
     def build_catalog(self):
         sellers, products = [], []
         for s in sorted(self.db["sellers"].values(), key=lambda x: (not x.get("partner"), x["created"])):
-            if s["status"] != "approved":
+            if s["status"] != "approved" or acquiring.unpaid(s):
                 continue
             cat = CAT_BY_ID.get(s["category"], CAT_BY_ID["other"])
             item = {
@@ -966,13 +939,30 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
             "version": 1, "demo": False, "updated": int(time.time()),
             "contact_telegram": self.db.get("contact_telegram", ""), "seller_bot": self.bot_username(),
             "donate_url": self.db.get("donate_url", ""),
+            "seller_portal": PUBLIC_BASE + "seller.html",
             "categories": [{"id": c["id"], "icon": c["icon"], "names": c["names"]} for c in CATEGORIES],
             "sellers": sellers, "products": products,
         }
 
     def write_catalog(self):
-        data = json.dumps(self.build_catalog(), ensure_ascii=False).encode()
-        self.st.put("catalog.json", data, "application/json; charset=utf-8", cache="public, max-age=60")
+        # A delayed publication must not replace a newer moderation or payment update.
+        for _ in range(5):
+            current = self
+            conditions = {}
+            if hasattr(self.st, "get_tagged") and hasattr(self.data, "get_tagged"):
+                _, tag = self.st.get_tagged("catalog.json")
+                raw = self.data.get(DB_KEY)
+                if raw:
+                    current = copy.copy(self)
+                    current.db = json.loads(raw)
+                conditions = {"if_match": tag} if tag else {"if_none_match": True}
+            data = json.dumps(current.build_catalog(), ensure_ascii=False).encode()
+            try:
+                self.st.put("catalog.json", data, "application/json; charset=utf-8", cache="public, max-age=60", **conditions)
+                return
+            except Conflict:
+                continue
+        raise RuntimeError("Повторите обновление каталога")
 
     # ---------- отправка ----------
     def send(self, chat, text, markup=None):
@@ -991,12 +981,23 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
 
     # ---------- приём обновлений ----------
     def handle(self, update):
+        update_id = update.get("update_id")
+        seen = self.db.get("processed_updates", [])
+        if update_id is not None and update_id in seen:
+            return
+        if update_id is not None:
+            self.db["processed_updates"] = (seen + [update_id])[-2000:]
+            self.dirty = True
         if "callback_query" in update:
             q = update["callback_query"]
             self.tg.call("answerCallbackQuery", callback_query_id=q["id"])
             msg = q.get("message") or {}
             if (msg.get("chat") or {}).get("type", "private") != "private":
                 return
+            community.touch(self, q["from"]["id"], "bot")
+            data = q.get("data", "")
+            if data.split(":")[0] in ("menu", "help", "add", "s", "adm", "place", "pl_pending", "pl_all", "pf_pending", "rv_pending", "pr_pending", "promo", "fb"):
+                return self.miniapp_entry(q["from"]["id"], message_id=msg.get("message_id"))
             self.on_callback(q["from"], q.get("data", ""))
         elif "message" in update:
             m = update["message"]
@@ -1011,6 +1012,7 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
             u["username"] = frm["username"]
             self.dirty = True
         text = (m.get("text") or "").strip()
+        community.touch(self, uid, "start" if text.startswith("/start") else "bot")
 
         if not self.db["owner"] and OWNER_USERNAME and (frm.get("username") or "").lower() == OWNER_USERNAME:
             return self.claim_owner(uid, frm, owner_code(self.token))
@@ -1018,12 +1020,14 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
             arg = text[6:].strip()
             u["state"] = None
             self.dirty = True
+            if arg == "feedback" or arg.startswith("feedback_"):
+                return self.miniapp_entry(uid, section="requests")
             if arg.startswith("inv_"):
                 return self.claim_invite(uid, arg[4:])
             if arg == "add":
-                return self.start_add(uid)
+                return self.miniapp_entry(uid, section="mine")
             if arg == "place":
-                return self.start_place(uid)
+                return self.miniapp_entry(uid, section="place")
             if arg.startswith("fix_"):
                 return self.start_place_correction(uid, arg[4:])
             return self.menu(uid)
@@ -1037,14 +1041,17 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
             return self.set_donate(uid, text[7:])
         if text.startswith("/admin ") and uid == self.db["owner"]:
             return self.add_admin(uid, text[7:].strip())
+        if text == "/feedback":
+            return self.miniapp_entry(uid, section="requests")
         if text == "/help":
             return self.help(uid)
         if text == "/reviews" and self.is_admin(uid):
             return self.reviews_pending_list(uid)
         if text.startswith("/prices") and uid == self.db["owner"]:
             return self.set_prices(uid, text[7:])
-        if text.startswith("/payurl") and uid == self.db["owner"]:
-            return self.set_pay_url(uid, text[7:])
+        if text == "/webcode":
+            code = acquiring.account_code(self, uid)
+            return self.send(uid, f"Код для входа в личный кабинет действителен 5 минут. Введите его только на сайте проекта.\n<code>{code}</code>")
 
         st = u.get("state")
         if st:
@@ -1053,38 +1060,20 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
 
     # ---------- меню ----------
     def help(self, uid):
-        self.send(uid, "Этот бот — кабинет продавца магазина в приложении <b>Зикр-тайм</b>.\n\n"
-                       "• «Добавить компанию» — по шагам: название, категория, город, описание, адрес, контакты, фото.\n"
-                       "• После проверки компания появится в приложении.\n"
-                       "• Дальше вы сами добавляете товары, цены и фото — изменения видны в приложении через пару минут.\n\n"
-                       "/menu — главное меню, /cancel — отменить текущий шаг.")
+        self.miniapp_entry(uid)
+
+    def miniapp_entry(self, uid, section="overview", message_id=None):
+        self.user(uid)["state"] = None
+        self.dirty = True
+        markup = {"inline_keyboard": [[{"text": "Открыть Зикр-тайм", "web_app": {"url": MINIAPP_URL + "?section=" + section}}]]}
+        text = "<b>Зикр-тайм</b>\nЛичный кабинет, компании, предложения и места для намаза."
+        if message_id:
+            self.tg.call("editMessageText", chat_id=uid, message_id=message_id, text=text, parse_mode="HTML", reply_markup=markup)
+        else:
+            self.send(uid, text, markup)
 
     def menu(self, uid):
-        mine = self.my_sellers(uid)
-        rows = [[btn(f"🏪 {s['name']} · {STATUS_TEXT[s['status']].split(' ')[0]}", f"s:{s['id']}")] for s in mine]
-        if not mine or len(mine) < MAX_SELLERS_PER_USER or self.is_admin(uid):
-            rows.append([btn("➕ Добавить компанию", "add")])
-        if self.is_admin(uid):
-            pending = sum(1 for s in self.db["sellers"].values() if s["status"] == "pending")
-            rows.append([btn(f"🛡 На проверке ({pending})", "adm:pending"), btn("📋 Все компании", "adm:all")])
-        rows.append([btn("🕌 Предложить место для намаза", "place")])
-        if self.is_admin(uid):
-            pp = sum(1 for p in self.db["places"].values() if p["status"] == "pending")
-            rows.append([btn(f"📍 Места на проверке ({pp})", "pl_pending"), btn("🗺 Все места", "pl_all")])
-            fixes = sum(r.get("status") == "pending" for r in self.db.get("place_corrections", {}).values())
-            rows.append([btn(f"✏️ Исправления мест ({fixes})", "pf_pending")])
-            rv = len(self.db.get("reviews_pending", {}))
-            pr = sum(1 for r in self.db.get("promo_requests", {}).values() if r["status"] == "claimed")
-            rows.append([btn(f"⭐ Отзывы ({rv})", "rv_pending"), btn(f"💰 Продвижение ({pr})", "pr_pending")])
-        rows.insert(0, [{"text": "📱 Открыть кабинет", "web_app": {"url": MINIAPP_URL}}])
-        rows.append([btn("❓ Как это работает", "help")])
-        if mine:
-            text = "Ваши компании в магазине <b>Зикр-тайм</b>. Выберите, что изменить:"
-        else:
-            text = ("Ассаляму алейкум! Это кабинет продавца магазина в приложении <b>Зикр-тайм</b>.\n\n"
-                    "Добавьте свою компанию — после проверки её увидят пользователи приложения: "
-                    "товары, цены, фото, адрес и кнопки «Написать в Telegram» и «Позвонить».")
-        self.send(uid, text, {"inline_keyboard": rows})
+        return self.miniapp_entry(uid)
 
     def claim_owner(self, uid, frm, code):
         if self.db["owner"]:
@@ -1119,7 +1108,7 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
             return self.send(uid, "Можно добавить не больше трёх компаний.")
         self.user(uid)["state"] = {"flow": "add", "step": "name", "data": {}}
         self.dirty = True
-        self.send(uid, "Шаг 1 из 11. Как называется ваша компания или магазин?\n\n/cancel — отменить")
+        self.send(uid, "Размещение карточки — 200 ₽ один раз после проверки. Добавление товаров входит в стоимость.\n\nШаг 1 из 11. Как называется ваша компания или магазин?\n\n/cancel — отменить")
 
     def ask_add_step(self, uid, step):
         uname = self.user(uid).get("username")
@@ -1171,14 +1160,14 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
             "lat": data.get("lat"), "lon": data.get("lon"), "phone": data.get("phone", ""),
             "whatsapp": data.get("whatsapp", ""), "telegram": data.get("telegram", ""),
             "instagram": data.get("instagram", ""), "logo": data.get("logo", ""), "cover": data.get("cover", ""),
-            "status": "approved" if admin else "pending", "partner": False,
+            "status": "awaiting_payment" if admin else "pending", "listing_fee": "due", "partner": False,
             "owners": [uid], "created": time.time(), "products": {},
         }
         self.db["sellers"][sid] = seller
         self.user(uid)["state"] = None
         self.changed(seller)
         if admin:
-            self.send(uid, "✅ Компания добавлена и сразу опубликована (вы модератор). Теперь добавьте товары.")
+            self.send(uid, "Карточка одобрена. Для публикации требуется оплата размещения — 200 ₽.")
         else:
             self.send(uid, "🙏 Спасибо! Компания отправлена на проверку. Мы сообщим, когда она появится в приложении.\n"
                            "А пока можно добавить товары — они станут видны вместе с компанией.")
@@ -1212,6 +1201,8 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
     def on_input(self, uid, u, st, m):
         text = (m.get("text") or "").strip()
         flow = st["flow"]
+        if flow in ("feedback", "feedback_reply"):
+            return self.feedback_input(uid, st, m)
         if flow == "add":
             return self.add_input(uid, st, m, text)
         if flow == "place":
@@ -1382,6 +1373,9 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
 
     def after_seller_edit(self, uid, s, what):
         self.changed(s)
+        if s["status"] in ("rejected", "awaiting_payment"):
+            s["status"] = "pending"
+            self.notify_admins("✏️ Карточка изменена и отправлена на повторную проверку.", self.moderation_kb(s))
         if s["status"] == "approved" and not self.is_admin(uid):
             self.notify_admins(f"✏️ <b>{esc(s['name'])}</b>: изменено «{esc(what)}».",
                                kb([btn("Открыть", f"s:{s['id']}"), btn("🙈 Скрыть", f"mod:hide:{s['id']}")]))
@@ -1592,6 +1586,8 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
         if frm.get("username") and u.get("username") != frm["username"]:
             u["username"] = frm["username"]
             self.dirty = True
+        if data.startswith("fb:"):
+            return self.feedback_callback(uid, data)
         parts = data.split(":")
         act = parts[0]
         st = u.get("state") or {}
@@ -1604,11 +1600,8 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
             return self.help(uid)
         if act == "promo" and len(parts) == 2:
             return self.promo_menu(uid, parts[1])
-        if act == "pt" and len(parts) == 3:
-            req = self.promo_create(uid, parts[1], parts[2])
-            if not req:
-                return self.menu(uid)
-            return self.send(uid, self.promo_pay_text(req), kb([btn("✅ Я оплатил", f"pc:{req['id']}")], [btn("⬅️ Назад", f"s:{parts[1]}")]))
+        if act == "pt":
+            return self.send(uid, "Эта старая форма больше не принимает новые заявки.")
         if act == "pc" and len(parts) == 2:
             req = self.promo_claim(uid, parts[1])
             return self.send(uid, "🙏 Спасибо! Проверим перевод и включим продвижение — пришлём сообщение." if req else "Заявка не найдена.")
@@ -1708,7 +1701,7 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
         if act == "vis":
             s = self.db["sellers"].get(parts[1])
             if self.can_edit(uid, s) and s["status"] in ("approved", "hidden"):
-                s["status"] = "hidden" if s["status"] == "approved" else "approved"
+                s["status"] = "hidden" if s["status"] == "approved" else ("awaiting_payment" if acquiring.unpaid(s) else "approved")
                 self.dirty = self.catalog_dirty = True
                 return self.seller_menu(uid, s["id"])
         if act == "wa2":
@@ -1725,6 +1718,8 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
         if act == "del2":
             s = self.db["sellers"].get(parts[1])
             if self.can_edit(uid, s):
+                if acquiring.active_order(self, s["id"]):
+                    return self.send(uid, "Дождитесь завершения банковского заказа перед удалением.")
                 del self.db["sellers"][s["id"]]
                 self.dirty = self.catalog_dirty = True
                 self.send(uid, "🗑 Компания удалена.")
@@ -1790,11 +1785,12 @@ class Bot(PlacesMixin, ReviewsMixin, PromoMixin):
             return self.send(uid, "Компания не найдена (возможно, удалена).")
         was_public = s["status"] == "approved"
         if action == "ok":
-            s["status"] = "approved"
+            s["status"] = "awaiting_payment" if acquiring.unpaid(s) else "approved"
+            result = "Одобрена. Публикация после оплаты 200 ₽." if acquiring.unpaid(s) else "Одобрена и опубликована."
             for o in s["owners"]:
                 if o != uid:
-                    self.send(o, f"🎉 Компания «{esc(s['name'])}» одобрена и уже видна в приложении Зикр-тайм!")
-            self.send(uid, f"✅ «{esc(s['name'])}» опубликована.")
+                    self.send(o, f"Компания «{esc(s['name'])}». {result}")
+            self.send(uid, f"✅ «{esc(s['name'])}». {result}")
         elif action == "no":
             s["status"] = "rejected"
             contact = self.db.get("contact_telegram")
@@ -1848,6 +1844,14 @@ def handler(event, context):
         body = base64.b64decode(body).decode()
     update = json.loads(body)
     token = (getattr(context, "token", None) or {}).get("access_token", "")
+    if update.get("feedback_probe"):
+        # Authenticated, read-only deployment check: no messages and no database writes.
+        raw = make_storage(token, DATA_BUCKET).get(DB_KEY)
+        db = json.loads(raw) if raw else {}
+        return {"statusCode": 200, "body": json.dumps({
+            "feature": "feedback_v1", "owner_configured": bool(db.get("owner")),
+            "private_database": DATA_BUCKET != BUCKET and bool(raw),
+        })}
     if update.get("probe"):
         return {"statusCode": 200, "body": json.dumps(probe(token), ensure_ascii=False)}
     tg = Telegram(BOT_TOKEN)

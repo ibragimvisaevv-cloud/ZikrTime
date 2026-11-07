@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="regional_prefer">Қаланың намаз кестесі</string>
+    <string name="regional_prefer_hint">Таңдалған қала мен күннің жарияланған кестесі қолданылады. Басқа жерлер мен күндер үшін уақыт төмендегі әдіспен есептеледі.</string>
+    <string name="regional_fallback">Кесте болмағандағы есептеу әдісі</string>
+    <string name="regional_network_hint">Интернет болғанда қала кестесі мен есептелген уақытты жаңарту.</string>
+    <string name="regional_published">Қала кестесі · %1$s</string>
+    <string name="regional_calculated">Есептелген уақыт · %1$s · %2$s</string>
+    <string name="regional_offline">телефонда</string>
+    <string name="regional_adjusted">%1$s · жеке түзетулер ескерілген</string>
+    <string name="regional_polar">Полярлық аймақ үшін болжам · ең жақын қолайлы ендік · %1$s</string>
+    <string name="regional_gps_zone">GPS нүктесінің уақыт белдеуі, мысалы Europe/Moscow</string>
+    <string name="regional_device_zone">%1$s · телефонның уақыт белдеуі (%2$s)</string>
+    <string name="regional_previous_day">%1$s (алдыңғы күн)</string>
+    <string name="regional_next_day">%1$s (ертең)</string>
+</resources>

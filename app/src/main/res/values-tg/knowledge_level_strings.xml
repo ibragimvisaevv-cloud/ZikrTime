@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="learning_level_title">Сатҳи донишро интихоб кунед</string>
+    <string name="learning_level_intro">Саволҳо ба омодагии шумо мувофиқ мешаванд. Сатҳро баъдтар иваз карда метавонед.</string>
+    <string name="learning_level_label">Сатҳи дониш</string>
+    <string name="learning_level_not_selected">Ҳанӯз интихоб нашудааст</string>
+    <string name="learning_level_choose">Интихоб</string>
+    <string name="learning_level_change">Иваз</string>
+    <string name="learning_level_beginner">Ибтидоӣ</string>
+    <string name="learning_level_intermediate">Миёна</string>
+    <string name="learning_level_advanced">Пешрафта</string>
+    <string name="learning_level_beginner_hint">Мафҳумҳои асосӣ ва далелҳои шинос.</string>
+    <string name="learning_level_intermediate_hint">Робитаҳо, замина ва маъноҳо.</string>
+    <string name="learning_level_advanced_hint">Ҷузъиёти дақиқ ва ҷавобҳои ба ҳам наздик.</string>
+    <string name="learning_level_count">Саволҳо дар ин сатҳ: %1$d</string>
+    <string name="learning_level_change_hint">Ҳангоми иваз кардани сатҳ даврҳои нотамом аз нав оғоз мешаванд. Таърихи омӯзиш ва дақиқаҳои гирифташуда нигоҳ дошта мешаванд.</string>
+    <string name="learning_level_confirm">Тасдиқи сатҳ</string>
+    <string name="learning_level_empty">Дар ин сатҳ барои ин мавзӯъ савол нест</string>
+    <string name="learning_level_empty_hint">Мавзӯи дигарро интихоб кунед ё сатҳро иваз кунед.</string>
+</resources>

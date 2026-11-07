@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qm_saved_here">Surede kaydedilenler</string>
+    <string name="qm_in_surah">Bu surede kaydedilen ayetler: %1$d</string>
+    <string name="qm_your_note">Notunuz</string>
+    <string name="qm_empty">Bu surenin yer imleri ve notları burada görünür. Ayet menüsünden ekleyebilirsiniz.</string>
+    <string name="qm_go_to_ayah">Ayete git</string>
+    <string name="qm_open_note">Notu aç</string>
+</resources>

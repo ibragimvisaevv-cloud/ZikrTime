@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qs_today">Bugün</string>
+    <string name="qs_paused">Takip duraklatıldı</string>
+    <string name="qs_enable_progress">Kişisel ilerlemeyi etkinleştir</string>
+    <string name="qs_goal_complete">Günlük hedefe ulaşıldı</string>
+    <string name="qs_today_start">Kendi hızınızda okuyun. Süre burada görünecek.</string>
+    <string name="qs_goal_remaining">Hedefe %1$d dk kaldı</string>
+    <string name="qs_change_goal">Hedefi değiştir</string>
+    <string name="qs_empty_title">Okuma geçmişiniz burada başlar</string>
+    <string name="qs_empty_body">Okuduktan sonra süreniz ve kaydedilen ayetler burada otomatik olarak görünür.</string>
+    <string name="qs_period">Seçilen dönem</string>
+    <string name="qs_reading_time">Okuma süresi</string>
+    <string name="qs_observed_ayahs">Kaydedilen farklı ayetler</string>
+    <string name="qs_active_days">Okuma yapılan günler</string>
+    <string name="qs_unique_hint">Aynı ayeti tekrar okumak bu sayıyı artırmaz.</string>
+    <string name="qs_all_time">Genel ilerleme</string>
+    <string name="qs_complete_surahs">Tüm ayetleri kaydedilen sureler</string>
+    <string name="qs_less_minute">Bir dakikadan az</string>
+    <string name="qs_duration_minutes">%1$d dk</string>
+    <string name="qs_duration_hours">%1$d sa %2$d dk</string>
+    <string name="qs_week_minutes">Günlük okuma dakikaları</string>
+    <string name="qs_goal_title">Günlük okuma hedefi</string>
+    <string name="qs_goal_hint">Size uygun bir süre seçin. Hedefi istediğiniz zaman değiştirebilirsiniz.</string>
+    <string name="qs_goal_minutes">Günlük dakika</string>
+    <string name="qs_goal_save">Hedefi kaydet</string>
+</resources>

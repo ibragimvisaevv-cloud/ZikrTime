@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ux_places_map_hint">Картаны бір саусақпен жылжытыңыз. Орынды көру үшін белгіге басыңыз.</string>
+    <string name="ux_places_preview_title">Орын туралы</string>
+    <string name="ux_places_details_title">Шарттар мен пікірлер</string>
+    <string name="ux_places_route_short">Бағыт</string>
+    <string name="ux_places_address_missing">Мекенжай көрсетілмеген. Бағыт картадағы белгіге апарады.</string>
+</resources>

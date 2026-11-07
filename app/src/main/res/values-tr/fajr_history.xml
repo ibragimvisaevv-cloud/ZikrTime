@@ -1,0 +1,10 @@
+<resources>
+    <string name="fajr_history_title">Son alarm</string>
+    <string name="fajr_history_empty">Alarm henüz çalmadı.</string>
+    <string name="fajr_history_daily">Sabah namazı alarmı</string>
+    <string name="fajr_history_test">Deneme alarmı</string>
+    <string name="fajr_history_snooze">Ertelenen alarm</string>
+    <string name="fajr_history_planned">Planlanan saat — %1$s</string>
+    <string name="fajr_history_fired">Çaldığı saat — %1$s</string>
+    <string name="fajr_history_delay">Gecikme — %1$d dakika</string>
+</resources>
