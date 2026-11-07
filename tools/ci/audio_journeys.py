@@ -19,6 +19,60 @@ UNCACHED = 108
 EXPECTED_OFFLINE_BYTES = 807637
 ACTIVE_GROUP = "initialization"
 
+# AlertDialog owns a separate Compose window and does not inherit the screen's
+# testTagsAsResourceId flag. Match only these known dialogs by their visible
+# title and exact label, then tap the real enabled clickable ancestor.
+AUDIO_DIALOG_CONTROLS = {
+    "audio_wifi_only": ("Память для аудио", "Wi-Fi и другие безлимитные сети"),
+    "audio_clear_cache": ("Память для аудио", "Очистить временный кэш"),
+    "audio_storage_close": ("Память для аудио", "Закрыть"),
+    "audio_confirm_clear_cache": ("Очистить временное аудио?", "Очистить временный кэш"),
+    "audio_confirm_delete": ("Удалить скачанную суру?", "Удалить"),
+}
+_resource_find_control = find_control
+
+
+def find_control(root, identifier, attribute="resource-id"):
+    tagged = _resource_find_control(root, identifier, attribute)
+    if tagged is not None or attribute != "resource-id" or identifier not in AUDIO_DIALOG_CONTROLS:
+        return tagged
+    title_text, label_text = AUDIO_DIALOG_CONTROLS[identifier]
+    titles = [n for n in root.iter("node")
+              if n.get("text") == title_text and n.get("package") == PKG]
+    if len(titles) != 1 or visible_bounds(root, titles[0]) != bounds(titles[0]):
+        return None
+    parents = {child: parent for parent in root.iter() for child in parent}
+    window = titles[0]
+    while window is not None and window.get("resource-id") != "android:id/content":
+        window = parents.get(window)
+    if window is None:
+        return None
+    matches = []
+    for label in window.iter("node"):
+        if label.get("text") != label_text:
+            continue
+        target = label
+        while target is not None and target is not window and target.get("clickable") != "true":
+            target = parents.get(target)
+        if target is not None and target is not window and target.get("enabled") == "true":
+            if all(target is not existing for existing in matches):
+                matches.append(target)
+    assert len(matches) <= 1, (identifier, "Ambiguous dialog action")
+    return matches[0] if matches else None
+
+
+def dialog_visible_bounds(root, node):
+    # A non-scrollable ScrollView still clips the expanded semantics touch area.
+    area = list(visible_bounds(root, node))
+    parents = {child: parent for parent in root.iter() for child in parent}
+    parent = parents.get(node)
+    while parent is not None:
+        if parent.get("class") in {"android.widget.ScrollView", "android.widget.HorizontalScrollView"}:
+            left, top, right, bottom = bounds(parent)
+            area = [max(area[0], left), max(area[1], top), min(area[2], right), min(area[3], bottom)]
+        parent = parents.get(parent)
+    return tuple(area)
+
 
 def open_route(route="quran_audio", surah=0, restart=False):
     args = ["am", "start"]
@@ -121,7 +175,18 @@ def require_reachable(tag, minimum_dp=32):
     node = find_control(root, tag)
     area = visible_bounds(root, node)
     raw = bounds(node)
-    assert area == raw, (tag, "Control is partially clipped", raw, area)
+    if tag == "audio_wifi_only":
+        # Compose expands the toggle's touch target beyond its visible 42dp row.
+        # Require a fully readable label and enough actual in-viewport touch area.
+        labels = [n for n in node.iter("node") if n.get("text") == AUDIO_DIALOG_CONTROLS[tag][1]]
+        assert len(labels) == 1, (tag, "Wi-Fi setting label missing")
+        label = labels[0]
+        assert dialog_visible_bounds(root, label) == bounds(label), (tag, "Setting label is clipped")
+        assert node.get("enabled") == "true" and node.get("clickable") == "true"
+        area = dialog_visible_bounds(root, node)
+        assert area[2] - area[0] >= minimum_dp * DENSITY / 160, (tag, "Touch target too narrow", area)
+    else:
+        assert area == raw, (tag, "Control is partially clipped", raw, area)
     assert area[3] - area[1] >= minimum_dp * DENSITY / 160, (tag, "Touch target too small", area)
     return root
 
