@@ -86,6 +86,7 @@ fun AppGuideScreen(
     onFinish: () -> Unit,
     onOpenTopic: (GuideTopic) -> Unit,
 ) {
+    StandardSystemBars()
     val topics = remember { GuideTopic.values().toList() }
     var page by rememberSaveable { mutableIntStateOf(0) }
     var contents by rememberSaveable { mutableStateOf(false) }
