@@ -170,11 +170,31 @@ def select(surah, restart=False):
 
 
 def require_reachable(tag, minimum_dp=32):
-    node = locate_control(tag)
-    root = ui()
-    node = find_control(root, tag)
-    area = visible_bounds(root, node)
-    raw = bounds(node)
+    locate_control(tag)
+    # The ordinary tap locator accepts a partially visible touch target.
+    # For layout evidence, bring the full control into the viewport first.
+    for attempt in range(4):
+        root = ui()
+        node = find_control(root, tag)
+        area = visible_bounds(root, node)
+        raw = bounds(node)
+        if tag == "audio_wifi_only" or area == raw or attempt == 3:
+            break
+        parents = {child: parent for parent in root.iter() for child in parent}
+        owner = parents.get(node)
+        while owner is not None and owner.get("scrollable") != "true":
+            owner = parents.get(owner)
+        if owner is None:
+            break
+        left, top, right, bottom = visible_bounds(root, owner)
+        if bottom - top < 72 or (raw[1] >= area[1] and raw[3] <= area[3]):
+            break
+        x = left + min(24, (right - left) // 4)
+        middle = (top + bottom) // 2
+        distance = min(int(24 * DENSITY / 160), (bottom - top) // 4)
+        end = middle - distance if raw[3] > area[3] else middle + distance
+        shell("input", "swipe", x, middle, x, end, 250)
+        time.sleep(.25)
     if tag == "audio_wifi_only":
         # Compose expands the toggle's touch target beyond its visible 42dp row.
         # Require a fully readable label and enough actual in-viewport touch area.
@@ -271,8 +291,11 @@ def streaming_background_and_interruption():
     left, top, right, bottom = bounds(slider)
     shell("input", "swipe", (left + right) // 2, (top + bottom) // 2,
           right - 2, (top + bottom) // 2, 450)
-    wait_state(lambda s: s["player"]["surahId"] == STREAM and s["player"]["ended"],
-               "Seeking to the end did not produce ENDED", 30)
+    ended = wait_state(lambda s: s["player"]["surahId"] == STREAM and s["player"]["ended"],
+                       "Seeking to the end did not produce ENDED", 30)["player"]
+    original_duration = active["player"]["durationMs"]
+    assert abs(ended["durationMs"] - original_duration) <= 1_500, \
+        ("Seeking to the end changed the recording duration", original_duration, ended["durationMs"])
     ended_root = ui()
     ended_button = find_control(ended_root, "audio_play_pause")
     assert ended_button is not None
@@ -282,6 +305,8 @@ def streaming_background_and_interruption():
     tap_control("audio_play_pause")
     replayed = playing(STREAM)["player"]
     assert 0 <= replayed["positionMs"] < 10_000, "Replay did not start near the beginning"
+    assert abs(replayed["durationMs"] - original_duration) <= 1_500, \
+        ("Replay changed the recording duration", original_duration, replayed["durationMs"])
 
     # Stop saves the current position before clearing the player's media item.
     time.sleep(2)
@@ -303,6 +328,7 @@ def streaming_background_and_interruption():
             "background_position_advances": True, "adhan_preview_pauses_without_auto_resume": True,
             "alarm_fixture_enabled_with_no_scheduled_days": True,
             "ended_offers_listen_and_restarts_from_beginning": True,
+            "duration_stable_after_end_seek_and_replay": True,
             "stop_position_survives_restart_without_autoplay": True,
             "prayer_and_blocking_settings_unchanged": True}
 

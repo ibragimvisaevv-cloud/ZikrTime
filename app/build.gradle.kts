@@ -94,9 +94,9 @@ dependencies {
     implementation("androidx.compose.material:material-icons-core")
     implementation("io.coil-kt:coil-compose:2.7.0")
     // Quran audio streams and explicit offline downloads share a small Media3 player.
-    implementation("androidx.media3:media3-exoplayer:1.5.1")
-    implementation("androidx.media3:media3-session:1.5.1")
-    implementation("androidx.media3:media3-database:1.5.1")
+    implementation("androidx.media3:media3-exoplayer:1.9.4")
+    implementation("androidx.media3:media3-session:1.9.4")
+    implementation("androidx.media3:media3-database:1.9.4")
     // Яндекс Карты (бесплатная лайт-версия: до 1000 пользователей карты в день)
     implementation("com.yandex.android:maps.mobile:4.45.0-lite")
 
