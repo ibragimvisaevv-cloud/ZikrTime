@@ -1,0 +1,14 @@
+{
+  "groups": {
+    "camera": {
+      "runtime_permission_requested": true,
+      "granted_and_opened": true,
+      "close_and_back_return_to_compass": true,
+      "denial_explained": true,
+      "preview_error_on_emulator": false,
+      "preview_streaming": true,
+      "preview_reopened": true
+    }
+  },
+  "profile": "isolated_debug_emulator"
+}
