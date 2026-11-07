@@ -173,3 +173,6 @@ textarea { min-height: 116px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
 @media (max-width: 350px) { #app { padding-left: 12px; padding-right: 12px; } .action-grid { grid-template-columns: 1fr; } .tabs button { font-size: 12px; } .row { flex-wrap: wrap; } }
+@media (max-width: 350px) {
+  .tabs.admin-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
