@@ -90,7 +90,7 @@ fun shopIcon(name: String): Int = when (name) {
     else -> R.drawable.ic_shop_store
 }
 
-private fun accentOf(seller: Shop.Seller?): Color = seller?.accent?.let { Color(0xFF000000 or it) } ?: Color(0xFF124C40)
+private fun accentOf(seller: Shop.Seller?): Color = seller?.accent?.let { Color(0xFF000000 or it) } ?: Color(0xFF235D4C)
 
 // ---------------- Витрина ----------------
 
@@ -306,7 +306,7 @@ private fun PartnerCard(seller: Shop.Seller, lang: String, catalog: Shop.Catalog
         Shop.imageUrl(seller.cover)?.let { url ->
             AsyncImage(model = url, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.matchParentSize())
         }
-        Box(Modifier.matchParentSize().background(Brush.verticalGradient(listOf(Color(0x40081010), Color(0xF0081512)))))
+        Box(Modifier.matchParentSize().background(Brush.verticalGradient(listOf(Color(0x40171B18), Color(0xF0171B18)))))
         Column(Modifier.fillMaxWidth().heightIn(min = 166.dp).padding(16.dp),
             verticalArrangement = Arrangement.SpaceBetween) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -472,7 +472,7 @@ fun SellerScreen(sellerId: String? = null) {
             } else {
                 StarPattern(Modifier.fillMaxSize(), color = Gold.copy(alpha = 0.18f), cell = 56f)
             }
-            Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color.Transparent, Color(0xDD071F1B)))))
+            Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color.Transparent, Color(0xDD171B18)))))
             Row(Modifier.align(Alignment.BottomStart).padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                 SellerLogo(seller, 60.dp)
                 Spacer(Modifier.width(14.dp))

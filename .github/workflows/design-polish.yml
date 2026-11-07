@@ -25,10 +25,17 @@ jobs:
       - name: Verify immutable Quran inputs
         run: |
           git diff --exit-code 2ed8494d6ae8766891c94835522f1b4340b06827 -- app/src/main/assets/quran app/src/main/java/com/zikrtime/app/data/QuranContent.kt
-      - name: Server and payment regression tests
+      - name: Reuse unchanged server and Mini App checks
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          for test in shop-bot/test_*.py; do python3 "$test"; done
-          node --check shop-bot/miniapp/app.js
+          mkdir -p ci-out/miniapp
+          git diff --exit-code 8f27ea26ece51932a5dfba45fad3e7a580578134 HEAD -- 'shop-bot/*.py'
+          git diff --exit-code ebb6dc535795f079a1b3d30309a3376772d78b1a HEAD -- shop-bot/miniapp/ tools/ci/miniapp_design_check.cjs
+          gh api "repos/$GITHUB_REPOSITORY/actions/jobs/128403313374" > ci-out/reused-backend-check.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/13574804431" > ci-out/reused-miniapp-artifact.json
+          gh run download 42374725250 -n ZikrTime-MiniApp-check -D ci-out/miniapp
+          python3 tools/ci/design_verified_web.py
       - name: Restore original signing key
         env:
           RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
@@ -58,20 +65,13 @@ jobs:
             ci-out/release-delivery.json
             ci-out/release-signature.txt
             app/build/test-results/
-      - name: Mini App browser journeys
-        env:
-          NODE_PATH: ${{ runner.temp }}/miniapp-qa/node_modules
-        run: |
-          npm install --prefix "$RUNNER_TEMP/miniapp-qa" playwright
-          "$RUNNER_TEMP/miniapp-qa/node_modules/.bin/playwright" install --with-deps chromium
-          node tools/ci/miniapp_design_check.cjs
       - run: python3 -m pip install 'Pillow>=11,<13'
       - name: Enable emulator acceleration
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-design.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      - name: App navigation, reminders and camera on Android 15
+      - name: App navigation, reminders and Kaaba view on Android 15
         timeout-minutes: 25
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -79,7 +79,7 @@ jobs:
           target: google_apis
           arch: x86_64
           disable-animations: false
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back emulated
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -camera-back none -camera-front none
           script: bash tools/ci/design_smoke.sh
       - name: Preserve build and screen evidence
         if: always()

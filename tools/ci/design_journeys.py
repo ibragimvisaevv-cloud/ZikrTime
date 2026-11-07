@@ -161,67 +161,68 @@ def reminders():
             "choice_persists_after_restart": True, "disable_clears_next_reminder": True}
 
 
-def permission_button(allow):
-    suffixes = (["permission_allow_foreground_only_button", "permission_allow_one_time_button", "permission_allow_button"]
-                if allow else ["permission_deny_button", "permission_deny_and_dont_ask_again_button"])
-    root = ui()
-    for suffix in suffixes:
-        node = next((n for n in root.iter("node") if n.get("resource-id", "").endswith("/" + suffix)), None)
-        if node is not None:
-            tap_control(node.get("resource-id"))
-            return
-    raise AssertionError("Expected Android camera permission dialog")
+def qibla_view():
+    font_before = shell("settings", "get", "system", "font_scale").strip()
+    motion_before = shell("settings", "get", "global", "animator_duration_scale").strip()
 
+    def open_view(name):
+        start("qibla")
+        tap_control(russian("qibla_view_open"), "text")
+        # Capture before any scrolling: the photo and exit must already be in view.
+        root = capture(name)
+        viewport = next(root.iter("node")).get("bounds")
+        vl, vt, vr, vb = map(int, re.findall(r"-?\d+", viewport))
+        for identifier, attribute in (("qibla_view_photo", "resource-id"),
+                                      (russian("qibla_view_close"), "text")):
+            node = find_control(root, identifier, attribute)
+            assert node is not None, (name, "missing", identifier)
+            left, top, right, bottom = map(int, re.findall(r"-?\d+", node.get("bounds")))
+            assert min(right, vr) - max(left, vl) > 24 and min(bottom, vb) - max(top, vt) > 12, (
+                name, "not visible before scrolling", identifier, node.get("bounds"))
+        assert find_control(root, "qibla_view_scene") is not None
+        return root
 
-def camera():
-    def wait_for_preview():
-        deadline = time.monotonic() + 45
-        while time.monotonic() < deadline:
-            root = ui()
-            if find_control(root, russian("qibla_camera_error"), "text") is not None:
-                capture("qibla-camera-error")
-                raise AssertionError("Camera preview reported an error")
-            if (find_control(root, russian("qibla_camera_close"), "text") is not None and
-                    find_control(root, russian("qibla_camera_note"), "text") is not None and
-                    find_control(root, russian("qibla_camera_loading"), "text") is None):
-                return
-            time.sleep(1)
-        capture("qibla-camera-timeout")
-        raise AssertionError("Camera preview did not reach STREAMING within 45 seconds")
+    try:
+        shell("wm", "size", "1080x1920")
+        shell("settings", "put", "system", "font_scale", "1.0")
+        open_view("qibla-view")
+        locate_control(russian("qibla_view_note"), "text")
+        capture("qibla-view-guidance")
+        tap_control(russian("qibla_view_close"), "text")
+        locate_control(russian("qibla_view_open"), "text")
+        assert find_control(ui(), "qibla_view_scene") is None
+        open_view("qibla-view-reopened")
+        shell("input", "keyevent", "KEYCODE_BACK")
+        locate_control(russian("qibla_view_open"), "text")
+        assert find_control(ui(), "qibla_view_scene") is None
 
-    permission = "android.permission.CAMERA"
-    shell("pm", "revoke", PKG, permission)
-    shell("pm", "clear-permission-flags", PKG, permission, "user-set", "user-fixed")
-    start("qibla")
-    tap_control(russian("qibla_camera_open"), "text")
-    permission_button(allow=True)
-    locate_control(russian("qibla_camera_close"), "text")
-    wait_for_preview()
-    root = capture("qibla-camera")
-    assert find_control(root, russian("qibla_camera_note"), "text") is not None, "Captured camera overlay is missing"
-    assert find_control(root, russian("qibla_camera_loading"), "text") is None, "Captured preview is still loading"
-    assert find_control(root, russian("qibla_camera_error"), "text") is None, "Captured preview has an error"
-    assert re.search(r"android\.permission\.CAMERA:\s+granted=true", shell("dumpsys", "package", PKG))
-    tap_control(russian("qibla_camera_close"), "text")
-    locate_control(russian("qibla_camera_open"), "text")
-    tap_control(russian("qibla_camera_open"), "text")
-    locate_control(russian("qibla_camera_close"), "text")
-    wait_for_preview()
-    shell("input", "keyevent", "KEYCODE_BACK")
-    locate_control(russian("qibla_camera_open"), "text")
-    shell("pm", "revoke", PKG, permission)
-    shell("pm", "clear-permission-flags", PKG, permission, "user-set", "user-fixed")
-    start("qibla")
-    tap_control(russian("qibla_camera_open"), "text")
-    permission_button(allow=False)
-    locate_control(russian("qibla_camera_permission"), "text")
-    capture("qibla-camera-denied")
-    tap_control(russian("qibla_camera_close"), "text")
-    locate_control(russian("qibla_camera_open"), "text")
-    return {"runtime_permission_requested": True, "granted_and_opened": True,
-            "close_and_back_return_to_compass": True, "denial_explained": True,
-            "preview_error_on_emulator": False, "preview_streaming": True,
-            "preview_reopened": True}
+        shell("settings", "put", "system", "font_scale", "1.5")
+        open_view("qibla-view-large")
+        locate_control(russian("qibla_view_note"), "text")
+        tap_control(russian("qibla_view_close"), "text")
+        locate_control(russian("qibla_view_open"), "text")
+
+        shell("wm", "size", "1920x1080")
+        open_view("qibla-view-landscape-large")
+        locate_control(russian("qibla_view_note"), "text")
+        tap_control(russian("qibla_view_close"), "text")
+        locate_control(russian("qibla_view_open"), "text")
+
+        shell("wm", "size", "1080x1920")
+        shell("settings", "put", "system", "font_scale", "1.0")
+        shell("settings", "put", "global", "animator_duration_scale", "0")
+        open_view("qibla-view-motion-off")
+        tap_control(russian("qibla_view_close"), "text")
+        locate_control(russian("qibla_view_open"), "text")
+    finally:
+        shell("wm", "size", "1080x1920")
+        shell("settings", "put", "system", "font_scale", font_before if font_before not in ("", "null") else "1.0")
+        shell("settings", "put", "global", "animator_duration_scale", motion_before if motion_before not in ("", "null") else "1.0")
+    return {"virtual_scene_opened": True, "guidance_visible": True,
+            "photo_and_close_visible_before_scrolling": True,
+            "close_and_back_return_to_compass": True, "scene_reopened": True,
+            "font_scale_1_5": True, "landscape_1920x1080": True,
+            "system_motion_off": True, "physical_sensor_alignment_requires_device_check": True}
 
 
 ROUTES = ("home", "focus", "knowledge", "more", "prayer_settings", "alarm",
@@ -264,14 +265,14 @@ def gallery():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--flow", choices=("focus", "knowledge", "more", "reminders", "camera"))
+    parser.add_argument("--flow", choices=("focus", "knowledge", "more", "reminders", "qibla_view"))
     parser.add_argument("--gallery", action="store_true")
     args = parser.parse_args()
     OUT.mkdir(exist_ok=True)
     (OUT / "screens").mkdir(exist_ok=True)
     start("home")
     report = {"groups": {}, "profile": "isolated_debug_emulator"}
-    flows = {"focus": focus, "knowledge": knowledge, "more": more, "reminders": reminders, "camera": camera}
+    flows = {"focus": focus, "knowledge": knowledge, "more": more, "reminders": reminders, "qibla_view": qibla_view}
     selected = {args.flow: flows[args.flow]} if args.flow else ({} if args.gallery else flows)
     if not args.flow:
         selected["gallery"] = gallery

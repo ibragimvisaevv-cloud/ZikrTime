@@ -10,6 +10,9 @@ apk = Path('app/build/outputs/apk/release/app-release.apk')
 debug = Path('app/build/outputs/apk/debug/app-debug.apk')
 source = Path('app/src/main/assets/quran')
 with zipfile.ZipFile(apk) as archive:
+    manifest = archive.read('AndroidManifest.xml')
+    for encoding in ('utf-8', 'utf-16le'):
+        assert 'android.permission.CAMERA'.encode(encoding) not in manifest, 'Unexpected camera permission'
     for file in source.rglob('*'):
         if file.is_file():
             assert archive.read('assets/quran/' + file.relative_to(source).as_posix()) == file.read_bytes(), str(file)
@@ -24,6 +27,8 @@ result = {
     'unit_tests': sum(int(test.get('tests', 0)) for test in tests),
     'unit_skipped': sum(int(test.get('skipped', 0)) for test in tests),
     'quran_assets_unchanged': True,
+    'camera_permission': False,
+    'qibla_view': 'local_photo_and_orientation_sensor',
 }
 Path('ci-out/release-delivery.json').write_text(json.dumps(result, indent=2))
 print(json.dumps(result))

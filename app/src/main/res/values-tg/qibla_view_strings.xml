@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qibla_view_open">Намоиши Каъба</string>
+    <string name="qibla_view_explain">Телефонро ба сӯи қибла гардонед — тасвири Каъба пеши шумо пайдо мешавад.</string>
+    <string name="qibla_view_note">Тасвир барои ёфтани самти қибла кумак мекунад. Роҳнамо ба қутбнамои телефон вобаста аст.</string>
+    <string name="qibla_view_image">Каъба дар Макка</string>
+    <string name="qibla_view_close">Пӯшидан</string>
+    <string name="qibla_view_level">Телефонро дар пеши худ нигоҳ доред</string>
+    <string name="qibla_view_no_sensor">Қутбнамо дастрас нест. Самти қибла — %1$d°.</string>
+    <string name="qibla_view_found">Қибла ёфт шуд</string>
+    <string name="qibla_view_attribution">مانفی · CC BY-SA 4.0</string>
+</resources>

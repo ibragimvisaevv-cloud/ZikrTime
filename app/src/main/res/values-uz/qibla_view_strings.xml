@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qibla_view_open">Ka\'baga qarash</string>
+    <string name="qibla_view_explain">Telefonni qibla tomon buring — Ka\'ba tasviri oldingizda paydo bo\'ladi.</string>
+    <string name="qibla_view_note">Tasvir qibla yo\'nalishini topishga yordam beradi. Yo\'nalish telefon kompasiga bog\'liq.</string>
+    <string name="qibla_view_image">Makkadagi Ka\'ba</string>
+    <string name="qibla_view_close">Yopish</string>
+    <string name="qibla_view_level">Telefonni oldingizda tuting</string>
+    <string name="qibla_view_no_sensor">Kompas mavjud emas. Qibla yo\'nalishi — %1$d°.</string>
+    <string name="qibla_view_found">Qibla topildi</string>
+    <string name="qibla_view_attribution">مانفی · CC BY-SA 4.0</string>
+</resources>

@@ -4,10 +4,10 @@ import kotlin.math.asin
 import kotlin.math.atan2
 import kotlin.math.hypot
 
-data class CameraDirection(val bearing: Float?, val elevation: Float)
+data class ForwardDirection(val bearing: Float?, val elevation: Float)
 
-/** The rear camera looks along negative device Z, independently of display rotation. */
-fun cameraDirection(rotation: FloatArray, declination: Float): CameraDirection {
+/** An upright phone faces along negative device Z, independently of display rotation. */
+fun forwardDirection(rotation: FloatArray, declination: Float): ForwardDirection {
     require(rotation.size == 9)
     val east = -rotation[2]
     val north = -rotation[5]
@@ -16,7 +16,7 @@ fun cameraDirection(rotation: FloatArray, declination: Float): CameraDirection {
     val bearing = if (hypot(east, north) < 0.15f) null else {
         ((Math.toDegrees(atan2(east, north).toDouble()) + declination + 360.0) % 360.0).toFloat()
     }
-    return CameraDirection(bearing, elevation)
+    return ForwardDirection(bearing, elevation)
 }
 
 fun qiblaAngleDifference(target: Float, heading: Float): Float =

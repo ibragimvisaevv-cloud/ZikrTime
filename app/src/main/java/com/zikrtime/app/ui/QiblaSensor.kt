@@ -18,18 +18,18 @@ import androidx.compose.ui.platform.LocalView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import com.zikrtime.app.prayer.cameraDirection
+import com.zikrtime.app.prayer.forwardDirection
 import com.zikrtime.app.prayer.qiblaAngleDifference
 
 data class QiblaPose(val heading: Float? = null, val elevation: Float = 0f, val lowAccuracy: Boolean = true)
 
 @Composable
-fun rememberQiblaPose(lat: Double, lon: Double, camera: Boolean, enabled: Boolean = true): QiblaPose {
+fun rememberQiblaPose(lat: Double, lon: Double, upright: Boolean, enabled: Boolean = true): QiblaPose {
     val context = LocalContext.current
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     val view = LocalView.current
-    var pose by remember(lat, lon, camera) { mutableStateOf(QiblaPose()) }
-    DisposableEffect(lat, lon, camera, lifecycle, enabled) {
+    var pose by remember(lat, lon, upright) { mutableStateOf(QiblaPose()) }
+    DisposableEffect(lat, lon, upright, lifecycle, enabled) {
         val manager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         val sensor = manager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
         val declination = GeomagneticField(lat.toFloat(), lon.toFloat(), 0f, System.currentTimeMillis()).declination
@@ -46,8 +46,8 @@ fun rememberQiblaPose(lat: Double, lon: Double, camera: Boolean, enabled: Boolea
                 SensorManager.getRotationMatrixFromVector(rotation, event.values)
                 val elevation: Float
                 val bearing: Float?
-                if (camera) {
-                    val direction = cameraDirection(rotation, declination)
+                if (upright) {
+                    val direction = forwardDirection(rotation, declination)
                     elevation = direction.elevation
                     bearing = direction.bearing
                 } else {

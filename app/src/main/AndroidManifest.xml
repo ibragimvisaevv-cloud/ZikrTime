@@ -4,8 +4,6 @@
 
     <!-- Загрузка времени намаза с aladhan.com -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera.any" android:required="false" />
     <!-- Уведомления о времени намаза и будильник -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- Будильник на фаджр: точное время, показ поверх экрана блокировки, звук и вибрация -->

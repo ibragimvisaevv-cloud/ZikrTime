@@ -94,15 +94,16 @@ fun QiblaScreen() {
     val loc = Store.location
     val qibla = remember(loc) { Qibla.bearing(loc.latitude, loc.longitude).toFloat() }
     val distance = remember(loc) { Qibla.distanceKm(loc.latitude, loc.longitude) }
-    var cameraOpen by remember { mutableStateOf(false) }
-    val pose = rememberQiblaPose(loc.latitude, loc.longitude, camera = false, enabled = !cameraOpen)
+    var viewOpen by remember { mutableStateOf(false) }
+    val pose = rememberQiblaPose(loc.latitude, loc.longitude, upright = false, enabled = !viewOpen)
     val heading = pose.heading
     val lowAccuracy = pose.lowAccuracy
     val relative = heading?.let { norm180(qibla - it) }
     // Пружинка поверх датчика: циферблат догоняет телефон мягко, без дрожи.
     val shownHeading by androidx.compose.animation.core.animateFloatAsState(
         heading ?: 0f,
-        androidx.compose.animation.core.spring(dampingRatio = 0.85f, stiffness = 90f),
+        if (motionEnabled()) androidx.compose.animation.core.spring(dampingRatio = 0.85f, stiffness = 90f)
+        else androidx.compose.animation.core.snap(),
         label = "heading",
     )
     val aligned = relative != null && !lowAccuracy && abs(relative) < 5f
@@ -130,7 +131,7 @@ fun QiblaScreen() {
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth(),
         )
-        QiblaCameraButton { cameraOpen = it }
+        QiblaViewButton { viewOpen = it }
         ZCard {
             InfoLine(stringResource(R.string.qibla_bearing), "${qibla.roundToInt()}°")
             InfoLine(stringResource(R.string.qibla_distance), stringResource(R.string.unit_km, distance.roundToInt()))
