@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ux_places_map_hint">Картаны бир манжа менен жылдырыңыз. Жерди көрүү үчүн белгини басыңыз.</string>
+    <string name="ux_places_preview_title">Бул жер тууралуу</string>
+    <string name="ux_places_details_title">Шарттар жана пикирлер</string>
+    <string name="ux_places_route_short">Багыт</string>
+    <string name="ux_places_address_missing">Дарек көрсөтүлгөн эмес. Багыт картадагы белгиге алып барат.</string>
+</resources>

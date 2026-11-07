@@ -87,8 +87,10 @@ fun FocusScreen() {
     val pauseStrict = remember(pauseRevision) { FocusPause.strict(context) }
     val pausePhrase = remember(pauseRevision) { FocusPause.phrase(context) }
     val running = BlockerService.running || GuardService.running
+    val protectionUnavailable = (Store.blockingEnabled || pauseEnabled) && (!running || (pauseEnabled && FocusPause.deliveryFailed))
     var showDisclosure by remember { mutableStateOf(false) }
     var showSettings by remember { mutableStateOf(false) }
+    var showPermissions by remember { mutableStateOf(false) }
 
     LaunchedEffect(resume, pauseEnabled) { GuardService.sync(context) }
     LaunchedEffect(Unit) {
@@ -106,16 +108,14 @@ fun FocusScreen() {
     val used = (usedMillis ?: 0L) / 60_000
     val allowed = Store.allowedMinutes()
     val remaining = (allowed - used).coerceAtLeast(0)
-    HorizonSection(title = stringResource(R.string.focus_title), subtitle = stringResource(R.string.focus_subtitle),
-        image = R.drawable.focus_courtyard, heroHeight = 330.dp,
+    HorizonSection(title = sectionCopy(SectionClarity.Limits), subtitle = sectionCopy(SectionClarity.LimitsIntro),
+        image = R.drawable.focus_courtyard, heroHeight = 270.dp,
         hero = {
             Spacer(Modifier.height(8.dp))
-            ProgressRing(progress = if (usedMillis == null) 0f else remaining.toFloat() / allowed.coerceAtLeast(1),
+            if (hasUsage) ProgressRing(progress = if (usedMillis == null) 0f else remaining.toFloat() / allowed.coerceAtLeast(1),
                 modifier = Modifier.align(Alignment.CenterHorizontally).size(if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 210.dp else 158.dp),
                 stroke = 3.dp, color = Sand, track = Porcelain.copy(alpha = .24f)) {
-                if (!hasUsage) Icon(painterResource(R.drawable.ic_nav_focus), null,
-                    tint = Sand, modifier = Modifier.size(52.dp))
-                else Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(if (usedMillis == null) "—" else remaining.toString(), color = Porcelain,
                         style = MaterialTheme.typography.displayLarge, fontSize = 64.sp)
                     Text(stringResource(R.string.unit_min), color = Sand, style = MaterialTheme.typography.titleMedium)
@@ -124,11 +124,11 @@ fun FocusScreen() {
             Text(if (!hasUsage || usedMillis == null) stringResource(R.string.focus_no_access) else stringResource(R.string.focus_remaining),
                 style = MaterialTheme.typography.titleMedium, color = Porcelain,
                 textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
-            if (!hasUsage) GoldButton(uiCopy(UiCopy0823.ConfigureLimits), onClick = { showSettings = true },
+            if (!hasUsage) GoldButton(sectionCopy(SectionClarity.SetPhoneAccess), onClick = { showPermissions = true },
                 modifier = Modifier.testTag("focus_setup").semantics { testTagsAsResourceId = true })
         }) {
         ZCard {
-            Text(uiCopy(UiCopy0823.FocusIntro), style = MaterialTheme.typography.bodyLarge)
+            Text(sectionCopy(SectionClarity.LimitMeaning), style = MaterialTheme.typography.bodyMedium)
             Spacer(Modifier.height(12.dp))
             PrimaryButton(uiCopy(UiCopy0823.ChooseApps), onClick = { nav.open(Screen.APPS) },
                 modifier = Modifier.testTag("focus_choose_apps").semantics { testTagsAsResourceId = true })
@@ -136,21 +136,30 @@ fun FocusScreen() {
             TonalButton(uiCopy(UiCopy0823.ConfigureLimits), onClick = { showSettings = true },
                 modifier = Modifier.testTag("focus_settings_open").semantics { testTagsAsResourceId = true })
             Spacer(Modifier.height(12.dp))
-            Text(uiCopy(when {
-                Store.blockedPackages.isEmpty() -> UiCopy0823.NeedApps
-                !hasUsage || !canBlock -> UiCopy0823.NeedAccess
-                !Store.blockingEnabled && !pauseEnabled -> UiCopy0823.FocusOff
-                else -> UiCopy0823.FocusReady
-            }), style = MaterialTheme.typography.titleSmall,
+            Text(when {
+                Store.blockedPackages.isEmpty() -> uiCopy(UiCopy0823.NeedApps)
+                !hasUsage || !canBlock -> uiCopy(UiCopy0823.NeedAccess)
+                !Store.blockingEnabled && !pauseEnabled -> uiCopy(UiCopy0823.FocusOff)
+                protectionUnavailable -> sectionCopy(SectionClarity.ProtectionInactive)
+                else -> uiCopy(UiCopy0823.FocusReady)
+            }, style = MaterialTheme.typography.titleSmall,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.testTag("focus_setup_status").semantics { testTagsAsResourceId = true })
             Text("${uiCopy(UiCopy0823.SelectedApps)} · ${Store.blockedPackages.size}",
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            val selectedNames = AppsCache.apps.orEmpty().filter { it.packageName in Store.blockedPackages }.map { it.label }
+            if (selectedNames.isNotEmpty()) Text(selectedNames.take(3).joinToString() + (if (selectedNames.size > 3) "…" else ""),
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            if (hasUsage && (!canBlock || protectionUnavailable)) {
+                Spacer(Modifier.height(8.dp))
+                TonalButton(sectionCopy(SectionClarity.SetPhoneAccess), onClick = { showPermissions = true },
+                    modifier = Modifier.testTag("focus_permissions_open").semantics { testTagsAsResourceId = true })
+            }
         }
         ZCard {
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 Column(Modifier.weight(1f)) {
-                    Text(stringResource(R.string.focus_daily_limit), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(sectionCopy(SectionClarity.DailyTime), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     Text(durationText(Store.dailyLimitMinutes.toLong()), style = MaterialTheme.typography.headlineSmall)
                 }
                 Column(Modifier.weight(1f)) {
@@ -162,10 +171,10 @@ fun FocusScreen() {
                 stringResource(R.string.focus_limit_bonus, durationText(Store.dailyLimitMinutes.toLong()), Store.bonusMinutes()),
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             HorizontalDivider(Modifier.padding(vertical = 12.dp), color = MaterialTheme.colorScheme.outlineVariant)
-            SwitchRow(title = stringResource(R.string.pause_title),
+            SwitchRow(title = sectionCopy(SectionClarity.PauseSwitch),
                 subtitle = stringResource(if (pauseStrict) R.string.pause_strict else R.string.pause_soft),
                 checked = pauseEnabled, onChange = { FocusPause.setEnabled(context, it) })
-            SwitchRow(title = stringResource(R.string.focus_enable), subtitle = stringResource(R.string.focus_enable_hint),
+            SwitchRow(title = sectionCopy(SectionClarity.LimitSwitch), subtitle = stringResource(R.string.focus_enable_hint),
                 checked = Store.blockingEnabled, onChange = {
                     Store.blockingEnabled = it; GuardService.sync(context); BlockerService.recheck()
                 })
@@ -181,6 +190,7 @@ fun FocusScreen() {
     if (showSettings) HorizonSheet(uiCopy(UiCopy0823.ConfigureLimits), { showSettings = false }) {
         Text(uiCopy(UiCopy0823.SetupIntro), style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant)
+        SectionLabel("1. ${uiCopy(UiCopy0823.ChooseApps)}")
         ZCard {
             DestinationRow(uiCopy(UiCopy0823.ChooseApps), R.drawable.ic_nav_more,
                 "${uiCopy(UiCopy0823.SelectedApps)} · ${Store.blockedPackages.size}") {
@@ -188,10 +198,10 @@ fun FocusScreen() {
                 nav.open(Screen.APPS)
             }
         }
-        SectionLabel(stringResource(R.string.focus_daily_limit))
+        SectionLabel("2. ${sectionCopy(SectionClarity.DailyTime)}")
         ZCard {
             SliderRow(
-                title = stringResource(R.string.focus_daily_limit),
+                title = sectionCopy(SectionClarity.DailyTime),
                 valueText = durationText(Store.dailyLimitMinutes.toLong()),
                 value = Store.dailyLimitMinutes,
                 range = 10..180,
@@ -205,9 +215,19 @@ fun FocusScreen() {
             )
         }
 
+        SectionLabel("3. ${sectionCopy(SectionClarity.PhoneAccess)}")
+        ZCard {
+            Text(sectionCopy(SectionClarity.AccessReason), style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Spacer(Modifier.height(10.dp))
+            TonalButton(sectionCopy(SectionClarity.SetPhoneAccess), onClick = {
+                showSettings = false
+                showPermissions = true
+            }, modifier = Modifier.testTag("focus_permissions_open").semantics { testTagsAsResourceId = true })
+        }
         ZCard {
             SwitchRow(
-                title = stringResource(R.string.focus_enable),
+                title = sectionCopy(SectionClarity.LimitSwitch),
                 subtitle = stringResource(R.string.focus_enable_hint),
                 checked = Store.blockingEnabled,
                 onChange = {
@@ -226,6 +246,7 @@ fun FocusScreen() {
             }
         }
 
+        SectionLabel(sectionCopy(SectionClarity.Optional))
         ZCard {
             SwitchRow(
                 title = stringResource(R.string.focus_prayer_lock),
@@ -248,7 +269,7 @@ fun FocusScreen() {
         SectionLabel(uiCopy(UiCopy0823.PauseOptional))
         ZCard {
             SwitchRow(
-                title = stringResource(R.string.pause_title),
+                title = sectionCopy(SectionClarity.PauseSwitch),
                 subtitle = stringResource(R.string.pause_enable_hint),
                 checked = pauseEnabled,
                 onChange = { FocusPause.setEnabled(context,it) },
@@ -282,7 +303,29 @@ fun FocusScreen() {
             }
         }
 
-        SectionLabel(stringResource(R.string.focus_permissions))
+        // Проверка: на минуту соцсети закрываются, как во время намаза.
+        if (Store.blockingEnabled) {
+            var testStarted by remember { mutableStateOf(false) }
+            ZCard {
+                Text(stringResource(R.string.focus_test_title), style = MaterialTheme.typography.titleSmall)
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    stringResource(if (testStarted) R.string.focus_test_running else R.string.focus_test_text),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = if (testStarted) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Spacer(Modifier.height(12.dp))
+                TonalButton(stringResource(R.string.focus_test_button), onClick = {
+                    Store.testLockUntil = System.currentTimeMillis() + 60_000
+                    testStarted = true
+                    GuardService.sync(context, checkNow = true)
+                })
+            }
+        }
+    }
+
+    if (showPermissions) HorizonSheet(sectionCopy(SectionClarity.PhoneAccess), { showPermissions = false }) {
+        Text(sectionCopy(SectionClarity.AccessReason), style = MaterialTheme.typography.bodyMedium)
         ZCard {
             Text(uiCopy(UiCopy0823.PermissionHint), style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -350,25 +393,8 @@ fun FocusScreen() {
             }
         }
 
-        // Проверка: на минуту соцсети закрываются, как во время намаза.
-        if (Store.blockingEnabled) {
-            var testStarted by remember { mutableStateOf(false) }
-            ZCard {
-                Text(stringResource(R.string.focus_test_title), style = MaterialTheme.typography.titleSmall)
-                Spacer(Modifier.height(4.dp))
-                Text(
-                    stringResource(if (testStarted) R.string.focus_test_running else R.string.focus_test_text),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = if (testStarted) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                Spacer(Modifier.height(12.dp))
-                TonalButton(stringResource(R.string.focus_test_button), onClick = {
-                    Store.testLockUntil = System.currentTimeMillis() + 60_000
-                    testStarted = true
-                    GuardService.sync(context, checkNow = true)
-                })
-            }
-        }
+        PrimaryButton(stringResource(R.string.action_done), onClick = { showPermissions = false },
+            modifier = Modifier.testTag("focus_permissions_done"))
     }
 
     if (showDisclosure) {
@@ -426,7 +452,12 @@ fun AppsScreen() {
             AppsCache.apps = loaded
         }
     }
-    ScreenScaffold(title = uiCopy(UiCopy0823.ChooseApps), onBack = { nav.back() }) {
+    ScreenScaffold(title = uiCopy(UiCopy0823.ChooseApps), onBack = { nav.back() },
+        actions = {
+            TextButton(onClick = { nav.back() }, modifier = Modifier.testTag("focus_apps_done")) {
+                Text(stringResource(R.string.action_done))
+            }
+        }) {
         Text(uiCopy(UiCopy0823.SelectionSaved), style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant)
         Text("${uiCopy(UiCopy0823.SelectedApps)} · ${Store.blockedPackages.size}",

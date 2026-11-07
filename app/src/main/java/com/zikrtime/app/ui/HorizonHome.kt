@@ -59,7 +59,8 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val status = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
         val compactHeight = status + if (large) 112.dp else 76.dp
-        val revealHeight = maxOf(maxHeight * .72f, status + if (large) 510.dp else 410.dp)
+        // Keep the next prayer prominent while bringing the schedule into view sooner.
+        val revealHeight = maxOf(maxHeight * .52f, status + if (large) 330.dp else 310.dp)
         var measuredHero by remember { mutableIntStateOf(0) }
         val collapsePx = (if (measuredHero > 0) measuredHero - with(density) { compactHeight.toPx() }
             else with(density) { (revealHeight - compactHeight).toPx() }).coerceAtLeast(1f)
@@ -109,32 +110,42 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
                     alpha = ((.72f - scroll.value / collapsePx) / .12f).coerceIn(0f, 1f)
                 }
                 .then(if (compact) Modifier.clearAndSetSemantics {} else Modifier),
-                verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                    Text(stringResource(R.string.app_name), color = Porcelain, style = MaterialTheme.typography.titleLarge,
-                        modifier = Modifier.weight(1f))
-                    ReadingHomeAction(Porcelain)
+                verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.Top) {
+                    Column(Modifier.weight(1f)) {
+                        Text(stringResource(R.string.app_name), color = Porcelain, style = MaterialTheme.typography.titleLarge)
+                        TextButton(onClick = { nav.open(Screen.READING_REMINDERS) },
+                            contentPadding = PaddingValues(end = 8.dp),
+                            modifier = Modifier.testTag("home_reading_reminders")) {
+                            Text(clarityCopy(UiClarity0825.Reading), color = Porcelain)
+                        }
+                    }
                     ThemeQuickButton(compact = true, onLandscape = true)
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    TextButton(onClick = { nav.open(Screen.CITY) }, contentPadding = PaddingValues(end = 8.dp)) {
+                    TextButton(onClick = { nav.open(Screen.CITY) },
+                        modifier = Modifier.testTag("home_change_city"),
+                        contentPadding = PaddingValues(end = 8.dp)) {
                         Icon(painterResource(R.drawable.ic_mosque), null, tint = Sand, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(6.dp))
-                        Text(Cities.displayName(context, Store.location), color = Porcelain,
-                            style = MaterialTheme.typography.labelLarge, maxLines = 2)
+                        Column {
+                            Text(Cities.displayName(context, Store.location), color = Porcelain,
+                                style = MaterialTheme.typography.labelLarge, maxLines = 2)
+                            Text(clarityCopy(UiClarity0825.ChangeCity), color = Sand,
+                                style = MaterialTheme.typography.labelSmall)
+                        }
                     }
                 }
-                Text(gregorianDate(now.toLocalDate()), color = Porcelain, style = MaterialTheme.typography.labelMedium)
-                Text(hijriDate(now.toLocalDate()), color = Sand, style = MaterialTheme.typography.labelMedium)
-                Spacer(Modifier.height(if (large) 10.dp else 22.dp))
+                Text(gregorianDate(now.toLocalDate()) + " · " + hijriDate(now.toLocalDate()),
+                    color = Sand, style = MaterialTheme.typography.labelMedium)
                 Text(stringResource(R.string.home_next_prayer), color = Porcelain.copy(alpha = .88f), style = MaterialTheme.typography.labelLarge)
                 Text(prayerName(prayer), color = Porcelain, style = MaterialTheme.typography.headlineLarge,
-                    fontSize = if (large) 28.sp else 36.sp)
-                BigClock(at, if (large) 44.sp else 68.sp, Porcelain, modifier = Modifier.testTag("horizon_time").semantics { testTagsAsResourceId = true }, weight = FontWeight.Normal)
+                    fontSize = 28.sp)
+                BigClock(at, if (large) 44.sp else 60.sp, Porcelain, modifier = Modifier.testTag("horizon_time").semantics { testTagsAsResourceId = true }, weight = FontWeight.Normal)
                 Text(countdown, color = Sand, style = MaterialTheme.typography.labelLarge,
                     modifier = Modifier.clip(RoundedCornerShape(18.dp)).background(Color(0xB319211D))
                         .padding(horizontal = 12.dp, vertical = 7.dp))
-                Spacer(Modifier.height(24.dp))
+                Spacer(Modifier.height(14.dp))
             }
             Column(Modifier.fillMaxWidth().testTag("horizon_panel").semantics { testTagsAsResourceId = true }
                 .clip(RoundedCornerShape(topStart = 34.dp, topEnd = 34.dp))
@@ -142,7 +153,7 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
                 .padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(18.dp)) {
                 Spacer(Modifier.height(4.dp))
                 content()
-                Spacer(Modifier.height(96.dp))
+                Spacer(Modifier.height(if (large) 140.dp else 96.dp))
                 Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
             }
         }
@@ -164,7 +175,6 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
                             maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
                     BigClock(at, if (large) 22.sp else 30.sp, scheme.onSurface, weight = FontWeight.Medium)
-                    ReadingHomeAction(scheme.onSurface)
                     ThemeQuickButton(compact = true)
                 }
             }

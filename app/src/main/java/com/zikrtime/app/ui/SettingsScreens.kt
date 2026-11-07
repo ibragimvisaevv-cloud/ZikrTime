@@ -91,12 +91,13 @@ fun MoreScreen() {
     val current = Lang.saved(context)
     val languageName = Lang.supported.firstOrNull { it.code == current }?.nativeName ?: stringResource(R.string.language_system)
 
-    HorizonSection(title = stringResource(R.string.more_title),
-        subtitle = stringResource(R.string.app_name) + " · " + BuildConfig.VERSION_NAME,
+    HorizonSection(title = sectionCopy(SectionClarity.Settings),
+        subtitle = sectionCopy(SectionClarity.SettingsIntro),
         image = if (com.zikrtime.app.ui.theme.LocalDarkTheme.current) R.drawable.horizon_portrait_night else R.drawable.horizon_portrait_day,
-        heroHeight = 260.dp,
+        heroHeight = 220.dp,
         hero = {
             Spacer(Modifier.height(8.dp))
+            Text(sectionCopy(SectionClarity.Appearance), style = MaterialTheme.typography.labelLarge, color = Porcelain)
             AppearanceSegments()
         }) {
         SectionLabel(uiCopy(UiCopy0823.PrayerSettings))
@@ -123,29 +124,11 @@ fun MoreScreen() {
         }
         ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
             SettingRow(
-                title = uiCopy(UiCopy0823.ConfigureLimits),
+                title = sectionCopy(SectionClarity.Limits),
                 subtitle = uiCopy(UiCopy0823.FocusSettingsHint),
                 icon = painterResource(R.drawable.ic_nav_focus),
                 onClick = { nav.tab = Tab.FOCUS },
             )
-        }
-        SectionLabel(stringResource(R.string.group_practice))
-        val destinations = listOf(
-            Triple(R.string.quran_title, R.drawable.ic_nav_knowledge, Screen.QURAN),
-            Triple(R.string.tasbih_title, R.drawable.ic_tasbih, Screen.TASBIH),
-            Triple(R.string.qibla_title, R.drawable.ic_qibla, Screen.QIBLA),
-            Triple(R.string.places_title, R.drawable.ic_mosque, Screen.PLACES),
-            Triple(R.string.ramadan_title, R.drawable.ic_prayer_isha, Screen.RAMADAN),
-            Triple(R.string.zakat_title, R.drawable.ic_calc, Screen.ZAKAT),
-            Triple(R.string.progress_title, R.drawable.ic_nav_knowledge, Screen.PROGRESS),
-        )
-        val columns = if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 1 else 2
-        destinations.chunked(columns).forEach { pair ->
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                pair.forEach { (title, icon, screen) ->
-                    HorizonDestination(stringResource(title), icon, Modifier.weight(1f), prominent = screen == Screen.TASBIH) { nav.open(screen) }
-                }
-            }
         }
         SectionLabel(stringResource(R.string.group_application))
         ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
@@ -160,6 +143,30 @@ fun MoreScreen() {
             PersonalProgressSetting()
             TextButton(onClick = { nav.open(Screen.PROGRESS) }) {
                 Text(stringResource(R.string.progress_settings))
+            }
+        }
+        SectionLabel(sectionCopy(SectionClarity.OtherSections))
+        val destinations = listOf(
+            Triple(R.string.quran_title, R.drawable.ic_nav_knowledge, Screen.QURAN),
+            Triple(R.string.tasbih_title, R.drawable.ic_tasbih, Screen.TASBIH),
+            Triple(R.string.qibla_title, R.drawable.ic_qibla, Screen.QIBLA),
+            Triple(R.string.places_title, R.drawable.ic_mosque, Screen.PLACES),
+            Triple(R.string.ramadan_title, R.drawable.ic_prayer_isha, Screen.RAMADAN),
+            Triple(R.string.zakat_title, R.drawable.ic_calc, Screen.ZAKAT),
+            Triple(R.string.progress_title, R.drawable.ic_nav_knowledge, Screen.PROGRESS),
+        )
+        ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
+            destinations.forEach { (title, icon, screen) ->
+                val hint = when (screen) {
+                    Screen.QURAN -> SectionClarity.QuranHint
+                    Screen.TASBIH -> SectionClarity.TasbihHint
+                    Screen.QIBLA -> SectionClarity.QiblaHint
+                    Screen.PLACES -> SectionClarity.PlacesHint
+                    Screen.RAMADAN -> SectionClarity.RamadanHint
+                    Screen.ZAKAT -> SectionClarity.ZakatHint
+                    else -> SectionClarity.ProgressHint
+                }
+                DestinationRow(stringResource(title), icon, sectionCopy(hint)) { nav.open(screen) }
             }
         }
         SectionLabel(uiCopy(UiCopy0823.HelpAndSupport))

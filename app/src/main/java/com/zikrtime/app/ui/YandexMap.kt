@@ -3,6 +3,8 @@ package com.zikrtime.app.ui
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.view.MotionEvent
+import android.widget.FrameLayout
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -16,6 +18,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.CameraPosition
+import com.yandex.mapkit.map.CameraListener
 import com.yandex.mapkit.map.MapObject
 import com.yandex.mapkit.map.MapObjectTapListener
 import com.yandex.mapkit.map.Cluster
@@ -103,6 +106,7 @@ fun YandexPlacesMap(
     me: Pair<Double, Double>? = null,
     focusMe: Int = 0,
     onLoaded: () -> Unit = {},
+    onGestureActive: (Boolean) -> Unit = {},
 ) {
     val context = LocalContext.current
     val density = context.resources.displayMetrics.density
@@ -116,6 +120,28 @@ fun YandexPlacesMap(
         }
     }
     val currentOnLoaded = androidx.compose.runtime.rememberUpdatedState(onLoaded)
+    val currentOnGestureActive = androidx.compose.runtime.rememberUpdatedState(onGestureActive)
+    val currentOnSelect = androidx.compose.runtime.rememberUpdatedState(onSelect)
+    val touchContainer = remember(mapView) {
+        MapTouchContainer(context) { currentOnGestureActive.value(it) }.apply {
+            addView(mapView, FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT))
+        }
+    }
+    // Debug-only observability for real gesture tests; release accessibility does
+    // not announce coordinates or attach a continuous camera listener.
+    if (BuildConfig.DEBUG) {
+        val cameraListener = remember(mapView) {
+            CameraListener { _, position, _, finished ->
+                if (finished) touchContainer.contentDescription = cameraDescription(position)
+            }
+        }
+        DisposableEffect(mapView) {
+            val listenerRef = java.lang.ref.WeakReference(cameraListener)
+            touchContainer.contentDescription = cameraDescription(mapView.mapWindow.map.cameraPosition)
+            mapView.mapWindow.map.addCameraListener(listenerRef)
+            onDispose { mapView.mapWindow.map.removeCameraListener(listenerRef) }
+        }
+    }
     val loadedListener = remember { com.yandex.mapkit.map.MapLoadedListener { currentOnLoaded.value() } }
     DisposableEffect(mapView) {
         mapView.mapWindow.map.setMapLoadedListener(java.lang.ref.WeakReference(loadedListener))
@@ -124,7 +150,7 @@ fun YandexPlacesMap(
     // Слушатель нужно держать в памяти — MapKit хранит слабую ссылку.
     val tap = remember {
         MapObjectTapListener { obj: MapObject, _: Point ->
-            (obj.userData as? String)?.let(onSelect)
+            (obj.userData as? String)?.let { currentOnSelect.value(it) }
             true
         }
     }
@@ -219,7 +245,56 @@ fun YandexPlacesMap(
             mapView.mapWindow.map.move(CameraPosition(Point(it.lat, it.lon), 15.5f, 0f, 0f))
         }
     }
-    AndroidView(factory = { mapView }, modifier = modifier)
+    AndroidView(factory = { touchContainer }, modifier = modifier)
+}
+
+private fun cameraDescription(position: CameraPosition): String =
+    "map-camera:${position.target.latitude},${position.target.longitude},${position.zoom}"
+
+/** A map owns the whole touch stream, including vertical one-finger panning.
+ * Asking on DOWN lets AndroidView's pointer interop dispatch MOVE before the
+ * enclosing Compose scrollable. Do not consume or synthesize MapKit events.
+ */
+private class MapTouchContainer(
+    context: android.content.Context,
+    private val onGestureActive: (Boolean) -> Unit,
+) : FrameLayout(context) {
+    private var gestureActive = false
+
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        if (event.actionMasked == MotionEvent.ACTION_DOWN) {
+            gestureActive = true
+            onGestureActive(true)
+            parent?.requestDisallowInterceptTouchEvent(true)
+        }
+        return try {
+            super.dispatchTouchEvent(event).also { handled ->
+                if (!handled && event.actionMasked == MotionEvent.ACTION_DOWN) finishGesture()
+            }
+        } finally {
+            if (event.actionMasked == MotionEvent.ACTION_UP || event.actionMasked == MotionEvent.ACTION_CANCEL) {
+                finishGesture()
+            }
+        }
+    }
+
+    override fun requestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+        // A child surface must not give the outer LazyColumn half of a gesture.
+        super.requestDisallowInterceptTouchEvent(gestureActive || disallowIntercept)
+    }
+
+    private fun finishGesture() {
+        if (gestureActive) {
+            gestureActive = false
+            parent?.requestDisallowInterceptTouchEvent(false)
+            onGestureActive(false)
+        }
+    }
+
+    override fun onDetachedFromWindow() {
+        finishGesture()
+        super.onDetachedFromWindow()
+    }
 }
 
 private fun addMe(map: com.yandex.mapkit.map.Map, me: Pair<Double, Double>, density: Float): PlacemarkMapObject =

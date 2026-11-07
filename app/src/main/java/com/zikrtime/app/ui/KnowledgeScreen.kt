@@ -63,9 +63,9 @@ fun KnowledgeScreen() {
     val zone = CityZones.forCity(Store.location.id, java.time.ZoneId.systemDefault())
     val morning = java.time.ZonedDateTime.now(zone).hour < 15
     HorizonSection(title = stringResource(R.string.knowledge_title),
-        subtitle = stringResource(R.string.knowledge_subtitle),
+        subtitle = sectionCopy(SectionClarity.KnowledgeIntro),
         image = if (morning) R.drawable.azkar_morning else R.drawable.azkar_evening,
-        heroHeight = 290.dp,
+        heroHeight = 230.dp,
         hero = {
             Spacer(Modifier.height(16.dp))
             HorizonFeature(stringResource(if (morning) R.string.azkar_morning else R.string.azkar_evening),
@@ -85,15 +85,17 @@ fun KnowledgeScreen() {
             if (morning) R.drawable.ic_prayer_isha else R.drawable.ic_prayer_fajr) {
             nav.openAzkar(if (morning) "evening" else "morning")
         }
-        HorizonDestination(stringResource(R.string.quran_title), R.drawable.ic_nav_knowledge,
-            Modifier.fillMaxWidth().testTag("quran_open"), prominent = true) { nav.open(Screen.QURAN) }
+        Column(Modifier.testTag("quran_open").semantics { testTagsAsResourceId = true }) {
+            DestinationRow(stringResource(R.string.quran_title), R.drawable.ic_nav_knowledge,
+                sectionCopy(SectionClarity.QuranHint)) { nav.open(Screen.QURAN) }
+        }
         SectionLabel(uiCopy(UiCopy0823.PracticeKnowledge))
         KnowledgeLevelGate(bank) { level ->
             KnowledgeLevelControl(bank)
             ZCard {
                 Text(uiCopy(UiCopy0823.StudyIntro), style = MaterialTheme.typography.bodyLarge)
                 Spacer(Modifier.height(14.dp))
-                PrimaryButton(stringResource(R.string.knowledge_start), onClick = { nav.startQuiz(null) },
+                PrimaryButton(sectionCopy(SectionClarity.Questions), onClick = { nav.startQuiz(null) },
                     modifier = Modifier.testTag("learning_start").semantics { testTagsAsResourceId = true })
                 Spacer(Modifier.height(14.dp))
                 Text(stringResource(R.string.knowledge_round_title, Store.CORRECT_ANSWERS_PER_ROUND, Store.BONUS_MINUTES_PER_ROUND),
@@ -101,6 +103,9 @@ fun KnowledgeScreen() {
                 Spacer(Modifier.height(6.dp))
                 Text(stringResource(R.string.learning_bonus_rule, Store.MAX_BONUS_MINUTES_PER_DAY),
                     style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Spacer(Modifier.height(6.dp))
+                Text(sectionCopy(SectionClarity.BonusMeaning), style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(Modifier.height(10.dp))
                 LinearProgressIndicator(progress = { bonus / Store.MAX_BONUS_MINUTES_PER_DAY.toFloat() },
                     modifier = Modifier.fillMaxWidth().height(6.dp), strokeCap = StrokeCap.Round, drawStopIndicator = {})
@@ -125,10 +130,10 @@ fun KnowledgeScreen() {
         }
 
         ZCard {
-            Text(stringResource(R.string.learning_review), style = MaterialTheme.typography.titleLarge)
+            Text(sectionCopy(SectionClarity.Review), style = MaterialTheme.typography.titleLarge)
             Text(stringResource(R.string.learning_review_hint), style = MaterialTheme.typography.bodyMedium)
             Spacer(Modifier.height(10.dp))
-            TonalButton(stringResource(R.string.learning_review), onClick = { nav.startReview() },
+            TonalButton(sectionCopy(SectionClarity.Review), onClick = { nav.startReview() },
                 modifier = Modifier.testTag("learning_review_start").semantics { testTagsAsResourceId = true })
             TextButton(onClick = { clearLearning = true },
                 modifier = Modifier.testTag("learning_clear").semantics { testTagsAsResourceId = true }) {

@@ -13,9 +13,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -73,6 +73,9 @@ import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.style.TextOverflow
 
 private fun kindName(kind: String): Int = when (kind) {
     "mosque" -> R.string.place_kind_mosque
@@ -111,11 +114,14 @@ fun PlacesScreen() {
     var filter by rememberSaveable { mutableStateOf("all") }
     var query by rememberSaveable { mutableStateOf("") }
     var selected by rememberSaveable { mutableStateOf<String?>(null) }
+    var mapGestureActive by remember { mutableStateOf(false) }
     var here by remember { mutableStateOf<Pair<Double, Double>?>(null) }
     var focusMe by remember { mutableIntStateOf(0) }
     var locating by remember { mutableStateOf(false) }
     var locationUnavailable by remember { mutableStateOf(false) }
     val largeText = LocalDensity.current.fontScale >= 1.3f
+    // Leave a real scroll surface below the map even on a landscape phone.
+    val mapHeight = (LocalConfiguration.current.screenHeightDp.dp * .34f).coerceIn(96.dp, 220.dp)
     var showMap by rememberSaveable { mutableStateOf(!largeText) }
     var tilesLoaded by remember { mutableStateOf(false) }
     var slowMap by remember { mutableStateOf(false) }
@@ -174,13 +180,14 @@ fun PlacesScreen() {
         // leave the cards confined to a few pixels at the bottom of the screen.
         LazyColumn(
             state = listState,
+            userScrollEnabled = !mapGestureActive,
             modifier = Modifier.weight(1f).fillMaxWidth().testTag("places_scroll"),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(bottom = 8.dp),
         ) {
             if (hasYandexMap && showMap) {
                 item(key = "places_header_map") {
-                    Box(Modifier.fillMaxWidth().height(220.dp).testTag("places_map")) {
+                    Box(Modifier.fillMaxWidth().height(mapHeight).testTag("places_map")) {
                         YandexPlacesMap(
                             places = places,
                             selected = selected,
@@ -192,6 +199,7 @@ fun PlacesScreen() {
                             me = here,
                             focusMe = focusMe,
                             onLoaded = { tilesLoaded = true; slowMap = false },
+                            onGestureActive = { mapGestureActive = it },
                         )
                         if (!tilesLoaded) {
                             androidx.compose.material3.Surface(
@@ -217,6 +225,11 @@ fun PlacesScreen() {
                             }
                         }
                     }
+                }
+                item(key = "places_map_hint") {
+                    Text(stringResource(R.string.ux_places_map_hint),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
             item(key = "places_header_origin") {
@@ -351,7 +364,12 @@ private fun PlaceCard(place: Places.Place, distanceKm: Double, onClick: () -> Un
 @Composable
 private fun PlaceDetailsSheet(place: Places.Place, distanceKm: Double, onDismiss: () -> Unit) {
     val context = LocalContext.current
+    val configuration = LocalConfiguration.current
+    val largeText = LocalDensity.current.fontScale >= 1.3f
+    var expanded by rememberSaveable(place.id) { mutableStateOf(false) }
     var correctionDialog by rememberSaveable(place.id) { mutableStateOf(false) }
+    val detailsScroll = rememberScrollState()
+    LaunchedEffect(expanded) { detailsScroll.scrollTo(0) }
     val correctionUrl = Places.correctionUrl(place.id)
     val unknown = stringResource(R.string.place_unknown)
     fun status(value: Boolean?) = when (value) { true -> R.string.place_yes; false -> R.string.place_no; null -> R.string.place_unknown }
@@ -361,21 +379,30 @@ private fun PlaceDetailsSheet(place: Places.Place, distanceKm: Double, onDismiss
         containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
         shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
     ) {
-        Column(Modifier.fillMaxWidth().fillMaxHeight(.95f)
+        // A tap first shows a compact summary. Only the explicit details action
+        // grows the panel; neither a long address nor missing fields force it open.
+        Column(Modifier.fillMaxWidth().heightIn(max = configuration.screenHeightDp.dp * if (expanded) .84f else .58f)
             .semantics { testTagsAsResourceId = true }.testTag("place_details_sheet")) {
             Row(Modifier.fillMaxWidth().padding(start = 20.dp, end = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-                Text(stringResource(R.string.places_details), style = MaterialTheme.typography.titleMedium,
+                Text(stringResource(if (expanded) R.string.ux_places_details_title else R.string.ux_places_preview_title), style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.weight(1f))
                 IconButton(onClick = onDismiss, modifier = Modifier.testTag("place_details_close")) {
                     Icon(androidx.compose.material.icons.Icons.Default.Close, stringResource(R.string.place_close))
                 }
             }
-            Column(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState())
-                .testTag("place_details_scroll").padding(horizontal = 20.dp).padding(bottom = 16.dp),
+            Column(Modifier.weight(1f, fill = false).fillMaxWidth().verticalScroll(detailsScroll)
+                .testTag(if (expanded) "place_details_scroll" else "place_preview_scroll").padding(horizontal = 20.dp).padding(bottom = 12.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(place.name, style = MaterialTheme.typography.headlineSmall)
+                Text(place.name, style = MaterialTheme.typography.headlineSmall,
+                    maxLines = if (expanded) Int.MAX_VALUE else 2, overflow = TextOverflow.Ellipsis)
                 Text(stringResource(kindName(place.kind)) + " · " + distanceText(distanceKm),
                     style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                if (!expanded) {
+                    Text(place.address.ifBlank { stringResource(R.string.ux_places_address_missing) },
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 3, overflow = TextOverflow.Ellipsis)
+                } else {
                 RatingBadge("place:${place.id}")
                 if (place.photo.isNotBlank()) {
                     AsyncImage(model = place.photo, contentDescription = null, contentScale = ContentScale.Crop,
@@ -407,10 +434,35 @@ private fun PlaceDetailsSheet(place: Places.Place, distanceKm: Double, onDismiss
                 Column(Modifier.fillMaxWidth().testTag("place_details_reviews")) {
                     ReviewsBlock("place:${place.id}", inCard = false)
                 }
+                }
             }
-            // Navigation stays reachable even when details or reviews are very long.
-            ShimmerButton(stringResource(R.string.places_route), onClick = { openRoute(context, place.lat, place.lon) },
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp).testTag("place_details_route"))
+            // Primary actions stay visible. Wider layouts use short side-by-side
+            // labels; large text gets full-width targets instead of cramped words.
+            val route: @Composable (Modifier) -> Unit = { modifier ->
+                ShimmerButton(stringResource(R.string.ux_places_route_short), onClick = { openRoute(context, place.lat, place.lon) },
+                    modifier = modifier.testTag("place_details_route"))
+            }
+            val toggle: @Composable (Modifier) -> Unit = { modifier ->
+                OutlinedButton(onClick = { expanded = !expanded },
+                    modifier = modifier.heightIn(min = 54.dp)
+                        .testTag(if (expanded) "place_details_collapse" else "place_details_expand"),
+                    contentPadding = PaddingValues(horizontal = 12.dp, vertical = 12.dp)) {
+                    Text(stringResource(if (expanded) R.string.places_less else R.string.places_details))
+                }
+            }
+            if (largeText && configuration.screenHeightDp >= 480) {
+                Column(Modifier.fillMaxWidth().padding(horizontal = 20.dp).padding(bottom = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    route(Modifier.fillMaxWidth())
+                    toggle(Modifier.fillMaxWidth())
+                }
+            } else {
+                Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp).padding(bottom = 16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    route(Modifier.weight(1f))
+                    toggle(Modifier.weight(1f))
+                }
+            }
         }
     }
     if (correctionDialog) HorizonDialog(

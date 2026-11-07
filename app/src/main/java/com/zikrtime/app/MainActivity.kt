@@ -316,21 +316,27 @@ private fun Tabs() {
                     1f to MaterialTheme.colorScheme.background))
                 .windowInsetsPadding(WindowInsets.navigationBars)
                 .padding(horizontal = 0.dp, vertical = 0.dp),
-        ) { (_, icon, label), selected ->
+        ) { (tab, icon, label), selected ->
             val color = if (selected) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
+            val title = when (tab) {
+                Tab.FOCUS -> com.zikrtime.app.ui.clarityCopy(com.zikrtime.app.ui.UiClarity0825.Limits)
+                Tab.MORE -> com.zikrtime.app.ui.clarityCopy(com.zikrtime.app.ui.UiClarity0825.Settings)
+                else -> stringResource(label)
+            }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Icon(
                     painterResource(icon),
-                    contentDescription = stringResource(label),
+                    contentDescription = null,
                     tint = color,
                     modifier = Modifier.size(24.dp),
                 )
-                if (androidx.compose.ui.platform.LocalDensity.current.fontScale <= 1.3f) Text(
-                    stringResource(label),
+                Text(
+                    title,
                     style = MaterialTheme.typography.labelSmall,
                     color = color,
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-                    maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                    minLines = if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 2 else 1,
+                    maxLines = 2,
                 )
             }
         }

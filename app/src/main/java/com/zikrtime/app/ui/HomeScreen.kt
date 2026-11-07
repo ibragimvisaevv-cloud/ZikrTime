@@ -22,9 +22,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -39,7 +36,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -65,7 +61,6 @@ import androidx.compose.material3.TextButton
 import com.zikrtime.app.prayer.OnlineTimes
 import com.zikrtime.app.prayer.Prayer
 import com.zikrtime.app.prayer.PrayerSchedule
-import com.zikrtime.app.prayer.Qibla
 import com.zikrtime.app.screentime.ScreenTime
 import com.zikrtime.app.ui.theme.Cream
 import com.zikrtime.app.ui.theme.Emerald
@@ -77,8 +72,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import java.time.Duration
 import java.time.ZonedDateTime
-import kotlin.math.roundToInt
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun HomeScreen() {
     val nav = LocalNav.current
@@ -117,23 +112,20 @@ fun HomeScreen() {
 
     HorizonHome(now, next.first, next.second, times) {
         Column(Modifier.fillMaxWidth()) {
-            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                Text(stringResource(R.string.home_today), style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.weight(1f))
-                JournalHomeActions()
-                androidx.compose.material3.IconButton(onClick = { nav.open(Screen.PRAYER_SETTINGS) },
-                    modifier = Modifier.testTag("prayer_notification_settings").semantics { testTagsAsResourceId = true }) {
-                    Icon(Icons.Default.Notifications, stringResource(R.string.prayer_notifications),
-                        tint = if (Store.prayerNotifications) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.size(24.dp).drawWithContent {
-                            drawContent()
-                            if (!Store.prayerNotifications) drawLine(Color(0xFFA8754E),
-                                androidx.compose.ui.geometry.Offset(size.width * .15f, size.height * .15f),
-                                androidx.compose.ui.geometry.Offset(size.width * .85f, size.height * .85f), 2.dp.toPx(), StrokeCap.Round)
-                        })
+            Text(stringResource(R.string.home_today), style = MaterialTheme.typography.headlineSmall)
+            FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                TextButton(onClick = { nav.open(Screen.PRAYER_JOURNAL) },
+                    modifier = Modifier.testTag("home_prayer_journal")) {
+                    Text(clarityCopy(UiClarity0825.PrayerHistory))
+                }
+                TextButton(onClick = { nav.open(Screen.PRAYER_SETTINGS) },
+                    modifier = Modifier.testTag("prayer_notification_settings")) {
+                    Text(clarityCopy(UiClarity0825.PrayerAlerts))
                 }
             }
-            Spacer(Modifier.height(12.dp))
+            Text(clarityCopy(UiClarity0825.MarkPrayerHint), style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Spacer(Modifier.height(8.dp))
             val prayed = Store.prayedOn(today)
             Prayer.entries.forEach { p ->
                 val dayOffset = times[p].toLocalDate().toEpochDay() - today.toEpochDay()
@@ -158,12 +150,22 @@ fun HomeScreen() {
             )
         }
 
+        Column {
+            Box(Modifier.testTag("home_quran_open")) {
+                DestinationRow(clarityCopy(UiClarity0825.ReadQuran), R.drawable.ic_nav_knowledge,
+                    clarityCopy(UiClarity0825.QuranHint)) { nav.open(Screen.QURAN) }
+            }
+            DestinationRow(clarityCopy(UiClarity0825.ReadingMoments), R.drawable.ic_shop_book,
+                clarityCopy(UiClarity0825.ReadingHint)) { nav.open(Screen.READING_REMINDERS) }
+        }
         MyDayActions()
         LandscapePanel(R.drawable.tasbih_still, Modifier.clickable { nav.open(Screen.TASBIH) }) {
             Row(Modifier.fillMaxWidth().padding(22.dp), verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {
                     Text(stringResource(R.string.tasbih_title), style = MaterialTheme.typography.headlineSmall)
                     Text(stringResource(R.string.tasbih_subtitle), style = MaterialTheme.typography.bodyMedium)
+                    Text(clarityCopy(UiClarity0825.StartDhikr) + " →", style = MaterialTheme.typography.labelLarge,
+                        modifier = Modifier.padding(top = 8.dp))
                     Spacer(Modifier.height(16.dp))
                     if (Store.personalProgressEnabled) Text(stringResource(R.string.tasbih_today, Store.tasbihToday(today)), color = Sand)
                 }
@@ -173,11 +175,11 @@ fun HomeScreen() {
 
         // Быстрые действия
         Column {
-            val qibla = Qibla.bearing(Store.location.latitude, Store.location.longitude).roundToInt()
-            DestinationRow(stringResource(R.string.qibla_title), R.drawable.ic_qibla, "$qibla°") { nav.open(Screen.QIBLA) }
+            DestinationRow(clarityCopy(UiClarity0825.FindQibla), R.drawable.ic_qibla,
+                clarityCopy(UiClarity0825.QiblaHint)) { nav.open(Screen.QIBLA) }
             val alarmAt = if (Store.alarmEnabled) FajrAlarm.nextTrigger(now) else null
             DestinationRow(stringResource(R.string.alarm_short), R.drawable.ic_alarm,
-                alarmAt?.let { clock(it) } ?: stringResource(R.string.state_off)) { nav.open(Screen.ALARM) }
+                alarmAt?.let { clock(it) } ?: clarityCopy(UiClarity0825.AlarmOffHint)) { nav.open(Screen.ALARM) }
         }
 
         RamadanHomeCard(now, onOpen = { nav.open(Screen.RAMADAN) })
@@ -247,21 +249,24 @@ private fun ActionTile(icon: Int, title: String, value: String, modifier: Modifi
 @Composable
 private fun FocusSummary(usedMillis: Long?, onOpen: () -> Unit, onQuiz: () -> Unit) {
     if (!Store.blockingEnabled || usedMillis == null) {
-        ZCard(onClick = onOpen) {
+        ZCard {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 IconBadge(painterResource(R.drawable.ic_nav_focus), container = MaterialTheme.colorScheme.secondaryContainer, tint = MaterialTheme.colorScheme.secondary)
                 Spacer(Modifier.width(14.dp))
                 Column(Modifier.weight(1f)) {
-                    Text(stringResource(R.string.focus_cta_title), style = MaterialTheme.typography.titleMedium)
-                    Text(stringResource(R.string.focus_cta_text), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(clarityCopy(UiClarity0825.AppLimits), style = MaterialTheme.typography.titleMedium)
+                    Text(clarityCopy(UiClarity0825.AppLimitsHint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
+            }
+            TextButton(onClick = onOpen, modifier = Modifier.testTag("home_set_limits")) {
+                Text(clarityCopy(UiClarity0825.SetLimit))
             }
         }
         return
     }
     val usedMin = usedMillis / 60_000
     val allowed = Store.allowedMinutes()
-    ZCard(onClick = onOpen) {
+    ZCard {
         Row(verticalAlignment = Alignment.CenterVertically) {
             ProgressRing(
                 progress = usedMin.toFloat() / allowed.coerceAtLeast(1),
@@ -287,6 +292,9 @@ private fun FocusSummary(usedMillis: Long?, onOpen: () -> Unit, onQuiz: () -> Un
                     )
                 }
             }
+        }
+        TextButton(onClick = onOpen, modifier = Modifier.testTag("home_set_limits")) {
+            Text(clarityCopy(UiClarity0825.SetLimit))
         }
     }
 }
@@ -325,7 +333,9 @@ private fun MyDayActions() {
     val pending = LearningStore.pendingSession(bank)
     val due = LearningStore.dueCount(bank)
     Column(Modifier.fillMaxWidth().padding(vertical = 8.dp)) {
-        Text(stringResource(R.string.my_day_title), style = MaterialTheme.typography.titleMedium)
+        Text(clarityCopy(UiClarity0825.Questions), style = MaterialTheme.typography.titleMedium)
+        Text(clarityCopy(UiClarity0825.QuestionsHint), style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant)
         if (pending != null) {
             TextButton(onClick = { nav.resumeLearning(context) }, modifier = Modifier.testTag("my_day_resume_learning").semantics { testTagsAsResourceId = true }) { Text(stringResource(R.string.my_day_resume_learning)) }
         } else {

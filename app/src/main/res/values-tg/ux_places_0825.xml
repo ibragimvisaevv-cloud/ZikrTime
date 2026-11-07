@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ux_places_map_hint">Харитаро бо як ангушт ҳаракат диҳед. Барои дидани ҷой нишонаро пахш кунед.</string>
+    <string name="ux_places_preview_title">Дар бораи ҷой</string>
+    <string name="ux_places_details_title">Шароит ва назарҳо</string>
+    <string name="ux_places_route_short">Масир</string>
+    <string name="ux_places_address_missing">Суроға нишон дода нашудааст. Масир ба нишонаи харита мебарад.</string>
+</resources>
