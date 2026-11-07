@@ -157,6 +157,14 @@ class MainActivity : ComponentActivity() {
             return
         }
         when (intent?.getStringExtra(EXTRA_OPEN)) {
+            com.zikrtime.app.prayer.PrayerCheckReminders.ROUTE -> {
+                val day = runCatching { java.time.LocalDate.parse(intent?.getStringExtra(com.zikrtime.app.prayer.PrayerCheckReminders.EXTRA_DAY)) }.getOrNull()
+                val prayer = com.zikrtime.app.prayer.Prayer.obligatory.firstOrNull {
+                    it.name == intent?.getStringExtra(com.zikrtime.app.prayer.PrayerCheckReminders.EXTRA_PRAYER)
+                }
+                nav.openJournal(day?.toString(), prayer?.name)
+                intent?.removeExtra(EXTRA_OPEN)
+            }
             "prayer" -> { nav.stack.clear(); nav.tab = Tab.PRAYER }
             "city" -> { nav.stack.clear(); nav.tab = Tab.PRAYER; if (Store.onboarded) nav.open(Screen.CITY) }
             "alarm" -> nav.open(Screen.ALARM)
@@ -180,6 +188,7 @@ class MainActivity : ComponentActivity() {
             FajrAlarm.schedule(this)
             com.zikrtime.app.prayer.FridayReminders.schedule(this)
             com.zikrtime.app.prayer.ReadingReminders.reschedule(this)
+            com.zikrtime.app.prayer.PrayerCheckReminders.reschedule(this)
             GuardService.sync(this)
             com.zikrtime.app.widget.Widgets.updateAll(this)
             lifecycleScope.launch {
@@ -246,7 +255,7 @@ private fun AppRoot() {
             Screen.PROGRESS -> com.zikrtime.app.ui.ProgressScreen()
             Screen.AZKAR -> com.zikrtime.app.ui.AzkarScreen()
             Screen.QURAN -> com.zikrtime.app.ui.QuranScreen()
-            Screen.PRAYER_JOURNAL -> com.zikrtime.app.ui.PrayerJournalScreen()
+            Screen.PRAYER_JOURNAL -> com.zikrtime.app.ui.PrayerJournalScreen(entry?.journalDay, entry?.journalPrayer)
             Screen.READING_REMINDERS -> com.zikrtime.app.ui.ReadingRemindersScreen()
             Screen.READING_BEDTIME -> com.zikrtime.app.ui.QuranScreen(2, 255)
             Screen.READING_FRIDAY -> com.zikrtime.app.ui.QuranScreen(18, 1)

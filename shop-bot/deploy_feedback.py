@@ -155,10 +155,7 @@ def main():
                     "allowed_updates": original_hook.get("allowed_updates", ["message", "callback_query"]),
                     "drop_pending_updates": False})
         raise
-    commands = tg("getMyCommands")
-    commands = [c for c in commands if c["command"] != "feedback"]
-    commands.append({"command": "feedback", "description": "Предложения и ошибки приложения"})
-    tg("setMyCommands", {"commands": commands})
+    tg("setMyCommands", {"commands": []})
     result = {"bot": identity["username"], "webhook": new_hook, "deployment": deployed,
               "feature": "feedback_v1", "owner_configured": True, "private_database": True,
               "unauthenticated_status": 403, "previous_deployment": old_id}

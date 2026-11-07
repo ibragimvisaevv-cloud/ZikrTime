@@ -49,15 +49,15 @@ internal object PrayerWidgetRenderer {
         val dark = darkOverride ?: WidgetPreferences.dark(c, id)
         val automatic = darkOverride == null && Build.VERSION.SDK_INT >= 31 && WidgetPreferences.followsSystem(c,id)
         val showDates = datesOverride ?: WidgetPreferences.dates(c,id)
-        val ink = if (dark) 0xFFF8F1E3.toInt() else 0xFF173E34.toInt()
-        val secondary = if (dark) 0xFFC3CFC1.toInt() else 0xFF526157.toInt()
-        val gold = if (dark) 0xFFE3C58C.toInt() else 0xFF77572C.toInt()
+        val ink = if (dark) 0xFFF1EFE7.toInt() else 0xFF242923.toInt()
+        val secondary = if (dark) 0xFFC0C4BA.toInt() else 0xFF62675E.toInt()
+        val gold = if (dark) 0xFFD6BD8E.toInt() else 0xFF796039.toInt()
         fun paint(view: RemoteViews, viewId: Int, color: Int) {
             if (automatic && Build.VERSION.SDK_INT >= 31) {
                 val pair = when (color) {
-                    ink -> 0xFF173E34.toInt() to 0xFFF8F1E3.toInt()
-                    gold -> 0xFF77572C.toInt() to 0xFFE3C58C.toInt()
-                    else -> 0xFF526157.toInt() to 0xFFC3CFC1.toInt()
+                    ink -> 0xFF242923.toInt() to 0xFFF1EFE7.toInt()
+                    gold -> 0xFF796039.toInt() to 0xFFD6BD8E.toInt()
+                    else -> 0xFF62675E.toInt() to 0xFFC0C4BA.toInt()
                 }
                 view.setColorInt(viewId, "setTextColor", pair.first, pair.second)
             } else view.setTextColor(viewId, color)

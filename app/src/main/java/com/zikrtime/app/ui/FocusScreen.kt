@@ -6,6 +6,7 @@ import android.net.Uri
 import android.provider.Settings
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -54,6 +55,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
+import androidx.compose.ui.semantics.Role
 import androidx.core.graphics.drawable.toBitmap
 import com.zikrtime.app.R
 import com.zikrtime.app.data.Store
@@ -105,11 +107,11 @@ fun FocusScreen() {
     val allowed = Store.allowedMinutes()
     val remaining = (allowed - used).coerceAtLeast(0)
     HorizonSection(title = stringResource(R.string.focus_title), subtitle = stringResource(R.string.focus_subtitle),
-        image = R.drawable.focus_courtyard, heroHeight = 390.dp,
+        image = R.drawable.focus_courtyard, heroHeight = 330.dp,
         hero = {
             Spacer(Modifier.height(8.dp))
             ProgressRing(progress = if (usedMillis == null) 0f else remaining.toFloat() / allowed.coerceAtLeast(1),
-                modifier = Modifier.align(Alignment.CenterHorizontally).size(if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 246.dp else 188.dp),
+                modifier = Modifier.align(Alignment.CenterHorizontally).size(if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 210.dp else 158.dp),
                 stroke = 3.dp, color = Sand, track = Porcelain.copy(alpha = .24f)) {
                 if (!hasUsage) Icon(painterResource(R.drawable.ic_nav_focus), null,
                     tint = Sand, modifier = Modifier.size(52.dp))
@@ -122,47 +124,128 @@ fun FocusScreen() {
             Text(if (!hasUsage || usedMillis == null) stringResource(R.string.focus_no_access) else stringResource(R.string.focus_remaining),
                 style = MaterialTheme.typography.titleMedium, color = Porcelain,
                 textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
-            if (!hasUsage) GoldButton(stringResource(R.string.pause_settings), onClick = { showSettings = true },
+            if (!hasUsage) GoldButton(uiCopy(UiCopy0823.ConfigureLimits), onClick = { showSettings = true },
                 modifier = Modifier.testTag("focus_setup").semantics { testTagsAsResourceId = true })
         }) {
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            Column(Modifier.weight(1f)) {
-                Text(stringResource(R.string.focus_daily_limit), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                Text(durationText(Store.dailyLimitMinutes.toLong()), style = MaterialTheme.typography.headlineSmall)
+        ZCard {
+            Text(uiCopy(UiCopy0823.FocusIntro), style = MaterialTheme.typography.bodyLarge)
+            Spacer(Modifier.height(12.dp))
+            PrimaryButton(uiCopy(UiCopy0823.ChooseApps), onClick = { nav.open(Screen.APPS) },
+                modifier = Modifier.testTag("focus_choose_apps").semantics { testTagsAsResourceId = true })
+            Spacer(Modifier.height(8.dp))
+            TonalButton(uiCopy(UiCopy0823.ConfigureLimits), onClick = { showSettings = true },
+                modifier = Modifier.testTag("focus_settings_open").semantics { testTagsAsResourceId = true })
+            Spacer(Modifier.height(12.dp))
+            Text(uiCopy(when {
+                Store.blockedPackages.isEmpty() -> UiCopy0823.NeedApps
+                !hasUsage || !canBlock -> UiCopy0823.NeedAccess
+                !Store.blockingEnabled && !pauseEnabled -> UiCopy0823.FocusOff
+                else -> UiCopy0823.FocusReady
+            }), style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.testTag("focus_setup_status").semantics { testTagsAsResourceId = true })
+            Text("${uiCopy(UiCopy0823.SelectedApps)} · ${Store.blockedPackages.size}",
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        ZCard {
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                Column(Modifier.weight(1f)) {
+                    Text(stringResource(R.string.focus_daily_limit), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(durationText(Store.dailyLimitMinutes.toLong()), style = MaterialTheme.typography.headlineSmall)
+                }
+                Column(Modifier.weight(1f)) {
+                    Text(stringResource(R.string.focus_today), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(if (usedMillis == null) "—" else durationText(used), style = MaterialTheme.typography.headlineSmall)
+                }
             }
-            Column(Modifier.weight(1f)) {
-                Text(stringResource(R.string.focus_today), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                Text(if (usedMillis == null) "—" else durationText(used), style = MaterialTheme.typography.headlineSmall)
+            if (Store.bonusMinutes() > 0) Text(
+                stringResource(R.string.focus_limit_bonus, durationText(Store.dailyLimitMinutes.toLong()), Store.bonusMinutes()),
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            HorizontalDivider(Modifier.padding(vertical = 12.dp), color = MaterialTheme.colorScheme.outlineVariant)
+            SwitchRow(title = stringResource(R.string.pause_title),
+                subtitle = stringResource(if (pauseStrict) R.string.pause_strict else R.string.pause_soft),
+                checked = pauseEnabled, onChange = { FocusPause.setEnabled(context, it) })
+            SwitchRow(title = stringResource(R.string.focus_enable), subtitle = stringResource(R.string.focus_enable_hint),
+                checked = Store.blockingEnabled, onChange = {
+                    Store.blockingEnabled = it; GuardService.sync(context); BlockerService.recheck()
+                })
+            if ((Store.blockingEnabled || pauseEnabled) && (!hasUsage || !canBlock)) {
+                Text(stringResource(R.string.focus_need_permissions), style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.error)
             }
         }
-        if (Store.bonusMinutes() > 0) Text(
-            stringResource(R.string.focus_limit_bonus, durationText(Store.dailyLimitMinutes.toLong()), Store.bonusMinutes()),
-            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-        SwitchRow(title = stringResource(R.string.pause_title),
-            subtitle = stringResource(if (pauseStrict) R.string.pause_strict else R.string.pause_soft),
-            checked = pauseEnabled, onChange = { FocusPause.setEnabled(context, it) })
-        SwitchRow(title = stringResource(R.string.focus_enable), subtitle = stringResource(R.string.focus_enable_hint),
-            checked = Store.blockingEnabled, onChange = {
-                Store.blockingEnabled = it; GuardService.sync(context); BlockerService.recheck()
-            })
-        if (!hasUsage || !canBlock) StatusLine(stringResource(R.string.focus_need_permissions))
-        PrimaryButton(stringResource(R.string.pause_settings), onClick = { showSettings = true },
-            modifier = Modifier.testTag("focus_settings_open").semantics { testTagsAsResourceId = true })
-        DestinationRow(stringResource(R.string.focus_apps), R.drawable.ic_nav_more,
-            AppsCache.apps?.filter { it.packageName in Store.blockedPackages }?.joinToString { it.label }
-                ?.takeIf { it.isNotBlank() } ?: stringResource(R.string.focus_apps_none)) { nav.open(Screen.APPS) }
         if (Store.bonusMinutes() < Store.MAX_BONUS_MINUTES_PER_DAY) {
             TonalButton(stringResource(R.string.focus_earn_button, Store.BONUS_MINUTES_PER_ROUND), onClick = { nav.startQuiz(null) })
         }
     }
-    if (showSettings) HorizonSheet(stringResource(R.string.pause_settings), { showSettings = false }) {
-        if (!hasUsage) ZCard {
-            PermissionRow(title = stringResource(R.string.perm_usage_title),
-                text = stringResource(R.string.perm_usage_text), granted = false,
-                onGrant = { ScreenTime.openUsageAccessSettings(context) })
+    if (showSettings) HorizonSheet(uiCopy(UiCopy0823.ConfigureLimits), { showSettings = false }) {
+        Text(uiCopy(UiCopy0823.SetupIntro), style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant)
+        ZCard {
+            DestinationRow(uiCopy(UiCopy0823.ChooseApps), R.drawable.ic_nav_more,
+                "${uiCopy(UiCopy0823.SelectedApps)} · ${Store.blockedPackages.size}") {
+                showSettings = false
+                nav.open(Screen.APPS)
+            }
         }
-        SectionLabel(stringResource(R.string.pause_title))
+        SectionLabel(stringResource(R.string.focus_daily_limit))
+        ZCard {
+            SliderRow(
+                title = stringResource(R.string.focus_daily_limit),
+                valueText = durationText(Store.dailyLimitMinutes.toLong()),
+                value = Store.dailyLimitMinutes,
+                range = 10..180,
+                step = 5,
+                onChange = { Store.dailyLimitMinutes = it },
+            )
+            Text(
+                stringResource(R.string.focus_daily_limit_hint, Store.MAX_BONUS_MINUTES_PER_DAY),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+
+        ZCard {
+            SwitchRow(
+                title = stringResource(R.string.focus_enable),
+                subtitle = stringResource(R.string.focus_enable_hint),
+                checked = Store.blockingEnabled,
+                onChange = {
+                    Store.blockingEnabled = it
+                    GuardService.sync(context)
+                    BlockerService.recheck()
+                },
+            )
+            if (Store.blockingEnabled && !(hasUsage && canBlock)) {
+                Text(
+                    stringResource(R.string.focus_need_permissions),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.padding(start = 4.dp, top = 4.dp),
+                )
+            }
+        }
+
+        ZCard {
+            SwitchRow(
+                title = stringResource(R.string.focus_prayer_lock),
+                subtitle = stringResource(R.string.focus_prayer_lock_hint),
+                checked = Store.prayerLockEnabled,
+                onChange = { Store.prayerLockEnabled = it },
+            )
+            if (Store.prayerLockEnabled) {
+                SliderRow(
+                    title = stringResource(R.string.focus_prayer_lock_duration),
+                    valueText = durationText(Store.prayerLockMinutes.toLong()),
+                    value = Store.prayerLockMinutes,
+                    range = 5..30,
+                    step = 5,
+                    onChange = { Store.prayerLockMinutes = it },
+                )
+            }
+        }
+
+        SectionLabel(uiCopy(UiCopy0823.PauseOptional))
         ZCard {
             SwitchRow(
                 title = stringResource(R.string.pause_title),
@@ -199,81 +282,12 @@ fun FocusScreen() {
             }
         }
 
-        ZCard {
-            SwitchRow(
-                title = stringResource(R.string.focus_enable),
-                subtitle = stringResource(R.string.focus_enable_hint),
-                checked = Store.blockingEnabled,
-                onChange = {
-                    Store.blockingEnabled = it
-                    GuardService.sync(context)
-                    BlockerService.recheck()
-                },
-            )
-            if (Store.blockingEnabled && !(hasUsage && canBlock)) {
-                Text(
-                    stringResource(R.string.focus_need_permissions),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.error,
-                    modifier = Modifier.padding(start = 4.dp, top = 4.dp),
-                )
-            }
-        }
-
-        SectionLabel(stringResource(R.string.focus_daily_limit))
-        ZCard {
-            SliderRow(
-                title = stringResource(R.string.focus_daily_limit),
-                valueText = durationText(Store.dailyLimitMinutes.toLong()),
-                value = Store.dailyLimitMinutes,
-                range = 10..180,
-                step = 5,
-                onChange = { Store.dailyLimitMinutes = it },
-            )
-            Text(
-                stringResource(R.string.focus_daily_limit_hint, Store.MAX_BONUS_MINUTES_PER_DAY),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-
-        ZCard {
-            SwitchRow(
-                title = stringResource(R.string.focus_prayer_lock),
-                subtitle = stringResource(R.string.focus_prayer_lock_hint),
-                checked = Store.prayerLockEnabled,
-                onChange = { Store.prayerLockEnabled = it },
-            )
-            if (Store.prayerLockEnabled) {
-                SliderRow(
-                    title = stringResource(R.string.focus_prayer_lock_duration),
-                    valueText = durationText(Store.prayerLockMinutes.toLong()),
-                    value = Store.prayerLockMinutes,
-                    range = 5..30,
-                    step = 5,
-                    onChange = { Store.prayerLockMinutes = it },
-                )
-            }
-        }
-
-        ZCard {
-            val apps = AppsCache.apps
-            val selected = Store.blockedPackages
-            SettingRow(
-                title = stringResource(R.string.focus_apps),
-                subtitle = when {
-                    apps == null -> "…"
-                    selected.isEmpty() -> stringResource(R.string.focus_apps_none)
-                    else -> apps.filter { it.packageName in selected }.joinToString { it.label }
-                },
-                icon = androidx.compose.ui.res.painterResource(R.drawable.ic_nav_more),
-                onClick = { showSettings = false; nav.open(Screen.APPS) },
-            )
-        }
-
         SectionLabel(stringResource(R.string.focus_permissions))
         ZCard {
-            if (hasUsage) PermissionRow(
+            Text(uiCopy(UiCopy0823.PermissionHint), style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Spacer(Modifier.height(12.dp))
+            PermissionRow(
                 title = stringResource(R.string.perm_usage_title),
                 text = stringResource(R.string.perm_usage_text),
                 granted = hasUsage,
@@ -395,7 +409,7 @@ fun PermissionRow(title: String, text: String, granted: Boolean, actionTag: Stri
             if (granted) Icon(Icons.Default.CheckCircle, contentDescription = stringResource(R.string.state_granted), tint = MaterialTheme.colorScheme.primary)
         }
         Text(text, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        if (!granted) FilledTonalButton(onClick = onGrant, modifier = Modifier.heightIn(min = 48.dp).testTag(actionTag)) { Text(stringResource(R.string.action_grant)) }
+        if (!granted) FilledTonalButton(onClick = onGrant, modifier = Modifier.heightIn(min = 48.dp).testTag(actionTag)) { Text(stringResource(R.string.action_open_settings)) }
     }
 }
 
@@ -412,7 +426,11 @@ fun AppsScreen() {
             AppsCache.apps = loaded
         }
     }
-    ScreenScaffold(title = stringResource(R.string.focus_apps), onBack = { nav.back() }) {
+    ScreenScaffold(title = uiCopy(UiCopy0823.ChooseApps), onBack = { nav.back() }) {
+        Text(uiCopy(UiCopy0823.SelectionSaved), style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text("${uiCopy(UiCopy0823.SelectedApps)} · ${Store.blockedPackages.size}",
+            style = MaterialTheme.typography.titleMedium)
         OutlinedTextField(
             value = query,
             onValueChange = { query = it },
@@ -448,12 +466,14 @@ private fun AppRow(app: AppInfo) {
         Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(14.dp))
-            .clickable {
-                Store.blockedPackages = Store.blockedPackages.let { if (checked) it - app.packageName else it + app.packageName }
+            .toggleable(value = checked, role = Role.Checkbox, onValueChange = { selected ->
+                Store.blockedPackages = Store.blockedPackages.let { if (selected) it + app.packageName else it - app.packageName }
                 FocusPause.selectionChanged(context)
                 GuardService.sync(context)
                 BlockerService.recheck()
-            }
+            })
+            .heightIn(min = 64.dp)
+            .testTag("focus_app_${app.packageName}").semantics { testTagsAsResourceId = true }
             .padding(horizontal = 8.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {

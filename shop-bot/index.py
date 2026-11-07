@@ -19,7 +19,9 @@
 Обновления от Telegram идут по одному (setWebhook max_connections=1), поэтому база — один файл.
 """
 import acquiring
+import community
 from feedback import FeedbackMixin
+from places_sources import publish_source_fields, remember_removed
 
 import base64
 import copy
@@ -544,9 +546,7 @@ class PlacesMixin(PlaceCorrectionsMixin):
             p["status"] = "hidden"
             self.send(uid, f"🙈 «{esc(p['name'])}» скрыто с карты.")
         elif action == "del":
-            if p.get("source") == "osm":
-                # чтобы ежемесячный импорт из OpenStreetMap не вернул удалённое место
-                self.db.setdefault("osm_removed", []).append(pid)
+            remember_removed(self.db, p)
             del self.db["places"][pid]
             self.send(uid, "🗑 Удалено.")
         self.dirty = True
@@ -567,8 +567,7 @@ class PlacesMixin(PlaceCorrectionsMixin):
             for field in EXTRA_FIELDS:
                 if p.get(field):
                     item[field] = p[field]
-            if p.get("source") == "osm":
-                item["src"] = "osm"
+            item.update(publish_source_fields(p))
             items.append(item)
         return {"version": 1, "updated": int(time.time()), "seller_bot": self.bot_username(),
                 "donate_url": self.db.get("donate_url", ""),
@@ -982,12 +981,23 @@ class Bot(FeedbackMixin, PlacesMixin, ReviewsMixin, PromoMixin):
 
     # ---------- приём обновлений ----------
     def handle(self, update):
+        update_id = update.get("update_id")
+        seen = self.db.get("processed_updates", [])
+        if update_id is not None and update_id in seen:
+            return
+        if update_id is not None:
+            self.db["processed_updates"] = (seen + [update_id])[-2000:]
+            self.dirty = True
         if "callback_query" in update:
             q = update["callback_query"]
             self.tg.call("answerCallbackQuery", callback_query_id=q["id"])
             msg = q.get("message") or {}
             if (msg.get("chat") or {}).get("type", "private") != "private":
                 return
+            community.touch(self, q["from"]["id"], "bot")
+            data = q.get("data", "")
+            if data.split(":")[0] in ("menu", "help", "add", "s", "adm", "place", "pl_pending", "pl_all", "pf_pending", "rv_pending", "pr_pending", "promo", "fb"):
+                return self.miniapp_entry(q["from"]["id"], message_id=msg.get("message_id"))
             self.on_callback(q["from"], q.get("data", ""))
         elif "message" in update:
             m = update["message"]
@@ -1002,6 +1012,7 @@ class Bot(FeedbackMixin, PlacesMixin, ReviewsMixin, PromoMixin):
             u["username"] = frm["username"]
             self.dirty = True
         text = (m.get("text") or "").strip()
+        community.touch(self, uid, "start" if text.startswith("/start") else "bot")
 
         if not self.db["owner"] and OWNER_USERNAME and (frm.get("username") or "").lower() == OWNER_USERNAME:
             return self.claim_owner(uid, frm, owner_code(self.token))
@@ -1010,13 +1021,13 @@ class Bot(FeedbackMixin, PlacesMixin, ReviewsMixin, PromoMixin):
             u["state"] = None
             self.dirty = True
             if arg == "feedback" or arg.startswith("feedback_"):
-                return self.feedback_home(uid, arg[9:])
+                return self.miniapp_entry(uid, section="requests")
             if arg.startswith("inv_"):
                 return self.claim_invite(uid, arg[4:])
             if arg == "add":
-                return self.start_add(uid)
+                return self.miniapp_entry(uid, section="mine")
             if arg == "place":
-                return self.start_place(uid)
+                return self.miniapp_entry(uid, section="place")
             if arg.startswith("fix_"):
                 return self.start_place_correction(uid, arg[4:])
             return self.menu(uid)
@@ -1031,7 +1042,7 @@ class Bot(FeedbackMixin, PlacesMixin, ReviewsMixin, PromoMixin):
         if text.startswith("/admin ") and uid == self.db["owner"]:
             return self.add_admin(uid, text[7:].strip())
         if text == "/feedback":
-            return self.feedback_home(uid)
+            return self.miniapp_entry(uid, section="requests")
         if text == "/help":
             return self.help(uid)
         if text == "/reviews" and self.is_admin(uid):
@@ -1049,42 +1060,20 @@ class Bot(FeedbackMixin, PlacesMixin, ReviewsMixin, PromoMixin):
 
     # ---------- меню ----------
     def help(self, uid):
-        self.send(uid, "Этот бот — кабинет продавца магазина в приложении <b>Зикр-тайм</b>.\n\n"
-                       "• «Добавить компанию» — по шагам: название, категория, город, описание, адрес, контакты, фото.\n"
-                       "• Размещение новой компании — 200 ₽ после проверки.\n"
-                       "• Дальше вы сами добавляете товары, цены и фото — изменения видны в приложении через пару минут.\n\n"
-                       "/menu — главное меню, /cancel — отменить текущий шаг.")
+        self.miniapp_entry(uid)
+
+    def miniapp_entry(self, uid, section="overview", message_id=None):
+        self.user(uid)["state"] = None
+        self.dirty = True
+        markup = {"inline_keyboard": [[{"text": "Открыть Зикр-тайм", "web_app": {"url": MINIAPP_URL + "?section=" + section}}]]}
+        text = "<b>Зикр-тайм</b>\nЛичный кабинет, компании, предложения и места для намаза."
+        if message_id:
+            self.tg.call("editMessageText", chat_id=uid, message_id=message_id, text=text, parse_mode="HTML", reply_markup=markup)
+        else:
+            self.send(uid, text, markup)
 
     def menu(self, uid):
-        mine = self.my_sellers(uid)
-        rows = [[btn(f"🏪 {s['name']} · {STATUS_TEXT[s['status']].split(' ')[0]}", f"s:{s['id']}")] for s in mine]
-        if not mine or len(mine) < MAX_SELLERS_PER_USER or self.is_admin(uid):
-            rows.append([btn("➕ Добавить компанию", "add")])
-        if self.is_admin(uid):
-            pending = sum(1 for s in self.db["sellers"].values() if s["status"] == "pending")
-            rows.append([btn(f"🛡 На проверке ({pending})", "adm:pending"), btn("📋 Все компании", "adm:all")])
-        rows.append([btn("🕌 Предложить место для намаза", "place")])
-        if self.is_admin(uid):
-            pp = sum(1 for p in self.db["places"].values() if p["status"] == "pending")
-            rows.append([btn(f"📍 Места на проверке ({pp})", "pl_pending"), btn("🗺 Все места", "pl_all")])
-            fixes = sum(r.get("status") == "pending" for r in self.db.get("place_corrections", {}).values())
-            rows.append([btn(f"✏️ Исправления мест ({fixes})", "pf_pending")])
-            rv = len(self.db.get("reviews_pending", {}))
-            pr = sum(1 for r in self.db.get("promo_requests", {}).values() if r["status"] == "claimed")
-            rows.append([btn(f"⭐ Отзывы ({rv})", "rv_pending"), btn(f"💰 Продвижение ({pr})", "pr_pending")])
-        rows.insert(0, [btn("💬 Предложения и ошибки", "fb:home")])
-        if self.feedback_owner(uid):
-            count = sum(t["status"] not in ("closed", "rejected") for t in self.db.get("feedback_tickets", {}).values())
-            rows.insert(1, [btn(f"📥 Обращения ({count})", "fb:list:inbox:0")])
-        rows.append([{"text": "📱 Открыть кабинет", "web_app": {"url": MINIAPP_URL}}])
-        rows.append([btn("❓ Как это работает", "help")])
-        if mine:
-            text = "Ваши компании в магазине <b>Зикр-тайм</b>. Выберите, что изменить:"
-        else:
-            text = ("Ассаляму алейкум! Это кабинет продавца магазина в приложении <b>Зикр-тайм</b>.\n\n"
-                    "Добавьте свою компанию — после одобрения и оплаты размещения её увидят пользователи приложения: "
-                    "товары, цены, фото, адрес и кнопки «Написать в Telegram» и «Позвонить».")
-        self.send(uid, text, {"inline_keyboard": rows})
+        return self.miniapp_entry(uid)
 
     def claim_owner(self, uid, frm, code):
         if self.db["owner"]:

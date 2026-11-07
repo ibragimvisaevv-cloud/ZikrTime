@@ -1,11 +1,6 @@
 package com.zikrtime.app.ui
 
 import android.content.Context
-import android.hardware.GeomagneticField
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
 import android.view.HapticFeedbackConstants
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.Canvas
@@ -92,38 +87,6 @@ import kotlin.math.roundToInt
 
 // ---------------- Кибла ----------------
 
-/** Направление телефона (азимут от истинного севера) по датчику ориентации. null — датчика нет. */
-@Composable
-private fun rememberHeading(lat: Double, lon: Double): Pair<Float?, Boolean> {
-    val context = LocalContext.current
-    var heading by remember { mutableStateOf<Float?>(null) }
-    var lowAccuracy by remember { mutableStateOf(false) }
-    DisposableEffect(lat, lon) {
-        val sm = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        val sensor = sm.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
-        val declination = GeomagneticField(lat.toFloat(), lon.toFloat(), 0f, System.currentTimeMillis()).declination
-        val rot = FloatArray(9)
-        val orientation = FloatArray(3)
-        val listener = object : SensorEventListener {
-            override fun onSensorChanged(event: SensorEvent) {
-                SensorManager.getRotationMatrixFromVector(rot, event.values)
-                SensorManager.getOrientation(rot, orientation)
-                val azimuth = ((Math.toDegrees(orientation[0].toDouble()) + declination + 360.0) % 360.0).toFloat()
-                val old = heading
-                // Угол «без скачков»: после 359° идёт 360°, 361°… — так стрелка поворачивается плавно.
-                heading = if (old == null) azimuth else old + norm180(azimuth - old) * 0.15f
-            }
-
-            override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-                lowAccuracy = accuracy <= SensorManager.SENSOR_STATUS_ACCURACY_LOW
-            }
-        }
-        if (sensor != null) sm.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_UI)
-        onDispose { sm.unregisterListener(listener) }
-    }
-    return heading to lowAccuracy
-}
-
 @Composable
 fun QiblaScreen() {
     val nav = LocalNav.current
@@ -131,7 +94,10 @@ fun QiblaScreen() {
     val loc = Store.location
     val qibla = remember(loc) { Qibla.bearing(loc.latitude, loc.longitude).toFloat() }
     val distance = remember(loc) { Qibla.distanceKm(loc.latitude, loc.longitude) }
-    val (heading, lowAccuracy) = rememberHeading(loc.latitude, loc.longitude)
+    var cameraOpen by remember { mutableStateOf(false) }
+    val pose = rememberQiblaPose(loc.latitude, loc.longitude, camera = false, enabled = !cameraOpen)
+    val heading = pose.heading
+    val lowAccuracy = pose.lowAccuracy
     val relative = heading?.let { norm180(qibla - it) }
     // Пружинка поверх датчика: циферблат догоняет телефон мягко, без дрожи.
     val shownHeading by androidx.compose.animation.core.animateFloatAsState(
@@ -148,7 +114,7 @@ fun QiblaScreen() {
 
     ScreenScaffold(title = stringResource(R.string.qibla_title), onBack = { nav.back() }, showHeading = false) {
         PageHeading(stringResource(R.string.qibla_title), com.zikrtime.app.data.Cities.displayName(LocalContext.current, loc))
-        Box(Modifier.fillMaxWidth().aspectRatio(1f).testTag("tasbih_counter").padding(8.dp), contentAlignment = Alignment.Center) {
+        Box(Modifier.fillMaxWidth().aspectRatio(1f).testTag("qibla_compass").padding(8.dp), contentAlignment = Alignment.Center) {
             Compass(heading = shownHeading, qibla = qibla, aligned = aligned)
         }
         Text(
@@ -164,6 +130,7 @@ fun QiblaScreen() {
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth(),
         )
+        QiblaCameraButton { cameraOpen = it }
         ZCard {
             InfoLine(stringResource(R.string.qibla_bearing), "${qibla.roundToInt()}°")
             InfoLine(stringResource(R.string.qibla_distance), stringResource(R.string.unit_km, distance.roundToInt()))

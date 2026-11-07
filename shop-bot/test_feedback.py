@@ -58,7 +58,14 @@ class FeedbackTests(unittest.TestCase):
             message.update(extra)
             update = {"message": message}
         bot = self.bot()
-        bot.handle(update)
+        # Existing drafts and historical ticket permissions retain their internal behavior.
+        # Telegram's new Mini App entry route is tested separately in test_community.
+        if callback is not None:
+            bot.feedback_callback(uid, callback)
+        elif text and text.startswith("/start feedback_"):
+            bot.feedback_home(uid, text[len("/start feedback_"):])
+        else:
+            bot.handle(update)
         bot.save()
         return bot
 

@@ -6,7 +6,7 @@ name: Shop bot
 
 on:
   push:
-    branches: [main]
+    branches: [main, codex/quran-reader-0814]
     paths: ["shop-bot/**", ".github/workflows/shop-bot.yml"]
   workflow_dispatch:
   # Раз в месяц обновляем мечети и молельные комнаты из OpenStreetMap
@@ -27,6 +27,7 @@ env:
 
 jobs:
   test:
+    if: ${{ github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[bot-release]') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -42,9 +43,25 @@ jobs:
         run: |
           python3 shop-bot/test_miniapi.py
           python3 shop-bot/test_acquiring.py
+          python3 shop-bot/test_robokassa.py
+          python3 shop-bot/test_community.py
+          python3 shop-bot/test_places_sources.py
 
       - name: Проверка мини-приложения (синтаксис)
         run: node --check shop-bot/miniapp/app.js
+
+      - name: Mini App browser journeys
+        env:
+          NODE_PATH: ${{ runner.temp }}/miniapp-qa/node_modules
+        run: |
+          npm install --prefix "$RUNNER_TEMP/miniapp-qa" playwright
+          "$RUNNER_TEMP/miniapp-qa/node_modules/.bin/playwright" install --with-deps chromium
+          node tools/ci/miniapp_design_check.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: MiniApp-0.8.23-ui
+          path: ci-out/miniapp/
 
   deploy:
     needs: test
@@ -149,6 +166,16 @@ jobs:
         env:
           BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
           TBANK_TERMINAL: ${{ secrets.TBANK_TERMINAL }}
+          PAYMENT_PROVIDER: ${{ vars.PAYMENT_PROVIDER }}
+          ROBOKASSA_ENABLED: ${{ vars.ROBOKASSA_ENABLED }}
+          ROBOKASSA_MERCHANT_LOGIN: ${{ secrets.ROBOKASSA_MERCHANT_LOGIN }}
+          ROBOKASSA_PASSWORD1: ${{ secrets.ROBOKASSA_PASSWORD1 }}
+          ROBOKASSA_PASSWORD2: ${{ secrets.ROBOKASSA_PASSWORD2 }}
+          ROBOKASSA_TEST_PASSWORD1: ${{ secrets.ROBOKASSA_TEST_PASSWORD1 }}
+          ROBOKASSA_TEST_PASSWORD2: ${{ secrets.ROBOKASSA_TEST_PASSWORD2 }}
+          ROBOKASSA_TEST_MODE: ${{ vars.ROBOKASSA_TEST_MODE }}
+          ROBOKASSA_HASH: ${{ vars.ROBOKASSA_HASH }}
+          ROBOKASSA_NPD_RECEIPTS: ${{ vars.ROBOKASSA_NPD_RECEIPTS }}
           TBANK_ENABLED: ${{ vars.TBANK_ENABLED }}
           TBANK_PASSWORD: ${{ secrets.TBANK_PASSWORD }}
           TBANK_TAXATION: ${{ vars.TBANK_TAXATION }}
@@ -169,14 +196,6 @@ jobs:
           sleep 10  # новый ключ хранилища начинает работать не сразу
           python3 shop-bot/upload_miniapp.py > diag/miniapp.txt 2>&1 || { cat diag/miniapp.txt; exit 1; }
           cat diag/miniapp.txt
-
-      - name: Мечети и молельные комнаты из OpenStreetMap
-        if: steps.keys.outputs.ready == 'true' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
-        env:
-          BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
-        run: |
-          sleep 15  # новый ключ хранилища начинает работать не сразу
-          python3 shop-bot/import_osm.py 2>&1 | tail -5 | tee diag/osm.txt
 
       - name: Бот на Vercel
         if: steps.keys.outputs.ready == 'true'
@@ -212,19 +231,20 @@ jobs:
           API="https://api.telegram.org/bot$SHOP_BOT_TOKEN"
           curl -s "$API/setWebhook" -H 'Content-Type: application/json' -d "{\"url\":\"$FUNCTION_URL\",\"secret_token\":\"$SECRET\",\"max_connections\":1,\"allowed_updates\":[\"message\",\"callback_query\"]}" > diag/webhook.txt
           grep -q '"ok":true' diag/webhook.txt
-          curl -sf "$API/setMyCommands" -H 'Content-Type: application/json' \
-            -d '{"commands":[{"command":"menu","description":"Главное меню"},{"command":"help","description":"Как это работает"},{"command":"cancel","description":"Отменить шаг"}]}' > /dev/null
+          for SCOPE in default all_private_chats all_group_chats all_chat_administrators; do
+            curl -sf "$API/deleteMyCommands" -H 'Content-Type: application/json' -d "{\"scope\":{\"type\":\"$SCOPE\"}}" > /dev/null
+          done
           curl -sf "$API/setMyDescription" -H 'Content-Type: application/json' \
-            -d '{"description":"Кабинет продавца магазина в приложении «Зикр-тайм»: добавьте свою компанию, товары, цены и фото — после проверки их увидят пользователи приложения."}' > /dev/null
+            -d '{"description":"Кабинет «Зикр-тайм»: компании и товары, продвижение, сообщения об ошибках, предложения и места для намаза."}' > /dev/null
           curl -sf "$API/setMyShortDescription" -H 'Content-Type: application/json' \
-            -d '{"short_description":"Добавьте свою компанию в магазин приложения «Зикр-тайм»"}' > /dev/null
+            -d '{"short_description":"Ваш кабинет в «Зикр-тайм»"}' > /dev/null
           # Кнопка «Кабинет» слева от поля ввода — открывает мини-приложение
           curl -sf "$API/setChatMenuButton" -H 'Content-Type: application/json' \
             -d "{\"menu_button\":{\"type\":\"web_app\",\"text\":\"Кабинет\",\"web_app\":{\"url\":\"https://storage.yandexcloud.net/$BUCKET/miniapp/index.html\"}}}" > diag/menubutton.txt || echo "menu button: fail" > diag/menubutton.txt
           BOT=$(curl -sf "$API/getMe" | jq -r .result.username)
           echo "bot=$BOT" > diag/bot.txt
           echo "webhook=$FUNCTION_URL" >> diag/bot.txt
-          [ -z "$OWNER_USERNAME" ] && echo "owner_code=$(python3 -c "import hashlib,os;print(hashlib.sha256((os.environ['SHOP_BOT_TOKEN']+':owner').encode()).hexdigest()[:8])")" >> diag/bot.txt || echo "owner=by_username" >> diag/bot.txt
+          [ -n "$OWNER_USERNAME" ] && echo "owner=by_username" >> diag/bot.txt || echo "owner=existing_database" >> diag/bot.txt
           CODE=$(python3 -c "import hashlib,os;print(hashlib.sha256((os.environ['SHOP_BOT_TOKEN']+':owner').encode()).hexdigest()[:8])")
           {
             echo "### ✅ Бот @$BOT работает"
@@ -233,6 +253,22 @@ jobs:
             echo ""
             echo "Каталог для приложения: https://storage.yandexcloud.net/$BUCKET/catalog.json"
           } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Мечети и молельные комнаты из OpenStreetMap
+        if: steps.keys.outputs.ready == 'true' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[places-refresh]'))
+        continue-on-error: true
+        env:
+          BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
+        run: |
+          sleep 15  # новый ключ хранилища начинает работать не сразу
+          python3 shop-bot/import_osm.py 2>&1 | tail -5 | tee diag/osm.txt
+
+      - name: Дополнительные сведения Wikidata и кандидаты мест
+        if: steps.keys.outputs.ready == 'true' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[places-refresh]'))
+        continue-on-error: true
+        env:
+          BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
+        run: python3 shop-bot/import_wikidata.py 2>&1 | tail -5 | tee diag/wikidata.txt
 
       - name: Отзывы и перенос базы в закрытый бакет
         if: steps.keys.outputs.ready == 'true'

@@ -9,6 +9,7 @@
 Нужны S3_KEY_ID, S3_SECRET, BUCKET (и BOT_TOKEN — для имени бота в places.json).
 """
 import json
+import datetime
 import os
 import sys
 import time
@@ -17,6 +18,7 @@ import urllib.request
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import index  # noqa: E402
+from places_sources import merge_import, valid_coordinates, wikidata_id
 
 OVERPASS = [
     "https://overpass-api.de/api/interpreter",
@@ -26,9 +28,23 @@ OVERPASS = [
 QUERY = """
 [out:json][timeout:300];
 area["ISO3166-1"="RU"][admin_level=2]->.ru;
-nwr["amenity"="place_of_worship"]["religion"="muslim"](area.ru);
+(
+  nwr["amenity"="place_of_worship"]["religion"="muslim"](area.ru);
+  nwr["amenity"="place_of_worship"]["building"="mosque"][!religion](area.ru);
+  nwr["amenity"="mosque"](area.ru);
+);
 out center tags;
+out count;
 """
+
+
+def complete_records(payload):
+    elements = payload.get("elements", [])
+    counts = [el for el in elements if el.get("type") == "count"]
+    records = [el for el in elements if el.get("type") != "count"]
+    if payload.get("remark") or len(counts) != 1 or int(counts[0]["tags"]["total"]) != len(records):
+        raise ValueError("Overpass returned a partial result")
+    return records
 
 
 def fetch():
@@ -38,7 +54,8 @@ def fetch():
         try:
             req = urllib.request.Request(url, data=body, headers={"User-Agent": "ZikrTime/1.0 (prayer places map)"})
             with urllib.request.urlopen(req, timeout=360) as r:
-                return json.loads(r.read())["elements"]
+                payload = json.loads(r.read())
+            return complete_records(payload)
         except Exception as e:  # пробуем следующий сервер
             last = e
             print("overpass fail", url, repr(e)[:200])
@@ -46,15 +63,29 @@ def fetch():
 
 
 def kind_of(tags):
-    name = " ".join(tags.get(k, "") for k in ("name", "name:ru", "name:en", "description")).lower()
-    if any(w in name for w in ("молельн", "намазхан", "musalla", "мусалл", "prayer room", "намаз")):
+    name = " ".join(tags.get(k, "") for k in ("name", "name:ru", "name:ce", "name:en", "description")).lower()
+    if any(w in name for w in ("молельн", "намазхан", "musalla", "мусалл", "prayer room")):
         return "room"
-    if tags.get("building") == "mosque" or any(w in name for w in ("мечет", "mosque", "джами", "масджид", "мәчет", "мечить")):
+    if tags.get("building") == "mosque" or tags.get("amenity") == "mosque" or any(w in name for w in ("мечет", "mosque", "джами", "масджид", "мәчет", "мечить", "маьждиг", "маждиг", "cami", "mescid")):
         return "mosque"
-    # Без названия и без здания-мечети: чаще всего это молельный дом или комната
-    if tags.get("building") in ("yes", "house", "retail", "commercial", "office") or tags.get("level") or tags.get("indoor"):
+    if tags.get("indoor") in ("yes", "room") or tags.get("room") == "prayer":
         return "room"
-    return "mosque"
+    # A generic building=yes does not tell us whether it is a mosque or a room.
+    return "other"
+
+
+def usable(tags):
+    if tags.get("religion") not in (None, "", "muslim"):
+        return False
+    if any(tags.get(key) in ("yes", "place_of_worship", "mosque") for key in (
+        "disused", "abandoned", "demolished", "ruins", "construction",
+        "disused:amenity", "abandoned:amenity", "demolished:amenity", "construction:amenity",
+    )):
+        return False
+    return tags.get("amenity") == "mosque" or (
+        tags.get("amenity") == "place_of_worship" and
+        (tags.get("religion") == "muslim" or tags.get("building") == "mosque")
+    )
 
 
 def address_of(tags):
@@ -74,14 +105,16 @@ def address_of(tags):
 
 def convert(el):
     tags = el.get("tags") or {}
-    lat = el.get("lat") or (el.get("center") or {}).get("lat")
-    lon = el.get("lon") or (el.get("center") or {}).get("lon")
-    if lat is None or lon is None:
+    lat = el.get("lat", (el.get("center") or {}).get("lat"))
+    lon = el.get("lon", (el.get("center") or {}).get("lon"))
+    if not usable(tags) or not valid_coordinates(lat, lon):
+        return None
+    if el.get("type") not in ("node", "way", "relation") or not isinstance(el.get("id"), int) or el["id"] <= 0:
         return None
     kind = kind_of(tags)
-    name = tags.get("name:ru") or tags.get("name") or tags.get("name:tt") or tags.get("name:en") or ""
+    name = tags.get("name:ru") or tags.get("name") or tags.get("name:ce") or tags.get("name:tt") or tags.get("name:en") or ""
     if not name:
-        name = "Мечеть" if kind == "mosque" else "Молельная комната"
+        name = {"mosque": "Мечеть", "room": "Молельная комната", "other": "Место для намаза"}[kind]
     who = ""
     if tags.get("female") == "yes" and tags.get("male") == "no":
         who = "women"
@@ -108,32 +141,16 @@ def convert(el):
         "note": " · ".join(notes)[:300],
         "status": "approved",
         "source": "osm",
+        "wikidata": wikidata_id(tags.get("wikidata")),
+        "source_updated": datetime.date.today().isoformat(),
+        "verification": "source_only",
         "author": None,
         "created": time.time(),
     }
 
 
 def merge(db, items):
-    places = db.setdefault("places", {})
-    seen = set()
-    added = updated = 0
-    for it in items:
-        seen.add(it["id"])
-        old = places.get(it["id"])
-        if old is None:
-            if it["id"] in db.get("osm_removed", []):
-                continue  # владелец удалил — не возвращаем
-            places[it["id"]] = it
-            added += 1
-        elif old.get("source") == "osm" and not old.get("edited"):
-            keep = {k: old[k] for k in ("status", "created", "photo", "wudu") if k in old and old[k] not in (None, "")}
-            places[it["id"]] = {**it, **keep}
-            updated += 1
-    removed = 0
-    for pid in [p for p, v in places.items() if v.get("source") == "osm" and p not in seen and not v.get("edited")]:
-        del places[pid]
-        removed += 1
-    return added, updated, removed
+    return merge_import(db, items, "osm")
 
 
 def main():
@@ -142,9 +159,19 @@ def main():
     print(f"OSM: {len(elements)} объектов, с координатами {len(items)}")
     if len(items) < 100:
         raise SystemExit("Подозрительно мало мест — импорт отменён, чтобы не стереть данные")
+    # Finish network reads before loading the private database and its write ETag.
+    import import_wikidata
+    wikidata_rows = None
+    try:
+        wikidata_rows = import_wikidata.fetch()
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        print("Wikidata unavailable; previous records retained:", type(exc).__name__)
     storage = index.make_storage()
     bot = index.Bot(storage, index.Telegram(index.BOT_TOKEN), data=index.make_storage(bucket=index.DATA_BUCKET))
     added, updated, removed = merge(bot.db, items)
+    if wikidata_rows is not None:
+        wd_added, wd_updated, _ = import_wikidata.merge(bot.db, wikidata_rows)
+        print(f"Wikidata: на проверку {wd_added}, обновлено {wd_updated}")
     bot.dirty = bot.places_dirty = True
     bot.save()
     kinds = {}

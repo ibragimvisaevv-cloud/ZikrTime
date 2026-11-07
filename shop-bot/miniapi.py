@@ -20,6 +20,8 @@ from urllib.parse import parse_qsl
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import acquiring
+import community
+import robokassa
 import index  # noqa: E402
 from index import CAT_BY_ID, CATEGORIES, MAX_PHOTOS, MAX_PRODUCTS, MAX_SELLERS_PER_USER, PUBLIC_BASE, Conflict, btn, esc, kb, new_id  # noqa: E402
 
@@ -42,7 +44,10 @@ def check_init_data(init_data, token, max_age=7 * 86400, now=None):
     """Проверка подписи Telegram (WebApp initData). Возвращает пользователя или None."""
     if not init_data or not token:
         return None
-    pairs = dict(parse_qsl(init_data, keep_blank_values=True))
+    entries = parse_qsl(init_data, keep_blank_values=True)
+    pairs = dict(entries)
+    if len(pairs) != len(entries):
+        return None
     received = pairs.pop("hash", "")
     check = "\n".join(f"{k}={v}" for k, v in sorted(pairs.items()))
     secret = hmac.new(b"WebAppData", token.encode(), hashlib.sha256).digest()
@@ -50,12 +55,13 @@ def check_init_data(init_data, token, max_age=7 * 86400, now=None):
     if not received or not hmac.compare_digest(calc, received):
         return None
     try:
-        if (now or time.time()) - int(pairs.get("auth_date", "0")) > max_age:
+        age = (time.time() if now is None else now) - int(pairs.get("auth_date", "0"))
+        if age < -60 or age > max_age:
             return None
         user = json.loads(pairs.get("user", "{}"))
     except (ValueError, TypeError):
         return None
-    return user if isinstance(user.get("id"), int) else None
+    return user if isinstance(user, dict) and type(user.get("id")) is int and user["id"] > 0 else None
 
 
 # ---------------------------------------------------------------- вид данных для мини-приложения
@@ -81,6 +87,7 @@ def seller_out(bot, s):
 
 
 def me(bot, uid, user):
+    community.touch(bot, uid, "miniapp")
     u = bot.user(uid)
     if user.get("username") and u.get("username") != user["username"]:
         u["username"] = user["username"]
@@ -97,6 +104,13 @@ def me(bot, uid, user):
     }
     if admin:
         out["moderation"] = moderation(bot)
+    if out["owner"]:
+        out["inbox_counts"] = {
+            "tickets": sum(t.get("status") not in ("closed", "rejected") for t in bot.db.get("feedback_tickets", {}).values()),
+            "places": sum(p.get("status") == "pending" for p in bot.db["places"].values()),
+        }
+    out["tickets"] = community.inbox(bot, uid, {})
+    out["places"] = community.places(bot, uid, {})
     return out
 
 
@@ -329,6 +343,8 @@ ACTIONS = {
     "promo_claim": act_promo_claim,
     "mod_seller": act_mod_seller, "mod_promo": act_mod_promo, "mod_review": act_mod_review, "settings": act_settings,
 }
+ACTIONS.update(community.ACTIONS)
+ACTIONS["account_code"] = lambda bot, uid, req: {"code": acquiring.account_code(bot, uid)}
 
 # Сообщения владельцу, которые бот отправляет «от себя» при модерации, в кабинете не нужны —
 # их получит продавец (через очередь), а владельцу хватит обновлённого экрана.
@@ -348,9 +364,9 @@ def run(req, storage_factory, token):
             result = me(bot, uid, user)
         elif action in ACTIONS:
             result = ACTIONS[action](bot, uid, req)
-            # Уведомления самому себе (владелец нажал в кабинете) не шлём в Telegram
-            bot.db["outbox"] = [m for m in bot.db.get("outbox", []) if not (m[0] == "sendMessage" and m[1].get("chat_id") == uid and action.startswith("mod_"))]
-            if action != "photo":
+            # The Mini App shows the result in place. Keep notifications to other recipients.
+            bot.db["outbox"] = [m for m in bot.db.get("outbox", []) if not (m[0] == "sendMessage" and m[1].get("chat_id") == uid)]
+            if action not in ("photo", "private_photo", "private_photo_upload", "users", "tickets", "my_places", "ticket"):
                 result.setdefault("me", me(bot, uid, user))
         else:
             raise ApiError("Неизвестное действие")
@@ -378,16 +394,28 @@ def handler(event, context):
     if event.get("isBase64Encoded"):
         body = base64.b64decode(body).decode("utf-8")
     try:
-        req = json.loads(body)
+        if len(body) > 3_600_000:
+            raise ApiError("Запрос слишком большой", 413)
+        query = event.get("queryStringParameters") or {}
+        if query.get("event") == "robokassa":
+            pairs = parse_qsl(body, keep_blank_values=True)
+            req = dict(pairs)
+            if len(pairs) != len(req):
+                raise ApiError("Повторяющиеся параметры")
+        else:
+            req = json.loads(body)
+        if not isinstance(req, dict):
+            raise ApiError("Неверный запрос")
         token = (getattr(context, "token", None) or {}).get("access_token", "") if context else ""
         def factory(bucket):
             return index.make_storage(token, bucket)
-        query = event.get("queryStringParameters") or {}
-        if query.get("event") == "tbank" or req.get("portal") is True:
+        callback = query.get("event") in ("tbank", "robokassa")
+        if callback or req.get("portal") is True:
             try:
-                result = acquiring.dispatch(factory, acquiring.Bank(), req, callback=query.get("event") == "tbank")
-                if result == "OK":
-                    return {"statusCode": 200, "headers": {"Content-Type": "text/plain"}, "body": "OK"}
+                provider = robokassa.Robokassa() if query.get("event") == "robokassa" else acquiring.Bank() if callback else acquiring.payment_provider()
+                result = acquiring.dispatch(factory, provider, req, callback=callback)
+                if isinstance(result, str):
+                    return {"statusCode": 200, "headers": {"Content-Type": "text/plain"}, "body": result}
                 return {"statusCode": 200, "headers": {"Content-Type": "application/json", "Cache-Control": "no-store"},
                         "body": json.dumps(result, ensure_ascii=False)}
             except acquiring.CheckoutError as exc:
@@ -395,7 +423,7 @@ def handler(event, context):
                         "body": json.dumps({"error": str(exc)}, ensure_ascii=False)}
         result = run(req, factory, index.BOT_TOKEN)
         code = 200
-    except ApiError as e:
+    except (ApiError, community.CommunityError) as e:
         result, code = {"error": str(e)}, e.code
     except (ValueError, KeyError) as e:
         result, code = {"error": "Неверный запрос"}, 400

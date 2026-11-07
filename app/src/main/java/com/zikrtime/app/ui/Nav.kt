@@ -13,7 +13,8 @@ enum class Screen { LANGUAGE, CITY, PRAYER_SETTINGS, ALARM, QIBLA, TASBIH, QUIZ,
 /** Вкладки нижней панели. */
 enum class Tab { PRAYER, KNOWLEDGE, SHOP, FOCUS, MORE }
 
-data class NavEntry(val screen: Screen, val id: Int, val seller: String? = null, val product: String? = null)
+data class NavEntry(val screen: Screen, val id: Int, val seller: String? = null, val product: String? = null,
+                    val journalDay: String? = null, val journalPrayer: String? = null)
 
 /** Простая навигация: текущая вкладка и стопка открытых экранов. */
 class Nav {
@@ -46,6 +47,11 @@ class Nav {
             (screen == Screen.SHOP_PRODUCT && old?.product != shopProduct)) {
             stack.add(NavEntry(screen, ++nextEntry, shopSeller, shopProduct))
         }
+    }
+
+    fun openJournal(day: String?, prayer: String?) {
+        if (stack.lastOrNull()?.screen == Screen.PRAYER_JOURNAL) back()
+        stack.add(NavEntry(Screen.PRAYER_JOURNAL, ++nextEntry, journalDay = day, journalPrayer = prayer))
     }
 
     fun openReading(kind: com.zikrtime.app.prayer.ReadingKind) {
@@ -96,7 +102,7 @@ class Nav {
 
     fun save(out: android.os.Bundle) {
         out.putString("nav_tab", tab.name)
-        out.putStringArrayList("nav_routes", ArrayList(stack.map { "${it.screen.name}|${it.id}|${it.seller.orEmpty()}|${it.product.orEmpty()}" }))
+        out.putStringArrayList("nav_routes", ArrayList(stack.map { "${it.screen.name}|${it.id}|${it.seller.orEmpty()}|${it.product.orEmpty()}|${it.journalDay.orEmpty()}|${it.journalPrayer.orEmpty()}" }))
         out.putString("nav_category", quizCategory); out.putInt("nav_round", quizRound)
         out.putString("nav_training_category", trainingCategory); out.putBoolean("nav_training_active", trainingActive)
         out.putString("nav_period", azkarPeriod)
@@ -106,7 +112,8 @@ class Nav {
         tab = runCatching { Tab.valueOf(saved.getString("nav_tab").orEmpty()) }.getOrDefault(Tab.PRAYER)
         saved.getStringArrayList("nav_routes")?.forEach { raw ->
             val fields = raw.split('|')
-            runCatching { NavEntry(Screen.valueOf(fields[0]), fields[1].toInt(), fields[2].ifBlank { null }, fields[3].ifBlank { null }) }
+            runCatching { NavEntry(Screen.valueOf(fields[0]), fields[1].toInt(), fields[2].ifBlank { null }, fields[3].ifBlank { null },
+                fields.getOrNull(4)?.ifBlank { null }, fields.getOrNull(5)?.ifBlank { null }) }
                 .getOrNull()?.let { stack.add(it); nextEntry = maxOf(nextEntry, it.id) }
         }
         quizCategory = saved.getString("nav_category"); quizRound = saved.getInt("nav_round")

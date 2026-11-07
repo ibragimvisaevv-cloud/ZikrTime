@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prayer_check_title">Ёдрасии қайди намоз</string>
+    <string name="prayer_check_hint">Агар намоз қайд нашуда бошад, як бор бе садо ёдрас мекунем. Бо пахши ёдрасӣ ҳамон намоз дар дафтар кушода мешавад.</string>
+    <string name="prayer_check_delay">Баъд аз оғози вақти намоз</string>
+    <string name="prayer_check_minutes">%1$d дақ</string>
+    <string name="prayer_check_progress">Барои ин ёдрасиҳо пешрафти шахсиро фаъол кунед.</string>
+    <string name="prayer_check_notification">Шумо ҳанӯз %1$s-ро қайд накардаед.</string>
+    <string name="prayer_check_open">Кушодани дафтар</string>
+</resources>

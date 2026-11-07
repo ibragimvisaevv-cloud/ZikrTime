@@ -17,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
@@ -37,22 +36,23 @@ fun AuroraBackground(modifier: Modifier = Modifier) = HorizonBackground(modifier
 /** Small tactile feedback; Compose respects the system animation duration scale. */
 fun Modifier.pressScale(interaction: MutableInteractionSource, pressedScale: Float = 0.97f): Modifier = composed {
     val pressed by interaction.collectIsPressedAsState()
-    val scale by animateFloatAsState(if (pressed) pressedScale else 1f,
-        spring(dampingRatio = Spring.DampingRatioNoBouncy, stiffness = Spring.StiffnessMedium), label = "press")
+    val motion = motionEnabled()
+    val scale by animateFloatAsState(if (pressed && motion) pressedScale else 1f,
+        tween(if (motion) 140 else 0, easing = FastOutSlowInEasing), label = "press")
     graphicsLayer { scaleX = scale; scaleY = scale }
 }
 
-// Kept for older decorative call sites. Primary buttons animate their sheen on interaction.
+// Retained for older call sites; decorative highlights remain static.
 fun Modifier.sheen(alpha: Float = 0.28f, periodMs: Int = 3_600): Modifier = this
 
 @Composable
 fun glassFill(): Brush {
     val scheme = MaterialTheme.colorScheme
-    return Brush.verticalGradient(listOf(scheme.surfaceContainer, scheme.surfaceContainerLow))
+    return SolidColor(scheme.surfaceContainerLow)
 }
 
 @Composable
-fun glassBorder(): BorderStroke = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = .65f))
+fun glassBorder(): BorderStroke = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = .8f))
 
 @Composable
 fun Modifier.glass(shape: Shape = RoundedCornerShape(20.dp), elevation: Dp = 10.dp): Modifier {
@@ -69,24 +69,15 @@ fun GlassHero(modifier: Modifier = Modifier, content: @Composable BoxScope.() ->
 @Composable
 fun ShimmerButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true) {
     val interaction = remember { MutableInteractionSource() }
-    val pressed by interaction.collectIsPressedAsState()
-    val sheen by animateFloatAsState(if (pressed) 1f else 0f, tween(500), label = "button-light")
-    val shape = RoundedCornerShape(16.dp)
-    val colors = if (enabled) listOf(Olive, Color(0xFF397C60), Olive) else listOf(Color(0xFF667E70), Color(0xFF667E70))
-    Button(onClick = onClick, enabled = enabled, interactionSource = interaction,
-        modifier = modifier.fillMaxWidth().heightIn(min = 54.dp).pressScale(interaction).clip(shape)
-            .background(Brush.horizontalGradient(colors))
-            .drawWithContent {
-                drawContent()
-                if (sheen > .01f) {
-                    val x = size.width * sheen
-                    drawRect(Brush.linearGradient(listOf(Color.Transparent, Porcelain.copy(alpha = .12f), Color.Transparent),
-                        start = Offset(x - size.width * .2f, 0f), end = Offset(x + size.width * .2f, size.height)))
-                }
-            }, shape = shape,
-        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent, contentColor = Porcelain,
-            disabledContainerColor = Color.Transparent, disabledContentColor = Porcelain.copy(alpha = .7f))) {
-        Text(text, style = MaterialTheme.typography.titleSmall, textAlign = TextAlign.Center, modifier = Modifier.padding(vertical = 7.dp))
+    Button(
+        onClick = onClick,
+        enabled = enabled,
+        interactionSource = interaction,
+        modifier = modifier.fillMaxWidth().heightIn(min = 54.dp).pressScale(interaction),
+        shape = MaterialTheme.shapes.medium,
+        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 15.dp),
+    ) {
+        Text(text, style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center)
     }
 }
 
@@ -94,8 +85,9 @@ fun ShimmerButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifi
 fun GoldButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
     val interaction = remember { MutableInteractionSource() }
     Button(onClick = onClick, interactionSource = interaction,
-        modifier = modifier.fillMaxWidth().heightIn(min = 54.dp).pressScale(interaction), shape = RoundedCornerShape(16.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = Sand, contentColor = Color(0xFF382A18))) {
+        modifier = modifier.fillMaxWidth().heightIn(min = 54.dp).pressScale(interaction), shape = MaterialTheme.shapes.medium,
+        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer)) {
         Text(text, style = MaterialTheme.typography.titleSmall, textAlign = TextAlign.Center, modifier = Modifier.padding(vertical = 7.dp))
     }
 }
@@ -108,24 +100,25 @@ fun CategoryChip(text: String, modifier: Modifier = Modifier) {
     }
 }
 
-/** Floating emerald dock and a sliding sage selection, matching the horizon concept. */
+/** The same neutral surface as the cards, with one clear selected destination. */
 @Composable
 fun <T> GlassNavBar(items: List<T>, selected: T, onSelect: (T) -> Unit, modifier: Modifier = Modifier,
     item: @Composable (T, Boolean) -> Unit) {
+    val motion = motionEnabled()
     val position by animateFloatAsState(items.indexOf(selected).coerceAtLeast(0).toFloat(),
-        spring(dampingRatio = Spring.DampingRatioNoBouncy, stiffness = 420f), label = "nav-selection")
+        tween(if (motion) 220 else 0, easing = FastOutSlowInEasing), label = "nav-selection")
     val scheme = MaterialTheme.colorScheme
     Box(modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp)
-        .shadow(12.dp, RoundedCornerShape(28.dp), ambientColor = Color.Black.copy(alpha = .12f), spotColor = Color.Black.copy(alpha = .12f))
-        .clip(RoundedCornerShape(28.dp))
-        .background(scheme.surfaceContainerLow.copy(alpha = .97f))
-        .border(1.dp, scheme.outlineVariant.copy(alpha = .6f), RoundedCornerShape(28.dp))) {
+        .shadow(6.dp, RoundedCornerShape(26.dp), ambientColor = Color.Black.copy(alpha = .12f), spotColor = Color.Black.copy(alpha = .12f))
+        .clip(RoundedCornerShape(26.dp))
+        .background(scheme.surfaceContainerLow)
+        .border(1.dp, scheme.outlineVariant.copy(alpha = .8f), RoundedCornerShape(26.dp))) {
         Canvas(Modifier.matchParentSize()) {
             val width = (size.width - 12.dp.toPx()) / items.size
             drawRoundRect(scheme.primaryContainer,
                 topLeft = Offset(6.dp.toPx() + position * width + 2.dp.toPx(), 7.dp.toPx()),
                 size = androidx.compose.ui.geometry.Size(width - 4.dp.toPx(), size.height - 14.dp.toPx()),
-                cornerRadius = androidx.compose.ui.geometry.CornerRadius(24.dp.toPx()))
+                cornerRadius = androidx.compose.ui.geometry.CornerRadius(19.dp.toPx()))
         }
         Row(Modifier.fillMaxWidth().selectableGroup().padding(horizontal = 6.dp, vertical = 8.dp)) {
             items.forEach { value ->

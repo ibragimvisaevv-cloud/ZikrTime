@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prayer_check_title">Namozni belgilash eslatmasi</string>
+    <string name="prayer_check_hint">Namoz belgilanmagan bo‘lsa, bir marta ovozsiz eslatamiz. Eslatma bosilganda jurnaldagi shu namoz ochiladi.</string>
+    <string name="prayer_check_delay">Namoz vaqti kirganidan keyin</string>
+    <string name="prayer_check_minutes">%1$d daq</string>
+    <string name="prayer_check_progress">Bu eslatmalardan foydalanish uchun shaxsiy natijalarni yoqing.</string>
+    <string name="prayer_check_notification">Siz hali %1$s namozini belgilamadingiz.</string>
+    <string name="prayer_check_open">Jurnalni ochish</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qibla_camera_open">Қибла тавассути камера</string>
+    <string name="qibla_camera_explain">Барои дидани самти қибла дар рӯйи муҳит ба камера иҷозат диҳед.</string>
+    <string name="qibla_camera_missing">Дар ин дастгоҳ камера дастрас нест.</string>
+    <string name="qibla_camera_permission">Иҷозати камера</string>
+    <string name="qibla_camera_settings">Танзимоти барнома</string>
+    <string name="qibla_camera_close">Пӯшидан</string>
+    <string name="qibla_camera_error">Камера дастрас нест. Ба қутбнамо баргардед.</string>
+    <string name="qibla_camera_loading">Камера кушода мешавад…</string>
+    <string name="qibla_camera_raise">Телефонро амудӣ нигоҳ доред.</string>
+    <string name="qibla_camera_level">Камераро дар сатҳи уфуқ нигоҳ доред.</string>
+    <string name="qibla_camera_image">Тасвири Каъба</string>
+    <string name="qibla_camera_note">Самт тавассути қутбнамо муайян мешавад. Ҳангоми ба қибла нигаронидани камера тасвир пайдо мешавад.</string>
+</resources>

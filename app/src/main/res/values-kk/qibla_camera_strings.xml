@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qibla_camera_open">Камера арқылы құбыла</string>
+    <string name="qibla_camera_explain">Айналаңыздың үстінен құбыла бағытын көру үшін камераға рұқсат беріңіз.</string>
+    <string name="qibla_camera_missing">Бұл құрылғыда камера қолжетімсіз.</string>
+    <string name="qibla_camera_permission">Камераға рұқсат</string>
+    <string name="qibla_camera_settings">Қолданба баптаулары</string>
+    <string name="qibla_camera_close">Жабу</string>
+    <string name="qibla_camera_error">Камера қолжетімсіз. Компасқа оралыңыз.</string>
+    <string name="qibla_camera_loading">Камера ашылуда…</string>
+    <string name="qibla_camera_raise">Телефонды тік ұстаңыз.</string>
+    <string name="qibla_camera_level">Камераны көкжиек деңгейінде ұстаңыз.</string>
+    <string name="qibla_camera_image">Қағба суреті</string>
+    <string name="qibla_camera_note">Бағыт компас арқылы анықталады. Камера құбылаға бағытталғанда сурет пайда болады.</string>
+</resources>

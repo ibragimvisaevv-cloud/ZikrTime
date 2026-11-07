@@ -67,6 +67,8 @@ object QaHooks {
             "language" -> nav.open(Screen.LANGUAGE)
             "city" -> nav.open(Screen.CITY)
             "prayer_settings" -> nav.open(Screen.PRAYER_SETTINGS)
+            "prayer_journal" -> nav.open(Screen.PRAYER_JOURNAL)
+            "reading_reminders" -> nav.open(Screen.READING_REMINDERS)
             "alarm" -> nav.open(Screen.ALARM)
             "qibla" -> nav.open(Screen.QIBLA)
             "tasbih" -> nav.open(Screen.TASBIH)

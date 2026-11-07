@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="places_search_label">Masjid nomi yoki manzili</string>
+    <string name="places_yandex_search">Yandex Xaritalarda boshqa masjidlarni topish</string>
+    <string name="places_search_empty">Joy topilmadi. Boshqa nom kiriting yoki Yandex Xaritalarda qidiring.</string>
+    <string name="places_wikidata_credit">Qo‘shimcha ma’lumotlar — Wikidata, CC0</string>
+    <string name="places_less">Yopish</string>
+    <string name="places_details">Batafsil</string>
+    <string name="places_access_check">Borishdan oldin masjidga kirish mumkinligini tekshiring.</string>
+    <string name="places_open_source">Manbani ochish</string>
+</resources>

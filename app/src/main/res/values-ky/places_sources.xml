@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="places_search_label">Мечиттин аты же дареги</string>
+    <string name="places_yandex_search">Яндекс Карталардан башка мечиттерди табуу</string>
+    <string name="places_search_empty">Жер табылган жок. Башка атты киргизиңиз же Яндекс Карталардан издеңиз.</string>
+    <string name="places_wikidata_credit">Кошумча маалымат — Wikidata, CC0</string>
+    <string name="places_less">Жыйноо</string>
+    <string name="places_details">Кененирээк</string>
+    <string name="places_access_check">Барардан мурун мечитке кирүү мүмкүнчүлүгүн тактаңыз.</string>
+    <string name="places_open_source">Булакты ачуу</string>
+</resources>

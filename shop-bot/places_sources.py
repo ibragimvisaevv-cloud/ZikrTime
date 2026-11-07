@@ -1,0 +1,101 @@
+"""Public provenance and moderation-safe merging for imported prayer places."""
+import datetime
+import math
+import re
+
+
+def wikidata_id(value):
+    return value if isinstance(value, str) and re.fullmatch(r"Q[1-9][0-9]*", value) else ""
+
+
+def source_url(place):
+    pid = str(place.get("id", ""))
+    osm = re.fullmatch(r"osm([nwr])([1-9][0-9]*)", pid)
+    if place.get("source") == "osm" and osm:
+        kind = {"n": "node", "w": "way", "r": "relation"}[osm[1]]
+        return f"https://www.openstreetmap.org/{kind}/{osm[2]}"
+    qid = wikidata_id(pid.removeprefix("wd"))
+    if place.get("source") == "wikidata" and qid:
+        return f"https://www.wikidata.org/wiki/{qid}"
+    return ""
+
+
+def publish_source_fields(place):
+    """Only these public source fields may leave the private moderation database."""
+    public = {}
+    if place.get("source") in ("osm", "wikidata"):
+        public["src"] = place["source"]
+    url = source_url(place)
+    if url:
+        public["source_url"] = url
+    qid = wikidata_id(place.get("wikidata"))
+    if qid:
+        public["wikidata_url"] = f"https://www.wikidata.org/wiki/{qid}"
+    try:
+        date = datetime.date.fromisoformat(place.get("source_updated", ""))
+        public["source_updated"] = date.isoformat()
+    except (ValueError, TypeError):
+        pass
+    if place.get("verification") == "source_only":
+        public["verification"] = "source_only"
+    return public
+
+
+def remember_removed(db, place):
+    if place.get("source") not in ("osm", "wikidata"):
+        return
+    pid = place.get("id")
+    if not isinstance(pid, str) or not pid:
+        return
+    keys = ["import_removed"]
+    if place.get("source") == "osm":
+        keys.append("osm_removed")
+    for key in keys:
+        removed = db.setdefault(key, [])
+        if pid not in removed:
+            removed.append(pid)
+    qid = wikidata_id(place.get("wikidata"))
+    if qid and "wd" + qid not in db["import_removed"]:
+        db["import_removed"].append("wd" + qid)
+
+
+def valid_coordinates(lat, lon):
+    if isinstance(lat, bool) or isinstance(lon, bool):
+        return False
+    try:
+        return math.isfinite(float(lat)) and math.isfinite(float(lon)) and -90 <= float(lat) <= 90 and -180 <= float(lon) <= 180
+    except (ValueError, TypeError):
+        return False
+
+
+def distance_km(a, b):
+    lat1, lat2 = math.radians(float(a["lat"])), math.radians(float(b["lat"]))
+    dlat = lat2 - lat1
+    dlon = math.radians(float(b["lon"]) - float(a["lon"]))
+    chord = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
+    return 6371 * 2 * math.asin(min(1, math.sqrt(chord)))
+
+
+def merge_import(db, items, source):
+    """Upsert one source. Missing records never cause destructive snapshot deletion."""
+    places = db.setdefault("places", {})
+    removed = set(db.get("osm_removed", [])) | set(db.get("import_removed", []))
+    added = updated = 0
+    for item in items:
+        if item["id"] in removed:
+            continue
+        old = places.get(item["id"])
+        if old is None:
+            places[item["id"]] = item
+            added += 1
+            continue
+        if old.get("source") != source or old.get("edited"):
+            continue
+        # Owner decisions and supplied access details survive provider refreshes.
+        keep = {key: old[key] for key in (
+            "status", "created", "photo", "wudu", "women", "who", "access_conditions",
+            "entrance", "confirmed_at", "source_details", "author",
+        ) if key in old}
+        places[item["id"]] = {**item, **keep}
+        updated += 1
+    return added, updated, 0

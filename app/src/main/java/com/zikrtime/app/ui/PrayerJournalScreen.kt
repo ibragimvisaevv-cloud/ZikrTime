@@ -59,7 +59,7 @@ private val PrayerMark.label get() = when (this) {
 }
 
 @Composable
-fun PrayerJournalScreen() {
+fun PrayerJournalScreen(initialDay: String? = null, initialPrayer: String? = null) {
     val nav = LocalNav.current
     val context = LocalContext.current
     val zone = PrayerSchedule.zone()
@@ -68,10 +68,14 @@ fun PrayerJournalScreen() {
         while (true) { now = ZonedDateTime.now(zone); delay(30_000) }
     }
     val today = now.toLocalDate()
-    var selectedDay by rememberSaveable { mutableStateOf<Long?>(null) }
-    val day = selectedDay?.let(LocalDate::ofEpochDay)?.coerceAtMost(today) ?: today
+    val tomorrowTimes = remember(today, zone, AppEvents.resumeCount) { PrayerSchedule.forDate(today.plusDays(1), zone) }
+    val latestDay = if (!tomorrowTimes[Prayer.FAJR].isAfter(now)) today.plusDays(1) else today
+    var selectedDay by rememberSaveable(initialDay) {
+        mutableStateOf(runCatching { LocalDate.parse(initialDay).toEpochDay() }.getOrNull())
+    }
+    val day = selectedDay?.let(LocalDate::ofEpochDay)?.coerceAtMost(latestDay) ?: today
     var days by rememberSaveable { mutableIntStateOf(7) }
-    var edit by rememberSaveable { mutableStateOf<String?>(null) }
+    var edit by rememberSaveable(initialDay, initialPrayer) { mutableStateOf(initialPrayer) }
     var pendingLimit by rememberSaveable { mutableIntStateOf(5) }
     ScreenScaffold(stringResource(R.string.journal_title), { nav.back() }, showHeading = false) {
         if (!Store.personalProgressEnabled) {
@@ -84,6 +88,7 @@ fun PrayerJournalScreen() {
         fun started(d: LocalDate, p: Prayer): Boolean = when (d) {
             today -> !todayTimes[p].isAfter(now)
             yesterday -> !yesterdayTimes[p].isAfter(now)
+            today.plusDays(1) -> !tomorrowTimes[p].isAfter(now)
             else -> d < today
         }
         val counts = PrayerMark.entries.associateWith { 0 }.toMutableMap()
@@ -111,6 +116,7 @@ fun PrayerJournalScreen() {
             }
         }
         Text(stringResource(R.string.journal_note), style = MaterialTheme.typography.bodySmall)
+        PrayerCheckReminderSettingsCard()
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             SectionLabel(stringResource(R.string.journal_day))
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -119,13 +125,13 @@ fun PrayerJournalScreen() {
                 }
                 OutlinedButton(onClick = {
                     DatePickerDialog(context, { _, y, m, d ->
-                        selectedDay = LocalDate.of(y, m + 1, d).coerceAtMost(today).toEpochDay()
+                        selectedDay = LocalDate.of(y, m + 1, d).coerceAtMost(latestDay).toEpochDay()
                     }, day.year, day.monthValue - 1, day.dayOfMonth).apply {
                         // The platform picker interprets these milliseconds in the phone's zone.
-                        datePicker.maxDate = today.plusDays(1).atStartOfDay(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli() - 1
+                        datePicker.maxDate = latestDay.plusDays(1).atStartOfDay(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli() - 1
                     }.show()
                 }, modifier = Modifier.weight(1f).testTag("journal_date")) { Text(journalDate(day)) }
-                IconButton(onClick = { selectedDay = day.plusDays(1).toEpochDay() }, enabled = day < today,
+                IconButton(onClick = { selectedDay = day.plusDays(1).toEpochDay() }, enabled = day < latestDay,
                     modifier = Modifier.testTag("journal_next")) {
                     Icon(Icons.AutoMirrored.Filled.ArrowForward, stringResource(R.string.journal_next))
                 }
@@ -175,7 +181,7 @@ fun PrayerJournalScreen() {
         val prayer = Prayer.obligatory.firstOrNull { it.name == edit }
         if (prayer != null && started(day, prayer)) {
             val status = Store.prayerMarks(day)[prayer] ?: PrayerMark.UNMARKED
-            val times = when (day) { today -> todayTimes; yesterday -> yesterdayTimes; else -> null }
+            val times = when (day) { today -> todayTimes; yesterday -> yesterdayTimes; today.plusDays(1) -> tomorrowTimes; else -> null }
             val ended = times == null || !when (prayer) {
                 Prayer.FAJR -> times[Prayer.SUNRISE]
                 Prayer.DHUHR -> times[Prayer.ASR]

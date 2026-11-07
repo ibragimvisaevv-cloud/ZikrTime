@@ -36,6 +36,12 @@ def secure_url(value):
 
 
 class Bank:
+    provider = "tbank"
+    name = "Т-Банк"
+    test = False
+    hosts = {"securepay.tinkoff.ru", "securepay.tbank.ru", "securepayments.tinkoff.ru",
+             "securepayments.tbank.ru", "pay.tbank.ru"}
+
     def __init__(self):
         self.key = os.getenv("TBANK_TERMINAL", "")
         self.password = os.getenv("TBANK_PASSWORD", "")
@@ -80,7 +86,26 @@ class Bank:
 
 
 def description(order):
-    return "Размещение карточки магазина" if order["kind"] == "listing" else f"Продвижение магазина на {order['days']} дн."
+    return "Размещение компании в Зикр-тайм" if order["kind"] == "listing" else f"Продвижение в Зикр-тайм на {order['days']} дн."
+
+
+def payment_provider():
+    from robokassa import Robokassa
+    if os.getenv("PAYMENT_PROVIDER", "robokassa") == "tbank":
+        return Bank()
+    return Robokassa()
+
+
+def provider_for_order(order, current):
+    provider = order.get("provider", "tbank")
+    if provider == getattr(current, "provider", "tbank") and order.get("test", False) == getattr(current, "test", False):
+        return current
+    if provider == "tbank":
+        return Bank()
+    if provider == "robokassa":
+        from robokassa import Robokassa
+        return Robokassa(test=order.get("test", False))
+    raise CheckoutError("Способ оплаты этого заказа пока недоступен.", 503)
 
 
 def unpaid(seller):
@@ -124,7 +149,8 @@ def identify(bot, session):
 
 def history(bot, sid):
     rows = [o for o in bot.db.get("shop_orders", {}).values() if o["sid"] == sid]
-    return [{k: o[k] for k in ("id", "amount", "kind", "days", "state", "created")}
+    return [dict({k: o[k] for k in ("id", "amount", "kind", "days", "state", "created")},
+                 test=o.get("test", False), provider=o.get("provider", "tbank"), expires=o.get("expires", 0))
             for o in sorted(rows, key=lambda o: -o["created"])]
 
 
@@ -167,6 +193,13 @@ def reserve(bot, uid, req, bank):
     order = {"id": secrets.token_hex(16), "uid": uid, "sid": s["id"], "terminal": bank.key,
              "kind": kind, "days": days, "amount": amount, "email": email, "intent": intent,
              "state": "initializing", "created": now, "expires": now + 3600, "offer": bank.offer}
+    order["provider"] = getattr(bank, "provider", "tbank")
+    order["test"] = getattr(bank, "test", False)
+    if order["provider"] == "robokassa":
+        # Invoice and order are reserved in the same compare-and-swap transaction.
+        invoice = max(int(bot.db.get("shop_invoice_sequence", 0)) + 1, now * 1000)
+        bot.db["shop_invoice_sequence"] = invoice
+        order["invoice"] = str(invoice)
     orders[order["id"]] = order
     bot.dirty = True
     return order, True
@@ -206,6 +239,12 @@ def apply_state(bot, order, data):
             bot.notify_admins("Возврат по заказу " + order["id"] + ". Проверьте сумму, услугу и возвратный чек в кабинете.")
         order["state"] = "refund_review"
     elif status == "CONFIRMED":
+        if order.get("test"):
+            order["state"] = "test_paid"
+            order.pop("url", None)
+            order.pop("email", None)
+            bot.dirty = True
+            return
         if order.get("applied"):
             # Also repair the public projection if a preceding upload failed after the DB commit.
             bot.catalog_dirty = True
@@ -226,7 +265,7 @@ def apply_state(bot, order, data):
                 bot.dirty = True
                 return
             order.update(applied=True, state="paid", settled=int(time.time()))
-            bot.send(order["uid"], "Оплата получена. " + description(order) + " · " + str(order["amount"] // 100) + " ₽.")
+            # The cabinet shows the result without a duplicate Telegram message.
             bot.catalog_dirty = True
     elif not order.get("applied") and order["state"] in ACTIVE:
         order["state"] = "failed" if status in FAILURES else "waiting"
@@ -250,8 +289,14 @@ def transact(factory, op):
 
 
 def sync(factory, bank, order, pid=None):
+    bank = provider_for_order(order, bank)
     if not bank.verifiable or bank.key != order["terminal"]:
         raise CheckoutError("Банковский терминал временно недоступен.", 503)
+    if order.get("provider") == "robokassa":
+        result = bank.state(order)
+        if result:
+            transact(factory, lambda bot: apply_state(bot, bot.db["shop_orders"][order["id"]], result))
+        return
     def flag_ambiguity(bot):
         current = bot.db["shop_orders"][order["id"]]
         if not current.get("bank_ambiguity"):
@@ -295,11 +340,19 @@ def sync(factory, bank, order, pid=None):
 
 def dispatch(factory, bank, req, callback=False):
     if callback:
+        if getattr(bank, "provider", "tbank") == "robokassa":
+            order = transact(factory, lambda bot: bot.db.get("shop_orders", {}).get(req.get("Shp_order")))
+            if not order or order.get("provider") != "robokassa":
+                raise CheckoutError("Заказ не найден.", 404)
+            verifier = provider_for_order(order, bank)
+            result = verifier.callback(req, order)
+            transact(factory, lambda bot: apply_state(bot, bot.db["shop_orders"][order["id"]], result))
+            return "OK" + order["invoice"]
         if not bank.verifiable or req.get("TerminalKey") != bank.key or not hmac.compare_digest(
                 str(req.get("Token", "")), signature(req, bank.password)):
             raise CheckoutError("Неверная подпись.", 403)
         order = transact(factory, lambda bot: bot.db.get("shop_orders", {}).get(req.get("OrderId")))
-        if not order or order["terminal"] != bank.key:
+        if not order or order.get("provider", "tbank") != "tbank" or order["terminal"] != bank.key:
             raise CheckoutError("Заказ не найден.", 404)
         sync(factory, bank, order, req.get("PaymentId"))
         return "OK"
@@ -314,14 +367,16 @@ def dispatch(factory, bank, req, callback=False):
             return {"ok": True}
         if action == "list":
             return {"ready": bank.ready, "offer": bank.offer if bank.ready else "", "prices": bot.promo_prices(),
+                    "provider": getattr(bank, "provider", "tbank"), "provider_name": getattr(bank, "name", "Т-Банк"),
+                    "test": getattr(bank, "test", False),
                     "shops": [{"sid": s["id"], "name": s["name"], "status": s["status"], "orders": history(bot, s["id"])}
                               for s in bot.my_sellers(uid)]}
         if action == "buy":
             return reserve(bot, uid, req, bank)
-        if action == "sync":
+        if action in ("sync", "resume"):
             order = bot.db.get("shop_orders", {}).get(req.get("id"))
             if order and uid in bot.db["sellers"].get(order["sid"], {}).get("owners", []):
-                return order
+                return (order, False) if action == "resume" else order
         raise CheckoutError("Заказ не найден.", 404)
     result = transact(factory, owned)
     if action in ("list", "logout"):
@@ -330,11 +385,11 @@ def dispatch(factory, bank, req, callback=False):
         sync(factory, bank, result)
         return {"ok": True}
     order, fresh = result
-    if fresh:
+    bank = provider_for_order(order, bank)
+    if fresh or (order.get("provider") == "robokassa" and order["state"] == "initializing"):
         initialized = bank.initiate(order)
         url = str(initialized.get("PaymentURL", ""))
-        if (not secure_url(url) or urlsplit(url).hostname not in {
-                "securepay.tinkoff.ru", "securepay.tbank.ru", "securepayments.tinkoff.ru", "securepayments.tbank.ru", "pay.tbank.ru"}
+        if (not secure_url(url) or urlsplit(url).hostname not in getattr(bank, "hosts", Bank.hosts)
                 or initialized.get("OrderId") != order["id"] or initialized.get("Amount") != order["amount"]
                 or initialized.get("TerminalKey") != bank.key or not str(initialized.get("PaymentId", "")).isdigit()):
             raise CheckoutError("Банк вернул некорректные данные заказа.", 503)

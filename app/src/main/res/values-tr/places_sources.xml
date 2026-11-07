@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="places_search_label">Cami adı veya adresi</string>
+    <string name="places_yandex_search">Yandex Haritalar’da daha fazla cami bul</string>
+    <string name="places_search_empty">Yer bulunamadı. Başka bir ad deneyin veya Yandex Haritalar’da arayın.</string>
+    <string name="places_wikidata_credit">Ek bilgiler — Wikidata, CC0</string>
+    <string name="places_less">Daralt</string>
+    <string name="places_details">Ayrıntılar</string>
+    <string name="places_access_check">Gitmeden önce camiye giriş durumunu doğrulayın.</string>
+    <string name="places_open_source">Kaynağı aç</string>
+</resources>

@@ -101,8 +101,11 @@ fun AppearanceSegments() {
         val option: @Composable (String, Int, Modifier) -> Unit = { value, label, modifier ->
             var optionOrigin by remember { mutableStateOf(Offset.Zero) }
             val selected = Store.appearance == value
-            Surface(color = if (selected) Sand else Color(0xB31A3933),
-                contentColor = if (selected) Color(0xFF173B30) else Porcelain, shape = RoundedCornerShape(16.dp), modifier = modifier) {
+            Surface(color = if (selected) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainerHigh,
+                contentColor = if (selected) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurface,
+                border = androidx.compose.foundation.BorderStroke(1.dp,
+                    if (selected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.outlineVariant),
+                shape = RoundedCornerShape(16.dp), modifier = modifier) {
                 Box(Modifier.heightIn(min = 52.dp).onGloballyPositioned { optionOrigin = it.boundsInWindow().center }.testTag("appearance_$value").semantics { testTagsAsResourceId = true }
                     .selectable(selected = selected, role = Role.RadioButton, onClick = {
                         change(value, optionOrigin)

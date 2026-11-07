@@ -63,6 +63,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 
 private fun kindName(kind: String): Int = when (kind) {
     "mosque" -> R.string.place_kind_mosque
@@ -97,6 +98,7 @@ fun PlacesScreen() {
         com.zikrtime.app.data.Reviews.refresh()
     }
     var filter by rememberSaveable { mutableStateOf("all") }
+    var query by rememberSaveable { mutableStateOf("") }
     var selected by rememberSaveable { mutableStateOf<String?>(null) }
     var here by remember { mutableStateOf<Pair<Double, Double>?>(null) }
     var focusMe by remember { mutableIntStateOf(0) }
@@ -135,13 +137,14 @@ fun PlacesScreen() {
     // Если доступ к месту уже есть — сразу ищем ближайшие к человеку, а не к центру города
     LaunchedEffect(Unit) { if (LocationHelper.hasPermission(context)) locate() }
     val origin = here ?: (Store.location.latitude to Store.location.longitude)
-    val all = data.places.sortedBy { Places.distanceKm(origin.first, origin.second, it.lat, it.lon) }
+    val all = remember(data, origin) { data.places.sortedBy { Places.distanceKm(origin.first, origin.second, it.lat, it.lon) } }
     val places = all.filter {
-        when (filter) {
+        val matchesKind = when (filter) {
             "mosque" -> it.kind == "mosque"
-            "room" -> it.kind != "mosque"
+            "room" -> it.kind == "room" || it.kind == "mall"
             else -> true
         }
+        matchesKind && (query.isBlank() || (it.name + " " + it.address).contains(query.trim(), ignoreCase = true))
     }
     // Keep a selected distant map marker visible even outside the nearest 100.
     val displayed = places.take(100).let { nearest ->
@@ -197,11 +200,21 @@ fun PlacesScreen() {
             modifier = Modifier.clickable(enabled = here == null) { whereAmI() },
         )
         if (locationUnavailable) StatusLine(stringResource(R.string.place_location_unavailable))
+        OutlinedTextField(
+            value = query, onValueChange = { query = it.take(120) },
+            label = { Text(stringResource(R.string.places_search_label)) },
+            singleLine = true, modifier = Modifier.fillMaxWidth().testTag("places_search"),
+        )
         Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             if (hasYandexMap) FilterPill(stringResource(if (showMap) R.string.place_hide_map else R.string.place_show_map), showMap) { showMap = !showMap }
             FilterPill(stringResource(R.string.places_all), filter == "all") { filter = "all" }
             FilterPill(stringResource(R.string.places_mosques), filter == "mosque") { filter = "mosque" }
             FilterPill(stringResource(R.string.places_rooms), filter == "room") { filter = "room" }
+        }
+        TextButton(onClick = {
+            openUrl(context, "https://yandex.ru/maps/?ll=${origin.second}%2C${origin.first}&z=13&text=${Uri.encode(query.trim().ifBlank { "мечеть" })}")
+        }, modifier = Modifier.testTag("places_yandex_search")) {
+            Text(stringResource(R.string.places_yandex_search))
         }
         LazyColumn(
             state = listState,
@@ -214,7 +227,11 @@ fun PlacesScreen() {
             }
             if (places.isEmpty()) {
                 item {
-                    StatePanel(stringResource(if (Places.loading) R.string.places_loading else R.string.places_empty), icon = R.drawable.ic_mosque)
+                    StatePanel(stringResource(when {
+                        Places.loading -> R.string.places_loading
+                        query.isNotBlank() -> R.string.places_search_empty
+                        else -> R.string.places_empty
+                    }), icon = R.drawable.ic_mosque)
                 }
             }
             // В списке — ближайшие 100, на карте — все (кластерами)
@@ -235,6 +252,10 @@ fun PlacesScreen() {
                         modifier = Modifier.padding(horizontal = 4.dp),
                     )
                 }
+            }
+            if (places.any { it.source == "wikidata" || it.wikidataUrl.isNotBlank() }) {
+                item { Text(stringResource(R.string.places_wikidata_credit), style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant) }
             }
             item {
                 LandscapePanel(R.drawable.azkar_morning) {
@@ -297,6 +318,9 @@ private fun PlaceCard(place: Places.Place, distanceKm: Double, expanded: Boolean
                 )
                 RatingBadge("place:${place.id}")
             }
+            TextButton(onClick = onClick) {
+                Text(stringResource(if (expanded) R.string.places_less else R.string.places_details))
+            }
         }
         if (expanded) {
             if (place.photo.isNotBlank()) {
@@ -314,10 +338,20 @@ private fun PlaceCard(place: Places.Place, distanceKm: Double, expanded: Boolean
             PlaceDetail(R.string.place_wudu, stringResource(status(place.wudu)))
             PlaceDetail(R.string.place_women, stringResource(status(place.women)))
             PlaceDetail(R.string.place_source, listOfNotNull(
-                if (place.source == "osm") "OpenStreetMap" else place.source.takeIf { it.isNotBlank() },
+                when (place.source) { "osm" -> "OpenStreetMap"; "wikidata" -> "Wikidata"; else -> place.source.takeIf { it.isNotBlank() } },
                 place.sourceDetails.takeIf { it.isNotBlank() },
             ).joinToString(" · ").ifBlank { unknown })
             PlaceDetail(R.string.place_confirmed, place.confirmedAt.ifBlank { unknown })
+            if (place.confirmedAt.isBlank() && place.source in listOf("osm", "wikidata")) {
+                Text(stringResource(R.string.places_access_check), style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+            if (place.sourceUrl.isNotBlank()) TextButton(onClick = { openUrl(context, place.sourceUrl) }) {
+                Text(stringResource(R.string.places_open_source))
+            }
+            if (place.wikidataUrl.isNotBlank() && place.wikidataUrl != place.sourceUrl) {
+                TextButton(onClick = { openUrl(context, place.wikidataUrl) }) { Text("Wikidata") }
+            }
             if (place.note.isNotBlank()) InfoLine("ℹ️", place.note)
             Spacer(Modifier.height(12.dp))
             ShimmerButton(stringResource(R.string.places_route), onClick = { openRoute(context, place.lat, place.lon) })

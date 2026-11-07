@@ -65,9 +65,9 @@ fun KnowledgeScreen() {
     HorizonSection(title = stringResource(R.string.knowledge_title),
         subtitle = stringResource(R.string.knowledge_subtitle),
         image = if (morning) R.drawable.azkar_morning else R.drawable.azkar_evening,
-        heroHeight = 370.dp,
+        heroHeight = 290.dp,
         hero = {
-            Spacer(Modifier.height(56.dp))
+            Spacer(Modifier.height(16.dp))
             HorizonFeature(stringResource(if (morning) R.string.azkar_morning else R.string.azkar_evening),
                 if (morning) R.drawable.ic_prayer_fajr else R.drawable.ic_prayer_isha) {
                 nav.openAzkar(if (morning) "morning" else "evening")
@@ -80,16 +80,37 @@ fun KnowledgeScreen() {
             PrimaryButton(stringResource(R.string.learning_resume), onClick = { nav.resumeLearning(context) },
                 modifier = Modifier.testTag("learning_resume").semantics { testTagsAsResourceId = true })
         }
+        SectionLabel(uiCopy(UiCopy0823.ReadAndRemember))
         DestinationRow(stringResource(if (morning) R.string.azkar_evening else R.string.azkar_morning),
             if (morning) R.drawable.ic_prayer_isha else R.drawable.ic_prayer_fajr) {
             nav.openAzkar(if (morning) "evening" else "morning")
         }
         HorizonDestination(stringResource(R.string.quran_title), R.drawable.ic_nav_knowledge,
             Modifier.fillMaxWidth().testTag("quran_open"), prominent = true) { nav.open(Screen.QURAN) }
+        SectionLabel(uiCopy(UiCopy0823.PracticeKnowledge))
         KnowledgeLevelGate(bank) { level ->
             KnowledgeLevelControl(bank)
-            WeakTopicsOverview(bank)
-            Text(stringResource(R.string.knowledge_topics), style = MaterialTheme.typography.headlineSmall)
+            ZCard {
+                Text(uiCopy(UiCopy0823.StudyIntro), style = MaterialTheme.typography.bodyLarge)
+                Spacer(Modifier.height(14.dp))
+                PrimaryButton(stringResource(R.string.knowledge_start), onClick = { nav.startQuiz(null) },
+                    modifier = Modifier.testTag("learning_start").semantics { testTagsAsResourceId = true })
+                Spacer(Modifier.height(14.dp))
+                Text(stringResource(R.string.knowledge_round_title, Store.CORRECT_ANSWERS_PER_ROUND, Store.BONUS_MINUTES_PER_ROUND),
+                    style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+                Spacer(Modifier.height(6.dp))
+                Text(stringResource(R.string.learning_bonus_rule, Store.MAX_BONUS_MINUTES_PER_DAY),
+                    style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Spacer(Modifier.height(10.dp))
+                LinearProgressIndicator(progress = { bonus / Store.MAX_BONUS_MINUTES_PER_DAY.toFloat() },
+                    modifier = Modifier.fillMaxWidth().height(6.dp), strokeCap = StrokeCap.Round, drawStopIndicator = {})
+                Text(stringResource(R.string.knowledge_bonus_today, bonus, Store.MAX_BONUS_MINUTES_PER_DAY),
+                    style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(top = 6.dp))
+            }
+            SectionLabel(stringResource(R.string.knowledge_topics))
+            Text(uiCopy(UiCopy0823.TopicHint), style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant)
             val columns = if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 1 else 2
             bank.categories.filter { (id, _) -> bank.questionsFor(id,level.id).isNotEmpty() }
                 .chunked(columns).forEach { pair ->
@@ -100,39 +121,7 @@ fun KnowledgeScreen() {
                     }
                 }
             }
-        }
-
-        MotifPanel {
-          Column(Modifier.padding(22.dp)) {
-            Text(
-                stringResource(R.string.knowledge_round_title, Store.CORRECT_ANSWERS_PER_ROUND, Store.BONUS_MINUTES_PER_ROUND),
-                style = MaterialTheme.typography.titleLarge,
-                color = androidx.compose.ui.graphics.Color(0xFFF7F2EA),
-            )
-            Spacer(Modifier.height(6.dp))
-            Text(
-                stringResource(R.string.learning_bonus_rule, Store.MAX_BONUS_MINUTES_PER_DAY),
-                style = MaterialTheme.typography.bodyMedium,
-                color = androidx.compose.ui.graphics.Color(0xFFF7F2EA).copy(alpha = 0.85f),
-            )
-            Spacer(Modifier.height(14.dp))
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                LinearProgressIndicator(
-                    progress = { bonus / Store.MAX_BONUS_MINUTES_PER_DAY.toFloat() },
-                    modifier = Modifier.weight(1f).height(8.dp),
-                    strokeCap = StrokeCap.Round,
-                    drawStopIndicator = {},
-                )
-                Spacer(Modifier.width(12.dp))
-                Text(
-                    stringResource(R.string.knowledge_bonus_today, bonus, Store.MAX_BONUS_MINUTES_PER_DAY),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = androidx.compose.ui.graphics.Color(0xFFF7F2EA),
-                )
-            }
-            Spacer(Modifier.height(16.dp))
-            GoldButton(stringResource(R.string.knowledge_start), onClick = { nav.startQuiz(null) })
-        }
+            WeakTopicsOverview(bank)
         }
 
         ZCard {
@@ -148,10 +137,9 @@ fun KnowledgeScreen() {
         }
         if (Store.personalProgressEnabled) {
             val summary = Store.personalProgressSummary()
-            ZCard(onClick = { nav.open(Screen.PROGRESS) }) {
-                Text(stringResource(R.string.progress_title), style = MaterialTheme.typography.titleMedium)
-                Text(stringResource(R.string.progress_home_summary, summary.sessions, summary.activeDays),
-                    color = MaterialTheme.colorScheme.onSurfaceVariant)
+            ZCard {
+                DestinationRow(stringResource(R.string.progress_title), R.drawable.ic_nav_knowledge,
+                    stringResource(R.string.progress_home_summary, summary.sessions, summary.activeDays)) { nav.open(Screen.PROGRESS) }
             }
         }
         Text(

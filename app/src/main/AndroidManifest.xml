@@ -4,6 +4,8 @@
 
     <!-- Загрузка времени намаза с aladhan.com -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.any" android:required="false" />
     <!-- Уведомления о времени намаза и будильник -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- Будильник на фаджр: точное время, показ поверх экрана блокировки, звук и вибрация -->
@@ -193,6 +195,14 @@
             </intent-filter>
         </receiver>
         <receiver android:name=".prayer.ReadingReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".prayer.PrayerCheckReceiver" android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qibla_camera_open">Qibla through the camera</string>
+    <string name="qibla_camera_explain">Allow camera access to see the Qibla direction over your surroundings.</string>
+    <string name="qibla_camera_missing">A camera is unavailable on this device.</string>
+    <string name="qibla_camera_permission">Camera permission</string>
+    <string name="qibla_camera_settings">App settings</string>
+    <string name="qibla_camera_close">Close</string>
+    <string name="qibla_camera_error">Camera unavailable. Return to the compass.</string>
+    <string name="qibla_camera_loading">Opening camera…</string>
+    <string name="qibla_camera_raise">Hold your phone upright.</string>
+    <string name="qibla_camera_level">Keep the camera level with the horizon.</string>
+    <string name="qibla_camera_image">Image of the Kaaba</string>
+    <string name="qibla_camera_note">The compass determines the direction. The image appears when the camera faces the Qibla.</string>
+</resources>

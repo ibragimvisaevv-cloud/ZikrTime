@@ -17,9 +17,9 @@ enum class SectionTone { Ink, Dusk, Dawn }
 fun MotifPanel(modifier: Modifier = Modifier, tone: SectionTone = SectionTone.Ink,
     content: @Composable BoxScope.() -> Unit) {
     val colors = when (tone) {
-        SectionTone.Ink -> listOf(Color(0xFF0C3B32), Color(0xFF24644D))
-        SectionTone.Dusk -> listOf(Color(0xFF142F3A), Color(0xFF315763))
-        SectionTone.Dawn -> listOf(Color(0xFF495B43), Color(0xFF746442))
+        SectionTone.Ink -> listOf(Color(0xFF243B32), Color(0xFF3C5546))
+        SectionTone.Dusk -> listOf(Color(0xFF293A45), Color(0xFF455660))
+        SectionTone.Dawn -> listOf(Color(0xFF514736), Color(0xFF766547))
     }
     Box(modifier.fillMaxWidth().clip(RoundedCornerShape(26.dp))
         .background(Brush.linearGradient(colors))) {

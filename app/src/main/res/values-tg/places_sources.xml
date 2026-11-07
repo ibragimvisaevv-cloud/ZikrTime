@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="places_search_label">Номи масҷид ё суроға</string>
+    <string name="places_yandex_search">Масҷидҳои бештар дар Яндекс Харитаҳо</string>
+    <string name="places_search_empty">Ҷое ёфт нашуд. Номи дигар ё ҷустуҷӯ дар Яндекс Харитаҳоро санҷед.</string>
+    <string name="places_wikidata_credit">Маълумоти иловагӣ — Wikidata, CC0</string>
+    <string name="places_less">Пӯшидан</string>
+    <string name="places_details">Муфассал</string>
+    <string name="places_access_check">Пеш аз рафтан дастрасии масҷидро аниқ кунед.</string>
+    <string name="places_open_source">Кушодани манбаъ</string>
+</resources>

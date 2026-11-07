@@ -16,6 +16,7 @@ class ZikrApp : Application() {
     override fun onCreate() {
         super.onCreate()
         Store.init(this)
+        com.zikrtime.app.prayer.PrayerCheckReminders.install(this)
         getSharedPreferences("zikrtime", MODE_PRIVATE).registerOnSharedPreferenceChangeListener(widgetChanges)
         PrayerAlarms.createChannels(this)
         com.zikrtime.app.ui.initYandexMapKey()

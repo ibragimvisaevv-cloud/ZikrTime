@@ -98,7 +98,7 @@ fun OnboardingScreen(onCityChosen: (City) -> Unit) {
                                 Text(stringResource(R.string.onboarding_ready_text), style = MaterialTheme.typography.bodyLarge)
                                 ZCard {
                                     Text(Cities.displayName(context, Store.location), style = MaterialTheme.typography.titleLarge)
-                                    Text(methodName(Store.method), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                    Text(uiCopy(UiCopy0823.PrayerSettingsHint), color = MaterialTheme.colorScheme.onSurfaceVariant)
                                 }
                                 AppearancePicker()
                             }

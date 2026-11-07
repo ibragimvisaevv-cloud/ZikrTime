@@ -99,7 +99,7 @@ class Orders(unittest.TestCase):
         self.assertEqual(self.notice(),"OK")
         self.assertEqual(self.notice(),"OK")
         self.assertEqual(len(json.loads(self.pub.files["catalog.json"])["sellers"]),1)
-        self.assertEqual(len(self.db()["outbox"]),1)
+        self.assertEqual(len(self.db().get("outbox", [])),0)
         self.assertEqual(self.call("list")["shops"][0]["orders"][0]["state"],"paid")
         with self.assertRaises(a.CheckoutError): self.buy()
         self.bank.status="REFUNDED";self.notice();self.notice()

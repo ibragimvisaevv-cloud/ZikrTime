@@ -63,7 +63,17 @@ uid_seq = [0]
 
 def run(update):
     bot = index.Bot(storage, tg, TOKEN)
-    bot.handle(update)
+    # Exercise retained legacy draft/moderation methods. New Telegram entry routing is covered in test_community.
+    message = update.get("message", {})
+    if message.get("text") == "/start add":
+        bot.start_add(message["from"]["id"])
+    elif message.get("text") == "/start place":
+        bot.start_place(message["from"]["id"])
+    elif "callback_query" in update:
+        query = update["callback_query"]
+        bot.on_callback(query["from"], query["data"])
+    else:
+        bot.handle(update)
     bot.save()
     return bot
 
@@ -275,9 +285,9 @@ check(db()["donate_url"] == "https://pay.cloudtips.ru/p/abc123", "не влад�
 # Импорт из OpenStreetMap
 import import_osm  # noqa: E402
 els = [
-    {"type": "node", "id": 1, "lat": 55.78, "lon": 37.63, "tags": {"name": "Московская Соборная мечеть", "addr:street": "Выползов переулок", "addr:housenumber": "7", "addr:city": "Москва"}},
-    {"type": "way", "id": 2, "center": {"lat": 55.79, "lon": 37.53}, "tags": {"name": "Молельная комната ТЦ"}},
-    {"type": "node", "id": 3, "lat": 43.3, "lon": 45.7, "tags": {"building": "mosque"}},
+    {"type": "node", "id": 1, "lat": 55.78, "lon": 37.63, "tags": {"amenity": "place_of_worship", "religion": "muslim", "name": "Московская Соборная мечеть", "addr:street": "Выползов переулок", "addr:housenumber": "7", "addr:city": "Москва"}},
+    {"type": "way", "id": 2, "center": {"lat": 55.79, "lon": 37.53}, "tags": {"amenity": "place_of_worship", "religion": "muslim", "name": "Молельная комната ТЦ"}},
+    {"type": "node", "id": 3, "lat": 43.3, "lon": 45.7, "tags": {"amenity": "place_of_worship", "religion": "muslim", "building": "mosque"}},
 ]
 items = [import_osm.convert(e) for e in els]
 check(items[0]["kind"] == "mosque" and "Выползов" in items[0]["address"], "osm: мечеть и адрес")
@@ -292,7 +302,7 @@ d["osm_removed"] = ["osmw2"]
 del d["places"]["osmw2"]
 import_osm.merge(d, items)
 check("osmw2" not in d["places"], "osm: удалённое не возвращается")
-check(import_osm.merge(d, items[:1])[2] == 1, "osm: исчезнувшее из OSM убирается")
+check(import_osm.merge(d, items[:1])[2] == 0 and "osmn3" in d["places"], "osm: неполная выборка сохраняет прежние места")
 
 # Отзывы: приложение кладёт файл в закрытый бакет, бот присылает его владельцу, одобренные — в reviews.json
 os.environ["S3_KEY_ID"], os.environ["S3_SECRET"] = "KEYID", "SECRET"

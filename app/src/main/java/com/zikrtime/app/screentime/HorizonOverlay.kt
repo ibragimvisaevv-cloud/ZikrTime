@@ -31,7 +31,7 @@ internal class HorizonOverlay(context: Context, title: String, subtitle: String?
         "dark" -> true
         else -> context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
     }
-    private val ink = if (dark) 0xFFFAF7EE.toInt() else 0xFF102D26.toInt()
+    private val ink = if (dark) 0xFFF1EFE7.toInt() else 0xFF242923.toInt()
     val view = FrameLayout(this.context).apply { isClickable = true }
     private val content = LinearLayout(this.context).apply {
         orientation = LinearLayout.VERTICAL
@@ -45,12 +45,12 @@ internal class HorizonOverlay(context: Context, title: String, subtitle: String?
                 scaleType = ImageView.ScaleType.CENTER_CROP
                 importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
             }, FrameLayout.LayoutParams(-1, -1))
-            view.addView(View(this.context).apply { setBackgroundColor(0xA6071F1B.toInt()) }, FrameLayout.LayoutParams(-1, -1))
+            view.addView(View(this.context).apply { setBackgroundColor(0xA6171B18.toInt()) }, FrameLayout.LayoutParams(-1, -1))
         } else {
             view.background = GradientDrawable().apply {
-                setColor(if (dark) 0xFF102A23.toInt() else 0xFFFFFCF5.toInt())
+                setColor(if (dark) 0xFF1D211C.toInt() else 0xFFFFFEFA.toInt())
                 cornerRadius = dp(28).toFloat()
-                setStroke(dp(1), if (dark) 0xFF50462F.toInt() else 0xFFE3D6BA.toInt())
+                setStroke(dp(1), if (dark) 0xFF42483D.toInt() else 0xFFDCDCD1.toInt())
             }
             view.clipToOutline = true
         }
@@ -78,18 +78,29 @@ internal class HorizonOverlay(context: Context, title: String, subtitle: String?
             androidx.core.view.ViewCompat.setAccessibilityHeading(this, true)
         })
         if (subtitle != null) content.addView(TextView(this.context).apply {
-            text = subtitle; textSize = 16f; setTextColor(if (dark) 0xFFD9BE87.toInt() else 0xFF80623C.toInt())
+            text = subtitle; textSize = 16f; setTextColor(if (dark) 0xFFD6BD8E.toInt() else 0xFF796039.toInt())
             gravity = Gravity.CENTER; setPadding(0, 0, 0, dp(12))
         })
     }
     fun button(label: String, id: Int = View.NO_ID, primary: Boolean = false, action: () -> Unit) {
-        val fill = if (primary) if (fullScreen) 0xFFD9BE87.toInt() else 0xFF124C40.toInt()
-            else if (dark) 0xFF234136.toInt() else 0xFFF0EBDD.toInt()
+        val fill = when {
+            primary && fullScreen -> 0xFFD6BD8E.toInt()
+            primary && dark -> 0xFFACD3BC.toInt()
+            primary -> 0xFF235D4C.toInt()
+            dark -> 0xFF2D312A.toInt()
+            else -> 0xFFECE9E1.toInt()
+        }
+        val labelColor = when {
+            primary && fullScreen -> 0xFF3B2E18.toInt()
+            primary && dark -> 0xFF193E2D.toInt()
+            primary -> Color.WHITE
+            else -> ink
+        }
         content.addView(Button(context).apply {
             text = label; this.id = id; isAllCaps = false; textSize = 16f
-            setTextColor(if (primary) if (fullScreen) 0xFF302716.toInt() else Color.WHITE else ink)
+            setTextColor(labelColor)
             minHeight = dp(52); setPadding(dp(16), dp(14), dp(16), dp(14)); stateListAnimator = null
-            val shape = GradientDrawable().apply { setColor(fill); cornerRadius = dp(18).toFloat() }
+            val shape = GradientDrawable().apply { setColor(fill); cornerRadius = dp(16).toFloat() }
             background = RippleDrawable(ColorStateList.valueOf(0x33FFFFFF), shape, null)
             setOnClickListener { action() }
             layoutParams = LinearLayout.LayoutParams(-1, -2).apply { topMargin = dp(12) }

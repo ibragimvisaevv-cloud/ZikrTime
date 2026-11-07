@@ -77,7 +77,7 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
         val topScrim = remember { Brush.verticalGradient(0f to Color(0xB309242D), .44f to Color(0x2409242D), .66f to Color.Transparent) }
         val sideScrim = remember { Brush.horizontalGradient(listOf(Color(0x4807242B), Color.Transparent)) }
         val imageId = if (period == NaturalPeriod.NIGHT) R.drawable.horizon_portrait_night else R.drawable.horizon_portrait_day
-        Box(Modifier.matchParentSize().background(Color(0xFF34615D))) {
+        Box(Modifier.matchParentSize().background(Color(0xFF353E36))) {
             if (!(com.zikrtime.app.BuildConfig.DEBUG && com.zikrtime.app.QaHooks.hideScene)) {
                 Image(painterResource(imageId), null, Modifier.fillMaxSize().graphicsLayer {
                     // Image overfill keeps the frame covered throughout its small parallax travel.
@@ -132,7 +132,7 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
                     fontSize = if (large) 28.sp else 36.sp)
                 BigClock(at, if (large) 44.sp else 68.sp, Porcelain, modifier = Modifier.testTag("horizon_time").semantics { testTagsAsResourceId = true }, weight = FontWeight.Normal)
                 Text(countdown, color = Sand, style = MaterialTheme.typography.labelLarge,
-                    modifier = Modifier.clip(RoundedCornerShape(18.dp)).background(Color(0xB307252D))
+                    modifier = Modifier.clip(RoundedCornerShape(18.dp)).background(Color(0xB319211D))
                         .padding(horizontal = 12.dp, vertical = 7.dp))
                 Spacer(Modifier.height(24.dp))
             }
@@ -140,9 +140,7 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
                 .clip(RoundedCornerShape(topStart = 34.dp, topEnd = 34.dp))
                 .background(scheme.background)
                 .padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(18.dp)) {
-                // A tactile seam signals ordinary vertical scrolling, without a competing drag handle.
-                Box(Modifier.align(Alignment.CenterHorizontally).padding(top = 12.dp).width(38.dp).height(3.dp)
-                    .background(scheme.secondary.copy(alpha = .45f), RoundedCornerShape(2.dp)))
+                Spacer(Modifier.height(4.dp))
                 content()
                 Spacer(Modifier.height(96.dp))
                 Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))

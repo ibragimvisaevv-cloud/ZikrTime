@@ -64,11 +64,15 @@ def main():
 
     buf = io.BytesIO()
     with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
-        for f in ("index.py", "miniapi.py", "acquiring.py", "seller.html", "place_corrections.py", "feedback.py"):
+        for f in ("index.py", "miniapi.py", "acquiring.py", "robokassa.py", "seller.html",
+                  "place_corrections.py", "places_sources.py", "feedback.py", "community.py"):
             z.write(os.path.join(os.path.dirname(__file__), f), f)
     env = {k: os.environ[k] for k in ("BOT_TOKEN", "BUCKET", "DATA_BUCKET", "S3_KEY_ID", "S3_SECRET")}
     env.update({k: os.environ[k] for k in ("TBANK_ENABLED", "TBANK_TERMINAL", "TBANK_PASSWORD", "TBANK_TAXATION",
-                                          "TBANK_TAX", "SELLER_OFFER_URL") if os.getenv(k)})
+                                          "TBANK_TAX", "SELLER_OFFER_URL", "PAYMENT_PROVIDER", "ROBOKASSA_ENABLED",
+                                          "ROBOKASSA_MERCHANT_LOGIN", "ROBOKASSA_PASSWORD1", "ROBOKASSA_PASSWORD2",
+                                          "ROBOKASSA_TEST_PASSWORD1", "ROBOKASSA_TEST_PASSWORD2", "ROBOKASSA_TEST_MODE",
+                                          "ROBOKASSA_HASH", "ROBOKASSA_NPD_RECEIPTS") if os.getenv(k)})
     env["SELLER_PORTAL_URL"] = f"https://functions.yandexcloud.net/{fid}"
     wait(call("POST", f"{API}/versions", {
         "functionId": fid,

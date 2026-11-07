@@ -99,7 +99,37 @@ fun MoreScreen() {
             Spacer(Modifier.height(8.dp))
             AppearanceSegments()
         }) {
-        Text(stringResource(R.string.group_practice), style = MaterialTheme.typography.headlineSmall)
+        SectionLabel(uiCopy(UiCopy0823.PrayerSettings))
+        ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
+            SettingRow(
+                title = stringResource(R.string.settings_city),
+                subtitle = Cities.displayName(context, Store.location),
+                icon = rememberVectorPainter(Icons.Default.LocationOn),
+                onClick = { nav.open(Screen.CITY) },
+            )
+            SettingRow(
+                title = stringResource(R.string.settings_prayer_times),
+                subtitle = uiCopy(UiCopy0823.PrayerSettingsHint),
+                icon = painterResource(R.drawable.ic_calc),
+                onClick = { nav.open(Screen.PRAYER_SETTINGS) },
+            )
+            SettingRow(
+                title = stringResource(R.string.alarm_title),
+                subtitle = if (Store.alarmEnabled) stringResource(R.string.alarm_status_on, Store.alarmOffsetMinutes)
+                else stringResource(R.string.state_off),
+                icon = painterResource(R.drawable.ic_alarm),
+                onClick = { nav.open(Screen.ALARM) },
+            )
+        }
+        ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
+            SettingRow(
+                title = uiCopy(UiCopy0823.ConfigureLimits),
+                subtitle = uiCopy(UiCopy0823.FocusSettingsHint),
+                icon = painterResource(R.drawable.ic_nav_focus),
+                onClick = { nav.tab = Tab.FOCUS },
+            )
+        }
+        SectionLabel(stringResource(R.string.group_practice))
         val destinations = listOf(
             Triple(R.string.quran_title, R.drawable.ic_nav_knowledge, Screen.QURAN),
             Triple(R.string.tasbih_title, R.drawable.ic_tasbih, Screen.TASBIH),
@@ -117,8 +147,6 @@ fun MoreScreen() {
                 }
             }
         }
-        DonateCard(prominent = true)
-        FeedbackButton("app")
         SectionLabel(stringResource(R.string.group_application))
         ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
             SettingRow(
@@ -127,33 +155,16 @@ fun MoreScreen() {
                 icon = painterResource(R.drawable.ic_language),
                 onClick = { nav.open(Screen.LANGUAGE) },
             )
-            SettingRow(
-                title = stringResource(R.string.settings_city),
-                subtitle = Cities.displayName(context, Store.location),
-                icon = rememberVectorPainter(Icons.Default.LocationOn),
-                onClick = { nav.open(Screen.CITY) },
-            )
-            SettingRow(
-                title = stringResource(R.string.settings_prayer_times),
-                subtitle = methodName(Store.method),
-                icon = painterResource(R.drawable.ic_calc),
-                onClick = { nav.open(Screen.PRAYER_SETTINGS) },
-            )
-            SettingRow(
-                title = stringResource(R.string.alarm_title),
-                subtitle = if (Store.alarmEnabled) stringResource(R.string.alarm_status_on, Store.alarmOffsetMinutes)
-                else stringResource(R.string.state_off),
-                icon = painterResource(R.drawable.ic_alarm),
-                onClick = { nav.open(Screen.ALARM) },
-            )
         }
-        SectionLabel(stringResource(R.string.group_data_help))
         ZCard {
             PersonalProgressSetting()
             TextButton(onClick = { nav.open(Screen.PROGRESS) }) {
                 Text(stringResource(R.string.progress_settings))
             }
         }
+        SectionLabel(uiCopy(UiCopy0823.HelpAndSupport))
+        FeedbackButton("app")
+        DonateCard(prominent = true)
         ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
             SettingRow(
                 title = stringResource(R.string.about_title),
@@ -327,6 +338,7 @@ fun PrayerSettingsScreen() {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var refreshing by remember { mutableStateOf(false) }
+    var showCalculationOptions by remember { mutableStateOf(false) }
     val resume = AppEvents.resumeCount
     val notificationsAllowed = remember(resume) { NotificationManagerCompat.from(context).areNotificationsEnabled() }
     val exactAllowed = remember(resume) { PrayerAlarms.canScheduleExact(context) }
@@ -378,30 +390,9 @@ fun PrayerSettingsScreen() {
                 }
             }
         }
-        SectionLabel(stringResource(if (RegionalTimes.preferred) R.string.regional_fallback else R.string.prayer_method))
-        ZCard(padding = PaddingValues(vertical = 6.dp, horizontal = 8.dp)) {
-            CalcMethod.entries.forEach { m ->
-                RadioLine(
-                    text = methodName(m),
-                    subtitle = m.ishaAngle?.let { stringResource(R.string.method_angles, fmtAngle(m.fajrAngle), fmtAngle(it)) }
-                        ?: stringResource(R.string.method_angles_minutes, fmtAngle(m.fajrAngle), m.ishaMinutes ?: 0),
-                    selected = Store.method == m,
-                    onClick = {
-                        Store.method = m
-                        reload()
-                    },
-                )
-            }
-        }
-
-        SectionLabel(stringResource(R.string.prayer_asr_section))
-        ZCard(padding = PaddingValues(vertical = 6.dp, horizontal = 8.dp)) {
-            AsrMadhab.entries.forEach { m ->
-                RadioLine(text = madhabName(m), selected = Store.madhab == m, onClick = {
-                    Store.madhab = m
-                    reload()
-                })
-            }
+        ZCard {
+            DestinationRow(uiCopy(UiCopy0823.CalculationOptions), R.drawable.ic_calc,
+                methodName(Store.method)) { showCalculationOptions = true }
         }
 
         ZCard {
@@ -479,6 +470,7 @@ fun PrayerSettingsScreen() {
             }
         }
 
+        PrayerCheckReminderSettingsCard()
         SectionLabel(stringResource(R.string.prayer_corrections))
         ZCard(padding = PaddingValues(horizontal = 16.dp, vertical = 10.dp)) {
             Text(
@@ -510,6 +502,34 @@ fun PrayerSettingsScreen() {
                 }
             }
         }
+    }
+    if (showCalculationOptions) HorizonSheet(uiCopy(UiCopy0823.CalculationOptions), { showCalculationOptions = false }) {
+        SectionLabel(stringResource(if (RegionalTimes.preferred) R.string.regional_fallback else R.string.prayer_method))
+        ZCard(padding = PaddingValues(vertical = 6.dp, horizontal = 8.dp)) {
+            CalcMethod.entries.forEach { m ->
+                RadioLine(
+                    text = methodName(m),
+                    subtitle = m.ishaAngle?.let { stringResource(R.string.method_angles, fmtAngle(m.fajrAngle), fmtAngle(it)) }
+                        ?: stringResource(R.string.method_angles_minutes, fmtAngle(m.fajrAngle), m.ishaMinutes ?: 0),
+                    selected = Store.method == m,
+                    onClick = {
+                        Store.method = m
+                        reload()
+                    },
+                )
+            }
+        }
+
+        SectionLabel(stringResource(R.string.prayer_asr_section))
+        ZCard(padding = PaddingValues(vertical = 6.dp, horizontal = 8.dp)) {
+            AsrMadhab.entries.forEach { m ->
+                RadioLine(text = madhabName(m), selected = Store.madhab == m, onClick = {
+                    Store.madhab = m
+                    reload()
+                })
+            }
+        }
+
     }
 }
 
