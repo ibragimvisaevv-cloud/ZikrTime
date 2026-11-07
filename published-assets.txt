@@ -1,0 +1,5 @@
+telegram-web-app.124bdff7ba3fe86c8ba5143467afec21e020405e74abdb92cfdda6c0ee3b5908.js SHA-256 verified
+config.c33afc8806cbb68b0744b5ad4210052d3d058f0a15c654972ce44999825c3ff0.js SHA-256 verified
+style.7d102cbbc148686ec27fb1d341c7e35f43a1ec34c2219e020d730a8954dda0f6.css SHA-256 verified
+app.4720acc17aa715f1fce2a60660c241cd652412ac815f026b089a3e989617f31a.js SHA-256 verified
+Published Mini App index and referenced assets verified.

@@ -1,0 +1,6 @@
+Curated prayer places: 4 added, 0 already present or removed
+Public verification: 4 verified, 0 intentionally skipped, 4673 total public places
+cur_berkat_zaytaeva: 43.325629, 45.82248
+cur_berkat_dzhuma_baza: 43.326666, 45.832946
+cur_berkat_dzhanaralieva: 43.331478, 45.816439
+cur_tsentora_north_mosque: 43.317942, 45.827648

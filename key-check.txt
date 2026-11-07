@@ -1,0 +1,4 @@
+длина ключа: 2483 начало: '{' конец: '}'
+не JSON: JSONDecodeError Invalid control character at: line 6 column 322 (char 484)
+ключ исправлен и прочитан
+folder id: длина 20, начало b1g

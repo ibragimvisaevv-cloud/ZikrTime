@@ -1,0 +1,6 @@
+miniapp/app.4720acc17aa715f1fce2a60660c241cd652412ac815f026b089a3e989617f31a.js 44600
+miniapp/style.7d102cbbc148686ec27fb1d341c7e35f43a1ec34c2219e020d730a8954dda0f6.css 13718
+miniapp/config.c33afc8806cbb68b0744b5ad4210052d3d058f0a15c654972ce44999825c3ff0.js 74
+miniapp/telegram-web-app.124bdff7ba3fe86c8ba5143467afec21e020405e74abdb92cfdda6c0ee3b5908.js 119731
+https://storage.yandexcloud.net/zikrtime-shop/privacy.html 12108
+https://storage.yandexcloud.net/zikrtime-shop/miniapp/index.html

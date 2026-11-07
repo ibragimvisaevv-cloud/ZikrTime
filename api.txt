@@ -1,0 +1,4 @@
+функция: d4e19urtqg3suhvp2jg2
+Payment configuration preserved
+версия создана
+api: https://functions.yandexcloud.net/d4e19urtqg3suhvp2jg2
