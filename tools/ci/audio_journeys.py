@@ -131,6 +131,13 @@ def streaming_background_and_interruption():
     shell("wm", "size", "1080x1920")
     shell("settings", "put", "system", "font_scale", "1.0")
     seed("dark", onboarded=True, dismissed=True)
+    # The existing sound picker is visible only when the alarm setting is on.
+    # This disposable profile has no selected days, so nextCityFajr returns null
+    # and no Fajr signal is scheduled.
+    put_pref("alarm_on", "boolean", "true")
+    put_pref("alarm_days", "set", [])
+    fixture = prefs()
+    assert fixture.get("alarm_on") == "true" and fixture.get("alarm_days") == []
     open_route("quran", restart=True)
     observe("quran_index_list")
     tap_control("quran_audio_entry")
@@ -173,8 +180,9 @@ def streaming_background_and_interruption():
     tap_control("audio_play_pause")
     playing(STREAM)
 
-    # Exercise an actual audio-focus boundary without enabling an alarm or
-    # changing its schedule: the existing local adhan preview has a real button.
+    # Exercise the real adhan-preview button in the enabled fixture with no
+    # scheduled days. Preview playback must not change that fixture or resume
+    # Quran automatically when the preview stops.
     open_route("alarm")
     tap_control("adhan_preview_athan_khalaf_one")
     interrupted = wait_state(lambda s: not s["player"]["playWhenReady"] and not s["player"]["isPlaying"],
@@ -184,11 +192,15 @@ def streaming_background_and_interruption():
     time.sleep(1)
     assert not probe()["player"]["playWhenReady"], "Stopping adhan unexpectedly resumed Quran"
     assert protected_preferences() == before, "Audio or preview changed prayer/blocking preferences"
+    fixture_after = prefs()
+    assert fixture_after.get("alarm_on") == "true" and fixture_after.get("alarm_days") == [], \
+        "Preview changed the enabled alarm fixture or its empty schedule"
     select(STREAM)
     capture("audio-return-after-interruption")
     assert not probe()["player"]["playWhenReady"]
     return {"real_surah": STREAM, "play_pause_seek": True, "background_media_controls": True,
             "background_position_advances": True, "adhan_preview_pauses_without_auto_resume": True,
+            "alarm_fixture_enabled_with_no_scheduled_days": True,
             "prayer_and_blocking_settings_unchanged": True}
 
 
