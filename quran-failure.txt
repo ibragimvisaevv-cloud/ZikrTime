@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/runner/work/ZikrTime/ZikrTime/tools/ci/quran_features_ui.py", line 91, in <module>
+    tool('quran_stop_open')
+    ~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ZikrTime/ZikrTime/tools/ci/quran_features_ui.py", line 8, in tool
+    tap_control(identifier)
+    ~~~~~~~~~~~^^^^^^^^^^^^
+  File "helpers", line 149, in tap_control
+    remaining = int(prefs('quran_reading')['timer_remaining'])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "helpers", line 145, in locate_control
+    tap_control('quran_timer_start')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: UI control not found: quran_stop_open
