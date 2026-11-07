@@ -195,7 +195,11 @@ private fun QuranAudioContent(initialSurah: Int) {
                         }
                         TextButton(onClick = { QuranAudioPlayer.togglePlayPause() }, enabled = playback.connected,
                             modifier = Modifier.testTag("audio_mini_play_pause")) {
-                            Text(stringResource(if (playback.playWhenReady) R.string.qaudio_pause else R.string.qaudio_resume))
+                            Text(stringResource(when {
+                                playback.ended -> R.string.qaudio_listen
+                                playback.playWhenReady -> R.string.qaudio_pause
+                                else -> R.string.qaudio_resume
+                            }))
                         }
                     }
                 }
@@ -282,7 +286,7 @@ private fun QuranAudioPlayerCard(surah: QuranSurah, ru: Boolean, playback: Quran
                 modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp).testTag("audio_play_pause")) {
                 Text(stringResource(when {
                     (active || !playback.connected) && playback.error != null -> R.string.qaudio_retry
-                    active && playback.playWhenReady -> R.string.qaudio_pause
+                    active && playback.playWhenReady && !playback.ended -> R.string.qaudio_pause
                     active && position > 0 && !playback.ended -> R.string.qaudio_resume
                     else -> R.string.qaudio_listen
                 }))

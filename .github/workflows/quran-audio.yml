@@ -47,6 +47,8 @@ jobs:
         if: env.REUSE_RUN == ''
       - name: Verify protected Quran text
         run: git diff --exit-code 7eaec0a2bcb389f637d56b5192660cafbd2c9243 -- app/src/main/assets/quran app/src/main/java/com/zikrtime/app/data/QuranContent.kt
+      - name: Validate audio verification scripts
+        run: python3 -m py_compile tools/ci/audio_journeys.py tools/ci/audio_delivery.py tools/ci/audio_source_check.py
       - name: Restore original signing key
         if: env.REUSE_RUN == ''
         env:
@@ -107,6 +109,30 @@ jobs:
           disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -camera-back none -camera-front none
           script: bash tools/ci/audio_smoke.sh
+      - name: Summarize audio validation
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          for name in ('release-delivery.json', 'recheck.json', 'audio-passed.json',
+                       'audio-failure.txt', 'crashes.txt', 'audio-app-locale.txt'):
+              path = Path('ci-out') / name
+              if path.exists():
+                  print('\n=== ' + name + ' ===\n' + path.read_text()[:20000])
+          lint = Path('app/build/reports/lint-results-debug.xml')
+          if lint.exists():
+              issues = ET.parse(lint).getroot().findall('issue')
+              print('Lint severities:', json.dumps({level: sum(i.get('severity') == level for i in issues)
+                                                    for level in ('Fatal', 'Error', 'Warning', 'Information')}))
+          if Path('ci-out/audio-failure.txt').exists():
+              for name in ('audio-failure.xml', 'tap-last.json', 'audio-snapshots.jsonl'):
+                  path = Path('ci-out') / name
+                  if path.exists():
+                      content = path.read_text()
+                      print('\n=== ' + name + ' ===\n' + (content[-16000:] if name.endswith('jsonl') else content[:32000]))
+          PY
       - name: Prepare signed update
         run: cp app/build/outputs/apk/release/app-release.apk ZikrTime-0.8.27.apk
       - uses: actions/upload-artifact@v7.0.2

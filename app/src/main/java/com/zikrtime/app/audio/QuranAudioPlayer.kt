@@ -147,8 +147,10 @@ object QuranAudioPlayer {
 
     fun togglePlayPause() {
         val current = controller
-        if (current?.playWhenReady == true) pause()
-        else (current?.currentMediaItem?.mediaId?.toIntOrNull() ?: mutableState.value.surahId)?.let(::play)
+        val surah = current?.currentMediaItem?.mediaId?.toIntOrNull() ?: mutableState.value.surahId
+        if (current?.playbackState == Player.STATE_ENDED) surah?.let(::play)
+        else if (current?.playWhenReady == true) pause()
+        else surah?.let(::play)
     }
 
     fun pause() { requestedSurah = null; controller?.pause(); update() }
@@ -171,7 +173,12 @@ object QuranAudioPlayer {
 
     fun stop() {
         requestedSurah = null
-        controller?.apply { pause(); stop(); clearMediaItems() }
+        controller?.apply {
+            app?.let { QuranPlaybackMemory.save(it, this) }
+            pause()
+            stop()
+            clearMediaItems()
+        }
         update()
     }
 

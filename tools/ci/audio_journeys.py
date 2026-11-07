@@ -198,9 +198,47 @@ def streaming_background_and_interruption():
     select(STREAM)
     capture("audio-return-after-interruption")
     assert not probe()["player"]["playWhenReady"]
+
+    # Seek using the real slider, then replay an actually ended recording.
+    tap_control("audio_play_pause")
+    playing(STREAM)
+    slider = locate_control("audio_seek")
+    left, top, right, bottom = bounds(slider)
+    shell("input", "swipe", (left + right) // 2, (top + bottom) // 2,
+          right - 2, (top + bottom) // 2, 450)
+    wait_state(lambda s: s["player"]["surahId"] == STREAM and s["player"]["ended"],
+               "Seeking to the end did not produce ENDED", 30)
+    ended_root = ui()
+    ended_button = find_control(ended_root, "audio_play_pause")
+    assert ended_button is not None
+    assert "Слушать" in [n.get("text", "") for n in ended_button.iter("node")], \
+        "An ended recording must offer Listen, not Pause"
+    capture("audio-ended-ready-to-replay", ended_root)
+    tap_control("audio_play_pause")
+    replayed = playing(STREAM)["player"]
+    assert 0 <= replayed["positionMs"] < 10_000, "Replay did not start near the beginning"
+
+    # Stop saves the current position before clearing the player's media item.
+    time.sleep(2)
+    stop_started = time.monotonic()
+    before_stop = probe()["player"]["positionMs"]
+    tap_control("audio_stop")
+    stopped_memory = prefs("quran_audio_playback_v1")
+    saved_position = int(stopped_memory["position"])
+    assert int(stopped_memory["surah"]) == STREAM
+    assert before_stop <= saved_position <= before_stop + int((time.monotonic() - stop_started) * 1000) + 2_000, \
+        ("Stop did not save its current position", before_stop, saved_position)
+    select(STREAM, restart=True)
+    restored_stop = audio_ready(STREAM)["player"]
+    assert restored_stop["surahId"] == STREAM
+    assert abs(restored_stop["positionMs"] - saved_position) <= 1_500
+    assert not restored_stop["playWhenReady"] and not restored_stop["isPlaying"]
+    capture("audio-stop-position-restored")
     return {"real_surah": STREAM, "play_pause_seek": True, "background_media_controls": True,
             "background_position_advances": True, "adhan_preview_pauses_without_auto_resume": True,
             "alarm_fixture_enabled_with_no_scheduled_days": True,
+            "ended_offers_listen_and_restarts_from_beginning": True,
+            "stop_position_survives_restart_without_autoplay": True,
             "prayer_and_blocking_settings_unchanged": True}
 
 
@@ -351,6 +389,14 @@ if __name__ == "__main__":
               "production_writes": False, "previous_suites_rerun": False, "groups": {}}
     try:
         shell("wm", "density", DENSITY)
+        # Configure the isolated Android profile before any activity is created.
+        # qa_lang then observes ru and does not recreate the first Compose tree.
+        shell("am", "force-stop", PKG)
+        shell("cmd", "locale", "set-app-locales", PKG, "--user", "0", "--locales", "ru")
+        locale_state = shell("cmd", "locale", "get-app-locales", PKG, "--user", "0").strip()
+        (OUT / "audio-app-locale.txt").write_text(locale_state + "\n")
+        assert locale_state == f"Locales for {PKG} for user 0 are [ru]", locale_state
+        report["app_locale"] = "ru"
         actions = {"stream_background_interruption": streaming_background_and_interruption,
                    "download_and_offline": downloaded_surah_works_offline,
                    "failure_cancel_retry_restore_delete": offline_error_cancel_retry_and_delete,
