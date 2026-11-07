@@ -17,6 +17,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
+import androidx.media3.session.SessionError
 import androidx.media3.session.SessionResult
 import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
@@ -95,7 +96,7 @@ class QuranPlaybackService : MediaSessionService() {
 
                 override fun onPlayerCommandRequest(session: MediaSession, controller: MediaSession.ControllerInfo, playerCommand: Int): Int {
                     if (playerCommand == Player.COMMAND_PLAY_PAUSE && !session.player.playWhenReady) {
-                        if (AlarmState.ringing) return SessionResult.RESULT_ERROR_INVALID_STATE
+                        if (AlarmState.ringing) return SessionError.ERROR_INVALID_STATE
                         AdhanSound.stopPreview()
                     }
                     return SessionResult.RESULT_SUCCESS
