@@ -117,7 +117,12 @@ def map_gestures():
           (l+r)//2, max(vt + 120, t + 100), 500)
     after = ui()
     shifted = find_control(after, "places_map")
-    assert shifted is None or bounds(shifted)[1] < t - 20, "Page no longer scrolls outside map"
+    # Accessibility bounds are CLIPPED to the LazyColumn viewport: the top of
+    # a partly hidden map stays at the viewport top while its bottom moves up.
+    # Require real content displacement, not a change of that clipped top.
+    shifted_bounds = bounds(shifted) if shifted is not None else None
+    assert shifted_bounds is None or shifted_bounds[3] < b - 20, (
+        "Page no longer scrolls outside map", area, shifted_bounds)
     capture("clarity-page-scrolled")
     # A fresh Activity restores the city camera and tests a real sparse marker.
     root = start()
@@ -130,7 +135,10 @@ def map_gestures():
     assert find_control(root, "place_details_sheet") is not None, "Native marker did not open preview"
     preview = preview_geometry("clarity-native-marker-preview", normal=True)
     close_sheet()
-    return {"drags": events, "outside_map_scroll": True, "native_marker_preview": preview}
+    return {"drags": events, "outside_map_scroll": True,
+            "outside_drag_map_bounds_before": area,
+            "outside_drag_map_bounds_after": shifted_bounds,
+            "native_marker_preview": preview}
 
 
 def preview_geometry(name, normal=False):
