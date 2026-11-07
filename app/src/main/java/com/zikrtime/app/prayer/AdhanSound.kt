@@ -72,6 +72,7 @@ object AdhanSound {
         }
         stopPreview()
         previewFailed = false
+        com.zikrtime.app.audio.QuranPlaybackService.pauseForInterruption(context)
         val res = resId(context, id).takeIf { it != 0 }
         if (res == null) {
             previewFailed = true

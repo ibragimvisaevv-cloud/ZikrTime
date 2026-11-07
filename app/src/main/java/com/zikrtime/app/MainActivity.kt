@@ -113,7 +113,7 @@ class MainActivity : ComponentActivity() {
         val showSplash = savedInstanceState == null && com.zikrtime.app.ui.LiveFlags.splash &&
             (intent?.hasExtra("qa_screen") != true || intent?.getBooleanExtra("qa_splash", false) == true)
         setContent {
-            val natural = Store.onboarded && (nav.stack.lastOrNull()?.screen in setOf(Screen.TASBIH, Screen.AZKAR, Screen.QURAN, Screen.READING_BEDTIME, Screen.READING_FRIDAY, Screen.PROGRESS, Screen.REVIEW, Screen.TRAINING) || (nav.stack.isEmpty() && nav.tab == Tab.PRAYER))
+            val natural = Store.onboarded && (nav.stack.lastOrNull()?.screen in setOf(Screen.TASBIH, Screen.AZKAR, Screen.QURAN, Screen.QURAN_AUDIO, Screen.READING_BEDTIME, Screen.READING_FRIDAY, Screen.PROGRESS, Screen.REVIEW, Screen.TRAINING) || (nav.stack.isEmpty() && nav.tab == Tab.PRAYER))
             com.zikrtime.app.ui.ThemeRevealHost {
                 ZikrTheme(natural = natural) {
                     val tilt = com.zikrtime.app.ui.rememberTilt(enabled = false)
@@ -146,10 +146,20 @@ class MainActivity : ComponentActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
+        if (BuildConfig.DEBUG) {
+            if (intent.hasExtra("qa_screen")) QaHooks.handle(this, intent, nav)
+            else QuranAudioQa.captureIfRequested(this, intent)
+        }
         handleOpen(intent)
     }
 
     private fun handleOpen(intent: Intent?) {
+        if (intent != null && (intent.getBooleanExtra("open_quran_audio", false) || intent.action == "com.zikrtime.app.OPEN_QURAN_AUDIO")) {
+            nav.openQuranAudio(intent.getIntExtra("quran_audio_surah", 0))
+            intent.removeExtra("open_quran_audio")
+            if (intent.action == "com.zikrtime.app.OPEN_QURAN_AUDIO") intent.action = null
+            return
+        }
         if (intent?.getBooleanExtra("open_focus", false) == true) { nav.stack.clear(); nav.tab = Tab.FOCUS }
         val reading = com.zikrtime.app.prayer.ReadingKind.entries.firstOrNull { it.route == intent?.getStringExtra(EXTRA_OPEN) }
         if (reading != null) {
@@ -263,6 +273,7 @@ private fun AppRoot() {
             Screen.PROGRESS -> com.zikrtime.app.ui.ProgressScreen()
             Screen.AZKAR -> com.zikrtime.app.ui.AzkarScreen()
             Screen.QURAN -> com.zikrtime.app.ui.QuranScreen()
+            Screen.QURAN_AUDIO -> com.zikrtime.app.ui.QuranAudioScreen(entry?.audioSurah ?: 0)
             Screen.PRAYER_JOURNAL -> com.zikrtime.app.ui.PrayerJournalScreen(entry?.journalDay, entry?.journalPrayer)
             Screen.READING_REMINDERS -> com.zikrtime.app.ui.ReadingRemindersScreen()
             Screen.READING_BEDTIME -> com.zikrtime.app.ui.QuranScreen(2, 255)

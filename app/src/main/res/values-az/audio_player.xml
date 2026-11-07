@@ -1,0 +1,8 @@
+<resources>
+    <string name="audio_player_reciter">Mişari Rəşid əl-Əfasi</string>
+    <string name="audio_player_album">Quran · Həfs qiraəti</string>
+    <string name="audio_player_failure">Səsyazma səsləndirilə bilmədi. İnternet bağlantısını yoxlayın və ya surəni yenidən endirib təkrar cəhd edin.</string>
+    <string name="audio_player_connect_failure">Pleyer başladıla bilmədi. Bu ekranı yenidən açıb dinləməyə cəhd edin.</string>
+    <string name="audio_player_catalog_failure">Audio kataloq açıla bilmədi. Bu ekranı yenidən açmağa cəhd edin.</string>
+    <string name="audio_player_alarm_active">Quranı dinləməzdən əvvəl zəngli saatı dayandırın və ya təxirə salın.</string>
+</resources>

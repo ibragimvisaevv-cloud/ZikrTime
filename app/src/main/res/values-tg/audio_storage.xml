@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="audio_download_channel">Боргириҳои Қуръон</string>
+    <string name="audio_download_channel_description">Раванди боргирии сураҳое, ки барои гӯш кардан бе интернет интихоб кардед. Огоҳиҳои бесадо.</string>
+    <string name="audio_download_waiting_network">Интизори пайвасти интернет</string>
+    <string name="audio_download_waiting_wifi">Интизори шабакаи бемаҳдуд</string>
+    <string name="audio_download_running">Сура барои гӯш кардан бе интернет нигоҳ дошта мешавад</string>
+    <string name="audio_download_preparing">Боргирӣ омода шуда истодааст</string>
+</resources>

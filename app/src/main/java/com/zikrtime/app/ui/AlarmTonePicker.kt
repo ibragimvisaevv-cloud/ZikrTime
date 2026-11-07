@@ -149,6 +149,7 @@ private class ToneSample {
     fun play(context: Context) {
         stop()
         AdhanSound.stopPreview()
+        com.zikrtime.app.audio.QuranPlaybackService.pauseForInterruption(context)
         failed = false
         val uris = AlarmTone.candidates(context)
         fun attempt(index: Int) {

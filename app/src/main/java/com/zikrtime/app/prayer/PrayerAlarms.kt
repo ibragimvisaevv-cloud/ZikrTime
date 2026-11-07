@@ -181,6 +181,7 @@ object PrayerAlarms {
             .setAutoCancel(true)
             .build()
         try {
+            if (mode == "adhan") com.zikrtime.app.audio.QuranPlaybackService.pauseForInterruption(context)
             nm.notify(prayer.ordinal + 100, notification)
             PrayerSignals.posted("prayer", prayer.name, time.toInstant().toEpochMilli(), mode = mode)
         } catch (_: SecurityException) {

@@ -1,0 +1,584 @@
+{
+  "schema_version": 1,
+  "reciter": "Mishary Rashid Alafasy",
+  "reciter_id": "alafasy",
+  "source": "https://www.mp3quran.net/eng/afs",
+  "permission_source": "https://www.mp3quran.net/eng/privacy",
+  "source_api": "https://www.mp3quran.net/api/v3/reciters?language=eng&reciter=123",
+  "source_reciter_id": 123,
+  "source_moshaf_id": 123,
+  "rewaya": "Hafs an Asim — Murattal",
+  "verified_at": "2026-11-07T22:28:23.540622+00:00",
+  "tracks": [
+    {
+      "surah_id": 1,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/001.mp3",
+      "size_bytes": 837734
+    },
+    {
+      "surah_id": 2,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/002.mp3",
+      "size_bytes": 120641555
+    },
+    {
+      "surah_id": 3,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/003.mp3",
+      "size_bytes": 74404818
+    },
+    {
+      "surah_id": 4,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/004.mp3",
+      "size_bytes": 76576952
+    },
+    {
+      "surah_id": 5,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/005.mp3",
+      "size_bytes": 60279889
+    },
+    {
+      "surah_id": 6,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/006.mp3",
+      "size_bytes": 69373425
+    },
+    {
+      "surah_id": 7,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/007.mp3",
+      "size_bytes": 79569122
+    },
+    {
+      "surah_id": 8,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/008.mp3",
+      "size_bytes": 29181216
+    },
+    {
+      "surah_id": 9,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/009.mp3",
+      "size_bytes": 58000339
+    },
+    {
+      "surah_id": 10,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/010.mp3",
+      "size_bytes": 43054115
+    },
+    {
+      "surah_id": 11,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/011.mp3",
+      "size_bytes": 44350623
+    },
+    {
+      "surah_id": 12,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/012.mp3",
+      "size_bytes": 40406761
+    },
+    {
+      "surah_id": 13,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/013.mp3",
+      "size_bytes": 19471188
+    },
+    {
+      "surah_id": 14,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/014.mp3",
+      "size_bytes": 19643805
+    },
+    {
+      "surah_id": 15,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/015.mp3",
+      "size_bytes": 15282819
+    },
+    {
+      "surah_id": 16,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/016.mp3",
+      "size_bytes": 40468621
+    },
+    {
+      "surah_id": 17,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/017.mp3",
+      "size_bytes": 33825578
+    },
+    {
+      "surah_id": 18,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/018.mp3",
+      "size_bytes": 31938492
+    },
+    {
+      "surah_id": 19,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/019.mp3",
+      "size_bytes": 20530713
+    },
+    {
+      "surah_id": 20,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/020.mp3",
+      "size_bytes": 26050700
+    },
+    {
+      "surah_id": 21,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/021.mp3",
+      "size_bytes": 25129522
+    },
+    {
+      "surah_id": 22,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/022.mp3",
+      "size_bytes": 28365777
+    },
+    {
+      "surah_id": 23,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/023.mp3",
+      "size_bytes": 23771156
+    },
+    {
+      "surah_id": 24,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/024.mp3",
+      "size_bytes": 29455396
+    },
+    {
+      "surah_id": 25,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/025.mp3",
+      "size_bytes": 17632169
+    },
+    {
+      "surah_id": 26,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/026.mp3",
+      "size_bytes": 29327506
+    },
+    {
+      "surah_id": 27,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/027.mp3",
+      "size_bytes": 25160030
+    },
+    {
+      "surah_id": 28,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/028.mp3",
+      "size_bytes": 30467277
+    },
+    {
+      "surah_id": 29,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/029.mp3",
+      "size_bytes": 20338457
+    },
+    {
+      "surah_id": 30,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/030.mp3",
+      "size_bytes": 18743522
+    },
+    {
+      "surah_id": 31,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/031.mp3",
+      "size_bytes": 11448042
+    },
+    {
+      "surah_id": 32,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/032.mp3",
+      "size_bytes": 8390675
+    },
+    {
+      "surah_id": 33,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/033.mp3",
+      "size_bytes": 27887216
+    },
+    {
+      "surah_id": 34,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/034.mp3",
+      "size_bytes": 18291705
+    },
+    {
+      "surah_id": 35,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/035.mp3",
+      "size_bytes": 16916201
+    },
+    {
+      "surah_id": 36,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/036.mp3",
+      "size_bytes": 16963851
+    },
+    {
+      "surah_id": 37,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/037.mp3",
+      "size_bytes": 23199804
+    },
+    {
+      "surah_id": 38,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/038.mp3",
+      "size_bytes": 17121417
+    },
+    {
+      "surah_id": 39,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/039.mp3",
+      "size_bytes": 26082467
+    },
+    {
+      "surah_id": 40,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/040.mp3",
+      "size_bytes": 25088558
+    },
+    {
+      "surah_id": 41,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/041.mp3",
+      "size_bytes": 18572994
+    },
+    {
+      "surah_id": 42,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/042.mp3",
+      "size_bytes": 18722625
+    },
+    {
+      "surah_id": 43,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/043.mp3",
+      "size_bytes": 19659690
+    },
+    {
+      "surah_id": 44,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/044.mp3",
+      "size_bytes": 9232862
+    },
+    {
+      "surah_id": 45,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/045.mp3",
+      "size_bytes": 10396461
+    },
+    {
+      "surah_id": 46,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/046.mp3",
+      "size_bytes": 15325452
+    },
+    {
+      "surah_id": 47,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/047.mp3",
+      "size_bytes": 11812505
+    },
+    {
+      "surah_id": 48,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/048.mp3",
+      "size_bytes": 11551697
+    },
+    {
+      "surah_id": 49,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/049.mp3",
+      "size_bytes": 8023707
+    },
+    {
+      "surah_id": 50,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/050.mp3",
+      "size_bytes": 8964526
+    },
+    {
+      "surah_id": 51,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/051.mp3",
+      "size_bytes": 8721281
+    },
+    {
+      "surah_id": 52,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/052.mp3",
+      "size_bytes": 7771673
+    },
+    {
+      "surah_id": 53,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/053.mp3",
+      "size_bytes": 7389660
+    },
+    {
+      "surah_id": 54,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/054.mp3",
+      "size_bytes": 7729461
+    },
+    {
+      "surah_id": 55,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/055.mp3",
+      "size_bytes": 10872933
+    },
+    {
+      "surah_id": 56,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/056.mp3",
+      "size_bytes": 11477721
+    },
+    {
+      "surah_id": 57,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/057.mp3",
+      "size_bytes": 12945592
+    },
+    {
+      "surah_id": 58,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/058.mp3",
+      "size_bytes": 9818843
+    },
+    {
+      "surah_id": 59,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/059.mp3",
+      "size_bytes": 10031163
+    },
+    {
+      "surah_id": 60,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/060.mp3",
+      "size_bytes": 7230423
+    },
+    {
+      "surah_id": 61,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/061.mp3",
+      "size_bytes": 4690061
+    },
+    {
+      "surah_id": 62,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/062.mp3",
+      "size_bytes": 3424902
+    },
+    {
+      "surah_id": 63,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/063.mp3",
+      "size_bytes": 4139196
+    },
+    {
+      "surah_id": 64,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/064.mp3",
+      "size_bytes": 5199557
+    },
+    {
+      "surah_id": 65,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/065.mp3",
+      "size_bytes": 5785115
+    },
+    {
+      "surah_id": 66,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/066.mp3",
+      "size_bytes": 5728692
+    },
+    {
+      "surah_id": 67,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/067.mp3",
+      "size_bytes": 7293947
+    },
+    {
+      "surah_id": 68,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/068.mp3",
+      "size_bytes": 7304397
+    },
+    {
+      "surah_id": 69,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/069.mp3",
+      "size_bytes": 6501498
+    },
+    {
+      "surah_id": 70,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/070.mp3",
+      "size_bytes": 5093813
+    },
+    {
+      "surah_id": 71,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/071.mp3",
+      "size_bytes": 4501977
+    },
+    {
+      "surah_id": 72,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/072.mp3",
+      "size_bytes": 5365483
+    },
+    {
+      "surah_id": 73,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/073.mp3",
+      "size_bytes": 3912244
+    },
+    {
+      "surah_id": 74,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/074.mp3",
+      "size_bytes": 5197471
+    },
+    {
+      "surah_id": 75,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/075.mp3",
+      "size_bytes": 3394391
+    },
+    {
+      "surah_id": 76,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/076.mp3",
+      "size_bytes": 5046999
+    },
+    {
+      "surah_id": 77,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/077.mp3",
+      "size_bytes": 4569693
+    },
+    {
+      "surah_id": 78,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/078.mp3",
+      "size_bytes": 4682121
+    },
+    {
+      "surah_id": 79,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/079.mp3",
+      "size_bytes": 4109937
+    },
+    {
+      "surah_id": 80,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/080.mp3",
+      "size_bytes": 3533567
+    },
+    {
+      "surah_id": 81,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/081.mp3",
+      "size_bytes": 2540081
+    },
+    {
+      "surah_id": 82,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/082.mp3",
+      "size_bytes": 2195266
+    },
+    {
+      "surah_id": 83,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/083.mp3",
+      "size_bytes": 4971354
+    },
+    {
+      "surah_id": 84,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/084.mp3",
+      "size_bytes": 2570176
+    },
+    {
+      "surah_id": 85,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/085.mp3",
+      "size_bytes": 3177886
+    },
+    {
+      "surah_id": 86,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/086.mp3",
+      "size_bytes": 1610539
+    },
+    {
+      "surah_id": 87,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/087.mp3",
+      "size_bytes": 1731746
+    },
+    {
+      "surah_id": 88,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/088.mp3",
+      "size_bytes": 2153472
+    },
+    {
+      "surah_id": 89,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/089.mp3",
+      "size_bytes": 3414450
+    },
+    {
+      "surah_id": 90,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/090.mp3",
+      "size_bytes": 1927352
+    },
+    {
+      "surah_id": 91,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/091.mp3",
+      "size_bytes": 1357675
+    },
+    {
+      "surah_id": 92,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/092.mp3",
+      "size_bytes": 1792768
+    },
+    {
+      "surah_id": 93,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/093.mp3",
+      "size_bytes": 1048801
+    },
+    {
+      "surah_id": 94,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/094.mp3",
+      "size_bytes": 695209
+    },
+    {
+      "surah_id": 95,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/095.mp3",
+      "size_bytes": 1045874
+    },
+    {
+      "surah_id": 96,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/096.mp3",
+      "size_bytes": 1529037
+    },
+    {
+      "surah_id": 97,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/097.mp3",
+      "size_bytes": 729480
+    },
+    {
+      "surah_id": 98,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/098.mp3",
+      "size_bytes": 2030173
+    },
+    {
+      "surah_id": 99,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/099.mp3",
+      "size_bytes": 966885
+    },
+    {
+      "surah_id": 100,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/100.mp3",
+      "size_bytes": 1127380
+    },
+    {
+      "surah_id": 101,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/101.mp3",
+      "size_bytes": 1007844
+    },
+    {
+      "surah_id": 102,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/102.mp3",
+      "size_bytes": 1008681
+    },
+    {
+      "surah_id": 103,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/103.mp3",
+      "size_bytes": 445686
+    },
+    {
+      "surah_id": 104,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/104.mp3",
+      "size_bytes": 935537
+    },
+    {
+      "surah_id": 105,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/105.mp3",
+      "size_bytes": 786321
+    },
+    {
+      "surah_id": 106,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/106.mp3",
+      "size_bytes": 687684
+    },
+    {
+      "surah_id": 107,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/107.mp3",
+      "size_bytes": 928012
+    },
+    {
+      "surah_id": 108,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/108.mp3",
+      "size_bytes": 399295
+    },
+    {
+      "surah_id": 109,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/109.mp3",
+      "size_bytes": 875351
+    },
+    {
+      "surah_id": 110,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/110.mp3",
+      "size_bytes": 566058
+    },
+    {
+      "surah_id": 111,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/111.mp3",
+      "size_bytes": 672221
+    },
+    {
+      "surah_id": 112,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/112.mp3",
+      "size_bytes": 354155
+    },
+    {
+      "surah_id": 113,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/113.mp3",
+      "size_bytes": 535966
+    },
+    {
+      "surah_id": 114,
+      "url": "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/114.mp3",
+      "size_bytes": 807637
+    }
+  ]
+}

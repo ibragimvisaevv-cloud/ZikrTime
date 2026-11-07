@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="audio_download_channel">Quran yükləmələri</string>
+    <string name="audio_download_channel_description">İnternetsiz dinləmək üçün seçdiyiniz surələrin yüklənmə gedişi. Səssiz bildirişlər.</string>
+    <string name="audio_download_waiting_network">İnternet bağlantısı gözlənilir</string>
+    <string name="audio_download_waiting_wifi">Limitsiz şəbəkə gözlənilir</string>
+    <string name="audio_download_running">Surə internetsiz dinləmək üçün saxlanılır</string>
+    <string name="audio_download_preparing">Yükləmə hazırlanır</string>
+</resources>

@@ -137,6 +137,7 @@ private fun QuranIndex(book: QuranBook, progress: QuranProgress, open: (QuranPro
     topicId: String, onTopic: (String) -> Unit, closeTopic: () -> Unit) {
     val context = LocalContext.current
     val ru = Lang.content(context) == "ru"
+    val nav = LocalNav.current
     val selectedTopic = if (tab == 3) QuranTopics.find(topicId) else null
     val filteredTopics = if (tab == 3) QuranTopics.search(topicQuery, book) {
         context.getString(it.titleResource()) + " " + context.getString(it.descriptionResource())
@@ -170,6 +171,20 @@ private fun QuranIndex(book: QuranBook, progress: QuranProgress, open: (QuranPro
                     modifier = Modifier.padding(bottom = 6.dp))
                 Text(stringResource(R.string.qp_index_subtitle), style = MaterialTheme.typography.bodyMedium,
                     color = colors.muted, textAlign = TextAlign.Center)
+            }
+        }
+        if (selectedTopic == null) item("listen") {
+            OutlinedCard(onClick = { nav.openQuranAudio(0) }, modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)
+                .testTag("quran_audio_entry"), shape = RoundedCornerShape(18.dp),
+                colors = CardDefaults.outlinedCardColors(containerColor = colors.paper), border = BorderStroke(1.dp, colors.rule)) {
+                Row(Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Text(stringResource(R.string.qaudio_title), style = MaterialTheme.typography.titleMedium, color = colors.accent)
+                        Text(stringResource(R.string.qaudio_entry_detail), style = MaterialTheme.typography.bodySmall, color = colors.muted)
+                    }
+                    Icon(Icons.AutoMirrored.Filled.ArrowForward, null, tint = colors.accent)
+                }
             }
         }
         if (selectedTopic == null) item("sections") {

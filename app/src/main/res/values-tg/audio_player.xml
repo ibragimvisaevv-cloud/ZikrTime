@@ -1,0 +1,8 @@
+<resources>
+    <string name="audio_player_reciter">Мишорӣ Рошид Ал-Афосӣ</string>
+    <string name="audio_player_album">Қуръон · қироати Ҳафс</string>
+    <string name="audio_player_failure">Сабт пахш нашуд. Интернетро санҷед ё сураро аз нав боргирӣ карда, боз кӯшиш кунед.</string>
+    <string name="audio_player_connect_failure">Плеер оғоз нашуд. Ин экранро аз нав кушода, барои шунидан кӯшиш кунед.</string>
+    <string name="audio_player_catalog_failure">Феҳристи аудио кушода нашуд. Ин экранро аз нав кушоед.</string>
+    <string name="audio_player_alarm_active">Пеш аз шунидани Қуръон соати зангдорро хомӯш кунед ё ба таъхир гузоред.</string>
+</resources>

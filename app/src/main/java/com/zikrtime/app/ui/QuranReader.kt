@@ -48,6 +48,7 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
     onScale: (Float) -> Unit, progress: QuranProgress, showIndex: () -> Unit,
     backLabel: Int = R.string.quran_surahs) {
     val context = LocalContext.current
+    val nav = LocalNav.current
     val view = LocalView.current
     val activity = context.readerActivity()
     val configuration = LocalConfiguration.current
@@ -208,6 +209,14 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
                         maxLines = 1, overflow = TextOverflow.Ellipsis, color = colors.ink)
                     if (!compact) Text(stringResource(R.string.qp_selected_ayah, surahId, currentAyah),
                         style = MaterialTheme.typography.labelMedium, color = colors.muted)
+                    if (!fullscreen) TextButton(onClick = {
+                        session.tick(false)
+                        tracker.pause()
+                        nav.openQuranAudio(surahId)
+                    }, contentPadding = PaddingValues(horizontal = 4.dp, vertical = 0.dp),
+                        modifier = Modifier.heightIn(min = 40.dp).testTag("quran_audio_reader_entry")) {
+                        Text(stringResource(R.string.qaudio_entry), style = MaterialTheme.typography.labelMedium)
+                    }
                 }
                 QuranQuickBookmark(QuranProgress.Location(surahId, currentAyah) in bookmarks, quickBookmark)
                 if (!fullscreen) IconButton(onClick = { fullscreen = true }, modifier = Modifier.testTag("quran_fullscreen")) {

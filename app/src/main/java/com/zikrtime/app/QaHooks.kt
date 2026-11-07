@@ -29,6 +29,7 @@ object QaHooks {
 
     fun handle(activity: Activity, intent: Intent?, nav: Nav): Boolean {
         intent ?: return false
+        QuranAudioQa.captureIfRequested(activity, intent)
         val lang = intent.getStringExtra("qa_lang")
         if (lang != null && lang != Lang.saved(activity)) {
             Lang.set(activity, lang)
@@ -83,6 +84,7 @@ object QaHooks {
             "progress" -> nav.open(Screen.PROGRESS)
             "azkar" -> nav.openAzkar("morning")
             "quran" -> nav.open(Screen.QURAN)
+            "quran_audio" -> nav.openQuranAudio(intent.getIntExtra("qa_surah", 0))
             "quiz" -> nav.startQuiz(null)
             "quiz_cards" -> {
                 nav.quizStartWithCards = true

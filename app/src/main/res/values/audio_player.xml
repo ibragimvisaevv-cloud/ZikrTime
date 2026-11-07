@@ -1,0 +1,8 @@
+<resources>
+    <string name="audio_player_reciter">Mishary Rashid Alafasy</string>
+    <string name="audio_player_album">Quran · Hafs recitation</string>
+    <string name="audio_player_failure">Could not play the recording. Check your connection or download this surah again, then retry.</string>
+    <string name="audio_player_connect_failure">The player could not start. Open this screen again and try listening.</string>
+    <string name="audio_player_catalog_failure">The audio catalogue could not be opened. Try opening this screen again.</string>
+    <string name="audio_player_alarm_active">Stop or snooze the alarm before listening to the Quran.</string>
+</resources>

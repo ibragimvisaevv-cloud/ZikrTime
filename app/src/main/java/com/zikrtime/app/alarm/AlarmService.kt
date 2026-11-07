@@ -101,6 +101,7 @@ class AlarmService : Service() {
     private var fallbackStop = false
 
     private fun startSound() {
+        com.zikrtime.app.audio.QuranPlaybackService.pauseForInterruption(this)
         val audio = getSystemService(AudioManager::class.java)
         if (Store.alarmMaxVolume) {
             savedVolume = audio.getStreamVolume(AudioManager.STREAM_ALARM)

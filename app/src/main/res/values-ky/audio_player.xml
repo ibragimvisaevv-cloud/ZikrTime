@@ -1,0 +1,8 @@
+<resources>
+    <string name="audio_player_reciter">Мишари Рашид Аль-Афаси</string>
+    <string name="audio_player_album">Куран · Хафс кырааты</string>
+    <string name="audio_player_failure">Жазууну ойнотуу мүмкүн болгон жок. Интернетти текшериңиз же сүрөнү кайра жүктөп, дагы аракет кылыңыз.</string>
+    <string name="audio_player_connect_failure">Ойноткуч ишке кирген жок. Бул экранды кайра ачып, угууга аракет кылыңыз.</string>
+    <string name="audio_player_catalog_failure">Аудио каталогу ачылган жок. Бул экранды кайра ачып көрүңүз.</string>
+    <string name="audio_player_alarm_active">Куранды угардан мурун ойготкучту өчүрүңүз же кийинкиге калтырыңыз.</string>
+</resources>
