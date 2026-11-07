@@ -6,7 +6,7 @@ import subprocess
 
 folder = Path('design-evidence')
 folder.mkdir(exist_ok=True)
-for name in ['release-delivery.json', 'design-passed.json', 'design-failure.txt', 'miniapp-passed.json',
+for name in ['release-delivery.json', 'design-passed.json', 'design-functional-passed.json', 'design-failure.txt', 'miniapp-passed.json',
              'miniapp-failure.txt', 'crashes.txt', 'last-ui.xml']:
     source = Path('ci-out') / name
     if source.exists():
