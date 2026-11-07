@@ -1,0 +1,49 @@
+gallery
+Traceback (most recent call last):
+  File "/home/runner/work/ZikrTime/ZikrTime/tools/ci/design_journeys.py", line 226, in gallery
+    assert_pref("appearance", theme)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ZikrTime/ZikrTime/tools/ci/design_journeys.py", line 45, in assert_pref
+    actual = prefs().get(key)
+             ~~~~~^^
+  File "tools/ci/features_controls.py", line 48, in prefs
+    for node in prefs_tree(name):
+                ~~~~~~~~~~^^^^^^
+  File "tools/ci/features_controls.py", line 34, in prefs_tree
+    raw = adb('exec-out', 'run-as', PKG, 'cat', f'shared_prefs/{name}.xml')
+  File "tools/ci/features_controls.py", line 16, in adb
+    return subprocess.check_output(['adb', *map(str, args)], text=True, timeout=45)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 473, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               **kwargs).stdout
+               ^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['adb', 'exec-out', 'run-as', 'com.zikrtime.app', 'cat', 'shared_prefs/zikrtime.xml']' returned non-zero exit status 255.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/work/ZikrTime/ZikrTime/tools/ci/design_journeys.py", line 262, in <module>
+    report["groups"][active] = run()
+                               ~~~^^
+  File "/home/runner/work/ZikrTime/ZikrTime/tools/ci/design_journeys.py", line 240, in gallery
+    shell("settings", "put", "system", "font_scale", font_before if font_before not in ("", "null") else "1.0")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "tools/ci/features_controls.py", line 23, in shell
+    return adb('shell', *args)
+  File "tools/ci/features_controls.py", line 16, in adb
+    return subprocess.check_output(['adb', *map(str, args)], text=True, timeout=45)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 473, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               **kwargs).stdout
+               ^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['adb', 'shell', 'settings', 'put', 'system', 'font_scale', '1.0']' returned non-zero exit status 1.

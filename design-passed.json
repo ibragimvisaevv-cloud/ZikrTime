@@ -1,0 +1,35 @@
+{
+  "groups": {
+    "focus": {
+      "choose_apps_opens_picker": true,
+      "selected_package": "com.google.android.youtube",
+      "selection_persists_after_restart": true,
+      "selection_restored": true,
+      "limits_and_permissions_reachable": true
+    },
+    "knowledge": {
+      "start_reaches_real_round": true,
+      "stage": "ASK",
+      "round_persists_after_restart": true
+    },
+    "more": {
+      "settings_groups_reachable": true,
+      "focus_entry_opens_focus": true,
+      "calculation_sheet_reachable": true
+    },
+    "reminders": {
+      "explicit_opt_in": true,
+      "delay_minutes": 15,
+      "choice_persists_after_restart": true,
+      "disable_clears_next_reminder": true
+    },
+    "camera": {
+      "runtime_permission_requested": true,
+      "granted_and_opened": true,
+      "close_and_back_return_to_compass": true,
+      "denial_explained": true,
+      "preview_error_on_emulator": false
+    }
+  },
+  "profile": "isolated_debug_emulator"
+}
