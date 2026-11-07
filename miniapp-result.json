@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "fixtures": "synthetic",
+  "scenarios": [
+    "private photo and issue",
+    "place submission",
+    "owner statistics",
+    "light and dark",
+    "320px layout"
+  ]
+}
