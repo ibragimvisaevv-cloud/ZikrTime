@@ -1,0 +1,15 @@
+{
+  "version": "0.8.23",
+  "version_code": 35,
+  "source_sha": "13083b99279496767732228022d55f8189b0a814",
+  "run": 42375102489,
+  "apk_size": 57496178,
+  "apk_sha256": "5aa422a24bbab488d7ba3e86567f2569f38ce5d8bc2543c7eaa84b6a9694bf92",
+  "debug_sha256": "e0d284281e3e24ab0d1d3656cef234ad5cbff7c500c7cde5cc863f967e21d44b",
+  "certificate_sha256": "7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf",
+  "unit_tests": 152,
+  "unit_skipped": 1,
+  "quran_assets_unchanged": true,
+  "camera_permission": false,
+  "qibla_view": "local_photo_and_orientation_sensor"
+}

@@ -1,0 +1,116 @@
+{
+  "groups": {
+    "focus": {
+      "choose_apps_opens_picker": true,
+      "selected_package": "com.google.android.youtube",
+      "selection_persists_after_restart": true,
+      "selection_restored": true,
+      "limits_and_permissions_reachable": true
+    },
+    "knowledge": {
+      "start_reaches_real_round": true,
+      "stage": "ASK",
+      "round_persists_after_restart": true
+    },
+    "more": {
+      "settings_groups_reachable": true,
+      "focus_entry_opens_focus": true,
+      "calculation_sheet_reachable": true
+    },
+    "reminders": {
+      "explicit_opt_in": true,
+      "delay_minutes": 15,
+      "choice_persists_after_restart": true,
+      "disable_clears_next_reminder": true
+    },
+    "qibla_view": {
+      "virtual_scene_opened": true,
+      "guidance_visible": true,
+      "photo_and_close_visible_before_scrolling": true,
+      "close_and_back_return_to_compass": true,
+      "scene_reopened": true,
+      "font_scale_1_5": true,
+      "landscape_1920x1080": true,
+      "system_motion_off": true,
+      "physical_sensor_alignment_requires_device_check": true
+    },
+    "gallery": {
+      "themes": [
+        "dark",
+        "light"
+      ],
+      "routes": [
+        "home",
+        "focus",
+        "knowledge",
+        "more",
+        "prayer_settings",
+        "alarm",
+        "qibla",
+        "tasbih",
+        "about",
+        "apps",
+        "progress",
+        "azkar",
+        "quran",
+        "shop",
+        "places",
+        "ramadan",
+        "zakat",
+        "prayer_journal",
+        "reading_reminders",
+        "onboarding_welcome",
+        "onboarding_perms"
+      ],
+      "large_text": 1.5,
+      "screenshots": [
+        "screens/design-dark-home.png",
+        "screens/design-dark-focus.png",
+        "screens/design-dark-knowledge.png",
+        "screens/design-dark-more.png",
+        "screens/design-dark-prayer_settings.png",
+        "screens/design-dark-alarm.png",
+        "screens/design-dark-qibla.png",
+        "screens/design-dark-tasbih.png",
+        "screens/design-dark-about.png",
+        "screens/design-dark-apps.png",
+        "screens/design-dark-progress.png",
+        "screens/design-dark-azkar.png",
+        "screens/design-dark-quran.png",
+        "screens/design-dark-shop.png",
+        "screens/design-dark-places.png",
+        "screens/design-dark-ramadan.png",
+        "screens/design-dark-zakat.png",
+        "screens/design-dark-prayer_journal.png",
+        "screens/design-dark-reading_reminders.png",
+        "screens/design-dark-onboarding_welcome.png",
+        "screens/design-dark-onboarding_perms.png",
+        "screens/design-light-home.png",
+        "screens/design-light-focus.png",
+        "screens/design-light-knowledge.png",
+        "screens/design-light-more.png",
+        "screens/design-light-prayer_settings.png",
+        "screens/design-light-alarm.png",
+        "screens/design-light-qibla.png",
+        "screens/design-light-tasbih.png",
+        "screens/design-light-about.png",
+        "screens/design-light-apps.png",
+        "screens/design-light-progress.png",
+        "screens/design-light-azkar.png",
+        "screens/design-light-quran.png",
+        "screens/design-light-shop.png",
+        "screens/design-light-places.png",
+        "screens/design-light-ramadan.png",
+        "screens/design-light-zakat.png",
+        "screens/design-light-prayer_journal.png",
+        "screens/design-light-reading_reminders.png",
+        "screens/design-light-onboarding_welcome.png",
+        "screens/design-light-onboarding_perms.png",
+        "screens/design-large-focus.png",
+        "screens/design-large-knowledge.png",
+        "screens/design-large-more.png"
+      ]
+    }
+  },
+  "profile": "isolated_debug_emulator"
+}

@@ -1,0 +1,17 @@
+{
+  "server_run": 42372494277,
+  "server_step": "Server and payment regression tests",
+  "miniapp_run": 42374725250,
+  "unchanged_sources": true,
+  "browser_result": {
+    "passed": true,
+    "fixtures": "synthetic",
+    "scenarios": [
+      "private photo and issue",
+      "place submission",
+      "owner statistics",
+      "light and dark",
+      "320px layout"
+    ]
+  }
+}
