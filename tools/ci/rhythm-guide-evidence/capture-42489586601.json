@@ -1,0 +1,562 @@
+{
+  "sourceSha": "0566585c761a20354fd2d443bf8644a480845359",
+  "sourceRun": "42489586601",
+  "debugApkSha256": "06ea5cc89b52faca38f3881da40d854157e76e073fbf63779791033cd6a0dcd6",
+  "profile": "disposable_debug_emulator",
+  "locale": "ru",
+  "theme": "dark",
+  "imagesAreActualScreenshots": true,
+  "productionWrites": false,
+  "reusedCaptureRun": null,
+  "captures": [
+    {
+      "topic": "welcome",
+      "step": 1,
+      "control": "Намаз",
+      "attribute": "text",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        76,
+        1731,
+        180,
+        1779
+      ],
+      "pngSha256": "8c3c49f8c0825d2a4cd589cf127572eb9a529170d38a63651702f898944bd438",
+      "webpSha256": "f4f38580b261c552d784f1ade7930f5211154f2364c18d5b38d1a8c077da3ecb"
+    },
+    {
+      "topic": "welcome",
+      "step": 2,
+      "control": "Лимиты",
+      "attribute": "text",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        681,
+        1731,
+        813,
+        1779
+      ],
+      "pngSha256": "8c3c49f8c0825d2a4cd589cf127572eb9a529170d38a63651702f898944bd438",
+      "webpSha256": "f4f38580b261c552d784f1ade7930f5211154f2364c18d5b38d1a8c077da3ecb"
+    },
+    {
+      "topic": "welcome",
+      "step": 3,
+      "control": "Настройки",
+      "attribute": "text",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        867,
+        1731,
+        1039,
+        1779
+      ],
+      "pngSha256": "8c3c49f8c0825d2a4cd589cf127572eb9a529170d38a63651702f898944bd438",
+      "webpSha256": "f4f38580b261c552d784f1ade7930f5211154f2364c18d5b38d1a8c077da3ecb"
+    },
+    {
+      "topic": "prayer",
+      "step": 1,
+      "control": "home_change_city",
+      "attribute": "resource-id",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        72,
+        240,
+        326,
+        384
+      ],
+      "pngSha256": "26f967122eb48b6a88cf301c4ffae048524ff34ffc1b299a8c495f3329b03429",
+      "webpSha256": "f468f01dd8149a35cd0e418f95f3f42388e3a897a1b957312544c409d1233c03"
+    },
+    {
+      "topic": "prayer",
+      "step": 2,
+      "control": "Время намаза",
+      "attribute": "text",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        258,
+        1055,
+        544,
+        1115
+      ],
+      "pngSha256": "a2ac569d482721ddb352bceab4897c7479dcff71215703ab19d0b9b23a2b6fc2",
+      "webpSha256": "bcd3f3841f3113cf3d958f1bfb49d316dfb8a64631fabbf87792582dfad96415"
+    },
+    {
+      "topic": "prayer",
+      "step": 3,
+      "control": "prayer_notification_settings",
+      "attribute": "resource-id",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        72,
+        1513,
+        560,
+        1620
+      ],
+      "pngSha256": "1033b14c8981ebae02bccb9da0174beeef234db455e6d0ebd542b89b3e088b9d",
+      "webpSha256": "a7410a5ec50ee1708d4f25a2763eb0791d0e74748eecf1aea52f78739b385e30"
+    },
+    {
+      "topic": "journal",
+      "step": 1,
+      "control": "Фаджр: Отметить намаз",
+      "attribute": "content-desc",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        864,
+        941,
+        1008,
+        1085
+      ],
+      "pngSha256": "ba0af44859952ef370b625bc405704bbc356670784dbe70d81f649b419547fb5",
+      "webpSha256": "f449c4c1d8d554f8e11f2bc72ae050e2d7938edea890923706991f3d63e3e5db"
+    },
+    {
+      "topic": "journal",
+      "step": 2,
+      "control": "home_prayer_journal",
+      "attribute": "resource-id",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        72,
+        1369,
+        499,
+        1513
+      ],
+      "pngSha256": "1033b14c8981ebae02bccb9da0174beeef234db455e6d0ebd542b89b3e088b9d",
+      "webpSha256": "a7410a5ec50ee1708d4f25a2763eb0791d0e74748eecf1aea52f78739b385e30"
+    },
+    {
+      "topic": "journal",
+      "step": 3,
+      "control": "journal_MADE_UP",
+      "attribute": "resource-id",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        132,
+        946,
+        948,
+        1084
+      ],
+      "pngSha256": "866a61c132e3b5f06e078c5e07ecf4def94512462b9af3a9a3e0323c012914d4",
+      "webpSha256": "00c44566d704d564550858e0390aaebf55c8cd56879e14f512890b51346945d0"
+    },
+    {
+      "topic": "limits",
+      "step": 1,
+      "control": "focus_choose_apps",
+      "attribute": "resource-id",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        72,
+        1053,
+        1008,
+        1215
+      ],
+      "pngSha256": "a600ae0eb77ca1b65779f08b31f92a47b3da98b36cfb0723cf3e20979bf78387",
+      "webpSha256": "14102f62729c2b4dc3af5f92f5ea7a725f439fb95e342b2bb23e50c979e9d9e7"
+    },
+    {
+      "topic": "limits",
+      "step": 2,
+      "control": "focus_settings_open",
+      "attribute": "resource-id",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        72,
+        1239,
+        1008,
+        1395
+      ],
+      "pngSha256": "a600ae0eb77ca1b65779f08b31f92a47b3da98b36cfb0723cf3e20979bf78387",
+      "webpSha256": "14102f62729c2b4dc3af5f92f5ea7a725f439fb95e342b2bb23e50c979e9d9e7"
+    },
+    {
+      "topic": "limits",
+      "step": 3,
+      "control": "Ограничивать время",
+      "attribute": "text",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        156,
+        841,
+        572,
+        901
+      ],
+      "pngSha256": "df32bc6d9ed4c14ed41214a16cbc2328a271d1ee7349a3ea67c546b29434d75e",
+      "webpSha256": "ff30544d26800f54c6c2d90a85fe2b011be37743898bc69ac2430c11bb24912d"
+    },
+    {
+      "topic": "permissions",
+      "step": 1,
+      "control": "Доступ к статистике использования",
+      "attribute": "text",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        132,
+        798,
+        948,
+        936
+      ],
+      "pngSha256": "e132994fca1e769e281178dd23009cc9cb366eaa9f87b163fa6310a67f40e7f5",
+      "webpSha256": "b8cd0c3945c29301de6395fec62cb619f05aaf9ef77191b0c3dc704520fcfc55"
+    },
+    {
+      "topic": "permissions",
+      "step": 2,
+      "control": "Способ 1. Поверх других приложений",
+      "attribute": "text",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        132,
+        1503,
+        948,
+        1641
+      ],
+      "pngSha256": "e132994fca1e769e281178dd23009cc9cb366eaa9f87b163fa6310a67f40e7f5",
+      "webpSha256": "b8cd0c3945c29301de6395fec62cb619f05aaf9ef77191b0c3dc704520fcfc55"
+    },
+    {
+      "topic": "permissions",
+      "step": 3,
+      "control": "focus_permissions_done",
+      "attribute": "resource-id",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        72,
+        1614,
+        1008,
+        1776
+      ],
+      "pngSha256": "ab75cca0793b6adc6bab0308e7502ebfe887a83396b22a0b3f5384dfd23ca362",
+      "webpSha256": "ac685ede753969f259f4511e000eaf6fbca3c0c7b779f4cb440cc7fdc2758f13"
+    },
+    {
+      "topic": "knowledge",
+      "step": 1,
+      "control": "learning_level_1",
+      "attribute": "resource-id",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        72,
+        1027,
+        1008,
+        1393
+      ],
+      "pngSha256": "7b8d47d31a6604341c44db6396794dda9e5fa82c4254b029a2de7281e99ad14f",
+      "webpSha256": "492bb72b45aeef627b5b59c63bcf8a455889ce00b158c6eea07444e655343731"
+    },
+    {
+      "topic": "knowledge",
+      "step": 2,
+      "control": "learning_start",
+      "attribute": "resource-id",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        72,
+        651,
+        1008,
+        813
+      ],
+      "pngSha256": "fc536172aa6551efb49b1d85d91c6e421c369ab5b480f8ea12d6b280cd20c2e1",
+      "webpSha256": "20d0ac52b77a165feeb7483a9b69d4465a9e4ef733ee181be26400daf61f88f0"
+    },
+    {
+      "topic": "knowledge",
+      "step": 3,
+      "control": "learning_review_start",
+      "attribute": "resource-id",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        72,
+        475,
+        1008,
+        631
+      ],
+      "pngSha256": "8ee3ec735e8451f001a2e1fe04e3e444aadcdcef27164bc3de2063bd6553054e",
+      "webpSha256": "dddc546a56e13b7c0f3fac31591cf1ad3f725d80f13bc2b45589f68df04c45f1"
+    },
+    {
+      "topic": "tools",
+      "step": 1,
+      "control": "qibla_compass",
+      "attribute": "resource-id",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        60,
+        447,
+        1020,
+        1407
+      ],
+      "pngSha256": "c833e895308411b166c8ecc17ca1428c76979641346c4a1798fa80aa843aadaa",
+      "webpSha256": "458bc029ee917446d6dc09b4eb0a077e88d0a683b74c18f7ce87697a1361f806"
+    },
+    {
+      "topic": "tools",
+      "step": 2,
+      "control": "tasbih_counter",
+      "attribute": "resource-id",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        48,
+        944,
+        1032,
+        1682
+      ],
+      "pngSha256": "2a0b6ea1acef606307b94cb547bee526c47c6ce017c65538ae816a91465932c0",
+      "webpSha256": "c121b465eb87f13588892f6ff6f67157cd6b672b857f0cf422b74b03210724e6"
+    },
+    {
+      "topic": "tools",
+      "step": 3,
+      "control": "home_reading_reminders",
+      "attribute": "resource-id",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        72,
+        1042,
+        374,
+        1186
+      ],
+      "pngSha256": "cf422386aa1c93cbd5d6dc5ae189175de67321e2ba5c5eef36316eb62bcc08a5",
+      "webpSha256": "0bf351d3786000f9b84211bbfd55455be079711de986b839ad07e1535eb98425"
+    },
+    {
+      "topic": "shop",
+      "step": 1,
+      "control": "shop_partner_s24a178b0",
+      "attribute": "resource-id",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        72,
+        882,
+        1008,
+        1257
+      ],
+      "pngSha256": "83db380b039bd0447f5bcccde3f256053fbcdc28b49c2f0bb83b72df8bcf68d0",
+      "webpSha256": "7f21009b2504a533cfece9182278139935d5fae76775cd1c70d7c7ae36b3669f"
+    },
+    {
+      "topic": "shop",
+      "step": 2,
+      "control": "Написать в Telegram",
+      "attribute": "text",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        331,
+        1221,
+        750,
+        1281
+      ],
+      "pngSha256": "13ffec459b4c0d525c6271862e868a42efb39890b53237c11c8887aeb0d7d6b2",
+      "webpSha256": "b5dcc2f020a219032df97839cbf7e6ad844bb27e4e54bcaa27c95d9beea31a89"
+    },
+    {
+      "topic": "shop",
+      "step": 3,
+      "control": "shop_merchant",
+      "attribute": "resource-id",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        72,
+        1329,
+        1008,
+        1533
+      ],
+      "pngSha256": "2e300214d6b984baa7cebee71741bee382802f478dea5521c8da1af5a8deca75",
+      "webpSha256": "27700c51d9818328388a78e5083b28ad9a292102c779e198bfc588584a3d4a7b"
+    },
+    {
+      "topic": "places",
+      "step": 1,
+      "control": "places_map",
+      "attribute": "resource-id",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        60,
+        324,
+        1020,
+        1092
+      ],
+      "pngSha256": "ef5c87cdddb9470353246850e5a09b5c82fa41b795a5c2ab8d4e536cb6a804e6",
+      "webpSha256": "f42f6f3d420a8d3e97c8126c7d3b98a662a6a88e40768e006582f6510b5cc38b"
+    },
+    {
+      "topic": "places",
+      "step": 2,
+      "control": "place_details_expand",
+      "attribute": "resource-id",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        555,
+        1638,
+        1020,
+        1800
+      ],
+      "pngSha256": "5ec2a4179aea13a14136be742ae1aef4620fabdb31e82d3a7c3e3e10c7190af7",
+      "webpSha256": "386b2b2dd32d47b1a95469a46c33e064ad987e9a0ffdb826c2d1374f586e747e"
+    },
+    {
+      "topic": "places",
+      "step": 3,
+      "control": "place_details_route",
+      "attribute": "resource-id",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        60,
+        1638,
+        525,
+        1800
+      ],
+      "pngSha256": "5ec2a4179aea13a14136be742ae1aef4620fabdb31e82d3a7c3e3e10c7190af7",
+      "webpSha256": "386b2b2dd32d47b1a95469a46c33e064ad987e9a0ffdb826c2d1374f586e747e"
+    },
+    {
+      "topic": "quran",
+      "step": 1,
+      "control": "quran_read_entry",
+      "attribute": "resource-id",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        60,
+        603,
+        1020,
+        843
+      ],
+      "pngSha256": "a666653f49a9687e12ce7b107c9ac098bb927fceff9ec180dff147f2e4b33cea",
+      "webpSha256": "b9ff80e83b46f6e0dcf4209207626e320f66b847f7e9ed53d73a89c1499e0938"
+    },
+    {
+      "topic": "quran",
+      "step": 2,
+      "control": "ayah_repeat_3",
+      "attribute": "resource-id",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        419,
+        890,
+        621,
+        1034
+      ],
+      "pngSha256": "020f0b3c2b108a2f5a1b30119de3f7a31c710973a9617e95392b793da0d8cdca",
+      "webpSha256": "c8982722063e66b1233cd74e562b5f16fde7b730648fdfe399829b8682a259ba"
+    },
+    {
+      "topic": "quran",
+      "step": 3,
+      "control": "quran_action_bookmark",
+      "attribute": "resource-id",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        60,
+        1672,
+        1020,
+        1828
+      ],
+      "pngSha256": "0d61f71566cf4d68fdb808e665c7ad9ef4e7606b4c16e292cf13e98239421743",
+      "webpSha256": "222fca11d50fe4f1ddd5302e091dafabcc6e3da1ccd0af1063ffa0df4c871b46"
+    }
+  ],
+  "design": "rhythm-pause-0829",
+  "setup": "real_onboarding_and_theme_controls",
+  "qaDemo": false,
+  "fabricatedProgress": false,
+  "captureRun": "42489586601",
+  "captureSha": "0566585c761a20354fd2d443bf8644a480845359",
+  "effectiveDisplayEvidence": "display/guide-source-<topic>-<step>.json",
+  "publicPlaceReference": "shop-bot/places/berkat_yurt_verified_2026-11-07.json",
+  "publicPlaceSnapshotUsedOnlyForRealGuideExample": true
+}

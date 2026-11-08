@@ -112,6 +112,17 @@ def back():
     time.sleep(.4)
 
 
+def long_press(tag):
+    root, node, (l, t, r, b) = locate(tag)
+    assert node.get('enabled', 'true') == 'true', 'Disabled action: ' + tag
+    assert node.get('long-clickable') == 'true', 'Long press is not exposed: ' + tag
+    with (OUT / 'rhythm-actions.jsonl').open('a') as stream:
+        stream.write(json.dumps({'group': ACTIVE, 'identifier': tag, 'gesture': 'long_press',
+                                 'point': [(l+r)//2, (t+b)//2], 'duration_ms': 650}) + '\n')
+    shell('input', 'swipe', (l+r)//2, (t+b)//2, (l+r)//2, (t+b)//2, 650)
+    time.sleep(.4)
+
+
 def route(name):
     shell('am', 'start', '-S', '-W', '-n', PKG + '/.MainActivity',
           '--es', 'qa_screen', name, '--es', 'qa_lang', LOCALE,
@@ -168,7 +179,15 @@ def capture_geometry(name, root):
     lines = [line.strip() for line in activity.splitlines()
              if 'mCurrentConfig' in line or line.lstrip().startswith(('ACTIVITY ', 'TASK '))]
     state['activity_config_lines'] = lines
-    config = next((line for line in lines if 'mCurrentConfig' in line), '')
+    # dumpsys includes the launcher beneath our activity. Its configuration
+    # cannot establish that the application received a font/density change.
+    config, app_activity, current_activity = '', '', ''
+    for line in lines:
+        if line.startswith('ACTIVITY '):
+            current_activity = line
+        elif 'mCurrentConfig' in line and current_activity.startswith('ACTIVITY ' + PKG + '/'):
+            config, app_activity = line, current_activity
+    state['configuration_activity'] = app_activity
     scale = re.search(r'\{([0-9]+(?:\.[0-9]+)?)\s', config)
     dpi = re.search(r'\b(\d+)dpi\b', config)
     width = re.search(r'\bw(\d+)dp\b', config)
@@ -435,6 +454,40 @@ def reader_actions():
     tap('quran_note_delete')
     tap('quran_note_delete_confirm')
     assert 'note_114:1' not in prefs('quran_reading')
+    tap('quran_tools')
+    tap('quran_jump_open')
+    enter_text('quran_ayah_input', '99')
+    back()
+    tap('quran_go')
+    observe('quran_jump_error')
+    enter_text('quran_ayah_input', '2')
+    back()
+    tap('quran_go')
+    root = observe('quran_translation_2')
+    assert prefs('quran_reading').get('last') == '114:2', 'Jump did not persist the exact ayah'
+    translation = find(root, 'quran_translation_2').get('text', '')
+    assert translation.strip(), 'Expected existing translated verse'
+    long_press('quran_translation_2')
+    observe('quran_ayah_sheet')
+    tap('quran_copy_ayah')
+    assert '114:2' in find(observe('quran_copy_location'), 'quran_copy_location').get('text', '')
+    for tag in ('quran_copy_arabic', 'quran_copy_translation', 'quran_copy_both'):
+        locate(tag)
+    tap('quran_copy_translation')
+    observe('quran_audio_reader_entry')
+    tap('quran_audio_reader_entry')
+    tap('quran_note_open')
+    assert '114:2' in find(observe('quran_note_location'), 'quran_note_location').get('text', '')
+    # Verify actual clipboard content through the app's editor, then discard it.
+    # No generated religious text, clipboard injection, or persisted test note.
+    tap('quran_stop_note')
+    shell('input', 'keyevent', 'KEYCODE_PASTE')
+    assert find(ui(), 'quran_stop_note').get('text', '') == translation, 'Copied translation differs from the visible ayah'
+    shot('test-long-press-copy-paste-exact-ayah')
+    back()
+    tap('quran_note_close')
+    tap('quran_note_discard')
+    assert 'note_114:2' not in prefs('quran_reading'), 'Discarded clipboard verification was saved'
     route('quran')
     tap('quran_topics')
     observe('quran_topics_count')
@@ -448,9 +501,12 @@ def reader_actions():
     tap('quran_goal_preset_15')
     tap('quran_goal_save')
     assert prefs('quran_reading').get('daily_goal_minutes') == '15'
-    return {'map_ids': ['19', '20', '21', '22', '23', '27', '30'],
+    return {'map_ids': ['19', '20', '21', '22', '23', '25', '27', '30'],
             'verified': ['surah_modes', 'fullscreen', 'audio_controls_reachable', 'repeats_speed_selection',
-                         'note_keyboard', 'discard_keep', 'save_delete_note', 'topics', 'statistics_period', 'goal']}
+                         'note_keyboard', 'discard_keep', 'save_delete_note', 'invalid_jump_rejected',
+                         'jump_exact_ayah_persisted', 'translation_long_press_opens_actions',
+                         'all_copy_options_reachable', 'copy_translation_exact_clipboard_paste_then_discard',
+                         'topics', 'statistics_period', 'goal']}
 
 
 def tasbih_azkar():
@@ -542,6 +598,27 @@ def focus_journal():
     tap('focus_apps_done')
     tap('focus_settings_open')
     shot('focus-settings-dark', presentation=True)
+    pause_before = prefs('focus_pause_v1')
+    assert pause_before.get('enabled', 'false') == 'false', 'This journey expects the fresh opt-out profile'
+    tap('Зикр перед открытием', 'text')
+    assert prefs('focus_pause_v1').get('enabled') == 'true'
+    for tag, value in (('focus_pause_strict', 'true'), ('focus_pause_soft', 'false')):
+        tap(tag)
+        root = ui()
+        assert find(root, tag).get('selected') == 'true', 'Pause mode is not marked selected: ' + tag
+        other = 'focus_pause_soft' if value == 'true' else 'focus_pause_strict'
+        assert find(root, other).get('selected') == 'false', 'Both pause modes appear selected'
+        assert prefs('focus_pause_v1').get('strict') == value, 'Pause mode did not persist'
+    for index in range(3):
+        tag = 'focus_pause_phrase_' + str(index)
+        tap(tag)
+        assert find(ui(), tag).get('selected') == 'true', 'Pause phrase is not marked selected: ' + tag
+        assert prefs('focus_pause_v1').get('phrase') == str(index), 'Pause phrase did not persist'
+    shot('test-focus-selected-mode-phrase')
+    tap('focus_pause_strict' if pause_before.get('strict') == 'true' else 'focus_pause_soft')
+    tap('focus_pause_phrase_' + pause_before.get('phrase', '0'))
+    tap('Зикр перед открытием', 'text')
+    assert prefs('focus_pause_v1').get('enabled') == 'false', 'Pause opt-out was not restored'
     back()
     tap('focus_setup')
     observe('focus_permissions_done')
@@ -554,7 +631,11 @@ def focus_journal():
     shot('journal-status-chooser-dark', presentation=True)
     back()
     return {'map_ids': ['14', '41', '42', '43', '44'],
-            'verified': ['apps_open_done', 'settings_open_back', 'permissions_open_done', 'journal_previous_status_choices'],
+            'verified': ['apps_open_done', 'settings_open_back', 'pause_opt_in_out',
+                         'both_pause_modes_selected_and_persisted', 'all_three_pause_phrases_selected_and_persisted',
+                         'permissions_open_done', 'journal_previous_status_choices'],
+            'permission_grants_changed': False, 'pause_opt_out_restored': True,
+            'selected_checkmark_visual_evidence': 'screens/test-focus-selected-mode-phrase.png',
             'blocking_services_enabled': False}
 
 

@@ -1,0 +1,12 @@
+{
+  "capture_run": "42489586601",
+  "source_sha": "0566585c761a20354fd2d443bf8644a480845359",
+  "source_run": "42489586601",
+  "debug_sha256": "06ea5cc89b52faca38f3881da40d854157e76e073fbf63779791033cd6a0dcd6",
+  "images": 30,
+  "webp_bytes": 1216998,
+  "source_inputs_unchanged_except_guide_assets": true,
+  "byte_identical_tracked_paths_excluded": [
+    "gradlew.bat"
+  ]
+}
