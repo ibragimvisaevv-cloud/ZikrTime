@@ -1,0 +1,67 @@
+{
+  "sourceSha": "5b3efc159b9325cc56d2f3498c136430a1260047",
+  "sourceRun": "42467811837",
+  "debugApkSha256": "8b2662e21e623e9c68dec74d6798195b50447cccf8735d53c1265ae0fe9d3004",
+  "profile": "disposable_debug_emulator",
+  "locale": "ru",
+  "theme": "dark",
+  "imagesAreActualScreenshots": true,
+  "productionWrites": false,
+  "reusedCaptureRun": null,
+  "captures": [
+    {
+      "topic": "quran",
+      "step": 1,
+      "control": "quran_read_entry",
+      "attribute": "resource-id",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        60,
+        663,
+        1020,
+        909
+      ],
+      "pngSha256": "e5c871ea62746fdf043d2b7dd9b564e914442d8d24c12771a737f01d8ca40560",
+      "webpSha256": "bbbda3a515bce261dede45d86c3104c09d06673793173698918b46652b3cc42d"
+    },
+    {
+      "topic": "quran",
+      "step": 2,
+      "control": "ayah_repeat_3",
+      "attribute": "resource-id",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        377,
+        890,
+        585,
+        1034
+      ],
+      "pngSha256": "3dfa234b47678e2df851a910789d52d8a1d50fb9a6ebb7e07df21d00e778cd1c",
+      "webpSha256": "8740fc573455527356e02c89033859f01bda6ea70386853ba1c0483f883153cf"
+    },
+    {
+      "topic": "quran",
+      "step": 3,
+      "control": "quran_action_bookmark",
+      "attribute": "resource-id",
+      "originalSize": [
+        1080,
+        1920
+      ],
+      "bounds": [
+        60,
+        1182,
+        1020,
+        1326
+      ],
+      "pngSha256": "0adacd73bf2489e628fe9c725ade600fd69dd3e7cc2388cd5d37f0c1acb9be55",
+      "webpSha256": "6fa739e28bda9e0f5da9ea5a75e191b2752be82cd6c167c6d73e6f4229935cf2"
+    }
+  ]
+}

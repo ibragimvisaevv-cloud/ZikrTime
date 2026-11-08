@@ -1,0 +1,18 @@
+{
+  "origins": [
+    {
+      "capture_run": 42468102124,
+      "apk_source_sha": "b755cffca95923b63c75f3b3c105f2c954f9e4f9",
+      "apk_source_run": "42426787159",
+      "debug_apk_sha256": "f48bfbfaed2b19bef31c7adc307cdcce016b5c511a74f429d6a73bf82ea09dec"
+    },
+    {
+      "capture_run": 42467811837,
+      "apk_source_sha": "5b3efc159b9325cc56d2f3498c136430a1260047",
+      "apk_source_run": "42467811837",
+      "debug_apk_sha256": "8b2662e21e623e9c68dec74d6798195b50447cccf8735d53c1265ae0fe9d3004"
+    }
+  ],
+  "steps": 30,
+  "webp_bytes": 1634980
+}

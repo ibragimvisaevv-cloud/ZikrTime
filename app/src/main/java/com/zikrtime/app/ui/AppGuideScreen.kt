@@ -249,7 +249,7 @@ private fun GuidePage(topic: GuideTopic, firstRun: Boolean, onFinish: () -> Unit
                 GuideStep(topic, step, Modifier.widthIn(max = 460.dp).fillMaxWidth())
                 AppGuidePreview(topic, step, Modifier.widthIn(max = 460.dp).fillMaxWidth(), imageHeight)
             }
-            if (topic != GuideTopic.WELCOME) {
+            if (!firstRun && topic != GuideTopic.WELCOME) {
                 FilledTonalButton(
                     onClick = { onOpenTopic(topic) },
                     modifier = Modifier.widthIn(max = 460.dp).fillMaxWidth().heightIn(min = 52.dp).testTag("guide_open"),
