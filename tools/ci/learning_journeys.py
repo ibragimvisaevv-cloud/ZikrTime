@@ -15,7 +15,10 @@ AYAH = 1
 
 def open_reader(restart=False):
     open_route("quran", restart=restart)
-    observe("quran_index_list")
+    # A freshly installed debug build validates the whole protected corpus.
+    # The isolated remaining-mode run starts cold, unlike the earlier audio
+    # groups. Keep the exact ready-state assertion with a bounded cold wait.
+    observe("quran_index_list", tries=30)
     locate_control("quran_search")
     current = find_control(ui(), "quran_search")
     if current.get("text", ""):

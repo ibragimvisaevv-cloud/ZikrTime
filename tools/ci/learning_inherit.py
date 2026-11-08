@@ -38,6 +38,11 @@ subprocess.run(["git", "diff", "--exit-code", SOURCE, "HEAD", "--", "app/",
                 "tools/ci/features_controls.py", "tools/ci/audio_source_check.py"], check=True)
 path = "tools/ci/learning_journeys.py"
 old_text = subprocess.check_output(["git", "show", SOURCE + ":" + path], text=True)
+# Only the cold-load readiness timeout changes in the shared reader helper;
+# media assertions, gestures, selections, and exact query checks stay intact.
+assert old_text.count('    observe("quran_index_list")') == 1
+old_text = old_text.replace('    observe("quran_index_list")',
+                            '    observe("quran_index_list", tries=30)')
 def functions(text):
     return {node.name: ast.dump(node, include_attributes=False) for node in ast.parse(text).body
             if isinstance(node, ast.FunctionDef)}
