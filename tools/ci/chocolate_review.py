@@ -5,6 +5,7 @@ with a disposable common debug certificate; every non-signature ZIP entry is
 verified unchanged. No production account, permission grant or purchase is used.
 """
 import hashlib
+import ast
 import json
 import os
 from pathlib import Path
@@ -118,6 +119,90 @@ def load_helpers():
     exec(compile(helper.read_text().split("\nif __name__ == '__main__':")[0], str(helper), 'exec'), globals())
     # The imported file contributes definitions only, never its historical suite.
     globals()['save_report'] = save_shard
+    globals()['probe'] = diagnostic_probe
+
+
+def diagnostic_probe():
+    """Wait for the requested debug snapshot, without restarting its player.
+
+    MainActivity.onNewIntent explicitly dispatches qa_audio_probe without a
+    qa_screen. am -W can return before that existing activity processes it.
+    A matching nonce proves the handler ran; no fabricated snapshot is used.
+    """
+    identifier = uuid.uuid4().hex
+    response = shell('am', 'start', '-W', '-n', PKG + '/.MainActivity',
+                     '--ez', 'qa_audio_probe', 'true', '--es', 'qa_audio_probe_id', identifier)
+    deadline = time.monotonic() + 8
+    while time.monotonic() < deadline:
+        result = subprocess.run(['adb', 'shell', 'run-as', PKG, 'cat', 'files/qa-audio-state.json'],
+                                capture_output=True, text=True, timeout=10)
+        if result.returncode == 0:
+            snapshot = json.loads(result.stdout)
+            if snapshot.get('probeId') == identifier:
+                with (OUT / 'audio-snapshots.jsonl').open('a') as handle:
+                    handle.write(json.dumps({'group': ACTIVE_GROUP, **snapshot}) + '\n')
+                return snapshot
+        time.sleep(.25)
+    raise AssertionError('Requested debug audio snapshot was not delivered: ' + response)
+
+
+def inherit(shard):
+    """Carry only recorded successful checks across identical APK/helper inputs."""
+    assert shard in SHARDS
+    build = json.loads((OUT / 'build.json').read_text())
+    prior_path = Path('prior-ui') / ('report-' + shard + '.json')
+    prior = json.loads(prior_path.read_text())
+    assert prior['shard'] == shard and prior['source_sha'] == build['source_sha']
+    assert prior['debug_apk_sha256'] == sha(DEBUG) == build['apk_sha256'][str(DEBUG)]
+    assert str(prior['run']) == os.environ['UI_REUSE_RUN']
+    previous = prior['verification_sha']
+    assert re.fullmatch('[0-9a-f]{40}', previous)
+    subprocess.run(['git', 'diff', '--exit-code', previous, 'HEAD', '--', 'app', 'gradle', 'gradlew',
+                    'gradlew.bat', 'build.gradle.kts', 'settings.gradle.kts', 'gradle.properties'], check=True)
+    subprocess.run(['git', 'diff', '--exit-code', previous, 'HEAD', '--', 'tools/ci',
+                    ':(exclude)tools/ci/chocolate_review.py'], check=True)
+    old_text = subprocess.check_output(['git', 'show', previous + ':tools/ci/chocolate_review.py'], text=True)
+    old_functions = {n.name: n for n in ast.parse(old_text).body if isinstance(n, ast.FunctionDef)}
+    new_functions = {n.name: n for n in ast.parse(Path(__file__).read_text()).body if isinstance(n, ast.FunctionDef)}
+    required_functions = ['fixture']
+    if shard == 'preserve':
+        required_functions += ['preserve_shard', 'frozen_screens', 'resigned_copies', 'apk_payload']
+    for name in required_functions:
+        assert ast.dump(old_functions[name]) == ast.dump(new_functions[name]), ('Inherited check changed', name)
+    if shard == 'sections':
+        # The completed section route mapping and capture loop are unchanged;
+        # only the later permission action is corrected and rerun.
+        def section_checks(function):
+            return [ast.dump(n) for n in ast.walk(function)
+                    if (isinstance(n, ast.Assign) and any(isinstance(t, ast.Name) and t.id == 'routes' for t in n.targets))
+                    or (isinstance(n, ast.For) and isinstance(n.target, ast.Tuple))]
+        assert section_checks(old_functions['sections_shard']) == section_checks(new_functions['sections_shard'])
+    expected = {'home': {'home-dark-800', 'home-dark-640', 'home-light-800', 'home-light-640', 'home-large-text'},
+                'sections': {'sections-dark', 'sections-light'},
+                'preserve': {'upgrade', 'frozen-screen-comparisons'}}[shard]
+    assert expected <= prior['groups'].keys()
+    if shard == 'preserve':
+        assert prior['complete'] and len(prior['groups']['frozen-screen-comparisons']) == 10
+    manifest = {}
+    for relative, digest in prior['captures'].items():
+        source = prior_path.parent / relative
+        assert sha(source) == digest, relative
+        target = OUT / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, target)
+        manifest[relative] = digest
+    provenance = OUT / 'inherited' / os.environ['UI_REUSE_RUN']
+    provenance.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(prior_path, provenance / ('prior-' + prior_path.name))
+    for xml in prior_path.parent.glob('*.xml'):
+        shutil.copyfile(xml, provenance / xml.name)
+    prior.pop('failure', None)
+    prior.update({'verification_sha': os.environ['GITHUB_SHA'], 'run': os.environ['GITHUB_RUN_ID'],
+                  'complete': shard == 'preserve', 'inherited': {'run': os.environ['UI_REUSE_RUN'],
+                  'verification_sha': previous, 'groups': sorted(expected), 'captures': manifest,
+                  'validation': 'Identical APK/source, helper bytes, frozen check AST and image SHA-256'}})
+    write_json(OUT / prior_path.name, prior)
+    print('Inherited verified ' + shard + ' groups: ' + ', '.join(sorted(expected)))
 
 
 def save_shard():
@@ -145,9 +230,11 @@ def home_shard():
     fixture()
     for theme in ('dark', 'light'):
         for height in (800, 640):
-            REPORT['groups'][f'home-{theme}-{height}'] = check_home_top(theme, height_dp=height)
-            save_shard()
-    REPORT['groups']['home-large-text'] = large_home('dark')
+            if f'home-{theme}-{height}' not in REPORT['groups']:
+                REPORT['groups'][f'home-{theme}-{height}'] = check_home_top(theme, height_dp=height)
+                save_shard()
+    if 'home-large-text' not in REPORT['groups']:
+        REPORT['groups']['home-large-text'] = large_home('dark')
     REPORT['groups']['home-reading-actions'] = below_schedule('dark')
     # One representative first screen per supported language, no audio rerun.
     configure('dark')
@@ -169,6 +256,8 @@ def sections_shard():
     routes = {'knowledge': 'quran_open', 'shop': 'shop_search', 'more': 'settings_guide', 'focus': 'focus_setup',
               'azkar': 'azkar_source', 'prayer_settings': 'prayer_regional_mode', 'onboarding_perms': 'onboarding_step_3'}
     for theme in ('dark', 'light'):
+        if 'sections-' + theme in REPORT['groups']:
+            continue
         configure(theme)
         for route, tag in routes.items():
             start(route)
@@ -179,8 +268,9 @@ def sections_shard():
                 put_pref('onboarded', 'boolean', 'true')
         REPORT['groups']['sections-' + theme] = list(routes)
         save_shard()
+    configure('light')
     start('focus')
-    tap_fully_visible('focus_permissions_open')
+    tap_fully_visible('focus_setup', observe('focus_setup'))
     for _ in range(6):
         root = ui()
         title = find_control(root, 'Разрешения телефона', 'text')
@@ -310,6 +400,10 @@ def run_ui(shard):
               'run': os.environ.get('GITHUB_RUN_ID'), 'debug_apk_sha256': sha(DEBUG), 'groups': {}, 'complete': False,
               'profile': 'disposable_debug_emulator', 'production_writes': False,
               'screenshots_are_real_android_pixels': True, 'release_ui_tested': False}
+    if os.environ.get('UI_REUSE_RUN'):
+        REPORT = json.loads((OUT / ('report-' + shard + '.json')).read_text())
+        assert REPORT.get('inherited', {}).get('run') == os.environ['UI_REUSE_RUN']
+        assert REPORT['debug_apk_sha256'] == sha(DEBUG)
     started = time.monotonic()
     try:
         shell('settings', 'put', 'global', 'stay_on_while_plugged_in', '3')
@@ -372,6 +466,8 @@ if __name__ == '__main__':
         run_ui(sys.argv[2])
     elif mode == 'aggregate':
         aggregate()
+    elif mode == 'inherit':
+        inherit(sys.argv[2])
     elif mode == 'source-check':
         print(json.dumps({'frozen_sources': len(source_freeze())}))
     else:

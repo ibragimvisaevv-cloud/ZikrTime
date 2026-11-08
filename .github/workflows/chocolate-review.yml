@@ -17,6 +17,10 @@ on:
         description: 'Optional chocolate-inputs run; Android build inputs must be identical'
         required: false
         default: ''
+      ui_run:
+        description: 'Optional prior UI run; completed checks require matching APK and helper guards'
+        required: false
+        default: ''
 
 permissions:
   contents: read
@@ -33,11 +37,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    outputs:
+      ui_run: ${{ steps.reuse.outputs.ui_run }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Resolve APK reuse for automation-only changes
+        id: reuse
         run: |
           mkdir -p ci-out
           python3 - <<'PY'
@@ -47,9 +54,14 @@ jobs:
           message = event.get('head_commit', {}).get('message', '')
           match = re.search(r'\[chocolate-review\]\s+reuse=(\d+)', message)
           reuse = event.get('inputs', {}).get('reuse_run', '') or (match.group(1) if match else '')
+          ui_match = re.search(r'\[chocolate-review\][^\r\n]*\bui=(\d+)', message)
+          ui_reuse = event.get('inputs', {}).get('ui_run', '') or (ui_match.group(1) if ui_match else '')
           assert not reuse or reuse.isdigit(), 'Invalid reuse run'
+          assert not ui_reuse or ui_reuse.isdigit(), 'Invalid UI reuse run'
           with open(os.environ['GITHUB_ENV'], 'a') as output:
               output.write('REUSE_RUN=' + reuse + '\n')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('ui_run=' + ui_reuse + '\n')
           PY
       - uses: actions/setup-java@v4
         with:
@@ -120,6 +132,8 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 22
+    env:
+      UI_REUSE_RUN: ${{ needs.build.outputs.ui_run }}
     strategy:
       fail-fast: false
       matrix:
@@ -136,18 +150,29 @@ jobs:
         with:
           name: chocolate-inputs
           path: .
+      - name: Download completed checks from the prior UI run
+        if: env.UI_REUSE_RUN != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download "$UI_REUSE_RUN" --repo "$GITHUB_REPOSITORY" -n "chocolate-ui-${{ matrix.shard }}" -D prior-ui
+      - name: Validate and inherit completed ${{ matrix.shard }} checks
+        if: env.UI_REUSE_RUN != ''
+        run: python3 tools/ci/chocolate_review.py inherit ${{ matrix.shard }}
       - name: Download the verified 0.8.30 baseline for comparison and upgrade
-        if: matrix.shard == 'preserve'
+        if: matrix.shard == 'preserve' && env.UI_REUSE_RUN == ''
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh run download 42519456373 --repo "$GITHUB_REPOSITORY" -n emerald-sample-inputs -D baseline-inputs
       - run: python3 -m pip install 'Pillow>=11,<13'
+        if: matrix.shard != 'preserve' || env.UI_REUSE_RUN == ''
       - name: Enable emulator acceleration
+        if: matrix.shard != 'preserve' || env.UI_REUSE_RUN == ''
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-chocolate.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
       - name: Check ${{ matrix.shard }} on Android 15
+        if: matrix.shard != 'preserve' || env.UI_REUSE_RUN == ''
         timeout-minutes: 15
         uses: reactivecircus/android-emulator-runner@v2
         with:
