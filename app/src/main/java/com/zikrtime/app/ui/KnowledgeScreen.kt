@@ -44,7 +44,7 @@ import androidx.compose.ui.semantics.testTagsAsResourceId
 
 fun categoryIcon(id: String): Int = when (id) {
     "quran" -> R.drawable.ic_nav_knowledge
-    "prophets" -> R.drawable.ic_prayer_isha
+    "prophets" -> R.drawable.ic_time_night
     "seerah" -> R.drawable.ic_nav_prayer
     "fiqh" -> R.drawable.ic_kaaba
     "arabic" -> R.drawable.ic_language
@@ -69,7 +69,7 @@ fun KnowledgeScreen() {
         hero = {
             Spacer(Modifier.height(16.dp))
             HorizonFeature(stringResource(if (morning) R.string.azkar_morning else R.string.azkar_evening),
-                if (morning) R.drawable.ic_prayer_fajr else R.drawable.ic_prayer_isha) {
+                if (morning) R.drawable.ic_time_dawn else R.drawable.ic_time_night) {
                 nav.openAzkar(if (morning) "morning" else "evening")
             }
         }) {
@@ -82,7 +82,7 @@ fun KnowledgeScreen() {
         }
         SectionLabel(uiCopy(UiCopy0823.ReadAndRemember))
         DestinationRow(stringResource(if (morning) R.string.azkar_evening else R.string.azkar_morning),
-            if (morning) R.drawable.ic_prayer_isha else R.drawable.ic_prayer_fajr) {
+            if (morning) R.drawable.ic_time_night else R.drawable.ic_time_dawn) {
             nav.openAzkar(if (morning) "evening" else "morning")
         }
         Column(Modifier.testTag("quran_open").semantics { testTagsAsResourceId = true }) {

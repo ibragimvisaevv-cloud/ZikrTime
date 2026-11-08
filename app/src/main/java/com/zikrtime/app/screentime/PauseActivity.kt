@@ -48,7 +48,7 @@ class PauseActivity : ComponentActivity() {
             override fun handleOnBackPressed() = closeToHome()
         })
         setContent {
-            ZikrTheme(natural=true) {
+            ZikrTheme(natural = true, chocolate = true) {
                 LaunchedEffect(target) {
                     while (true) {
                         if (!FocusPause.eligible(this@PauseActivity,target) || !ScreenTime.hasUsageAccess(this@PauseActivity) || ScreenTime.hasActiveCall(this@PauseActivity)) {

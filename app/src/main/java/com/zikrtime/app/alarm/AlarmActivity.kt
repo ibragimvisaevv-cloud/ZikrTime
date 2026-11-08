@@ -58,8 +58,6 @@ import com.zikrtime.app.ui.StarPattern
 import com.zikrtime.app.ui.clock
 import com.zikrtime.app.ui.theme.ArabicStyle
 import com.zikrtime.app.ui.theme.Cream
-import com.zikrtime.app.ui.theme.EmeraldDeep
-import com.zikrtime.app.ui.theme.EmeraldNight
 import com.zikrtime.app.ui.theme.Gold
 import com.zikrtime.app.ui.theme.ZikrTheme
 import kotlinx.coroutines.delay
@@ -92,7 +90,7 @@ class AlarmActivity : ComponentActivity() {
         })
         val test = intent.getBooleanExtra(FajrAlarm.EXTRA_TEST, false)
         setContent {
-            ZikrTheme {
+            ZikrTheme(chocolate = true) {
                 AlarmScreen(
                     test = test,
                     onStop = {
@@ -154,7 +152,8 @@ private fun AlarmScreen(test: Boolean, onStop: () -> Unit, onSnooze: () -> Unit)
     Box(
         Modifier
             .fillMaxSize()
-            .background(Brush.verticalGradient(listOf(EmeraldNight, EmeraldDeep, EmeraldNight))),
+            .background(Brush.verticalGradient(listOf(MaterialTheme.colorScheme.background,
+                MaterialTheme.colorScheme.surfaceContainerHigh, MaterialTheme.colorScheme.background))),
     ) {
         com.zikrtime.app.ui.SceneBackdrop(Modifier.fillMaxSize(), night = true)
         Column(

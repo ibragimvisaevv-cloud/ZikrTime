@@ -78,6 +78,7 @@ import com.zikrtime.app.ui.theme.Cream
 import com.zikrtime.app.ui.theme.EmeraldDeep
 import com.zikrtime.app.ui.theme.Gold
 import com.zikrtime.app.ui.theme.LocalDarkTheme
+import com.zikrtime.app.ui.theme.LocalChocolateTheme
 
 /** Значок категории магазина. */
 fun shopIcon(name: String): Int = when (name) {
@@ -90,7 +91,15 @@ fun shopIcon(name: String): Int = when (name) {
     else -> R.drawable.ic_shop_store
 }
 
-private fun accentOf(seller: Shop.Seller?): Color = seller?.accent?.let { Color(0xFF000000 or it) } ?: Color(0xFF235D4C)
+@Composable
+private fun accentOf(seller: Shop.Seller?): Color = seller?.accent?.let { Color(0xFF000000 or it) }
+    ?: if (LocalChocolateTheme.current) Color(0xFF79583B) else Color(0xFF235D4C)
+
+@Composable
+private fun shopDeepColor(): Color = if (LocalChocolateTheme.current) Color(0xFF2A1E17) else EmeraldDeep
+
+@Composable
+private fun shopPhotoShade(): Color = if (LocalChocolateTheme.current) Color(0xFF211913) else Color(0xFF171B18)
 
 // ---------------- Витрина ----------------
 
@@ -299,19 +308,20 @@ private fun PartnerCard(seller: Shop.Seller, lang: String, catalog: Shop.Catalog
     val shape = RoundedCornerShape(topStart = 26.dp, topEnd = 12.dp, bottomEnd = 26.dp, bottomStart = 12.dp)
     val accent = accentOf(seller)
     Box(modifier.testTag("shop_partner_${seller.id}").clip(shape)
-        .background(Brush.linearGradient(listOf(accent, EmeraldDeep))).border(1.dp, Gold.copy(alpha = .6f), shape)
+        .background(Brush.linearGradient(listOf(accent, shopDeepColor()))).border(1.dp, Gold.copy(alpha = .6f), shape)
         .clickable(role = Role.Button) { onClick(seller) }) {
         // Always draw a backdrop so a missing or failed cover still has a readable contrast layer.
         StarPattern(Modifier.matchParentSize(), color = Cream.copy(alpha = .12f), cell = 48f)
         Shop.imageUrl(seller.cover)?.let { url ->
             AsyncImage(model = url, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.matchParentSize())
         }
-        Box(Modifier.matchParentSize().background(Brush.verticalGradient(listOf(Color(0x40171B18), Color(0xF0171B18)))))
+        val photoShade = shopPhotoShade()
+        Box(Modifier.matchParentSize().background(Brush.verticalGradient(listOf(photoShade.copy(alpha = 64 / 255f), photoShade.copy(alpha = 240 / 255f)))))
         Column(Modifier.fillMaxWidth().heightIn(min = 166.dp).padding(16.dp),
             verticalArrangement = Arrangement.SpaceBetween) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Box(Modifier.clip(RoundedCornerShape(8.dp)).background(Cream).padding(horizontal = 8.dp, vertical = 4.dp)) {
-                    Text(stringResource(R.string.shop_partner), style = MaterialTheme.typography.labelSmall, color = EmeraldDeep)
+                    Text(stringResource(R.string.shop_partner), style = MaterialTheme.typography.labelSmall, color = shopDeepColor())
                 }
                 if (seller.promoted) AdLabel(Modifier.testTag("shop_ad_${seller.id}"))
                 Spacer(Modifier.weight(1f))
@@ -343,7 +353,7 @@ private fun SellerLogo(seller: Shop.Seller, size: androidx.compose.ui.unit.Dp) {
         Modifier
             .size(size)
             .clip(CircleShape)
-            .background(Brush.linearGradient(listOf(accent, EmeraldDeep)))
+            .background(Brush.linearGradient(listOf(accent, shopDeepColor())))
             .border(2.dp, Gold.copy(alpha = 0.7f), CircleShape),
         contentAlignment = Alignment.Center,
     ) {
@@ -380,7 +390,7 @@ private fun ProductImage(product: Shop.Product, catalog: Shop.Catalog, modifier:
     Box(
         modifier.background(
             Brush.linearGradient(
-                if (dark) listOf(accent.copy(alpha = 0.55f), EmeraldDeep) else listOf(accent.copy(alpha = 0.16f), Gold.copy(alpha = 0.18f)),
+                if (dark) listOf(accent.copy(alpha = 0.55f), shopDeepColor()) else listOf(accent.copy(alpha = 0.16f), Gold.copy(alpha = 0.18f)),
             ),
         ),
         contentAlignment = Alignment.Center,
@@ -405,8 +415,11 @@ private fun ProductImage(product: Shop.Product, catalog: Shop.Catalog, modifier:
 private fun ProductCard(product: Shop.Product, catalog: Shop.Catalog, lang: String, onClick: () -> Unit) {
     val scheme = MaterialTheme.colorScheme
     val seller = catalog.seller(product.seller)
-    Row(Modifier.fillMaxWidth().testTag("shop_product_${product.id}").clip(RoundedCornerShape(16.dp))
-        .background(scheme.surfaceContainerLow).clickable(role = Role.Button, onClick = onClick).padding(10.dp),
+    val shape = RoundedCornerShape(16.dp)
+    Row(Modifier.fillMaxWidth().testTag("shop_product_${product.id}").clip(shape)
+        .background(scheme.surfaceContainerLow)
+        .then(if (LocalChocolateTheme.current) Modifier.border(.7.dp, scheme.outlineVariant.copy(alpha = .7f), shape) else Modifier)
+        .clickable(role = Role.Button, onClick = onClick).padding(10.dp),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         ProductImage(product, catalog, Modifier.size(64.dp).clip(RoundedCornerShape(12.dp)), iconSize = 28.dp)
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
@@ -464,7 +477,7 @@ fun SellerScreen(sellerId: String? = null) {
                 .fillMaxWidth()
                 .height(160.dp)
                 .clip(RoundedCornerShape(28.dp))
-                .background(Brush.linearGradient(listOf(accent, accent.copy(alpha = 0.8f), EmeraldDeep))),
+                .background(Brush.linearGradient(listOf(accent, accent.copy(alpha = 0.8f), shopDeepColor()))),
         ) {
             val coverUrl = Shop.imageUrl(seller.cover)
             if (coverUrl != null) {
@@ -472,7 +485,7 @@ fun SellerScreen(sellerId: String? = null) {
             } else {
                 StarPattern(Modifier.fillMaxSize(), color = Gold.copy(alpha = 0.18f), cell = 56f)
             }
-            Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color.Transparent, Color(0xDD171B18)))))
+            Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color.Transparent, shopPhotoShade().copy(alpha = 221 / 255f)))))
             Row(Modifier.align(Alignment.BottomStart).padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                 SellerLogo(seller, 60.dp)
                 Spacer(Modifier.width(14.dp))
@@ -644,7 +657,9 @@ private fun openMap(context: Context, seller: Shop.Seller) {
 @Composable
 private fun AdLabel(modifier: Modifier = Modifier) {
     Box(
-        modifier.clip(RoundedCornerShape(6.dp)).background(Color(0xFF343732)).padding(horizontal = 8.dp, vertical = 3.dp),
+        modifier.clip(RoundedCornerShape(6.dp))
+            .background(if (LocalChocolateTheme.current) Color(0xFF493728) else Color(0xFF343732))
+            .padding(horizontal = 8.dp, vertical = 3.dp),
     ) {
         Text(stringResource(R.string.shop_ad), style = MaterialTheme.typography.labelSmall, color = Color.White)
     }

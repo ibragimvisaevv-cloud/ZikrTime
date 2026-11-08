@@ -23,12 +23,22 @@ import androidx.compose.ui.unit.dp
 import com.zikrtime.app.R
 import com.zikrtime.app.data.Store
 import com.zikrtime.app.ui.theme.LocalDarkTheme
+import com.zikrtime.app.ui.theme.LocalChocolateTheme
+
+/** Preserve the established icons on the excluded Quran and tasbih routes. */
+private fun appearanceIcon(dark: Boolean, chocolate: Boolean): Int = when {
+    chocolate && dark -> R.drawable.ic_time_night
+    chocolate -> R.drawable.ic_time_noon
+    dark -> R.drawable.ic_prayer_isha
+    else -> R.drawable.ic_prayer_sunrise
+}
 
 /** Visible manual switch on Home; writes the same persisted preference as Settings. */
 @Composable
 fun ThemeQuickButton(compact: Boolean = false, onLandscape: Boolean = false) {
     val change = rememberAppearanceChange()
     val dark = LocalDarkTheme.current
+    val chocolate = LocalChocolateTheme.current
     val scheme = MaterialTheme.colorScheme
     var origin by remember { mutableStateOf(Offset.Zero) }
     if (compact) {
@@ -36,8 +46,8 @@ fun ThemeQuickButton(compact: Boolean = false, onLandscape: Boolean = false) {
         IconButton(onClick = {
             change(if (dark) "light" else "dark", origin)
         }, modifier = Modifier.size(48.dp).onGloballyPositioned { origin = it.boundsInWindow().center }.testTag("theme_quick_toggle").semantics { testTagsAsResourceId = true }) {
-            Icon(painterResource(if (dark) R.drawable.ic_prayer_sunrise else R.drawable.ic_prayer_isha),
-                contentDescription = label, tint = if (onLandscape) Porcelain else scheme.onSurface,
+            Icon(painterResource(appearanceIcon(dark = !dark, chocolate = chocolate)),
+                contentDescription = label, tint = if (onLandscape) { if (chocolate) Sand else Porcelain } else scheme.onSurface,
                 modifier = Modifier.size(22.dp))
         }
         return
@@ -56,7 +66,7 @@ fun ThemeQuickButton(compact: Boolean = false, onLandscape: Boolean = false) {
                         .selectable(selected = selected, role = Role.RadioButton, onClick = { if (!selected) change(if (option) "dark" else "light", optionOrigin) })
                         .padding(horizontal = 9.dp),
                         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                        Icon(painterResource(if (option) R.drawable.ic_prayer_isha else R.drawable.ic_prayer_sunrise), null, modifier = Modifier.size(15.dp))
+                        Icon(painterResource(appearanceIcon(dark = option, chocolate = chocolate)), null, modifier = Modifier.size(15.dp))
                         Text(label, style = MaterialTheme.typography.labelSmall)
                     }
                 }
@@ -67,6 +77,7 @@ fun ThemeQuickButton(compact: Boolean = false, onLandscape: Boolean = false) {
 
 @Composable
 fun AppearancePicker() {
+    val chocolate = LocalChocolateTheme.current
     val change = rememberAppearanceChange()
     ZCard(padding = PaddingValues(horizontal = 16.dp, vertical = 12.dp)) {
         Text(stringResource(R.string.appearance_title), style = MaterialTheme.typography.titleMedium)
@@ -82,7 +93,7 @@ fun AppearancePicker() {
                         onClick = { change(value, optionOrigin) }), verticalAlignment = Alignment.CenterVertically) {
                     RadioButton(selected = Store.appearance == value, onClick = null)
                     Text(stringResource(label), style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
-                    if (value != "system") Icon(painterResource(if (value == "light") R.drawable.ic_prayer_sunrise else R.drawable.ic_prayer_isha),
+                    if (value != "system") Icon(painterResource(appearanceIcon(dark = value == "dark", chocolate = chocolate)),
                         null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(22.dp))
                 }
             }

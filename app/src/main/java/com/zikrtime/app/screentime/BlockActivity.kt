@@ -61,8 +61,6 @@ import com.zikrtime.app.ui.durationText
 import com.zikrtime.app.ui.prayerIconRes
 import com.zikrtime.app.ui.prayerName
 import com.zikrtime.app.ui.theme.Cream
-import com.zikrtime.app.ui.theme.Emerald
-import com.zikrtime.app.ui.theme.EmeraldDeep
 import com.zikrtime.app.ui.theme.Gold
 import com.zikrtime.app.ui.theme.Tabular
 import com.zikrtime.app.ui.theme.ZikrTheme
@@ -95,7 +93,7 @@ class BlockActivity : ComponentActivity() {
             override fun handleOnBackPressed() = closeToHome()
         })
         setContent {
-            ZikrTheme {
+            ZikrTheme(chocolate = true) {
                 BlockScreen(reason = reason, onClose = { closeToHome() }, onBackToApp = { finish() })
             }
         }
@@ -184,7 +182,8 @@ private fun BlockScreen(reason: BlockReason, onClose: () -> Unit, onBackToApp: (
     val sessionKey = "${LearningStore.selectedLevel?.id}-${session?.id}-${session?.index}"
     LaunchedEffect(mode, sessionKey) { scroll.scrollTo(0) }
 
-    Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Emerald, EmeraldDeep)))) {
+    Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(
+        MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.surfaceContainerHigh)))) {
         com.zikrtime.app.ui.SceneBackdrop(Modifier.fillMaxSize(), night = true)
         Column(
             Modifier

@@ -3,6 +3,7 @@ package com.zikrtime.app.ui
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -327,17 +328,22 @@ fun PlacesScreen() {
 private fun FilterPill(text: String, selected: Boolean, onClick: () -> Unit) {
     val shape = RoundedCornerShape(16.dp)
     val interaction = remember { MutableInteractionSource() }
+    val chocolate = com.zikrtime.app.ui.theme.LocalChocolateTheme.current
+    val scheme = MaterialTheme.colorScheme
     Box(
         Modifier
             .pressScale(interaction)
             .then(
-                if (selected) Modifier.clip(shape).background(Brush.linearGradient(listOf(Emerald, EmeraldDeep)))
+                if (selected && chocolate) Modifier.clip(shape).background(scheme.primaryContainer)
+                    .border(.8.dp, scheme.secondary.copy(alpha = .55f), shape)
+                else if (selected) Modifier.clip(shape).background(Brush.linearGradient(listOf(Emerald, EmeraldDeep)))
                 else Modifier.glass(shape, elevation = 3.dp),
             )
             .clickable(interactionSource = interaction, indication = null, onClick = onClick)
             .padding(horizontal = 16.dp, vertical = 14.dp),
     ) {
-        Text(text, style = MaterialTheme.typography.labelLarge, color = if (selected) Color.White else MaterialTheme.colorScheme.onSurface)
+        Text(text, style = MaterialTheme.typography.labelLarge,
+            color = if (selected && chocolate) scheme.onPrimaryContainer else if (selected) Color.White else scheme.onSurface)
     }
 }
 

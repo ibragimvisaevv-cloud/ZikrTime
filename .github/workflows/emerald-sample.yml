@@ -1,16 +1,12 @@
-name: Emerald sample - home and Quran
+name: Archived 0.8.30 emerald sample
 on:
-  push:
-    branches: [codex/emerald-concept-0828]
-    paths:
-      - 'app/**'
-      - 'gradle/**'
-      - 'gradlew'
-      - 'build.gradle.kts'
-      - 'settings.gradle.kts'
-      - 'gradle.properties'
-      - '.github/workflows/emerald-sample.yml'
-      - 'tools/ci/emerald_sample_smoke.py'
+  # Historical verification; current changes use chocolate-review.yml.
+  workflow_dispatch:
+    inputs:
+      reuse_run:
+        description: 'Existing 0.8.30 input/evidence run'
+        required: true
+        default: '42519456373'
 permissions:
   contents: read
   actions: read
@@ -33,10 +29,13 @@ jobs:
           python3 - <<'PY'
           import json, os, re
           from pathlib import Path
-          message = json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text())['head_commit']['message']
+          event = json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text())
+          message = event.get('head_commit', {}).get('message', '')
           match = re.search(r'\[emerald-sample\]\s+reuse=(\d+)', message)
+          reuse = event.get('inputs', {}).get('reuse_run', '') or (match.group(1) if match else '')
+          assert not reuse or reuse.isdigit()
           with open(os.environ['GITHUB_ENV'], 'a') as out:
-              out.write('REUSE_RUN=' + (match.group(1) if match else '') + '\n')
+              out.write('REUSE_RUN=' + reuse + '\n')
           PY
       - uses: actions/setup-java@v4
         with:

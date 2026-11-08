@@ -58,6 +58,7 @@ import com.zikrtime.app.data.Store
 import com.zikrtime.app.prayer.PrayerAlarms
 import com.zikrtime.app.ui.theme.Cream
 import com.zikrtime.app.ui.theme.EmeraldDeep
+import com.zikrtime.app.ui.theme.LocalChocolateTheme
 import com.zikrtime.app.ui.theme.EmeraldNight
 import com.zikrtime.app.ui.theme.Gold
 import java.time.ZonedDateTime
@@ -206,8 +207,8 @@ private fun AlarmHero(enabled: Boolean, next: ZonedDateTime?, onToggle: (Boolean
                     checked = enabled,
                     onCheckedChange = onToggle,
                     colors = SwitchDefaults.colors(
-                        checkedThumbColor = EmeraldDeep,
-                        checkedTrackColor = Gold,
+                        checkedThumbColor = if (LocalChocolateTheme.current) MaterialTheme.colorScheme.onSecondary else EmeraldDeep,
+                        checkedTrackColor = if (LocalChocolateTheme.current) MaterialTheme.colorScheme.secondary else Gold,
                         uncheckedThumbColor = Cream.copy(alpha = 0.8f),
                         uncheckedTrackColor = Color.Transparent,
                         uncheckedBorderColor = Cream.copy(alpha = 0.5f),

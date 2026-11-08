@@ -72,7 +72,6 @@ import com.zikrtime.app.ui.theme.Emerald
 import com.zikrtime.app.ui.theme.EmeraldDeep
 import com.zikrtime.app.ui.theme.Gold
 import com.zikrtime.app.ui.theme.Tabular
-import com.zikrtime.app.ui.theme.LocalDarkTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -82,21 +81,8 @@ import java.time.ZonedDateTime
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun HomeScreen() {
-    // The approved sample is scoped to this screen; the remaining app keeps 0.8.28.
-    val dark = LocalDarkTheme.current
-    val original = MaterialTheme.colorScheme
-    val colors = if (dark) original.copy(
-        background = Color(0xFF102C24), surface = Color(0xFF102C24),
-        surfaceContainerLow = Color(0xFF17372D), surfaceContainer = Color(0xFF1B3D32),
-        surfaceContainerHigh = Color(0xFF224638), primaryContainer = Color(0xFF284E3F),
-        secondaryContainer = Color(0xFF3B4433), outlineVariant = Color(0xFF3D5B4D),
-        onSurfaceVariant = Color(0xFFC3CFC4),
-    ) else original.copy(
-        background = Color(0xFFF5F0E5), surface = Color(0xFFF5F0E5),
-        surfaceContainerLow = Color(0xFFFFFCF4), surfaceContainer = Color(0xFFF0EADF),
-        primaryContainer = Color(0xFFDDE9DF), outlineVariant = Color(0xFFD7D6C8),
-    )
-    MaterialTheme(colorScheme = colors) { HomeContent() }
+    // Share the approved cocoa surfaces with the surrounding application.
+    HomeContent()
 }
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -245,6 +231,16 @@ private fun HomeContent() {
     }
 }
 
+/** Home-only marks leave the Quran, tasbih and existing widget artwork unchanged. */
+private fun homePrayerIcon(prayer: Prayer): Int = when (prayer) {
+    Prayer.FAJR -> R.drawable.ic_time_dawn
+    Prayer.SUNRISE -> R.drawable.ic_time_sunrise
+    Prayer.DHUHR -> R.drawable.ic_time_noon
+    Prayer.ASR -> R.drawable.ic_time_afternoon
+    Prayer.MAGHRIB -> R.drawable.ic_time_sunset
+    Prayer.ISHA -> R.drawable.ic_time_night
+}
+
 @Composable
 private fun PrayerTile(prayer: Prayer, time: String, isCurrent: Boolean, isNext: Boolean,
     started: Boolean, done: Boolean, modifier: Modifier, compactViewport: Boolean, onToggle: () -> Unit) {
@@ -259,15 +255,15 @@ private fun PrayerTile(prayer: Prayer, time: String, isCurrent: Boolean, isNext:
     Surface(modifier.fillMaxHeight().testTag("home_prayer_${prayer.name}")
         .semantics { testTagsAsResourceId = true; if (status.isNotEmpty()) stateDescription = status },
         shape = shape, color = fill,
-        border = BorderStroke(if (isNext) 1.dp else .5.dp,
-            if (isNext) scheme.secondary.copy(alpha = .75f) else scheme.outlineVariant.copy(alpha = .65f))) {
+        border = BorderStroke(if (isNext) 1.dp else .7.dp,
+            scheme.secondary.copy(alpha = if (isNext) .75f else if (isCurrent) .48f else .30f))) {
         Row(Modifier.fillMaxWidth().heightIn(min = if (compactViewport) 64.dp else 82.dp)
             .padding(start = if (compactViewport) 10.dp else 12.dp, end = 3.dp,
                 top = if (compactViewport) 4.dp else 8.dp, bottom = if (compactViewport) 4.dp else 8.dp),
             verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(2.dp)) {
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(5.dp)) {
-                    Icon(painterResource(prayerIconRes(prayer)), null, tint = scheme.secondary,
+                    Icon(painterResource(homePrayerIcon(prayer)), null, tint = scheme.secondary,
                         modifier = Modifier.size(15.dp))
                     Text((if (isNext) "› " else "") + prayerName(prayer),
                         style = MaterialTheme.typography.labelLarge, fontSize = 16.sp)
@@ -282,8 +278,8 @@ private fun PrayerTile(prayer: Prayer, time: String, isCurrent: Boolean, isNext:
                 CheckCircle(checked = done, enabled = started, onToggle = onToggle,
                     contentDescription = prayerName(prayer) + ": " + stringResource(R.string.home_mark_prayed))
             }
-            else Icon(painterResource(prayerIconRes(prayer)), null,
-                modifier = Modifier.padding(horizontal = 13.dp).size(22.dp), tint = scheme.secondary.copy(alpha = .65f))
+            // Sunrise has no completion action. Keep the same alignment without a second symbol.
+            else Spacer(Modifier.size(48.dp))
         }
     }
 }
@@ -293,7 +289,7 @@ private fun HomeReadingEntry(title: String, detail: String, icon: Int?, tag: Str
     val scheme = MaterialTheme.colorScheme
     Surface(onClick = onClick, modifier = Modifier.fillMaxWidth().testTag(tag)
         .semantics { testTagsAsResourceId = true }, shape = RoundedCornerShape(22.dp),
-        color = scheme.surfaceContainerLow, border = BorderStroke(.5.dp, scheme.outlineVariant)) {
+        color = scheme.surfaceContainerLow, border = BorderStroke(.7.dp, scheme.secondary.copy(alpha = .30f))) {
         Row(Modifier.padding(horizontal = 18.dp, vertical = 18.dp), verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(14.dp)) {
             if (icon != null) Icon(painterResource(icon), null, tint = scheme.secondary, modifier = Modifier.size(28.dp))

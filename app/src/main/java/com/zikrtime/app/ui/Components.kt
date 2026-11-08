@@ -87,6 +87,7 @@ import com.zikrtime.app.prayer.AsrMadhab
 import com.zikrtime.app.prayer.CalcMethod
 import com.zikrtime.app.prayer.Prayer
 import com.zikrtime.app.ui.theme.LocalDarkTheme
+import com.zikrtime.app.ui.theme.LocalChocolateTheme
 import com.zikrtime.app.ui.theme.Tabular
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -447,7 +448,9 @@ fun CheckCircle(checked: Boolean, enabled: Boolean, onToggle: () -> Unit, conten
             contentAlignment = Alignment.Center,
         ) {
             if (checked) {
-                Icon(painterResource(R.drawable.ic_check), null, tint = if (onDark) Olive else scheme.onPrimary, modifier = Modifier.size(16.dp))
+                Icon(painterResource(R.drawable.ic_check), null,
+                    tint = if (onDark) { if (LocalChocolateTheme.current) Color(0xFF352313) else Olive } else scheme.onPrimary,
+                    modifier = Modifier.size(16.dp))
             } else {
                 Canvas(Modifier.fillMaxSize()) {
                     drawCircle(

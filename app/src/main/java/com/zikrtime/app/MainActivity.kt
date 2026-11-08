@@ -115,7 +115,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val natural = Store.onboarded && (nav.stack.lastOrNull()?.screen in setOf(Screen.TASBIH, Screen.AZKAR, Screen.QURAN, Screen.QURAN_AUDIO, Screen.READING_BEDTIME, Screen.READING_FRIDAY, Screen.PROGRESS, Screen.REVIEW, Screen.TRAINING) || (nav.stack.isEmpty() && nav.tab == Tab.PRAYER))
             com.zikrtime.app.ui.ThemeRevealHost {
-                ZikrTheme(natural = natural) {
+                ZikrTheme(natural = natural, chocolate = usesChocolateTheme(nav.stack.lastOrNull()?.screen)) {
                     val tilt = com.zikrtime.app.ui.rememberTilt(enabled = false)
                     var splash by androidx.compose.runtime.saveable.rememberSaveable { androidx.compose.runtime.mutableStateOf(showSplash) }
                     LaunchedEffect(Unit) {
@@ -220,6 +220,13 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+/** Keep the approved reader and the deferred tasbih on their original materials. */
+private fun usesChocolateTheme(screen: Screen?): Boolean = when (screen) {
+    Screen.TASBIH, Screen.QURAN, Screen.QURAN_AUDIO, Screen.READING_REMINDERS,
+    Screen.READING_BEDTIME, Screen.READING_FRIDAY -> false
+    else -> true
+}
+
 @Composable
 private fun AppRoot() {
     val context = LocalContext.current
@@ -259,6 +266,8 @@ private fun AppRoot() {
     ) { entry ->
         val screen = entry?.screen
         screensState.SaveableStateProvider(if (screen == Screen.QUIZ || screen == Screen.REVIEW) "${entry?.id}-${nav.quizRound}" else entry?.id?.toString() ?: "tabs") {
+        // Bind colours to this entry, including its outgoing animation frame.
+        com.zikrtime.app.ui.theme.AppColorTheme(chocolate = usesChocolateTheme(screen)) {
         when (screen) {
             null -> Tabs()
             Screen.LANGUAGE -> LanguageScreen()
@@ -314,6 +323,7 @@ private fun AppRoot() {
                 }
                 Box(Modifier.weight(1f)) { Tabs() }
             }
+        }
         }
         }
     }

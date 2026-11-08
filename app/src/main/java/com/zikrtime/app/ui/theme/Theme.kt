@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zikrtime.app.R
 
-// Emerald actions, warm stone surfaces and restrained brass accents.
+// The retained palette stays intact for the approved Quran and tasbih screens.
 val Emerald = Color(0xFF235D4C)
 val EmeraldDeep = Color(0xFF173E34)
 val EmeraldNight = Color(0xFF151C19)
@@ -101,6 +101,44 @@ private val DarkColors = darkColorScheme(
     onErrorContainer = Color(0xFFFFDAD2),
 )
 
+// Cocoa surfaces and quiet antique-gold accents for the surrounding app.
+// Keep the original schemes above: the reader and tasbih are intentionally frozen.
+private val ChocolateLightColors = LightColors.copy(
+    primary = Color(0xFF795833), onPrimary = Color.White,
+    primaryContainer = Color(0xFFE8D8BA), onPrimaryContainer = Color(0xFF3B281A),
+    secondary = Color(0xFF806036), onSecondary = Color.White,
+    secondaryContainer = Color(0xFFF0E3CB), onSecondaryContainer = Color(0xFF49341E),
+    tertiary = Color(0xFF74604B), onTertiary = Color.White,
+    tertiaryContainer = Color(0xFFEBDFD0), onTertiaryContainer = Color(0xFF453427),
+    background = Color(0xFFF8F2E8), onBackground = Color(0xFF30251D),
+    surface = Color(0xFFF8F2E8), onSurface = Color(0xFF30251D),
+    surfaceVariant = Color(0xFFECE1D1), onSurfaceVariant = Color(0xFF716150),
+    surfaceContainerLowest = Color(0xFFFFFCF7), surfaceContainerLow = Color(0xFFFFFBF5),
+    surfaceContainer = Color(0xFFF3EADD), surfaceContainerHigh = Color(0xFFECE1D1),
+    surfaceContainerHighest = Color(0xFFE3D5C2), surfaceTint = Color(0xFF795833),
+    inverseSurface = Color(0xFF35281F), inverseOnSurface = Color(0xFFF6ECDA),
+    inversePrimary = Color(0xFFD4B582),
+    outline = Color(0xFF9A8262), outlineVariant = Color(0xFFCDBB9B),
+)
+
+private val ChocolateDarkColors = DarkColors.copy(
+    primary = Color(0xFFD4B582), onPrimary = Color(0xFF352313),
+    primaryContainer = Color(0xFF543B24), onPrimaryContainer = Color(0xFFFFEED1),
+    secondary = Color(0xFFCBA76A), onSecondary = Color(0xFF352313),
+    secondaryContainer = Color(0xFF493721), onSecondaryContainer = Color(0xFFF1DEC0),
+    tertiary = Color(0xFFC5B397), onTertiary = Color(0xFF392B20),
+    tertiaryContainer = Color(0xFF493A2D), onTertiaryContainer = Color(0xFFF2E4D1),
+    background = Color(0xFF211913), onBackground = Color(0xFFF4EBDD),
+    surface = Color(0xFF211913), onSurface = Color(0xFFF4EBDD),
+    surfaceVariant = Color(0xFF403127), onSurfaceVariant = Color(0xFFC9BBA6),
+    surfaceContainerLowest = Color(0xFF19120E), surfaceContainerLow = Color(0xFF2D221B),
+    surfaceContainer = Color(0xFF34271E), surfaceContainerHigh = Color(0xFF403127),
+    surfaceContainerHighest = Color(0xFF493729), surfaceTint = Color(0xFFD4B582),
+    inverseSurface = Color(0xFFF4EBDD), inverseOnSurface = Color(0xFF30251D),
+    inversePrimary = Color(0xFF795833),
+    outline = Color(0xFFA18B6F), outlineVariant = Color(0xFF6D5435),
+)
+
 private val base = Typography()
 
 // Заголовки плотнее и с чуть сжатым трекингом, основной текст — чуть крупнее и с воздухом между строк.
@@ -149,8 +187,31 @@ val Tabular = TextStyle(fontFeatureSettings = "tnum")
 /** Тёмная ли сейчас тема — для мелких отличий в оформлении. */
 val LocalDarkTheme = staticCompositionLocalOf { false }
 
+/** Extra cocoa/gold decoration is disabled on the retained Quran/tasbih routes. */
+val LocalChocolateTheme = staticCompositionLocalOf { false }
+
+/** Route-local colours also protect outgoing content during animated navigation. */
 @Composable
-fun ZikrTheme(natural: Boolean = false, content: @Composable () -> Unit) {
+fun AppColorTheme(chocolate: Boolean, content: @Composable () -> Unit) {
+    val dark = LocalDarkTheme.current
+    val colors = when {
+        chocolate && dark -> ChocolateDarkColors
+        chocolate -> ChocolateLightColors
+        dark -> DarkColors
+        else -> LightColors
+    }
+    androidx.compose.runtime.CompositionLocalProvider(LocalChocolateTheme provides chocolate) {
+        MaterialTheme(colorScheme = colors, typography = AppTypography, shapes = AppShapes) {
+            androidx.compose.runtime.CompositionLocalProvider(
+                androidx.compose.material3.LocalContentColor provides colors.onSurface,
+                content = content,
+            )
+        }
+    }
+}
+
+@Composable
+fun ZikrTheme(natural: Boolean = false, chocolate: Boolean = false, content: @Composable () -> Unit) {
     val dark = when (com.zikrtime.app.data.Store.appearance) {
         "light" -> false
         "dark" -> true
@@ -166,14 +227,6 @@ fun ZikrTheme(natural: Boolean = false, content: @Composable () -> Unit) {
         }
     }
     androidx.compose.runtime.CompositionLocalProvider(LocalDarkTheme provides dark, com.zikrtime.app.ui.LocalNatural provides natural) {
-        val baseColors = if (dark) DarkColors else LightColors
-        val colors = baseColors
-        MaterialTheme(colorScheme = colors, typography = AppTypography, shapes = AppShapes) {
-            // Цвет текста по умолчанию — светлый в тёмной теме, тёмный в светлой (раньше его давал Surface).
-            androidx.compose.runtime.CompositionLocalProvider(
-                androidx.compose.material3.LocalContentColor provides colors.onSurface,
-                content = content,
-            )
-        }
+        AppColorTheme(chocolate, content)
     }
 }

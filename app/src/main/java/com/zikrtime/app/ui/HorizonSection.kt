@@ -29,6 +29,7 @@ import androidx.compose.ui.semantics.*
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.*
 import com.zikrtime.app.ui.theme.LocalDarkTheme
+import com.zikrtime.app.ui.theme.LocalChocolateTheme
 
 /** Edge-to-edge scene and one continuous scroll surface. Hero height follows text scale. */
 @Composable
@@ -40,6 +41,7 @@ fun HorizonSection(title: String, subtitle: String? = null, image: Int, heroHeig
     val dark = LocalDarkTheme.current
     val motion = motionEnabled()
     val scheme = MaterialTheme.colorScheme
+    val sceneShade = if (LocalChocolateTheme.current) Color(0xFF211913) else Color(0xFF171B18)
     var heroPx by remember { mutableIntStateOf(0) }
     val status = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
     val compactPx = with(density) { (status + 60.dp).toPx() }
@@ -62,7 +64,8 @@ fun HorizonSection(title: String, subtitle: String? = null, image: Int, heroHeig
                 Image(painterResource(image), null, Modifier.fillMaxSize(), contentScale = ContentScale.Crop)
             }
             Box(Modifier.matchParentSize().background(Brush.verticalGradient(listOf(
-                Color(0xA1171B18), Color(0x18171B18), Color(0xD9171B18)))))
+                sceneShade.copy(alpha = 161 / 255f), sceneShade.copy(alpha = 24 / 255f),
+                sceneShade.copy(alpha = 217 / 255f)))))
         }
         Column(Modifier.fillMaxSize().drawWithContent {
             // Only the landscape reaches behind system icons; scrolling labels stop below them.
@@ -130,7 +133,9 @@ fun HorizonFeature(title: String, icon: Int, onClick: () -> Unit) {
             Text(title, style = MaterialTheme.typography.headlineLarge, color = Porcelain)
         }
         Surface(color = Sand, shape = RoundedCornerShape(50)) {
-            Icon(Icons.AutoMirrored.Filled.ArrowForward, null, tint = Color(0xFF163C32), modifier = Modifier.padding(16.dp).size(24.dp))
+            Icon(Icons.AutoMirrored.Filled.ArrowForward, null,
+                tint = if (LocalChocolateTheme.current) Color(0xFF3A291C) else Color(0xFF163C32),
+                modifier = Modifier.padding(16.dp).size(24.dp))
         }
     }
 }

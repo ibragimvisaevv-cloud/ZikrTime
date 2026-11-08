@@ -19,14 +19,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.zikrtime.app.ui.theme.LocalChocolateTheme
 
 /** Dedicated images stay decorative; live text remains accessible and translated. */
 @Composable
 fun LandscapePanel(@DrawableRes art: Int, modifier: Modifier = Modifier, content: @Composable BoxScope.() -> Unit) {
-    Box(modifier.fillMaxWidth().clip(RoundedCornerShape(28.dp))) {
+    val chocolate = LocalChocolateTheme.current
+    val shape = RoundedCornerShape(28.dp)
+    val frame = if (chocolate) Modifier.border(.7.dp, MaterialTheme.colorScheme.secondary.copy(alpha = .45f), shape) else Modifier
+    val horizontalScrim = if (chocolate) listOf(Color(0xB8281A12), Color(0x18281A12))
+        else listOf(Color(0xB8171B18), Color(0x18171B18))
+    val bottomScrim = if (chocolate) Color(0xDA281A12) else Color(0xDA171B18)
+    Box(modifier.fillMaxWidth().clip(shape).then(frame)) {
         Image(painterResource(art), null, Modifier.matchParentSize(), contentScale = ContentScale.Crop)
-        Box(Modifier.matchParentSize().background(Brush.horizontalGradient(listOf(Color(0xB8171B18), Color(0x18171B18)))))
-        Box(Modifier.matchParentSize().background(Brush.verticalGradient(listOf(Color.Transparent, Color(0xDA171B18)))))
+        Box(Modifier.matchParentSize().background(Brush.horizontalGradient(horizontalScrim)))
+        Box(Modifier.matchParentSize().background(Brush.verticalGradient(listOf(Color.Transparent, bottomScrim))))
         CompositionLocalProvider(LocalContentColor provides Porcelain) { content() }
     }
 }

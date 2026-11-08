@@ -83,10 +83,10 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
             }
         }
 
-        val topScrim = remember { Brush.verticalGradient(0f to Color(0xB30B241E), .38f to Color(0x400B241E), .7f to Color.Transparent) }
-        val sideScrim = remember { Brush.horizontalGradient(listOf(Color(0x400B241E), Color.Transparent)) }
+        val topScrim = remember { Brush.verticalGradient(0f to Color(0xB31D1713), .38f to Color(0x401D1713), .7f to Color.Transparent) }
+        val sideScrim = remember { Brush.horizontalGradient(listOf(Color(0x401D1713), Color.Transparent)) }
         val imageId = if (period == NaturalPeriod.NIGHT) R.drawable.horizon_portrait_night else R.drawable.horizon_portrait_day
-        Box(Modifier.matchParentSize().background(Color(0xFF353E36))) {
+        Box(Modifier.matchParentSize().background(Color(0xFF2C211A))) {
             if (!(com.zikrtime.app.BuildConfig.DEBUG && com.zikrtime.app.QaHooks.hideScene)) {
                 Image(painterResource(imageId), null, Modifier.fillMaxWidth().height(revealHeight + 110.dp).graphicsLayer {
                     // Image overfill keeps the frame covered throughout its small parallax travel.
@@ -105,7 +105,7 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
                     else -> Color.Transparent
                 }
                 drawRect(tint)
-                drawRect(Color(0xFF061D24).copy(alpha = p * .28f))
+                drawRect(Color(0xFF1B130E).copy(alpha = p * .28f))
             })
         }
 
@@ -164,7 +164,7 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
                 }
                 Spacer(Modifier.height(if (compactViewport) 8.dp else 12.dp))
                 Surface(Modifier.fillMaxWidth().testTag("home_next_prayer_card"), shape = RoundedCornerShape(22.dp),
-                    color = Color(0xEB14372C), border = BorderStroke(.7.dp, Sand.copy(alpha = .48f))) {
+                    color = Color(0xEB2D221B), border = BorderStroke(.8.dp, Sand.copy(alpha = .50f))) {
                     Column(Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
                         verticalArrangement = Arrangement.spacedBy(4.dp)) {
                         if (large) {

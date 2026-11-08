@@ -1,0 +1,192 @@
+name: Chocolate design review 0.8.31
+
+on:
+  push:
+    branches: [codex/emerald-concept-0828]
+    paths:
+      - 'app/**'
+      - 'tools/ci/**'
+      - '.github/workflows/chocolate-review.yml'
+      - 'build.gradle.kts'
+      - 'settings.gradle.kts'
+      - 'gradle/**'
+      - 'gradle.properties'
+  workflow_dispatch:
+    inputs:
+      reuse_run:
+        description: 'Optional chocolate-inputs run; Android build inputs must be identical'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: chocolate-review-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  BASELINE: be103ebd84d228a36a1c1a0d8596b494a7c97383
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Resolve APK reuse for automation-only changes
+        run: |
+          mkdir -p ci-out
+          python3 - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          event = json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text())
+          message = event.get('head_commit', {}).get('message', '')
+          match = re.search(r'\[chocolate-review\]\s+reuse=(\d+)', message)
+          reuse = event.get('inputs', {}).get('reuse_run', '') or (match.group(1) if match else '')
+          assert not reuse or reuse.isdigit(), 'Invalid reuse run'
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('REUSE_RUN=' + reuse + '\n')
+          PY
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        if: env.REUSE_RUN == ''
+      - name: Compile, run the 24 targeted tests and lint
+        if: env.REUSE_RUN == ''
+        run: |
+          bash gradlew :app:testDebugUnitTest --tests 'com.zikrtime.app.ui.NavigationTest' --tests 'com.zikrtime.app.prayer.PrayerNextTest' --tests 'com.zikrtime.app.data.QuranReadingTest' --tests 'com.zikrtime.app.data.QuranProgressTest' --tests 'com.zikrtime.app.audio.QuranAyahPlaybackPolicyTest' :app:lintDebug :app:assembleDebug --console=plain
+      - name: Sign the release with the existing key
+        if: env.REUSE_RUN == ''
+        env:
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          test -n "$RELEASE_KEY_PASSWORD"
+          openssl enc -d -aes-256-cbc -pbkdf2 -iter 300000 -in keystore/release.jks.enc -out keystore/release.jks -pass env:RELEASE_KEY_PASSWORD
+          bash gradlew :app:assembleRelease --console=plain
+      - name: Remove decrypted key
+        if: always()
+        run: rm -f keystore/release.jks
+      - name: Download APKs after automation-only changes
+        if: env.REUSE_RUN != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download "$REUSE_RUN" --repo "$GITHUB_REPOSITORY" -n chocolate-inputs -D .
+      - name: Verify version, signatures, frozen sources and protected resources
+        run: python3 tools/ci/chocolate_review.py verify-build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: chocolate-inputs
+          compression-level: 0
+          if-no-files-found: error
+          path: |
+            app/build/outputs/apk/debug/app-debug.apk
+            app/build/outputs/apk/release/app-release.apk
+            ci-out/build.json
+      - name: Stage build evidence
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import shutil
+          from pathlib import Path
+          target = Path('ci-build-evidence')
+          target.mkdir(exist_ok=True)
+          for source in [Path('ci-out/build.json'), Path('ci-out/ZikrTime-0.8.31-chocolate.apk')]:
+              if source.exists():
+                  shutil.copy2(source, target / source.name)
+          checks = target / 'checks'
+          checks.mkdir(exist_ok=True)
+          lint = Path('app/build/reports/lint-results-debug.xml')
+          if lint.exists():
+              shutil.copy2(lint, checks / lint.name)
+          tests = Path('app/build/test-results/testDebugUnitTest')
+          if tests.exists():
+              shutil.copytree(tests, checks / 'testDebugUnitTest', dirs_exist_ok=True)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: chocolate-build-evidence
+          compression-level: 0
+          if-no-files-found: warn
+          path: ci-build-evidence/
+
+  review:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [home, sections, preserve]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/download-artifact@v4
+        with:
+          name: chocolate-inputs
+          path: .
+      - name: Download the verified 0.8.30 baseline for comparison and upgrade
+        if: matrix.shard == 'preserve'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download 42519456373 --repo "$GITHUB_REPOSITORY" -n emerald-sample-inputs -D baseline-inputs
+      - run: python3 -m pip install 'Pillow>=11,<13'
+      - name: Enable emulator acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-chocolate.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Check ${{ matrix.shard }} on Android 15
+        timeout-minutes: 15
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -camera-back none -camera-front none -skin 1080x2400
+          script: python3 tools/ci/chocolate_review.py ui ${{ matrix.shard }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: chocolate-ui-${{ matrix.shard }}
+          compression-level: 0
+          if-no-files-found: error
+          path: ci-out/
+
+  aggregate:
+    needs: [build, review]
+    if: always() && needs.build.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: chocolate-build-evidence
+          path: ci-out
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: chocolate-ui-*
+          path: review-shards
+          merge-multiple: false
+      - name: Verify every shard belongs to the same build and collect evidence
+        run: python3 tools/ci/chocolate_review.py aggregate
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: chocolate-review-evidence
+          compression-level: 0
+          if-no-files-found: error
+          path: ci-out/
