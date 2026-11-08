@@ -140,7 +140,7 @@ internal fun QuranTimerSheet(progress: QuranProgress, session: QuranSession, clo
         Text(readingClock(session.timer.remaining), style = MaterialTheme.typography.displaySmall, modifier = Modifier.testTag("quran_timer_value"))
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             listOf(5, 10, 15, 30).forEach { m ->
-                FilterChip(minutes == m.toString(), { minutes = m.toString(); invalid = false }, label = { Text(stringResource(R.string.qf_minutes, m)) })
+                RhythmChoiceChip(minutes == m.toString(), { minutes = m.toString(); invalid = false }, label = { Text(stringResource(R.string.qf_minutes, m)) })
             }
         }
         OutlinedTextField(minutes, { minutes = it.take(3); invalid = false }, singleLine = true, isError = invalid,

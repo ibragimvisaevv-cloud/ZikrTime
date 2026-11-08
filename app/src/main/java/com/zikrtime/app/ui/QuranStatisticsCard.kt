@@ -270,7 +270,7 @@ private fun QuranGoalDialog(goal: Int, onDismiss: () -> Unit, onSave: (Int) -> U
                 Text(stringResource(R.string.qs_goal_hint), style = MaterialTheme.typography.bodyMedium)
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     listOf(5, 10, 15, 30).forEach { minutes ->
-                        FilterChip(selected = value == minutes, onClick = { draft = minutes.toString() },
+                        RhythmChoiceChip(selected = value == minutes, onClick = { draft = minutes.toString() },
                             label = { Text(stringResource(R.string.qf_minutes, minutes)) },
                             modifier = Modifier.testTag("quran_goal_preset_$minutes"))
                     }

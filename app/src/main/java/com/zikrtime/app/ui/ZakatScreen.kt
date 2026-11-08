@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -154,8 +153,8 @@ fun ZakatScreen() {
             Text(stringResource(R.string.zakat_nisab), style = MaterialTheme.typography.titleSmall)
             Spacer(Modifier.height(8.dp))
             androidx.compose.foundation.layout.FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                FilterChip(selected = !bySilver, onClick = { bySilver = false; save() }, label = { Text(stringResource(R.string.zakat_by_gold)) })
-                FilterChip(selected = bySilver, onClick = { bySilver = true; save() }, label = { Text(stringResource(R.string.zakat_by_silver)) })
+                RhythmChoiceChip(selected = !bySilver, onClick = { bySilver = false; save() }, label = { Text(stringResource(R.string.zakat_by_gold)) })
+                RhythmChoiceChip(selected = bySilver, onClick = { bySilver = true; save() }, label = { Text(stringResource(R.string.zakat_by_silver)) })
             }
             Spacer(Modifier.height(10.dp))
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {

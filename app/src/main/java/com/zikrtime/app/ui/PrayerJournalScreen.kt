@@ -105,7 +105,7 @@ fun PrayerJournalScreen(initialDay: String? = null, initialPrayer: String? = nul
         }
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                for (n in listOf(7, 30)) FilterChip(days == n, { days = n }, label = { Text(daysText(n)) })
+                for (n in listOf(7, 30)) RhythmChoiceChip(days == n, { days = n }, label = { Text(daysText(n)) })
             }
             Column(Modifier.fillMaxWidth()) {
                 for ((index, mark) in listOf(PrayerMark.DONE, PrayerMark.MADE_UP, PrayerMark.MISSED, PrayerMark.UNMARKED).withIndex()) {

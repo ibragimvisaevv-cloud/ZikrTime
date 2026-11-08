@@ -34,7 +34,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -206,7 +205,7 @@ private fun TasbihContent(palette: TasbihPalette) {
                             verticalArrangement = Arrangement.spacedBy(2.dp)) {
                             listOf(33, 99, 100, 0).forEach { value ->
                                 val label = if (value == 0) stringResource(R.string.tb_unlimited) else value.toString()
-                                FilterChip(selected = target == value, onClick = { Store.tasbihTarget = value },
+                                RhythmChoiceChip(selected = target == value, onClick = { Store.tasbihTarget = value },
                                     label = { Text(label) },
                                     modifier = Modifier.testTag("tasbih_target_$value"))
                             }

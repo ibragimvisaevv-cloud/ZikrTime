@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -195,7 +194,7 @@ fun RamadanScreen() {
             Spacer(Modifier.height(8.dp))
             androidx.compose.foundation.layout.FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 listOf(-1 to R.string.ramadan_shift_earlier, 0 to R.string.ramadan_shift_none, 1 to R.string.ramadan_shift_later).forEach { (v, label) ->
-                    FilterChip(selected = shift == v, onClick = { Store.ramadanShift = v }, label = { Text(stringResource(label)) })
+                    RhythmChoiceChip(selected = shift == v, onClick = { Store.ramadanShift = v }, label = { Text(stringResource(label)) })
                 }
             }
             Spacer(Modifier.height(8.dp))

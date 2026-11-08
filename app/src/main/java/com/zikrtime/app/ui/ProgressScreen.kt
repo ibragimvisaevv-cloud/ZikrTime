@@ -46,7 +46,7 @@ fun ProgressScreen() {
             OutlinedButton(onClick = { nav.open(Screen.PRAYER_JOURNAL) }) { Text(stringResource(R.string.journal_title)) }
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 listOf(7, 30, 90).forEach { d ->
-                    FilterChip(selected = days == d, onClick = { days = d }, label = { Text(daysText(d)) })
+                    RhythmChoiceChip(selected = days == d, onClick = { days = d }, label = { Text(daysText(d)) })
                 }
             }
             val summary = Store.personalProgressSummary(LocalDate.now(), days)

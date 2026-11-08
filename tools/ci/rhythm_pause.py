@@ -437,6 +437,19 @@ def reader_actions():
     # below it, not absent. Scroll the real reader before asserting the text.
     locate('quran_translation_1')
     tap('quran_fullscreen')
+    # Android can cover the first immersive entry with its own teaching window.
+    # Dismiss only that observed system window through its real button, then
+    # still require the reader's fullscreen control below.
+    for _ in range(10):
+        root = ui()
+        if find(root, 'android:id/immersive_cling_title') is not None:
+            confirmation = find(root, 'android:id/ok')
+            assert confirmation is not None and confirmation.get('package') == 'android', 'Unexpected fullscreen confirmation'
+            tap('android:id/ok')
+            break
+        if find(root, 'quran_exit_fullscreen') is not None:
+            break
+        time.sleep(.35)
     observe('quran_exit_fullscreen')
     shot('quran-fullscreen-translation-dark', presentation=True)
     tap('quran_exit_fullscreen')
@@ -444,9 +457,11 @@ def reader_actions():
     for tag in ('ayah_play_pause', 'ayah_repeat_3', 'ayah_speed_75', 'ayah_continue', 'quran_action_bookmark', 'quran_note_open', 'quran_copy_ayah'):
         locate(tag)
     tap('ayah_repeat_3')
-    assert find(ui(), 'ayah_repeat_3').get('selected') == 'true', 'Repeat selection not applied'
+    repeat = find(ui(), 'ayah_repeat_3')
+    assert repeat is not None and repeat.get('checkable') == 'true' and repeat.get('checked') == 'true', 'Repeat selection not applied'
     tap('ayah_speed_75')
-    assert find(ui(), 'ayah_speed_75').get('selected') == 'true', 'Speed selection not applied'
+    speed = find(ui(), 'ayah_speed_75')
+    assert speed is not None and speed.get('checkable') == 'true' and speed.get('checked') == 'true', 'Speed selection not applied'
     shot('quran-ayah-controls-dark', presentation=True)
     tap('quran_note_open')
     enter_text('quran_stop_note', 'UI state test')
@@ -580,6 +595,33 @@ def knowledge():
     # and scroll to Skip instead of silently continuing after a missed tap.
     tap('learning_skip')
     bank = json.loads(Path('app/src/main/assets/quiz/ru.json').read_text())['questions']
+    labels = {node.get('name'): ''.join(node.itertext())
+              for node in ET.parse('app/src/main/res/values-ru/strings.xml').getroot()}
+    session_id = json.loads(prefs()['learning_state_v1'])['sessions']['normal']['id']
+
+    def continuation():
+        # Exactly one real action follows the explanation. Looking only for
+        # Next wastes a full scroll search on the final question and treating
+        # its absence as Finish can conceal a missing control.
+        previous = None
+        for _ in range(12):
+            root = ui()
+            choices = [tag for tag in ('learning_next', 'learning_finish') if find(root, tag) is not None]
+            assert len(choices) <= 1, 'Ambiguous quiz continuation controls'
+            if choices:
+                locate(choices[0])
+                return choices[0]
+            owners = [node for node in root.iter('node') if node.get('scrollable') == 'true'
+                      and visible_bounds(root, node)[3] - visible_bounds(root, node)[1] > 150]
+            assert owners, 'Quiz continuation has no scrollable viewport'
+            owner = max(owners, key=lambda node: visible_bounds(root, node)[3] - visible_bounds(root, node)[1])
+            signature = ET.tostring(owner)
+            assert signature != previous, 'Reached the end of feedback without Next or Finish'
+            previous = signature
+            l, t, r, b = visible_bounds(root, owner)
+            shell('input', 'swipe', l+16, int(t+(b-t)*.78), l+16, int(t+(b-t)*.35), 450)
+        raise AssertionError('Quiz continuation not found within bounded feedback scrolling')
+
     wrong_seen = correct_seen = False
     for index in range(8):
         root, _, _ = locate('learning_question')
@@ -605,21 +647,25 @@ def knowledge():
             assert 'Верно' in feedback_text
             correct_seen = True
             shot('test-quiz-correct-feedback')
-        # The continuation follows the explanation/source and can start
-        # offscreen. Both branches still require the actual enabled UI action.
-        try:
-            locate('learning_next')
-        except AssertionError:
-            tap('learning_finish')
-            locate('МашаАллах!', 'text')
+        action = continuation()
+        tap(action)
+        if action == 'learning_finish':
+            # RoundResult uses learning_complete; quiz_mashallah is a legacy
+            # string and is no longer rendered on this result page.
+            locate(labels['learning_complete'], 'text')
+            locate(labels['quiz_again'], 'text')
+            locate(labels['action_done'], 'text')
+            completed = json.loads(prefs()['learning_state_v1'])['sessions']['normal']
+            assert completed['id'] == session_id and completed['stage'] == 'RESULT', 'The answered quiz did not persist its result'
+            assert len(completed['correct']) == index, 'Result differs from the answers selected through the UI'
             shot('test-quiz-result')
             break
-        tap('learning_next')
     else:
         raise AssertionError('Quiz did not finish in bounded UI steps')
     assert wrong_seen and correct_seen
     return {'map_ids': ['33', '34', '35', '36'], 'real_questions_and_answer_callbacks': True,
             'wrong_and_correct_word_labels': True, 'result_reached': True,
+            'result_again_done_actions_reachable': True, 'same_session_result_persisted': True,
             'answers_selected_by_test': True, 'screens_are_test_evidence': True}
 
 
@@ -642,14 +688,18 @@ def focus_journal():
     for tag, value in (('focus_pause_strict', 'true'), ('focus_pause_soft', 'false')):
         tap(tag)
         root = ui()
-        assert find(root, tag).get('selected') == 'true', 'Pause mode is not marked selected: ' + tag
+        # Compose FilterChip exposes checkable/checked through Android accessibility,
+        # while the separate selected property remains false even with its checkmark.
+        chip = find(root, tag)
+        assert chip.get('checkable') == 'true' and chip.get('checked') == 'true', 'Pause mode is not checked: ' + tag
         other = 'focus_pause_soft' if value == 'true' else 'focus_pause_strict'
-        assert find(root, other).get('selected') == 'false', 'Both pause modes appear selected'
+        assert find(root, other).get('checked') == 'false', 'Both pause modes appear checked'
         assert prefs('focus_pause_v1').get('strict') == value, 'Pause mode did not persist'
     for index in range(3):
         tag = 'focus_pause_phrase_' + str(index)
         tap(tag)
-        assert find(ui(), tag).get('selected') == 'true', 'Pause phrase is not marked selected: ' + tag
+        chip = find(ui(), tag)
+        assert chip.get('checkable') == 'true' and chip.get('checked') == 'true', 'Pause phrase is not checked: ' + tag
         assert prefs('focus_pause_v1').get('phrase') == str(index), 'Pause phrase did not persist'
     shot('test-focus-selected-mode-phrase')
     tap('focus_pause_strict' if pause_before.get('strict') == 'true' else 'focus_pause_soft')
@@ -776,11 +826,57 @@ def shop_and_places():
 def widgets_gallery(palette, font=1.0):
     """Actual native RemoteViews in the existing debug preview, not a mock or launcher."""
     global LOCALE
+    import types
     LOCALE = 'ru'
     # This emulator accepts 1920px height. Keep the measured 320/360dp width
     # and 150% font; test full widget visibility in the real 640dp viewport.
     display(960 if font > 1 else 1080, 1920, font)
     theme(palette)
+    # Native Chronometers emit accessibility events every second. The stock
+    # `uiautomator dump` fails with "could not get idle state" on this page.
+    # Reuse the repository's read-only instrumentation instead of stopping
+    # clocks, substituting values or changing the application APK.
+    fixture = Path('fixtures/widget-ui.apk')
+    fixture_sources = [Path('tools/ci/build_widget_ui.sh'),
+                       Path('tools/ci/widget-ui/DumpInstrumentation.java'),
+                       Path('tools/ci/widget-ui/AndroidManifest.xml')]
+    if not fixture.exists():
+        fixture.parent.mkdir(exist_ok=True)
+        sdk = Path(os.environ['ANDROID_HOME'])
+        if not (sdk / 'platforms/android-35/android.jar').is_file():
+            subprocess.run([str(sdk / 'cmdline-tools/latest/bin/sdkmanager'),
+                            'platforms;android-35', 'build-tools;35.0.0'], check=True)
+        if not Path('fixtures/test.jks').exists():
+            subprocess.run(['keytool', '-genkeypair', '-keystore', 'fixtures/test.jks',
+                            '-storepass', 'android', '-keypass', 'android', '-alias', 'test',
+                            '-dname', 'CN=Disposable Widget Test', '-keyalg', 'RSA',
+                            '-keysize', '2048', '-validity', '2'], check=True)
+        subprocess.run(['bash', 'tools/ci/build_widget_ui.sh'], check=True)
+    probe_package = 'com.zikrtime.widgetprobe'
+    if 'package:' + probe_package not in shell('pm', 'list', 'packages', probe_package).splitlines():
+        adb('install', '-r', fixture)
+
+    def widget_ui():
+        # Remove the previous snapshot before each observation. A failed
+        # instrumentation run must never produce a stale successful tree.
+        shell('run-as', probe_package, 'rm', '-f', 'files/window.xml')
+        result = shell('am', 'instrument', '-w', probe_package + '/.DumpInstrumentation')
+        assert 'snapshot saved' in result and 'INSTRUMENTATION_CODE: -1' in result, result
+        root = ET.fromstring(adb('exec-out', 'run-as', probe_package, 'cat', 'files/window.xml'))
+        assert any(node.get('package') == PKG for node in root.iter('node')), 'Widget app is not the active window'
+        assert not any(node.get('resource-id') == 'android:id/aerr_close' for node in root.iter('node')), 'App error dialog present'
+        (OUT / 'widget-last-ui.xml').write_text(ET.tostring(root, encoding='unicode'))
+        return root
+
+    # Give only this group the non-idle reader. The existing route, scrolling,
+    # screenshot, display-geometry and persistence code remain unchanged, and
+    # no shared function or SUPPORT global is monkey-patched.
+    widget_globals = dict(globals(), ui=widget_ui)
+    local_helpers = {name: types.FunctionType(globals()[name].__code__, widget_globals,
+                                             name, globals()[name].__defaults__)
+                     for name in ('route', 'locate', 'shot')}
+    widget_globals.update(local_helpers)
+    widget_route, widget_locate, widget_shot = (local_helpers[name] for name in ('route', 'locate', 'shot'))
     size = '320dp-150' if font > 1 else '360dp-100'
     variants = [
         ('compact', 'Ближайший намаз · 2×1', 'w_time', 90),
@@ -793,9 +889,9 @@ def widgets_gallery(palette, font=1.0):
     rendered = []
     try:
         for name, label, marker, height in variants:
-            route('widgets')
+            widget_route('widgets')
             identifier, attribute = (label, 'text') if label else (marker, 'resource-id')
-            root, node, area = locate(identifier, attribute)
+            root, node, area = widget_locate(identifier, attribute)
             # Align the selected section toward the top within its real scroll
             # container. The leading gutter avoids native widget click targets.
             owners = [n for n in root.iter('node') if n.get('scrollable') == 'true']
@@ -806,7 +902,7 @@ def widgets_gallery(palette, font=1.0):
             if distance > 24:
                 start = int(t + (b-t)*.83)
                 shell('input', 'swipe', l+18, start, l+18, max(t+36, start-distance), 400)
-            root = ui()
+            root = widget_ui()
             label_node = find(root, label, 'text') if label else None
             label_bottom = bounds(label_node)[3] if label_node is not None else 0
             candidates = [n for n in root.iter('node')
@@ -819,13 +915,22 @@ def widgets_gallery(palette, font=1.0):
             assert wb-wt >= height*3-8, ('Native widget clipped', name, bounds(widget), height)
             value = find(widget, marker)
             assert value.get('text', '').strip(), ('Native widget has no value', name)
-            shot('widgets-' + name + '-' + size + '-' + palette, presentation=True)
+            widget_shot('widgets-' + name + '-' + size + '-' + palette, presentation=True)
             rendered.append({'section': name, 'native_value': value.get('text'),
                              'height_dp': height, 'visible_bounds': [wl, wt, wr, wb]})
+    except Exception:
+        try:
+            widget_shot('test-widget-probe-failure-' + size + '-' + palette)
+        except Exception:
+            pass
+        raise
     finally:
         display()
     return {'map_ids': ['63', '64', '65'], 'theme': palette, 'font_scale': font,
             'native_remote_views': True, 'actual_current_time_and_preferences': True,
+            'hierarchy_reader': 'existing_read_only_DumpInstrumentation_without_idle_wait',
+            'hierarchy_probe_apk_sha256': hashlib.sha256(fixture.read_bytes()).hexdigest(),
+            'hierarchy_probe_source_sha256': {str(path): hashlib.sha256(path.read_bytes()).hexdigest() for path in fixture_sources},
             'host': 'existing_debug_WidgetPreview', 'launcher_pinning_and_pending_intents_tested': False,
             'wide_at_150_percent': 'expected compact responsive fallback at 320dp' if font > 1 else 'wide',
             'rendered': rendered}

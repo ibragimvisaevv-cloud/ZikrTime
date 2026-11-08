@@ -46,8 +46,8 @@ fun AzkarScreen() {
                 trackColor = MaterialTheme.colorScheme.outlineVariant, drawStopIndicator = {})
         }
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            FilterChip(selected = period == "morning", onClick = { nav.openAzkar("morning") }, label = { Text(stringResource(R.string.azkar_morning)) })
-            FilterChip(selected = period == "evening", onClick = { nav.openAzkar("evening") }, label = { Text(stringResource(R.string.azkar_evening)) })
+            RhythmChoiceChip(selected = period == "morning", onClick = { nav.openAzkar("morning") }, label = { Text(stringResource(R.string.azkar_morning)) })
+            RhythmChoiceChip(selected = period == "evening", onClick = { nav.openAzkar("evening") }, label = { Text(stringResource(R.string.azkar_evening)) })
         }
         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
             Text(if (ru) item.titleRu else item.titleEn, style = MaterialTheme.typography.headlineSmall)

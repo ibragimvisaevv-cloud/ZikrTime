@@ -65,7 +65,7 @@ fun PrayerCheckReminderSettingsCard() {
             Spacer(Modifier.height(12.dp))
             Text(stringResource(R.string.prayer_check_delay), style = MaterialTheme.typography.labelLarge)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                for (minutes in PrayerCheckPlan.delays) FilterChip(
+                for (minutes in PrayerCheckPlan.delays) RhythmChoiceChip(
                     selected = PrayerCheckReminders.delayMinutes == minutes,
                     onClick = { PrayerCheckReminders.delayMinutes = minutes; PrayerCheckReminders.reschedule(context) },
                     label = { Text(stringResource(R.string.prayer_check_minutes, minutes)) },
