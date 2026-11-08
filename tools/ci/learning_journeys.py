@@ -16,9 +16,33 @@ AYAH = 1
 def open_reader(restart=False):
     open_route("quran", restart=restart)
     observe("quran_index_list")
+    locate_control("quran_search")
+    current = find_control(ui(), "quran_search")
+    if current.get("text", ""):
+        tap_control("quran_search_clear")
+        assert find_control(ui(), "quran_search").get("text", "") == "", "Clear-search action did not clear the field"
     tap_control("quran_search")
-    shell("input", "text", str(SURAH))
+    focused = find_control(ui(), "quran_search")
+    assert focused.get("focused") == "true", "Search field did not acquire input focus"
+    assert focused.get("text", "") == "", "Search field changed before typing"
+    # A single `adb input text 114` immediately after an IME opens can race
+    # Compose's selection updates: the observed failed run typed '41' into an
+    # initially empty field. Type through real key events at a settled cursor,
+    # and verify every prefix instead of proceeding to a different surah.
+    prefix = ""
+    for digit in str(SURAH):
+        shell("input", "keyevent", "KEYCODE_MOVE_END")
+        shell("input", "keyevent", "KEYCODE_" + digit)
+        prefix += digit
+        entered = find_control(ui(), "quran_search")
+        actual = entered.get("text", "")
+        with (OUT / "learning-search-input.jsonl").open("a") as handle:
+            handle.write(json.dumps({"expected": prefix, "actual": actual,
+                                     "focused": entered.get("focused")}) + "\n")
+        assert actual == prefix, ("Search input changed or lost a typed digit", prefix, actual)
     shell("input", "keyevent", "KEYCODE_BACK")
+    assert find_control(ui(), "quran_search").get("text", "") == str(SURAH), \
+        "Closing the keyboard changed the exact surah query"
     tap_control("quran_surah_" + str(SURAH))
     observe("quran_audio_reader_entry")
 
