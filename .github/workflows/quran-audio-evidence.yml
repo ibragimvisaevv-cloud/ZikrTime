@@ -65,7 +65,7 @@ jobs:
           preferred = [
               'audio-playing-dark.png', 'audio-offline-playback.png',
               'audio-large-light-player.png', 'audio-landscape-large-player.png',
-              'audio-landscape-large-download.png',
+              'audio-landscape-large-download.png', 'audio-cache-and-downloads.png',
           ]
           fallback = [
               'audio-failure.png', 'audio-ended-ready-to-replay.png',
@@ -73,7 +73,7 @@ jobs:
           ]
           emitted = []
           for name in preferred + fallback:
-              if len(emitted) == 5:
+              if len(emitted) == 6:
                   break
               matches = list(root.rglob(name))
               if not matches:
