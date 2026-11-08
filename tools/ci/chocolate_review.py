@@ -175,6 +175,8 @@ def sections_shard():
             root = observe(tag, tries=12)
             assert any(n.get('package') == PKG for n in root.iter('node')), route
             capture('section-' + route + '-' + theme, root)
+            if route.startswith('onboarding'):
+                put_pref('onboarded', 'boolean', 'true')
         REPORT['groups']['sections-' + theme] = list(routes)
         save_shard()
     start('focus')
