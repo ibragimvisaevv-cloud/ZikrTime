@@ -96,11 +96,14 @@ internal fun QuranAyahActionsSheet(
             selectAyah(target)
         }
     }
+    // Bound only the scrolling content: constraining the ModalBottomSheet modifier also
+    // constrains its anchor container and can place the sheet at the top of the screen.
+    val maxContentHeight = ((LocalConfiguration.current.screenHeightDp * .88f).dp - 56.dp).coerceAtLeast(120.dp)
     ModalBottomSheet(onDismissRequest = close,
-        modifier = Modifier.heightIn(max = (LocalConfiguration.current.screenHeightDp * .88f).dp),
         sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
         containerColor = colors.canvas, shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp)) {
-        Column(Modifier.fillMaxWidth().semantics { testTagsAsResourceId = true }.testTag("quran_ayah_sheet")
+        Column(Modifier.fillMaxWidth().heightIn(max = maxContentHeight)
+            .semantics { testTagsAsResourceId = true }.testTag("quran_ayah_sheet")
             .verticalScroll(rememberScrollState()).padding(horizontal = 20.dp).padding(bottom = 24.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
@@ -190,7 +193,7 @@ internal fun QuranAyahActionsSheet(
             }
             HorizontalDivider(color = colors.rule)
             Text(stringResource(R.string.ql_saved_actions), style = MaterialTheme.typography.titleSmall)
-            ReaderAction(if (saved) R.string.qt_remove_bookmark else R.string.qt_save_place, "quran_action_bookmark", bookmark)
+            ReaderAction(if (saved) R.string.qt_remove_bookmark else R.string.quran_save, "quran_action_bookmark", bookmark)
             ReaderAction(R.string.qt_note, "quran_note_open", note)
             ReaderAction(R.string.qt_copy, "quran_copy_ayah", copy)
             Text(stringResource(R.string.audio_ayah_source), style = MaterialTheme.typography.bodySmall, color = colors.muted)
