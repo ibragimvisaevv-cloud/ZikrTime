@@ -381,14 +381,38 @@ def illustrated_guide():
 
 
 def visible_guide_image():
-    # Inline screenshots intentionally retain their full aspect and may extend
-    # below a short viewport. Prove a substantial real image is visible; the
-    # dedicated zoom dialog is tested separately for whole-image access.
+    # The generic locator accepts 48px of a control, less than the substantial
+    # image area required here. Scroll only its real ancestor when a caption
+    # pushes the image below the fold; the zoom dialog proves whole-image access.
     locate_control("guide_screenshot")
-    root = ui()
-    node = find_control(root, "guide_screenshot")
-    left, top, right, bottom = visible_bounds(root, node)
-    assert right - left >= 100 * DENSITY / 160 and bottom - top >= 80 * DENSITY / 160
+    minimum_height = 80 * DENSITY / 160
+    previous_geometry = None
+    for attempt in range(4):
+        root = ui()
+        node = find_control(root, "guide_screenshot")
+        raw = bounds(node)
+        left, top, right, bottom = visible_bounds(root, node)
+        geometry = (raw, (left, top, right, bottom))
+        if bottom - top >= minimum_height or attempt == 3 or geometry == previous_geometry:
+            break
+        previous_geometry = geometry
+        parents = {child: parent for parent in root.iter() for child in parent}
+        owner = parents.get(node)
+        while owner is not None and owner.get("scrollable") != "true":
+            owner = parents.get(owner)
+        if owner is None or (raw[1] >= top and raw[3] <= bottom):
+            break
+        ol, ot, oright, ob = visible_bounds(root, owner)
+        if ob - ot < minimum_height:
+            break
+        distance = min(max(72, int(minimum_height - (bottom - top)) + 36), (ob - ot) // 3)
+        middle = (ot + ob) // 2
+        end = middle - distance if raw[3] > bottom else middle + distance
+        x = ol + min(18, (oright - ol) // 8)
+        shell("input", "swipe", x, middle, x, end, 300)
+        time.sleep(.25)
+    assert right - left >= 100 * DENSITY / 160 and bottom - top >= minimum_height, (
+        "Guide screenshot is insufficiently visible", raw, (left, top, right, bottom))
     assert find_control(root, "guide_hotspot") is not None, "Screenshot marker layer missing"
     return root
 
