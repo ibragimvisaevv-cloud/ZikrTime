@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 108 108" role="img" aria-labelledby="title desc">
+  <title id="title">ZikrTime — Ритм и пауза</title>
+  <desc id="desc">Открытый контур купола и две короткие вертикальные линии паузы на нейтральном фоне. Предложение иконки, не установленное в приложение.</desc>
+  <path fill="#F5F6F8" d="M0 0h108v108H0z"/>
+  <path d="M29 76V61c0-14 13-21 25-34 12 13 25 20 25 34v15" fill="none" stroke="#3157C8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="43" y="56" width="8" height="24" rx="2" fill="#3157C8"/>
+  <rect x="57" y="56" width="8" height="24" rx="2" fill="#3157C8"/>
+</svg>

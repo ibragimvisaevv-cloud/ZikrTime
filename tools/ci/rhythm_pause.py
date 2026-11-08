@@ -511,6 +511,62 @@ def shop_and_places():
             'seller_product_review_submission': 'not_exercised_no_production_writes'}
 
 
+def widgets_gallery(palette, font=1.0):
+    """Actual native RemoteViews in the existing debug preview, not a mock or launcher."""
+    global LOCALE
+    LOCALE = 'ru'
+    display(960 if font > 1 else 1080, 2400, font)
+    theme(palette)
+    size = '320dp-150' if font > 1 else '360dp-100'
+    variants = [
+        ('compact', 'Ближайший намаз · 2×1', 'w_time', 90),
+        ('wide-responsive', 'Линия времени · 4×1', 'w_time', 90),
+        ('square', 'Мой намаз · 2×2', 'w_time', 240 if font > 1 else 190),
+        ('day', 'Расписание дня · 4×2', 'w_time', 380 if font > 1 else 210),
+        ('focus', None, 'w_value', 200 if font > 1 else 190),
+        ('tasbih', None, 'w_count', 220 if font > 1 else 190),
+    ]
+    rendered = []
+    try:
+        for name, label, marker, height in variants:
+            route('widgets')
+            identifier, attribute = (label, 'text') if label else (marker, 'resource-id')
+            root, node, area = locate(identifier, attribute)
+            # Align the selected section toward the top within its real scroll
+            # container. The leading gutter avoids native widget click targets.
+            owners = [n for n in root.iter('node') if n.get('scrollable') == 'true']
+            assert owners, 'Widget preview scroll container missing'
+            owner = max(owners, key=lambda n: bounds(n)[3] - bounds(n)[1])
+            l, t, r, b = visible_bounds(root, owner)
+            distance = max(0, area[1] - t - 54)
+            if distance > 24:
+                start = int(t + (b-t)*.83)
+                shell('input', 'swipe', l+18, start, l+18, max(t+36, start-distance), 400)
+            root = ui()
+            label_node = find(root, label, 'text') if label else None
+            label_bottom = bounds(label_node)[3] if label_node is not None else 0
+            candidates = [n for n in root.iter('node')
+                          if n.get('resource-id', '').endswith('/widget_root')
+                          and find(n, marker) is not None
+                          and (not label or bounds(n)[1] >= label_bottom - 4)]
+            assert candidates, ('Native widget missing', name, size)
+            widget = min(candidates, key=lambda n: bounds(n)[1])
+            wl, wt, wr, wb = visible_bounds(root, widget)
+            assert wb-wt >= height*3-8, ('Native widget clipped', name, bounds(widget), height)
+            value = find(widget, marker)
+            assert value.get('text', '').strip(), ('Native widget has no value', name)
+            shot('widgets-' + name + '-' + size + '-' + palette, presentation=True)
+            rendered.append({'section': name, 'native_value': value.get('text'),
+                             'height_dp': height, 'visible_bounds': [wl, wt, wr, wb]})
+    finally:
+        display()
+    return {'map_ids': ['62', '63', '64', '65'], 'theme': palette, 'font_scale': font,
+            'native_remote_views': True, 'actual_current_time_and_preferences': True,
+            'host': 'existing_debug_WidgetPreview', 'launcher_pinning_and_pending_intents_tested': False,
+            'wide_at_150_percent': 'expected compact responsive fallback at 320dp' if font > 1 else 'wide',
+            'rendered': rendered}
+
+
 def compact_and_languages():
     global LOCALE
     display(960, 1920, 1.5)
@@ -538,6 +594,16 @@ def compact_and_languages():
         route('more')
         locate('settings_guide')
         shot('settings-320dp-150-' + language, presentation=True)
+    # Exercise the platform preference used by clockFormatter / BigClock.
+    # EN makes the AM/PM assertion unambiguous; no prayer schedule is injected.
+    LOCALE = 'en'
+    shell('settings', 'put', 'system', 'time_12_24', '12')
+    route('home')
+    root = observe('home_change_city')
+    text = ' '.join(n.get('text', '') for n in root.iter('node'))
+    assert re.search(r'\b(?:AM|PM)\b', text), '12-hour period absent from real home UI'
+    shot('home-320dp-150-en-12hour', presentation=True)
+    shell('settings', 'put', 'system', 'time_12_24', '24')
     LOCALE = 'ru'
     display()
     route('more')
@@ -549,7 +615,8 @@ def compact_and_languages():
     shell('settings', 'put', 'global', 'animator_duration_scale', '1')
     return {'map_ids': ['07', '08', '21', '28', '66'], 'width_dp': 320, 'font_scale': 1.5,
             'locales': ['ru', 'en', 'tr', 'az', 'uz', 'tg', 'kk', 'ky'],
-            'rotation_with_open_ayah_sheet': True, 'zero_animation_scale_theme_actions': True}
+            'rotation_with_open_ayah_sheet': True, 'twelve_hour_period_visible': True,
+            'zero_animation_scale_theme_actions': True}
 
 
 def group(name, action):
@@ -578,7 +645,9 @@ def main():
     mode = sys.argv[1]
     OUT.mkdir(exist_ok=True)
     (OUT / 'screens').mkdir(exist_ok=True)
-    REPORT.update(mode=mode, source_sha=os.environ.get('GITHUB_SHA'), run_id=os.environ.get('GITHUB_RUN_ID'),
+    delivery = json.loads((OUT / 'rhythm-delivery.json').read_text())
+    REPORT.update(mode=mode, source_sha=delivery['source_sha'], source_run=delivery['run_id'],
+                  verification_sha=os.environ.get('GITHUB_SHA'), run_id=os.environ.get('GITHUB_RUN_ID'),
                   debug_sha256=hashlib.sha256(APK.read_bytes()).hexdigest())
     adb('wait-for-device')
     shell('svc', 'power', 'stayon', 'true')
@@ -604,6 +673,9 @@ def main():
             group('all_main_routes_both_themes', route_gallery)
             group('catalog_search_and_map', shop_and_places)
             group('compact_languages_rotation_motion', compact_and_languages)
+            for palette in ('light', 'dark'):
+                group('widgets_' + palette, lambda palette=palette: widgets_gallery(palette))
+                group('widgets_150_' + palette, lambda palette=palette: widgets_gallery(palette, 1.5))
             # Existing guide assertions exercise real image-load markers, zoom
             # controls and return paths without rerunning playback suites.
             group('guide_all_topics_steps_zoom_return', SUPPORT['illustrated_guide'])
@@ -616,6 +688,7 @@ def main():
     finally:
         shell('settings', 'put', 'global', 'animator_duration_scale', '1')
         shell('settings', 'put', 'system', 'font_scale', '1.0')
+        shell('settings', 'put', 'system', 'time_12_24', '24')
         shell('wm', 'size', '1080x2400')
         persist()
 

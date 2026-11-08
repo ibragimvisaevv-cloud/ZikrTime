@@ -37,7 +37,8 @@ def capture():
     current['display']()
     current['first_run']()
     current['theme']('dark')
-    assert os.environ['GUIDE_APK_SOURCE_SHA'] == os.environ['GITHUB_SHA']
+    delivery = json.loads(Path('ci-out/rhythm-delivery.json').read_text())
+    assert os.environ['GUIDE_APK_SOURCE_SHA'] == delivery['source_sha']
     try:
         old['capture_common']()
         old['capture_quran']()
@@ -48,6 +49,7 @@ def capture():
         provenance = json.loads(provenance_file.read_text())
         provenance.update(design='rhythm-pause-0829', setup='real_onboarding_and_theme_controls',
                           qaDemo=False, fabricatedProgress=False,
+                          captureRun=os.environ['GITHUB_RUN_ID'], captureSha=os.environ['GITHUB_SHA'],
                           publicPlaceReference='shop-bot/places/berkat_yurt_verified_2026-11-07.json',
                           publicPlaceSnapshotUsedOnlyForRealGuideExample=True)
         provenance_file.write_text(json.dumps(provenance, ensure_ascii=False, indent=2) + '\n')
@@ -68,7 +70,7 @@ def sha(path):
 def validate(folder, expected_source, expected_run):
     provenance = json.loads((folder / 'guide-capture-provenance.json').read_text())
     assert provenance['sourceSha'] == expected_source
-    assert str(provenance['sourceRun']) == str(expected_run)
+    assert str(provenance['captureRun']) == str(expected_run)
     assert provenance['imagesAreActualScreenshots'] is True
     assert provenance['productionWrites'] is False
     assert provenance['design'] == 'rhythm-pause-0829'
@@ -104,8 +106,11 @@ def import_captures(folder, source, run):
     manifest, provenance, size = validate(folder, source, run)
     # Captured application code must still be identical. Guide illustration
     # assets are the only allowed Android difference during their import.
-    changed = subprocess.check_output(['git', 'diff', '--name-only', source, 'HEAD', '--', 'app',
-        'gradle', 'gradlew', 'build.gradle.kts', 'settings.gradle.kts', 'gradle.properties'], text=True).splitlines()
+    inputs = ['app', 'gradle', 'gradlew', 'gradlew.bat', 'build.gradle.kts',
+              'settings.gradle.kts', 'gradle.properties', 'keystore/release.jks.enc']
+    # Compare the working tree as well as committed changes to the captured APK.
+    changed = subprocess.check_output(['git', 'diff', '--name-only', source, '--', *inputs], text=True).splitlines()
+    changed += subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard', '--', *inputs], text=True).splitlines()
     assert all(path.startswith('app/src/main/assets/guide/') for path in changed), changed
     destination = Path('app/src/main/assets/guide/ru')
     evidence = Path('tools/ci/rhythm-guide-evidence')
@@ -117,6 +122,7 @@ def import_captures(folder, source, run):
     (destination / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n')
     (evidence / f'capture-{run}.json').write_text(json.dumps(provenance, ensure_ascii=False, indent=2) + '\n')
     (evidence / 'import.json').write_text(json.dumps({'capture_run': str(run), 'source_sha': source,
+        'source_run': provenance['sourceRun'],
         'debug_sha256': provenance['debugApkSha256'], 'images': 30, 'webp_bytes': size,
         'source_inputs_unchanged_except_guide_assets': True}, indent=2) + '\n')
     print(json.dumps({'imported': 30, 'webp_bytes': size, 'source_sha': source}))

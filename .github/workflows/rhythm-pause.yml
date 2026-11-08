@@ -22,7 +22,7 @@ jobs:
       - name: Select one explicit stage
         run: |
           python3 - <<'PY'
-          import json, os
+          import json, os, re
           from pathlib import Path
           message = json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text())['head_commit']['message']
           preview, final = '[rhythm-preview]' in message, '[rhythm-final]' in message
@@ -30,18 +30,21 @@ jobs:
           with open(os.environ['GITHUB_ENV'], 'a') as out:
               out.write('RHYTHM_MODE=' + ('final' if final else 'preview') + '\n')
               out.write('RHYTHM_GUIDE_CAPTURE=' + str('guide=true' in message).lower() + '\n')
+              reuse = re.search(r'\breuse=(\d+)\b', message)
+              out.write('RHYTHM_REUSE_RUN=' + (reuse.group(1) if reuse else '') + '\n')
           PY
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
       - uses: gradle/actions/setup-gradle@v4
+        if: env.RHYTHM_REUSE_RUN == ''
       - name: Validate protected inputs and evidence scripts
         run: |
           python3 -m py_compile tools/ci/rhythm_pause.py tools/ci/rhythm_pause_delivery.py tools/ci/rhythm_pause_guide.py
           python3 tools/ci/rhythm_pause_delivery.py inputs
       - name: Build baseline only for the actual update journey
-        if: env.RHYTHM_MODE == 'final'
+        if: env.RHYTHM_MODE == 'final' && env.RHYTHM_REUSE_RUN == ''
         run: |
           git worktree add --detach "$RUNNER_TEMP/rhythm-baseline" "$RHYTHM_BASELINE"
           (cd "$RUNNER_TEMP/rhythm-baseline" && bash gradlew assembleDebug --console=plain)
@@ -49,25 +52,42 @@ jobs:
           cp "$RUNNER_TEMP/rhythm-baseline/app/build/outputs/apk/debug/app-debug.apk" ci-out/baseline/ZikrTime-0.8.28-debug.apk
           git worktree remove --force "$RUNNER_TEMP/rhythm-baseline"
       - name: Restore the existing release key
-        if: env.RHYTHM_MODE == 'final'
+        if: env.RHYTHM_MODE == 'final' && env.RHYTHM_REUSE_RUN == ''
         env:
           RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
         run: |
           test -n "$RELEASE_KEY_PASSWORD"
           openssl enc -d -aes-256-cbc -pbkdf2 -iter 300000 -in keystore/release.jks.enc -out keystore/release.jks -pass env:RELEASE_KEY_PASSWORD
       - name: Build preview
-        if: env.RHYTHM_MODE == 'preview'
+        if: env.RHYTHM_MODE == 'preview' && env.RHYTHM_REUSE_RUN == ''
         run: bash gradlew assembleDebug --console=plain
       - name: Check changed presentation boundaries and build signed update
-        if: env.RHYTHM_MODE == 'final'
+        if: env.RHYTHM_MODE == 'final' && env.RHYTHM_REUSE_RUN == ''
         env:
           RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
         run: |
           bash gradlew testDebugUnitTest --tests 'com.zikrtime.app.ui.NavigationTest' --tests 'com.zikrtime.app.ui.ThemeRevealGeometryTest' --tests 'com.zikrtime.app.data.QuranProgressTest' --tests 'com.zikrtime.app.data.Guide*' --tests 'com.zikrtime.app.widget.PrayerWidgetModelTest' --console=plain
           bash gradlew lintDebug assembleDebug assembleRelease --console=plain
+      - name: Reuse exact APK inputs for a test-only correction
+        if: env.RHYTHM_REUSE_RUN != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RHYTHM_REUSE_RUN" > ci-out/rhythm-requested-reuse-run.json
+          gh run download "$RHYTHM_REUSE_RUN" --repo "$GITHUB_REPOSITORY" -n "rhythm-$RHYTHM_MODE-inputs" -D .
+          python3 tools/ci/rhythm_pause_delivery.py reuse
       - name: Record APK provenance and original release certificate
         id: provenance
-        run: python3 tools/ci/rhythm_pause_delivery.py apk
+        run: |
+          if [ -z "$RHYTHM_REUSE_RUN" ]; then python3 tools/ci/rhythm_pause_delivery.py apk; fi
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          report = json.loads(Path('ci-out/rhythm-delivery.json').read_text())
+          with open(os.environ['GITHUB_ENV'], 'a') as out:
+              out.write('RHYTHM_APK_SOURCE_SHA=' + report['source_sha'] + '\n')
+              out.write('RHYTHM_APK_SOURCE_RUN=' + str(report['run_id']) + '\n')
+          PY
       - uses: actions/upload-artifact@v4
         with:
           name: rhythm-${{ env.RHYTHM_MODE }}-inputs
@@ -79,6 +99,8 @@ jobs:
             ci-out/rhythm-delivery.json
             ci-out/release-signature.txt
             ci-out/baseline/
+            app/build/test-results/
+            app/build/reports/lint-results-debug.xml
       - run: python3 -m pip install 'Pillow>=11,<13'
       - name: Enable emulator acceleration
         run: |
@@ -95,13 +117,28 @@ jobs:
           disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -camera-back none -camera-front none
           script: python3 tools/ci/rhythm_pause.py "$RHYTHM_MODE"
+      - name: Make the first six screenshots available before guide capture
+        if: always() && steps.provenance.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: rhythm-${{ env.RHYTHM_MODE }}-first-screens
+          if-no-files-found: warn
+          path: |
+            ci-out/screens/home-dark.*
+            ci-out/screens/home-light.*
+            ci-out/screens/reader-dark.*
+            ci-out/screens/reader-light.*
+            ci-out/screens/settings-dark.*
+            ci-out/screens/settings-light.*
+            ci-out/rhythm-ui.json
+            ci-out/rhythm-transitions.mp4
       - name: Capture 30 new guide illustrations when explicitly selected
         if: always() && env.RHYTHM_GUIDE_CAPTURE == 'true' && steps.provenance.outcome == 'success'
         timeout-minutes: 18
         uses: reactivecircus/android-emulator-runner@v2
         env:
-          GUIDE_APK_SOURCE_SHA: ${{ github.sha }}
-          GUIDE_APK_SOURCE_RUN: ${{ github.run_id }}
+          GUIDE_APK_SOURCE_SHA: ${{ env.RHYTHM_APK_SOURCE_SHA }}
+          GUIDE_APK_SOURCE_RUN: ${{ env.RHYTHM_APK_SOURCE_RUN }}
         with:
           api-level: 35
           target: google_apis
@@ -129,6 +166,7 @@ jobs:
           name: rhythm-${{ env.RHYTHM_MODE }}-evidence
           path: |
             ci-out/
+            !ci-out/baseline/*.apk
             app/build/reports/lint-results-debug.*
             app/build/test-results/
             docs/RHYTHM_PAUSE_SCREEN_MAP.md

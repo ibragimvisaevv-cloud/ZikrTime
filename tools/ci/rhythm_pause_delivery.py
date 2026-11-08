@@ -6,6 +6,7 @@ from pathlib import Path
 import re
 import subprocess
 import sys
+import xml.etree.ElementTree as ET
 import zipfile
 
 OUT = Path('ci-out')
@@ -62,6 +63,9 @@ def apk():
     debug = Path('app/build/outputs/apk/debug/app-debug.apk')
     report['debug_sha256'] = digest(debug)
     report['debug_bytes'] = debug.stat().st_size
+    badging = run(tool('aapt'), 'dump', 'badging', str(debug))
+    assert "name='com.zikrtime.app'" in badging
+    assert "versionCode='41'" in badging and "versionName='0.8.29'" in badging
     with zipfile.ZipFile(debug) as archive:
         for path, expected in source['protected_assets'].items():
             assert hashlib.sha256(archive.read(path.removeprefix('app/src/main/'))).hexdigest() == expected, path
@@ -80,10 +84,55 @@ def apk():
             for path, expected in source['protected_assets'].items():
                 assert hashlib.sha256(archive.read(path.removeprefix('app/src/main/'))).hexdigest() == expected, path
         report['release_protected_assets_verified'] = len(source['protected_assets'])
+        tests = sorted(Path('app/build/test-results/testDebugUnitTest').glob('TEST-*.xml'))
+        assert tests, 'No targeted test evidence'
+        roots = [ET.parse(path).getroot() for path in tests]
+        assert not any(int(t.get('failures', 0)) + int(t.get('errors', 0)) for t in roots)
+        lint = Path('app/build/reports/lint-results-debug.xml')
+        issues = ET.parse(lint).getroot().findall('issue')
+        assert not any(i.get('severity') in {'Fatal', 'Error'} for i in issues)
+        report['targeted_tests'] = sum(int(t.get('tests', 0)) for t in roots)
+        report['skipped_tests'] = sum(int(t.get('skipped', 0)) for t in roots)
+        report['inheritable_check_files'] = {str(path): digest(path) for path in [*tests, lint]}
     save('rhythm-delivery.json', report)
     print(json.dumps({k: v for k, v in report.items() if k not in ('protected_assets',)}, ensure_ascii=False))
 
 
+def reuse():
+    report = json.loads((OUT / 'rhythm-delivery.json').read_text())
+    requested = json.loads((OUT / 'rhythm-requested-reuse-run.json').read_text())
+    source = report['source_sha']
+    assert re.fullmatch(r'[0-9a-f]{40}', source)
+    assert str(requested['id']) == os.environ['RHYTHM_REUSE_RUN']
+    assert requested['head_branch'] == 'codex/rhythm-pause-0829'
+    assert requested['path'] == '.github/workflows/rhythm-pause.yml'
+    assert re.fullmatch(r'\d+', str(report['run_id']))
+    original = json.loads(run('gh', 'api', 'repos/' + os.environ['GITHUB_REPOSITORY']
+                              + '/actions/runs/' + str(report['run_id'])))
+    assert original['head_sha'] == source
+    assert original['path'] == '.github/workflows/rhythm-pause.yml'
+    assert original['head_branch'] == 'codex/rhythm-pause-0829'
+    save('rhythm-original-build-run.json', original)
+    assert report['mode'] == os.environ['RHYTHM_MODE']
+    assert report['version'] == '0.8.29' and report['version_code'] == 41
+    subprocess.run(['git', 'diff', '--exit-code', source, 'HEAD', '--', 'app', 'gradle',
+                    'gradlew', 'gradlew.bat', 'build.gradle.kts', 'settings.gradle.kts',
+                    'gradle.properties', 'keystore/release.jks.enc'], check=True)
+    assert digest('app/build/outputs/apk/debug/app-debug.apk') == report['debug_sha256']
+    if report['mode'] == 'final':
+        assert report['certificate_sha256'] == CERT
+        assert digest('app/build/outputs/apk/release/app-release.apk') == report['release_sha256']
+        assert digest(OUT / 'baseline/ZikrTime-0.8.28-debug.apk') == report['baseline_debug_sha256']
+        for path, expected in report['inheritable_check_files'].items():
+            assert digest(path) == expected
+    save('rhythm-reuse.json', {'apk_source_sha': source, 'apk_build_run': report['run_id'],
+                             'downloaded_from_run': requested['id'],
+                             'verification_sha': os.environ['GITHUB_SHA'],
+                             'verification_run': os.environ['GITHUB_RUN_ID'],
+                             'unchanged_android_inputs': True, 'apk_hashes_verified': True,
+                             'prior_targeted_tests_and_lint_inherited': report['mode'] == 'final'})
+
+
 if __name__ == '__main__':
-    assert len(sys.argv) == 2 and sys.argv[1] in {'inputs', 'apk'}
-    {'inputs': inputs, 'apk': apk}[sys.argv[1]]()
+    assert len(sys.argv) == 2 and sys.argv[1] in {'inputs', 'apk', 'reuse'}
+    {'inputs': inputs, 'apk': apk, 'reuse': reuse}[sys.argv[1]]()
