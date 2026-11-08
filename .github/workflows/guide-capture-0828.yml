@@ -25,7 +25,9 @@ jobs:
         run: |
           gh run download 42426787159 --repo "$GITHUB_REPOSITORY" -n audio-verified-inputs -D .
           echo 'f48bfbfaed2b19bef31c7adc307cdcce016b5c511a74f429d6a73bf82ea09dec  app/build/outputs/apk/debug/app-debug.apk' | sha256sum --check
-          gh run download "$GUIDE_CAPTURE_REUSE_RUN" --repo "$GITHUB_REPOSITORY" -n real-guide-screens-0828 -D ci-out
+          gh run download "$GUIDE_CAPTURE_REUSE_RUN" --repo "$GITHUB_REPOSITORY" -n real-guide-screens-0828 -D prior-capture
+          cp -a prior-capture/guide-assets prior-capture/screens ci-out/
+          cp prior-capture/guide-capture-provenance.json ci-out/
       - run: python3 -m pip install 'Pillow>=11,<13'
       - name: Enable emulator acceleration
         run: |
