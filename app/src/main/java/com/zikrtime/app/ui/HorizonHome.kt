@@ -45,7 +45,7 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
             .windowInsetsPadding(WindowInsets.statusBars).verticalScroll(scroll)
             .padding(horizontal = RhythmSpace.Page)) {
             Column(Modifier.fillMaxWidth().onSizeChanged { heroHeight = it.height }
-                .padding(top = 8.dp, bottom = 28.dp)) {
+                .padding(top = 8.dp, bottom = 16.dp)) {
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                     RhythmMark(Modifier.size(24.dp))
                     Spacer(Modifier.width(10.dp))
@@ -64,9 +64,11 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
                     Spacer(Modifier.width(6.dp))
                     Text("›", style = MaterialTheme.typography.titleMedium)
                 }
-                Text(gregorianDate(now.toLocalDate()) + " · " + hijriDate(now.toLocalDate()),
-                    color = scheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
-                Spacer(Modifier.height(28.dp))
+                Text(gregorianDate(now.toLocalDate()), color = scheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.bodySmall)
+                Text(hijriDate(now.toLocalDate()), color = scheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.bodySmall)
+                Spacer(Modifier.height(16.dp))
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Box(Modifier.size(6.dp).background(scheme.primary, androidx.compose.foundation.shape.CircleShape))
                     Text(stringResource(R.string.home_next_prayer), color = scheme.primary, style = MaterialTheme.typography.labelLarge)
@@ -88,7 +90,7 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
             }
             HorizontalDivider(color = scheme.outlineVariant)
             Column(Modifier.fillMaxWidth().testTag("horizon_panel").semantics { testTagsAsResourceId = true }
-                .padding(top = 24.dp), verticalArrangement = Arrangement.spacedBy(RhythmSpace.Section)) {
+                .padding(top = 16.dp), verticalArrangement = Arrangement.spacedBy(RhythmSpace.Section)) {
                 content()
                 Spacer(Modifier.height(if (density.fontScale > 1.3f) 132.dp else 96.dp))
                 Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))

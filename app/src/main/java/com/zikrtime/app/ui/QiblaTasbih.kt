@@ -111,7 +111,9 @@ fun QiblaScreen() {
     }
 
     ScreenScaffold(title = stringResource(R.string.qibla_title), onBack = { nav.back() }, showHeading = false) {
-        PageHeading(stringResource(R.string.qibla_title), com.zikrtime.app.data.Cities.displayName(LocalContext.current, loc))
+        Text(com.zikrtime.app.data.Cities.displayName(LocalContext.current, loc),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant)
         Box(Modifier.fillMaxWidth().heightIn(max = 340.dp).aspectRatio(1f).testTag("qibla_compass").padding(12.dp), contentAlignment = Alignment.Center) {
             Compass(heading = shownHeading, qibla = qibla, aligned = aligned)
         }

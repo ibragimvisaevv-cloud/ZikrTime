@@ -33,12 +33,18 @@ def capture():
     for path in (Path('ci-out'), Path('ci-out/screens'), old['ASSETS']):
         path.mkdir(parents=True, exist_ok=True)
     current['adb']('wait-for-device')
-    current['adb']('install', '-r', current['APK'])
     current['display']()
+    current['adb']('install', '-r', current['APK'])
     current['first_run']()
     current['theme']('dark')
     delivery = json.loads(Path('ci-out/rhythm-delivery.json').read_text())
     assert os.environ['GUIDE_APK_SOURCE_SHA'] == delivery['source_sha']
+    original_capture = old['capture']
+    def capture_with_geometry(name, root=None):
+        captured = original_capture(name, root)
+        current['capture_geometry'](name, captured)
+        return captured
+    old['capture'] = capture_with_geometry
     try:
         old['capture_common']()
         old['capture_quran']()
@@ -50,6 +56,7 @@ def capture():
         provenance.update(design='rhythm-pause-0829', setup='real_onboarding_and_theme_controls',
                           qaDemo=False, fabricatedProgress=False,
                           captureRun=os.environ['GITHUB_RUN_ID'], captureSha=os.environ['GITHUB_SHA'],
+                          effectiveDisplayEvidence='display/guide-source-<topic>-<step>.json',
                           publicPlaceReference='shop-bot/places/berkat_yurt_verified_2026-11-07.json',
                           publicPlaceSnapshotUsedOnlyForRealGuideExample=True)
         provenance_file.write_text(json.dumps(provenance, ensure_ascii=False, indent=2) + '\n')
@@ -70,7 +77,10 @@ def sha(path):
 def validate(folder, expected_source, expected_run):
     provenance = json.loads((folder / 'guide-capture-provenance.json').read_text())
     assert provenance['sourceSha'] == expected_source
-    assert str(provenance['captureRun']) == str(expected_run)
+    # The first 0.8.29 preview captured within its build run, before separate
+    # verification runs existed. Its explicit sourceRun is also captureRun.
+    capture_run = provenance.get('captureRun', provenance['sourceRun'])
+    assert str(capture_run) == str(expected_run)
     assert provenance['imagesAreActualScreenshots'] is True
     assert provenance['productionWrites'] is False
     assert provenance['design'] == 'rhythm-pause-0829'
@@ -111,6 +121,17 @@ def import_captures(folder, source, run):
     # Compare the working tree as well as committed changes to the captured APK.
     changed = subprocess.check_output(['git', 'diff', '--name-only', source, '--', *inputs], text=True).splitlines()
     changed += subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard', '--', *inputs], text=True).splitlines()
+    tracked = set(subprocess.check_output(['git', 'ls-files', '--', *inputs], text=True).splitlines())
+    byte_identical = []
+    for name in changed:
+        if name not in tracked or not Path(name).is_file():
+            continue
+        blob = subprocess.run(['git', 'show', source + ':' + name], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+        if blob.returncode == 0 and blob.stdout == Path(name).read_bytes():
+            # Git's clean/eol filter can report a difference despite exact
+            # checkout bytes. Never normalize content or exclude new files.
+            byte_identical.append(name)
+    changed = [name for name in changed if name not in byte_identical]
     assert all(path.startswith('app/src/main/assets/guide/') for path in changed), changed
     destination = Path('app/src/main/assets/guide/ru')
     evidence = Path('tools/ci/rhythm-guide-evidence')
@@ -124,7 +145,8 @@ def import_captures(folder, source, run):
     (evidence / 'import.json').write_text(json.dumps({'capture_run': str(run), 'source_sha': source,
         'source_run': provenance['sourceRun'],
         'debug_sha256': provenance['debugApkSha256'], 'images': 30, 'webp_bytes': size,
-        'source_inputs_unchanged_except_guide_assets': True}, indent=2) + '\n')
+        'source_inputs_unchanged_except_guide_assets': True,
+        'byte_identical_tracked_paths_excluded': byte_identical}, indent=2) + '\n')
     print(json.dumps({'imported': 30, 'webp_bytes': size, 'source_sha': source}))
 
 

@@ -21,6 +21,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.AlertDialog
@@ -291,11 +292,20 @@ fun FocusScreen() {
                 color=if(pauseEnabled && (!hasUsage || !running || FocusPause.deliveryFailed)) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
             )
             if (pauseEnabled) {
-                FilterChip(selected=!pauseStrict,onClick={FocusPause.setStrict(context,false)},label={Text(stringResource(R.string.pause_soft))})
-                FilterChip(selected=pauseStrict,onClick={FocusPause.setStrict(context,true)},label={Text(stringResource(R.string.pause_strict))})
+                FilterChip(selected = !pauseStrict, onClick = { FocusPause.setStrict(context, false) },
+                    label = { Text(stringResource(R.string.pause_soft)) },
+                    leadingIcon = if (!pauseStrict) { { Icon(Icons.Filled.Check, null, Modifier.size(18.dp)) } } else null,
+                    modifier = Modifier.heightIn(min = 48.dp).testTag("focus_pause_soft"))
+                FilterChip(selected = pauseStrict, onClick = { FocusPause.setStrict(context, true) },
+                    label = { Text(stringResource(R.string.pause_strict)) },
+                    leadingIcon = if (pauseStrict) { { Icon(Icons.Filled.Check, null, Modifier.size(18.dp)) } } else null,
+                    modifier = Modifier.heightIn(min = 48.dp).testTag("focus_pause_strict"))
                 Text(stringResource(R.string.pause_zikr),style=MaterialTheme.typography.titleSmall)
                 listOf(R.string.zikr_1_name,R.string.zikr_2_name,R.string.zikr_3_name).forEachIndexed { index,label ->
-                    FilterChip(selected=pausePhrase==index,onClick={FocusPause.setPhrase(context,index)},label={Text(stringResource(label))})
+                    FilterChip(selected = pausePhrase == index, onClick = { FocusPause.setPhrase(context, index) },
+                        label = { Text(stringResource(label)) },
+                        leadingIcon = if (pausePhrase == index) { { Icon(Icons.Filled.Check, null, Modifier.size(18.dp)) } } else null,
+                        modifier = Modifier.heightIn(min = 48.dp).testTag("focus_pause_phrase_$index"))
                 }
                 Text(stringResource(R.string.pause_foreground),style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant)
                 if (!hasPauseNotifications) {

@@ -17,6 +17,8 @@ import time
 import traceback
 import xml.etree.ElementTree as ET
 
+from PIL import Image
+
 SUPPORT = {'__name__': 'rhythm_support'}
 SOURCE = Path('tools/ci/learning_journeys.py')
 exec(compile(SOURCE.read_text(), str(SOURCE), 'exec'), SUPPORT)
@@ -36,10 +38,25 @@ REPORT = {'profile': PROFILE, 'production_writes': False, 'qa_demo': False,
                      'A screen capture verifies rendering, not every action on that screen.']}
 ACTIVE = 'setup'
 LOCALE = 'ru'
+DISPLAY_REQUESTED = None
 
 
 def persist():
     (OUT / 'rhythm-ui.json').write_text(json.dumps(REPORT, ensure_ascii=False, indent=2) + '\n')
+    mapping = Path('docs/RHYTHM_PAUSE_SCREEN_MAP.md')
+    if mapping.exists():
+        rows = []
+        for identifier, title in re.findall(r'^\| (\d{2}) · ([^|]+)\|', mapping.read_text(), re.M):
+            related = {name: result['status'] for name, result in REPORT['groups'].items()
+                       if identifier in result.get('map_ids', [])}
+            rows.append({'id': identifier, 'screen': title.strip(), 'groups': related,
+                         'status': 'partial_evidence' if related else 'not_exercised',
+                         'all_listed_actions_verified': False})
+        (OUT / 'rhythm-map-coverage.json').write_text(json.dumps({
+            'source_sha': REPORT.get('source_sha'), 'rows': rows,
+            'interpretation': 'Partial evidence refers only to assertions and rendering in linked groups. '
+                              'No entire row is automatically certified by a screenshot.',
+        }, ensure_ascii=False, indent=2) + '\n')
 
 
 def observe(tag, attribute='resource-id', attempts=10):
@@ -108,17 +125,93 @@ def shot(name, presentation=False):
     root = ui()
     SUPPORT['capture'](name, root)
     file = OUT / 'screens' / (name + '.png')
+    geometry = capture_geometry(name, root)
     REPORT['screens'].append({'name': name, 'sha256': hashlib.sha256(file.read_bytes()).hexdigest(),
-                             'xml': name + '.xml', 'group': ACTIVE, 'presentation': presentation,
+                             'png': 'screens/' + name + '.png', 'xml': name + '.xml',
+                             'geometry': 'display/' + name + '.json', 'effective_display': geometry, 'group': ACTIVE, 'presentation': presentation,
                              'real_app_render': True, 'locale': LOCALE})
     persist()
     return root
 
 
-def display(width=1080, height=2400, font=1.0):
-    shell('wm', 'density', '480')
-    shell('wm', 'size', f'{width}x{height}')
-    shell('settings', 'put', 'system', 'font_scale', str(font))
+def effective_display():
+    size = shell('wm', 'size').strip()
+    density = shell('wm', 'density').strip()
+    sizes = re.findall(r'(Physical|Override) size:\s*(\d+)x(\d+)', size)
+    densities = re.findall(r'(Physical|Override) density:\s*(\d+)', density)
+    assert sizes and densities, ('Unrecognized Android display readback', size, density)
+    return {'wm_size_raw': size, 'wm_density_raw': density,
+            'effective_wm_pixels': list(map(int, sizes[-1][1:])),
+            'effective_density_dpi': int(densities[-1][1]),
+            'font_scale_setting': float(shell('settings', 'get', 'system', 'font_scale').strip()),
+            'am_get_config': shell('am', 'get-config').strip()}
+
+
+def assert_requested_display(state):
+    if DISPLAY_REQUESTED is None:
+        return
+    assert state['effective_wm_pixels'] == DISPLAY_REQUESTED['pixels'], ('wm size did not persist', state)
+    assert state['effective_density_dpi'] == DISPLAY_REQUESTED['density_dpi'], ('wm density did not persist', state)
+    assert abs(state['font_scale_setting'] - DISPLAY_REQUESTED['font_scale']) < .001, ('font_scale did not persist', state)
+
+
+def capture_geometry(name, root):
+    # Read actual Android configuration alongside untouched screencap bytes.
+    folder = OUT / 'display'
+    folder.mkdir(exist_ok=True)
+    state = effective_display()
+    state['requested'] = DISPLAY_REQUESTED
+    with Image.open(OUT / 'screens' / (name + '.png')) as raster:
+        state['png_pixels'] = list(raster.size)
+    state['xml_root_bounds'] = list(bounds(next(root.iter('node'))))
+    activity = shell('dumpsys', 'activity', 'top')
+    lines = [line.strip() for line in activity.splitlines()
+             if 'mCurrentConfig' in line or line.lstrip().startswith(('ACTIVITY ', 'TASK '))]
+    state['activity_config_lines'] = lines
+    config = next((line for line in lines if 'mCurrentConfig' in line), '')
+    scale = re.search(r'\{([0-9]+(?:\.[0-9]+)?)\s', config)
+    dpi = re.search(r'\b(\d+)dpi\b', config)
+    width = re.search(r'\bw(\d+)dp\b', config)
+    state['app_font_scale'] = float(scale.group(1)) if scale else None
+    state['app_density_dpi'] = int(dpi.group(1)) if dpi else None
+    state['app_width_dp'] = int(width.group(1)) if width else None
+    state['raster_matches_wm_size'] = state['png_pixels'] == state['effective_wm_pixels']
+    # Save readbacks before assertions. Physical captures may differ from a
+    # logical wm override; record both instead of assuming equal dimensions.
+    (folder / (name + '.json')).write_text(json.dumps(state, ensure_ascii=False, indent=2) + '\n')
+    assert_requested_display(state)
+    assert scale and dpi and width, ('Foreground configuration missing', name, lines)
+    assert abs(state['app_font_scale'] - state['font_scale_setting']) < .001, ('App fontScale differs from system setting', state)
+    assert state['app_density_dpi'] == state['effective_density_dpi'], ('App density differs from wm', state)
+    if DISPLAY_REQUESTED and DISPLAY_REQUESTED['pixels'][0] < DISPLAY_REQUESTED['pixels'][1]:
+        expected_dp = DISPLAY_REQUESTED['pixels'][0] * 160 / state['app_density_dpi']
+        assert abs(state['app_width_dp'] - expected_dp) <= 1, ('App did not receive requested portrait width', state)
+    l, t, r, b = state['xml_root_bounds']
+    assert 0 <= l < r <= state['png_pixels'][0] and 0 <= t < b <= state['png_pixels'][1], ('XML and PNG coordinate spaces differ', state)
+    return state
+
+
+def display(width=1080, height=1920, font=1.0):
+    global DISPLAY_REQUESTED
+    DISPLAY_REQUESTED = {'pixels': [width, height], 'density_dpi': 480, 'font_scale': float(font)}
+    results = [shell('wm', 'size', f'{width}x{height}'), shell('wm', 'density', '480'),
+               shell('settings', 'put', 'system', 'font_scale', str(font))]
+    # Configure before install/launch where possible and let SystemUI settle.
+    previous = None
+    for attempt in range(4):
+        time.sleep(1)
+        state = effective_display()
+        state['requested'] = DISPLAY_REQUESTED
+        state['set_command_outputs'] = results
+        OUT.mkdir(exist_ok=True)
+        with (OUT / 'rhythm-display.jsonl').open('a') as stream:
+            stream.write(json.dumps(state, ensure_ascii=False) + '\n')
+        assert_requested_display(state)
+        stable = (state['effective_wm_pixels'], state['effective_density_dpi'], state['font_scale_setting'])
+        if stable == previous:
+            return state
+        previous = stable
+    raise AssertionError('Display configuration did not settle')
 
 
 def theme(value):
@@ -227,7 +320,7 @@ def transition_recording():
         (OUT / 'rhythm-video-log.txt').write_bytes(stdout + b'\n' + stderr)
         adb('pull', remote, OUT / 'rhythm-transitions.mp4')
     assert (OUT / 'rhythm-transitions.mp4').stat().st_size > 10000
-    return {'map_ids': ['01', '19', '21', '28'], 'actual_screenrecord': True,
+    return {'map_ids': ['01', '19', '21', '30'], 'actual_screenrecord': True,
             'maximum_seconds': 60, 'frame_rate_performance_measured': False}
 
 
@@ -267,14 +360,7 @@ def upgrade():
     tap('learning_level_confirm')
     route('focus')
     tap('focus_settings_open')
-    root = ui()
-    slider = next((n for n in root.iter('node') if n.get('class') == 'android.widget.SeekBar'), None)
-    if slider is None:
-        locate('Дневной лимит', 'text')
-        root = ui()
-        slider = next((n for n in root.iter('node') if n.get('class') == 'android.widget.SeekBar'), None)
-    assert slider is not None, 'Focus limit slider not exposed'
-    l, t, r, b = visible_bounds(root, slider)
+    root, slider, (l, t, r, b) = locate('android.widget.SeekBar', 'class')
     assert r > l and b > t
     shell('input', 'tap', int(l + (r-l)*.36), (t+b)//2)
     time.sleep(.5)
@@ -306,7 +392,7 @@ def upgrade():
     tap('quran_note_open')
     assert find(ui(), 'quran_stop_note').get('text') == 'Upgrade test note'
     shot('test-upgrade-note-preserved')
-    return {'map_ids': ['07', '09', '14', '23', '24', '32', '38', '41'],
+    return {'map_ids': ['07', '09', '14', '22', '23', '34', '40', '42'],
             'baseline_debug_sha256': hashlib.sha256(BASE_APK.read_bytes()).hexdigest(),
             'new_debug_sha256': hashlib.sha256(APK.read_bytes()).hexdigest(),
             'same_debug_key_install_r_succeeded': True, 'all_preexisting_preferences_preserved': True,
@@ -330,7 +416,9 @@ def reader_actions():
     for tag in ('ayah_play_pause', 'ayah_repeat_3', 'ayah_speed_75', 'ayah_continue', 'quran_action_bookmark', 'quran_note_open', 'quran_copy_ayah'):
         locate(tag)
     tap('ayah_repeat_3')
+    assert find(ui(), 'ayah_repeat_3').get('selected') == 'true', 'Repeat selection not applied'
     tap('ayah_speed_75')
+    assert find(ui(), 'ayah_speed_75').get('selected') == 'true', 'Speed selection not applied'
     shot('quran-ayah-controls-dark', presentation=True)
     tap('quran_note_open')
     enter_text('quran_stop_note', 'UI state test')
@@ -360,7 +448,7 @@ def reader_actions():
     tap('quran_goal_preset_15')
     tap('quran_goal_save')
     assert prefs('quran_reading').get('daily_goal_minutes') == '15'
-    return {'map_ids': ['19', '20', '21', '23', '25', '27', '28'],
+    return {'map_ids': ['19', '20', '21', '22', '23', '27', '30'],
             'verified': ['surah_modes', 'fullscreen', 'audio_controls_reachable', 'repeats_speed_selection',
                          'note_keyboard', 'discard_keep', 'save_delete_note', 'topics', 'statistics_period', 'goal']}
 
@@ -389,18 +477,20 @@ def tasbih_azkar():
     tap('azkar_next')
     observe('azkar_previous')
     tap('azkar_previous')
-    return {'map_ids': ['37', '38'], 'verified': ['counter', 'reset_cancel', 'phrase', 'target', 'restart', 'azkar_source', 'azkar_count_next_previous']}
+    return {'map_ids': ['32', '40'], 'verified': ['counter', 'reset_cancel', 'phrase', 'target', 'restart', 'azkar_source', 'azkar_count_next_previous']}
 
 
 def knowledge():
     route('knowledge')
-    if find(ui(), 'learning_level_1') is not None:
-        tap('learning_level_1')
-        tap('learning_level_confirm')
-    else:
+    try:
+        locate('learning_level_1')
+    except AssertionError:
+        # A level may already be selected. An offscreen first-run picker must
+        # be searched before treating its absence as a different UI state.
         tap('learning_level_change')
-        tap('learning_level_1')
-        tap('learning_level_confirm')
+        locate('learning_level_1')
+    tap('learning_level_1')
+    tap('learning_level_confirm')
     tap('learning_start')
     if find(ui(), 'learning_skip') is not None:
         tap('learning_skip')
@@ -418,7 +508,9 @@ def knowledge():
             choices.append((number, wanted in texts or wanted == node.get('text')))
         selected = next(number for number, correct in choices if correct != (index == 0))
         tap('learning_answer_' + str(selected))
-        root = observe('learning_feedback')
+        observe('learning_feedback')
+        locate('learning_feedback')
+        root = ui()
         feedback_text = ' '.join(n.get('text', '') for n in find(root, 'learning_feedback').iter('node'))
         if index == 0:
             assert 'Не совсем' in feedback_text
@@ -437,7 +529,7 @@ def knowledge():
     else:
         raise AssertionError('Quiz did not finish in bounded UI steps')
     assert wrong_seen and correct_seen
-    return {'map_ids': ['32', '33', '34'], 'real_questions_and_answer_callbacks': True,
+    return {'map_ids': ['33', '34', '35', '36'], 'real_questions_and_answer_callbacks': True,
             'wrong_and_correct_word_labels': True, 'result_reached': True,
             'answers_selected_by_test': True, 'screens_are_test_evidence': True}
 
@@ -461,7 +553,7 @@ def focus_journal():
     observe('journal_MADE_UP')
     shot('journal-status-chooser-dark', presentation=True)
     back()
-    return {'map_ids': ['14', '17', '41', '42', '43'],
+    return {'map_ids': ['14', '41', '42', '43', '44'],
             'verified': ['apps_open_done', 'settings_open_back', 'permissions_open_done', 'journal_previous_status_choices'],
             'blocking_services_enabled': False}
 
@@ -483,7 +575,7 @@ def route_gallery():
                 observe(tag)
             shot(name + '-' + palette, presentation=True)
             visited.append(name + ':' + palette)
-    return {'map_ids': ['06', '08', '09', '10', '14', '15', '29', '32', '36', '39', '41', '47', '52', '55', '56', '57', '58', '61'],
+    return {'map_ids': ['06', '08', '09', '10', '14', '15', '28', '33', '38', '39', '41', '47', '52', '55', '56', '57', '58', '61'],
             'rendered_routes': visited, 'scope': 'Rendering and named entry controls; not every conditional action.'}
 
 
@@ -560,7 +652,7 @@ def widgets_gallery(palette, font=1.0):
                              'height_dp': height, 'visible_bounds': [wl, wt, wr, wb]})
     finally:
         display()
-    return {'map_ids': ['62', '63', '64', '65'], 'theme': palette, 'font_scale': font,
+    return {'map_ids': ['63', '64', '65'], 'theme': palette, 'font_scale': font,
             'native_remote_views': True, 'actual_current_time_and_preferences': True,
             'host': 'existing_debug_WidgetPreview', 'launcher_pinning_and_pending_intents_tested': False,
             'wide_at_150_percent': 'expected compact responsive fallback at 320dp' if font > 1 else 'wide',
@@ -581,7 +673,7 @@ def compact_and_languages():
     for tag in ('ayah_play_pause', 'ayah_repeat_3', 'ayah_speed_75', 'quran_note_open'):
         SUPPORT['require_reachable'](tag)
     shot('ayah-controls-320dp-150-light', presentation=True)
-    shell('wm', 'size', '1920x960')
+    display(1920, 960, 1.5)
     observe('quran_ayah_sheet')
     SUPPORT['require_reachable']('ayah_play_pause')
     shot('ayah-landscape-150-light', presentation=True)
@@ -613,7 +705,7 @@ def compact_and_languages():
     tap('appearance_light')
     assert prefs().get('appearance') == 'light'
     shell('settings', 'put', 'global', 'animator_duration_scale', '1')
-    return {'map_ids': ['07', '08', '21', '28', '66'], 'width_dp': 320, 'font_scale': 1.5,
+    return {'map_ids': ['06', '07', '08', '21', '30', '66'], 'width_dp': 320, 'font_scale': 1.5,
             'locales': ['ru', 'en', 'tr', 'az', 'uz', 'tg', 'kk', 'ky'],
             'rotation_with_open_ayah_sheet': True, 'twelve_hour_period_visible': True,
             'zero_animation_scale_theme_actions': True}
@@ -689,7 +781,7 @@ def main():
         shell('settings', 'put', 'global', 'animator_duration_scale', '1')
         shell('settings', 'put', 'system', 'font_scale', '1.0')
         shell('settings', 'put', 'system', 'time_12_24', '24')
-        shell('wm', 'size', '1080x2400')
+        shell('wm', 'size', '1080x1920')
         persist()
 
 

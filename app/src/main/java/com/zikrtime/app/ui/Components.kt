@@ -31,6 +31,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
@@ -120,7 +121,7 @@ fun ScreenScaffold(
     val scroll = rememberScrollState()
     androidx.compose.runtime.LaunchedEffect(scrollKey) { if (scrollKey != null) scroll.scrollTo(0) }
     Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
-        .windowInsetsPadding(WindowInsets.statusBars).imePadding()) {
+        .windowInsetsPadding(WindowInsets.statusBars).navigationBarsPadding().imePadding()) {
         Surface(color = MaterialTheme.colorScheme.background, tonalElevation = 0.dp) {
             Row(Modifier.fillMaxWidth().heightIn(min = 64.dp).padding(horizontal = 12.dp, vertical = 4.dp),
                 verticalAlignment = Alignment.CenterVertically) {
@@ -134,13 +135,12 @@ fun ScreenScaffold(
             }
         }
         val body = Modifier.fillMaxWidth().weight(1f)
-            .let { if (scrollable) it.verticalScroll(scroll) else it }.padding(horizontal = 20.dp)
+            .let { if (scrollable) it.verticalScroll(scroll) else it }
+            .padding(horizontal = 20.dp).padding(top = 20.dp)
         Column(body, verticalArrangement = Arrangement.spacedBy(20.dp)) {
-            Spacer(Modifier.height(0.dp))
             // The persistent title already identifies this screen; no duplicate photo heading.
             content()
-            Spacer(Modifier.height(12.dp))
-            Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
+            if (scrollable) Spacer(Modifier.height(12.dp))
         }
     }
 }

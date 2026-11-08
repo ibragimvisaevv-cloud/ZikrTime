@@ -5,11 +5,14 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.view.MotionEvent
 import android.widget.FrameLayout
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
@@ -38,8 +41,8 @@ val hasYandexMap: Boolean get() = BuildConfig.MAPKIT_KEY.isNotBlank()
 
 private var mapKitReady = false
 
-/** Метка на карте: изумрудный кружок с золотой обводкой (выбранная — крупнее и золотая). */
-private fun markerBitmap(selected: Boolean, density: Float): Bitmap {
+/** Метка в палитре темы; выбранная отличается размером и заполнением. */
+private fun markerBitmap(selected: Boolean, density: Float, colors: ColorScheme): Bitmap {
     val size = ((if (selected) 40 else 30) * density).toInt()
     val bmp = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
     val c = Canvas(bmp)
@@ -47,44 +50,44 @@ private fun markerBitmap(selected: Boolean, density: Float): Bitmap {
     val r = size / 2f
     p.color = 0x55000000
     c.drawCircle(r, r + density, r - density, p)
-    p.color = 0xFFE2B659.toInt()
+    p.color = colors.surface.toArgb()
     c.drawCircle(r, r, r - 1.5f * density, p)
-    p.color = if (selected) 0xFFFFE7A8.toInt() else 0xFF124C40.toInt()
+    p.color = (if (selected) colors.primary else colors.primaryContainer).toArgb()
     c.drawCircle(r, r, r - 4.5f * density, p)
-    p.color = if (selected) 0xFF124C40.toInt() else 0xFFFFF6E0.toInt()
+    p.color = (if (selected) colors.onPrimary else colors.onPrimaryContainer).toArgb()
     c.drawCircle(r, r, r * 0.28f, p)
     return bmp
 }
 
-/** «Я здесь»: синяя точка с белой обводкой и мягким ореолом. */
-private fun meBitmap(density: Float): Bitmap {
+/** «Я здесь»: акцентная точка с контрастной обводкой и мягким ореолом. */
+private fun meBitmap(density: Float, colors: ColorScheme): Bitmap {
     val size = (34 * density).toInt()
     val bmp = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
     val c = Canvas(bmp)
     val p = Paint(Paint.ANTI_ALIAS_FLAG)
     val r = size / 2f
-    p.color = 0x402F80ED
+    p.color = colors.primary.copy(alpha = .25f).toArgb()
     c.drawCircle(r, r, r, p)
-    p.color = 0xFFFFFFFF.toInt()
+    p.color = colors.surface.toArgb()
     c.drawCircle(r, r, 9 * density, p)
-    p.color = 0xFF2F80ED.toInt()
+    p.color = colors.primary.toArgb()
     c.drawCircle(r, r, 6.5f * density, p)
     return bmp
 }
 
-/** Кластер: золотой круг с числом мест. */
-private fun clusterBitmap(count: Int, density: Float): Bitmap {
+/** Кластер: акцентная обводка и число мест в палитре темы. */
+private fun clusterBitmap(count: Int, density: Float, colors: ColorScheme): Bitmap {
     val text = if (count > 999) "999+" else count.toString()
     val size = ((if (count > 99) 46 else 38) * density).toInt()
     val bmp = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
     val c = Canvas(bmp)
     val p = Paint(Paint.ANTI_ALIAS_FLAG)
     val r = size / 2f
-    p.color = 0xFFE2B659.toInt()
+    p.color = colors.primary.toArgb()
     c.drawCircle(r, r, r - density, p)
-    p.color = 0xFF124C40.toInt()
+    p.color = colors.primaryContainer.toArgb()
     c.drawCircle(r, r, r - 3.5f * density, p)
-    p.color = 0xFFFFF6E0.toInt()
+    p.color = colors.onPrimaryContainer.toArgb()
     p.textSize = 13 * density
     p.isFakeBoldText = true
     p.textAlign = Paint.Align.CENTER
@@ -110,6 +113,8 @@ fun YandexPlacesMap(
 ) {
     val context = LocalContext.current
     val density = context.resources.displayMetrics.density
+    val markerColors = MaterialTheme.colorScheme
+    val currentMarkerColors = androidx.compose.runtime.rememberUpdatedState(markerColors)
     val mapView = remember {
         if (!mapKitReady) {
             MapKitFactory.initialize(context)
@@ -190,20 +195,20 @@ fun YandexPlacesMap(
     }
     val clusterListener = remember {
         ClusterListener { cluster: Cluster ->
-            cluster.appearance.setIcon(ImageProvider.fromBitmap(clusterBitmap(cluster.size, density)))
+            cluster.appearance.setIcon(ImageProvider.fromBitmap(clusterBitmap(cluster.size, density, currentMarkerColors.value)))
             cluster.addClusterTapListener(java.lang.ref.WeakReference(clusterTap))
         }
     }
     val marks = remember { HashMap<String, PlacemarkMapObject>() }
     val meMark = remember { arrayOfNulls<PlacemarkMapObject>(1) }
     val icons = remember { arrayOfNulls<ImageProvider>(2) }
-    LaunchedEffect(places, dark) {
+    LaunchedEffect(places, dark, markerColors) {
         val map = mapView.mapWindow.map
         map.isNightModeEnabled = dark
         map.mapObjects.clear()
         marks.clear()
-        val normal = ImageProvider.fromBitmap(markerBitmap(false, density))
-        val big = ImageProvider.fromBitmap(markerBitmap(true, density))
+        val normal = ImageProvider.fromBitmap(markerBitmap(false, density, markerColors))
+        val big = ImageProvider.fromBitmap(markerBitmap(true, density, markerColors))
         icons[0] = normal
         icons[1] = big
         val collection = map.mapObjects.addClusterizedPlacemarkCollection(java.lang.ref.WeakReference(clusterListener))
@@ -217,12 +222,12 @@ fun YandexPlacesMap(
         }
         collection.clusterPlacemarks(55.0, 14)
         meMark[0] = null
-        me?.let { meMark[0] = addMe(map, it, density) }
+        me?.let { meMark[0] = addMe(map, it, density, markerColors) }
     }
-    LaunchedEffect(me) {
+    LaunchedEffect(me, markerColors) {
         val map = mapView.mapWindow.map
         meMark[0]?.let { runCatching { map.mapObjects.remove(it) } }
-        meMark[0] = me?.let { addMe(map, it, density) }
+        meMark[0] = me?.let { addMe(map, it, density, markerColors) }
     }
     LaunchedEffect(focusMe, me) {
         if (focusMe > 0 && me != null) {
@@ -297,10 +302,10 @@ private class MapTouchContainer(
     }
 }
 
-private fun addMe(map: com.yandex.mapkit.map.Map, me: Pair<Double, Double>, density: Float): PlacemarkMapObject =
+private fun addMe(map: com.yandex.mapkit.map.Map, me: Pair<Double, Double>, density: Float, colors: ColorScheme): PlacemarkMapObject =
     map.mapObjects.addPlacemark().apply {
         geometry = Point(me.first, me.second)
-        setIcon(ImageProvider.fromBitmap(meBitmap(density)))
+        setIcon(ImageProvider.fromBitmap(meBitmap(density, colors)))
         zIndex = 100f
     }
 
