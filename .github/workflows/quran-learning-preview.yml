@@ -6,7 +6,7 @@ permissions:
   contents: read
   actions: read
 concurrency:
-  group: learning-preview-${{ github.ref }}
+  group: learning-preview-${{ contains(github.event.head_commit.message, '[quran-learning-preview]') && github.ref || github.run_id }}
   cancel-in-progress: true
 jobs:
   capture:

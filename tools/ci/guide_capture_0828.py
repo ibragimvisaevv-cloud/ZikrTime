@@ -18,6 +18,7 @@ exec(compile(helpers.read_text().split("\ndef fresh_skip_and_upgrade():")[0], st
 ASSETS = OUT / "guide-assets" / "ru"
 MANIFEST = {}
 EVIDENCE = []
+REUSED_CAPTURE_RUN = None
 
 
 def route(screen):
@@ -43,9 +44,36 @@ def local_setup():
 
 def specimen(topic, step, identifier, attribute="resource-id"):
     locate_control(identifier, attribute)
-    root = ui()
-    node = find_control(root, identifier, attribute)
-    raw, visible = bounds(node), visible_bounds(root, node)
+    # A locator only establishes a usable visible part. A guide screenshot must
+    # show the entire highlighted control, including a large tasbih counter.
+    # Nudge inside its actual scrolling ancestor, then read fresh bounds again.
+    for attempt in range(5):
+        root = ui()
+        node = find_control(root, identifier, attribute)
+        raw, visible = bounds(node), visible_bounds(root, node)
+        if raw == visible:
+            break
+        parents = {child: parent for parent in root.iter() for child in parent}
+        owner = parents.get(node)
+        while owner is not None and owner.get("scrollable") != "true":
+            owner = parents.get(owner)
+        if owner is None or attempt == 4:
+            break
+        left, top, right, bottom = visible_bounds(root, owner)
+        if bottom - top < 150:
+            break
+        hidden_bottom = max(0, raw[3] - visible[3])
+        hidden_top = max(0, visible[1] - raw[1])
+        if not hidden_bottom and not hidden_top:
+            break
+        distance = min(max(72, hidden_bottom + hidden_top + 36), (bottom - top) // 3)
+        middle = (top + bottom) // 2
+        end = middle - distance if hidden_bottom else middle + distance
+        # The inner leading gutter belongs to scrolling, outside the counter's
+        # tap detector. Never drag the counter itself to make a screenshot fit.
+        x = left + min(18, (right-left)//8)
+        shell("input", "swipe", x, middle, x, end, 300)
+        time.sleep(.25)
     assert raw == visible, (topic, step, identifier, "hotspot clipped", raw, visible)
     assert visible[2] > visible[0] and visible[3] > visible[1], identifier
     name = f"guide-source-{topic}-{step}"
@@ -85,6 +113,7 @@ def persist():
         "debugApkSha256": hashlib.sha256(Path("app/build/outputs/apk/debug/app-debug.apk").read_bytes()).hexdigest(),
         "profile": "disposable_debug_emulator", "locale": "ru", "theme": "dark",
         "imagesAreActualScreenshots": True, "productionWrites": False,
+        "reusedCaptureRun": REUSED_CAPTURE_RUN,
         "captures": EVIDENCE,
     }, ensure_ascii=False, indent=2) + "\n")
 
@@ -128,6 +157,10 @@ def capture_common():
     specimen("knowledge", 3, "learning_review_start")
     route("qibla")
     specimen("tools", 1, "qibla_compass")
+    capture_common_remaining()
+
+
+def capture_common_remaining():
     route("tasbih")
     specimen("tools", 2, "tasbih_counter")
     route("home")
@@ -167,6 +200,50 @@ def capture_common():
     specimen("places", 3, "place_details_route")
 
 
+def resume_common():
+    """Reuse only already captured and hash-verified images from the same APK."""
+    global MANIFEST, EVIDENCE, REUSED_CAPTURE_RUN
+    saved = json.loads((OUT / "guide-capture-provenance.json").read_text())
+    manifest = json.loads((ASSETS / "manifest.json").read_text())
+    apk = Path("app/build/outputs/apk/debug/app-debug.apk")
+    assert saved["sourceSha"] == os.environ["GUIDE_APK_SOURCE_SHA"]
+    assert str(saved["sourceRun"]) == os.environ["GUIDE_APK_SOURCE_RUN"]
+    assert saved["debugApkSha256"] == hashlib.sha256(apk.read_bytes()).hexdigest()
+    assert saved["imagesAreActualScreenshots"] is True and saved["productionWrites"] is False
+    assert saved["locale"] == "ru" and saved["theme"] == "dark"
+    complete_topics = {"welcome", "prayer", "journal", "limits", "permissions", "knowledge"}
+    assert set(manifest) == complete_topics | {"tools"}
+    assert all(len(manifest[topic]) == 3 and all(manifest[topic]) for topic in complete_topics)
+    assert len(manifest["tools"]) == 3 and manifest["tools"][0] and manifest["tools"][1:] == [None, None]
+    assert len(saved["captures"]) == 19
+    seen = set()
+    for item in saved["captures"]:
+        topic, step = item["topic"], item["step"]
+        assert (topic, step) not in seen
+        seen.add((topic, step))
+        spec = manifest[topic][step-1]
+        assert spec["image"] == f"{topic}-{step}.webp"
+        webp = ASSETS / spec["image"]
+        png = OUT / "screens" / f"guide-source-{topic}-{step}.png"
+        assert hashlib.sha256(webp.read_bytes()).hexdigest() == item["webpSha256"]
+        assert hashlib.sha256(png.read_bytes()).hexdigest() == item["pngSha256"]
+        with Image.open(webp) as image:
+            assert image.format == "WEBP" and image.size == (spec["width"], spec["height"])
+        with Image.open(png) as image:
+            assert list(image.size) == item["originalSize"]
+        width, height = item["originalSize"]
+        left, top, right, bottom = item["bounds"]
+        assert 0 <= left < right <= width and 0 <= top < bottom <= height
+        assert spec["target"] == [round(left/width, 6), round(top/height, 6),
+                                  round(right/width, 6), round(bottom/height, 6)]
+    assert seen == {(topic, step) for topic in complete_topics for step in (1, 2, 3)} | {("tools", 1)}
+    REUSED_CAPTURE_RUN = os.environ["GUIDE_CAPTURE_REUSE_RUN"]
+    assert REUSED_CAPTURE_RUN.isdecimal()
+    MANIFEST, EVIDENCE = manifest, saved["captures"]
+    print(f"Reusing 19 verified screenshot assets from capture run {REUSED_CAPTURE_RUN}", flush=True)
+    capture_common_remaining()
+
+
 def capture_quran():
     route("quran")
     specimen("quran", 1, "quran_read_entry")
@@ -186,10 +263,12 @@ if __name__ == "__main__":
         local_setup()
         if mode in {"common", "all"}:
             capture_common()
+        if mode == "resume-common":
+            resume_common()
         if mode in {"quran", "all"}:
             capture_quran()
-        assert mode in {"common", "quran", "all"}, mode
-        expected = 9 if mode == "common" else 1 if mode == "quran" else 10
+        assert mode in {"common", "resume-common", "quran", "all"}, mode
+        expected = 9 if mode in {"common", "resume-common"} else 1 if mode == "quran" else 10
         assert len(MANIFEST) == expected and all(len(v) == 3 and all(v) for v in MANIFEST.values())
         print(json.dumps({"complete": True, "topics": list(MANIFEST), "images": len(EVIDENCE),
                           "webpBytes": sum(p.stat().st_size for p in ASSETS.glob("*.webp"))}))

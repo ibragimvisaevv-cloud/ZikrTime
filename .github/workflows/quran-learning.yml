@@ -12,7 +12,7 @@ permissions:
   contents: read
   actions: read
 concurrency:
-  group: quran-learning-${{ github.ref }}
+  group: quran-learning-${{ (github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[quran-learning-build]') || contains(github.event.head_commit.message, '[quran-learning-recheck]')) && github.ref || github.run_id }}
   cancel-in-progress: true
 jobs:
   check:
