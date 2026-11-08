@@ -16,7 +16,7 @@ jobs:
     env:
       GUIDE_APK_SOURCE_SHA: b755cffca95923b63c75f3b3c105f2c954f9e4f9
       GUIDE_APK_SOURCE_RUN: '42426787159'
-      GUIDE_CAPTURE_REUSE_RUN: '42466490210'
+      GUIDE_CAPTURE_REUSE_RUN: '42467593443'
     steps:
       - uses: actions/checkout@v4
       - name: Download previously verified app without rebuilding

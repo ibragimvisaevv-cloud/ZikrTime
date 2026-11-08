@@ -53,6 +53,17 @@ with zipfile.ZipFile(apk) as archive:
     assert archive.read("assets/quran_audio/alafasy.json") == audio_catalog.read_bytes()
     assert not any(name.startswith("assets/quran_audio/") and name.lower().endswith(
         (".mp3", ".m4a", ".ogg", ".wav", ".aac")) for name in archive.namelist()), "Audio must not be bundled in APK"
+    timing_asset = Path("app/src/main/assets/quran_audio/alafasy_ayah_timings.json")
+    assert archive.read("assets/quran_audio/alafasy_ayah_timings.json") == timing_asset.read_bytes()
+    timing_data = json.loads(timing_asset.read_text())
+    assert len(timing_data["surahs"]) == 114
+    assert sum(sum(1 for row in surah["ayahs"] if row[0] > 0) for surah in timing_data["surahs"]) == 6236
+    guide_root = Path("app/src/main/assets/guide/ru")
+    guide_manifest = json.loads((guide_root / "manifest.json").read_text())
+    guide_images = {frame["image"] for steps in guide_manifest.values() for frame in steps}
+    assert len(guide_manifest) == 10 and sum(map(len, guide_manifest.values())) == 30
+    for name in guide_images | {"manifest.json"}:
+        assert archive.read("assets/guide/ru/" + name) == (guide_root / name).read_bytes()
 
 tests = [ET.parse(p).getroot() for p in Path("app/build/test-results/testDebugUnitTest").glob("TEST-*.xml")]
 assert tests and not any(int(t.get("failures", 0)) + int(t.get("errors", 0)) for t in tests)
@@ -66,6 +77,10 @@ result = {"version": VERSION, "version_code": CODE, "source_sha": os.environ["GI
           "skipped_unit_tests": sum(int(t.get("skipped", 0)) for t in tests),
           "quran_assets_unchanged": True, "camera_permission": False,
           "audio_catalog_sha256": hashlib.sha256(audio_catalog.read_bytes()).hexdigest(),
-          "bundled_quran_audio_files": 0}
+          "bundled_quran_audio_files": 0,
+          "ayah_timing_sha256": hashlib.sha256(timing_asset.read_bytes()).hexdigest(),
+          "numbered_ayahs": 6236,
+          "guide_screenshot_steps": 30,
+          "guide_image_bytes": sum((guide_root / name).stat().st_size for name in guide_images)}
 report_path.write_text(json.dumps(result, indent=2))
 print(json.dumps(result))

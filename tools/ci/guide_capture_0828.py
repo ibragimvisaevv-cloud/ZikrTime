@@ -161,29 +161,32 @@ def capture_common():
 
 
 def capture_common_remaining():
-    route("tasbih")
-    specimen("tools", 2, "tasbih_counter")
-    route("home")
-    specimen("tools", 3, "home_reading_reminders")
-    route("shop")
-    # Use the app's published read-only catalogue, never fabricated sellers.
-    deadline = time.monotonic() + 45
-    partner = None
-    while time.monotonic() < deadline:
-        root = ui()
-        partner = next((n for n in root.iter("node")
-                        if "shop_partner_" in n.get("resource-id", "")), None)
-        if partner is not None:
-            break
-        time.sleep(1)
-    assert partner is not None, "Published shop has no visible partner card; do not fabricate a guide seller"
-    tag = partner.get("resource-id")
-    specimen("shop", 1, tag)
-    tap_control(tag)
-    # Public card contact is captured but never activated.
-    specimen("shop", 2, "Написать в Telegram", "text")
-    route("shop")
-    specimen("shop", 3, "shop_merchant")
+    if not MANIFEST["tools"][1]:
+        route("tasbih")
+        specimen("tools", 2, "tasbih_counter")
+    if not MANIFEST["tools"][2]:
+        route("home")
+        specimen("tools", 3, "home_reading_reminders")
+    if "shop" not in MANIFEST:
+        route("shop")
+        # Use the app's published read-only catalogue, never fabricated sellers.
+        deadline = time.monotonic() + 45
+        partner = None
+        while time.monotonic() < deadline:
+            root = ui()
+            partner = next((n for n in root.iter("node")
+                            if "shop_partner_" in n.get("resource-id", "")), None)
+            if partner is not None:
+                break
+            time.sleep(1)
+        assert partner is not None, "Published shop has no visible partner card; do not fabricate a guide seller"
+        tag = partner.get("resource-id")
+        specimen("shop", 1, tag)
+        tap_control(tag)
+        # Public card contact is captured but never activated.
+        specimen("shop", 2, "Написать в Telegram", "text")
+        route("shop")
+        specimen("shop", 3, "shop_merchant")
     # Verified public catalogue snapshot provides actual prayer places and
     # known coordinates; unknown facilities stay unknown in the screenshot.
     places = json.loads(Path("shop-bot/places/berkat_yurt_verified_2026-11-07.json").read_text())["places"]
@@ -191,8 +194,8 @@ def capture_common_remaining():
     put_pref("places_json", "string", json.dumps({"places": places, "seller_bot": "", "donate_url": ""}, ensure_ascii=False))
     put_pref("city", "string", "Беркат-Юрт")
     put_pref("city_id", "string", "")
-    put_pref("lat", "float", first["lat"])
-    put_pref("lon", "float", first["lon"])
+    put_pref("lat", "float", str(first["lat"]))
+    put_pref("lon", "float", str(first["lon"]))
     route("places")
     specimen("places", 1, "places_map")
     tap_control("place_card_" + first["id"])
@@ -212,10 +215,17 @@ def resume_common():
     assert saved["imagesAreActualScreenshots"] is True and saved["productionWrites"] is False
     assert saved["locale"] == "ru" and saved["theme"] == "dark"
     complete_topics = {"welcome", "prayer", "journal", "limits", "permissions", "knowledge"}
-    assert set(manifest) == complete_topics | {"tools"}
+    count = len(saved["captures"])
+    assert count in {19, 24}, "Only the reviewed 19-frame or 24-frame checkpoints can be resumed"
+    if count == 24:
+        complete_topics |= {"tools", "shop"}
+        assert set(manifest) == complete_topics
+        expected_entries = {(topic, step) for topic in complete_topics for step in (1, 2, 3)}
+    else:
+        assert set(manifest) == complete_topics | {"tools"}
+        assert len(manifest["tools"]) == 3 and manifest["tools"][0] and manifest["tools"][1:] == [None, None]
+        expected_entries = {(topic, step) for topic in complete_topics for step in (1, 2, 3)} | {("tools", 1)}
     assert all(len(manifest[topic]) == 3 and all(manifest[topic]) for topic in complete_topics)
-    assert len(manifest["tools"]) == 3 and manifest["tools"][0] and manifest["tools"][1:] == [None, None]
-    assert len(saved["captures"]) == 19
     seen = set()
     for item in saved["captures"]:
         topic, step = item["topic"], item["step"]
@@ -236,11 +246,11 @@ def resume_common():
         assert 0 <= left < right <= width and 0 <= top < bottom <= height
         assert spec["target"] == [round(left/width, 6), round(top/height, 6),
                                   round(right/width, 6), round(bottom/height, 6)]
-    assert seen == {(topic, step) for topic in complete_topics for step in (1, 2, 3)} | {("tools", 1)}
+    assert seen == expected_entries
     REUSED_CAPTURE_RUN = os.environ["GUIDE_CAPTURE_REUSE_RUN"]
     assert REUSED_CAPTURE_RUN.isdecimal()
     MANIFEST, EVIDENCE = manifest, saved["captures"]
-    print(f"Reusing 19 verified screenshot assets from capture run {REUSED_CAPTURE_RUN}", flush=True)
+    print(f"Reusing {count} verified screenshot assets from capture run {REUSED_CAPTURE_RUN}", flush=True)
     capture_common_remaining()
 
 
