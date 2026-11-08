@@ -31,6 +31,8 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import com.zikrtime.app.data.QuranContent
+import org.json.JSONObject
 
 /** One owner per process: playback never opens a second cache for the same directory. */
 object QuranAudioRepository {
@@ -57,6 +59,8 @@ object QuranAudioRepository {
     private val preparing = mutableSetOf<Int>()
     private val failures = mutableMapOf<Int, QuranAudioStorageError>()
     private val publishLater = Runnable { publish() }
+    private var ayahTimings: QuranAyahTimingCatalog? = null
+    private var ayahTimingsAttempted = false
 
     /** Call on the main thread, lazily when entering audio or creating a media service. */
     fun init(context: Context) {
@@ -157,6 +161,27 @@ object QuranAudioRepository {
     }
 
     fun track(surahId: Int): QuranAudioTrack? = tracks.getOrNull(surahId - 1)?.takeIf { it.surahId == surahId }
+
+    /** The same downloaded surah bytes serve clips; no second recording or extra offline copy. */
+    fun ayahTiming(surahId: Int, ayah: Int): QuranAyahTiming? {
+        if (!ayahTimingsAttempted) {
+            val context = app ?: return null
+            ayahTimingsAttempted = true
+            ayahTimings = runCatching {
+                val metadata = context.assets.open("quran/manifest.json").use { it.readBytes() }
+                require(QuranContent.sha256(metadata) == QuranContent.MANIFEST_SHA256)
+                val surahs = JSONObject(metadata.toString(Charsets.UTF_8)).getJSONArray("surahs")
+                val counts = (0 until surahs.length()).associate { i ->
+                    val entry = surahs.getJSONObject(i)
+                    entry.getInt("id") to entry.getInt("ayahCount")
+                }
+                val timings = context.assets.open("quran_audio/alafasy_ayah_timings.json").use { it.readBytes() }
+                require(QuranContent.sha256(timings) == QuranAyahTimingCatalog.SHA256)
+                QuranAyahTimingCatalog.parse(timings.toString(Charsets.UTF_8), counts)
+            }.getOrNull()
+        }
+        return ayahTimings?.timing(surahId, ayah)
+    }
 
     /** Saved downloads are read-only to the player; only the download manager writes them. */
     fun playbackDataSourceFactory(): DataSource.Factory {

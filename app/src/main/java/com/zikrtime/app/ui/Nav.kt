@@ -15,7 +15,8 @@ enum class Tab { PRAYER, KNOWLEDGE, SHOP, FOCUS, MORE }
 
 data class NavEntry(val screen: Screen, val id: Int, val seller: String? = null, val product: String? = null,
                     val journalDay: String? = null, val journalPrayer: String? = null,
-                    val returnTab: Tab? = null, val audioSurah: Int = 0)
+                    val returnTab: Tab? = null, val audioSurah: Int = 0,
+                    val quranSurah: Int = 0, val quranAyah: Int = 1)
 
 /** Простая навигация: текущая вкладка и стопка открытых экранов. */
 class Nav {
@@ -64,6 +65,15 @@ class Nav {
             stack.removeAt(stack.lastIndex)
         }
         stack.add(NavEntry(Screen.QURAN_AUDIO, ++nextEntry, audioSurah = surah))
+    }
+
+    /** Open the selected recording's verses; returning retains the player and its state. */
+    fun openQuran(surahId: Int, ayah: Int = 1) {
+        val surah = surahId.takeIf { it in 1..114 } ?: 0
+        val verse = if (surah == 0) 1 else ayah.coerceIn(1, 286)
+        val top = stack.lastOrNull()
+        if (top?.screen == Screen.QURAN && top.quranSurah == surah && top.quranAyah == verse) return
+        stack.add(NavEntry(Screen.QURAN, ++nextEntry, quranSurah = surah, quranAyah = verse))
     }
 
     /** Keep the guide entry alive so returning restores its topic and reading position. */
@@ -121,7 +131,7 @@ class Nav {
 
     fun save(out: android.os.Bundle) {
         out.putString("nav_tab", tab.name)
-        out.putStringArrayList("nav_routes", ArrayList(stack.map { "${it.screen.name}|${it.id}|${it.seller.orEmpty()}|${it.product.orEmpty()}|${it.journalDay.orEmpty()}|${it.journalPrayer.orEmpty()}|${it.returnTab?.name.orEmpty()}|${it.audioSurah}" }))
+        out.putStringArrayList("nav_routes", ArrayList(stack.map { "${it.screen.name}|${it.id}|${it.seller.orEmpty()}|${it.product.orEmpty()}|${it.journalDay.orEmpty()}|${it.journalPrayer.orEmpty()}|${it.returnTab?.name.orEmpty()}|${it.audioSurah}|${it.quranSurah}|${it.quranAyah}" }))
         out.putString("nav_category", quizCategory); out.putInt("nav_round", quizRound)
         out.putString("nav_training_category", trainingCategory); out.putBoolean("nav_training_active", trainingActive)
         out.putString("nav_period", azkarPeriod)
@@ -134,7 +144,9 @@ class Nav {
             runCatching { NavEntry(Screen.valueOf(fields[0]), fields[1].toInt(), fields[2].ifBlank { null }, fields[3].ifBlank { null },
                 fields.getOrNull(4)?.ifBlank { null }, fields.getOrNull(5)?.ifBlank { null },
                 fields.getOrNull(6)?.takeIf { it.isNotBlank() }?.let { Tab.valueOf(it) },
-                fields.getOrNull(7)?.toIntOrNull()?.takeIf { it in 1..114 } ?: 0) }
+                fields.getOrNull(7)?.toIntOrNull()?.takeIf { it in 1..114 } ?: 0,
+                fields.getOrNull(8)?.toIntOrNull()?.takeIf { it in 1..114 } ?: 0,
+                fields.getOrNull(9)?.toIntOrNull()?.coerceIn(1, 286) ?: 1) }
                 .getOrNull()?.let { stack.add(it); nextEntry = maxOf(nextEntry, it.id) }
         }
         quizCategory = saved.getString("nav_category"); quizRound = saved.getInt("nav_round")

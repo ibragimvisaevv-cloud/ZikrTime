@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="guide_visual_example">App screen · Russian example</string>
+    <string name="guide_visual_enlarge">Enlarge</string>
+    <string name="guide_visual_reset">Fit screen</string>
+    <string name="guide_visual_zoom_hint">Pinch to zoom, then drag to see the details.</string>
+    <string name="guide_visual_unavailable">The screenshot could not be opened. You can open this section below.</string>
+    <string name="guide_visual_highlight">Highlighted button for action %1$d</string>
+    <string name="guide_visual_step">Action %1$d of %2$d</string>
+    <string name="guide_visual_skip">Skip</string>
+    <string name="guide_visual_open">Try it in the app</string>
+    <string name="guide_visual_intro">These are real app screens. Tap 1, 2 or 3 to see which button to use. You can enlarge any image.</string>
+    <string name="guide_visual_quran_title">Quran: read and listen</string>
+    <string name="guide_visual_quran_summary">Reading, audio and saved verses</string>
+    <string name="guide_visual_quran_control1">Read or listen</string>
+    <string name="guide_visual_quran_control2">Repeat a verse</string>
+    <string name="guide_visual_quran_control3">Bookmarks and notes</string>
+    <string name="guide_visual_quran_step1">In Quran, choose Read or Listen. To read, tap the surah you want.</string>
+    <string name="guide_visual_quran_step2">Tap a verse, then Listen to this verse. Choose the speed and number of repeats in the panel.</string>
+    <string name="guide_visual_quran_step3">In the same verse panel, scroll down to save a bookmark or write a note. Saved verses are marked in the text.</string>
+</resources>

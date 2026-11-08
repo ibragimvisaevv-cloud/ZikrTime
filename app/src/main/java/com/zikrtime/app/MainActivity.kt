@@ -272,7 +272,7 @@ private fun AppRoot() {
             Screen.TRAINING -> com.zikrtime.app.ui.TrainingScreen()
             Screen.PROGRESS -> com.zikrtime.app.ui.ProgressScreen()
             Screen.AZKAR -> com.zikrtime.app.ui.AzkarScreen()
-            Screen.QURAN -> com.zikrtime.app.ui.QuranScreen()
+            Screen.QURAN -> com.zikrtime.app.ui.QuranScreen(entry?.quranSurah ?: 0, entry?.quranAyah ?: 1)
             Screen.QURAN_AUDIO -> com.zikrtime.app.ui.QuranAudioScreen(entry?.audioSurah ?: 0)
             Screen.PRAYER_JOURNAL -> com.zikrtime.app.ui.PrayerJournalScreen(entry?.journalDay, entry?.journalPrayer)
             Screen.READING_REMINDERS -> com.zikrtime.app.ui.ReadingRemindersScreen()

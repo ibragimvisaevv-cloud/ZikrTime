@@ -1,0 +1,150 @@
+name: Quran learning and visual guide 0.8.28
+on:
+  push:
+    branches: [codex/quran-reader-0814]
+  workflow_dispatch:
+    inputs:
+      reuse_run:
+        type: string
+        description: Earlier audio build run; reuse only with unchanged Android inputs
+        default: ''
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: quran-learning-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  check:
+    if: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[quran-learning-build]') || contains(github.event.head_commit.message, '[quran-learning-recheck]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      REUSE_RUN: ${{ inputs.reuse_run || '' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Resolve optional test-only recheck
+        run: |
+          python3 - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          message = json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text()).get('head_commit', {}).get('message', '')
+          match = re.search(r'\[quran-learning-recheck\]\s+reuse=(\d+)', message)
+          run = os.environ['REUSE_RUN'] or (match.group(1) if match else '')
+          assert not run or run.isdecimal(), 'reuse_run must be a numeric Actions run ID'
+          if '[quran-learning-recheck]' in message:
+              assert run, 'An audio recheck must name its verified build: reuse=RUN_ID'
+          with open(os.environ['GITHUB_ENV'], 'a') as out:
+              out.write('REUSE_RUN=' + run + '\n')
+          PY
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        if: env.REUSE_RUN == ''
+      - name: Verify protected Quran text
+        run: git diff --exit-code 7eaec0a2bcb389f637d56b5192660cafbd2c9243 -- app/src/main/assets/quran app/src/main/java/com/zikrtime/app/data/QuranContent.kt
+      - name: Validate audio verification scripts
+        run: python3 -m py_compile tools/ci/learning_journeys.py tools/ci/learning_delivery.py tools/ci/guide_capture_0828.py
+      - name: Restore original signing key
+        if: env.REUSE_RUN == ''
+        env:
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          test -n "$RELEASE_KEY_PASSWORD"
+          openssl enc -d -aes-256-cbc -pbkdf2 -iter 300000 -in keystore/release.jks.enc -out keystore/release.jks -pass env:RELEASE_KEY_PASSWORD
+      - name: Build ayah learning and check audio policy, guide assets and navigation
+        if: env.REUSE_RUN == ''
+        env:
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          chmod +x gradlew
+          ./gradlew testDebugUnitTest --tests 'com.zikrtime.app.audio.*' --tests 'com.zikrtime.app.ui.NavigationTest' --tests 'com.zikrtime.app.data.Guide*' --console=plain
+          ./gradlew lintDebug assembleDebug assembleRelease --console=plain
+      - name: Verify signed update
+        if: env.REUSE_RUN == ''
+        run: |
+          mkdir -p ci-out/screens
+          SIGNER=$(find "$ANDROID_HOME/build-tools" -name apksigner | sort -V | tail -1)
+          AAPT=$(find "$ANDROID_HOME/build-tools" -name aapt | sort -V | tail -1)
+          "$SIGNER" verify --verbose --print-certs app/build/outputs/apk/release/app-release.apk > ci-out/release-signature.txt
+          grep -q 'certificate SHA-256 digest: 7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf' ci-out/release-signature.txt
+          "$AAPT" dump badging app/build/outputs/apk/release/app-release.apk > ci-out/release-badging.txt
+          python3 tools/ci/learning_delivery.py
+      - name: Reuse signed update after verifying unchanged inputs
+        if: env.REUSE_RUN != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download "$REUSE_RUN" --repo "$GITHUB_REPOSITORY" -n learning-verified-inputs -D .
+          python3 tools/ci/learning_delivery.py --reuse
+      - uses: actions/upload-artifact@v4
+        with:
+          name: learning-verified-inputs
+          compression-level: 0
+          path: |
+            app/build/outputs/apk/debug/app-debug.apk
+            app/build/outputs/apk/release/app-release.apk
+            ci-out/release-delivery.json
+            ci-out/release-signature.txt
+            app/build/test-results/
+      - name: Check real Alafasy source before playback
+        run: python3 tools/ci/audio_source_check.py
+      - run: python3 -m pip install 'Pillow>=11,<13'
+      - name: Enable emulator acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-audio.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Ayah repeats, speed, readable controls and real-screen guide on Android 15
+        timeout-minutes: 22
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -camera-back none -camera-front none
+          script: bash tools/ci/learning_smoke.sh
+      - name: Summarize audio validation
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          for name in ('release-delivery.json', 'recheck.json', 'learning-passed.json',
+                       'learning-failure.txt', 'crashes.txt', 'audio-app-locale.txt'):
+              path = Path('ci-out') / name
+              if path.exists():
+                  print('\n=== ' + name + ' ===\n' + path.read_text()[:20000])
+          lint = Path('app/build/reports/lint-results-debug.xml')
+          if lint.exists():
+              issues = ET.parse(lint).getroot().findall('issue')
+              print('Lint severities:', json.dumps({level: sum(i.get('severity') == level for i in issues)
+                                                    for level in ('Fatal', 'Error', 'Warning', 'Information')}))
+          if Path('ci-out/learning-failure.txt').exists():
+              for name in ('learning-failure.xml', 'tap-last.json', 'audio-snapshots.jsonl'):
+                  path = Path('ci-out') / name
+                  if path.exists():
+                      content = path.read_text()
+                      print('\n=== ' + name + ' ===\n' + (content[-16000:] if name.endswith('jsonl') else content[:32000]))
+          PY
+      - name: Prepare signed update
+        run: cp app/build/outputs/apk/release/app-release.apk ZikrTime-0.8.28.apk
+      - uses: actions/upload-artifact@v7.0.2
+        with:
+          path: ZikrTime-0.8.28.apk
+          archive: false
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ZikrTime-0.8.28-learning-check
+          path: |
+            app/build/reports/
+            app/build/test-results/
+            ci-out/

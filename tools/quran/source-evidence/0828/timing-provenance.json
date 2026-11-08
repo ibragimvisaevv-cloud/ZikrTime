@@ -1,0 +1,693 @@
+{
+  "asset": "app/src/main/assets/quran_audio/alafasy_ayah_timings.json",
+  "sha256": "ee480450fff61cf1bd3ab1125adfafd56312288a45804a172d700f1bf53dd40b",
+  "bytes": 126954,
+  "surahs": 114,
+  "numbered_ayahs": 6236,
+  "source_responses": [
+    {
+      "surah": 1,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/1/ayah-timings",
+      "sha256": "e33b8243ea618b1116fed6983d78f83defdf88c6d2e9b1196000ed4848b2b740",
+      "bytes": 204
+    },
+    {
+      "surah": 2,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/2/ayah-timings",
+      "sha256": "79cd82ab7741b6ec283612711b8e85faa0193269c2d5e6dfacc025f2a1b4a07a",
+      "bytes": 6167
+    },
+    {
+      "surah": 3,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/3/ayah-timings",
+      "sha256": "2261eb8c35865200abe639e202903e522a19a9b7c77a13b105e3288f3ce07f95",
+      "bytes": 4299
+    },
+    {
+      "surah": 4,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/4/ayah-timings",
+      "sha256": "af9fc213dcc38f21b8ab6b3b3800fc3da3ee364abc00f2f451f4e02ad2fcc76a",
+      "bytes": 3816
+    },
+    {
+      "surah": 5,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/5/ayah-timings",
+      "sha256": "563565c8600f42e055eb96c2a6b415d393be5a94bc48e67d3cf51f46c1ce0778",
+      "bytes": 2590
+    },
+    {
+      "surah": 6,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/6/ayah-timings",
+      "sha256": "ed3fb2fb2bbbef9b90a2106c0268bcc772896c5bba6cabd75d8dd5e235c741fb",
+      "bytes": 3529
+    },
+    {
+      "surah": 7,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/7/ayah-timings",
+      "sha256": "1ca0ee5c0132b8d8598cb2193ed0961dc2e888ad03b7e9f5b721d4678f504e02",
+      "bytes": 4440
+    },
+    {
+      "surah": 8,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/8/ayah-timings",
+      "sha256": "e5d40b8db4e4d5753de017df77d4f56b3c683026b3323e0b016e3db4c5e6f06c",
+      "bytes": 1576
+    },
+    {
+      "surah": 9,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/9/ayah-timings",
+      "sha256": "cc7f348b9f733a6e3efe640467cd0296d4eee17a2b644f539e20bafbed835921",
+      "bytes": 2746
+    },
+    {
+      "surah": 10,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/10/ayah-timings",
+      "sha256": "5dfd5918fe5ae9b195a98b4060a6ca4dd700eba08c1eb86b6b6fda81c69d8b90",
+      "bytes": 2326
+    },
+    {
+      "surah": 11,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/11/ayah-timings",
+      "sha256": "e7f5fcb411017857ebe96e1feb5922ea80de4bffb19f793e422d76173cab341c",
+      "bytes": 2614
+    },
+    {
+      "surah": 12,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/12/ayah-timings",
+      "sha256": "6e5c04867cc9b5b0d9af977ab3d07fe0363c4b2328fc1de1dd68b52dc9192610",
+      "bytes": 2353
+    },
+    {
+      "surah": 13,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/13/ayah-timings",
+      "sha256": "189bfcd72543d0556359ab1da42324288b1aa7d43603cd79ce02f5fe034f83fa",
+      "bytes": 928
+    },
+    {
+      "surah": 14,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/14/ayah-timings",
+      "sha256": "66e53bba3340fc215894929cdbf5ad14f93ffcd3dd0bf6a697b3e81d81344732",
+      "bytes": 1104
+    },
+    {
+      "surah": 15,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/15/ayah-timings",
+      "sha256": "dc4645427dbf373797b1929eb5ad79af048ebed3840f7a716ababc535e2d26d5",
+      "bytes": 1959
+    },
+    {
+      "surah": 16,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/16/ayah-timings",
+      "sha256": "ac8e7f27b540aade1c8143a0d211e54cb72cd52e2111f9d870fd22038128589a",
+      "bytes": 2688
+    },
+    {
+      "surah": 17,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/17/ayah-timings",
+      "sha256": "545622991c1b1bae623a8804dae77e3ce2daa184f9f17a611e50260143539585",
+      "bytes": 2324
+    },
+    {
+      "surah": 18,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/18/ayah-timings",
+      "sha256": "7cb33821ed9cdad423f796ed21114ef60ce095564ad78538fca961a2673bb600",
+      "bytes": 2302
+    },
+    {
+      "surah": 19,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/19/ayah-timings",
+      "sha256": "73233b437c13a4e079a82f6e774325f0d2e4633c1f01813651d7441cee53b947",
+      "bytes": 2000
+    },
+    {
+      "surah": 20,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/20/ayah-timings",
+      "sha256": "0dd69bf72352aed99131cb43ffd87706f726b1c5415b6d17941ef6e6a622837a",
+      "bytes": 2770
+    },
+    {
+      "surah": 21,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/21/ayah-timings",
+      "sha256": "a311fc6e969ffbc76325e069dc6294a6094d76ccd3955f6d172feaa30011c5f2",
+      "bytes": 2304
+    },
+    {
+      "surah": 22,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/22/ayah-timings",
+      "sha256": "0eab050c45e20842612821b86872270be49ed0b0894c96c5bfc2d535d31295d7",
+      "bytes": 1648
+    },
+    {
+      "surah": 23,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/23/ayah-timings",
+      "sha256": "bee8a2df1c4ac19abd514af085b5cb1445d2fc20c9dc4db4bb376671edfcc5e0",
+      "bytes": 2418
+    },
+    {
+      "surah": 24,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/24/ayah-timings",
+      "sha256": "3cb1b6d8488638157ae7e0f8ea965c528dbc92d3354e7470c07ce874bdf37c3b",
+      "bytes": 1362
+    },
+    {
+      "surah": 25,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/25/ayah-timings",
+      "sha256": "2905af4df852095ca4b4e835ada341d35f8de0f27b43deca9d58ef7882d3edfe",
+      "bytes": 1566
+    },
+    {
+      "surah": 26,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/26/ayah-timings",
+      "sha256": "49cfa3f0966f9204c1e15c99667274a82c2c6e1adac84358ff68cbbae095168e",
+      "bytes": 4736
+    },
+    {
+      "surah": 27,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/27/ayah-timings",
+      "sha256": "48e05ae9481ea6811f48aeb715957cb74319e69e9e23b62cd361a00fb250fe8b",
+      "bytes": 1919
+    },
+    {
+      "surah": 28,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/28/ayah-timings",
+      "sha256": "69fc987c1edc2bd3a673f2a4d1d93bca126ca4f265e6de2dbdea49550092cf89",
+      "bytes": 1843
+    },
+    {
+      "surah": 29,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/29/ayah-timings",
+      "sha256": "03b0b2e16147441a8687f467d7d040cf430473bdde1184cab46aa4c6911eb5c0",
+      "bytes": 1428
+    },
+    {
+      "surah": 30,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/30/ayah-timings",
+      "sha256": "27989d8956f13ef06ef204df3980415815af6408bf49ec97de6ba7a31dad979c",
+      "bytes": 1244
+    },
+    {
+      "surah": 31,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/31/ayah-timings",
+      "sha256": "523f1ccf8ccac82fa4569ea96d8e52ee6609c063ab57cd5306fd9f25f02c67d6",
+      "bytes": 728
+    },
+    {
+      "surah": 32,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/32/ayah-timings",
+      "sha256": "4dfe51e441693b8c8682d502085f3bc6260db9b839ec8b7624eb48cde94289a8",
+      "bytes": 656
+    },
+    {
+      "surah": 33,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/33/ayah-timings",
+      "sha256": "75f488738deed77ac6163b2ba9520d1cc1ed1948f85936121b347a6fd2f4b55e",
+      "bytes": 1536
+    },
+    {
+      "surah": 34,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/34/ayah-timings",
+      "sha256": "e4144283803c1bd825150ba8c47e910b043d2dafeec3f1b6b1a0ede2d32d2919",
+      "bytes": 1134
+    },
+    {
+      "surah": 35,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/35/ayah-timings",
+      "sha256": "9e18d5e1e57c8f3fc60bd9dc4c2fc837958747e16a07bf3fb716073e350f185f",
+      "bytes": 946
+    },
+    {
+      "surah": 36,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/36/ayah-timings",
+      "sha256": "dbf7580963de07a8d7617397a1727c07676444748421bbed01fae3fcb0d49835",
+      "bytes": 1660
+    },
+    {
+      "surah": 37,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/37/ayah-timings",
+      "sha256": "4627f25cb01e699d40f5d0ecd9e49d1477e2ea9c4bd9807ec26015d71b620543",
+      "bytes": 3758
+    },
+    {
+      "surah": 38,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/38/ayah-timings",
+      "sha256": "c855069fd561bc5cb2e20f444020ce9a8c4bc436c72334fcd9a308176e22e3a2",
+      "bytes": 1776
+    },
+    {
+      "surah": 39,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/39/ayah-timings",
+      "sha256": "9dc6cf7c724c05c8f4f80308a3680fcb71b8ecd4fcdc98f62cfd747fd467b218",
+      "bytes": 1572
+    },
+    {
+      "surah": 40,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/40/ayah-timings",
+      "sha256": "61a52d9cd530d98cd95e2f443f0f092eb76fd80eea3ce0b7db147e67101bf055",
+      "bytes": 1764
+    },
+    {
+      "surah": 41,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/41/ayah-timings",
+      "sha256": "76d78a8993b338bc9a64743148c7a43b63c8d6d74078288842ad14465147c32f",
+      "bytes": 1128
+    },
+    {
+      "surah": 42,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/42/ayah-timings",
+      "sha256": "f1df5a69387f8f88ee1d4879a17e37e54aa43756298b938a86ad9efa6bef5065",
+      "bytes": 1104
+    },
+    {
+      "surah": 43,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/43/ayah-timings",
+      "sha256": "e0af2c16bec49a8ac9469fec6890b31e0eea9d731dbc339638b0d3b6cd5004cf",
+      "bytes": 1806
+    },
+    {
+      "surah": 44,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/44/ayah-timings",
+      "sha256": "3d19c96e24c05267d077febd7a3e062d5c9cd49d557d0c4b81d0525fef67c86a",
+      "bytes": 1199
+    },
+    {
+      "surah": 45,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/45/ayah-timings",
+      "sha256": "e08e443194eead19fee85d629075112dad878bc26f035c777a88c33fc2fd55a7",
+      "bytes": 788
+    },
+    {
+      "surah": 46,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/46/ayah-timings",
+      "sha256": "d1feef75115764b1e84237ed274d21215c3342e5b02c34411f2440a3f60fcdf3",
+      "bytes": 753
+    },
+    {
+      "surah": 47,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/47/ayah-timings",
+      "sha256": "f6e5ec7c00b01ed9440d4756a952dc938b66673e27580c29e81b674fff2f61d9",
+      "bytes": 812
+    },
+    {
+      "surah": 48,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/48/ayah-timings",
+      "sha256": "072d53420bb96f00a95796311bbafd58623ed1c06f9ff21e56aaaeb3914d2109",
+      "bytes": 637
+    },
+    {
+      "surah": 49,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/49/ayah-timings",
+      "sha256": "fb509536037fb813a35abd704780f7c28db55825185282eea809036e3701f987",
+      "bytes": 430
+    },
+    {
+      "surah": 50,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/50/ayah-timings",
+      "sha256": "a3b36f40d3ba82d3cbae17d4386444f56190cdfaab11170c28a69ce665525cc1",
+      "bytes": 942
+    },
+    {
+      "surah": 51,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/51/ayah-timings",
+      "sha256": "a6b6b1630806c837d8f18384e461e92fe77f2caf76533536071ae105b9a86742",
+      "bytes": 1205
+    },
+    {
+      "surah": 52,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/52/ayah-timings",
+      "sha256": "7548c96111eaf1161315b44b7524fa8bd7863288bd7151479282844c25dc36b1",
+      "bytes": 995
+    },
+    {
+      "surah": 53,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/53/ayah-timings",
+      "sha256": "2e20eeb77a605ac2dfaa32d679403bf33d9cf64d2432544e1d914fb4d16c6d0d",
+      "bytes": 1234
+    },
+    {
+      "surah": 54,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/54/ayah-timings",
+      "sha256": "63042b8f7c3208be6a341c6ffa3342c9f987e249f95626052fa31957644d358a",
+      "bytes": 1123
+    },
+    {
+      "surah": 55,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/55/ayah-timings",
+      "sha256": "bb1cecd9fe1e157535b4d9194bc57dcfc44b184deeddb62007ea0445f62158c1",
+      "bytes": 1552
+    },
+    {
+      "surah": 56,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/56/ayah-timings",
+      "sha256": "96af07dcfdf231ac9b64ffaa6f885cc05c05596ea72bac9a4ec7e50043d0dcf1",
+      "bytes": 1887
+    },
+    {
+      "surah": 57,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/57/ayah-timings",
+      "sha256": "ca80a5ca37cad500b50d4bef5ec9d7e232f938cf0efc9a29f9aaa48bee403644",
+      "bytes": 635
+    },
+    {
+      "surah": 58,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/58/ayah-timings",
+      "sha256": "88c8db8fcd266d95972cb8a04746ba7d6be09b8d1e0284b61baed5746daf3524",
+      "bytes": 511
+    },
+    {
+      "surah": 59,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/59/ayah-timings",
+      "sha256": "f714d507ec211b18425efa119518000184fe702bbeaca1f5bd6e23b20113b779",
+      "bytes": 544
+    },
+    {
+      "surah": 60,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/60/ayah-timings",
+      "sha256": "5c3c29b089a25db98319f0e0df40618ae1d70af6d6616829eb9f5e83674cc7b3",
+      "bytes": 339
+    },
+    {
+      "surah": 61,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/61/ayah-timings",
+      "sha256": "398c20c046409c1810c16f5014c45a12e254008cffbc4394ae1d7b366c2f3b90",
+      "bytes": 352
+    },
+    {
+      "surah": 62,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/62/ayah-timings",
+      "sha256": "2a4bbf0cb01de0a8e2ddb06d7e5f0342063f4746fec29ba49827863d13648625",
+      "bytes": 295
+    },
+    {
+      "surah": 63,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/63/ayah-timings",
+      "sha256": "94f45f9c5093dfb2d2c387eeee2bb1b020f268d4370985d305a77afab917e870",
+      "bytes": 297
+    },
+    {
+      "surah": 64,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/64/ayah-timings",
+      "sha256": "d4156600e89dcd57c980f3d5160698e48deab57c23d49d1c5c60ddeb329d3bb2",
+      "bytes": 428
+    },
+    {
+      "surah": 65,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/65/ayah-timings",
+      "sha256": "c82f4cf94fb2e7fcadd19612050067464495b8462a8a2d88554d5cc1689d3f8e",
+      "bytes": 320
+    },
+    {
+      "surah": 66,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/66/ayah-timings",
+      "sha256": "ebe1b5340b39d721c556fd336878d043ea16f58fe6014531625fe54d8d2062c5",
+      "bytes": 316
+    },
+    {
+      "surah": 67,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/67/ayah-timings",
+      "sha256": "82bd476df4800d5f135c0cb885b2d6f101d1da92c71f13a52e6eaff3c08622f4",
+      "bytes": 658
+    },
+    {
+      "surah": 68,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/68/ayah-timings",
+      "sha256": "a9ada513fb04b9b379f3f32abae2fb46e8733fe7e9d5a90ef32a7f72b2a7168d",
+      "bytes": 1058
+    },
+    {
+      "surah": 69,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/69/ayah-timings",
+      "sha256": "470b75fd9eb0e607f40622ffd6bdaa1e6880c0ea78fff4b255369df8774255b0",
+      "bytes": 1064
+    },
+    {
+      "surah": 70,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/70/ayah-timings",
+      "sha256": "df425810bbdcbe8fdfe9c7da0ec8248891f33833a3cd368c723c74bfa047f3ed",
+      "bytes": 900
+    },
+    {
+      "surah": 71,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/71/ayah-timings",
+      "sha256": "5f9a22de466750a7feccffaa33521f076e6f6190c1eb6ea1054ee3d345e87515",
+      "bytes": 614
+    },
+    {
+      "surah": 72,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/72/ayah-timings",
+      "sha256": "0b4295db10ab1c04dca3faa2c0241000292b32ddd95a071182756539034e06d4",
+      "bytes": 612
+    },
+    {
+      "surah": 73,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/73/ayah-timings",
+      "sha256": "712789ede957955388d15810d13673a2cfb9cceaf9211d305754d4b69f88af4e",
+      "bytes": 448
+    },
+    {
+      "surah": 74,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/74/ayah-timings",
+      "sha256": "0860046488274849b9ba5f35678af37e758cfa0603a18571d0076c71d6de267f",
+      "bytes": 1112
+    },
+    {
+      "surah": 75,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/75/ayah-timings",
+      "sha256": "1828870f47102dd36d7db1351532425ec80a15f909fde01a2822667f26b854b1",
+      "bytes": 820
+    },
+    {
+      "surah": 76,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/76/ayah-timings",
+      "sha256": "63572a22860f4854595b266b6dec50b7034a8bcc6ad9eb6e5e074b86a1e84b12",
+      "bytes": 667
+    },
+    {
+      "surah": 77,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/77/ayah-timings",
+      "sha256": "d37f18a4e0aa656a7f27ef72bba5346330281c59af6cad546c8e8231ec43cf2a",
+      "bytes": 1000
+    },
+    {
+      "surah": 78,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/78/ayah-timings",
+      "sha256": "ffba29e6cba49893c07014bac47b96be744e33af6cf78c093d101ef3b09a1ba6",
+      "bytes": 829
+    },
+    {
+      "surah": 79,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/79/ayah-timings",
+      "sha256": "886491bc77af32f15449933292be8de335295961769bf1430ec2ebc77be273bc",
+      "bytes": 934
+    },
+    {
+      "surah": 80,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/80/ayah-timings",
+      "sha256": "4a1133ae53aeec8aa5dddba09ef13821340819e8998aeb72f512786a68decc8b",
+      "bytes": 852
+    },
+    {
+      "surah": 81,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/81/ayah-timings",
+      "sha256": "83b607e9596f033401a7a4f8e4fbfa571e654a8e3e301ba4483b2a21f7132853",
+      "bytes": 603
+    },
+    {
+      "surah": 82,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/82/ayah-timings",
+      "sha256": "a04e713232d34551e7e4d80f3d90ef3bb880be15c5002fc98c90ed98a820074f",
+      "bytes": 427
+    },
+    {
+      "surah": 83,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/83/ayah-timings",
+      "sha256": "a9d711475ea305045d2aa15240b001f631afb70d887356ab38d1a4646f1a4f55",
+      "bytes": 756
+    },
+    {
+      "surah": 84,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/84/ayah-timings",
+      "sha256": "fd6b20469bb0ee1792d631548a92b3a382e73b15fe389ab1d98cf06948b279ef",
+      "bytes": 541
+    },
+    {
+      "surah": 85,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/85/ayah-timings",
+      "sha256": "af9f78ccb8b9f3d73d44338ce6114631c79e7bd89ff308c4ca8ed8fed3e1049c",
+      "bytes": 496
+    },
+    {
+      "surah": 86,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/86/ayah-timings",
+      "sha256": "21c7f590d3ef19a96f507afc2dc57e846ad294612468858ebdf3aff07079bf53",
+      "bytes": 386
+    },
+    {
+      "surah": 87,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/87/ayah-timings",
+      "sha256": "fef47ef7a93c007bfc0a8a47cc175a01d77fb2658779f3d7ae3b6fb86c8b1327",
+      "bytes": 423
+    },
+    {
+      "surah": 88,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/88/ayah-timings",
+      "sha256": "478012d40b1cbd418ce22aed0479deea85572310e55aea0e4a0ab4401724efa3",
+      "bytes": 550
+    },
+    {
+      "surah": 89,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/89/ayah-timings",
+      "sha256": "0fcbdb241def5773a4b576971dc952075df3a50ebd5e410989b0bb042cd6f0e2",
+      "bytes": 634
+    },
+    {
+      "surah": 90,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/90/ayah-timings",
+      "sha256": "34a104666fb11922153fa1b410adddec4116d2f8c94cd242484cb7d642f241fb",
+      "bytes": 444
+    },
+    {
+      "surah": 91,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/91/ayah-timings",
+      "sha256": "bcbdef13d5ae222f0d8c42572a2a20d2fb6d7348e35040d1c2ee145ae49de9d4",
+      "bytes": 352
+    },
+    {
+      "surah": 92,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/92/ayah-timings",
+      "sha256": "1fe73d96ca58227234e27de081bf24b3a1b7cecaf1e117b37e039dd602c64113",
+      "bytes": 457
+    },
+    {
+      "surah": 93,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/93/ayah-timings",
+      "sha256": "d542f71bd867be2c088be02dea0b9a0caceefd6ffbc6b991ca434fa6df05e15f",
+      "bytes": 282
+    },
+    {
+      "surah": 94,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/94/ayah-timings",
+      "sha256": "bfef1b9690c1c08ac696993b433a8dab0cf21af746c5e003d76144242507423e",
+      "bytes": 234
+    },
+    {
+      "surah": 95,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/95/ayah-timings",
+      "sha256": "64ab8698bb8fa05e489bb766d6e8591c0da13748da52ad96eee5acc19b578972",
+      "bytes": 234
+    },
+    {
+      "surah": 96,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/96/ayah-timings",
+      "sha256": "488e7ac2025e3f192071c56dfdfc2fc3e0a8a63940b1f93936db2103ffef38be",
+      "bytes": 420
+    },
+    {
+      "surah": 97,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/97/ayah-timings",
+      "sha256": "681d8872759fd380ca07cc96b7e4be113d753d0939d1ccb127d8dc5020c7bb27",
+      "bytes": 186
+    },
+    {
+      "surah": 98,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/98/ayah-timings",
+      "sha256": "6249b2e6be8a27bb2b28b2e2f25f97c83ad47e9869e651a16cef31d6244da0e7",
+      "bytes": 235
+    },
+    {
+      "surah": 99,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/99/ayah-timings",
+      "sha256": "2bdd2c348a6d502eced7d29437585c7e047c2bb3d60ea8acfe3ff5f7bd7426bd",
+      "bytes": 234
+    },
+    {
+      "surah": 100,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/100/ayah-timings",
+      "sha256": "291cb6274100e8ce8e9a0425f644a2ada42fd1e0c4ff0362ace93bf50a7e1faa",
+      "bytes": 284
+    },
+    {
+      "surah": 101,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/101/ayah-timings",
+      "sha256": "348018ffdf2031f044492567d4d74d8f1bce3e869719613ea2228d0cb8ca46d1",
+      "bytes": 283
+    },
+    {
+      "surah": 102,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/102/ayah-timings",
+      "sha256": "4cce1934c2a37f84972cfd1c5f8f5cabd72d657382741ff515de53251690a3f7",
+      "bytes": 235
+    },
+    {
+      "surah": 103,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/103/ayah-timings",
+      "sha256": "734dd0b559748a5ee426b0bab1e1e7a7b25c94d1e8b02fa129912dd93d1a0f58",
+      "bytes": 153
+    },
+    {
+      "surah": 104,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/104/ayah-timings",
+      "sha256": "d6237e0ba5dc6429eb901a89aeecd55d1d29c4af3a4ca49306566218eb75bb5b",
+      "bytes": 251
+    },
+    {
+      "surah": 105,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/105/ayah-timings",
+      "sha256": "d5541f0b112329f0d66236a39f5a17da0684a1d0a5a3f938a26a462c899cb9c3",
+      "bytes": 187
+    },
+    {
+      "surah": 106,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/106/ayah-timings",
+      "sha256": "7a5e4978219cfb0b4ebc33a1690471b97d3133e2d92eef0020667020c3bd5fb4",
+      "bytes": 171
+    },
+    {
+      "surah": 107,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/107/ayah-timings",
+      "sha256": "94ba06d01e66ae9e1b086a2c06d4c4da7d82657df16e338a4df7f126bb64a270",
+      "bytes": 219
+    },
+    {
+      "surah": 108,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/108/ayah-timings",
+      "sha256": "b8a07c0f3d0e5f6d961d9c7145e6ea5141e27b4afe77cc16c418a1c0d54b422b",
+      "bytes": 155
+    },
+    {
+      "surah": 109,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/109/ayah-timings",
+      "sha256": "c8231d6fe173863f49f2ecf4e5de1365848a3dab007aa0c1b5ea98d8debec25c",
+      "bytes": 203
+    },
+    {
+      "surah": 110,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/110/ayah-timings",
+      "sha256": "0f719c805aa4fe6e701ff4e9ef20c333da6293ca27eae05354b093eef4670a3c",
+      "bytes": 155
+    },
+    {
+      "surah": 111,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/111/ayah-timings",
+      "sha256": "76749ab12215d99fa19bbb9c71e8018433caf3d037ce7567b403bb117d67ec46",
+      "bytes": 187
+    },
+    {
+      "surah": 112,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/112/ayah-timings",
+      "sha256": "0b42b3131d05d7a6e07195b2ebc573c02d747e145d8d141a6b8f17af61d5b27f",
+      "bytes": 170
+    },
+    {
+      "surah": 113,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/113/ayah-timings",
+      "sha256": "381b8199f5360fdad5cb5b7cc545eee14b851b6ed32eecf7e0cf140154ac788c",
+      "bytes": 187
+    },
+    {
+      "surah": 114,
+      "url": "https://api-staging.mp3quran.net/v4/recitations/mishary-alafasy/r1/surahs/114/ayah-timings",
+      "sha256": "7e5ff89925c0f3606101eebbe63b03023f0a1fb837eaada6861ed1230d78670f",
+      "bytes": 203
+    }
+  ]
+}

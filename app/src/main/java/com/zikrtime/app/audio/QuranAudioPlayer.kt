@@ -6,11 +6,15 @@ import android.content.ComponentName
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
+import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
+import androidx.media3.common.MediaMetadata
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
+import androidx.media3.session.SessionCommand
+import androidx.media3.session.SessionResult
 import com.google.common.util.concurrent.ListenableFuture
 import com.zikrtime.app.R
 import com.zikrtime.app.i18n.Lang
@@ -29,7 +33,11 @@ object QuranAudioPlayer {
     private var future: ListenableFuture<MediaController>? = null
     private var connections = 0
     private var generation = 0
-    private var requestedSurah: Int? = null
+    private data class Request(val surahId: Int, val ayah: Int? = null,
+        val options: QuranAyahOptions = QuranAyahOptions(), val autoplay: Boolean = true) {
+        val mediaId: String get() = ayah?.let { QuranAudioAyah(surahId, it).mediaId } ?: surahId.toString()
+    }
+    private var requested: Request? = null
     private val handler = Handler(Looper.getMainLooper())
     private val updatePosition = object : Runnable {
         override fun run() {
@@ -67,7 +75,14 @@ object QuranAudioPlayer {
         mutableState.value = mutableState.value.copy(
             connected = false, surahId = saved?.surahId, positionMs = saved?.positionMs ?: 0L,
             durationMs = saved?.durationMs ?: 0L, isPlaying = false, playWhenReady = false,
-            title = saved?.let { QuranAudioTitles.title(context, it.surahId) }.orEmpty(), error = null,
+            title = saved?.let {
+                val title = QuranAudioTitles.title(context, it.surahId)
+                if (it.ayah == null) title else Lang.wrap(context).getString(R.string.audio_ayah_title, title, it.ayah)
+            }.orEmpty(), error = null, ayah = saved?.ayah, repeatCount = saved?.ayahOptions?.repeatCount ?: 1,
+            repeatIteration = saved?.repeatIteration ?: 1, speed = saved?.ayahOptions?.speed ?: 1f,
+            continueAfter = saved?.ayahOptions?.continueAfter ?: false, ended = false,
+            clipStartMs = saved?.ayah?.let { QuranAudioRepository.ayahTiming(saved.surahId, it)?.startMs },
+            clipEndMs = saved?.ayah?.let { QuranAudioRepository.ayahTiming(saved.surahId, it)?.endMs },
         )
         val token = SessionToken(context, ComponentName(context, QuranPlaybackService::class.java))
         val currentGeneration = ++generation
@@ -92,10 +107,10 @@ object QuranAudioPlayer {
                 connected.addListener(listener)
                 update()
                 schedulePosition()
-                requestedSurah?.also { requestedSurah = null; play(it) }
+                requested?.also { requested = null; playRequest(it) }
             }.onFailure {
                 future = null
-                requestedSurah = null
+                requested = null
                 fail(R.string.audio_player_connect_failure)
             }
         }, ContextCompat.getMainExecutor(context))
@@ -106,7 +121,7 @@ object QuranAudioPlayer {
         connections = (connections - 1).coerceAtLeast(0)
         if (connections > 0) return
         generation++
-        requestedSurah = null
+        requested = null
         handler.removeCallbacks(updatePosition)
         controller?.let { update(); it.removeListener(listener); it.release() }
         controller = null
@@ -115,45 +130,104 @@ object QuranAudioPlayer {
         mutableState.value = mutableState.value.copy(connected = false)
     }
 
-    /** The only automatic connection follow-up allowed is this explicit user play request. */
-    fun play(surahId: Int) {
+    /** Every sound start originates in an explicit user request; opening a reader only connects. */
+    fun play(surahId: Int) = playRequest(Request(surahId))
+
+    fun playAyah(surahId: Int, ayah: Int, repeatCount: Int = 1, speed: Float = 1f,
+        continueAfter: Boolean = false) {
+        val options = QuranAyahPlaybackPolicy.options(repeatCount, speed, continueAfter) ?: return
+        playRequest(Request(surahId, ayah, options))
+    }
+
+    private fun playRequest(request: Request) {
         val context = app ?: return
-        if (QuranAudioRepository.track(surahId) == null) return
-        if (AlarmState.ringing) {
+        if (QuranAudioRepository.track(request.surahId) == null) return
+        if (request.ayah != null && QuranAudioRepository.ayahTiming(request.surahId, request.ayah) == null) {
+            mutableState.value = mutableState.value.copy(error = Lang.wrap(context).getString(R.string.audio_ayah_unavailable))
+            return
+        }
+        if (request.autoplay && AlarmState.ringing) {
             mutableState.value = mutableState.value.copy(error = Lang.wrap(context).getString(R.string.audio_player_alarm_active))
             return
         }
-        AdhanSound.stopPreview()
+        if (request.autoplay) AdhanSound.stopPreview()
         val connected = controller
         if (connected == null) {
             if (connections == 0) return
-            requestedSurah = surahId
+            requested = request
             if (future == null) openConnection()
             return
         }
-        if (connected.currentMediaItem?.mediaId == surahId.toString() && connected.playbackState != Player.STATE_ENDED) {
-            if (connected.playbackState == Player.STATE_IDLE) connected.prepare()
-            connected.play()
+        requested = null
+        if (connected.currentMediaItem?.mediaId == request.mediaId && connected.playbackState != Player.STATE_ENDED) {
+            if (request.ayah != null) configureAyah(request.options.repeatCount, request.options.speed, request.options.continueAfter)
+            if (request.autoplay) {
+                if (connected.playbackState == Player.STATE_IDLE) connected.prepare()
+                connected.play()
+            } else connected.pause()
         } else {
-            val saved = QuranPlaybackMemory.read(context)?.takeIf { it.surahId == surahId }
-            val position = if (connected.currentMediaItem?.mediaId == surahId.toString()) 0L else saved?.positionMs ?: 0L
-            // The service replaces this ID with the trusted source URL and verified metadata.
-            connected.setMediaItem(MediaItem.Builder().setMediaId(surahId.toString()).build(), position)
-            connected.prepare()
-            connected.play()
+            val saved = QuranPlaybackMemory.read(context)?.takeIf { it.surahId == request.surahId && it.ayah == request.ayah }
+            val position = if (connected.currentMediaItem?.mediaId == request.mediaId) 0L else saved?.positionMs ?: 0L
+            // The service discards arbitrary URLs/clips and rebuilds this checked ID from its catalogue.
+            val item = MediaItem.Builder().setMediaId(request.mediaId).setMediaMetadata(MediaMetadata.Builder()
+                .setExtras(QuranAyahSession.bundle(request.options)).build()).build()
+            connected.pause()
+            connected.setMediaItem(item, position)
+            if (request.autoplay) {
+                connected.prepare()
+                connected.play()
+            }
         }
         update()
     }
 
     fun togglePlayPause() {
         val current = controller
-        val surah = current?.currentMediaItem?.mediaId?.toIntOrNull() ?: mutableState.value.surahId
-        if (current?.playbackState == Player.STATE_ENDED) surah?.let(::play)
-        else if (current?.playWhenReady == true) pause()
-        else surah?.let(::play)
+        if (current?.playWhenReady == true && current.playbackState != Player.STATE_ENDED) pause()
+        else {
+            val state = mutableState.value
+            val surah = state.surahId ?: return
+            if (state.ayah != null) playAyah(surah, state.ayah, state.repeatCount, state.speed, state.continueAfter)
+            else play(surah)
+        }
     }
 
-    fun pause() { requestedSurah = null; controller?.pause(); update() }
+    /** Options change the current exercise without restarting audio or acquiring focus. */
+    fun configureAyah(repeatCount: Int, speed: Float, continueAfter: Boolean) {
+        val options = QuranAyahPlaybackPolicy.options(repeatCount, speed, continueAfter) ?: return
+        val context = app ?: return
+        val current = controller ?: return
+        val id = current.currentMediaItem?.mediaId ?: return
+        if (QuranAyahPlaybackPolicy.reference(id) == null) return
+        val args = QuranAyahSession.bundle(options).apply { putString("media_id", id) }
+        val result = current.sendCustomCommand(SessionCommand(QuranAyahSession.COMMAND_CONFIGURE, Bundle.EMPTY), args)
+        result.addListener({
+            if (controller === current && current.currentMediaItem?.mediaId == id &&
+                runCatching { result.get().resultCode == SessionResult.RESULT_SUCCESS }.getOrDefault(false)) update()
+        }, ContextCompat.getMainExecutor(context))
+    }
+
+    fun setSpeed(speed: Float) {
+        if (speed !in QuranAyahPlaybackPolicy.speeds) return
+        val current = mutableState.value
+        if (current.ayah != null) configureAyah(current.repeatCount, speed, current.continueAfter)
+        else controller?.setPlaybackSpeed(speed)
+        update()
+    }
+
+    fun nextAyah() = moveAyah(1)
+    fun previousAyah() = moveAyah(-1)
+
+    private fun moveAyah(offset: Int) {
+        val state = snapshot()
+        val surah = state.surahId ?: return
+        val ayah = state.ayah ?: return
+        if (QuranAudioRepository.ayahTiming(surah, ayah + offset) == null) return
+        playRequest(Request(surah, ayah + offset, QuranAyahOptions(state.repeatCount, state.speed, state.continueAfter),
+            autoplay = state.playWhenReady && !state.ended))
+    }
+
+    fun pause() { requested = null; controller?.pause(); update() }
 
     fun seekTo(positionMs: Long) {
         val current = controller ?: return
@@ -167,12 +241,15 @@ object QuranAudioPlayer {
     }
 
     fun retry() {
-        val surah = mutableState.value.surahId ?: requestedSurah ?: return
-        play(surah)
+        requested?.let { playRequest(it); return }
+        val state = mutableState.value
+        val surah = state.surahId ?: return
+        if (state.ayah != null) playAyah(surah, state.ayah, state.repeatCount, state.speed, state.continueAfter)
+        else play(surah)
     }
 
     fun stop() {
-        requestedSurah = null
+        requested = null
         controller?.apply {
             app?.let { QuranPlaybackMemory.save(it, this) }
             pause()

@@ -21,6 +21,13 @@ data class QuranPlaybackState(
     val ended: Boolean = false,
     val playWhenReady: Boolean = false,
     val playbackState: Int = Player.STATE_IDLE,
+    val ayah: Int? = null,
+    val repeatCount: Int = 1,
+    val repeatIteration: Int = 1,
+    val speed: Float = 1f,
+    val continueAfter: Boolean = false,
+    val clipStartMs: Long? = null,
+    val clipEndMs: Long? = null,
 )
 
 internal object QuranPlaybackMemory {
@@ -28,22 +35,41 @@ internal object QuranPlaybackMemory {
 
     fun read(context: Context): QuranPlaybackPosition? {
         val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
-        return QuranPlaybackPolicy.restore(prefs.getInt("surah", 0), prefs.getLong("position", 0L), prefs.getLong("duration", 0L))
+        val saved = QuranPlaybackPolicy.restore(prefs.getInt("surah", 0), prefs.getLong("position", 0L), prefs.getLong("duration", 0L)) ?: return null
+        val ayah = prefs.getInt("ayah", 0).takeIf { it > 0 }
+        if (ayah != null && QuranAudioRepository.ayahTiming(saved.surahId, ayah) == null) return null
+        val options = QuranAyahPlaybackPolicy.options(prefs.getInt("repeats", 1), prefs.getFloat("speed", 1f),
+            prefs.getBoolean("continue", false)) ?: QuranAyahOptions()
+        val iteration = prefs.getInt("iteration", 1).coerceIn(1, options.repeatCount.takeIf { it > 0 } ?: Int.MAX_VALUE)
+        return saved.copy(ayah = ayah, ayahOptions = options, repeatIteration = iteration)
     }
 
     fun save(context: Context, player: Player) {
-        val surah = player.currentMediaItem?.mediaId?.toIntOrNull()?.takeIf { it in 1..114 } ?: return
+        val mediaId = player.currentMediaItem?.mediaId ?: return
+        val verse = QuranAyahPlaybackPolicy.reference(mediaId)
+        val surah = verse?.surahId ?: mediaId.toIntOrNull()?.takeIf { it in 1..114 } ?: return
         val duration = player.duration.takeIf { it != C.TIME_UNSET && it > 0L }
-            ?: read(context)?.takeIf { it.surahId == surah }?.durationMs ?: 0L
+            ?: verse?.let { QuranAudioRepository.ayahTiming(it.surahId, it.ayah)?.durationMs }
+            ?: read(context)?.takeIf { it.surahId == surah && it.ayah == verse?.ayah }?.durationMs ?: 0L
         val position = if (player.playbackState == Player.STATE_ENDED) 0L else QuranPlaybackPolicy.clamp(player.currentPosition, duration)
+        val options = if (verse != null && QuranAyahSession.reference == verse) QuranAyahSession.options else QuranAyahOptions()
+        val iteration = if (verse != null && QuranAyahSession.reference == verse && player.playbackState != Player.STATE_ENDED)
+            QuranAyahSession.iteration else 1
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit()
-            .putInt("surah", surah).putLong("position", position).putLong("duration", duration).apply()
+            .putInt("surah", surah).putInt("ayah", verse?.ayah ?: 0)
+            .putLong("position", position).putLong("duration", duration)
+            .putInt("repeats", options.repeatCount).putFloat("speed", options.speed)
+            .putBoolean("continue", options.continueAfter).putInt("iteration", iteration).apply()
     }
 
     fun state(context: Context, player: Player): QuranPlaybackState {
-        val surah = player.currentMediaItem?.mediaId?.toIntOrNull()?.takeIf { it in 1..114 }
+        val verse = player.currentMediaItem?.mediaId?.let(QuranAyahPlaybackPolicy::reference)
+        val surah = verse?.surahId ?: player.currentMediaItem?.mediaId?.toIntOrNull()?.takeIf { it in 1..114 }
+        val timing = verse?.let { QuranAudioRepository.ayahTiming(it.surahId, it.ayah) }
+        val options = if (verse != null && QuranAyahSession.reference == verse) QuranAyahSession.options else QuranAyahOptions()
         val duration = player.duration.takeIf { it != C.TIME_UNSET && it > 0L }
-            ?: read(context)?.takeIf { it.surahId == surah }?.durationMs ?: 0L
+            ?: timing?.durationMs
+            ?: read(context)?.takeIf { it.surahId == surah && it.ayah == verse?.ayah }?.durationMs ?: 0L
         val failure = player.playerError
         return QuranPlaybackState(
             connected = true, surahId = surah, title = player.mediaMetadata.title?.toString().orEmpty(),
@@ -52,6 +78,10 @@ internal object QuranPlaybackMemory {
             error = failure?.let { Lang.wrap(context).getString(R.string.audio_player_failure) },
             errorCode = failure?.errorCode, ended = player.playbackState == Player.STATE_ENDED,
             playWhenReady = player.playWhenReady, playbackState = player.playbackState,
+            ayah = verse?.ayah, repeatCount = options.repeatCount,
+            repeatIteration = if (verse != null && QuranAyahSession.reference == verse) QuranAyahSession.iteration else 1,
+            speed = player.playbackParameters.speed, continueAfter = options.continueAfter,
+            clipStartMs = timing?.startMs, clipEndMs = timing?.endMs,
         )
     }
 }

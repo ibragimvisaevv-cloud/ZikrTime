@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="guide_visual_example">Tətbiq ekranı · rusca nümunə</string>
+    <string name="guide_visual_enlarge">Böyüt</string>
+    <string name="guide_visual_reset">Bütün ekran</string>
+    <string name="guide_visual_zoom_hint">Böyütmək üçün iki barmağınızı ayırın. Detalları görmək üçün şəkli sürüşdürün.</string>
+    <string name="guide_visual_unavailable">Ekran şəkli açılmadı. Aşağıdakı düymə ilə bölməni aça bilərsiniz.</string>
+    <string name="guide_visual_highlight">%1$d-ci əməl üçün vurğulanan düymə</string>
+    <string name="guide_visual_step">Əməl %1$d / %2$d</string>
+    <string name="guide_visual_skip">Keç</string>
+    <string name="guide_visual_open">Tətbiqdə aç</string>
+    <string name="guide_visual_intro">Bunlar tətbiqin həqiqi ekranlarıdır. Lazım olan düyməni görmək üçün 1, 2 və ya 3-ə toxunun. Şəkli böyütmək olar.</string>
+    <string name="guide_visual_quran_title">Quran: oxuyun və dinləyin</string>
+    <string name="guide_visual_quran_summary">Oxu, dinləmə və saxlanmış ayələr</string>
+    <string name="guide_visual_quran_control1">Oxumaq və ya dinləmək</string>
+    <string name="guide_visual_quran_control2">Ayəni təkrarlamaq</string>
+    <string name="guide_visual_quran_control3">Əlfəcinlər və qeydlər</string>
+    <string name="guide_visual_quran_step1">Quran bölməsində Oxu və ya Dinlə seçin. Oxumaq üçün istədiyiniz surəyə toxunun.</string>
+    <string name="guide_visual_quran_step2">Ayəyə toxunun, sonra Bu ayəni dinlə seçin. Paneldə sürəti və təkrar sayını seçin.</string>
+    <string name="guide_visual_quran_step3">Eyni ayə panelində aşağı sürüşdürün: burada əlfəcin və ya qeyd əlavə edə bilərsiniz. Ayə mətndə işarələnəcək.</string>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="guide_visual_example">Экран приложения · пример</string>
+    <string name="guide_visual_enlarge">Увеличить</string>
+    <string name="guide_visual_reset">Весь экран</string>
+    <string name="guide_visual_zoom_hint">Разведите пальцы для увеличения. Двигайте снимок, чтобы рассмотреть детали.</string>
+    <string name="guide_visual_unavailable">Не удалось открыть снимок. Можно перейти в сам раздел кнопкой ниже.</string>
+    <string name="guide_visual_highlight">Выделенная кнопка для действия %1$d</string>
+    <string name="guide_visual_step">Действие %1$d из %2$d</string>
+    <string name="guide_visual_skip">Пропустить</string>
+    <string name="guide_visual_open">Открыть в приложении</string>
+    <string name="guide_visual_intro">Здесь — снимки самого приложения. Нажимайте 1, 2, 3: мы покажем нужную кнопку. Любой снимок можно увеличить.</string>
+    <string name="guide_visual_quran_title">Коран: читать и слушать</string>
+    <string name="guide_visual_quran_summary">Чтение, прослушивание и сохранённые аяты</string>
+    <string name="guide_visual_quran_control1">Читать или слушать</string>
+    <string name="guide_visual_quran_control2">Повторять аят</string>
+    <string name="guide_visual_quran_control3">Закладки и заметки</string>
+    <string name="guide_visual_quran_step1">В разделе «Коран» выберите «Читать» или «Слушать». Для чтения нажмите нужную суру.</string>
+    <string name="guide_visual_quran_step2">Нажмите на аят, затем «Слушать этот аят». В панели выберите скорость и число повторов.</string>
+    <string name="guide_visual_quran_step3">В этой же панели аята прокрутите ниже: здесь можно сохранить место или написать заметку. Аят останется отмеченным в тексте.</string>
+</resources>

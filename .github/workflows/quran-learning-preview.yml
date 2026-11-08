@@ -1,0 +1,102 @@
+name: Quran learning screenshot capture 0.8.28
+on:
+  push:
+    branches: [codex/quran-reader-0814]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: learning-preview-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  capture:
+    if: ${{ contains(github.event.head_commit.message, '[quran-learning-preview]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Resolve optional capture-only recheck
+        run: |
+          python3 - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          message = json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text())['head_commit']['message']
+          match = re.search(r'\[quran-learning-preview\]\s+reuse=(\d+)', message)
+          with open(os.environ['GITHUB_ENV'], 'a') as out:
+              out.write('REUSE_RUN=' + (match.group(1) if match else '') + '\n')
+          PY
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        if: env.REUSE_RUN == ''
+      - name: Verify protected Quran text
+        run: git diff --exit-code 7eaec0a2bcb389f637d56b5192660cafbd2c9243 -- app/src/main/assets/quran app/src/main/java/com/zikrtime/app/data/QuranContent.kt
+      - name: Build real app screens for guide captures
+        if: env.REUSE_RUN == ''
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --console=plain
+          mkdir -p ci-out
+          python3 - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          apk = Path('app/build/outputs/apk/debug/app-debug.apk')
+          Path('ci-out/preview-source.json').write_text(json.dumps({
+              'source_sha': os.environ['GITHUB_SHA'], 'source_run': os.environ['GITHUB_RUN_ID'],
+              'debug_sha256': hashlib.sha256(apk.read_bytes()).hexdigest()}))
+          PY
+      - name: Reuse identical app for screenshot script correction
+        if: env.REUSE_RUN != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download "$REUSE_RUN" --repo "$GITHUB_REPOSITORY" -n learning-preview-inputs -D .
+          python3 - <<'PY'
+          import hashlib, json, subprocess
+          from pathlib import Path
+          data = json.loads(Path('ci-out/preview-source.json').read_text())
+          subprocess.run(['git','diff','--exit-code',data['source_sha'],'HEAD','--','app',
+              'gradle','gradlew','gradlew.bat','build.gradle.kts','settings.gradle.kts','gradle.properties'], check=True)
+          assert hashlib.sha256(Path('app/build/outputs/apk/debug/app-debug.apk').read_bytes()).hexdigest() == data['debug_sha256']
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: learning-preview-inputs
+          compression-level: 0
+          path: |
+            app/build/outputs/apk/debug/app-debug.apk
+            ci-out/preview-source.json
+      - name: Record captured application provenance
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          data = json.loads(Path('ci-out/preview-source.json').read_text())
+          with open(os.environ['GITHUB_ENV'], 'a') as out:
+              out.write('GUIDE_APK_SOURCE_SHA=' + data['source_sha'] + '\n')
+              out.write('GUIDE_APK_SOURCE_RUN=' + data['source_run'] + '\n')
+          PY
+      - run: python3 -m pip install 'Pillow>=11,<13'
+      - name: Enable emulator acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-guide.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Capture updated Quran screens on Android 15
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -camera-back none -camera-front none
+          script: adb install -r app/build/outputs/apk/debug/app-debug.apk && python3 tools/ci/guide_capture_0828.py quran
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: learning-preview-screens
+          path: ci-out/

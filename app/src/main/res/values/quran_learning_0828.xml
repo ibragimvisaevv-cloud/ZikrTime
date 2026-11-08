@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ql_read_title">Read Quran</string>
+    <string name="ql_read_detail">Surahs, translation and saved verses</string>
+    <string name="ql_listen_detail">Alafasy · full surahs and downloads</string>
+    <string name="ql_listen_ayah">Listen to this verse</string>
+    <string name="ql_listen_ayah_short">Listen to verse</string>
+    <string name="ql_ayah_hint">Tap a verse to listen, repeat or save it.</string>
+    <string name="ql_speed">Playback speed</string>
+    <string name="ql_repeat">Repeat this verse</string>
+    <string name="ql_repeat_once">Once</string>
+    <string name="ql_repeat_count">%1$d times</string>
+    <string name="ql_repeat_forever">Until stopped</string>
+    <string name="ql_repeat_progress">Repetition %1$d of %2$d</string>
+    <string name="ql_repeat_progress_forever">Repetition %1$d · until stopped</string>
+    <string name="ql_continue">Then play the next verse</string>
+    <string name="ql_continue_detail">Repeat each following verse with these settings. Stops at the end of the surah.</string>
+    <string name="ql_continue_infinite">Choose a finite repeat count to continue to the next verse.</string>
+    <string name="ql_verse_finished">Verse finished</string>
+    <string name="ql_whole_surah">Listen to the full surah</string>
+    <string name="ql_previous_verse">Previous verse</string>
+    <string name="ql_next_verse">Next verse</string>
+    <string name="ql_saved_actions">Save or copy</string>
+    <string name="ql_learning_title">Listen and learn</string>
+    <string name="ql_learning_detail">Tap any verse while reading to repeat it and change the speed.</string>
+    <string name="ql_open_reader">Open verses</string>
+    <string name="ql_reading_now">Listening: %1$s</string>
+    <string name="ql_verse_counter">Verse %1$d of %2$d</string>
+    <string name="audio_ayah_title">%1$s · verse %2$d</string>
+    <string name="audio_ayah_unavailable">This verse recording is unavailable. Please try again.</string>
+    <string name="audio_ayah_source">Verse recordings: MP3Quran</string>
+</resources>

@@ -1,7 +1,14 @@
 package com.zikrtime.app.audio
 
 /** Saved progress never implies a request to start sound. */
-data class QuranPlaybackPosition(val surahId: Int, val positionMs: Long, val durationMs: Long)
+data class QuranPlaybackPosition(
+    val surahId: Int,
+    val positionMs: Long,
+    val durationMs: Long,
+    val ayah: Int? = null,
+    val ayahOptions: QuranAyahOptions = QuranAyahOptions(),
+    val repeatIteration: Int = 1,
+)
 
 object QuranPlaybackPolicy {
     fun restore(surahId: Int, positionMs: Long, durationMs: Long): QuranPlaybackPosition? {

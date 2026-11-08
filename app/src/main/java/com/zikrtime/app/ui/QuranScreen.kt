@@ -173,18 +173,12 @@ private fun QuranIndex(book: QuranBook, progress: QuranProgress, open: (QuranPro
                     color = colors.muted, textAlign = TextAlign.Center)
             }
         }
-        if (selectedTopic == null) item("listen") {
-            OutlinedCard(onClick = { nav.openQuranAudio(0) }, modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)
-                .testTag("quran_audio_entry"), shape = RoundedCornerShape(18.dp),
-                colors = CardDefaults.outlinedCardColors(containerColor = colors.paper), border = BorderStroke(1.dp, colors.rule)) {
-                Row(Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                        Text(stringResource(R.string.qaudio_title), style = MaterialTheme.typography.titleMedium, color = colors.accent)
-                        Text(stringResource(R.string.qaudio_entry_detail), style = MaterialTheme.typography.bodySmall, color = colors.muted)
-                    }
-                    Icon(Icons.AutoMirrored.Filled.ArrowForward, null, tint = colors.accent)
-                }
+        if (selectedTopic == null) item("read_and_listen") {
+            Column(Modifier.fillMaxWidth().padding(bottom = 12.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                QuranEntryCard(stringResource(R.string.ql_read_title), stringResource(R.string.ql_read_detail),
+                    "quran_read_entry") { open(last ?: QuranProgress.Location(1, 1)) }
+                QuranEntryCard(stringResource(R.string.qaudio_title), stringResource(R.string.ql_listen_detail),
+                    "quran_audio_entry") { nav.openQuranAudio(0) }
             }
         }
         if (selectedTopic == null) item("sections") {
@@ -373,5 +367,22 @@ internal fun QuranSources(close: () -> Unit) {
         Text(stringResource(R.string.quran_source_translation), style = MaterialTheme.typography.bodyLarge)
         TextButton(onClick = { runCatching { uri.openUri("https://quranenc.com/en/browse/russian_rwwad/1") } }) { Text("QuranEnc") }
         TextButton(onClick = close, modifier = Modifier.testTag("quran_sources_close")) { Text(stringResource(R.string.quran_close)) }
+    }
+}
+
+@Composable
+private fun QuranEntryCard(title: String, detail: String, tag: String, open: () -> Unit) {
+    val colors = quranPaperColors()
+    OutlinedCard(onClick = open, modifier = Modifier.fillMaxWidth().testTag(tag),
+        shape = RoundedCornerShape(18.dp), colors = CardDefaults.outlinedCardColors(containerColor = colors.paper),
+        border = BorderStroke(1.dp, colors.accent.copy(alpha = .5f))) {
+        Row(Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(title, style = MaterialTheme.typography.titleLarge, color = colors.accent)
+                Text(detail, style = MaterialTheme.typography.bodySmall, color = colors.muted)
+            }
+            Icon(Icons.AutoMirrored.Filled.ArrowForward, null, tint = colors.accent)
+        }
     }
 }

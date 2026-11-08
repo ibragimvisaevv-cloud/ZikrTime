@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ql_read_title">Читать Коран</string>
+    <string name="ql_read_detail">Суры, перевод и сохранённые аяты</string>
+    <string name="ql_listen_detail">Аль-Афаси · целые суры и скачивание</string>
+    <string name="ql_listen_ayah">Слушать этот аят</string>
+    <string name="ql_listen_ayah_short">Слушать аят</string>
+    <string name="ql_ayah_hint">Нажмите на аят, чтобы слушать, повторять или сохранить.</string>
+    <string name="ql_speed">Скорость чтения</string>
+    <string name="ql_repeat">Повторять этот аят</string>
+    <string name="ql_repeat_once">Один раз</string>
+    <string name="ql_repeat_count">%1$d раз</string>
+    <string name="ql_repeat_forever">До остановки</string>
+    <string name="ql_repeat_progress">Повтор %1$d из %2$d</string>
+    <string name="ql_repeat_progress_forever">Повтор %1$d · до остановки</string>
+    <string name="ql_continue">Затем читать следующий аят</string>
+    <string name="ql_continue_detail">Следующие аяты тоже повторяются с этими настройками. Чтение остановится в конце суры.</string>
+    <string name="ql_continue_infinite">Для перехода к следующему аяту выберите число повторов.</string>
+    <string name="ql_verse_finished">Аят завершён</string>
+    <string name="ql_whole_surah">Слушать суру целиком</string>
+    <string name="ql_previous_verse">Предыдущий аят</string>
+    <string name="ql_next_verse">Следующий аят</string>
+    <string name="ql_saved_actions">Сохранить или скопировать</string>
+    <string name="ql_learning_title">Слушать и запоминать</string>
+    <string name="ql_learning_detail">Нажмите на любой аят при чтении: можно включить повторы и изменить скорость.</string>
+    <string name="ql_open_reader">Открыть аяты</string>
+    <string name="ql_reading_now">Звучит: %1$s</string>
+    <string name="ql_verse_counter">Аят %1$d из %2$d</string>
+    <string name="audio_ayah_title">%1$s · аят %2$d</string>
+    <string name="audio_ayah_unavailable">Не удалось открыть запись этого аята. Попробуйте ещё раз.</string>
+    <string name="audio_ayah_source">Записи аятов: MP3Quran</string>
+</resources>

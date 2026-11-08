@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="guide_visual_example">Uygulama ekranı · Rusça örnek</string>
+    <string name="guide_visual_enlarge">Büyüt</string>
+    <string name="guide_visual_reset">Ekrana sığdır</string>
+    <string name="guide_visual_zoom_hint">Büyütmek için iki parmağınızı açın. Ayrıntıları görmek için görüntüyü sürükleyin.</string>
+    <string name="guide_visual_unavailable">Ekran görüntüsü açılamadı. Aşağıdaki düğmeyle bölümü açabilirsiniz.</string>
+    <string name="guide_visual_highlight">%1$d. adımın vurgulanan düğmesi</string>
+    <string name="guide_visual_step">Adım %1$d / %2$d</string>
+    <string name="guide_visual_skip">Atla</string>
+    <string name="guide_visual_open">Uygulamada aç</string>
+    <string name="guide_visual_intro">Bunlar uygulamanın gerçek ekranlarıdır. Kullanılacak düğmeyi görmek için 1, 2 veya 3’e dokunun. Her görüntüyü büyütebilirsiniz.</string>
+    <string name="guide_visual_quran_title">Kur’an: oku ve dinle</string>
+    <string name="guide_visual_quran_summary">Okuma, dinleme ve kaydedilen ayetler</string>
+    <string name="guide_visual_quran_control1">Oku veya dinle</string>
+    <string name="guide_visual_quran_control2">Ayeti tekrarla</string>
+    <string name="guide_visual_quran_control3">Yer imleri ve notlar</string>
+    <string name="guide_visual_quran_step1">Kur’an bölümünde Oku veya Dinle’yi seçin. Okumak için istediğiniz sureye dokunun.</string>
+    <string name="guide_visual_quran_step2">Ayete dokunup Bu ayeti dinle’yi seçin. Panelden hızı ve tekrar sayısını ayarlayın.</string>
+    <string name="guide_visual_quran_step3">Aynı ayet panelini aşağı kaydırın: yer imi ekleyebilir veya not yazabilirsiniz. Ayet metinde işaretli kalır.</string>
+</resources>

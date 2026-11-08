@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
@@ -51,9 +52,9 @@ enum class GuideTopic(
     JOURNAL(R.string.guide_journal_title, R.string.guide_journal_summary,
         listOf(R.string.guide_journal_step1, R.string.guide_journal_step2, R.string.guide_journal_step3),
         listOf(R.string.guide_journal_control1, R.string.guide_journal_control2, R.string.guide_journal_control3), R.drawable.ic_prayer_rug),
-    QURAN(R.string.guide_quran_title, R.string.guide_quran_summary,
-        listOf(R.string.guide_quran_step1, R.string.guide_quran_step2, R.string.guide_quran_step3),
-        listOf(R.string.guide_quran_control1, R.string.guide_quran_control2, R.string.guide_quran_control3), R.drawable.ic_nav_knowledge),
+    QURAN(R.string.guide_visual_quran_title, R.string.guide_visual_quran_summary,
+        listOf(R.string.guide_visual_quran_step1, R.string.guide_visual_quran_step2, R.string.guide_visual_quran_step3),
+        listOf(R.string.guide_visual_quran_control1, R.string.guide_visual_quran_control2, R.string.guide_visual_quran_control3), R.drawable.ic_nav_knowledge),
     LIMITS(R.string.guide_limits_title, R.string.guide_limits_summary,
         listOf(R.string.guide_limits_step1, R.string.guide_limits_step2, R.string.guide_limits_step3),
         listOf(R.string.guide_limits_control1, R.string.guide_limits_control2, R.string.guide_limits_control3), R.drawable.ic_nav_focus),
@@ -107,8 +108,12 @@ fun AppGuideScreen(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(stringResource(R.string.guide_title), style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.weight(1f))
-                IconButton(onClick = onFinish, modifier = Modifier.testTag(if (firstRun) "guide_skip" else "guide_close")) {
-                    Icon(Icons.Default.Close, contentDescription = stringResource(if (firstRun) R.string.guide_skip else R.string.guide_close))
+                if (firstRun) {
+                    TextButton(onClick = onFinish, modifier = Modifier.testTag("guide_skip")) {
+                        Text(stringResource(R.string.guide_visual_skip))
+                    }
+                } else IconButton(onClick = onFinish, modifier = Modifier.testTag("guide_close")) {
+                    Icon(Icons.Default.Close, contentDescription = stringResource(R.string.guide_close))
                 }
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -201,47 +206,60 @@ fun AppGuideScreen(
 @Composable
 private fun GuidePage(topic: GuideTopic, firstRun: Boolean, onFinish: () -> Unit, onOpenTopic: (GuideTopic) -> Unit) {
     val scroll = rememberScrollState()
+    var step by rememberSaveable(topic.key) { mutableIntStateOf(0) }
+    val colors = MaterialTheme.colorScheme
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val wide = maxWidth >= 600.dp
+        val imageHeight = if (wide) 340.dp else (maxHeight - 260.dp).coerceIn(210.dp, 340.dp)
         Column(
             Modifier.fillMaxSize().verticalScroll(scroll).testTag("guide_page_" + topic.key)
                 .padding(horizontal = 20.dp, vertical = 12.dp),
-            verticalArrangement = Arrangement.spacedBy(18.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Column(Modifier.widthIn(max = 800.dp).fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                Text(stringResource(topic.title), style = MaterialTheme.typography.headlineMedium,
+                Text(stringResource(topic.title), style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier.semantics { heading() })
-                Text(stringResource(topic.summary), style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant)
                 if (topic == GuideTopic.WELCOME) {
-                    Text(stringResource(R.string.guide_subtitle), style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(R.string.guide_visual_intro), style = MaterialTheme.typography.bodyMedium,
+                        color = colors.onSurfaceVariant)
                     if (firstRun) TextButton(onClick = onFinish, modifier = Modifier.fillMaxWidth().testTag("guide_skip_welcome")) {
                         Text(stringResource(R.string.guide_skip))
                     }
                 }
+                // These switch the highlighted action in the picture, not another wall of text.
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    topic.steps.indices.forEach { index ->
+                        val description = stringResource(R.string.guide_visual_step, index + 1, topic.steps.size) +
+                            ": " + stringResource(topic.controls[index])
+                        FilterChip(selected = step == index, onClick = { step = index },
+                            label = { Text((index + 1).toString(), modifier = Modifier.padding(horizontal = 14.dp)) },
+                            modifier = Modifier.heightIn(min = 48.dp).testTag("guide_step_" + (index + 1))
+                                .semantics { contentDescription = description })
+                    }
+                    Spacer(Modifier.weight(1f))
+                }
             }
             if (wide) {
                 Row(Modifier.widthIn(max = 800.dp).fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(24.dp)) {
-                    AppGuidePreview(topic, Modifier.weight(1f))
-                    GuideSteps(topic, Modifier.weight(1f))
+                    AppGuidePreview(topic, step, Modifier.weight(1f), imageHeight)
+                    GuideStep(topic, step, Modifier.weight(1f).padding(top = 16.dp))
                 }
             } else {
-                AppGuidePreview(topic, Modifier.widthIn(max = 560.dp).fillMaxWidth())
-                GuideSteps(topic, Modifier.widthIn(max = 560.dp).fillMaxWidth())
+                GuideStep(topic, step, Modifier.widthIn(max = 460.dp).fillMaxWidth())
+                AppGuidePreview(topic, step, Modifier.widthIn(max = 460.dp).fillMaxWidth(), imageHeight)
             }
-            if (!firstRun && topic != GuideTopic.WELCOME) {
+            if (topic != GuideTopic.WELCOME) {
                 FilledTonalButton(
                     onClick = { onOpenTopic(topic) },
-                    modifier = Modifier.widthIn(max = 560.dp).fillMaxWidth().heightIn(min = 52.dp).testTag("guide_open"),
+                    modifier = Modifier.widthIn(max = 460.dp).fillMaxWidth().heightIn(min = 52.dp).testTag("guide_open"),
                     contentPadding = PaddingValues(horizontal = 20.dp, vertical = 14.dp),
-                ) { Text(stringResource(R.string.guide_open)) }
+                ) { Text(stringResource(R.string.guide_visual_open)) }
             }
             if (topic == GuideTopic.WELCOME || topic == GuideTopic.SHOP) {
-                Text(stringResource(R.string.guide_replay_hint), style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.widthIn(max = 560.dp).fillMaxWidth())
+                Text(stringResource(R.string.guide_replay_hint), style = MaterialTheme.typography.bodySmall,
+                    color = colors.onSurfaceVariant,
+                    modifier = Modifier.widthIn(max = 460.dp).fillMaxWidth())
             }
             Spacer(Modifier.height(4.dp))
         }
@@ -249,17 +267,16 @@ private fun GuidePage(topic: GuideTopic, firstRun: Boolean, onFinish: () -> Unit
 }
 
 @Composable
-private fun GuideSteps(topic: GuideTopic, modifier: Modifier) {
-    Column(modifier, verticalArrangement = Arrangement.spacedBy(18.dp)) {
-        topic.steps.forEachIndexed { index, text ->
-            Row(verticalAlignment = Alignment.Top, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                GuideNumber(index + 1)
-                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(5.dp)) {
-                    Text(stringResource(topic.controls[index]), style = MaterialTheme.typography.titleSmall,
-                        color = MaterialTheme.colorScheme.onSurface)
-                    Text(stringResource(text), style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
+private fun GuideStep(topic: GuideTopic, step: Int, modifier: Modifier) {
+    Surface(modifier.testTag("guide_step_caption"), shape = MaterialTheme.shapes.large,
+        color = MaterialTheme.colorScheme.secondaryContainer) {
+        Row(Modifier.padding(16.dp), verticalAlignment = Alignment.Top, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            GuideNumber(step + 1)
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text(stringResource(topic.controls[step]), style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer)
+                Text(stringResource(topic.steps[step]), style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer)
             }
         }
     }

@@ -4,6 +4,26 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class NavigationTest {
+    @Test fun listeningOpensSelectedVersesWithoutLosingThePlayer() {
+        val nav = Nav()
+        nav.openQuranAudio(114)
+        val player = nav.stack.last()
+        nav.openQuran(114, 3)
+        assertEquals(114, nav.stack.last().quranSurah)
+        assertEquals(3, nav.stack.last().quranAyah)
+        nav.openQuran(114, 3)
+        assertEquals(2, nav.stack.size)
+        assertTrue(nav.back())
+        assertEquals(player, nav.stack.last())
+    }
+
+    @Test fun invalidReadingSelectionFallsBackToTheCatalogue() {
+        val nav = Nav()
+        nav.openQuran(115, -2)
+        assertEquals(0, nav.stack.last().quranSurah)
+        assertEquals(1, nav.stack.last().quranAyah)
+    }
+
     @Test fun audioReturnsToReaderAndNotificationsDoNotDuplicateThePlayer() {
         val nav = Nav()
         nav.open(Screen.QURAN)

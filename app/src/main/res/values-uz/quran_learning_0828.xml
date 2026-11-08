@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ql_read_title">Qur’on o‘qish</string>
+    <string name="ql_read_detail">Suralar, tarjima va saqlangan oyatlar</string>
+    <string name="ql_listen_detail">Al-Afasiy · to‘liq suralar va yuklash</string>
+    <string name="ql_listen_ayah">Bu oyatni tinglash</string>
+    <string name="ql_listen_ayah_short">Oyatni tinglash</string>
+    <string name="ql_ayah_hint">Tinglash, takrorlash yoki saqlash uchun oyatni bosing.</string>
+    <string name="ql_speed">O‘qish tezligi</string>
+    <string name="ql_repeat">Bu oyatni takrorlash</string>
+    <string name="ql_repeat_once">Bir marta</string>
+    <string name="ql_repeat_count">%1$d marta</string>
+    <string name="ql_repeat_forever">To‘xtatilguncha</string>
+    <string name="ql_repeat_progress">Takror %1$d / %2$d</string>
+    <string name="ql_repeat_progress_forever">Takror %1$d · to‘xtatilguncha</string>
+    <string name="ql_continue">So‘ng keyingi oyatni o‘qish</string>
+    <string name="ql_continue_detail">Keyingi oyatlar ham shu sozlamalarda takrorlanadi. Sura oxirida to‘xtaydi.</string>
+    <string name="ql_continue_infinite">Keyingi oyatga o‘tish uchun takrorlar sonini tanlang.</string>
+    <string name="ql_verse_finished">Oyat tugadi</string>
+    <string name="ql_whole_surah">Surani to‘liq tinglash</string>
+    <string name="ql_previous_verse">Oldingi oyat</string>
+    <string name="ql_next_verse">Keyingi oyat</string>
+    <string name="ql_saved_actions">Saqlash yoki nusxalash</string>
+    <string name="ql_learning_title">Tinglash va yodlash</string>
+    <string name="ql_learning_detail">O‘qishda oyatni bosib, takrorlar va tezlikni sozlang.</string>
+    <string name="ql_open_reader">Oyatlarni ochish</string>
+    <string name="ql_reading_now">Tinglanmoqda: %1$s</string>
+    <string name="ql_verse_counter">Oyat %1$d / %2$d</string>
+    <string name="audio_ayah_title">%1$s · oyat %2$d</string>
+    <string name="audio_ayah_unavailable">Bu oyat yozuvini ochib bo‘lmadi. Qayta urinib ko‘ring.</string>
+    <string name="audio_ayah_source">Oyat yozuvlari: MP3Quran</string>
+</resources>

@@ -132,13 +132,47 @@ private fun QuranAudioContent(initialSurah: Int) {
             LazyColumn(Modifier.weight(1f).fillMaxWidth().testTag("audio_list"), state = list,
                 contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 24.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                if (playback.ayah != null && playback.surahId != null) item("active_verse") {
+                    Surface(color = colors.paper, shape = RoundedCornerShape(20.dp),
+                        border = BorderStroke(1.dp, colors.accent.copy(alpha = .5f)),
+                        modifier = Modifier.fillMaxWidth().testTag("audio_current_ayah")) {
+                        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Text(playback.title, style = MaterialTheme.typography.titleLarge, color = colors.ink)
+                            Text(stringResource(if (playback.ended) R.string.ql_verse_finished else if (playback.isBuffering)
+                                R.string.qaudio_buffering else if (playback.isPlaying) R.string.qaudio_playing else R.string.qaudio_paused),
+                                style = MaterialTheme.typography.labelLarge, color = colors.accent)
+                            if (playback.error != null) Text(playback.error!!, color = MaterialTheme.colorScheme.error)
+                            Button(onClick = { if (playback.error != null) QuranAudioPlayer.retry() else QuranAudioPlayer.togglePlayPause() },
+                                enabled = playback.connected, modifier = Modifier.fillMaxWidth().testTag("audio_current_ayah_play_pause")) {
+                                Text(stringResource(if (playback.error != null) R.string.qaudio_retry else if (playback.playWhenReady && !playback.ended)
+                                    R.string.qaudio_pause else if (playback.ended) R.string.ql_listen_ayah else R.string.qaudio_resume))
+                            }
+                            OutlinedButton(onClick = { nav.openQuran(playback.surahId!!, playback.ayah!!) },
+                                modifier = Modifier.fillMaxWidth().testTag("audio_current_ayah_open")) {
+                                Text(stringResource(R.string.ql_open_reader))
+                            }
+                        }
+                    }
+                }
                 item("player") {
                     Column(Modifier.fillMaxWidth().padding(top = 8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         QuranOrnament(Modifier.width(92.dp).height(14.dp))
                         Text(stringResource(R.string.qaudio_reciter), style = MaterialTheme.typography.titleLarge,
                             modifier = Modifier.semantics { heading() })
-                        if (selected != null && storage.ready) QuranAudioPlayerCard(selected, ru, playback, storage,
-                            onDelete = { deleteId = selected.id })
+                        if (selected != null && storage.ready) {
+                            QuranAudioPlayerCard(selected, ru, playback, storage, onDelete = { deleteId = selected.id })
+                            OutlinedCard(onClick = {
+                                nav.openQuran(selected.id, playback.ayah?.takeIf { playback.surahId == selected.id } ?: 1)
+                            },
+                                modifier = Modifier.fillMaxWidth().testTag("audio_open_verses")) {
+                                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                                    Text(stringResource(R.string.ql_learning_title), style = MaterialTheme.typography.titleMedium)
+                                    Text(stringResource(R.string.ql_learning_detail), style = MaterialTheme.typography.bodySmall)
+                                    Text(stringResource(R.string.ql_open_reader), color = colors.accent,
+                                        style = MaterialTheme.typography.labelLarge)
+                                }
+                            }
+                        }
                         else if (loadFailed || (!storage.ready && storage.error != null)) {
                             Text(stringResource(R.string.qaudio_load_error))
                             OutlinedButton(onClick = { loadAttempt++ }, modifier = Modifier.testTag("audio_catalog_retry")) {
@@ -190,7 +224,12 @@ private fun QuranAudioContent(initialSurah: Int) {
                 Surface(color = colors.paper, shadowElevation = 2.dp) {
                     FlowRow(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 4.dp),
                         horizontalArrangement = Arrangement.SpaceBetween) {
-                        TextButton(onClick = { playback.surahId?.let(openPlayer) }, modifier = Modifier.testTag("audio_show_player")) {
+                        TextButton(onClick = {
+                            playback.surahId?.let { id ->
+                                val verse = playback.ayah
+                                if (verse != null) nav.openQuran(id, verse) else openPlayer(id)
+                            }
+                        }, modifier = Modifier.testTag("audio_show_player")) {
                             Text(stringResource(R.string.qaudio_show_player))
                         }
                         TextButton(onClick = { QuranAudioPlayer.togglePlayPause() }, enabled = playback.connected,
@@ -233,7 +272,7 @@ private fun QuranAudioContent(initialSurah: Int) {
 private fun QuranAudioPlayerCard(surah: QuranSurah, ru: Boolean, playback: QuranPlaybackState,
     storage: QuranAudioStorageState, onDelete: () -> Unit) {
     val colors = quranPaperColors()
-    val active = playback.surahId == surah.id
+    val active = playback.surahId == surah.id && playback.ayah == null
     val playing = active && playback.isPlaying
     val position = if (active) playback.positionMs.coerceAtLeast(0) else 0L
     val duration = if (active) playback.durationMs.coerceAtLeast(0) else 0L
@@ -299,6 +338,7 @@ private fun QuranAudioPlayerCard(surah: QuranSurah, ru: Boolean, playback: Quran
                 TextButton(onClick = { QuranAudioPlayer.stop() }, enabled = playback.connected,
                     modifier = Modifier.testTag("audio_stop")) { Text(stringResource(R.string.qaudio_stop)) }
             }
+            if (active) QuranSpeedControls(playback.speed, "audio") { QuranAudioPlayer.setSpeed(it) }
             HorizontalDivider(color = colors.rule)
             QuranAudioDownloadActions(surah.id, storage, onDelete, tagSuffix = "player")
         }
@@ -317,9 +357,9 @@ private fun QuranAudioTrackRow(surah: QuranSurah, ru: Boolean, storage: QuranAud
                 modifier = Modifier.weight(1f))
         }
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            TextButton(onClick = if (playback.surahId == surah.id && playback.isPlaying) onOpenPlayer else onListen,
+            TextButton(onClick = if (playback.surahId == surah.id && playback.ayah == null && playback.isPlaying) onOpenPlayer else onListen,
                 enabled = playback.connected && storage.ready, modifier = Modifier.testTag("audio_play_${surah.id}")) {
-                Text(stringResource(if (playback.surahId == surah.id && playback.isPlaying)
+                Text(stringResource(if (playback.surahId == surah.id && playback.ayah == null && playback.isPlaying)
                     R.string.qaudio_show_player else R.string.qaudio_listen))
             }
         }

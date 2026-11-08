@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ql_read_title">Quran oxu</string>
+    <string name="ql_read_detail">Surələr, tərcümə və saxlanmış ayələr</string>
+    <string name="ql_listen_detail">Əl-Əfasi · tam surələr və yükləmələr</string>
+    <string name="ql_listen_ayah">Bu ayəni dinlə</string>
+    <string name="ql_listen_ayah_short">Ayəni dinlə</string>
+    <string name="ql_ayah_hint">Dinləmək, təkrarlamaq və ya saxlamaq üçün ayəyə toxunun.</string>
+    <string name="ql_speed">Oxuma sürəti</string>
+    <string name="ql_repeat">Bu ayəni təkrarla</string>
+    <string name="ql_repeat_once">Bir dəfə</string>
+    <string name="ql_repeat_count">%1$d dəfə</string>
+    <string name="ql_repeat_forever">Dayandırılana qədər</string>
+    <string name="ql_repeat_progress">Təkrar %1$d / %2$d</string>
+    <string name="ql_repeat_progress_forever">Təkrar %1$d · dayandırılana qədər</string>
+    <string name="ql_continue">Sonra növbəti ayəni oxu</string>
+    <string name="ql_continue_detail">Sonrakı ayələr də bu ayarlarla təkrarlanır. Surənin sonunda dayanır.</string>
+    <string name="ql_continue_infinite">Növbəti ayəyə keçmək üçün məhdud təkrar sayı seçin.</string>
+    <string name="ql_verse_finished">Ayə tamamlandı</string>
+    <string name="ql_whole_surah">Surəni tam dinlə</string>
+    <string name="ql_previous_verse">Əvvəlki ayə</string>
+    <string name="ql_next_verse">Növbəti ayə</string>
+    <string name="ql_saved_actions">Saxla və ya köçür</string>
+    <string name="ql_learning_title">Dinlə və öyrən</string>
+    <string name="ql_learning_detail">Oxuyarkən ayəyə toxunub təkrarları və sürəti seçin.</string>
+    <string name="ql_open_reader">Ayələri aç</string>
+    <string name="ql_reading_now">Səslənir: %1$s</string>
+    <string name="ql_verse_counter">Ayə %1$d / %2$d</string>
+    <string name="audio_ayah_title">%1$s · ayə %2$d</string>
+    <string name="audio_ayah_unavailable">Bu ayənin yazısını açmaq olmadı. Yenidən cəhd edin.</string>
+    <string name="audio_ayah_source">Ayə yazıları: MP3Quran</string>
+</resources>

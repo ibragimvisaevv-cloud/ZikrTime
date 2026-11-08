@@ -1,0 +1,24 @@
+{
+  "source": "https://dumraikk.ru/download/sury_trascripciya.docx",
+  "publisher_page": "https://dumraikk.ru/zagruzki/",
+  "publisher": "Духовное управление мусульман Республики Адыгея и Краснодарского края",
+  "retrieved_at": "2026-11-08T09:13:09.264140+00:00",
+  "sha256": "6615448ec0b5ffdf9c213adc84619ded7ee04f37afd3c58d40b55ddc86569e9f",
+  "bytes": 18692,
+  "coverage": [
+    "1:1-7",
+    "2:255",
+    "112:1-4",
+    "113:1-5",
+    "114:1-6"
+  ],
+  "scope": "partial teaching handout; not a complete Quran transcription corpus",
+  "status": "research evidence only, not imported as app content",
+  "notes": [
+    "Document has unnumbered paragraphs and separate basmala passages.",
+    "No manual spelling correction, normalization or conversion is permitted in an eventual import.",
+    "The 114 basmala ends Рахии. in the source; keep raw and request editorial clarification before presenting it as verified."
+  ],
+  "permission": "Page requires active source hyperlink when copying site materials; no assertion of public-domain or universal licence.",
+  "page_sha256": "ab19601d4814c042a887fb915256cf86cb032ee0bcfe2377dfba896ee606bdc9"
+}

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ql_read_title">Kur’an oku</string>
+    <string name="ql_read_detail">Sureler, meal ve kaydedilen ayetler</string>
+    <string name="ql_listen_detail">Alafasy · tam sureler ve indirmeler</string>
+    <string name="ql_listen_ayah">Bu ayeti dinle</string>
+    <string name="ql_listen_ayah_short">Ayeti dinle</string>
+    <string name="ql_ayah_hint">Dinlemek, tekrarlamak veya kaydetmek için bir ayete dokunun.</string>
+    <string name="ql_speed">Okuma hızı</string>
+    <string name="ql_repeat">Bu ayeti tekrarla</string>
+    <string name="ql_repeat_once">Bir kez</string>
+    <string name="ql_repeat_count">%1$d kez</string>
+    <string name="ql_repeat_forever">Durdurulana kadar</string>
+    <string name="ql_repeat_progress">Tekrar %1$d / %2$d</string>
+    <string name="ql_repeat_progress_forever">Tekrar %1$d · durdurulana kadar</string>
+    <string name="ql_continue">Sonra sonraki ayeti oku</string>
+    <string name="ql_continue_detail">Sonraki ayetler de bu ayarlarla tekrarlanır. Sure sonunda durur.</string>
+    <string name="ql_continue_infinite">Sonraki ayete geçmek için belirli bir tekrar sayısı seçin.</string>
+    <string name="ql_verse_finished">Ayet tamamlandı</string>
+    <string name="ql_whole_surah">Surenin tamamını dinle</string>
+    <string name="ql_previous_verse">Önceki ayet</string>
+    <string name="ql_next_verse">Sonraki ayet</string>
+    <string name="ql_saved_actions">Kaydet veya kopyala</string>
+    <string name="ql_learning_title">Dinle ve öğren</string>
+    <string name="ql_learning_detail">Okurken bir ayete dokunarak tekrar sayısını ve hızı ayarlayın.</string>
+    <string name="ql_open_reader">Ayetleri aç</string>
+    <string name="ql_reading_now">Çalıyor: %1$s</string>
+    <string name="ql_verse_counter">Ayet %1$d / %2$d</string>
+    <string name="audio_ayah_title">%1$s · ayet %2$d</string>
+    <string name="audio_ayah_unavailable">Bu ayetin kaydı açılamadı. Tekrar deneyin.</string>
+    <string name="audio_ayah_source">Ayet kayıtları: MP3Quran</string>
+</resources>

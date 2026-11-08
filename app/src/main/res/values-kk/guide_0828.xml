@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="guide_visual_example">Қолданба экраны · орысша үлгі</string>
+    <string name="guide_visual_enlarge">Үлкейту</string>
+    <string name="guide_visual_reset">Экранға сыйдыру</string>
+    <string name="guide_visual_zoom_hint">Үлкейту үшін екі саусақты алшақтатыңыз. Толық көру үшін суретті жылжытыңыз.</string>
+    <string name="guide_visual_unavailable">Экран суреті ашылмады. Төмендегі түймемен бөлімді ашуға болады.</string>
+    <string name="guide_visual_highlight">%1$d-әрекеттің белгіленген түймесі</string>
+    <string name="guide_visual_step">%2$d әрекеттің %1$d-і</string>
+    <string name="guide_visual_skip">Өткізу</string>
+    <string name="guide_visual_open">Қолданбада ашу</string>
+    <string name="guide_visual_intro">Бұл — қолданбаның нақты экрандары. Қажетті түймені көру үшін 1, 2, 3-ті басыңыз. Кез келген суретті үлкейтуге болады.</string>
+    <string name="guide_visual_quran_title">Құран: оқу және тыңдау</string>
+    <string name="guide_visual_quran_summary">Оқу, тыңдау және сақталған аяттар</string>
+    <string name="guide_visual_quran_control1">Оқу немесе тыңдау</string>
+    <string name="guide_visual_quran_control2">Аятты қайталау</string>
+    <string name="guide_visual_quran_control3">Бетбелгілер мен жазбалар</string>
+    <string name="guide_visual_quran_step1">«Құран» бөлімінде «Оқу» немесе «Тыңдау» таңдаңыз. Оқу үшін қажетті сүрені басыңыз.</string>
+    <string name="guide_visual_quran_step2">Аятты басып, «Осы аятты тыңдау» таңдаңыз. Панельде жылдамдық пен қайталау санын орнатыңыз.</string>
+    <string name="guide_visual_quran_step3">Осы аят панелін төмен айналдырыңыз: орынды сақтауға немесе жазба қосуға болады. Аят мәтінде белгіленіп қалады.</string>
+</resources>
