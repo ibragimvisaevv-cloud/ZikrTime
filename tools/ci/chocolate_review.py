@@ -181,8 +181,15 @@ def sections_shard():
         save_shard()
     start('focus')
     tap_fully_visible('focus_permissions_open')
-    observe('focus_permissions_done')
-    capture('section-permissions-light')
+    for _ in range(6):
+        root = ui()
+        title = find_control(root, 'Разрешения телефона', 'text')
+        if title is not None and visible_bounds(root, title) == bounds(title):
+            break
+        time.sleep(.3)
+    else:
+        raise AssertionError('Phone permission explanation did not open')
+    capture('section-permissions-light', root)
     REPORT['groups']['permission-explanation-opened'] = True
 
 
