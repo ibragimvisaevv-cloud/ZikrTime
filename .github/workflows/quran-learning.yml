@@ -39,9 +39,10 @@ jobs:
               assert run, 'An audio recheck must name its verified build: reuse=RUN_ID'
           with open(os.environ['GITHUB_ENV'], 'a') as out:
               out.write('REUSE_RUN=' + run + '\n')
-              if '[quran-learning-recheck]' in message and 'mode=remaining' in message:
+              mode = re.search(r'\bmode=(remaining|guide)\b', message)
+              if '[quran-learning-recheck]' in message and mode:
                   assert run == '42474183725', 'Remaining checks require the audited final build'
-                  out.write('LEARNING_MODE=remaining\n')
+                  out.write('LEARNING_MODE=' + mode.group(1) + '\n')
           PY
       - uses: actions/setup-java@v4
         with:
@@ -52,7 +53,7 @@ jobs:
       - name: Verify protected Quran text
         run: git diff --exit-code 7eaec0a2bcb389f637d56b5192660cafbd2c9243 -- app/src/main/assets/quran app/src/main/java/com/zikrtime/app/data/QuranContent.kt
       - name: Validate audio verification scripts
-        run: python3 -m py_compile tools/ci/learning_journeys.py tools/ci/learning_delivery.py tools/ci/guide_capture_0828.py
+        run: python3 -m py_compile tools/ci/learning_journeys.py tools/ci/learning_delivery.py tools/ci/learning_inherit.py tools/ci/guide_capture_0828.py
       - name: Restore original signing key
         if: env.REUSE_RUN == ''
         env:
@@ -85,14 +86,19 @@ jobs:
         run: |
           gh run download "$REUSE_RUN" --repo "$GITHUB_REPOSITORY" -n learning-verified-inputs -D .
           python3 tools/ci/learning_delivery.py --reuse
-      - name: Preserve passed audio checks on the identical APK
-        if: env.LEARNING_MODE == 'remaining'
+      - name: Preserve passed checks on the identical APK
+        if: env.LEARNING_MODE == 'remaining' || env.LEARNING_MODE == 'guide'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p ci-inherited
           gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/13615411512" > ci-inherited/artifact.json
           gh run download 42474183725 --repo "$GITHUB_REPOSITORY" -n ZikrTime-0.8.28-learning-check -D ci-inherited
+          if [ "$LEARNING_MODE" = guide ]; then
+            mkdir -p ci-accessible
+            gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/13616423692" > ci-accessible/artifact.json
+            gh run download 42478656906 --repo "$GITHUB_REPOSITORY" -n ZikrTime-0.8.28-learning-check -D ci-accessible
+          fi
           python3 tools/ci/learning_inherit.py
       - uses: actions/upload-artifact@v4
         with:
@@ -105,7 +111,7 @@ jobs:
             ci-out/release-signature.txt
             app/build/test-results/
       - name: Check real Alafasy source before playback
-        if: env.LEARNING_MODE != 'remaining'
+        if: env.LEARNING_MODE != 'remaining' && env.LEARNING_MODE != 'guide'
         run: python3 tools/ci/audio_source_check.py
       - run: python3 -m pip install 'Pillow>=11,<13'
       - name: Enable emulator acceleration

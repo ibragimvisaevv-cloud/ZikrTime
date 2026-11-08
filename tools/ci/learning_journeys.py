@@ -397,8 +397,18 @@ def illustrated_guide():
         page(topic)
         for step in (1, 2, 3):
             tap_control("guide_step_" + str(step))
-            observe(f"guide_image_{topic}_{step}")
-            visible_guide_image()
+            # Coil's decorative AsyncImage has contentDescription=null and is
+            # omitted from the Android accessibility tree even when loaded.
+            # ScreenshotWithTarget exposes its marker only after onSuccess.
+            # Verify the real topic/selected step and that loaded marker rather
+            # than waiting for a non-accessible image node.
+            selected = find_control(page(topic), "guide_step_" + str(step))
+            assert selected is not None and selected.get("checked") == "true", \
+                ("Guide did not select the requested step", topic, step)
+            frame = visible_guide_image()
+            hotspot = find_control(frame, "guide_hotspot")
+            assert hotspot is not None and hotspot.get("content-desc") == \
+                f"Выделенная кнопка для действия {step}", (topic, step, "Wrong loaded image marker")
         if topic in {"welcome", "limits", "quran"}:
             capture("learning-illustrated-guide-" + topic)
         if topic == "quran":
@@ -408,7 +418,7 @@ def illustrated_guide():
             capture("learning-guide-screenshot-zoom")
             tap_control("guide_zoom_close")
             tap_control("guide_open")
-            observe("quran_index_list")
+            observe("quran_index_list", tries=30)
             shell("input", "keyevent", "KEYCODE_BACK")
             page("quran")
         if topic != TOPICS[-1]:
@@ -460,14 +470,21 @@ def visible_guide_image():
         owner = parents.get(node)
         while owner is not None and owner.get("scrollable") != "true":
             owner = parents.get(owner)
-        if owner is None or (raw[1] >= top and raw[3] <= bottom):
+        if owner is None:
             break
         ol, ot, oright, ob = visible_bounds(root, owner)
         if ob - ot < minimum_height:
             break
+        # UiAutomator may already clip the reported image bounds to its scroll
+        # viewport. Equality of raw/visible bounds then does not mean the whole
+        # image is on screen. Reveal a short image touching either viewport edge.
+        clipped_bottom = raw[3] >= ob - 2
+        clipped_top = raw[1] <= ot + 2
+        if not (clipped_bottom or clipped_top):
+            break
         distance = min(max(72, int(minimum_height - (bottom - top)) + 36), (ob - ot) // 3)
         middle = (ot + ob) // 2
-        end = middle - distance if raw[3] > bottom else middle + distance
+        end = middle - distance if clipped_bottom else middle + distance
         x = ol + min(18, (oright - ol) // 8)
         shell("input", "swipe", x, middle, x, end, 300)
         time.sleep(.25)
