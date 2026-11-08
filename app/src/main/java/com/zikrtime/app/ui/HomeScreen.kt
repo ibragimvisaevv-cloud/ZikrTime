@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
@@ -103,6 +104,7 @@ fun HomeScreen() {
 private fun HomeContent() {
     val nav = LocalNav.current
     val context = LocalContext.current
+    val compactViewport = LocalConfiguration.current.screenHeightDp < 720 && LocalDensity.current.fontScale <= 1.3f
     val zone = PrayerSchedule.zone()
     var now by remember(zone) { mutableStateOf(ZonedDateTime.now(zone)) }
     val today = now.toLocalDate()
@@ -138,13 +140,15 @@ private fun HomeContent() {
     HorizonHome(now, next.first, next.second, times) {
         Column(Modifier.fillMaxWidth()) {
             Text(stringResource(R.string.home_today), style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(top = 2.dp, bottom = 10.dp))
+                fontSize = if (compactViewport) 22.sp else MaterialTheme.typography.headlineSmall.fontSize,
+                lineHeight = if (compactViewport) 28.sp else MaterialTheme.typography.headlineSmall.lineHeight,
+                modifier = Modifier.padding(top = 2.dp, bottom = if (compactViewport) 8.dp else 10.dp))
             val prayed = Store.prayedOn(today)
             // All six times come first. Two roomy columns replace six long rows;
             // large text falls back to one column without clipping or shrinking it.
             BoxWithConstraints(Modifier.fillMaxWidth().testTag("home_prayer_schedule")) {
                 val columns = if (LocalDensity.current.fontScale > 1.3f || maxWidth < 280.dp) 1 else 2
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(if (compactViewport) 6.dp else 8.dp)) {
                     Prayer.entries.chunked(columns).forEach { row ->
                         Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             row.forEach { p ->
@@ -156,7 +160,7 @@ private fun HomeContent() {
                                 }
                                 PrayerTile(p, clockLabel, p == current,
                                     p == next.first && times[p].toInstant() == next.second.toInstant(),
-                                    !times[p].isAfter(now), p in prayed, Modifier.weight(1f), onToggle = {
+                                    !times[p].isAfter(now), p in prayed, Modifier.weight(1f), compactViewport, onToggle = {
                                         Store.setPrayed(today, p, p !in prayed)
                                         com.zikrtime.app.widget.Widgets.updateAll(context)
                                     })
@@ -243,7 +247,7 @@ private fun HomeContent() {
 
 @Composable
 private fun PrayerTile(prayer: Prayer, time: String, isCurrent: Boolean, isNext: Boolean,
-    started: Boolean, done: Boolean, modifier: Modifier, onToggle: () -> Unit) {
+    started: Boolean, done: Boolean, modifier: Modifier, compactViewport: Boolean, onToggle: () -> Unit) {
     val scheme = MaterialTheme.colorScheme
     val shape = RoundedCornerShape(18.dp)
     val fill = when { isCurrent -> scheme.primaryContainer; else -> scheme.surfaceContainerLow }
@@ -257,21 +261,27 @@ private fun PrayerTile(prayer: Prayer, time: String, isCurrent: Boolean, isNext:
         shape = shape, color = fill,
         border = BorderStroke(if (isNext) 1.dp else .5.dp,
             if (isNext) scheme.secondary.copy(alpha = .75f) else scheme.outlineVariant.copy(alpha = .65f))) {
-        Row(Modifier.fillMaxWidth().heightIn(min = 82.dp).padding(start = 12.dp, end = 3.dp, top = 8.dp, bottom = 8.dp),
+        Row(Modifier.fillMaxWidth().heightIn(min = if (compactViewport) 64.dp else 82.dp)
+            .padding(start = if (compactViewport) 10.dp else 12.dp, end = 3.dp,
+                top = if (compactViewport) 4.dp else 8.dp, bottom = if (compactViewport) 4.dp else 8.dp),
             verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(2.dp)) {
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(5.dp)) {
                     Icon(painterResource(prayerIconRes(prayer)), null, tint = scheme.secondary,
                         modifier = Modifier.size(15.dp))
                     Text((if (isNext) "› " else "") + prayerName(prayer),
-                        style = MaterialTheme.typography.labelLarge, fontSize = 14.sp)
+                        style = MaterialTheme.typography.labelLarge, fontSize = 16.sp)
                 }
                 Text(time, style = MaterialTheme.typography.titleLarge.merge(Tabular),
-                    fontSize = 23.sp, fontWeight = FontWeight.Medium)
-                if (isCurrent) Text(status, style = MaterialTheme.typography.labelSmall, color = scheme.onSurfaceVariant)
+                    fontSize = if (compactViewport) 22.sp else 23.sp, fontWeight = FontWeight.Medium)
+                if (isCurrent && !compactViewport) Text(status, style = MaterialTheme.typography.labelSmall, color = scheme.onSurfaceVariant)
             }
-            if (prayer.isPrayer) CheckCircle(checked = done, enabled = started, onToggle = onToggle,
-                contentDescription = prayerName(prayer) + ": " + stringResource(R.string.home_mark_prayed))
+            if (prayer.isPrayer) Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                if (isCurrent && compactViewport) Text(status, style = MaterialTheme.typography.labelSmall,
+                    color = scheme.onSurfaceVariant, fontSize = 12.sp, lineHeight = 14.sp)
+                CheckCircle(checked = done, enabled = started, onToggle = onToggle,
+                    contentDescription = prayerName(prayer) + ": " + stringResource(R.string.home_mark_prayed))
+            }
             else Icon(painterResource(prayerIconRes(prayer)), null,
                 modifier = Modifier.padding(horizontal = 13.dp).size(22.dp), tint = scheme.secondary.copy(alpha = .65f))
         }

@@ -45,6 +45,7 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
     val scroll = rememberScrollState()
     val density = LocalDensity.current
     val large = density.fontScale > 1.3f
+    val compactViewport = LocalConfiguration.current.screenHeightDp < 720 && !large
     val dark = LocalDarkTheme.current
     val context = LocalContext.current
     val nav = LocalNav.current
@@ -63,7 +64,11 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
         val compactHeight = status + if (large) 112.dp else 76.dp
         // The next prayer stays above a complete six-time schedule. Only large-text
         // layouts grow naturally; the regular hero no longer consumes half the page.
-        val revealHeight = if (large) status + 330.dp else maxOf(maxHeight * .34f, status + 260.dp)
+        val revealHeight = when {
+            large -> status + 330.dp
+            compactViewport -> status + 220.dp
+            else -> maxOf(maxHeight * .34f, status + 260.dp)
+        }
         var measuredHero by remember { mutableIntStateOf(0) }
         val collapsePx = (if (measuredHero > 0) measuredHero - with(density) { compactHeight.toPx() }
             else with(density) { (revealHeight - compactHeight).toPx() }).coerceAtLeast(1f)
@@ -87,7 +92,7 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
                     // Image overfill keeps the frame covered throughout its small parallax travel.
                     scaleX = 1.08f; scaleY = 1.08f
                     translationY = if (motion) -scroll.value.coerceAtMost(collapsePx.toInt()) * .055f else 0f
-                }, contentScale = ContentScale.Crop, alignment = BiasAlignment(0f, .6f))
+                }, contentScale = ContentScale.Crop, alignment = BiasAlignment(0f, if (compactViewport) .35f else .6f))
             }
             Box(Modifier.matchParentSize().drawBehind {
                 val p = (scroll.value / collapsePx).coerceIn(0f, 1f)
@@ -119,6 +124,25 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
                         style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
                     ThemeQuickButton(compact = true, onLandscape = true)
                 }
+                if (compactViewport) Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    val city = Cities.displayName(context, Store.location)
+                    val changeCity = clarityCopy(UiClarity0825.ChangeCity)
+                    TextButton(onClick = { nav.open(Screen.CITY) },
+                        modifier = Modifier.widthIn(max = 108.dp).testTag("home_change_city")
+                            .semantics { contentDescription = "$city. $changeCity" },
+                        contentPadding = PaddingValues(end = 2.dp)) {
+                        Icon(painterResource(R.drawable.ic_pin), null, tint = Sand, modifier = Modifier.size(18.dp))
+                        Spacer(Modifier.width(6.dp))
+                        Text(city, color = Porcelain, style = MaterialTheme.typography.labelLarge, fontSize = 16.sp)
+                    }
+                    Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                        Text(gregorianDate(now.toLocalDate()), color = Porcelain,
+                            style = MaterialTheme.typography.labelMedium)
+                        Text(hijriDate(now.toLocalDate()), color = Porcelain.copy(alpha = .92f),
+                            style = MaterialTheme.typography.labelMedium)
+                    }
+                } else {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     TextButton(onClick = { nav.open(Screen.CITY) },
                         modifier = Modifier.testTag("home_change_city"),
@@ -137,7 +161,8 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
                     style = MaterialTheme.typography.labelMedium)
                 Text(hijriDate(now.toLocalDate()), color = Porcelain.copy(alpha = .92f),
                     style = MaterialTheme.typography.labelMedium)
-                Spacer(Modifier.height(12.dp))
+                }
+                Spacer(Modifier.height(if (compactViewport) 8.dp else 12.dp))
                 Surface(Modifier.fillMaxWidth().testTag("home_next_prayer_card"), shape = RoundedCornerShape(22.dp),
                     color = Color(0xEB14372C), border = BorderStroke(.7.dp, Sand.copy(alpha = .48f))) {
                     Column(Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
@@ -164,15 +189,19 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
                             modifier = Modifier.testTag("home_countdown"))
                     }
                 }
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(if (compactViewport) 12.dp else 16.dp))
             }
             Column(Modifier.fillMaxWidth().testTag("horizon_panel").semantics { testTagsAsResourceId = true }
                 .clip(RoundedCornerShape(topStart = 34.dp, topEnd = 34.dp))
                 .background(Brush.verticalGradient(listOf(scheme.surfaceContainerLow, scheme.background),
                     endY = with(density) { 560.dp.toPx() }))
                 .padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(18.dp)) {
-                Spacer(Modifier.height(0.dp))
+                // Padding the content instead of a zero-height spacer avoids an
+                // extra full section gap above the first schedule on short phones.
+                Column(Modifier.padding(top = if (compactViewport) 8.dp else 18.dp),
+                    verticalArrangement = Arrangement.spacedBy(18.dp)) {
                 content()
+                }
                 Spacer(Modifier.height(if (large) 140.dp else 96.dp))
                 Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
             }
