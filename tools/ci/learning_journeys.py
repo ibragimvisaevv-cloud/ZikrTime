@@ -291,6 +291,63 @@ def isolated_offline_check():
     return result
 
 
+def require_ayah_reachable(tag, toward_top=False):
+    """Reveal a control inside the existing sheet without overscrolling its top.
+
+    The generic locator can reverse a long swipe at a scroll boundary, which
+    dismisses ModalBottomSheet through nested scrolling. Use short, slow moves
+    inside this sheet only, and fail immediately if the sheet disappears.
+    """
+    previous_geometry = None
+    for attempt in range(48):
+        root = ui()
+        sheet = find_control(root, "quran_ayah_sheet")
+        assert sheet is not None, (tag, "Ayah sheet disappeared while locating a control")
+        node = find_control(sheet, tag)
+        raw = bounds(node) if node is not None else None
+        if node is not None and visible_bounds(root, node) == raw:
+            # Retain the original full-visibility and minimum touch-target
+            # assertions. The generic helper no longer needs any scrolling.
+            return require_reachable(tag)
+        parents = {child: parent for parent in sheet.iter() for child in parent}
+        owner = parents.get(node) if node is not None else sheet
+        while owner is not None and owner.get("scrollable") != "true":
+            owner = parents.get(owner)
+        assert owner is not None, (tag, "Missing sheet scroll container")
+        left, top, right, bottom = visible_bounds(root, owner)
+        assert bottom - top >= 96, (tag, "Sheet viewport is too small to scroll")
+        direction = -1 if toward_top else 1
+        distance = 24 * DENSITY / 160
+        if raw is not None:
+            if raw[1] < top:
+                direction, distance = -1, top - raw[1]
+            elif raw[3] > bottom:
+                direction, distance = 1, raw[3] - bottom
+            else:
+                raise AssertionError((tag, "Control is clipped horizontally", raw,
+                                      visible_bounds(root, node)))
+        geometry = (raw, tuple((n.get("resource-id"), n.get("bounds"))
+                               for n in owner.iter("node") if n.get("resource-id")))
+        assert geometry != previous_geometry, (tag, "Sheet scroll made no progress")
+        previous_geometry = geometry
+        # Cap travel and avoid fling velocity. When the target has bounds, move
+        # only the remaining distance instead of swiping past the content edge.
+        # Account for touch slop when only a few pixels are clipped; a sub-slop
+        # gesture is a touch rather than a scroll. Travel remains capped at 24dp.
+        distance = max(1, min(int(distance + 8 * DENSITY / 160),
+                              int(24 * DENSITY / 160), (bottom - top) // 5))
+        middle = (top + bottom) // 2
+        x = left + min(24, (right - left) // 4)
+        end = middle - direction * distance
+        with (OUT / "learning-sheet-scroll.jsonl").open("a") as handle:
+            handle.write(json.dumps({"tag": tag, "attempt": attempt, "target": raw,
+                                     "viewport": [left, top, right, bottom],
+                                     "swipe": [x, middle, x, end]}) + "\n")
+        shell("input", "swipe", x, middle, x, end, 500)
+        time.sleep(.25)
+    raise AssertionError("Control not reachable within ayah sheet: " + tag)
+
+
 def accessible_ayah_controls():
     shell("wm", "size", "960x1920")
     shell("settings", "put", "system", "font_scale", "1.5")
@@ -302,13 +359,13 @@ def accessible_ayah_controls():
     tap_control("quran_audio_reader_entry")
     observe("quran_ayah_sheet")
     for tag in ("ayah_play_pause", "ayah_repeat_10", "ayah_repeat_0", "ayah_speed_150", "ayah_continue"):
-        require_reachable(tag)
+        require_ayah_reachable(tag, toward_top=tag == "ayah_play_pause")
     capture("learning-ayah-large-light")
     shell("wm", "size", "1920x1080")
     time.sleep(.7)
     observe("quran_ayah_sheet")
     for tag in ("ayah_play_pause", "ayah_repeat_3", "ayah_speed_75", "ayah_close"):
-        require_reachable(tag)
+        require_ayah_reachable(tag, toward_top=tag in {"ayah_play_pause", "ayah_close"})
     assert not probe()["player"]["playWhenReady"], "Rotation started ayah playback"
     capture("learning-ayah-landscape-large")
     return {"fontScale": 1.5, "widthDp": 320, "lightTheme": True,
@@ -421,7 +478,7 @@ if __name__ == "__main__":
     OUT.mkdir(exist_ok=True)
     (OUT / "screens").mkdir(exist_ok=True)
     mode = sys.argv[1] if len(sys.argv) > 1 else "all"
-    assert mode in {"all", "audio", "offline", "guide"}, mode
+    assert mode in {"all", "audio", "offline", "guide", "remaining"}, mode
     report = {"profile": "isolated_debug_emulator", "productionWrites": False,
               "previousSuitesRerun": False, "mode": mode, "groups": {}}
     try:
@@ -433,11 +490,16 @@ if __name__ == "__main__":
         actions = {}
         if mode in {"all", "audio"}:
             actions.update({"ayah_repeats_speed_background": learning_audio,
-                            "offline_ayah_saved_marks": offline_ayah_and_saved_marks,
-                            "accessible_ayah_controls": accessible_ayah_controls})
+                            "offline_ayah_saved_marks": offline_ayah_and_saved_marks})
+        if mode == "remaining":
+            # Layout and guide checks need no downloaded or playing audio. Seed
+            # their own disposable profile instead of rerunning passed media tests.
+            seed("light", onboarded=True, dismissed=True)
+        if mode in {"all", "audio", "remaining"}:
+            actions["accessible_ayah_controls"] = accessible_ayah_controls
         if mode == "offline":
             actions["offline_download_without_temporary_cache"] = isolated_offline_check
-        if mode in {"all", "guide"}:
+        if mode in {"all", "guide", "remaining"}:
             actions["illustrated_guide"] = illustrated_guide
         for ACTIVE_GROUP, action in actions.items():
             print("Learning check:", ACTIVE_GROUP, flush=True)

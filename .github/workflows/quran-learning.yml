@@ -21,6 +21,7 @@ jobs:
     timeout-minutes: 45
     env:
       REUSE_RUN: ${{ inputs.reuse_run || '' }}
+      LEARNING_MODE: all
     steps:
       - uses: actions/checkout@v4
         with:
@@ -38,6 +39,9 @@ jobs:
               assert run, 'An audio recheck must name its verified build: reuse=RUN_ID'
           with open(os.environ['GITHUB_ENV'], 'a') as out:
               out.write('REUSE_RUN=' + run + '\n')
+              if '[quran-learning-recheck]' in message and 'mode=remaining' in message:
+                  assert run == '42474183725', 'Remaining checks require the audited final build'
+                  out.write('LEARNING_MODE=remaining\n')
           PY
       - uses: actions/setup-java@v4
         with:
@@ -81,6 +85,15 @@ jobs:
         run: |
           gh run download "$REUSE_RUN" --repo "$GITHUB_REPOSITORY" -n learning-verified-inputs -D .
           python3 tools/ci/learning_delivery.py --reuse
+      - name: Preserve passed audio checks on the identical APK
+        if: env.LEARNING_MODE == 'remaining'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p ci-inherited
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/13615411512" > ci-inherited/artifact.json
+          gh run download 42474183725 --repo "$GITHUB_REPOSITORY" -n ZikrTime-0.8.28-learning-check -D ci-inherited
+          python3 tools/ci/learning_inherit.py
       - uses: actions/upload-artifact@v4
         with:
           name: learning-verified-inputs
@@ -92,6 +105,7 @@ jobs:
             ci-out/release-signature.txt
             app/build/test-results/
       - name: Check real Alafasy source before playback
+        if: env.LEARNING_MODE != 'remaining'
         run: python3 tools/ci/audio_source_check.py
       - run: python3 -m pip install 'Pillow>=11,<13'
       - name: Enable emulator acceleration
@@ -108,7 +122,7 @@ jobs:
           arch: x86_64
           disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -camera-back none -camera-front none
-          script: bash tools/ci/learning_smoke.sh
+          script: bash tools/ci/learning_smoke.sh "$LEARNING_MODE"
       - name: Summarize audio validation
         if: always()
         run: |
@@ -116,7 +130,7 @@ jobs:
           import json
           from pathlib import Path
           import xml.etree.ElementTree as ET
-          for name in ('release-delivery.json', 'recheck.json', 'learning-passed.json',
+          for name in ('release-delivery.json', 'recheck.json', 'inherited-learning.json', 'learning-passed.json',
                        'learning-failure.txt', 'crashes.txt', 'audio-app-locale.txt'):
               path = Path('ci-out') / name
               if path.exists():
