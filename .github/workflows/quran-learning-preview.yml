@@ -1,4 +1,4 @@
-name: Quran learning screenshot capture 0.8.28
+name: Quran learning preview and audio verification 0.8.28
 on:
   push:
     branches: [codex/quran-reader-0814]
@@ -6,26 +6,32 @@ permissions:
   contents: read
   actions: read
 concurrency:
-  group: learning-preview-${{ contains(github.event.head_commit.message, '[quran-learning-preview]') && github.ref || github.run_id }}
+  group: learning-preview-${{ (contains(github.event.head_commit.message, '[quran-learning-preview]') || contains(github.event.head_commit.message, '[quran-audio-qa-0828]')) && github.ref || github.run_id }}
   cancel-in-progress: true
 jobs:
   capture:
-    if: ${{ contains(github.event.head_commit.message, '[quran-learning-preview]') }}
+    if: ${{ contains(github.event.head_commit.message, '[quran-learning-preview]') || contains(github.event.head_commit.message, '[quran-audio-qa-0828]') }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Resolve optional capture-only recheck
+      - name: Resolve capture or existing-APK audio verification
         run: |
           python3 - <<'PY'
           import json, os, re
           from pathlib import Path
           message = json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text())['head_commit']['message']
-          match = re.search(r'\[quran-learning-preview\]\s+reuse=(\d+)', message)
+          audio = '[quran-audio-qa-0828]' in message
+          capture = '[quran-learning-preview]' in message
+          assert audio != capture, 'Select exactly one preview or audio verification marker'
+          marker = '[quran-audio-qa-0828]' if audio else '[quran-learning-preview]'
+          match = re.search(re.escape(marker) + r'\s+reuse=(\d+)', message)
+          assert not audio or match, 'Audio verification must reuse an existing checked APK'
           with open(os.environ['GITHUB_ENV'], 'a') as out:
               out.write('REUSE_RUN=' + (match.group(1) if match else '') + '\n')
+              out.write('LEARNING_PREVIEW_MODE=' + ('audio' if audio else 'capture') + '\n')
           PY
       - uses: actions/setup-java@v4
         with:
@@ -49,19 +55,30 @@ jobs:
               'source_sha': os.environ['GITHUB_SHA'], 'source_run': os.environ['GITHUB_RUN_ID'],
               'debug_sha256': hashlib.sha256(apk.read_bytes()).hexdigest()}))
           PY
-      - name: Reuse identical app for screenshot script correction
+      - name: Reuse identical app after checking source and APK hash
         if: env.REUSE_RUN != ''
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh run download "$REUSE_RUN" --repo "$GITHUB_REPOSITORY" -n learning-preview-inputs -D .
           python3 - <<'PY'
-          import hashlib, json, subprocess
+          import hashlib, json, os, re, subprocess
           from pathlib import Path
           data = json.loads(Path('ci-out/preview-source.json').read_text())
+          assert re.fullmatch(r'[0-9a-f]{40}', data['source_sha'])
+          assert str(data['source_run']).isdecimal()
+          assert re.fullmatch(r'[0-9a-f]{64}', data['debug_sha256'])
           subprocess.run(['git','diff','--exit-code',data['source_sha'],'HEAD','--','app',
               'gradle','gradlew','gradlew.bat','build.gradle.kts','settings.gradle.kts','gradle.properties'], check=True)
           assert hashlib.sha256(Path('app/build/outputs/apk/debug/app-debug.apk').read_bytes()).hexdigest() == data['debug_sha256']
+          if os.environ['LEARNING_PREVIEW_MODE'] == 'audio':
+              Path('ci-out/audio-qa-reuse.json').write_text(json.dumps({
+                  'apk_source_sha': data['source_sha'], 'apk_source_run': data['source_run'],
+                  'downloaded_from_run': os.environ['REUSE_RUN'],
+                  'verification_sha': os.environ['GITHUB_SHA'], 'verification_run': os.environ['GITHUB_RUN_ID'],
+                  'debug_sha256': data['debug_sha256'], 'unchanged_android_inputs': True,
+                  'apk_hash_verified': True, 'mode': 'audio_only',
+              }, indent=2))
           PY
       - uses: actions/upload-artifact@v4
         with:
@@ -86,7 +103,7 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-guide.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      - name: Capture updated Quran screens on Android 15
+      - name: Capture screens or verify ayah audio on Android 15
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 35
@@ -94,9 +111,9 @@ jobs:
           arch: x86_64
           disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -camera-back none -camera-front none
-          script: adb install -r app/build/outputs/apk/debug/app-debug.apk && python3 tools/ci/guide_capture_0828.py quran
+          script: ${{ env.LEARNING_PREVIEW_MODE == 'audio' && 'bash tools/ci/learning_smoke.sh audio' || 'adb install -r app/build/outputs/apk/debug/app-debug.apk && python3 tools/ci/guide_capture_0828.py quran' }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: learning-preview-screens
+          name: ${{ env.LEARNING_PREVIEW_MODE == 'audio' && 'learning-audio-qa-0828' || 'learning-preview-screens' }}
           path: ci-out/

@@ -114,6 +114,11 @@ def learning_audio():
     assert abs(restored_loop["positionMs"] - paused_loop["positionMs"]) < 1500
     assert not restored_loop["playWhenReady"], "Restoring a repeat cycle started sound"
     tap_control("ayah_repeat_1")
+    # Ayah 114:2 is only 5.239s at normal speed. At the previous 1.5x,
+    # Android's accessibility snapshot could outlast it before the real Pause
+    # tap. Slow this explicit-next check so it observes and pauses that verse,
+    # rather than accidentally testing a later auto-advanced selection.
+    tap_control("ayah_speed_50")
     tap_control("ayah_continue")
     assert not probe()["player"]["playWhenReady"], "Continue toggle resumed paused sound"
     tap_control("ayah_play_pause")
@@ -153,7 +158,7 @@ def learning_audio():
     return {"firstClip": clip, "secondClip": second_clip, "threeRealRepeatsFinish": True,
             "replayRestartsRepeatCycle": True,
             "repeatCounterSpeedAndPositionRestorePaused": True,
-            "infiniteRepeatAndPause": True, "speeds": [.75, 1.5, 1.0],
+            "infiniteRepeatAndPause": True, "speeds": [.75, 1.5, .5, 1.0],
             "explicitContinueNextAyah": True, "backgroundMediaControls": True,
             "adhanPausesWithoutResume": True, "restorationDoesNotAutoplay": True,
             "prayerAndBlockingSettingsUnchanged": True}
