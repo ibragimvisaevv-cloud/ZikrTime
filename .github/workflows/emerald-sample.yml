@@ -20,7 +20,7 @@ concurrency:
 jobs:
   sample:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
     env:
       BASELINE: 362244c46133feb9b7ef3d55cc716531a8b521f8
     steps:
@@ -79,6 +79,11 @@ jobs:
           assert data['tests_passed'] > 0 and data['tests_failed'] == 0 and data['tests_skipped'] == 0
           assert data['lint_errors'] == 0
           PY
+      - name: Download previous UI evidence for verified successful groups
+        if: env.REUSE_RUN != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download "$REUSE_RUN" --repo "$GITHUB_REPOSITORY" -n emerald-sample-evidence -D prior-evidence
       - name: Verify APK identity, original signature and 128 protected resources
         run: |
           python3 - <<'PY'

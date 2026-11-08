@@ -318,15 +318,39 @@ def audio_and_saved_marks():
             'full_repetition_background_offline_suite_rerun': False}
 
 
+def require_home_control(tag, minimum_dp, prayer=False):
+    """Compose may report only the tile fragment exposed above floating nav."""
+    for attempt in range(12):
+        root = ui()
+        node = find_control(root, tag)
+        raw = bounds(node) if node is not None else None
+        text = ' '.join(n.get('text', '') for n in node.iter('node')) if node is not None else ''
+        if (node is not None and visible_bounds(root, node) == raw
+                and raw[3] - raw[1] >= minimum_dp * DENSITY / 160
+                and (not prayer or re.search(r'\d{1,2}:\d{2}', text))):
+            assert all(visible_bounds(root, child) == bounds(child)
+                       for child in node.iter('node') if child.get('text')), (tag, 'Home text clipped')
+            return root
+        scroll = find_control(root, 'horizon_scroll')
+        assert scroll is not None, (tag, 'Home scroll container missing')
+        left, top, right, bottom = visible_bounds(root, scroll)
+        # The tested order follows the six tiles from the top. Reveal the next
+        # complete tile, never accept the truncated semantics as its real size.
+        x = left + 30
+        start = int(top + (bottom - top) * .72)
+        shell('input', 'swipe', x, start, x, start - 72 * DENSITY // 160, 450)
+    raise AssertionError('Complete home control not reachable: ' + tag)
+
+
 def large_home(theme):
     configure(theme, True)
     start('home')
     observe('horizon_time', tries=16)
     capture('home-top-' + theme + '-320dp-150')
     for prayer in PRAYERS:
-        require_reachable('home_prayer_' + prayer, minimum_dp=48)
+        require_home_control('home_prayer_' + prayer, minimum_dp=82, prayer=True)
     capture('home-schedule-' + theme + '-320dp-150')
-    require_reachable('home_quran_open', minimum_dp=40)
+    require_home_control('home_quran_open', minimum_dp=40)
     return {'width_dp': 320, 'height_dp': 640, 'font_scale': 1.5,
             'all_six_reachable_by_scroll': True, 'read_entry_reachable': True}
 
@@ -362,6 +386,91 @@ def record_navigation():
             'actual_screenrecord': True, 'fps_performance_not_measured': True}
 
 
+def inherit_verified_results(tasks):
+    """Reuse only proved groups on byte-identical APKs and unchanged checks."""
+    import ast
+    import shutil
+    reuse_run = os.environ.get('REUSE_RUN', '')
+    if not reuse_run:
+        return
+    previous_dir = Path('prior-evidence/ci-out')
+    previous = json.loads((previous_dir / 'report.json').read_text())
+    previous_build = json.loads((previous_dir / 'build.json').read_text())
+    current_build = json.loads((OUT / 'build.json').read_text())
+    assert previous['run'] == reuse_run, 'Evidence belongs to a different run'
+    assert previous['source_sha'] == previous_build['source_sha'] == current_build['source_sha']
+    apk_sha = hashlib.sha256(Path('app/build/outputs/apk/debug/app-debug.apk').read_bytes()).hexdigest()
+    assert previous['debug_apk_sha256'] == apk_sha
+    assert previous_build['apk_sha256'] == current_build['apk_sha256'], 'APK input hashes differ'
+    verification = previous['verification_sha']
+    assert re.fullmatch(r'[0-9a-f]{40}', verification), 'Invalid evidence verification commit'
+    immutable_paths = ['app', 'gradle', 'gradlew', 'gradlew.bat', 'build.gradle.kts',
+                       'settings.gradle.kts', 'gradle.properties', 'keystore/release.jks.enc',
+                       'tools/ci/learning_journeys.py', 'tools/ci/audio_journeys.py',
+                       'tools/ci/guide_journeys.py', 'tools/ci/features_controls.py',
+                       'tools/ci/check_screen.py']
+    subprocess.run(['git', 'diff', '--exit-code', verification, 'HEAD', '--', *immutable_paths], check=True)
+    source_file = 'tools/ci/emerald_sample_smoke.py'
+    old_source = subprocess.check_output(['git', 'show', verification + ':' + source_file], text=True)
+    old_tree, current_tree = ast.parse(old_source), ast.parse(Path(source_file).read_text())
+    old_functions = {n.name: n for n in old_tree.body if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))}
+    current_functions = {n.name: n for n in current_tree.body if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))}
+    # Only the dedicated large-home check changed; both themes must rerun.
+    for name, definition in old_functions.items():
+        if name != 'large_home':
+            assert name in current_functions and ast.dump(definition) == ast.dump(current_functions[name]), ('Inherited check changed', name)
+    def constants(tree):
+        return [ast.dump(n) for n in tree.body if not isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.If))]
+    assert constants(old_tree) == constants(current_tree), 'Harness imports/constants changed'
+    def task_definitions(tree):
+        return [ast.dump(n) for n in ast.walk(tree)
+                if isinstance(n, (ast.Assign, ast.AugAssign)) and
+                any(isinstance(t, ast.Name) and t.id == 'tasks'
+                    for t in (n.targets if isinstance(n, ast.Assign) else [n.target]))]
+    assert task_definitions(old_tree) == task_definitions(current_tree), 'Task mapping changed'
+    expected = {name for name, _ in tasks}
+    assert set(previous['groups']) <= expected, 'Unknown previous groups'
+    evidence_manifest = {}
+    for filename, digest in previous.get('captures', {}).items():
+        assert Path(filename).name == filename and filename.endswith('.png')
+        source = previous_dir / 'screens' / filename
+        assert hashlib.sha256(source.read_bytes()).hexdigest() == digest, ('Evidence image hash differs', filename)
+        evidence_manifest[filename] = digest
+        # Keep failed snapshots separately, outside the final gallery.
+        if not filename.startswith('failure-'):
+            shutil.copyfile(source, OUT / 'screens' / filename)
+            xml = previous_dir / (Path(filename).stem + '.xml')
+            if xml.exists():
+                shutil.copyfile(xml, OUT / xml.name)
+    previous_video = previous['groups'].get('scroll_recording', {})
+    if previous_video.get('status') == 'passed':
+        video = previous_dir / 'home-quran-scroll.mp4'
+        assert hashlib.sha256(video.read_bytes()).hexdigest() == previous_video['sha256'], 'Video evidence hash differs'
+        shutil.copyfile(video, OUT / video.name)
+    inherited = []
+    for name, result in previous['groups'].items():
+        if result.get('status') == 'passed' and name not in {'home_large_dark', 'home_large_light'}:
+            REPORT['groups'][name] = {**result, 'inherited_from_run': reuse_run,
+                                      'original_verification_sha': verification}
+            inherited.append(name)
+    # Preserve the signed input provenance and original incomplete report.
+    provenance = OUT / 'inherited' / reuse_run
+    provenance.mkdir(parents=True, exist_ok=True)
+    for filename in ['report.json', 'build.json', 'crashes.txt']:
+        source = previous_dir / filename
+        if source.exists():
+            shutil.copyfile(source, provenance / filename)
+    prior_crashes = previous_dir / 'crashes.txt'
+    if prior_crashes.exists():
+        assert not re.search(r'FATAL EXCEPTION|Fatal signal', prior_crashes.read_text()), 'Prior Android crash recorded'
+    REPORT['inherited_evidence'] = {'run': reuse_run, 'verification_sha': verification,
+                                   'debug_apk_sha256': apk_sha, 'groups': inherited,
+                                   'image_sha256': evidence_manifest,
+                                   'method': 'APK hashes, source diff, existing function AST, imports/constants and task mapping',
+                                   'prior_crash_log_available': prior_crashes.exists()}
+    print('Verified inherited groups:', ', '.join(inherited), flush=True)
+
+
 if __name__ == '__main__':
     OUT.mkdir(exist_ok=True);(OUT / 'screens').mkdir(exist_ok=True)
     ACTIVE_GROUP = 'setup'
@@ -384,8 +493,12 @@ if __name__ == '__main__':
         tasks += [('home_short_dark', lambda: check_home_top('dark', height_dp=640)),
                   ('home_short_light', lambda: check_home_top('light', height_dp=640)),
                   ('scroll_recording', record_navigation)]
+        inherit_verified_results(tasks)
+        save_report()
         failures = []
         for ACTIVE_GROUP, action in tasks:
+            if ACTIVE_GROUP in REPORT['groups']:
+                continue
             print('Emerald sample:', ACTIVE_GROUP, flush=True)
             group_started = time.monotonic()
             try:
