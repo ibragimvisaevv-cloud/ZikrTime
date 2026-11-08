@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -38,12 +37,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -55,15 +52,10 @@ import com.zikrtime.app.quiz.QuestionBank
 import com.zikrtime.app.quiz.LearningStore
 import com.zikrtime.app.ui.GhostButton
 import com.zikrtime.app.ui.QuizRound
-import com.zikrtime.app.ui.StarPattern
 import com.zikrtime.app.ui.clock
 import com.zikrtime.app.ui.durationText
 import com.zikrtime.app.ui.prayerIconRes
 import com.zikrtime.app.ui.prayerName
-import com.zikrtime.app.ui.theme.Cream
-import com.zikrtime.app.ui.theme.Emerald
-import com.zikrtime.app.ui.theme.EmeraldDeep
-import com.zikrtime.app.ui.theme.Gold
 import com.zikrtime.app.ui.theme.Tabular
 import com.zikrtime.app.ui.theme.ZikrTheme
 import kotlinx.coroutines.delay
@@ -84,7 +76,7 @@ class BlockActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Store.init(this)
-        // Фон тёмно-зелёный, поэтому значки строки состояния всегда светлые.
+        // Interruption screens use the calm dark surface and light system icons.
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.dark(android.graphics.Color.TRANSPARENT),
             navigationBarStyle = SystemBarStyle.dark(android.graphics.Color.TRANSPARENT),
@@ -96,7 +88,11 @@ class BlockActivity : ComponentActivity() {
         })
         setContent {
             ZikrTheme {
-                BlockScreen(reason = reason, onClose = { closeToHome() }, onBackToApp = { finish() })
+                androidx.compose.runtime.CompositionLocalProvider(com.zikrtime.app.ui.theme.LocalDarkTheme provides true) {
+                    MaterialTheme(colorScheme = com.zikrtime.app.ui.theme.DarkColors) {
+                        BlockScreen(reason = reason, onClose = { closeToHome() }, onBackToApp = { finish() })
+                    }
+                }
             }
         }
     }
@@ -184,7 +180,7 @@ private fun BlockScreen(reason: BlockReason, onClose: () -> Unit, onBackToApp: (
     val sessionKey = "${LearningStore.selectedLevel?.id}-${session?.id}-${session?.index}"
     LaunchedEffect(mode, sessionKey) { scroll.scrollTo(0) }
 
-    Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Emerald, EmeraldDeep)))) {
+    Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         com.zikrtime.app.ui.SceneBackdrop(Modifier.fillMaxSize(), night = true)
         Column(
             Modifier
@@ -196,8 +192,8 @@ private fun BlockScreen(reason: BlockReason, onClose: () -> Unit, onBackToApp: (
         ) {
             when (val m = mode) {
                 BlockMode.Quiz -> {
-                    Text(stringResource(R.string.block_quiz_title), style = MaterialTheme.typography.headlineSmall, color = Cream)
-                    Surface(shape = RoundedCornerShape(28.dp), color = MaterialTheme.colorScheme.surface) {
+                    Text(stringResource(R.string.block_quiz_title), style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.onSurface)
+                    Surface(shape = MaterialTheme.shapes.large, color = MaterialTheme.colorScheme.surface) {
                         QuizRound(
                             bank = remember { QuestionBank.load(context) },
                             category = null,
@@ -208,11 +204,11 @@ private fun BlockScreen(reason: BlockReason, onClose: () -> Unit, onBackToApp: (
                             modifier = Modifier.padding(20.dp),
                         )
                     }
-                    GhostButton(stringResource(R.string.action_close), onClick = onClose, color = Cream)
+                    GhostButton(stringResource(R.string.action_close), onClick = onClose, color = MaterialTheme.colorScheme.onSurface)
                 }
 
                 is BlockMode.Earned -> {
-                    Spacer(Modifier.height(48.dp))
+                    Spacer(Modifier.height(24.dp))
                     Title(stringResource(R.string.learning_complete))
                     Body(
                         if (m.minutes > 0) stringResource(R.string.block_earned, m.minutes)
@@ -230,7 +226,7 @@ private fun BlockScreen(reason: BlockReason, onClose: () -> Unit, onBackToApp: (
                     }, onClose = onClose)
                     is BlockReason.PrayerTime -> PrayerInfo(reason, onClose = onClose)
                     BlockReason.None -> {
-                        Spacer(Modifier.height(48.dp))
+                        Spacer(Modifier.height(24.dp))
                         Title(stringResource(R.string.app_name))
                         GoldButton(stringResource(R.string.action_close), onClose)
                     }
@@ -242,18 +238,18 @@ private fun BlockScreen(reason: BlockReason, onClose: () -> Unit, onBackToApp: (
 
 @Composable
 private fun LimitInfo(reason: BlockReason.LimitReached, onQuiz: () -> Unit, onClose: () -> Unit) {
-    Spacer(Modifier.height(48.dp))
-    Icon(painterResource(R.drawable.ic_nav_focus), contentDescription = null, tint = Gold, modifier = Modifier.size(48.dp))
+    Spacer(Modifier.height(24.dp))
+    Icon(painterResource(R.drawable.ic_nav_focus), contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(48.dp))
     Title(stringResource(R.string.block_limit_title))
     Body(stringResource(R.string.block_limit_text, durationText(reason.usedMinutes.toLong()), durationText(reason.allowedMinutes.toLong())))
-    Text(stringResource(R.string.slogan), style = MaterialTheme.typography.titleMedium, fontStyle = FontStyle.Italic, color = Gold)
+    Text(stringResource(R.string.slogan), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
     Spacer(Modifier.height(24.dp))
     if (Store.bonusMinutes() < Store.MAX_BONUS_MINUTES_PER_DAY) {
         GoldButton(stringResource(R.string.block_quiz_button, Store.CORRECT_ANSWERS_PER_ROUND, Store.BONUS_MINUTES_PER_ROUND), onQuiz)
     } else {
         Body(stringResource(R.string.block_bonus_used, Store.MAX_BONUS_MINUTES_PER_DAY))
     }
-    GhostButton(stringResource(R.string.action_close), onClick = onClose, color = Cream)
+    GhostButton(stringResource(R.string.action_close), onClick = onClose, color = MaterialTheme.colorScheme.onSurface)
 }
 
 @Composable
@@ -267,10 +263,10 @@ private fun PrayerInfo(reason: BlockReason.PrayerTime, onClose: () -> Unit) {
     }
     val left = Duration.between(now, reason.endsAt)
 
-    Spacer(Modifier.height(48.dp))
-    Icon(painterResource(prayerIconRes(reason.prayer)), contentDescription = null, tint = Gold, modifier = Modifier.size(48.dp))
-    Text(stringResource(R.string.block_prayer_label), style = MaterialTheme.typography.titleMedium, color = Gold)
-    Text(prayerName(reason.prayer), fontSize = 48.sp, color = Cream, style = MaterialTheme.typography.displaySmall)
+    Spacer(Modifier.height(24.dp))
+    Icon(painterResource(prayerIconRes(reason.prayer)), contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(48.dp))
+    Text(stringResource(R.string.block_prayer_label), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+    Text(prayerName(reason.prayer), fontSize = 38.sp, color = MaterialTheme.colorScheme.onSurface, style = MaterialTheme.typography.displaySmall)
     if (left.isNegative || left.isZero) {
         Body(stringResource(R.string.block_prayer_open))
         Spacer(Modifier.height(24.dp))
@@ -281,7 +277,7 @@ private fun PrayerInfo(reason: BlockReason.PrayerTime, onClose: () -> Unit) {
     Text(
         String.format(Lang.locale(LocalContext.current), "%d:%02d", left.toMinutes(), left.seconds % 60),
         fontSize = 44.sp,
-        color = Cream.copy(alpha = 0.85f),
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
         textAlign = TextAlign.Center,
         style = Tabular,
         modifier = Modifier.fillMaxWidth(),
@@ -292,25 +288,25 @@ private fun PrayerInfo(reason: BlockReason.PrayerTime, onClose: () -> Unit) {
         Store.dismissLock(reason.date, reason.prayer)
         onClose()
     }
-    GhostButton(stringResource(R.string.action_close), onClick = onClose, color = Cream)
+    GhostButton(stringResource(R.string.action_close), onClick = onClose, color = MaterialTheme.colorScheme.onSurface)
 }
 
 @Composable
 private fun Title(text: String) {
-    Text(text, style = MaterialTheme.typography.headlineMedium, color = Cream)
+    Text(text, style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.onSurface)
 }
 
 @Composable
 private fun Body(text: String) {
-    Text(text, style = MaterialTheme.typography.bodyLarge, color = Cream.copy(alpha = 0.9f))
+    Text(text, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
 }
 
 @Composable
 private fun GoldButton(text: String, onClick: () -> Unit) {
     Button(
         onClick = onClick,
-        colors = ButtonDefaults.buttonColors(containerColor = Gold, contentColor = Color(0xFF2B1E00)),
-        shape = RoundedCornerShape(18.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary),
+        shape = MaterialTheme.shapes.medium,
         modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
     ) { Text(text, textAlign = TextAlign.Center) }
 }

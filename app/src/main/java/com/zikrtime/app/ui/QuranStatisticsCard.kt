@@ -1,12 +1,13 @@
 package com.zikrtime.app.ui
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -62,7 +63,7 @@ internal fun QuranStatisticsCard(book: QuranBook? = null, showTitle: Boolean = t
         if (showTitle) Text(stringResource(R.string.qf_statistics), style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.semantics { heading() })
         if (!Store.personalProgressEnabled) {
-            Surface(color = colors.surfaceVariant, shape = RoundedCornerShape(16.dp),
+            Surface(color = colors.surfaceVariant, shape = MaterialTheme.shapes.medium,
                 modifier = Modifier.fillMaxWidth().testTag("quran_stats_disabled")) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     Text(stringResource(R.string.qs_paused), style = MaterialTheme.typography.titleSmall)
@@ -92,7 +93,7 @@ internal fun QuranStatisticsCard(book: QuranBook? = null, showTitle: Boolean = t
                 Text(stringResource(R.string.qs_change_goal))
             }
         }
-        if (empty && Store.personalProgressEnabled) Surface(color = colors.secondaryContainer, shape = RoundedCornerShape(16.dp),
+        if (empty && Store.personalProgressEnabled) Surface(color = colors.secondaryContainer, shape = MaterialTheme.shapes.medium,
             modifier = Modifier.fillMaxWidth().testTag("quran_stats_empty")) {
             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 Text(stringResource(R.string.qs_empty_title), style = MaterialTheme.typography.titleSmall)
@@ -103,6 +104,7 @@ internal fun QuranStatisticsCard(book: QuranBook? = null, showTitle: Boolean = t
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 listOf(7, 30, 90).forEach { days ->
                     FilterChip(selected = period == days, onClick = { period = days },
+                        leadingIcon = if (period == days) { { Icon(Icons.Filled.Check, null, Modifier.size(18.dp)) } } else null,
                         label = { Text(daysText(days)) }, modifier = Modifier.testTag("quran_stats_period_$days"))
                 }
             }
@@ -163,25 +165,21 @@ internal fun QuranStatisticsCard(book: QuranBook? = null, showTitle: Boolean = t
 @Composable
 private fun QuranStatsSection(title: String, content: @Composable ColumnScope.() -> Unit) {
     val colors = MaterialTheme.colorScheme
-    Surface(shape = RoundedCornerShape(20.dp), color = colors.surface,
-        border = BorderStroke(1.dp, colors.outlineVariant), modifier = Modifier.fillMaxWidth()) {
-        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            Text(title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.semantics { heading() })
-            content()
-        }
+    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+        HorizontalDivider(color = colors.outlineVariant)
+        Text(title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold,
+            modifier = Modifier.semantics { heading() })
+        content()
     }
 }
 
 @Composable
 private fun QuranStatsMetric(value: String, label: String, tag: String, modifier: Modifier = Modifier) {
-    Surface(color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = .6f), shape = RoundedCornerShape(14.dp),
-        modifier = modifier.fillMaxWidth().testTag(tag).semantics(mergeDescendants = true) {}) {
-        Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-            Text(value, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onSurface)
-            Text(label, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        }
+    Column(modifier.fillMaxWidth().testTag(tag).semantics(mergeDescendants = true) {}
+        .padding(vertical = 8.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Text(value, style = MaterialTheme.typography.headlineSmall.copy(fontFeatureSettings = "tnum"),
+            fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onSurface)
+        Text(label, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 
@@ -247,7 +245,8 @@ private fun QuranStatsWeek(history: QuranReadingHistory, today: LocalDate) {
                             Text(day.format(shortDay), style = MaterialTheme.typography.labelSmall,
                                 textAlign = TextAlign.Center, color = if (day == today) colors.primary else colors.onSurfaceVariant)
                             Text(day.dayOfMonth.toString(), style = MaterialTheme.typography.labelSmall,
-                                color = colors.onSurfaceVariant)
+                                color = colors.onSurfaceVariant,
+                                fontWeight = if (day == today) FontWeight.Bold else FontWeight.Normal)
                         }
                     }
                 }
@@ -262,7 +261,7 @@ private fun QuranGoalDialog(goal: Int, onDismiss: () -> Unit, onSave: (Int) -> U
     var draft by rememberSaveable { mutableStateOf(goal.toString()) }
     val value = draft.toIntOrNull()
     val valid = value != null && value in 1..180
-    AlertDialog(onDismissRequest = onDismiss, shape = RoundedCornerShape(24.dp),
+    AlertDialog(onDismissRequest = onDismiss, shape = MaterialTheme.shapes.extraLarge,
         modifier = Modifier.semantics { testTagsAsResourceId = true },
         containerColor = MaterialTheme.colorScheme.surface,
         title = { Text(stringResource(R.string.qs_goal_title)) },

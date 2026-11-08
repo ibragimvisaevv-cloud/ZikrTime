@@ -20,14 +20,15 @@ fun SourceDetails(source: SourceInfo) {
     val context = LocalContext.current
     var linkError by remember(source) { mutableStateOf(false) }
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
         Text(stringResource(R.string.source_heading), style = MaterialTheme.typography.titleSmall)
-        original?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
-        translation?.let { Text(stringResource(R.string.source_translation, it), style = MaterialTheme.typography.bodySmall) }
+        original?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
+        translation?.let { Text(stringResource(R.string.source_translation, it), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
         source.safeWebUrl?.let { url ->
             TextButton(onClick = { linkError = runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url))) }.isFailure }) {
                 Text(stringResource(R.string.source_open_link))
             }
-            Text(stringResource(R.string.source_link_network), style = MaterialTheme.typography.bodyMedium)
+            Text(stringResource(R.string.source_link_network), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         if (linkError) Text(stringResource(R.string.source_link_failed), color = MaterialTheme.colorScheme.error)
     }

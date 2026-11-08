@@ -1,0 +1,624 @@
+"""Real Android UI evidence for Rhythm and Pause, on disposable emulator data.
+
+No qa_demo, invented statistics, injected quiz answers or production writes.
+Routes use existing debug navigation only; actions are performed through actual
+visible controls. Upgrade notes and counters are labelled test evidence and are
+cleared before the separate presentation screenshots are captured.
+"""
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import signal
+import subprocess
+import sys
+import time
+import traceback
+import xml.etree.ElementTree as ET
+
+SUPPORT = {'__name__': 'rhythm_support'}
+SOURCE = Path('tools/ci/learning_journeys.py')
+exec(compile(SOURCE.read_text(), str(SOURCE), 'exec'), SUPPORT)
+OUT = Path('ci-out')
+PKG = 'com.zikrtime.app'
+APK = Path('app/build/outputs/apk/debug/app-debug.apk')
+BASE_APK = OUT / 'baseline/ZikrTime-0.8.28-debug.apk'
+adb, shell, ui, prefs = (SUPPORT[n] for n in ('adb', 'shell', 'ui', 'prefs'))
+find = SUPPORT['find_control']
+bounds, visible_bounds = SUPPORT['bounds'], SUPPORT['visible_bounds']
+PROFILE = 'disposable_android15_debug_emulator'
+REPORT = {'profile': PROFILE, 'production_writes': False, 'qa_demo': False,
+          'fixture_values_are_user_data': False, 'groups': {}, 'screens': [],
+          'full_66_row_action_audit_complete': False,
+          'limits': ['Physical sensors and Samsung background alarms are not verified here.',
+                     'External messages, calls, reviews, payments and production mutations are not sent.',
+                     'A screen capture verifies rendering, not every action on that screen.']}
+ACTIVE = 'setup'
+LOCALE = 'ru'
+
+
+def persist():
+    (OUT / 'rhythm-ui.json').write_text(json.dumps(REPORT, ensure_ascii=False, indent=2) + '\n')
+
+
+def observe(tag, attribute='resource-id', attempts=10):
+    for _ in range(attempts):
+        root = ui()
+        if find(root, tag, attribute) is not None:
+            return root
+        time.sleep(.35)
+    raise AssertionError('Expected UI not reached: ' + tag)
+
+
+def locate(tag, attribute='resource-id'):
+    """Bounded local scrolling, with no invisible controls or stale coordinates."""
+    direction, previous = 1, None
+    for _ in range(9):
+        root = ui()
+        node = find(root, tag, attribute)
+        if node is not None:
+            l, t, r, b = visible_bounds(root, node)
+            if r - l >= 24 and b - t >= 30:
+                return root, node, (l, t, r, b)
+        owners = [(visible_bounds(root, n), n) for n in root.iter('node') if n.get('scrollable') == 'true']
+        owners = [(area, n) for area, n in owners if area[3] - area[1] > 150]
+        if not owners:
+            time.sleep(.3)
+            continue
+        area, owner = max(owners, key=lambda pair: pair[0][3] - pair[0][1])
+        signature = ET.tostring(owner)
+        if signature == previous:
+            direction *= -1
+        previous = signature
+        l, t, r, b = area
+        a, z = int(t + (b-t)*.78), int(t + (b-t)*.28)
+        if direction < 0:
+            a, z = z, a
+        shell('input', 'swipe', l+16, a, l+16, z, 300)
+    raise AssertionError('Visible control not found: ' + tag)
+
+
+def tap(tag, attribute='resource-id'):
+    root, node, (l, t, r, b) = locate(tag, attribute)
+    assert node.get('enabled', 'true') == 'true', 'Disabled action: ' + tag
+    (OUT / 'rhythm-last-action.xml').write_text(ET.tostring(root, encoding='unicode'))
+    with (OUT / 'rhythm-actions.jsonl').open('a') as stream:
+        stream.write(json.dumps({'group': ACTIVE, 'identifier': tag, 'attribute': attribute,
+                                 'point': [(l+r)//2, (t+b)//2]}) + '\n')
+    shell('input', 'tap', (l+r)//2, (t+b)//2)
+    time.sleep(.4)
+
+
+def back():
+    shell('input', 'keyevent', 'KEYCODE_BACK')
+    time.sleep(.4)
+
+
+def route(name):
+    shell('am', 'start', '-S', '-W', '-n', PKG + '/.MainActivity',
+          '--es', 'qa_screen', name, '--es', 'qa_lang', LOCALE,
+          '--ez', 'qa_tilt', 'false', '--ez', 'qa_parallax', 'false')
+    root = ui()
+    assert any(n.get('package') == PKG for n in root.iter('node')), ('App screen missing', name)
+    return root
+
+
+def shot(name, presentation=False):
+    root = ui()
+    SUPPORT['capture'](name, root)
+    file = OUT / 'screens' / (name + '.png')
+    REPORT['screens'].append({'name': name, 'sha256': hashlib.sha256(file.read_bytes()).hexdigest(),
+                             'xml': name + '.xml', 'group': ACTIVE, 'presentation': presentation,
+                             'real_app_render': True, 'locale': LOCALE})
+    persist()
+    return root
+
+
+def display(width=1080, height=2400, font=1.0):
+    shell('wm', 'density', '480')
+    shell('wm', 'size', f'{width}x{height}')
+    shell('settings', 'put', 'system', 'font_scale', str(font))
+
+
+def theme(value):
+    route('more')
+    tap('appearance_' + value)
+    assert prefs().get('appearance') == value, 'Appearance did not persist'
+    time.sleep(.4)
+
+
+def enter_text(tag, text, attribute='resource-id'):
+    tap(tag, attribute)
+    current = find(ui(), tag, attribute)
+    assert current is not None
+    shell('input', 'keyevent', 'KEYCODE_MOVE_END')
+    for _ in current.get('text', ''):
+        shell('input', 'keyevent', 'KEYCODE_DEL')
+    if text.isdecimal():
+        for digit in text:
+            shell('input', 'keyevent', 'KEYCODE_' + digit)
+    else:
+        shell('input', 'text', text.replace(' ', '%s'))
+    node = find(ui(), tag, attribute)
+    assert node is not None and node.get('text') == text, (tag, 'Input differs', node.attrib if node is not None else None)
+
+
+def first_run(capture_steps=False):
+    shell('pm', 'clear', PKG)
+    shell('cmd', 'uimode', 'night', 'yes')
+    shell('am', 'start', '-S', '-W', '-n', PKG + '/.MainActivity', '--es', 'qa_lang', 'ru')
+    observe('onboarding_step_0')
+    for step in range(5):
+        observe('onboarding_step_' + str(step))
+        if capture_steps:
+            shot('first-launch-' + str(step), presentation=True)
+        if step == 2:
+            tap('Москва', 'text')
+        else:
+            tap('onboarding_next')
+    observe('guide_screen')
+    if capture_steps:
+        shot('first-launch-guide', presentation=True)
+    tap('guide_skip')
+    observe('home_prayer_journal')
+    assert prefs().get('onboarded') == 'true'
+    assert prefs().get('city_id') == 'moscow'
+    assert prefs().get('guide_dismissed_v1') == 'true'
+    return {'map_ids': ['59', '60'], 'steps': 5, 'city_selected_through_ui': 'moscow',
+            'permission_prompts_skipped': True, 'guide_skipped_through_ui': True}
+
+
+def reader(surah=1):
+    route('quran')
+    observe('quran_index_list', attempts=20)
+    if surah != 1:
+        enter_text('quran_search', str(surah))
+        back()
+    tap('quran_surah_' + str(surah))
+    observe('quran_audio_reader_entry')
+    return ui()
+
+
+def presentation(palette):
+    display()
+    theme(palette)
+    route('home')
+    observe('home_change_city')
+    shot('home-' + palette, presentation=True)
+    reader()
+    shot('reader-' + palette, presentation=True)
+    route('more')
+    observe('appearance_' + palette)
+    shot('settings-' + palette, presentation=True)
+    return {'map_ids': ['02', '03', '06', '07', '21'], 'palette': palette,
+            'scope': 'Actual rendered home, reader and settings; captures do not assert all actions.'}
+
+
+def transition_recording():
+    route('home')
+    remote = '/sdcard/rhythm-transitions.mp4'
+    process = subprocess.Popen(['adb', 'shell', 'screenrecord', '--time-limit', '60', '--bit-rate', '4000000', remote],
+                               stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    try:
+        time.sleep(1)
+        tap('Знания', 'text')
+        tap('quran_open')
+        observe('quran_index_list', attempts=20)
+        tap('quran_surah_1')
+        tap('quran_audio_reader_entry')
+        observe('quran_ayah_sheet')
+        tap('ayah_close')
+        tap('quran_surahs')
+        observe('quran_index_list')
+        back()
+        tap('Настройки', 'text')
+        observe('settings_guide')
+    finally:
+        pids = subprocess.run(['adb', 'shell', 'pidof', 'screenrecord'],
+                              capture_output=True, text=True).stdout.strip().split() if process.poll() is None else []
+        if pids:
+            shell('kill', '-INT', *pids)
+        try:
+            stdout, stderr = process.communicate(timeout=12)
+        except subprocess.TimeoutExpired:
+            process.terminate()
+            stdout, stderr = process.communicate(timeout=5)
+        (OUT / 'rhythm-video-log.txt').write_bytes(stdout + b'\n' + stderr)
+        adb('pull', remote, OUT / 'rhythm-transitions.mp4')
+    assert (OUT / 'rhythm-transitions.mp4').stat().st_size > 10000
+    return {'map_ids': ['01', '19', '21', '28'], 'actual_screenrecord': True,
+            'maximum_seconds': 60, 'frame_rate_performance_measured': False}
+
+
+def preferences_snapshot():
+    shell('am', 'force-stop', PKG)
+    result = {}
+    names = shell('run-as', PKG, 'ls', 'shared_prefs').split()
+    for filename in names:
+        if filename.endswith('.xml'):
+            result[filename] = prefs(filename[:-4])
+    return result
+
+
+def upgrade():
+    adb('uninstall', PKG) if 'package:' in shell('pm', 'path', PKG) else None
+    adb('install', '-r', BASE_APK)
+    first_run()
+    theme('light')
+    route('tasbih')
+    tap('tasbih_target_99')
+    for _ in range(3):
+        tap('tasbih_counter')
+    assert prefs().get('tasbih_count') == '3'
+    reader(114)
+    tap('quran_audio_reader_entry')
+    tap('quran_action_bookmark')
+    if find(ui(), 'quran_ayah_sheet') is None:
+        tap('quran_audio_reader_entry')
+    tap('quran_note_open')
+    enter_text('quran_stop_note', 'Upgrade test note')
+    back()
+    tap('quran_stop_save')
+    assert prefs('quran_reading').get('note_114:1') == 'Upgrade test note'
+    assert '114:1' in prefs('quran_reading').get('bookmarks', [])
+    route('knowledge')
+    tap('learning_level_2')
+    tap('learning_level_confirm')
+    route('focus')
+    tap('focus_settings_open')
+    root = ui()
+    slider = next((n for n in root.iter('node') if n.get('class') == 'android.widget.SeekBar'), None)
+    if slider is None:
+        locate('Дневной лимит', 'text')
+        root = ui()
+        slider = next((n for n in root.iter('node') if n.get('class') == 'android.widget.SeekBar'), None)
+    assert slider is not None, 'Focus limit slider not exposed'
+    l, t, r, b = visible_bounds(root, slider)
+    assert r > l and b > t
+    shell('input', 'tap', int(l + (r-l)*.36), (t+b)//2)
+    time.sleep(.5)
+    assert 'limit' in prefs(), 'UI limit change did not persist'
+    route('prayer_journal')
+    tap('journal_previous')
+    tap('journal_FAJR')
+    tap('journal_MADE_UP')
+    route('home')
+    before = preferences_snapshot()
+    (OUT / 'upgrade-before.json').write_text(json.dumps(before, ensure_ascii=False, indent=2))
+    adb('install', '-r', APK)
+    route('home')
+    observe('home_prayer_journal')
+    assert find(ui(), 'onboarding_step_0') is None, 'Update incorrectly restarted onboarding'
+    after = preferences_snapshot()
+    ignored = {'places_at', 'places_json', 'reviews_at', 'reviews_json'}
+    changes = {}
+    for name, values in before.items():
+        for key, value in values.items():
+            if name == 'zikrtime.xml' and key in ignored:
+                continue
+            if after.get(name, {}).get(key) != value:
+                changes[name + ':' + key] = [value, after.get(name, {}).get(key)]
+    (OUT / 'upgrade-after.json').write_text(json.dumps(after, ensure_ascii=False, indent=2))
+    assert not changes, ('Saved values changed on update', changes)
+    reader(114)
+    tap('quran_audio_reader_entry')
+    tap('quran_note_open')
+    assert find(ui(), 'quran_stop_note').get('text') == 'Upgrade test note'
+    shot('test-upgrade-note-preserved')
+    return {'map_ids': ['07', '09', '14', '23', '24', '32', '38', '41'],
+            'baseline_debug_sha256': hashlib.sha256(BASE_APK.read_bytes()).hexdigest(),
+            'new_debug_sha256': hashlib.sha256(APK.read_bytes()).hexdigest(),
+            'same_debug_key_install_r_succeeded': True, 'all_preexisting_preferences_preserved': True,
+            'volatile_catalog_keys_excluded': sorted(ignored),
+            'values_created_using_ui': ['city', 'appearance', 'tasbih', 'target', 'bookmark', 'note', 'knowledge_level', 'focus_limit', 'prayer_mark'],
+            'screens_are_test_evidence': True}
+
+
+def reader_actions():
+    reader(114)
+    tap('quran_mode_read')
+    observe('quran_whole_surah')
+    shot('quran-whole-surah-dark', presentation=True)
+    tap('quran_mode_translation')
+    observe('quran_translation_1')
+    tap('quran_fullscreen')
+    observe('quran_exit_fullscreen')
+    shot('quran-fullscreen-translation-dark', presentation=True)
+    tap('quran_exit_fullscreen')
+    tap('quran_audio_reader_entry')
+    for tag in ('ayah_play_pause', 'ayah_repeat_3', 'ayah_speed_75', 'ayah_continue', 'quran_action_bookmark', 'quran_note_open', 'quran_copy_ayah'):
+        locate(tag)
+    tap('ayah_repeat_3')
+    tap('ayah_speed_75')
+    shot('quran-ayah-controls-dark', presentation=True)
+    tap('quran_note_open')
+    enter_text('quran_stop_note', 'UI state test')
+    shot('test-note-keyboard')
+    back()
+    tap('quran_note_close')
+    observe('quran_note_discard')
+    tap('quran_note_keep')
+    assert find(ui(), 'quran_stop_note').get('text') == 'UI state test'
+    tap('quran_stop_save')
+    assert prefs('quran_reading').get('note_114:1') == 'UI state test'
+    tap('quran_audio_reader_entry')
+    tap('quran_note_open')
+    tap('quran_note_delete')
+    tap('quran_note_delete_confirm')
+    assert 'note_114:1' not in prefs('quran_reading')
+    route('quran')
+    tap('quran_topics')
+    observe('quran_topics_count')
+    shot('quran-topics-dark', presentation=True)
+    route('quran')
+    tap('quran_statistics_open')
+    observe('quran_statistics')
+    tap('quran_stats_period_30')
+    shot('quran-statistics-dark', presentation=True)
+    tap('quran_goal_open')
+    tap('quran_goal_preset_15')
+    tap('quran_goal_save')
+    assert prefs('quran_reading').get('daily_goal_minutes') == '15'
+    return {'map_ids': ['19', '20', '21', '23', '25', '27', '28'],
+            'verified': ['surah_modes', 'fullscreen', 'audio_controls_reachable', 'repeats_speed_selection',
+                         'note_keyboard', 'discard_keep', 'save_delete_note', 'topics', 'statistics_period', 'goal']}
+
+
+def tasbih_azkar():
+    route('tasbih')
+    before = int(prefs().get('tasbih_count', 0))
+    tap('tasbih_counter')
+    assert int(prefs().get('tasbih_count', 0)) == before + 1
+    tap('tasbih_reset')
+    tap('tasbih_reset_cancel')
+    assert int(prefs().get('tasbih_count', 0)) == before + 1
+    tap('tasbih_phrase_open')
+    tap('tasbih_phrase_1')
+    tap('tasbih_target_99')
+    route('tasbih')
+    assert prefs().get('tasbih_phrase') == '1' and prefs().get('tasbih_target') == '99'
+    shot('tasbih-dark', presentation=True)
+    route('azkar')
+    observe('azkar_arabic')
+    shot('azkar-dark', presentation=True)
+    tap('azkar_source')
+    shot('azkar-source-dark', presentation=True)
+    back()
+    tap('azkar_count')
+    tap('azkar_next')
+    observe('azkar_previous')
+    tap('azkar_previous')
+    return {'map_ids': ['37', '38'], 'verified': ['counter', 'reset_cancel', 'phrase', 'target', 'restart', 'azkar_source', 'azkar_count_next_previous']}
+
+
+def knowledge():
+    route('knowledge')
+    if find(ui(), 'learning_level_1') is not None:
+        tap('learning_level_1')
+        tap('learning_level_confirm')
+    else:
+        tap('learning_level_change')
+        tap('learning_level_1')
+        tap('learning_level_confirm')
+    tap('learning_start')
+    if find(ui(), 'learning_skip') is not None:
+        tap('learning_skip')
+    bank = json.loads(Path('app/src/main/assets/quiz/ru.json').read_text())['questions']
+    wrong_seen = correct_seen = False
+    for index in range(8):
+        root = observe('learning_question')
+        question_text = find(root, 'learning_question').get('text')
+        question = next(q for q in bank if q['q'] == question_text)
+        wanted = question['options'][question['answer']]
+        choices = []
+        for number in range(len(question['options'])):
+            _, node, _ = locate('learning_answer_' + str(number))
+            texts = [n.get('text', '') for n in node.iter('node')]
+            choices.append((number, wanted in texts or wanted == node.get('text')))
+        selected = next(number for number, correct in choices if correct != (index == 0))
+        tap('learning_answer_' + str(selected))
+        root = observe('learning_feedback')
+        feedback_text = ' '.join(n.get('text', '') for n in find(root, 'learning_feedback').iter('node'))
+        if index == 0:
+            assert 'Не совсем' in feedback_text
+            wrong_seen = True
+            shot('test-quiz-wrong-feedback')
+        elif not correct_seen:
+            assert 'Верно' in feedback_text
+            correct_seen = True
+            shot('test-quiz-correct-feedback')
+        if find(root, 'learning_finish') is not None:
+            tap('learning_finish')
+            observe('МашаАллах!', 'text')
+            shot('test-quiz-result')
+            break
+        tap('learning_next')
+    else:
+        raise AssertionError('Quiz did not finish in bounded UI steps')
+    assert wrong_seen and correct_seen
+    return {'map_ids': ['32', '33', '34'], 'real_questions_and_answer_callbacks': True,
+            'wrong_and_correct_word_labels': True, 'result_reached': True,
+            'answers_selected_by_test': True, 'screens_are_test_evidence': True}
+
+
+def focus_journal():
+    route('focus')
+    tap('focus_choose_apps')
+    observe('focus_apps_done')
+    shot('focus-apps-dark', presentation=True)
+    tap('focus_apps_done')
+    tap('focus_settings_open')
+    shot('focus-settings-dark', presentation=True)
+    back()
+    tap('focus_setup')
+    observe('focus_permissions_done')
+    shot('focus-permissions-dark', presentation=True)
+    tap('focus_permissions_done')
+    route('prayer_journal')
+    tap('journal_previous')
+    tap('journal_FAJR')
+    observe('journal_MADE_UP')
+    shot('journal-status-chooser-dark', presentation=True)
+    back()
+    return {'map_ids': ['14', '17', '41', '42', '43'],
+            'verified': ['apps_open_done', 'settings_open_back', 'permissions_open_done', 'journal_previous_status_choices'],
+            'blocking_services_enabled': False}
+
+
+def route_gallery():
+    targets = [('knowledge', 'quran_open'), ('focus', 'focus_choose_apps'),
+               ('quran_audio', 'audio_screen'), ('qibla', 'qibla_compass'),
+               ('places', 'places_map'), ('shop', 'shop_search'),
+               ('prayer_journal', 'journal_previous'), ('reading_reminders', 'reading_open_BEDTIME'),
+               ('progress', 'personal_progress_toggle'), ('training', 'training_dashboard'),
+               ('alarm', None), ('prayer_settings', 'prayer_regional_mode'),
+               ('language', None), ('city', None), ('ramadan', None), ('zakat', None), ('about', None)]
+    visited = []
+    for palette in ('dark', 'light'):
+        theme(palette)
+        for name, tag in targets:
+            route(name)
+            if tag:
+                observe(tag)
+            shot(name + '-' + palette, presentation=True)
+            visited.append(name + ':' + palette)
+    return {'map_ids': ['06', '08', '09', '10', '14', '15', '29', '32', '36', '39', '41', '47', '52', '55', '56', '57', '58', '61'],
+            'rendered_routes': visited, 'scope': 'Rendering and named entry controls; not every conditional action.'}
+
+
+def shop_and_places():
+    theme('dark')
+    route('shop')
+    enter_text('shop_search', 'NoSuchShopRhythm829')
+    back()
+    observe('shop_empty')
+    shot('shop-empty-search-dark', presentation=True)
+    tap('shop_clear_search')
+    assert find(ui(), 'shop_search').get('text', '') == ''
+    tap('shop_merchant')
+    observe('shop_seller_portal')
+    shot('shop-merchant-terms-dark', presentation=True)
+    back()
+    route('places')
+    observe('places_map')
+    root, node, (l, t, r, b) = locate('places_map')
+    shell('input', 'swipe', int(l+(r-l)*.7), (t+b)//2, int(l+(r-l)*.35), (t+b)//2, 400)
+    shot('places-after-real-pan-dark', presentation=True)
+    return {'map_ids': ['47', '48', '52'],
+            'verified': ['empty_search', 'clear_search', 'merchant_terms_entry', 'seller_portal_present', 'map_pan_gesture'],
+            'map_center_change_asserted': False, 'production_contact_actions_activated': False,
+            'seller_product_review_submission': 'not_exercised_no_production_writes'}
+
+
+def compact_and_languages():
+    global LOCALE
+    display(960, 1920, 1.5)
+    theme('light')
+    route('home')
+    for tag in ('home_change_city', 'home_prayer_journal', 'home_reading_reminders'):
+        locate(tag)
+    route('home')
+    shot('home-320dp-150-light', presentation=True)
+    reader(114)
+    tap('quran_audio_reader_entry')
+    for tag in ('ayah_play_pause', 'ayah_repeat_3', 'ayah_speed_75', 'quran_note_open'):
+        SUPPORT['require_reachable'](tag)
+    shot('ayah-controls-320dp-150-light', presentation=True)
+    shell('wm', 'size', '1920x960')
+    observe('quran_ayah_sheet')
+    SUPPORT['require_reachable']('ayah_play_pause')
+    shot('ayah-landscape-150-light', presentation=True)
+    display(960, 1920, 1.5)
+    route('more')
+    locate('settings_guide')
+    shot('settings-320dp-150-light', presentation=True)
+    for language in ('en', 'tr', 'az', 'uz', 'tg', 'kk', 'ky'):
+        LOCALE = language
+        route('more')
+        locate('settings_guide')
+        shot('settings-320dp-150-' + language, presentation=True)
+    LOCALE = 'ru'
+    display()
+    route('more')
+    shell('settings', 'put', 'global', 'animator_duration_scale', '0')
+    tap('appearance_dark')
+    assert prefs().get('appearance') == 'dark'
+    tap('appearance_light')
+    assert prefs().get('appearance') == 'light'
+    shell('settings', 'put', 'global', 'animator_duration_scale', '1')
+    return {'map_ids': ['07', '08', '21', '28', '66'], 'width_dp': 320, 'font_scale': 1.5,
+            'locales': ['ru', 'en', 'tr', 'az', 'uz', 'tg', 'kk', 'ky'],
+            'rotation_with_open_ayah_sheet': True, 'zero_animation_scale_theme_actions': True}
+
+
+def group(name, action):
+    global ACTIVE
+    ACTIVE = name
+    print('Rhythm UI:', name, flush=True)
+    start = time.monotonic()
+    try:
+        result = action() or {}
+        REPORT['groups'][name] = {'status': 'passed', 'seconds': round(time.monotonic()-start, 2), **result}
+    except Exception:
+        error = traceback.format_exc()
+        REPORT['groups'][name] = {'status': 'failed', 'seconds': round(time.monotonic()-start, 2), 'error': error}
+        (OUT / ('rhythm-failure-' + name + '.txt')).write_text(error)
+        try:
+            shot('failure-' + name)
+        except Exception:
+            pass
+        print(error, flush=True)
+    persist()
+    return REPORT['groups'][name]['status'] == 'passed'
+
+
+def main():
+    assert len(sys.argv) == 2 and sys.argv[1] in {'preview', 'final'}
+    mode = sys.argv[1]
+    OUT.mkdir(exist_ok=True)
+    (OUT / 'screens').mkdir(exist_ok=True)
+    REPORT.update(mode=mode, source_sha=os.environ.get('GITHUB_SHA'), run_id=os.environ.get('GITHUB_RUN_ID'),
+                  debug_sha256=hashlib.sha256(APK.read_bytes()).hexdigest())
+    adb('wait-for-device')
+    shell('svc', 'power', 'stayon', 'true')
+    shell('input', 'keyevent', 'KEYCODE_WAKEUP')
+    shell('wm', 'dismiss-keyguard')
+    adb('logcat', '-c')
+    display()
+    try:
+        if mode == 'final':
+            group('update_preserves_data', upgrade)
+        adb('install', '-r', APK)
+        if not group('fresh_first_launch', lambda: first_run(mode == 'final')):
+            raise AssertionError('First launch must succeed before presentation captures')
+        for palette in ('dark', 'light'):
+            group('presentation_' + palette, lambda palette=palette: presentation(palette))
+        group('transitions', transition_recording)
+        if mode == 'final':
+            theme('dark')
+            group('reader_actions', reader_actions)
+            group('tasbih_azkar', tasbih_azkar)
+            group('quiz_answer_feedback_result', knowledge)
+            group('focus_journal', focus_journal)
+            group('all_main_routes_both_themes', route_gallery)
+            group('catalog_search_and_map', shop_and_places)
+            group('compact_languages_rotation_motion', compact_and_languages)
+            # Existing guide assertions exercise real image-load markers, zoom
+            # controls and return paths without rerunning playback suites.
+            group('guide_all_topics_steps_zoom_return', SUPPORT['illustrated_guide'])
+        crashes = adb('logcat', '-d', '-b', 'crash')
+        (OUT / 'rhythm-crashes.txt').write_text(crashes)
+        REPORT['app_crashes'] = bool(re.search(r'FATAL EXCEPTION|Fatal signal', crashes))
+        REPORT['planned_groups_passed'] = all(g['status'] == 'passed' for g in REPORT['groups'].values()) and not REPORT['app_crashes']
+        persist()
+        assert REPORT['planned_groups_passed'], 'One or more planned UI groups failed; preserved evidence is authoritative'
+    finally:
+        shell('settings', 'put', 'global', 'animator_duration_scale', '1')
+        shell('settings', 'put', 'system', 'font_scale', '1.0')
+        shell('wm', 'size', '1080x2400')
+        persist()
+
+
+if __name__ == '__main__':
+    main()

@@ -38,7 +38,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.filled.Search
@@ -53,10 +52,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -74,10 +72,6 @@ import coil.compose.AsyncImage
 import com.zikrtime.app.R
 import com.zikrtime.app.data.Shop
 import com.zikrtime.app.i18n.Lang
-import com.zikrtime.app.ui.theme.Cream
-import com.zikrtime.app.ui.theme.EmeraldDeep
-import com.zikrtime.app.ui.theme.Gold
-import com.zikrtime.app.ui.theme.LocalDarkTheme
 
 /** Значок категории магазина. */
 fun shopIcon(name: String): Int = when (name) {
@@ -90,7 +84,6 @@ fun shopIcon(name: String): Int = when (name) {
     else -> R.drawable.ic_shop_store
 }
 
-private fun accentOf(seller: Shop.Seller?): Color = seller?.accent?.let { Color(0xFF000000 or it) } ?: Color(0xFF235D4C)
 
 // ---------------- Витрина ----------------
 
@@ -128,7 +121,7 @@ fun ShopScreen() {
     var showTerms by rememberSaveable { mutableStateOf(false) }
     val hasMerchantContact = catalog.sellerBot.isNotBlank() || catalog.contactTelegram.isNotBlank()
     val hasMerchantEntry = hasMerchantContact || catalog.sellerPortal != null
-    HorizonSection(title = stringResource(R.string.shop_title), image = R.drawable.shop_market, heroHeight = 146.dp) {
+    HorizonSection(title = stringResource(R.string.shop_title), image = R.drawable.shop_market, heroHeight = 0.dp) {
         StoreSearch(query) { query = it }
         if (catalog.categories.isNotEmpty()) {
             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -234,7 +227,7 @@ private fun StoreSearch(query: String, onChange: (String) -> Unit) {
     val scheme = MaterialTheme.colorScheme
     val label = stringResource(R.string.shop_search)
     val clear = stringResource(R.string.store_clear)
-    val shape = RoundedCornerShape(16.dp)
+    val shape = MaterialTheme.shapes.medium
     BasicTextField(
         value = query, onValueChange = onChange, singleLine = true,
         textStyle = MaterialTheme.typography.bodyLarge.copy(color = scheme.onSurface),
@@ -261,15 +254,15 @@ private fun StoreSearch(query: String, onChange: (String) -> Unit) {
 
 @Composable
 private fun CategoryPill(text: String, icon: Int, id: String, selected: Boolean, onClick: () -> Unit) {
-    val shape = RoundedCornerShape(16.dp)
+    val shape = MaterialTheme.shapes.medium
     val scheme = MaterialTheme.colorScheme
     Row(Modifier.testTag("shop_category_$id").clip(shape)
-        .background(if (selected) scheme.secondaryContainer else scheme.surfaceContainerLow)
-        .border(1.dp, if (selected) scheme.secondary else scheme.outlineVariant, shape)
+        .background(if (selected) scheme.primaryContainer else scheme.surfaceContainerLow)
+        .border(1.dp, if (selected) scheme.primary else scheme.outlineVariant, shape)
         .selectable(selected = selected, role = Role.RadioButton, onClick = onClick)
         .heightIn(min = 48.dp).padding(horizontal = 12.dp, vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(7.dp), verticalAlignment = Alignment.CenterVertically) {
-        val ink = if (selected) scheme.onSecondaryContainer else scheme.onSurfaceVariant
+        val ink = if (selected) scheme.onPrimaryContainer else scheme.onSurfaceVariant
         Icon(painterResource(icon), null, tint = ink, modifier = Modifier.size(16.dp))
         Text(text, style = MaterialTheme.typography.labelLarge, color = ink)
     }
@@ -278,7 +271,7 @@ private fun CategoryPill(text: String, icon: Int, id: String, selected: Boolean,
 @Composable
 private fun SellerCard(seller: Shop.Seller, lang: String, modifier: Modifier, onClick: (Shop.Seller) -> Unit) {
     val scheme = MaterialTheme.colorScheme
-    val shape = RoundedCornerShape(16.dp)
+    val shape = MaterialTheme.shapes.medium
     Row(modifier.testTag("shop_seller_${seller.id}").clip(shape).background(scheme.surfaceContainerLow)
         .border(1.dp, scheme.outlineVariant, shape).clickable(role = Role.Button) { onClick(seller) }
         .padding(12.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -295,64 +288,51 @@ private fun SellerCard(seller: Shop.Seller, lang: String, modifier: Modifier, on
 }
 
 @Composable
+@OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 private fun PartnerCard(seller: Shop.Seller, lang: String, catalog: Shop.Catalog, modifier: Modifier, onClick: (Shop.Seller) -> Unit) {
-    val shape = RoundedCornerShape(topStart = 26.dp, topEnd = 12.dp, bottomEnd = 26.dp, bottomStart = 12.dp)
-    val accent = accentOf(seller)
-    Box(modifier.testTag("shop_partner_${seller.id}").clip(shape)
-        .background(Brush.linearGradient(listOf(accent, EmeraldDeep))).border(1.dp, Gold.copy(alpha = .6f), shape)
-        .clickable(role = Role.Button) { onClick(seller) }) {
-        // Always draw a backdrop so a missing or failed cover still has a readable contrast layer.
-        StarPattern(Modifier.matchParentSize(), color = Cream.copy(alpha = .12f), cell = 48f)
-        Shop.imageUrl(seller.cover)?.let { url ->
-            AsyncImage(model = url, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.matchParentSize())
+    val scheme = MaterialTheme.colorScheme
+    Column(modifier.testTag("shop_partner_${seller.id}").clip(MaterialTheme.shapes.large)
+        .background(scheme.surfaceContainerLow)
+        .border(1.dp, scheme.outlineVariant, MaterialTheme.shapes.large)
+        .clickable(role = Role.Button) { onClick(seller) }.padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(14.dp)) {
+        androidx.compose.foundation.layout.FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            CategoryChip(stringResource(R.string.shop_partner))
+            if (seller.promoted) AdLabel(Modifier.testTag("shop_ad_${seller.id}"))
+            RatingBadge("seller:${seller.id}", Modifier.padding(vertical = 4.dp))
         }
-        Box(Modifier.matchParentSize().background(Brush.verticalGradient(listOf(Color(0x40171B18), Color(0xF0171B18)))))
-        Column(Modifier.fillMaxWidth().heightIn(min = 166.dp).padding(16.dp),
-            verticalArrangement = Arrangement.SpaceBetween) {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Box(Modifier.clip(RoundedCornerShape(8.dp)).background(Cream).padding(horizontal = 8.dp, vertical = 4.dp)) {
-                    Text(stringResource(R.string.shop_partner), style = MaterialTheme.typography.labelSmall, color = EmeraldDeep)
-                }
-                if (seller.promoted) AdLabel(Modifier.testTag("shop_ad_${seller.id}"))
-                Spacer(Modifier.weight(1f))
-                RatingBadge("seller:${seller.id}", Modifier.clip(RoundedCornerShape(8.dp))
-                    .background(MaterialTheme.colorScheme.surface).padding(horizontal = 6.dp, vertical = 3.dp))
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            val coverUrl = Shop.imageUrl(seller.cover)
+            if (coverUrl != null) {
+                AsyncImage(model = coverUrl, contentDescription = null, contentScale = ContentScale.Crop,
+                    modifier = Modifier.size(52.dp).clip(MaterialTheme.shapes.small))
+            } else SellerLogo(seller, 44.dp)
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(seller.name, style = MaterialTheme.typography.titleMedium)
+                val count = catalog.products.count { it.seller == seller.id }
+                val details = listOf(seller.city.get(lang), if (count > 0) pluralStringResource(R.plurals.shop_products_count, count, count) else "")
+                    .filter(String::isNotBlank).joinToString(" · ")
+                if (details.isNotEmpty()) Text(details, style = MaterialTheme.typography.bodySmall, color = scheme.onSurfaceVariant)
             }
-            Spacer(Modifier.height(20.dp))
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                SellerLogo(seller, 46.dp)
-                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Text(seller.name, style = MaterialTheme.typography.headlineSmall, color = Cream,
-                        maxLines = 2, overflow = TextOverflow.Ellipsis)
-                    val count = catalog.products.count { it.seller == seller.id }
-                    val details = listOf(seller.city.get(lang), if (count > 0) pluralStringResource(R.plurals.shop_products_count, count, count) else "")
-                        .filter(String::isNotBlank).joinToString(" · ")
-                    if (details.isNotEmpty()) Text(details, style = MaterialTheme.typography.bodySmall, color = Cream,
-                        maxLines = 2, overflow = TextOverflow.Ellipsis)
-                }
-                Icon(Icons.AutoMirrored.Filled.ArrowForward, null, tint = Cream, modifier = Modifier.size(20.dp))
-            }
+            Icon(Icons.AutoMirrored.Filled.ArrowForward, null, tint = scheme.primary, modifier = Modifier.size(20.dp))
         }
     }
 }
 
 @Composable
 private fun SellerLogo(seller: Shop.Seller, size: androidx.compose.ui.unit.Dp) {
-    val accent = accentOf(seller)
-    Box(
-        Modifier
-            .size(size)
-            .clip(CircleShape)
-            .background(Brush.linearGradient(listOf(accent, EmeraldDeep)))
-            .border(2.dp, Gold.copy(alpha = 0.7f), CircleShape),
-        contentAlignment = Alignment.Center,
-    ) {
+    val scheme = MaterialTheme.colorScheme
+    Box(Modifier.size(size).clip(MaterialTheme.shapes.small).background(scheme.primaryContainer),
+        contentAlignment = Alignment.Center) {
         val url = Shop.imageUrl(seller.logo)
         var logoFailed by remember(url) { mutableStateOf(url == null) }
         if (!logoFailed) {
-            AsyncImage(model = url, contentDescription = null, contentScale = ContentScale.Crop, onError = { logoFailed = true }, modifier = Modifier.fillMaxSize())
+            AsyncImage(model = url, contentDescription = null, contentScale = ContentScale.Crop,
+                onError = { logoFailed = true }, modifier = Modifier.fillMaxSize())
         } else {
-            Text(seller.name.trim().take(1).uppercase(), color = Cream, fontWeight = FontWeight.Bold, fontSize = (size.value * 0.42f).sp)
+            Text(seller.name.trim().take(1).uppercase(), color = scheme.onPrimaryContainer,
+                fontWeight = FontWeight.SemiBold, fontSize = (size.value * 0.42f).sp)
         }
     }
 }
@@ -374,29 +354,16 @@ private fun ProductList(products: List<Shop.Product>, catalog: Shop.Catalog, lan
 
 @Composable
 private fun ProductImage(product: Shop.Product, catalog: Shop.Catalog, modifier: Modifier, iconSize: androidx.compose.ui.unit.Dp = 48.dp, fit: Boolean = false) {
-    val seller = catalog.seller(product.seller)
-    val accent = accentOf(seller)
-    val dark = LocalDarkTheme.current
-    Box(
-        modifier.background(
-            Brush.linearGradient(
-                if (dark) listOf(accent.copy(alpha = 0.55f), EmeraldDeep) else listOf(accent.copy(alpha = 0.16f), Gold.copy(alpha = 0.18f)),
-            ),
-        ),
-        contentAlignment = Alignment.Center,
-    ) {
+    val scheme = MaterialTheme.colorScheme
+    Box(modifier.background(scheme.surfaceContainer), contentAlignment = Alignment.Center) {
         val url = product.images.firstOrNull()?.let { Shop.imageUrl(it) }
         var failed by remember(url) { mutableStateOf(url == null) }
         if (!failed) {
             AsyncImage(model = url, contentDescription = null, contentScale = if (fit) ContentScale.Fit else ContentScale.Crop,
                 onError = { failed = true }, modifier = Modifier.fillMaxSize())
         } else {
-            Icon(
-                painterResource(shopIcon(catalog.category(product.category)?.icon ?: "store")),
-                contentDescription = null,
-                tint = if (dark) Gold else accent,
-                modifier = Modifier.size(iconSize),
-            )
+            Icon(painterResource(shopIcon(catalog.category(product.category)?.icon ?: "store")),
+                contentDescription = null, tint = scheme.primary, modifier = Modifier.size(iconSize))
         }
     }
 }
@@ -447,6 +414,7 @@ private fun PriceLine(product: Shop.Product, lang: String, big: Boolean = false)
 // ---------------- Продавец ----------------
 
 @Composable
+@OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 fun SellerScreen(sellerId: String? = null) {
     val context = LocalContext.current
     val nav = LocalNav.current
@@ -458,36 +426,25 @@ fun SellerScreen(sellerId: String? = null) {
             Text(stringResource(R.string.search_nothing), style = MaterialTheme.typography.bodyLarge)
             return@ScreenScaffold
         }
-        val accent = accentOf(seller)
-        Box(
-            Modifier
-                .fillMaxWidth()
-                .height(160.dp)
-                .clip(RoundedCornerShape(28.dp))
-                .background(Brush.linearGradient(listOf(accent, accent.copy(alpha = 0.8f), EmeraldDeep))),
-        ) {
-            val coverUrl = Shop.imageUrl(seller.cover)
-            if (coverUrl != null) {
-                AsyncImage(model = coverUrl, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
-            } else {
-                StarPattern(Modifier.fillMaxSize(), color = Gold.copy(alpha = 0.18f), cell = 56f)
-            }
-            Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color.Transparent, Color(0xDD171B18)))))
-            Row(Modifier.align(Alignment.BottomStart).padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-                SellerLogo(seller, 60.dp)
-                Spacer(Modifier.width(14.dp))
-                Column(Modifier.weight(1f)) {
-                    Text(seller.name, style = MaterialTheme.typography.titleMedium, color = Cream)
-                    Text(seller.city.get(lang), style = MaterialTheme.typography.bodyMedium, color = Cream.copy(alpha = 0.85f))
+        val scheme = MaterialTheme.colorScheme
+        Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+                SellerLogo(seller, 56.dp)
+                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(seller.name, style = MaterialTheme.typography.headlineSmall)
+                    Text(seller.city.get(lang), style = MaterialTheme.typography.bodyMedium, color = scheme.onSurfaceVariant)
                 }
             }
-            Row(Modifier.align(Alignment.TopStart).padding(12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            androidx.compose.foundation.layout.FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 if (seller.partner) CategoryChip(stringResource(R.string.shop_partner))
                 if (seller.promoted) AdLabel(Modifier.testTag("shop_ad_${seller.id}"))
             }
-        }
-        if (!seller.description.isEmpty) {
-            ZCard { Text(seller.description.get(lang), style = MaterialTheme.typography.bodyLarge) }
+            Shop.imageUrl(seller.cover)?.let { coverUrl ->
+                AsyncImage(model = coverUrl, contentDescription = null, contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxWidth().height(112.dp).clip(MaterialTheme.shapes.medium))
+            }
+            if (!seller.description.isEmpty) Text(seller.description.get(lang), style = MaterialTheme.typography.bodyLarge)
         }
         ContactButtons(seller)
         if (seller.address.isNotBlank()) {
@@ -543,15 +500,15 @@ private fun ContactButtons(seller: Shop.Seller) {
                     Modifier
                         .weight(1f)
                         .pressScale(interaction)
-                        .glass(RoundedCornerShape(18.dp), elevation = 4.dp)
-                        .clickable(interactionSource = interaction, indication = null, onClick = action)
+                        .clip(MaterialTheme.shapes.medium).background(MaterialTheme.colorScheme.surfaceContainerLow)
+                        .clickable(interactionSource = interaction, indication = androidx.compose.material3.ripple(), role = Role.Button, onClick = action)
                         .padding(14.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
                 ) {
                     Icon(painterResource(icon), contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                     Spacer(Modifier.width(8.dp))
-                    Text(stringResource(label), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                    Text(stringResource(label), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.weight(1f))
                 }
             }
             if (row.size < columns) Spacer(Modifier.weight(1f))
@@ -578,7 +535,7 @@ fun ProductScreen(productId: String? = null) {
             return@ScreenScaffold
         }
         val seller = catalog.seller(product.seller)
-        ProductImage(product, catalog, Modifier.fillMaxWidth().aspectRatio(1.2f).clip(RoundedCornerShape(28.dp)), iconSize = 96.dp, fit = true)
+        ProductImage(product, catalog, Modifier.fillMaxWidth().aspectRatio(1.2f).clip(MaterialTheme.shapes.large), iconSize = 96.dp, fit = true)
         if (product.images.size > 1) {
             Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 product.images.drop(1).forEach { img ->
@@ -643,9 +600,10 @@ private fun openMap(context: Context, seller: Shop.Seller) {
 /** Пометка «Реклама» у продвигаемых за плату компаний и их товаров. */
 @Composable
 private fun AdLabel(modifier: Modifier = Modifier) {
+    val scheme = MaterialTheme.colorScheme
     Box(
-        modifier.clip(RoundedCornerShape(6.dp)).background(Color(0xFF343732)).padding(horizontal = 8.dp, vertical = 3.dp),
+        modifier.clip(MaterialTheme.shapes.extraSmall).background(scheme.inverseSurface).padding(horizontal = 8.dp, vertical = 3.dp),
     ) {
-        Text(stringResource(R.string.shop_ad), style = MaterialTheme.typography.labelSmall, color = Color.White)
+        Text(stringResource(R.string.shop_ad), style = MaterialTheme.typography.labelSmall, color = scheme.inverseOnSurface)
     }
 }

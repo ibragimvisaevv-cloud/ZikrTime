@@ -11,6 +11,9 @@ import android.provider.Settings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.Image
@@ -91,16 +94,21 @@ fun MoreScreen() {
     val current = Lang.saved(context)
     val languageName = Lang.supported.firstOrNull { it.code == current }?.nativeName ?: stringResource(R.string.language_system)
 
-    HorizonSection(title = sectionCopy(SectionClarity.Settings),
-        subtitle = sectionCopy(SectionClarity.SettingsIntro),
-        image = if (com.zikrtime.app.ui.theme.LocalDarkTheme.current) R.drawable.horizon_portrait_night else R.drawable.horizon_portrait_day,
-        heroHeight = 220.dp,
-        hero = {
-            Spacer(Modifier.height(8.dp))
-            Text(sectionCopy(SectionClarity.Appearance), style = MaterialTheme.typography.labelLarge, color = Porcelain)
-            AppearanceSegments()
-        }) {
-        ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
+    StandardSystemBars()
+    Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
+        .windowInsetsPadding(WindowInsets.statusBars).testTag("section_scroll")
+        .semantics { testTagsAsResourceId = true }.verticalScroll(rememberScrollState())
+        .padding(horizontal = 24.dp), verticalArrangement = Arrangement.spacedBy(24.dp)) {
+        Row(Modifier.fillMaxWidth().padding(top = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+            Text(sectionCopy(SectionClarity.Settings), style = MaterialTheme.typography.headlineLarge,
+                modifier = Modifier.weight(1f))
+            ThemeQuickButton(compact = true)
+        }
+        Text(sectionCopy(SectionClarity.SettingsIntro), style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant)
+        AppearanceSegments()
+        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+        Column(Modifier.fillMaxWidth()) {
             Column(Modifier.testTag("settings_guide").semantics { testTagsAsResourceId = true }) {
                 SettingRow(
                     title = stringResource(R.string.guide_title),
@@ -111,7 +119,7 @@ fun MoreScreen() {
             }
         }
         SectionLabel(uiCopy(UiCopy0823.PrayerSettings))
-        ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
+        Column(Modifier.fillMaxWidth()) {
             SettingRow(
                 title = stringResource(R.string.settings_city),
                 subtitle = Cities.displayName(context, Store.location),
@@ -132,7 +140,7 @@ fun MoreScreen() {
                 onClick = { nav.open(Screen.ALARM) },
             )
         }
-        ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
+        Column(Modifier.fillMaxWidth()) {
             SettingRow(
                 title = sectionCopy(SectionClarity.Limits),
                 subtitle = uiCopy(UiCopy0823.FocusSettingsHint),
@@ -141,7 +149,7 @@ fun MoreScreen() {
             )
         }
         SectionLabel(stringResource(R.string.group_application))
-        ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
+        Column(Modifier.fillMaxWidth()) {
             SettingRow(
                 title = stringResource(R.string.settings_language),
                 subtitle = languageName,
@@ -149,7 +157,7 @@ fun MoreScreen() {
                 onClick = { nav.open(Screen.LANGUAGE) },
             )
         }
-        ZCard {
+        Column(Modifier.fillMaxWidth()) {
             PersonalProgressSetting()
             TextButton(onClick = { nav.open(Screen.PROGRESS) }) {
                 Text(stringResource(R.string.progress_settings))
@@ -165,7 +173,7 @@ fun MoreScreen() {
             Triple(R.string.zakat_title, R.drawable.ic_calc, Screen.ZAKAT),
             Triple(R.string.progress_title, R.drawable.ic_nav_knowledge, Screen.PROGRESS),
         )
-        ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
+        Column(Modifier.fillMaxWidth()) {
             destinations.forEach { (title, icon, screen) ->
                 val hint = when (screen) {
                     Screen.QURAN -> SectionClarity.QuranHint
@@ -182,7 +190,7 @@ fun MoreScreen() {
         SectionLabel(uiCopy(UiCopy0823.HelpAndSupport))
         FeedbackButton("app")
         DonateCard(prominent = true)
-        ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)) {
+        Column(Modifier.fillMaxWidth()) {
             SettingRow(
                 title = stringResource(R.string.about_title),
                 subtitle = stringResource(R.string.about_version, BuildConfig.VERSION_NAME),
@@ -190,6 +198,8 @@ fun MoreScreen() {
                 onClick = { nav.open(Screen.ABOUT) },
             )
         }
+        Spacer(Modifier.height(96.dp))
+        Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
     }
 }
 
@@ -229,7 +239,7 @@ fun RadioLine(text: String, selected: Boolean, subtitle: String? = null, onClick
     Row(
         Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp))
+            .clip(MaterialTheme.shapes.small)
             .background(if (selected) MaterialTheme.colorScheme.primaryContainer.copy(alpha = .7f) else Color.Transparent)
             .selectable(selected = selected, role = Role.RadioButton, onClick = onClick)
             .heightIn(min = 52.dp).padding(vertical = 6.dp, horizontal = 6.dp),
@@ -250,7 +260,7 @@ fun RadioLine(text: String, selected: Boolean, subtitle: String? = null, onClick
 fun CityScreen() {
     val nav = LocalNav.current
     val context = LocalContext.current
-    ScreenScaffold(title = stringResource(R.string.settings_city), onBack = { nav.back() }, scene = R.drawable.horizon_dawn) {
+    ScreenScaffold(title = stringResource(R.string.settings_city), onBack = { nav.back() }, showHeading = false) {
         CityPicker(onPicked = { city ->
             Store.setLocation(city)
             PrayerAlarms.scheduleNext(context)
@@ -309,7 +319,7 @@ fun CityPicker(onPicked: (City) -> Unit) {
         leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
         placeholder = { Text(stringResource(R.string.city_search)) },
         singleLine = true,
-        shape = RoundedCornerShape(16.dp),
+        shape = MaterialTheme.shapes.small,
         modifier = Modifier.fillMaxWidth(),
     )
 
@@ -332,7 +342,7 @@ fun CityPicker(onPicked: (City) -> Unit) {
                         Modifier
                             .fillMaxWidth()
                             .clip(RoundedCornerShape(12.dp))
-                            .clickable { onPicked(c.toCity(lang)) }
+                            .selectable(selected = c.id == currentId, role = Role.RadioButton, onClick = { onPicked(c.toCity(lang)) })
                             .padding(horizontal = 12.dp, vertical = 14.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
@@ -557,14 +567,19 @@ private fun fmtAngle(a: Double): String = if (a % 1.0 == 0.0) a.toInt().toString
 @Composable
 fun AboutScreen() {
     val nav = LocalNav.current
-    ScreenScaffold(title = stringResource(R.string.about_title), onBack = { nav.back() }, scene = R.drawable.azkar_morning) {
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            AppIconImage(Modifier.size(96.dp))
-            Spacer(Modifier.height(12.dp))
-            Text(stringResource(R.string.app_name), style = MaterialTheme.typography.headlineSmall)
-            Text(stringResource(R.string.slogan), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
-            Text(stringResource(R.string.about_version, BuildConfig.VERSION_NAME), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    ScreenScaffold(title = stringResource(R.string.about_title), onBack = { nav.back() }, showHeading = false) {
+        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            AppIconImage(Modifier.size(56.dp))
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(stringResource(R.string.app_name), style = MaterialTheme.typography.headlineSmall)
+                Text(stringResource(R.string.about_version, BuildConfig.VERSION_NAME),
+                    style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
         }
+        Text(stringResource(R.string.slogan), style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.primary)
+        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
         AboutBlock(stringResource(R.string.about_privacy_title), stringResource(R.string.about_privacy_text))
         AboutBlock(stringResource(R.string.about_times_title), stringResource(R.string.about_times_text))
         AboutBlock(stringResource(R.string.about_quiz_title), stringResource(R.string.about_quiz_text))

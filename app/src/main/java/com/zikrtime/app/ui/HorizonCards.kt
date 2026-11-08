@@ -20,13 +20,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
-/** Dedicated images stay decorative; live text remains accessible and translated. */
+/** A calm ink emphasis surface. Existing content keeps its readable light foreground. */
 @Composable
 fun LandscapePanel(@DrawableRes art: Int, modifier: Modifier = Modifier, content: @Composable BoxScope.() -> Unit) {
-    Box(modifier.fillMaxWidth().clip(RoundedCornerShape(28.dp))) {
-        Image(painterResource(art), null, Modifier.matchParentSize(), contentScale = ContentScale.Crop)
-        Box(Modifier.matchParentSize().background(Brush.horizontalGradient(listOf(Color(0xB8171B18), Color(0x18171B18)))))
-        Box(Modifier.matchParentSize().background(Brush.verticalGradient(listOf(Color.Transparent, Color(0xDA171B18)))))
+    Box(modifier.fillMaxWidth().clip(MaterialTheme.shapes.large).background(Color(0xFF223454))) {
         CompositionLocalProvider(LocalContentColor provides Porcelain) { content() }
     }
 }
@@ -36,12 +33,12 @@ fun LandscapePanel(@DrawableRes art: Int, modifier: Modifier = Modifier, content
 fun FeatureTile(title: String, icon: Int, modifier: Modifier = Modifier, detail: String? = null, onClick: () -> Unit) {
     val scheme = MaterialTheme.colorScheme
     val interaction = remember { MutableInteractionSource() }
-    val shape = RoundedCornerShape(24.dp)
+    val shape = MaterialTheme.shapes.medium
     Column(modifier.pressScale(interaction).clip(shape)
         .background(scheme.surfaceContainerLow)
         .border(1.dp, scheme.outlineVariant.copy(alpha = .65f), shape)
         .clickable(interactionSource = interaction, indication = ripple(), role = androidx.compose.ui.semantics.Role.Button, onClick = onClick)
-        .heightIn(min = 132.dp).padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        .heightIn(min = 96.dp).padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             IconBadge(painterResource(icon), size = 36.dp)
             Spacer(Modifier.weight(1f))
@@ -57,10 +54,10 @@ fun FeatureTile(title: String, icon: Int, modifier: Modifier = Modifier, detail:
 @Composable
 fun DestinationRow(title: String, icon: Int, detail: String? = null, onClick: () -> Unit) {
     val scheme = MaterialTheme.colorScheme
-    Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).clickable(onClick = onClick)
+    Row(Modifier.fillMaxWidth().clip(MaterialTheme.shapes.medium).clickable(onClick = onClick)
         .heightIn(min = 68.dp).padding(vertical = 12.dp, horizontal = 4.dp),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
-        IconBadge(painterResource(icon), size = 38.dp, container = scheme.secondaryContainer, tint = scheme.secondary)
+        IconBadge(painterResource(icon), size = 38.dp, container = scheme.primaryContainer, tint = scheme.primary)
         Column(Modifier.weight(1f)) {
             Text(title, style = MaterialTheme.typography.titleMedium)
             if (detail != null) Text(detail, style = MaterialTheme.typography.bodySmall, color = scheme.onSurfaceVariant)
@@ -74,9 +71,9 @@ fun DestinationRow(title: String, icon: Int, detail: String? = null, onClick: ()
 fun ReadingRow(title: String, art: Int, onClick: () -> Unit) {
     val scheme = MaterialTheme.colorScheme
     Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(18.dp)).clickable(onClick = onClick)
-        .padding(vertical = 6.dp), verticalAlignment = Alignment.CenterVertically,
+        .heightIn(min = 48.dp).padding(vertical = 6.dp), verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-        Image(painterResource(art), null, Modifier.size(78.dp).clip(RoundedCornerShape(14.dp)), contentScale = ContentScale.Crop)
+        Icon(painterResource(com.zikrtime.app.R.drawable.ic_shop_book), null, tint = scheme.primary, modifier = Modifier.size(28.dp))
         Text(title, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
         Icon(androidx.compose.material.icons.Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = scheme.onSurfaceVariant, modifier = Modifier.padding(end = 8.dp))
     }

@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -49,6 +50,8 @@ import com.zikrtime.app.quiz.LearningStore
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
+import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.semantics.Role
 import com.zikrtime.app.quiz.QuizBank
 import com.zikrtime.app.quiz.hasArabic
 import com.zikrtime.app.ui.theme.ArabicStyle
@@ -100,6 +103,7 @@ private fun QuizRoundContent(bank: QuizBank, category: String?, onFinished: () -
     val view = androidx.compose.ui.platform.LocalView.current
     val scheme = MaterialTheme.colorScheme
     val readingScale by rememberReadingScale()
+    val motion = motionEnabled()
 
     Column(Modifier.semantics { testTagsAsResourceId = true }, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -107,18 +111,18 @@ private fun QuizRoundContent(bank: QuizBank, category: String?, onFinished: () -
                 else stringResource(R.string.quiz_progress, if (reviewMode) session.index else correct,
                     if (reviewMode) session.questionIds.size else target),
                 modifier = if(sessionScope == "training") Modifier.testTag("training_progress") else Modifier,
-                style = MaterialTheme.typography.labelLarge, color = scheme.secondary)
+                style = MaterialTheme.typography.labelLarge, color = scheme.onSurfaceVariant)
             androidx.compose.material3.LinearProgressIndicator(
                 progress = { (if (reviewMode) session.index.toFloat() / session.questionIds.size.coerceAtLeast(1) else correct.toFloat() / target.coerceAtLeast(1)) },
                 modifier = Modifier.fillMaxWidth().height(4.dp), drawStopIndicator = {})
         }
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Surface(shape = RoundedCornerShape(50), color = scheme.secondaryContainer) {
+            Surface(shape = MaterialTheme.shapes.small, color = scheme.surfaceContainerHigh) {
                 Text(
                     bank.categoryName(question.category),
                     style = MaterialTheme.typography.labelMedium,
-                    color = scheme.onSecondaryContainer,
+                    color = scheme.onSurfaceVariant,
                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
                 )
             }
@@ -129,12 +133,12 @@ private fun QuizRoundContent(bank: QuizBank, category: String?, onFinished: () -
         Text(question.text, style = MaterialTheme.typography.headlineSmall.copy(fontSize = (24 * readingScale).sp, lineHeight = (33 * readingScale).sp), modifier = Modifier.testTag("learning_question"))
 
         question.arabic?.let {
-            Surface(shape = RoundedCornerShape(20.dp), color = scheme.primaryContainer.copy(alpha = 0.55f), modifier = Modifier.fillMaxWidth()) {
+            Surface(shape = MaterialTheme.shapes.medium, color = scheme.surfaceContainerLow, modifier = Modifier.fillMaxWidth()) {
                 Text(
                     it,
                     style = ArabicStyle.copy(textDirection = TextDirection.Rtl),
                     textAlign = TextAlign.Center,
-                    color = scheme.onPrimaryContainer,
+                    color = scheme.onSurface,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
                 )
             }
@@ -165,7 +169,10 @@ private fun QuizRoundContent(bank: QuizBank, category: String?, onFinished: () -
             }
         }
 
-        AnimatedVisibility(visible = selected != null, enter = fadeIn() + expandVertically(), modifier = Modifier.testTag("learning_feedback")) {
+        AnimatedVisibility(visible = selected != null,
+            enter = fadeIn(androidx.compose.animation.core.tween(if (motion) 140 else 0)) +
+                expandVertically(androidx.compose.animation.core.tween(if (motion) 140 else 0)),
+            modifier = Modifier.testTag("learning_feedback")) {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 val ok = session.selected == question.answerIndex
                 InfoCard(ok = ok, correctAnswer = question.correctOption, info = question.info)
@@ -191,7 +198,7 @@ private fun QuizRoundContent(bank: QuizBank, category: String?, onFinished: () -
 private fun InfoCard(ok: Boolean, correctAnswer: String, info: String) {
     val scheme = MaterialTheme.colorScheme
     Surface(
-        shape = RoundedCornerShape(20.dp),
+        shape = MaterialTheme.shapes.medium,
         color = if (ok) scheme.primaryContainer else scheme.surfaceContainerHigh,
         modifier = Modifier.fillMaxWidth(),
     ) {
@@ -257,14 +264,21 @@ private fun OptionSurface(letter: String, text: String, state: OptionState, onCl
         OptionState.Dimmed -> scheme.surfaceContainerLow to Color.Transparent
     }
     val arabic = text.hasArabic()
+    val answerState = when (state) {
+        OptionState.Correct -> stringResource(R.string.quiz_correct)
+        OptionState.Wrong -> stringResource(R.string.quiz_wrong)
+        else -> ""
+    }
     Surface(
-        shape = RoundedCornerShape(22.dp),
+        shape = MaterialTheme.shapes.medium,
         color = container,
         border = BorderStroke(if (state == OptionState.Idle) 1.dp else 1.5.dp, border),
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(22.dp))
-            .clickable(enabled = state == OptionState.Idle, onClick = onClick),
+            .heightIn(min = 56.dp)
+            .clip(MaterialTheme.shapes.medium)
+            .semantics { if (answerState.isNotEmpty()) stateDescription = answerState }
+            .clickable(enabled = state == OptionState.Idle, role = Role.Button, onClick = onClick),
     ) {
         Row(
             Modifier.padding(horizontal = 14.dp, vertical = if (arabic) 8.dp else 14.dp),
@@ -273,7 +287,7 @@ private fun OptionSurface(letter: String, text: String, state: OptionState, onCl
             Box(
                 Modifier
                     .size(30.dp)
-                    .clip(CircleShape)
+                    .clip(MaterialTheme.shapes.extraSmall)
                     .background(
                         when (state) {
                             OptionState.Correct -> scheme.primary
@@ -298,7 +312,7 @@ private fun OptionSurface(letter: String, text: String, state: OptionState, onCl
                 text,
                 style = if (arabic) ArabicStyle.copy(textDirection = TextDirection.Rtl) else MaterialTheme.typography.bodyLarge,
                 textAlign = if (arabic) TextAlign.Center else TextAlign.Start,
-                color = if (state == OptionState.Dimmed) scheme.onSurfaceVariant.copy(alpha = 0.6f) else scheme.onSurface,
+                color = if (state == OptionState.Dimmed) scheme.onSurfaceVariant else scheme.onSurface,
                 modifier = Modifier.weight(1f),
             )
         }

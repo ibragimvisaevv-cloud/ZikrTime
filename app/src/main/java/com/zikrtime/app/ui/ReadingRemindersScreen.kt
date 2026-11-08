@@ -81,10 +81,10 @@ fun ReadingRemindersScreen() {
                         Store.setReadingMinute(kind, h * 60 + m)
                         ReadingReminders.schedule(context, kind)
                     }, time.hour, time.minute, DateFormat.is24HourFormat(context)).show()
-                }, modifier = Modifier.testTag("reading_time_" + kind.name)) {
+                }, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp).testTag("reading_time_" + kind.name)) {
                     Text(stringResource(R.string.reading_time, time.format(clockFormatter(context))))
                 }
-                TextButton({ nav.openReading(kind) }, Modifier.testTag("reading_open_" + kind.name)) {
+                TextButton({ nav.openReading(kind) }, Modifier.fillMaxWidth().heightIn(min = 48.dp).testTag("reading_open_" + kind.name)) {
                     Text(stringResource(R.string.reading_open))
                 }
                 TextButton(onClick = {

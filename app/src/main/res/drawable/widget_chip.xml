@@ -1,7 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Плашка обратного отсчёта на виджете -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-    <solid android:color="#18765C3C" />
-    <stroke android:width="1dp" android:color="#28765C3C" />
-    <corners android:radius="12dp" />
-</shape>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle"><solid android:color="#163157C8"/><corners android:radius="10dp"/></shape>

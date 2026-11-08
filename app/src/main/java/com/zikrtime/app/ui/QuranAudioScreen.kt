@@ -9,12 +9,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -24,12 +26,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -70,6 +72,7 @@ private fun QuranAudioContent(initialSurah: Int) {
     var deleteId by rememberSaveable { mutableIntStateOf(0) }
     val list = rememberLazyListState()
     val scope = rememberCoroutineScope()
+    val motion = motionEnabled()
     val ru = Lang.content(context) == "ru"
     val colors = quranPaperColors()
 
@@ -112,11 +115,14 @@ private fun QuranAudioContent(initialSurah: Int) {
                     surah.nameLatin.contains(search, true) || surah.nameArabic.contains(search))
         }
     }
-    val openPlayer: (Int) -> Unit = { id -> selectedId = id; scope.launch { list.animateScrollToItem(0) } }
+    val openPlayer: (Int) -> Unit = { id ->
+        selectedId = id
+        scope.launch { if (motion) list.animateScrollToItem(0) else list.scrollToItem(0) }
+    }
     val playSurah: (Int) -> Unit = { id ->
         selectedId = id
         QuranAudioPlayer.play(id)
-        scope.launch { list.animateScrollToItem(0) }
+        scope.launch { if (motion) list.animateScrollToItem(0) else list.scrollToItem(0) }
     }
     Surface(color = colors.canvas, modifier = Modifier.fillMaxSize().testTag("audio_screen")
         .semantics { testTagsAsResourceId = true }) {
@@ -133,7 +139,7 @@ private fun QuranAudioContent(initialSurah: Int) {
                 contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 24.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 if (playback.ayah != null && playback.surahId != null) item("active_verse") {
-                    Surface(color = colors.paper, shape = RoundedCornerShape(20.dp),
+                    Surface(color = colors.paper, shape = MaterialTheme.shapes.large,
                         border = BorderStroke(1.dp, colors.accent.copy(alpha = .5f)),
                         modifier = Modifier.fillMaxWidth().testTag("audio_current_ayah")) {
                         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -156,20 +162,23 @@ private fun QuranAudioContent(initialSurah: Int) {
                 }
                 item("player") {
                     Column(Modifier.fillMaxWidth().padding(top = 8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        QuranOrnament(Modifier.width(92.dp).height(14.dp))
                         Text(stringResource(R.string.qaudio_reciter), style = MaterialTheme.typography.titleLarge,
                             modifier = Modifier.semantics { heading() })
                         if (selected != null && storage.ready) {
                             QuranAudioPlayerCard(selected, ru, playback, storage, onDelete = { deleteId = selected.id })
-                            OutlinedCard(onClick = {
+                            Surface(onClick = {
                                 nav.openQuran(selected.id, playback.ayah?.takeIf { playback.surahId == selected.id } ?: 1)
-                            },
+                            }, color = colors.canvas, shape = MaterialTheme.shapes.small,
                                 modifier = Modifier.fillMaxWidth().testTag("audio_open_verses")) {
-                                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                                    Text(stringResource(R.string.ql_learning_title), style = MaterialTheme.typography.titleMedium)
-                                    Text(stringResource(R.string.ql_learning_detail), style = MaterialTheme.typography.bodySmall)
-                                    Text(stringResource(R.string.ql_open_reader), color = colors.accent,
-                                        style = MaterialTheme.typography.labelLarge)
+                                Row(Modifier.padding(vertical = 16.dp, horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                                    Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                                        Text(stringResource(R.string.ql_learning_title), style = MaterialTheme.typography.titleMedium)
+                                        Text(stringResource(R.string.ql_learning_detail), style = MaterialTheme.typography.bodySmall, color = colors.muted)
+                                        Text(stringResource(R.string.ql_open_reader), color = colors.accent,
+                                            style = MaterialTheme.typography.labelLarge)
+                                    }
+                                    Icon(Icons.AutoMirrored.Filled.ArrowForward, null, tint = colors.accent)
                                 }
                             }
                         }
@@ -183,7 +192,7 @@ private fun QuranAudioContent(initialSurah: Int) {
                     }
                 }
                 storage.error?.let { error -> item("storage_error") {
-                    Surface(color = MaterialTheme.colorScheme.errorContainer, shape = RoundedCornerShape(14.dp)) {
+                    Surface(color = MaterialTheme.colorScheme.errorContainer, shape = MaterialTheme.shapes.medium) {
                         Column(Modifier.fillMaxWidth().padding(14.dp)) {
                             Text(stringResource(audioStorageErrorText(error)), color = MaterialTheme.colorScheme.onErrorContainer)
                             TextButton(onClick = { QuranAudioRepository.dismissError() }) { Text(stringResource(R.string.qaudio_close)) }
@@ -193,8 +202,10 @@ private fun QuranAudioContent(initialSurah: Int) {
                 item("filters") {
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         FilterChip(!downloadsOnly, { downloadsOnly = false }, label = { Text(stringResource(R.string.qaudio_all)) },
+                            leadingIcon = if (!downloadsOnly) { { Icon(Icons.Filled.Check, null, Modifier.size(18.dp)) } } else null,
                             modifier = Modifier.testTag("audio_all_filter"))
                         FilterChip(downloadsOnly, { downloadsOnly = true }, label = { Text(stringResource(R.string.qaudio_downloads)) },
+                            leadingIcon = if (downloadsOnly) { { Icon(Icons.Filled.Check, null, Modifier.size(18.dp)) } } else null,
                             modifier = Modifier.testTag("audio_downloads_filter"))
                     }
                     OutlinedTextField(query, { query = it }, singleLine = true,
@@ -202,7 +213,7 @@ private fun QuranAudioContent(initialSurah: Int) {
                         leadingIcon = { Icon(Icons.Default.Search, null) },
                         trailingIcon = if (query.isEmpty()) null else {{
                             IconButton(onClick = { query = "" }) { Icon(Icons.Default.Close, stringResource(R.string.qaudio_clear_search)) }
-                        }}, shape = RoundedCornerShape(16.dp), modifier = Modifier.fillMaxWidth().testTag("audio_search"))
+                        }}, shape = MaterialTheme.shapes.medium, modifier = Modifier.fillMaxWidth().testTag("audio_search"))
                 }
                 if (filtered.isEmpty() && book != null) item("empty") {
                     Text(stringResource(if (downloadsOnly && storage.downloads.isEmpty() && query.isBlank())
@@ -279,12 +290,12 @@ private fun QuranAudioPlayerCard(surah: QuranSurah, ru: Boolean, playback: Quran
     var dragging by remember(surah.id) { mutableStateOf(false) }
     var seekValue by remember(surah.id) { mutableFloatStateOf(0f) }
     val seekDescription = stringResource(R.string.qaudio_seek)
-    Surface(shape = RoundedCornerShape(20.dp), color = colors.paper, border = BorderStroke(1.dp, colors.rule),
+    Surface(shape = MaterialTheme.shapes.large, color = colors.paper,
         modifier = Modifier.fillMaxWidth().testTag("audio_player")) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 QuranNumberSeal(surah.id.toString(), Modifier.size(40.dp))
-                Text(if (ru) surah.nameRu else surah.nameLatin, style = MaterialTheme.typography.titleLarge,
+                Text(if (ru) surah.nameRu else surah.nameLatin, style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier.weight(1f).testTag("audio_player_title"))
             }
             Text(stringResource(when {
@@ -308,9 +319,10 @@ private fun QuranAudioPlayerCard(surah: QuranSurah, ru: Boolean, playback: Quran
                     valueRange = 0f..duration.toFloat(), enabled = playback.connected,
                     modifier = Modifier.fillMaxWidth().testTag("audio_seek").semantics { contentDescription = seekDescription })
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text(audioClock(if (dragging) seekValue.toLong() else position), style = MaterialTheme.typography.labelMedium,
+                    Text(audioClock(if (dragging) seekValue.toLong() else position),
+                        style = MaterialTheme.typography.titleLarge.copy(fontFeatureSettings = "tnum"),
                         modifier = Modifier.testTag("audio_position"))
-                    Text(audioClock(duration), style = MaterialTheme.typography.labelMedium)
+                    Text(audioClock(duration), style = MaterialTheme.typography.bodyMedium.copy(fontFeatureSettings = "tnum"), color = colors.muted)
                 }
             } else Text(if (position > 0) stringResource(R.string.qaudio_saved_position, audioClock(position))
                 else stringResource(R.string.qaudio_unknown_duration), style = MaterialTheme.typography.bodySmall, color = colors.muted)
@@ -323,6 +335,10 @@ private fun QuranAudioPlayerCard(surah: QuranSurah, ru: Boolean, playback: Quran
                 }
             }, enabled = storage.ready && (playback.connected || playback.error != null),
                 modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp).testTag("audio_play_pause")) {
+                if (active && playback.playWhenReady && !playback.ended && playback.error == null)
+                    Icon(painterResource(R.drawable.ic_audio_pause), null, Modifier.size(22.dp))
+                else Icon(Icons.Filled.PlayArrow, null, Modifier.size(22.dp))
+                Spacer(Modifier.width(8.dp))
                 Text(stringResource(when {
                     (active || !playback.connected) && playback.error != null -> R.string.qaudio_retry
                     active && playback.playWhenReady && !playback.ended -> R.string.qaudio_pause
@@ -359,6 +375,8 @@ private fun QuranAudioTrackRow(surah: QuranSurah, ru: Boolean, storage: QuranAud
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             TextButton(onClick = if (playback.surahId == surah.id && playback.ayah == null && playback.isPlaying) onOpenPlayer else onListen,
                 enabled = playback.connected && storage.ready, modifier = Modifier.testTag("audio_play_${surah.id}")) {
+                Icon(Icons.Filled.PlayArrow, null, Modifier.size(20.dp))
+                Spacer(Modifier.width(6.dp))
                 Text(stringResource(if (playback.surahId == surah.id && playback.ayah == null && playback.isPlaying)
                     R.string.qaudio_show_player else R.string.qaudio_listen))
             }

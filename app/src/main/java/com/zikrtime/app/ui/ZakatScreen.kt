@@ -31,8 +31,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zikrtime.app.R
 import com.zikrtime.app.data.Store
-import com.zikrtime.app.ui.theme.Cream
-import com.zikrtime.app.ui.theme.Gold
 import com.zikrtime.app.ui.theme.Tabular
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -127,23 +125,21 @@ fun ZakatScreen() {
     val money = remember { NumberFormat.getNumberInstance(Locale("ru")).apply { maximumFractionDigits = 0 } }
 
     ScreenScaffold(title = stringResource(R.string.zakat_title), onBack = { nav.back() }) {
-        // Итог
-        LandscapePanel(R.drawable.shop_market) {
-            Column(Modifier.padding(22.dp)) {
-                Text(stringResource(R.string.zakat_due), style = MaterialTheme.typography.labelLarge, color = Cream.copy(alpha = 0.85f))
-                val due = if (nisab > 0 && total >= nisab) total * ZAKAT_RATE else 0.0
-                Text(money.format(due) + " ₽", fontSize = 40.sp, fontWeight = FontWeight.Light, color = Gold, style = Tabular)
-                Spacer(Modifier.height(6.dp))
-                Text(
-                    when {
-                        nisab <= 0 -> stringResource(R.string.zakat_need_prices)
-                        total >= nisab -> stringResource(R.string.zakat_above, money.format(total), money.format(nisab))
-                        else -> stringResource(R.string.zakat_below, money.format(total.coerceAtLeast(0.0)), money.format(nisab))
-                    },
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Cream,
-                )
-            }
+        // The amount, basis and inputs share a calm document-like surface.
+        Column(Modifier.fillMaxWidth().padding(vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text(stringResource(R.string.zakat_due), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            val due = if (nisab > 0 && total >= nisab) total * ZAKAT_RATE else 0.0
+            Text(money.format(due) + " ₽", fontSize = 40.sp, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.primary, style = Tabular)
+            Spacer(Modifier.height(6.dp))
+            Text(
+                when {
+                    nisab <= 0 -> stringResource(R.string.zakat_need_prices)
+                    total >= nisab -> stringResource(R.string.zakat_above, money.format(total), money.format(nisab))
+                    else -> stringResource(R.string.zakat_below, money.format(total.coerceAtLeast(0.0)), money.format(nisab))
+                },
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
         }
 
         ZCard {
@@ -191,7 +187,7 @@ private fun MoneyField(value: String, label: String, onChange: (String) -> Unit)
         label = { Text(label) },
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-        shape = RoundedCornerShape(14.dp),
+        shape = MaterialTheme.shapes.medium,
         modifier = Modifier.fillMaxWidth(),
     )
 }

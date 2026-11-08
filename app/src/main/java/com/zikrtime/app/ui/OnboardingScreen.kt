@@ -32,7 +32,7 @@ import com.zikrtime.app.data.Cities
 import com.zikrtime.app.data.Store
 import com.zikrtime.app.i18n.Lang
 
-/** One scene, a readable foreground and five short steps. Permissions always remain optional. */
+/** Five compact steps on the app surface; permission requests remain optional. */
 @Composable
 fun OnboardingScreen(onCityChosen: (City) -> Unit) {
     val nav = LocalNav.current
@@ -42,23 +42,20 @@ fun OnboardingScreen(onCityChosen: (City) -> Unit) {
     val current = Lang.saved(context)
     val motion = motionEnabled()
     BackHandler(enabled = step > 0) { step-- }
-    val titles = listOf(R.string.app_name, R.string.onboarding_language_title, R.string.onboarding_city_title,
+    val titles = listOf(R.string.slogan, R.string.onboarding_language_title, R.string.onboarding_city_title,
         R.string.onboarding_perms_title, R.string.onboarding_ready_title)
-    BoxWithConstraints(Modifier.fillMaxSize().testTag("onboarding_step_$step")) {
-        val reveal = if (LocalDensity.current.fontScale > 1.3f) 80.dp else if (step == 0) maxHeight * .40f else 112.dp
-        SceneBackdrop(Modifier.fillMaxWidth().height(reveal + 200.dp))
+    StandardSystemBars()
+    Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).testTag("onboarding_step_$step")) {
         Column(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.statusBars)) {
             Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically) {
-                Text("ZikrTime", style = MaterialTheme.typography.titleLarge, color = Porcelain, modifier = Modifier.weight(1f))
-                ThemeQuickButton(compact = true, onLandscape = true)
+                Text("ZikrTime", style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f))
+                ThemeQuickButton(compact = true)
             }
-            // Leave the mosque and minarets visible; smaller viewports give space back to content.
-            Spacer(Modifier.height((reveal - 72.dp).coerceAtLeast(8.dp)))
-            Column(Modifier.weight(1f).fillMaxWidth().clip(RoundedCornerShape(topStart = 34.dp, topEnd = 34.dp))
-                .background(MaterialTheme.colorScheme.background).imePadding()) {
+            HorizontalDivider(Modifier.padding(horizontal = 24.dp), color = MaterialTheme.colorScheme.outlineVariant)
+            Column(Modifier.weight(1f).fillMaxWidth().imePadding()) {
                 Row(Modifier.fillMaxWidth().padding(start = 24.dp, end = 12.dp, top = 14.dp), verticalAlignment = Alignment.CenterVertically) {
                     Text(stringResource(R.string.onboarding_steps, step + 1, 5), style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.secondary, modifier = Modifier.weight(1f))
+                        color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.weight(1f))
                     if (step > 0) TextButton(onClick = { step-- }, modifier = Modifier.testTag("onboarding_back")) { Text(stringResource(R.string.action_back)) }
                 }
                 Row(Modifier.padding(horizontal = 24.dp, vertical = 10.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -66,21 +63,23 @@ fun OnboardingScreen(onCityChosen: (City) -> Unit) {
                         .background(if (i <= step) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant)) }
                 }
                 AnimatedContent(targetState = step, transitionSpec = {
-                    fadeIn(tween(if (motion) 240 else 0)) togetherWith fadeOut(tween(if (motion) 120 else 0))
+                    fadeIn(tween(if (motion) 180 else 0)) togetherWith fadeOut(tween(if (motion) 120 else 0))
                 }, modifier = Modifier.weight(1f), label = "onboarding") { page ->
                     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp),
                         verticalArrangement = Arrangement.spacedBy(20.dp)) {
                         Text(stringResource(titles[page]), style = MaterialTheme.typography.headlineLarge)
                         when (page) {
                             0 -> {
-                                Text(stringResource(R.string.slogan), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.secondary)
                                 listOf(R.drawable.ic_nav_prayer to R.string.onboarding_feature_times,
                                     R.drawable.ic_alarm to R.string.onboarding_feature_alarm,
                                     R.drawable.ic_nav_knowledge to R.string.onboarding_feature_quiz,
                                     R.drawable.ic_nav_focus to R.string.onboarding_feature_focus,
                                     R.drawable.ic_qibla to R.string.onboarding_feature_tools).forEach { (icon, label) ->
-                                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
-                                        IconBadge(painterResource(icon)); Text(stringResource(label), style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
+                                    Row(Modifier.fillMaxWidth().heightIn(min = 48.dp),
+                                        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                                        Icon(painterResource(icon), contentDescription = null,
+                                            tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(24.dp))
+                                        Text(stringResource(label), style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
                                     }
                                 }
                             }
@@ -96,10 +95,11 @@ fun OnboardingScreen(onCityChosen: (City) -> Unit) {
                             4 -> {
                                 IconBadge(painterResource(R.drawable.ic_check), size = 64.dp)
                                 Text(stringResource(R.string.onboarding_ready_text), style = MaterialTheme.typography.bodyLarge)
-                                ZCard {
+                                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                                     Text(Cities.displayName(context, Store.location), style = MaterialTheme.typography.titleLarge)
                                     Text(uiCopy(UiCopy0823.PrayerSettingsHint), color = MaterialTheme.colorScheme.onSurfaceVariant)
                                 }
+                                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
                                 AppearancePicker()
                             }
                         }

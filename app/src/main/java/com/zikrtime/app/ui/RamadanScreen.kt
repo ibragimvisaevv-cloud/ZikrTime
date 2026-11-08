@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -29,7 +28,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -41,8 +39,6 @@ import com.zikrtime.app.data.Ramadan
 import com.zikrtime.app.data.Store
 import com.zikrtime.app.prayer.Prayer
 import com.zikrtime.app.prayer.PrayerSchedule
-import com.zikrtime.app.ui.theme.Cream
-import com.zikrtime.app.ui.theme.Gold
 import com.zikrtime.app.ui.theme.Tabular
 import kotlinx.coroutines.delay
 import java.time.Duration
@@ -93,51 +89,49 @@ fun RamadanScreen() {
     val dateFmt = remember { DateTimeFormatter.ofPattern("d MMMM", com.zikrtime.app.i18n.Lang.locale(context)) }
 
     ScreenScaffold(title = stringResource(R.string.ramadan_title), onBack = { nav.back() }, showHeading = false) {
-        LandscapePanel(R.drawable.horizon_night) {
-            Column(Modifier.padding(22.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                val day = period?.dayOf(today)
-                androidx.compose.material3.Icon(painterResource(R.drawable.ic_prayer_isha), null, tint = Gold)
+        Column(Modifier.fillMaxWidth().padding(vertical = 8.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            val day = period?.dayOf(today)
+            androidx.compose.material3.Icon(painterResource(R.drawable.ic_prayer_isha), null, tint = MaterialTheme.colorScheme.primary)
+            Text(
+                when {
+                    period == null -> stringResource(R.string.ramadan_title)
+                    day != null -> stringResource(R.string.ramadan_day, day, period.days)
+                    else -> stringResource(R.string.ramadan_until, (period.start.toEpochDay() - today.toEpochDay()).toInt())
+                },
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onSurface,
+                textAlign = TextAlign.Start,
+            )
+            if (period != null && day == null) {
                 Text(
-                    when {
-                        period == null -> stringResource(R.string.ramadan_title)
-                        day != null -> stringResource(R.string.ramadan_day, day, period.days)
-                        else -> stringResource(R.string.ramadan_until, (period.start.toEpochDay() - today.toEpochDay()).toInt())
-                    },
-                    style = MaterialTheme.typography.titleLarge,
-                    color = Cream,
-                    textAlign = TextAlign.Center,
+                    stringResource(R.string.ramadan_starts, period.start.format(dateFmt)),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                if (period != null && day == null) {
-                    Text(
-                        stringResource(R.string.ramadan_starts, period.start.format(dateFmt)),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = Cream.copy(alpha = 0.8f),
-                    )
+            }
+            Spacer(Modifier.height(14.dp))
+            Text(
+                stringResource(if (state.iftarNext) R.string.ramadan_to_iftar else R.string.ramadan_to_suhur_end),
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Text(
+                hms(Duration.between(now, state.target)),
+                fontSize = if (stackTimes) 36.sp else 48.sp,
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colorScheme.primary,
+                style = Tabular,
+            )
+            Spacer(Modifier.height(12.dp))
+            if (stackTimes) {
+                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                    TimeCell(stringResource(R.string.ramadan_suhur), clock(state.suhurEnd), R.drawable.ic_prayer_fajr)
+                    TimeCell(stringResource(R.string.ramadan_iftar), clock(state.iftar), R.drawable.ic_prayer_maghrib)
                 }
-                Spacer(Modifier.height(14.dp))
-                Text(
-                    stringResource(if (state.iftarNext) R.string.ramadan_to_iftar else R.string.ramadan_to_suhur_end),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = Cream.copy(alpha = 0.85f),
-                )
-                Text(
-                    hms(Duration.between(now, state.target)),
-                    fontSize = 44.sp,
-                    fontWeight = FontWeight.Light,
-                    color = Gold,
-                    style = Tabular,
-                )
-                Spacer(Modifier.height(12.dp))
-                if (stackTimes) {
-                    Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(18.dp)) {
-                        TimeCell(stringResource(R.string.ramadan_suhur), clock(state.suhurEnd), R.drawable.ic_prayer_fajr)
-                        TimeCell(stringResource(R.string.ramadan_iftar), clock(state.iftar), R.drawable.ic_prayer_maghrib)
-                    }
-                } else {
-                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                        TimeCell(stringResource(R.string.ramadan_suhur), clock(state.suhurEnd), R.drawable.ic_prayer_fajr)
-                        TimeCell(stringResource(R.string.ramadan_iftar), clock(state.iftar), R.drawable.ic_prayer_maghrib)
-                    }
+            } else {
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(24.dp)) {
+                    TimeCell(stringResource(R.string.ramadan_suhur), clock(state.suhurEnd), R.drawable.ic_prayer_fajr, Modifier.weight(1f))
+                    TimeCell(stringResource(R.string.ramadan_iftar), clock(state.iftar), R.drawable.ic_prayer_maghrib, Modifier.weight(1f))
                 }
             }
         }
@@ -164,25 +158,25 @@ fun RamadanScreen() {
                                 Modifier
                                     .weight(1f)
                                     .aspectRatio(1f)
-                                    .clip(CircleShape)
+                                    .clip(MaterialTheme.shapes.small)
                                     .background(
                                         when {
-                                            done -> Gold
+                                            done -> MaterialTheme.colorScheme.primaryContainer
                                             canMark -> MaterialTheme.colorScheme.surfaceContainerHigh
                                             else -> MaterialTheme.colorScheme.surfaceContainerLow
                                         },
                                     )
-                                    .then(if (isToday) Modifier.border(2.dp, MaterialTheme.colorScheme.primary, CircleShape) else Modifier)
+                                    .then(if (isToday) Modifier.border(2.dp, MaterialTheme.colorScheme.primary, MaterialTheme.shapes.small) else Modifier)
                                     .toggleable(value = done, enabled = canMark, role = Role.Checkbox, onValueChange = { Ramadan.toggle(date) }),
                                 contentAlignment = Alignment.Center,
                             ) {
                                 if (done) androidx.compose.material3.Icon(painterResource(R.drawable.ic_check), null,
-                                    tint = Color(0xFF2B1E00), modifier = Modifier.align(Alignment.BottomEnd).size(14.dp))
+                                    tint = MaterialTheme.colorScheme.onPrimaryContainer, modifier = Modifier.align(Alignment.BottomEnd).size(14.dp))
                                 Text(
                                     n.toString(),
                                     style = MaterialTheme.typography.labelLarge,
                                     color = when {
-                                        done -> Color(0xFF2B1E00)
+                                        done -> MaterialTheme.colorScheme.onPrimaryContainer
                                         canMark -> MaterialTheme.colorScheme.onSurface
                                         else -> MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
                                     },
@@ -211,11 +205,14 @@ fun RamadanScreen() {
 }
 
 @Composable
-private fun TimeCell(label: String, time: String, icon: Int) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        androidx.compose.material3.Icon(painterResource(icon), contentDescription = null, tint = Gold, modifier = Modifier.height(24.dp).width(24.dp))
-        Text(label, style = MaterialTheme.typography.labelMedium, color = Cream.copy(alpha = 0.8f))
-        Text(time, style = MaterialTheme.typography.titleLarge.merge(Tabular), color = Cream)
+private fun TimeCell(label: String, time: String, icon: Int, modifier: Modifier = Modifier) {
+    Row(modifier, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        androidx.compose.material3.Icon(painterResource(icon), contentDescription = null,
+            tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(24.dp))
+        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Text(label, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(time, style = MaterialTheme.typography.titleLarge.merge(Tabular), color = MaterialTheme.colorScheme.onSurface)
+        }
     }
 }
 
@@ -230,7 +227,7 @@ fun RamadanHomeCard(now: ZonedDateTime, onOpen: () -> Unit) {
     val state = fastState(now)
     ZCard(onClick = onOpen, padding = androidx.compose.foundation.layout.PaddingValues(horizontal = 16.dp, vertical = 14.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("🌙", fontSize = 26.sp)
+            IconBadge(painterResource(R.drawable.ic_prayer_isha), container = MaterialTheme.colorScheme.primaryContainer)
             Spacer(Modifier.width(12.dp))
             Column(Modifier.weight(1f)) {
                 Text(

@@ -16,24 +16,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
-/** Wide photographic morning/evening journeys, with an Islamic horizon. */
+/** Source-compatible destination row; no decorative artwork or tile grid. */
 @Composable
 fun EditorialTile(title: String, icon: Int, warm: Boolean, modifier: Modifier = Modifier, prominent: Boolean = false, onClick: () -> Unit) {
-    val interaction = remember { MutableInteractionSource() }
-    Box(modifier.pressScale(interaction).clip(RoundedCornerShape(26.dp))
-        .clickable(interactionSource = interaction, indication = ripple(), onClick = onClick)) {
-        androidx.compose.foundation.Image(painterResource(if (warm) com.zikrtime.app.R.drawable.azkar_morning else com.zikrtime.app.R.drawable.azkar_evening),
-            null, Modifier.matchParentSize(), contentScale = androidx.compose.ui.layout.ContentScale.Crop)
-        Box(Modifier.matchParentSize().background(androidx.compose.ui.graphics.Brush.verticalGradient(listOf(
-            androidx.compose.ui.graphics.Color(0x22171B18), androidx.compose.ui.graphics.Color(0xDD171B18)))))
-        Column(Modifier.fillMaxWidth().heightIn(min = if (prominent) 232.dp else 154.dp).padding(18.dp), verticalArrangement = Arrangement.SpaceBetween) {
-            Icon(painterResource(icon), null, tint = Sand, modifier = Modifier.size(24.dp))
-            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                Text(title, color = Porcelain, style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
-                Surface(color = Porcelain.copy(alpha = .08f), shape = CircleShape, border = BorderStroke(1.dp, Porcelain.copy(alpha = .6f))) {
-                    Box(Modifier.size(40.dp), contentAlignment = Alignment.Center) { Text("›", color = Porcelain, style = MaterialTheme.typography.headlineSmall) }
-                }
-            }
-        }
+    val scheme = MaterialTheme.colorScheme
+    Row(modifier.fillMaxWidth().clip(MaterialTheme.shapes.medium).clickable(onClick = onClick)
+        .heightIn(min = 72.dp).padding(16.dp), verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Icon(painterResource(icon), null, tint = scheme.primary, modifier = Modifier.size(24.dp))
+        Text(title, style = if (prominent) MaterialTheme.typography.titleLarge else MaterialTheme.typography.titleMedium,
+            modifier = Modifier.weight(1f))
+        Text("→", color = scheme.primary)
     }
 }

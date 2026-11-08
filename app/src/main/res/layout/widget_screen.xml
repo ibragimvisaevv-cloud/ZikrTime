@@ -1,71 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/widget_root"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/widget_surface_light"
-    android:clipToOutline="true">
-
-    <ImageView
-        android:id="@+id/w_bg"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:importantForAccessibility="no"
-        android:scaleType="fitXY" />
-
-    <ImageView
-        android:id="@+id/w_star"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:layout_gravity="end|bottom"
-        android:layout_marginEnd="-18dp"
-        android:layout_marginBottom="-18dp"
-        android:importantForAccessibility="no"
-        android:src="@drawable/widget_star" />
-
-    <!-- Кольцо: сколько экранного времени осталось -->
-    <ImageView
-        android:id="@+id/w_ring"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_gravity="end|top"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:importantForAccessibility="no" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="bottom"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <TextView
-            android:id="@+id/w_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="0dp"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textColor="#D9F7F2EA"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/w_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:fontFamily="sans-serif-medium"
-            android:maxLines="1"
-            android:textColor="#E6CBA6"
-            android:textSize="28sp" />
-
-        <TextView
-            android:id="@+id/w_hint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLines="2"
-            android:textColor="#E6F7F2EA"
-            android:textSize="12sp" />
+    android:id="@+id/widget_root" android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/widget_surface_light" android:clipToOutline="true">
+    <ImageView android:id="@+id/w_bg" android:layout_width="match_parent" android:layout_height="match_parent"
+        android:importantForAccessibility="no" android:visibility="gone" android:scaleType="fitXY" />
+    <ImageView android:id="@+id/w_star" android:layout_width="1dp" android:layout_height="1dp"
+        android:importantForAccessibility="no" android:visibility="gone" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+        android:orientation="vertical" android:padding="16dp">
+        <TextView android:id="@+id/w_label" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:ellipsize="end" android:maxLines="2" android:includeFontPadding="false"
+            android:textColor="@color/widget_ink" android:textSize="12sp" android:fontFamily="sans-serif-medium" />
+        <TextView android:layout_width="1dp" android:layout_height="0dp" android:layout_weight="1" />
+        <TextView android:id="@+id/w_value" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="6dp" android:fontFamily="sans-serif-medium" android:fontFeatureSettings="tnum"
+            android:includeFontPadding="false" android:maxLines="1" android:textColor="@color/widget_ink" android:textSize="28sp" />
+        <TextView android:id="@+id/w_hint" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" android:maxLines="2" android:ellipsize="end" android:includeFontPadding="false"
+            android:textColor="@color/widget_ink" android:textSize="12sp" />
+        <ImageView android:id="@+id/w_ring" android:layout_width="match_parent" android:layout_height="12dp"
+            android:layout_marginTop="8dp" android:importantForAccessibility="no" android:scaleType="fitXY" />
     </LinearLayout>
 </FrameLayout>

@@ -69,7 +69,7 @@ fun AdhanVoiceList(selected: String, onSelect: (String) -> Unit, includeSystem: 
                 Modifier
                     .fillMaxWidth()
                     .testTag("adhan_select_${voice.id}")
-                    .clip(RoundedCornerShape(16.dp))
+                    .clip(MaterialTheme.shapes.small)
                     .clickable { onSelect(voice.id) }
                     .padding(vertical = 4.dp, horizontal = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -130,6 +130,9 @@ private fun AdhanSourceDialog(voice: AdhanSound.Voice, onDismiss: () -> Unit) {
     }
     AlertDialog(
         onDismissRequest = onDismiss,
+        shape = MaterialTheme.shapes.extraLarge,
+        containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+        tonalElevation = 0.dp,
         title = { Text(stringResource(voice.titleRes)) },
         text = {
             Column {
@@ -144,14 +147,14 @@ private fun AdhanSourceDialog(voice: AdhanSound.Voice, onDismiss: () -> Unit) {
     )
 }
 
-/** Круглая кнопка ▶ / ■ с золотым кольцом, пока звучит. */
+/** Preview has a distinct play/stop shape and a full 48 dp touch target. */
 @Composable
 private fun PlayButton(playing: Boolean, id: String, onClick: () -> Unit) {
     val scheme = MaterialTheme.colorScheme
     val label = stringResource(if (playing) R.string.adhan_stop_preview else R.string.adhan_preview)
     Box(
         Modifier
-            .size(44.dp)
+            .size(48.dp)
             .testTag("adhan_preview_$id")
             .semantics { contentDescription = label }
             .clip(CircleShape)

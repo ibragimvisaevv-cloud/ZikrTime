@@ -219,7 +219,7 @@
     <string name="tasbih_subtitle">Счётчик зикров</string>
     <string name="tasbih_of">из %1$d</string>
     <string name="tasbih_laps">Кругов: %1$d</string>
-    <string name="tasbih_tap_hint">Нажимайте на круг, чтобы считать</string>
+    <string name="tasbih_tap_hint">Нажимайте на счётчик, чтобы считать</string>
     <string name="tasbih_target">Цель</string>
     <string name="tasbih_today">Сегодня: %1$d</string>
     <string name="zikr_1_name">Субханаллах</string>

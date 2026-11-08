@@ -43,40 +43,26 @@ fun StandardSystemBars() {
     } }
 }
 
-/** The approved home scene also connects onboarding, ringing and interruption screens. */
+/** Calm ink surface for alarms and interruption screens; no image or looping effects. */
 @Composable
 fun SceneBackdrop(modifier: Modifier = Modifier, night: Boolean = LocalDarkTheme.current, controlBars: Boolean = true) {
     val view = androidx.compose.ui.platform.LocalView.current
     if (controlBars) SideEffect {
         (view.context as? android.app.Activity)?.let {
-            androidx.core.view.WindowCompat.getInsetsController(it.window, view).isAppearanceLightStatusBars = false
+            androidx.core.view.WindowCompat.getInsetsController(it.window, view).apply {
+                isAppearanceLightStatusBars = false
+                isAppearanceLightNavigationBars = false
+            }
         }
     }
-    Box(modifier) {
-        Image(painterResource(if (night) R.drawable.horizon_portrait_night else R.drawable.horizon_portrait_day),
-            contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
-        Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(
-            Color(0xFF171B18).copy(alpha = .52f), Color(0xFF171B18).copy(alpha = .16f), Color(0xFF171B18).copy(alpha = .82f)))))
-    }
+    Box(modifier.background(if (night) Color(0xFF14171D) else Color(0xFF223E71)))
 }
 
 @Composable
 fun PageHeading(title: String, subtitle: String? = null, scene: Int? = null) {
-    val type = (if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) MaterialTheme.typography.headlineMedium
-        else MaterialTheme.typography.headlineLarge).copy(hyphens = androidx.compose.ui.text.style.Hyphens.Auto)
-    if (scene == null) {
-        Column(Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 8.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-            Box(Modifier.width(30.dp).height(3.dp).background(MaterialTheme.colorScheme.secondary, RoundedCornerShape(4.dp)))
-            Text(title, style = type)
-            if (subtitle != null) Text(subtitle, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        }
-    } else {
-        LandscapePanel(scene) {
-            Column(Modifier.fillMaxWidth().heightIn(min = 168.dp).padding(24.dp), verticalArrangement = Arrangement.Bottom) {
-                Text(title, style = type, color = Porcelain)
-                if (subtitle != null) Text(subtitle, style = MaterialTheme.typography.bodyMedium, color = Porcelain.copy(alpha = .88f))
-            }
-        }
+    Column(Modifier.fillMaxWidth().padding(top = 4.dp, bottom = 8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text(title, style = MaterialTheme.typography.headlineMedium.copy(hyphens = androidx.compose.ui.text.style.Hyphens.Auto))
+        if (subtitle != null) Text(subtitle, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 
@@ -84,7 +70,7 @@ fun PageHeading(title: String, subtitle: String? = null, scene: Int? = null) {
 @Composable
 fun StatePanel(title: String, text: String? = null, icon: Int = R.drawable.ic_nav_knowledge,
     action: String? = null, onAction: (() -> Unit)? = null, error: Boolean = false) {
-    Surface(shape = RoundedCornerShape(24.dp), color = if (error) MaterialTheme.colorScheme.errorContainer.copy(alpha = .45f)
+    Surface(shape = MaterialTheme.shapes.large, color = if (error) MaterialTheme.colorScheme.errorContainer.copy(alpha = .45f)
         else MaterialTheme.colorScheme.surfaceContainerHigh, modifier = Modifier.fillMaxWidth()) {
         Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             IconBadge(painterResource(icon), size = 44.dp)
@@ -108,7 +94,7 @@ fun HorizonDialog(onDismissRequest: () -> Unit, confirmButton: @Composable () ->
 @Composable
 fun HorizonSheet(title: String, onDismiss: () -> Unit, content: @Composable ColumnScope.() -> Unit) {
     ModalBottomSheet(onDismissRequest = onDismiss, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-        containerColor = MaterialTheme.colorScheme.surfaceContainerLow, shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp)) {
+        containerColor = MaterialTheme.colorScheme.surfaceContainerLow, shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)) {
         Column(Modifier.fillMaxWidth().semantics { testTagsAsResourceId = true }.imePadding().verticalScroll(rememberScrollState()).padding(horizontal = 24.dp)
             .padding(bottom = 24.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
             Text(title, style = MaterialTheme.typography.headlineSmall)
@@ -148,7 +134,7 @@ fun ReadingTools(scale: Float, onScale: (Float) -> Unit) {
 /** Compact status for content-heavy screens such as map and calculation settings. */
 @Composable
 fun StatusLine(text: String, error: Boolean = false) {
-    Surface(shape = RoundedCornerShape(16.dp), color = if (error) MaterialTheme.colorScheme.errorContainer.copy(alpha = .5f)
+    Surface(shape = MaterialTheme.shapes.medium, color = if (error) MaterialTheme.colorScheme.errorContainer.copy(alpha = .5f)
         else MaterialTheme.colorScheme.secondaryContainer.copy(alpha = .5f), modifier = Modifier.fillMaxWidth()) {
         Row(Modifier.padding(14.dp), horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
             Icon(painterResource(R.drawable.ic_pin), null, tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(20.dp))

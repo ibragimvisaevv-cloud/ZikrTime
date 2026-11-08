@@ -219,7 +219,7 @@
     <string name="tasbih_subtitle">Dhikr counter</string>
     <string name="tasbih_of">of %1$d</string>
     <string name="tasbih_laps">Rounds: %1$d</string>
-    <string name="tasbih_tap_hint">Tap the circle to count</string>
+    <string name="tasbih_tap_hint">Tap the counter to count</string>
     <string name="tasbih_target">Target</string>
     <string name="tasbih_today">Today: %1$d</string>
     <string name="zikr_1_name">SubhanAllah</string>

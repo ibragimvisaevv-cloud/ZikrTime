@@ -2,7 +2,6 @@ package com.zikrtime.app.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.*
@@ -26,7 +25,7 @@ internal fun QuranSavedEntry(count: Int, open: () -> Unit) {
     val p = quranPaperColors()
     val description = stringResource(R.string.qm_in_surah, count)
     Surface(onClick = open, modifier = Modifier.fillMaxWidth().testTag("quran_saved_open")
-        .semantics { contentDescription = description }, shape = RoundedCornerShape(12.dp),
+        .semantics { contentDescription = description }, shape = MaterialTheme.shapes.small,
         color = p.paper, border = BorderStroke(1.dp, p.rule)) {
         Row(Modifier.heightIn(min = 48.dp).padding(horizontal = 12.dp, vertical = 6.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -75,7 +74,7 @@ internal fun QuranSavedIndicator(surah: Int, mark: QuranSavedMark, open: () -> U
 internal fun QuranSavedNotePreview(mark: QuranSavedMark, open: () -> Unit) {
     val p = quranPaperColors()
     Surface(onClick = open, modifier = Modifier.fillMaxWidth().testTag("quran_saved_note_preview_" + mark.ayah),
-        shape = RoundedCornerShape(12.dp), color = p.selection.copy(alpha = .38f)) {
+        shape = MaterialTheme.shapes.small, color = p.selection.copy(alpha = .38f)) {
         Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Filled.Edit, null, modifier = Modifier.size(16.dp), tint = p.accent)
@@ -98,7 +97,7 @@ internal fun QuranSavedSheet(surah: Int, name: String, marks: List<QuranSavedMar
                 style = MaterialTheme.typography.bodyLarge, color = p.muted)
             marks.forEach { mark ->
                 val description = markDescription(surah, mark)
-                Surface(shape = RoundedCornerShape(16.dp), color = p.paper, border = BorderStroke(1.dp, p.rule)) {
+                Surface(shape = MaterialTheme.shapes.medium, color = p.paper, border = BorderStroke(1.dp, p.rule)) {
                     Column(Modifier.fillMaxWidth().padding(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
                             QuranSavedIcons(mark)

@@ -121,11 +121,10 @@ fun ScreenScaffold(
     androidx.compose.runtime.LaunchedEffect(scrollKey) { if (scrollKey != null) scroll.scrollTo(0) }
     Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
         .windowInsetsPadding(WindowInsets.statusBars).imePadding()) {
-        Surface(color = MaterialTheme.colorScheme.surfaceContainerLow, tonalElevation = 0.dp) {
+        Surface(color = MaterialTheme.colorScheme.background, tonalElevation = 0.dp) {
             Row(Modifier.fillMaxWidth().heightIn(min = 64.dp).padding(horizontal = 12.dp, vertical = 4.dp),
                 verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = onBack, modifier = Modifier.clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.surfaceContainerHigh)) {
+                IconButton(onClick = onBack, modifier = Modifier.clip(MaterialTheme.shapes.small)) {
                     Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.action_back))
                 }
                 Spacer(Modifier.width(12.dp))
@@ -138,7 +137,7 @@ fun ScreenScaffold(
             .let { if (scrollable) it.verticalScroll(scroll) else it }.padding(horizontal = 20.dp)
         Column(body, verticalArrangement = Arrangement.spacedBy(20.dp)) {
             Spacer(Modifier.height(0.dp))
-            if (showHeading && scrollable && scene != null) PageHeading(title, scene = scene)
+            // The persistent title already identifies this screen; no duplicate photo heading.
             content()
             Spacer(Modifier.height(12.dp))
             Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
@@ -223,7 +222,7 @@ fun IconBadge(
     container: Color = MaterialTheme.colorScheme.surfaceContainerHigh,
     size: Dp = 40.dp,
 ) {
-    val shape = RoundedCornerShape(size * 0.4f)
+    val shape = MaterialTheme.shapes.small
     Box(
         modifier
             .size(size)
@@ -553,18 +552,29 @@ fun BigClock(time: ZonedDateTime, fontSize: TextUnit, color: Color, modifier: Mo
     val locale = Lang.locale(context)
     val h24 = android.text.format.DateFormat.is24HourFormat(context)
     val digits = time.format(DateTimeFormatter.ofPattern(if (h24) "HH:mm" else "h:mm", locale))
-    Row(modifier, verticalAlignment = Alignment.Bottom) {
-        Text(digits, fontSize = fontSize, fontWeight = weight, color = color, style = Tabular, fontFamily = androidx.compose.ui.text.font.FontFamily.Serif, maxLines = 1, softWrap = false)
-        if (!h24) {
-            Spacer(Modifier.width(6.dp))
-            Text(
-                time.format(DateTimeFormatter.ofPattern("a", locale)),
-                fontSize = fontSize * 0.32f,
-                fontWeight = FontWeight.Medium,
-                color = color,
-                maxLines = 1,
-                modifier = Modifier.padding(bottom = (fontSize.value * 0.18f).dp),
-            )
+    val period = if (h24) "" else time.format(DateTimeFormatter.ofPattern("a", locale))
+    val measurer = androidx.compose.ui.text.rememberTextMeasurer()
+    androidx.compose.foundation.layout.BoxWithConstraints(modifier) {
+        val baseStyle = Tabular.copy(fontFamily = androidx.compose.ui.text.font.FontFamily.SansSerif,
+            fontSize = fontSize, fontWeight = weight)
+        val digitsWidth = measurer.measure(androidx.compose.ui.text.AnnotatedString(digits), baseStyle,
+            softWrap = false, maxLines = 1).size.width
+        val suffixWidth = if (h24) 0 else measurer.measure(androidx.compose.ui.text.AnnotatedString(period),
+            baseStyle.copy(fontSize = fontSize * .32f, fontWeight = FontWeight.Medium),
+            softWrap = false, maxLines = 1).size.width
+        val gap = with(androidx.compose.ui.platform.LocalDensity.current) { if (h24) 0f else 6.dp.toPx() }
+        val required = digitsWidth + suffixWidth + gap
+        val ratio = if (constraints.hasBoundedWidth && required > constraints.maxWidth)
+            ((constraints.maxWidth - gap).coerceAtLeast(1f) / (digitsWidth + suffixWidth).coerceAtLeast(1)).coerceAtMost(1f) else 1f
+        val fitted = fontSize * ratio
+        Row(verticalAlignment = Alignment.Bottom) {
+            Text(digits, fontSize = fitted, fontWeight = weight, color = color, style = Tabular,
+                fontFamily = androidx.compose.ui.text.font.FontFamily.SansSerif, maxLines = 1, softWrap = false)
+            if (!h24) {
+                Spacer(Modifier.width(6.dp))
+                Text(period, fontSize = fitted * .32f, fontWeight = FontWeight.Medium, color = color,
+                    maxLines = 1, softWrap = false, modifier = Modifier.padding(bottom = (fitted.value * .18f).dp))
+            }
         }
     }
 }

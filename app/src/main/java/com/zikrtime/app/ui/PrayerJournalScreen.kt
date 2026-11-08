@@ -4,6 +4,9 @@ package com.zikrtime.app.ui
 
 import android.app.DatePickerDialog
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.background
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.icons.Icons
@@ -104,7 +107,7 @@ fun PrayerJournalScreen(initialDay: String? = null, initialPrayer: String? = nul
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 for (n in listOf(7, 30)) FilterChip(days == n, { days = n }, label = { Text(daysText(n)) })
             }
-            ZCard(padding = PaddingValues(16.dp)) {
+            Column(Modifier.fillMaxWidth()) {
                 for ((index, mark) in listOf(PrayerMark.DONE, PrayerMark.MADE_UP, PrayerMark.MISSED, PrayerMark.UNMARKED).withIndex()) {
                     if (index > 0) HorizontalDivider()
                     Row(Modifier.fillMaxWidth().padding(vertical = 9.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -137,15 +140,21 @@ fun PrayerJournalScreen(initialDay: String? = null, initialPrayer: String? = nul
                 }
             }
             val marks = Store.prayerMarks(day)
-            ZCard(padding = PaddingValues(horizontal = 12.dp, vertical = 4.dp)) {
+            Column(Modifier.fillMaxWidth()) {
+                val axis = MaterialTheme.colorScheme.outlineVariant
                 Prayer.obligatory.forEachIndexed { index, prayer ->
-                    if (index > 0) HorizontalDivider()
                     val available = started(day, prayer)
                     val status = marks[prayer] ?: PrayerMark.UNMARKED
                     Row(Modifier.fillMaxWidth().testTag("journal_" + prayer.name)
                         .clickable(enabled = available, role = Role.Button) { edit = prayer.name }
-                        .padding(vertical = 13.dp, horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
-                        Icon(painterResource(prayerIconRes(prayer)), null, Modifier.size(22.dp), tint = MaterialTheme.colorScheme.primary)
+                        .drawBehind {
+                            val x = 15.dp.toPx()
+                            if (index > 0) drawLine(axis, Offset(x, 0f), Offset(x, size.height / 2), 1.dp.toPx())
+                            if (index < Prayer.obligatory.lastIndex) drawLine(axis, Offset(x, size.height / 2), Offset(x, size.height), 1.dp.toPx())
+                        }.padding(vertical = 16.dp, horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+                        Icon(painterResource(prayerIconRes(prayer)), null,
+                            Modifier.size(22.dp).background(MaterialTheme.colorScheme.background),
+                            tint = if (available) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant)
                         Spacer(Modifier.width(12.dp))
                         Column(Modifier.weight(1f)) {
                             Text(prayerName(prayer), style = MaterialTheme.typography.titleMedium)
@@ -153,6 +162,8 @@ fun PrayerJournalScreen(initialDay: String? = null, initialPrayer: String? = nul
                                 modifier = Modifier.testTag("journal_state_" + prayer.name + "_" + status.name),
                                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
+                        if (available) Icon(Icons.AutoMirrored.Filled.ArrowForward, null,
+                            modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.primary)
                     }
                 }
             }
@@ -190,7 +201,9 @@ fun PrayerJournalScreen(initialDay: String? = null, initialPrayer: String? = nul
                 Prayer.ISHA -> PrayerSchedule.forDate(day.plusDays(1), zone)[Prayer.FAJR]
                 Prayer.SUNRISE -> error("Sunrise is not a prayer")
             }.isAfter(now)
-            AlertDialog(onDismissRequest = { edit = null }, modifier = Modifier.semantics { testTagsAsResourceId = true }, title = { Text(prayerName(prayer)) }, text = {
+            AlertDialog(onDismissRequest = { edit = null }, modifier = Modifier.semantics { testTagsAsResourceId = true },
+                containerColor = MaterialTheme.colorScheme.surfaceContainerLow, tonalElevation = 0.dp,
+                shape = MaterialTheme.shapes.extraLarge, title = { Text(prayerName(prayer)) }, text = {
                 Column {
                     Text(journalDate(day), style = MaterialTheme.typography.bodyMedium)
                     listOf(PrayerMark.DONE, PrayerMark.MISSED, PrayerMark.MADE_UP, PrayerMark.UNMARKED).forEach { mark ->

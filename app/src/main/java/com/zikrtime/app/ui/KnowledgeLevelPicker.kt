@@ -61,8 +61,8 @@ fun KnowledgeLevelControl(bank: QuizBank) {
             Text(stringResource(if(current==null) R.string.learning_level_choose else R.string.learning_level_change))
         }
     }
-    Surface(color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = .5f),
-        shape = RoundedCornerShape(20.dp), modifier = Modifier.fillMaxWidth()) {
+    Surface(color = MaterialTheme.colorScheme.surfaceContainerLow,
+        shape = MaterialTheme.shapes.medium, modifier = Modifier.fillMaxWidth()) {
         BoxWithConstraints(Modifier.fillMaxWidth().padding(start = 16.dp, end = 8.dp, top = 8.dp, bottom = 8.dp)) {
             if(maxWidth < 280.dp || LocalDensity.current.fontScale > 1.3f) {
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -111,9 +111,9 @@ private fun KnowledgeLevelPicker(bank: QuizBank, initial: KnowledgeLevel? = null
         Column(Modifier.selectableGroup(), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             KnowledgeLevel.entries.forEach { level ->
                 val selected = choice == level
-                Surface(shape = RoundedCornerShape(22.dp),
-                    color = if(selected) scheme.secondaryContainer else scheme.surfaceContainer,
-                    border = BorderStroke(1.dp, if(selected) scheme.secondary else scheme.outlineVariant)) {
+                Surface(shape = MaterialTheme.shapes.medium,
+                    color = if(selected) scheme.primaryContainer else scheme.surfaceContainerLow,
+                    border = BorderStroke(if(selected) 2.dp else 1.dp, if(selected) scheme.primary else scheme.outlineVariant)) {
                     Row(Modifier.fillMaxWidth().selectable(selected, role = Role.RadioButton, onClick = { choice = level })
                         .testTag("learning_level_${level.id}").padding(16.dp),
                         horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -125,7 +125,7 @@ private fun KnowledgeLevelPicker(bank: QuizBank, initial: KnowledgeLevel? = null
                                 KnowledgeLevel.ADVANCED -> R.string.learning_level_advanced_hint
                             }), style = MaterialTheme.typography.bodyMedium, color = scheme.onSurfaceVariant)
                             Text(stringResource(R.string.learning_level_count, bank.questionsFor(null,level.id).size),
-                                style = MaterialTheme.typography.labelMedium, color = scheme.secondary)
+                                style = MaterialTheme.typography.labelMedium, color = scheme.primary)
                         }
                         RadioButton(selected = selected, onClick = null)
                     }

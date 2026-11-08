@@ -110,15 +110,15 @@ private fun QiblaViewDialog(onClose: () -> Unit) {
                     horizontalAlignment = Alignment.CenterHorizontally) {
                     QiblaScene(relative, pose.elevation, reliable, aligned, Modifier.fillMaxWidth().height(sceneHeight))
                     Surface(Modifier.padding(horizontal = 20.dp).fillMaxWidth().testTag("qibla_view_direction"),
-                        color = if (aligned) colors.secondaryContainer else colors.surfaceContainer,
-                        shape = RoundedCornerShape(24.dp)) {
+                        color = if (aligned) colors.primaryContainer else colors.surfaceContainer,
+                        shape = MaterialTheme.shapes.medium) {
                         Column(Modifier.padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.spacedBy(10.dp)) {
                             Text(message, style = MaterialTheme.typography.titleLarge, textAlign = TextAlign.Center,
-                                color = if (aligned) colors.onSecondaryContainer else colors.onSurface)
+                                color = if (aligned) colors.onPrimaryContainer else colors.onSurface)
                             Text(stringResource(R.string.qibla_bearing) + " · ${target.roundToInt()}°",
                                 style = MaterialTheme.typography.labelLarge,
-                                color = if (aligned) colors.onSecondaryContainer else colors.onSurfaceVariant)
+                                color = if (aligned) colors.onPrimaryContainer else colors.onSurfaceVariant)
                         }
                     }
                     Text(stringResource(R.string.qibla_view_note), Modifier.padding(horizontal = 28.dp, vertical = 20.dp),
@@ -148,19 +148,17 @@ private fun QiblaScene(relative: Float?, elevation: Float, reliable: Boolean, al
     val colors = MaterialTheme.colorScheme
     BoxWithConstraints(modifier.testTag("qibla_view_scene"), contentAlignment = Alignment.Center) {
         val frameWidth = minOf(maxWidth * 0.88f, (maxHeight - 56.dp) * (16f / 9f), 700.dp)
-        Box(Modifier.fillMaxSize().background(Brush.radialGradient(listOf(
-            colors.secondary.copy(alpha = if (aligned) 0.15f else 0.07f), Color.Transparent))))
         Canvas(Modifier.fillMaxSize()) {
             val centerX = size.width / 2
-            val lineColor = colors.secondary.copy(alpha = 0.5f)
+            val lineColor = colors.primary.copy(alpha = 0.7f)
             drawLine(lineColor, Offset(centerX, 16.dp.toPx()), Offset(centerX, 38.dp.toPx()), 1.dp.toPx())
             drawCircle(lineColor, 2.dp.toPx(), Offset(centerX, size.height - 28.dp.toPx()))
         }
         Surface(Modifier.width(frameWidth).offset(shiftX.dp, shiftY.dp)
             .graphicsLayer { scaleX = scale; scaleY = scale; alpha = opacity },
-            shape = RoundedCornerShape(24.dp), color = colors.surfaceContainerLow,
-            border = BorderStroke(if (aligned) 2.dp else 1.dp, if (aligned) colors.secondary else colors.outlineVariant),
-            shadowElevation = 6.dp) {
+            shape = MaterialTheme.shapes.medium, color = colors.surfaceContainerLow,
+            border = BorderStroke(if (aligned) 2.dp else 1.dp, if (aligned) colors.primary else colors.outlineVariant),
+            shadowElevation = 0.dp) {
             Image(painterResource(R.drawable.qibla_kaaba), stringResource(R.string.qibla_view_image),
                 contentScale = ContentScale.Fit, modifier = Modifier.fillMaxWidth().aspectRatio(16f / 9f).testTag("qibla_view_photo"))
         }

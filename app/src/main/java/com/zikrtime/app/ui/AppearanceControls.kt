@@ -37,12 +37,12 @@ fun ThemeQuickButton(compact: Boolean = false, onLandscape: Boolean = false) {
             change(if (dark) "light" else "dark", origin)
         }, modifier = Modifier.size(48.dp).onGloballyPositioned { origin = it.boundsInWindow().center }.testTag("theme_quick_toggle").semantics { testTagsAsResourceId = true }) {
             Icon(painterResource(if (dark) R.drawable.ic_prayer_sunrise else R.drawable.ic_prayer_isha),
-                contentDescription = label, tint = if (onLandscape) Porcelain else scheme.onSurface,
+                contentDescription = label, tint = scheme.onSurface,
                 modifier = Modifier.size(22.dp))
         }
         return
     }
-    Surface(color = scheme.surfaceContainerHigh, shape = RoundedCornerShape(24.dp)) {
+    Surface(color = scheme.surfaceContainerHigh, shape = MaterialTheme.shapes.medium) {
         Row(Modifier.selectableGroup().padding(3.dp), verticalAlignment = Alignment.CenterVertically) {
             listOf(false, true).forEach { option ->
                 var optionOrigin by remember { mutableStateOf(Offset.Zero) }
@@ -50,7 +50,7 @@ fun ThemeQuickButton(compact: Boolean = false, onLandscape: Boolean = false) {
                 val label = stringResource(if (option) R.string.appearance_dark else R.string.appearance_light)
                 Surface(color = if (selected) scheme.primary else Color.Transparent,
                     contentColor = if (selected) scheme.onPrimary else scheme.onSurfaceVariant,
-                    shape = RoundedCornerShape(20.dp)) {
+                    shape = MaterialTheme.shapes.small) {
                     Row(Modifier.heightIn(min = 48.dp).onGloballyPositioned { optionOrigin = it.boundsInWindow().center }
                         .then(if (!selected) Modifier.testTag("theme_quick_toggle").semantics { testTagsAsResourceId = true } else Modifier)
                         .selectable(selected = selected, role = Role.RadioButton, onClick = { if (!selected) change(if (option) "dark" else "light", optionOrigin) })
@@ -94,23 +94,28 @@ fun AppearancePicker() {
 @Composable
 fun AppearanceSegments() {
     val change = rememberAppearanceChange()
-    val large = androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f
+    val large = androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f ||
+        androidx.compose.ui.platform.LocalConfiguration.current.screenWidthDp < 380
     val options = listOf("light" to R.string.appearance_light, "dark" to R.string.appearance_dark, "system" to R.string.appearance_system)
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(stringResource(R.string.appearance_title), color = Porcelain, style = MaterialTheme.typography.labelLarge)
+        Text(stringResource(R.string.appearance_title), color = MaterialTheme.colorScheme.onSurface, style = MaterialTheme.typography.titleMedium)
         val option: @Composable (String, Int, Modifier) -> Unit = { value, label, modifier ->
             var optionOrigin by remember { mutableStateOf(Offset.Zero) }
             val selected = Store.appearance == value
-            Surface(color = if (selected) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainerHigh,
-                contentColor = if (selected) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurface,
+            Surface(color = if (selected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceContainerLow,
+                contentColor = if (selected) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurface,
                 border = androidx.compose.foundation.BorderStroke(1.dp,
-                    if (selected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.outlineVariant),
-                shape = RoundedCornerShape(16.dp), modifier = modifier) {
+                    if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant),
+                shape = MaterialTheme.shapes.small, modifier = modifier) {
                 Box(Modifier.heightIn(min = 52.dp).onGloballyPositioned { optionOrigin = it.boundsInWindow().center }.testTag("appearance_$value").semantics { testTagsAsResourceId = true }
                     .selectable(selected = selected, role = Role.RadioButton, onClick = {
                         change(value, optionOrigin)
                     }).padding(horizontal = 12.dp, vertical = 12.dp), contentAlignment = Alignment.Center) {
-                    Text(stringResource(label), style = MaterialTheme.typography.labelLarge)
+                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                        if (selected) Icon(painterResource(R.drawable.ic_check), contentDescription = null,
+                            modifier = Modifier.size(16.dp))
+                        Text(stringResource(label), style = MaterialTheme.typography.labelLarge)
+                    }
                 }
             }
         }

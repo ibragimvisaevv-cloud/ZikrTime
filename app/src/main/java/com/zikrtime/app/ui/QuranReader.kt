@@ -13,6 +13,8 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -240,6 +242,8 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
             if (!fullscreen) {
                 FilledTonalButton(onClick = { openAyahSheet(currentAyah, "actions") },
                     modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp).testTag("quran_audio_reader_entry")) {
+                    Icon(Icons.Filled.PlayArrow, null, Modifier.size(20.dp))
+                    Spacer(Modifier.width(8.dp))
                     Text(stringResource(R.string.ql_listen_ayah_short))
                 }
                 BoxWithConstraints(Modifier.fillMaxWidth()) {
@@ -247,10 +251,12 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
                     val stackModes = maxWidth / LocalDensity.current.fontScale < 320.dp
                     val modeChips: @Composable (Modifier) -> Unit = { chipModifier ->
                         FilterChip(selected = wholeSurah, onClick = { switchMode(true) },
+                            leadingIcon = if (wholeSurah) { { Icon(Icons.Filled.Check, null, Modifier.size(18.dp)) } } else null,
                             modifier = chipModifier.then(if (!wholeSurah) Modifier.testTag("quran_read_mode") else Modifier),
                             label = { Text(stringResource(R.string.qp_reading_mode),
                                 Modifier.fillMaxWidth().testTag("quran_mode_read"), textAlign = TextAlign.Center) })
                         FilterChip(selected = !wholeSurah, onClick = { switchMode(false) },
+                            leadingIcon = if (!wholeSurah) { { Icon(Icons.Filled.Check, null, Modifier.size(18.dp)) } } else null,
                             modifier = chipModifier.then(if (wholeSurah) Modifier.testTag("quran_read_mode") else Modifier),
                             label = { Text(stringResource(R.string.qp_translation_mode),
                                 Modifier.fillMaxWidth().testTag("quran_mode_translation"), textAlign = TextAlign.Center) })
@@ -275,7 +281,7 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
                 Column(Modifier.fillMaxSize().padding(horizontal = if (compact) 12.dp else 18.dp)) {
                     if (!compact) QuranSurahHeading(surah, Modifier.fillMaxWidth())
                     if (wholeSurah) {
-                        // Source text and offsets stay exact. The frame has no fake Mushaf page numbers.
+                        // Source text, Arabic leading and exact ayah geometry are preserved.
                         LazyColumn(
                             modifier = Modifier.fillMaxWidth().weight(1f)
                                 .onGloballyPositioned { geometry.viewport = it }

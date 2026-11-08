@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
@@ -148,7 +149,7 @@ fun AppGuideScreen(
             }
         }
 
-        Surface(modifier = Modifier.fillMaxWidth(), color = colors.surfaceContainer, tonalElevation = 1.dp) {
+        Surface(modifier = Modifier.fillMaxWidth(), color = colors.surfaceContainerLow, tonalElevation = 0.dp) {
             Box(contentAlignment = Alignment.Center) {
             Row(
                 Modifier.widthIn(max = 840.dp).fillMaxWidth().padding(horizontal = 16.dp, vertical = 10.dp),
@@ -176,6 +177,9 @@ fun AppGuideScreen(
         AlertDialog(
             onDismissRequest = { contents = false },
             modifier = Modifier.testTag("guide_contents_dialog").semantics { testTagsAsResourceId = true },
+            shape = MaterialTheme.shapes.extraLarge,
+            containerColor = colors.surfaceContainerLow,
+            tonalElevation = 0.dp,
             title = { Text(stringResource(R.string.guide_contents)) },
             text = {
                 LazyColumn(Modifier.heightIn(max = 420.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -233,7 +237,9 @@ private fun GuidePage(topic: GuideTopic, firstRun: Boolean, onFinish: () -> Unit
                         val description = stringResource(R.string.guide_visual_step, index + 1, topic.steps.size) +
                             ": " + stringResource(topic.controls[index])
                         FilterChip(selected = step == index, onClick = { step = index },
-                            label = { Text((index + 1).toString(), modifier = Modifier.padding(horizontal = 14.dp)) },
+                            label = { Text((index + 1).toString(), modifier = Modifier.padding(horizontal = 10.dp)) },
+                            leadingIcon = if (step == index) ({ Icon(painterResource(R.drawable.ic_check),
+                                contentDescription = null, modifier = Modifier.size(16.dp)) }) else null,
                             modifier = Modifier.heightIn(min = 48.dp).testTag("guide_step_" + (index + 1))
                                 .semantics { contentDescription = description })
                     }
@@ -269,14 +275,14 @@ private fun GuidePage(topic: GuideTopic, firstRun: Boolean, onFinish: () -> Unit
 @Composable
 private fun GuideStep(topic: GuideTopic, step: Int, modifier: Modifier) {
     Surface(modifier.testTag("guide_step_caption"), shape = MaterialTheme.shapes.large,
-        color = MaterialTheme.colorScheme.secondaryContainer) {
+        color = MaterialTheme.colorScheme.primaryContainer) {
         Row(Modifier.padding(16.dp), verticalAlignment = Alignment.Top, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             GuideNumber(step + 1)
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 Text(stringResource(topic.controls[step]), style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSecondaryContainer)
+                    color = MaterialTheme.colorScheme.onPrimaryContainer)
                 Text(stringResource(topic.steps[step]), style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSecondaryContainer)
+                    color = MaterialTheme.colorScheme.onPrimaryContainer)
             }
         }
     }
@@ -284,10 +290,10 @@ private fun GuideStep(topic: GuideTopic, step: Int, modifier: Modifier) {
 
 @Composable
 internal fun GuideNumber(number: Int, modifier: Modifier = Modifier) {
-    Box(modifier.size(30.dp).background(MaterialTheme.colorScheme.secondaryContainer, CircleShape),
+    Box(modifier.size(30.dp).background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
         contentAlignment = Alignment.Center) {
         Text(number.toString(), style = MaterialTheme.typography.labelLarge,
-            color = MaterialTheme.colorScheme.onSecondaryContainer)
+            color = MaterialTheme.colorScheme.onPrimaryContainer)
     }
 }
 

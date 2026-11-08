@@ -9,6 +9,9 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.ui.semantics.Role
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
@@ -124,9 +127,10 @@ private fun PauseContent(pkg: String,onOpen:(Int,String)->Unit,onExit:()->Unit,o
     Surface(Modifier.fillMaxSize().testTag("pause_screen").semantics { testTagsAsResourceId=true },color=MaterialTheme.colorScheme.background) {
         Column(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing).imePadding()
             .verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
-            com.zikrtime.app.ui.PageHeading(stringResource(R.string.pause_title), appLabel, R.drawable.focus_courtyard)
+            com.zikrtime.app.ui.PageHeading(stringResource(R.string.pause_title), appLabel)
             if(!completed) {
-                ZCard {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
                     Text(stringResource(R.string.pause_zikr),style=MaterialTheme.typography.titleMedium)
                     Text(stringResource(R.string.pause_action_hint),style=MaterialTheme.typography.bodyMedium)
                     Spacer(Modifier.height(20.dp))
@@ -136,21 +140,25 @@ private fun PauseContent(pkg: String,onOpen:(Int,String)->Unit,onExit:()->Unit,o
                     Text(stringResource(meanings[phrase]),style=MaterialTheme.typography.bodyLarge)
                     Spacer(Modifier.height(12.dp))
                 }
-                Button(onClick={completed=true},modifier=Modifier.fillMaxWidth().testTag("pause_done")) { Text(stringResource(R.string.pause_done)) }
+                Button(onClick={completed=true},shape = MaterialTheme.shapes.medium, modifier=Modifier.fillMaxWidth().heightIn(min = 52.dp).testTag("pause_done")) { Text(stringResource(R.string.pause_done)) }
                 if(!strict) TextButton(onClick={completed=true},modifier=Modifier.fillMaxWidth().testTag("pause_skip")) { Text(stringResource(R.string.pause_skip)) }
             } else {
-                ZCard {
+                Column(Modifier.selectableGroup(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
                     Text(stringResource(R.string.pause_intention),style=MaterialTheme.typography.titleMedium)
                     choices.forEachIndexed { index,label ->
-                        Row(verticalAlignment=Alignment.CenterVertically) {
-                            RadioButton(selected=intention==index,onClick={intention=index})
-                            TextButton(onClick={intention=index}) { Text(stringResource(label)) }
+                        Row(Modifier.fillMaxWidth().heightIn(min = 48.dp).selectable(
+                            selected = intention == index, role = Role.RadioButton, onClick = { intention = index }),
+                            verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            RadioButton(selected = intention == index, onClick = null)
+                            Text(stringResource(label), modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyLarge)
                         }
                     }
                     if(intention==3) OutlinedTextField(value=custom,onValueChange={custom=it.take(120)},label={Text(stringResource(R.string.pause_custom))},modifier=Modifier.fillMaxWidth(),maxLines=3)
                     Text(stringResource(R.string.pause_local),style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant)
                 }
-                ZCard {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
                     Text(stringResource(R.string.pause_duration),style=MaterialTheme.typography.titleMedium)
                     FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp)) {
                         listOf(1,5,10,15,30).forEach { value ->
@@ -159,9 +167,9 @@ private fun PauseContent(pkg: String,onOpen:(Int,String)->Unit,onExit:()->Unit,o
                     }
                     Text(stringResource(R.string.pause_foreground),style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant)
                 }
-                Button(onClick={onOpen(minutes,intentionText)},enabled=intentionText.isNotBlank(),modifier=Modifier.fillMaxWidth().testTag("pause_open")) { Text(stringResource(R.string.pause_open)) }
+                Button(onClick={onOpen(minutes,intentionText)},enabled=intentionText.isNotBlank(),shape = MaterialTheme.shapes.medium, modifier=Modifier.fillMaxWidth().heightIn(min = 52.dp).testTag("pause_open")) { Text(stringResource(R.string.pause_open)) }
             }
-            OutlinedButton(onClick=onExit,modifier=Modifier.fillMaxWidth().testTag("pause_exit")) { Text(stringResource(R.string.pause_exit)) }
+            OutlinedButton(onClick=onExit,shape = MaterialTheme.shapes.medium, modifier=Modifier.fillMaxWidth().heightIn(min = 48.dp).testTag("pause_exit")) { Text(stringResource(R.string.pause_exit)) }
             TextButton(onClick=onSettings,modifier=Modifier.fillMaxWidth()) { Text(stringResource(R.string.pause_settings)) }
             TextButton(onClick=onDisable,modifier=Modifier.fillMaxWidth().testTag("pause_disable")) { Text(stringResource(R.string.pause_disable)) }
         }

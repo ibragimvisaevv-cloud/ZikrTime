@@ -22,80 +22,24 @@ import com.zikrtime.app.ui.theme.LocalDarkTheme
 import kotlin.math.cos
 import kotlin.math.sin
 
-// Shared accents; retained names keep secondary surfaces in the same palette.
-val Clay = Color(0xFF8B663D)
-val Olive = Color(0xFF124C40)
-val Sand = Color(0xFFE2C58F)
-val Porcelain = Color(0xFFFFF9ED)
+// Compatibility accents used by interruption screens and legacy callers.
+val Clay = Color(0xFFA4523B)
+val Olive = Color(0xFF3157C8)
+val Sand = Color(0xFFB5C5FF)
+val Porcelain = Color(0xFFF0F2F6)
 
-/** A local panorama, with a separate night exposure. No network image dependency. */
 @Composable
 fun HorizonLandscape(period: NaturalPeriod, modifier: Modifier = Modifier, motion: Boolean = false) {
-    val movement = motion && motionEnabled()
-    val tint by animateColorAsState(when (period) {
-        NaturalPeriod.DAWN -> Color(0x20E9BB83)
-        NaturalPeriod.DAY -> Color(0x152C7D72)
-        NaturalPeriod.SUNSET -> Color(0x45B36443)
-        NaturalPeriod.NIGHT -> Color(0x20071925)
-    }, tween(if (movement) 300 else 0), label = "horizon-period")
-    Box(modifier.clip(RoundedCornerShape(26.dp))) {
-        Image(painterResource(if (period == NaturalPeriod.NIGHT) R.drawable.horizon_night else R.drawable.horizon_dawn),
-            null, Modifier.matchParentSize(), contentScale = ContentScale.Crop)
-        Canvas(Modifier.matchParentSize()) {
-            drawRect(tint)
-            if (motion) drawRect(Brush.radialGradient(
-                listOf(Sand.copy(alpha = if (period == NaturalPeriod.NIGHT) .035f else .12f), Color.Transparent),
-                center = Offset(size.width * .425f, size.height * .25f), radius = size.width * .6f))
-            // Fixed scrims protect text contrast throughout the animation.
-            drawRect(Brush.horizontalGradient(listOf(Color(0x99171B18), Color(0x20171B18))))
-            drawRect(Brush.verticalGradient(listOf(Color(0x55171B18), Color.Transparent, Color(0xD9171B18))))
-        }
-    }
+    Box(modifier.clip(MaterialTheme.shapes.large).background(if (period == NaturalPeriod.NIGHT) Color(0xFF14171D) else Color(0xFF223454)))
 }
 
 @Composable
 fun HorizonBackground(modifier: Modifier = Modifier) {
-    val dark = LocalDarkTheme.current
-    Box(modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
-        Canvas(Modifier.fillMaxSize()) {
-            drawRect(Brush.radialGradient(listOf(Sand.copy(alpha = if (dark) .025f else .035f), Color.Transparent),
-                center = Offset(size.width, size.height * .15f), radius = size.width))
-            drawRect(Brush.radialGradient(listOf(Sand.copy(alpha = if (dark) .035f else .08f), Color.Transparent),
-                center = Offset(0f, size.height * .7f), radius = size.width))
-        }
-    }
+    Box(modifier.fillMaxSize().background(MaterialTheme.colorScheme.background))
 }
 
-/** Quiet mosque silhouette and a small geometric band for text-heavy secondary panels. */
+/** Kept source-compatible while the former decorative silhouette is retired. */
 @Composable
 fun HorizonSilhouette(modifier: Modifier = Modifier, color: Color = Sand) {
-    Canvas(modifier) {
-        val w = size.width; val h = size.height
-        val base = h * .98f; val cx = w * .86f; val r = minOf(w * .16f, h * .45f)
-        val path = Path().apply {
-            moveTo(cx - r, base); lineTo(cx - r, base - r * .65f)
-            cubicTo(cx - r, base - r * 1.35f, cx - r * .3f, base - r * 1.35f, cx, base - r * 1.7f)
-            cubicTo(cx + r * .3f, base - r * 1.35f, cx + r, base - r * 1.35f, cx + r, base - r * .65f)
-            lineTo(cx + r, base); close()
-        }
-        drawPath(path, color.copy(alpha = .12f))
-        for (x in listOf(cx - r * 1.3f, cx + r * 1.3f)) {
-            val tower = Path().apply {
-                moveTo(x - r * .1f, base); lineTo(x - r * .1f, base - r * 1.65f)
-                lineTo(x, base - r * 2.05f); lineTo(x + r * .1f, base - r * 1.65f)
-                lineTo(x + r * .1f, base); close()
-            }
-            drawPath(tower, color.copy(alpha = .14f))
-        }
-        val star = Path()
-        repeat(2) { square ->
-            repeat(4) { i ->
-                val a = Math.toRadians((i * 90 + square * 45).toDouble())
-                val x = w - 20.dp.toPx() + 9.dp.toPx() * cos(a).toFloat()
-                val y = 20.dp.toPx() + 9.dp.toPx() * sin(a).toFloat()
-                if (i == 0) star.moveTo(x, y) else star.lineTo(x, y)
-            }; star.close()
-        }
-        drawPath(star, color.copy(alpha = .28f), style = Stroke(.8.dp.toPx()))
-    }
+    Spacer(modifier)
 }

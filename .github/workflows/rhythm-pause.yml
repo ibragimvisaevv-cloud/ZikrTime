@@ -1,0 +1,135 @@
+name: ZikrTime Rhythm and Pause 0.8.29
+on:
+  push:
+    branches: [codex/rhythm-pause-0829]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: rhythm-pause-${{ (contains(github.event.head_commit.message, '[rhythm-preview]') || contains(github.event.head_commit.message, '[rhythm-final]')) && github.ref || github.run_id }}
+  cancel-in-progress: true
+jobs:
+  android:
+    if: ${{ contains(github.event.head_commit.message, '[rhythm-preview]') || contains(github.event.head_commit.message, '[rhythm-final]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    env:
+      RHYTHM_BASELINE: c451791056a717846adad432f5b9d5884729d27e
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Select one explicit stage
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          message = json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text())['head_commit']['message']
+          preview, final = '[rhythm-preview]' in message, '[rhythm-final]' in message
+          assert preview != final, 'Choose exactly one Rhythm stage'
+          with open(os.environ['GITHUB_ENV'], 'a') as out:
+              out.write('RHYTHM_MODE=' + ('final' if final else 'preview') + '\n')
+              out.write('RHYTHM_GUIDE_CAPTURE=' + str('guide=true' in message).lower() + '\n')
+          PY
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Validate protected inputs and evidence scripts
+        run: |
+          python3 -m py_compile tools/ci/rhythm_pause.py tools/ci/rhythm_pause_delivery.py tools/ci/rhythm_pause_guide.py
+          python3 tools/ci/rhythm_pause_delivery.py inputs
+      - name: Build baseline only for the actual update journey
+        if: env.RHYTHM_MODE == 'final'
+        run: |
+          git worktree add --detach "$RUNNER_TEMP/rhythm-baseline" "$RHYTHM_BASELINE"
+          (cd "$RUNNER_TEMP/rhythm-baseline" && bash gradlew assembleDebug --console=plain)
+          mkdir -p ci-out/baseline
+          cp "$RUNNER_TEMP/rhythm-baseline/app/build/outputs/apk/debug/app-debug.apk" ci-out/baseline/ZikrTime-0.8.28-debug.apk
+          git worktree remove --force "$RUNNER_TEMP/rhythm-baseline"
+      - name: Restore the existing release key
+        if: env.RHYTHM_MODE == 'final'
+        env:
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          test -n "$RELEASE_KEY_PASSWORD"
+          openssl enc -d -aes-256-cbc -pbkdf2 -iter 300000 -in keystore/release.jks.enc -out keystore/release.jks -pass env:RELEASE_KEY_PASSWORD
+      - name: Build preview
+        if: env.RHYTHM_MODE == 'preview'
+        run: bash gradlew assembleDebug --console=plain
+      - name: Check changed presentation boundaries and build signed update
+        if: env.RHYTHM_MODE == 'final'
+        env:
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          bash gradlew testDebugUnitTest --tests 'com.zikrtime.app.ui.NavigationTest' --tests 'com.zikrtime.app.ui.ThemeRevealGeometryTest' --tests 'com.zikrtime.app.data.QuranProgressTest' --tests 'com.zikrtime.app.data.Guide*' --tests 'com.zikrtime.app.widget.PrayerWidgetModelTest' --console=plain
+          bash gradlew lintDebug assembleDebug assembleRelease --console=plain
+      - name: Record APK provenance and original release certificate
+        id: provenance
+        run: python3 tools/ci/rhythm_pause_delivery.py apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rhythm-${{ env.RHYTHM_MODE }}-inputs
+          compression-level: 0
+          path: |
+            app/build/outputs/apk/debug/app-debug.apk
+            app/build/outputs/apk/release/app-release.apk
+            ci-out/rhythm-inputs.json
+            ci-out/rhythm-delivery.json
+            ci-out/release-signature.txt
+            ci-out/baseline/
+      - run: python3 -m pip install 'Pillow>=11,<13'
+      - name: Enable emulator acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-rhythm.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Actual app journeys, screenshots and transition recording
+        timeout-minutes: 32
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -camera-back none -camera-front none
+          script: python3 tools/ci/rhythm_pause.py "$RHYTHM_MODE"
+      - name: Capture 30 new guide illustrations when explicitly selected
+        if: always() && env.RHYTHM_GUIDE_CAPTURE == 'true' && steps.provenance.outcome == 'success'
+        timeout-minutes: 18
+        uses: reactivecircus/android-emulator-runner@v2
+        env:
+          GUIDE_APK_SOURCE_SHA: ${{ github.sha }}
+          GUIDE_APK_SOURCE_RUN: ${{ github.run_id }}
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -camera-back none -camera-front none
+          script: python3 tools/ci/rhythm_pause_guide.py capture
+      - name: Remove decrypted signing material
+        if: always()
+        run: rm -f keystore/release.jks
+      - name: Prepare user-facing signed file
+        if: env.RHYTHM_MODE == 'final'
+        run: cp app/build/outputs/apk/release/app-release.apk ZikrTime-0.8.29.apk
+      - uses: actions/upload-artifact@v4
+        if: env.RHYTHM_MODE == 'final'
+        with:
+          name: ZikrTime-0.8.29-APK
+          compression-level: 0
+          path: ZikrTime-0.8.29.apk
+          if-no-files-found: error
+      - name: Preserve success and failure evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rhythm-${{ env.RHYTHM_MODE }}-evidence
+          path: |
+            ci-out/
+            app/build/reports/lint-results-debug.*
+            app/build/test-results/
+            docs/RHYTHM_PAUSE_SCREEN_MAP.md
+            docs/RHYTHM_PAUSE_DESIGN.md

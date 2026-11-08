@@ -9,7 +9,7 @@ import android.media.RingtoneManager
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -33,6 +33,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun AlarmTonePicker() {
     val context = LocalContext.current
@@ -100,7 +101,7 @@ internal fun AlarmTonePicker() {
             style = MaterialTheme.typography.bodyMedium)
         Text(stringResource(R.string.tone_hint), style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant)
-        Row {
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
             TextButton(enabled = !importing, modifier = Modifier.testTag("alarm_tone_choose"), onClick = {
                 sample.stop()
                 val default = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
@@ -117,7 +118,7 @@ internal fun AlarmTonePicker() {
                 Text(stringResource(if (sample.playing) R.string.tone_stop else R.string.adhan_preview))
             }
         }
-        Row {
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
             TextButton(enabled = !importing, onClick = ::openFile) { Text(stringResource(R.string.tone_file)) }
             if (selected != null) TextButton(enabled = !importing, onClick = {
                 sample.stop()

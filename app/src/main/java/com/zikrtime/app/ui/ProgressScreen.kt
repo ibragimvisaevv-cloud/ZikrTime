@@ -39,8 +39,9 @@ fun ProgressScreen() {
     val nav = LocalNav.current
     var days by rememberSaveable { mutableIntStateOf(30) }
     var clear by remember { mutableStateOf(false) }
-    ScreenScaffold(title = stringResource(R.string.progress_title), onBack = { nav.back() }, scene = R.drawable.focus_courtyard) {
-        ZCard { PersonalProgressSetting() }
+    ScreenScaffold(title = stringResource(R.string.progress_title), onBack = { nav.back() }) {
+        PersonalProgressSetting()
+        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
         if (Store.personalProgressEnabled) {
             OutlinedButton(onClick = { nav.open(Screen.PRAYER_JOURNAL) }) { Text(stringResource(R.string.journal_title)) }
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -54,15 +55,11 @@ fun ProgressScreen() {
                 summary.topics to stringResource(R.string.progress_topics, summary.topics),
                 summary.reviewed to stringResource(R.string.progress_reviewed, summary.reviewed),
                 summary.activeDays to stringResource(R.string.progress_active_days, summary.activeDays))
-            metrics.chunked(if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 1 else 2).forEach { pair ->
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    pair.forEach { (value, label) ->
-                        ZCard(modifier = Modifier.weight(1f), padding = PaddingValues(16.dp)) {
-                            Text(value.toString(), style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.primary)
-                            Spacer(Modifier.height(8.dp))
-                            Text(label, style = MaterialTheme.typography.bodyMedium)
-                        }
-                    }
+            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                metrics.forEach { (_, label) ->
+                    // The translated line already contains its real count; do not repeat it in a decorative tile.
+                    Text(label, style = MaterialTheme.typography.titleMedium.merge(com.zikrtime.app.ui.theme.Tabular))
+                    HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
                 }
             }
             Text(stringResource(R.string.progress_measurement_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)

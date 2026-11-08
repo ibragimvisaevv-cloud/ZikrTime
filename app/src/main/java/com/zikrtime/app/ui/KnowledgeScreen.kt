@@ -17,6 +17,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -65,10 +66,9 @@ fun KnowledgeScreen() {
     HorizonSection(title = stringResource(R.string.knowledge_title),
         subtitle = sectionCopy(SectionClarity.KnowledgeIntro),
         image = if (morning) R.drawable.azkar_morning else R.drawable.azkar_evening,
-        heroHeight = 230.dp,
+        heroHeight = 180.dp,
         hero = {
-            Spacer(Modifier.height(16.dp))
-            HorizonFeature(stringResource(if (morning) R.string.azkar_morning else R.string.azkar_evening),
+            DestinationRow(stringResource(if (morning) R.string.azkar_morning else R.string.azkar_evening),
                 if (morning) R.drawable.ic_prayer_fajr else R.drawable.ic_prayer_isha) {
                 nav.openAzkar(if (morning) "morning" else "evening")
             }
@@ -92,12 +92,12 @@ fun KnowledgeScreen() {
         SectionLabel(uiCopy(UiCopy0823.PracticeKnowledge))
         KnowledgeLevelGate(bank) { level ->
             KnowledgeLevelControl(bank)
-            ZCard {
+            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 Text(uiCopy(UiCopy0823.StudyIntro), style = MaterialTheme.typography.bodyLarge)
-                Spacer(Modifier.height(14.dp))
+                Spacer(Modifier.height(6.dp))
                 PrimaryButton(sectionCopy(SectionClarity.Questions), onClick = { nav.startQuiz(null) },
                     modifier = Modifier.testTag("learning_start").semantics { testTagsAsResourceId = true })
-                Spacer(Modifier.height(14.dp))
+                Spacer(Modifier.height(10.dp))
                 Text(stringResource(R.string.knowledge_round_title, Store.CORRECT_ANSWERS_PER_ROUND, Store.BONUS_MINUTES_PER_ROUND),
                     style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
                 Spacer(Modifier.height(6.dp))
@@ -108,7 +108,7 @@ fun KnowledgeScreen() {
                     color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(Modifier.height(10.dp))
                 LinearProgressIndicator(progress = { bonus / Store.MAX_BONUS_MINUTES_PER_DAY.toFloat() },
-                    modifier = Modifier.fillMaxWidth().height(6.dp), strokeCap = StrokeCap.Round, drawStopIndicator = {})
+                    modifier = Modifier.fillMaxWidth().height(3.dp), strokeCap = StrokeCap.Round, drawStopIndicator = {})
                 Text(stringResource(R.string.knowledge_bonus_today, bonus, Store.MAX_BONUS_MINUTES_PER_DAY),
                     style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(top = 6.dp))
@@ -116,20 +116,19 @@ fun KnowledgeScreen() {
             SectionLabel(stringResource(R.string.knowledge_topics))
             Text(uiCopy(UiCopy0823.TopicHint), style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
-            val columns = if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 1 else 2
             bank.categories.filter { (id, _) -> bank.questionsFor(id,level.id).isNotEmpty() }
-                .chunked(columns).forEach { pair ->
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    pair.forEach { (id, name) ->
-                        HorizonDestination(if (id == "quran") stringResource(R.string.quran_quiz) else name,
-                            categoryIcon(id), Modifier.weight(1f)) { nav.startQuiz(id) }
-                    }
+                .forEach { (id, name) ->
+                DestinationRow(if (id == "quran") stringResource(R.string.quran_quiz) else name,
+                    categoryIcon(id), stringResource(R.string.learning_level_count, bank.questionsFor(id, level.id).size)) {
+                    nav.startQuiz(id)
                 }
             }
             WeakTopicsOverview(bank)
         }
 
-        ZCard {
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+            Spacer(Modifier.height(8.dp))
             Text(sectionCopy(SectionClarity.Review), style = MaterialTheme.typography.titleLarge)
             Text(stringResource(R.string.learning_review_hint), style = MaterialTheme.typography.bodyMedium)
             Spacer(Modifier.height(10.dp))
@@ -142,10 +141,8 @@ fun KnowledgeScreen() {
         }
         if (Store.personalProgressEnabled) {
             val summary = Store.personalProgressSummary()
-            ZCard {
-                DestinationRow(stringResource(R.string.progress_title), R.drawable.ic_nav_knowledge,
-                    stringResource(R.string.progress_home_summary, summary.sessions, summary.activeDays)) { nav.open(Screen.PROGRESS) }
-            }
+            DestinationRow(stringResource(R.string.progress_title), R.drawable.ic_nav_knowledge,
+                stringResource(R.string.progress_home_summary, summary.sessions, summary.activeDays)) { nav.open(Screen.PROGRESS) }
         }
         Text(
             stringResource(R.string.knowledge_disclaimer),
@@ -267,18 +264,16 @@ private const val PREP_CARDS = 5
 /** «Хотите подготовиться?» — две кнопки. */
 @Composable
 private fun PrepOffer(onRead: () -> Unit, onSkip: () -> Unit) {
-    LandscapePanel(R.drawable.azkar_morning) {
-        Column(Modifier.padding(24.dp)) {
-            androidx.compose.material3.Icon(painterResource(R.drawable.ic_nav_knowledge), null, tint = com.zikrtime.app.ui.theme.Gold, modifier = Modifier.padding(bottom = 8.dp))
-            Spacer(Modifier.height(12.dp))
-            Text(stringResource(R.string.prep_title), style = MaterialTheme.typography.headlineSmall, color = com.zikrtime.app.ui.theme.Cream)
-            Spacer(Modifier.height(6.dp))
-            Text(stringResource(R.string.prep_text), style = MaterialTheme.typography.bodyLarge, color = com.zikrtime.app.ui.theme.Cream.copy(alpha = 0.85f))
-            Spacer(Modifier.height(20.dp))
-            GoldButton(stringResource(R.string.prep_read), onClick = onRead, modifier = Modifier.testTag("learning_read").semantics { testTagsAsResourceId = true })
-            Spacer(Modifier.height(10.dp))
-            GhostButton(stringResource(R.string.prep_skip), onClick = onSkip, color = com.zikrtime.app.ui.theme.Cream, modifier = Modifier.testTag("learning_skip").semantics { testTagsAsResourceId = true })
-        }
+    Column(Modifier.fillMaxWidth().padding(vertical = 12.dp)) {
+        IconBadge(painterResource(R.drawable.ic_nav_knowledge), size = 44.dp)
+        Spacer(Modifier.height(24.dp))
+        Text(stringResource(R.string.prep_title), style = MaterialTheme.typography.headlineMedium)
+        Spacer(Modifier.height(6.dp))
+        Text(stringResource(R.string.prep_text), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Spacer(Modifier.height(32.dp))
+        PrimaryButton(stringResource(R.string.prep_read), onClick = onRead, modifier = Modifier.testTag("learning_read").semantics { testTagsAsResourceId = true })
+        Spacer(Modifier.height(10.dp))
+        GhostButton(stringResource(R.string.prep_skip), onClick = onSkip, modifier = Modifier.testTag("learning_skip").semantics { testTagsAsResourceId = true })
     }
 }
 
@@ -286,6 +281,7 @@ private fun PrepOffer(onRead: () -> Unit, onSkip: () -> Unit) {
 @Composable
 private fun StudyCards(bank: QuizBank, cards: List<com.zikrtime.app.quiz.Question>, session: LearningSession, onReady: () -> Unit) {
     val readingScale by rememberReadingScale()
+    val motion = motionEnabled()
     val index = session.cardIndex.coerceAtMost((cards.size - 1).coerceAtLeast(0))
     if (cards.isEmpty()) {
         androidx.compose.runtime.LaunchedEffect(Unit) { onReady() }
@@ -310,8 +306,8 @@ private fun StudyCards(bank: QuizBank, cards: List<com.zikrtime.app.quiz.Questio
     androidx.compose.animation.AnimatedContent(
         targetState = index,
         transitionSpec = {
-            (androidx.compose.animation.slideInHorizontally { it / 3 } + androidx.compose.animation.fadeIn()) togetherWith
-                (androidx.compose.animation.slideOutHorizontally { -it / 3 } + androidx.compose.animation.fadeOut())
+            androidx.compose.animation.fadeIn(androidx.compose.animation.core.tween(if (motion) 160 else 0)) togetherWith
+                androidx.compose.animation.fadeOut(androidx.compose.animation.core.tween(if (motion) 90 else 0))
         },
         label = "card",
     ) { i ->
@@ -344,19 +340,18 @@ private fun StudyCards(bank: QuizBank, cards: List<com.zikrtime.app.quiz.Questio
 
 @Composable
 fun RoundResult(addedMinutes: Int, onAgain: (() -> Unit)?, onDone: () -> Unit, doneText: String = stringResource(R.string.action_done)) {
-    LandscapePanel(R.drawable.azkar_evening) {
-      Column(Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 36.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-        IconBadge(painterResource(R.drawable.ic_check), size = 72.dp)
-        Spacer(Modifier.height(16.dp))
-        Text(stringResource(R.string.learning_complete), style = MaterialTheme.typography.headlineMedium, color = Porcelain)
+    Column(Modifier.fillMaxWidth().padding(vertical = 28.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        IconBadge(painterResource(R.drawable.ic_check), size = 48.dp)
+        Spacer(Modifier.height(8.dp))
+        Text(stringResource(R.string.learning_complete), style = MaterialTheme.typography.headlineMedium)
         Spacer(Modifier.height(8.dp))
         Text(
             if (addedMinutes > 0) stringResource(R.string.quiz_result_added, addedMinutes)
             else stringResource(R.string.learning_no_bonus),
             style = MaterialTheme.typography.bodyLarge,
-            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
-    }
+        HorizontalDivider(Modifier.padding(top = 16.dp), color = MaterialTheme.colorScheme.outlineVariant)
     }
     Spacer(Modifier.height(8.dp))
     if (onAgain != null) PrimaryButton(stringResource(R.string.quiz_again), onClick = onAgain)

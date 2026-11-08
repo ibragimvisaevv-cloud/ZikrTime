@@ -7,10 +7,11 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -20,6 +21,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
@@ -101,7 +103,7 @@ internal fun QuranAyahActionsSheet(
     val maxContentHeight = ((LocalConfiguration.current.screenHeightDp * .88f).dp - 56.dp).coerceAtLeast(120.dp)
     ModalBottomSheet(onDismissRequest = close,
         sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-        containerColor = colors.canvas, shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp)) {
+        containerColor = colors.canvas, shape = MaterialTheme.shapes.extraLarge) {
         Column(Modifier.fillMaxWidth().heightIn(max = maxContentHeight)
             .semantics { testTagsAsResourceId = true }.testTag("quran_ayah_sheet")
             .verticalScroll(rememberScrollState()).padding(horizontal = 20.dp).padding(bottom = 24.dp),
@@ -130,6 +132,10 @@ internal fun QuranAyahActionsSheet(
                     else -> QuranAudioPlayer.playAyah(surah.id, ayah, repeats, speed, continueAfter && repeats != 0)
                 }
             }, modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp).testTag("ayah_play_pause")) {
+                if (active && playback.playWhenReady && !playback.ended && playback.error == null)
+                    Icon(painterResource(R.drawable.ic_audio_pause), null, Modifier.size(22.dp))
+                else Icon(Icons.Filled.PlayArrow, null, Modifier.size(22.dp))
+                Spacer(Modifier.width(8.dp))
                 Text(stringResource(when {
                     (active || !playback.connected) && playback.error != null -> R.string.qaudio_retry
                     active && playback.playWhenReady && !playback.ended -> R.string.qaudio_pause
@@ -158,7 +164,8 @@ internal fun QuranAyahActionsSheet(
                         repeats = count
                         if (count == 0) continueAfter = false
                         configure()
-                    }, label = { Text(when (count) {
+                    }, leadingIcon = if (repeats == count) { { Icon(Icons.Filled.Check, null, Modifier.size(18.dp)) } } else null,
+                    label = { Text(when (count) {
                         0 -> stringResource(R.string.ql_repeat_forever)
                         1 -> stringResource(R.string.ql_repeat_once)
                         else -> stringResource(R.string.ql_repeat_count, count)
@@ -166,7 +173,7 @@ internal fun QuranAyahActionsSheet(
                 }
             }
             QuranSpeedControls(speed, "ayah") { speed = it; configure() }
-            Surface(color = colors.paper, shape = RoundedCornerShape(16.dp), border = BorderStroke(1.dp, colors.rule)) {
+            Surface(color = colors.paper, shape = MaterialTheme.shapes.medium, border = BorderStroke(1.dp, colors.rule)) {
                 Column(Modifier.fillMaxWidth().toggleable(continueAfter, enabled = repeats != 0, role = Role.Checkbox,
                     onValueChange = { continueAfter = it; configure() }).testTag("ayah_continue").padding(12.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -207,6 +214,7 @@ internal fun QuranSpeedControls(speed: Float, tagPrefix: String, change: (Float)
     FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         listOf(.5f, .75f, 1f, 1.25f, 1.5f).forEach { value ->
             FilterChip(selected = speed == value, onClick = { change(value) },
+                leadingIcon = if (speed == value) { { Icon(Icons.Filled.Check, null, Modifier.size(18.dp)) } } else null,
                 label = { Text("${value.toString().removeSuffix(".0")}×") },
                 modifier = Modifier.testTag("${tagPrefix}_speed_${(value * 100).toInt()}"))
         }

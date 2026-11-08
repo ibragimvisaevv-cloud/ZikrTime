@@ -5,6 +5,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -22,7 +23,13 @@ import com.zikrtime.app.data.*
 
 @Composable
 internal fun ReaderAction(label: Int, tag: String, action: () -> Unit) {
-    OutlinedButton(onClick = action, modifier = Modifier.fillMaxWidth().testTag(tag)) { Text(stringResource(label)) }
+    TextButton(onClick = action, modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp).testTag(tag),
+        shape = MaterialTheme.shapes.small, contentPadding = PaddingValues(horizontal = 12.dp, vertical = 10.dp)) {
+        Text(stringResource(label), modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyLarge)
+        Spacer(Modifier.width(12.dp))
+        Icon(Icons.AutoMirrored.Filled.ArrowForward, null, Modifier.size(20.dp))
+    }
+    HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
 }
 
 @Composable
@@ -60,7 +67,7 @@ internal fun QuranNoteSheet(surahName: String, location: QuranProgress.Location,
         } else true
     })
     ModalBottomSheet(onDismissRequest = requestClose, sheetState = state,
-        containerColor = MaterialTheme.colorScheme.surfaceContainerLow) {
+        containerColor = MaterialTheme.colorScheme.surfaceContainerLow, shape = MaterialTheme.shapes.extraLarge) {
         Column(Modifier.fillMaxWidth().semantics { testTagsAsResourceId = true }.imePadding()
             .verticalScroll(rememberScrollState()).padding(horizontal = 20.dp).padding(bottom = 24.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)) {

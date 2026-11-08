@@ -38,34 +38,33 @@ fun AzkarScreen() {
     val title = stringResource(if (period == "evening") R.string.azkar_evening else R.string.azkar_morning)
     ScreenScaffold(title = title, onBack = { nav.back() }, showHeading = false,
         scrollKey = "$period-${item.id}", actions = { ReadingTools(scale) { scale = it } }) {
-        LandscapePanel(if (period == "evening") R.drawable.azkar_evening else R.drawable.azkar_morning) {
-            Column(Modifier.fillMaxWidth().heightIn(min = 140.dp).padding(24.dp), verticalArrangement = Arrangement.Bottom) {
-                Text(title, style = MaterialTheme.typography.headlineMedium)
-                Spacer(Modifier.height(12.dp))
-                Text(stringResource(R.string.azkar_position, index + 1, items.size), style = MaterialTheme.typography.labelLarge)
-                Spacer(Modifier.height(12.dp))
-                LinearProgressIndicator(progress = { (index + 1f) / items.size },
-                    modifier = Modifier.fillMaxWidth().height(3.dp), color = Sand, trackColor = Porcelain.copy(alpha = .25f), drawStopIndicator = {})
-            }
+        Column(Modifier.fillMaxWidth().padding(top = 8.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Text(stringResource(R.string.azkar_position, index + 1, items.size), style = MaterialTheme.typography.labelLarge)
+            LinearProgressIndicator(progress = { (index + 1f) / items.size },
+                modifier = Modifier.fillMaxWidth().height(3.dp),
+                color = MaterialTheme.colorScheme.primary,
+                trackColor = MaterialTheme.colorScheme.outlineVariant, drawStopIndicator = {})
         }
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             FilterChip(selected = period == "morning", onClick = { nav.openAzkar("morning") }, label = { Text(stringResource(R.string.azkar_morning)) })
             FilterChip(selected = period == "evening", onClick = { nav.openAzkar("evening") }, label = { Text(stringResource(R.string.azkar_evening)) })
         }
-        Text(if (ru) item.titleRu else item.titleEn, style = MaterialTheme.typography.titleLarge)
-        TextButton(onClick = { source = true }, modifier = Modifier.testTag("azkar_source")) {
-            Text(stringResource(R.string.azkar_source_button))
+        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            Text(if (ru) item.titleRu else item.titleEn, style = MaterialTheme.typography.headlineSmall)
+            TextButton(onClick = { source = true }, modifier = Modifier.testTag("azkar_source")) {
+                Text(stringResource(R.string.azkar_source_button))
+            }
         }
         if (Lang.content(context) !in listOf("ru", "en"))
             Text(stringResource(R.string.source_translation, "English"), style = MaterialTheme.typography.labelMedium)
         Column(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp), verticalArrangement = Arrangement.spacedBy(22.dp)) {
             Text(item.arabic, modifier = Modifier.fillMaxWidth().testTag("azkar_arabic"),
                 style = ArabicStyle.copy(fontSize = (32 * scale).sp, textDirection = TextDirection.Rtl),
-                textAlign = TextAlign.Center, color = MaterialTheme.colorScheme.primary)
+                textAlign = TextAlign.Center, color = MaterialTheme.colorScheme.onSurface)
             HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
             Text(if (ru) item.transliterationRu else item.transliterationEn,
                 style = MaterialTheme.typography.bodyLarge.copy(fontSize = (17 * scale).sp, lineHeight = (28 * scale).sp),
-                color = MaterialTheme.colorScheme.secondary)
+                color = MaterialTheme.colorScheme.onSurfaceVariant)
             Text(if (ru) item.meaningRu else item.meaningEn,
                 style = MaterialTheme.typography.bodyLarge.copy(fontSize = (19 * scale).sp, lineHeight = (30 * scale).sp))
         }

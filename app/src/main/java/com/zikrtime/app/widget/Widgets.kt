@@ -21,10 +21,6 @@ import com.zikrtime.app.ui.clockFormatter
 import com.zikrtime.app.ui.durationText
 import com.zikrtime.app.ui.prayerIconRes
 import com.zikrtime.app.ui.prayerName
-import com.zikrtime.app.ui.SkyPeriod
-import com.zikrtime.app.ui.skyColors
-import com.zikrtime.app.ui.skyPeriod
-import androidx.compose.ui.graphics.toArgb
 import java.time.LocalDate
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -38,9 +34,9 @@ object Widgets {
         "dark" -> true
         else -> context.resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK == android.content.res.Configuration.UI_MODE_NIGHT_YES
     }
-    private fun ink(context: Context) = if (dark(context)) 0xFFF1EFE7.toInt() else 0xFF242923.toInt()
-    private fun muted(context: Context) = if (dark(context)) 0xFFC0C4BA.toInt() else 0xFF62675E.toInt()
-    private fun accent(context: Context) = if (dark(context)) WidgetArt.GOLD_LIGHT else 0xFF235D4C.toInt()
+    private fun ink(context: Context) = if (dark(context)) 0xFFF0F2F6.toInt() else 0xFF20242D.toInt()
+    private fun muted(context: Context) = if (dark(context)) 0xFFB9C0CD.toInt() else 0xFF5C626F.toInt()
+    private fun accent(context: Context) = if (dark(context)) 0xFFB5C5FF.toInt() else 0xFF3157C8.toInt()
 
 
     fun updateAll(context: Context) {
@@ -102,8 +98,8 @@ object Widgets {
         if (context.resources.configuration.fontScale > 1.3f && size.first < 200) views.setViewVisibility(R.id.w_name, android.view.View.GONE)
         runCatching {
             views.setInt(R.id.widget_root, "setBackgroundResource", if (dark(context)) R.drawable.widget_surface_dark else R.drawable.widget_surface_light)
-            views.setImageViewResource(R.id.w_bg, if (dark(context)) R.drawable.widget_horizon_dark else R.drawable.widget_horizon_light)
-            views.setImageViewBitmap(R.id.w_beads, WidgetArt.beads(context, minOf(size.first, size.second) - 12, count, target, light = !dark(context)))
+            views.setViewVisibility(R.id.w_bg, android.view.View.GONE)
+            views.setImageViewBitmap(R.id.w_beads, WidgetArt.beads(context, size.first - 32, count, target, light = !dark(context)))
         }
         views.setOnClickPendingIntent(R.id.widget_root, tasbihAction(context, TasbihWidget.ACTION_ADD))
         views.setOnClickPendingIntent(R.id.w_reset, tasbihAction(context, TasbihWidget.ACTION_RESET))
@@ -130,36 +126,6 @@ object Widgets {
         val w = o.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH).takeIf { it > 0 } ?: defW
         val h = o.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT).takeIf { it > 0 } ?: defH
         return w.coerceIn(80, 560) to h.coerceIn(80, 560)
-    }
-
-    /** Небо для фона виджета — как в приложении: по времени суток. */
-    private fun skyBitmap(context: Context, size: Pair<Int, Int>, now: ZonedDateTime, seed: Int, body: WidgetArt.Body? = null): android.graphics.Bitmap {
-        val times = PrayerSchedule.forDate(now.toLocalDate(), now.zone)
-        val period = skyPeriod(now, times)
-        val day = !now.isBefore(times[Prayer.SUNRISE]) && now.isBefore(times[Prayer.MAGHRIB])
-        val colors = if (dark(context)) when (period) {
-            SkyPeriod.NIGHT -> intArrayOf(0xFF102B28.toInt(), 0xFF1C3E36.toInt())
-            SkyPeriod.DAWN, SkyPeriod.SUNSET -> intArrayOf(0xFF263D32.toInt(), 0xFF46553B.toInt())
-            else -> intArrayOf(0xFF123B2E.toInt(), 0xFF255342.toInt())
-        } else when (period) {
-            SkyPeriod.NIGHT -> intArrayOf(0xFFE5ECE0.toInt(), 0xFFF2F4E9.toInt())
-            SkyPeriod.DAWN, SkyPeriod.SUNSET -> intArrayOf(0xFFF3EDDA.toInt(), 0xFFE5DBBE.toInt())
-            else -> intArrayOf(0xFFF6F7ED.toInt(), 0xFFDCE8D9.toInt())
-        }
-        val glow = when (period) {
-            SkyPeriod.NIGHT -> 0x403A7BD5
-            SkyPeriod.DAWN -> 0x80FFA477.toInt()
-            SkyPeriod.MORNING -> 0x55FFE2A0
-            SkyPeriod.DAY -> 0x40FFF1C0
-            SkyPeriod.GOLDEN -> 0x80FFC266.toInt()
-            SkyPeriod.SUNSET -> 0x99FF8A4C.toInt()
-        }
-        val stars = when (period) {
-            SkyPeriod.NIGHT -> 1f
-            SkyPeriod.DAWN, SkyPeriod.SUNSET -> 0.5f
-            else -> 0f
-        }
-        return WidgetArt.sky(context, size.first, size.second, colors, glow, stars, body ?: if (day) WidgetArt.Body.SUN else WidgetArt.Body.MOON, seed, ink = ink(context))
     }
 
     private fun ids(context: Context, manager: AppWidgetManager, cls: Class<*>): IntArray =
@@ -248,19 +214,19 @@ object Widgets {
             fraction = if (allowed > 0) left.toFloat() / allowed else 0f
         }
         runCatching {
-            // Sage glass with a quiet horizon; the ring indicates remaining screen time.
+            // A linear meter shares the same left-to-right reading direction as the remaining-time value.
             views.setInt(R.id.widget_root, "setBackgroundResource", if (dark(context)) R.drawable.widget_surface_dark else R.drawable.widget_surface_light)
-            views.setImageViewResource(R.id.w_bg, if (dark(context)) R.drawable.widget_horizon_dark else R.drawable.widget_horizon_light)
+            views.setViewVisibility(R.id.w_bg, android.view.View.GONE)
             views.setViewVisibility(R.id.w_star, android.view.View.GONE)
-            val sweep = when {
-                used == null -> intArrayOf(0x66F7F2EA, 0x66F7F2EA)
-                fraction > 0.5f -> intArrayOf(0xFFA9D5B9.toInt(), 0xFFE2C58F.toInt())
-                fraction > 0.2f -> intArrayOf(WidgetArt.GOLD_DARK, WidgetArt.GOLD_LIGHT, WidgetArt.GOLD)
-                else -> intArrayOf(0xFFE5484D.toInt(), 0xFFFFA36C.toInt(), 0xFFFF6B6B.toInt())
+            val meterColor = when {
+                used == null -> muted(context)
+                fraction > 0.2f -> accent(context)
+                dark(context) -> 0xFFE7AB96.toInt()
+                else -> 0xFFA4523B.toInt()
             }
             views.setImageViewBitmap(
                 R.id.w_ring,
-                WidgetArt.ring(context, 60, if (used == null) 0f else fraction, sweep, R.drawable.ic_nav_focus, accent(context), glow = used != null && fraction <= 0.2f),
+                WidgetArt.focusMeter(context, size.first - 32, if (used == null) 0f else fraction, meterColor, muted(context)),
             )
         }
         views.setOnClickPendingIntent(R.id.widget_root, openApp(context, "focus"))

@@ -219,7 +219,7 @@
     <string name="tasbih_subtitle">Ҳисобкунаки зикр</string>
     <string name="tasbih_of">аз %1$d</string>
     <string name="tasbih_laps">Даврҳо: %1$d</string>
-    <string name="tasbih_tap_hint">Барои ҳисоб доираро пахш кунед</string>
+    <string name="tasbih_tap_hint">Барои ҳисоб кардан ҳисобкунакро пахш кунед</string>
     <string name="tasbih_target">Ҳадаф</string>
     <string name="tasbih_today">Имрӯз: %1$d</string>
     <string name="zikr_1_name">Субҳоналлоҳ</string>

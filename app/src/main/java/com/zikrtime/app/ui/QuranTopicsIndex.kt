@@ -4,7 +4,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
@@ -83,7 +82,6 @@ internal fun LazyListScope.quranTopicItems(
             val colors = quranPaperColors()
             Column(Modifier.fillMaxWidth().padding(top = 16.dp, bottom = 20.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                QuranOrnament(Modifier.width(104.dp).height(16.dp))
                 Text(stringResource(R.string.qti_title), style = MaterialTheme.typography.headlineMedium,
                     color = colors.ink)
                 Text(stringResource(R.string.qti_intro), style = MaterialTheme.typography.bodyLarge,
@@ -99,7 +97,7 @@ internal fun LazyListScope.quranTopicItems(
                             Icon(Icons.Filled.Close, stringResource(R.string.qti_clear))
                         }
                     } } else null,
-                    shape = RoundedCornerShape(16.dp),
+                    shape = MaterialTheme.shapes.medium,
                     modifier = Modifier.fillMaxWidth().testTag("quran_topics_search"))
             }
         }
@@ -130,7 +128,6 @@ internal fun LazyListScope.quranTopicItems(
                     Spacer(Modifier.width(8.dp))
                     Text(stringResource(R.string.qti_back_to_topics))
                 }
-                QuranOrnament(Modifier.width(104.dp).height(16.dp))
                 Text(stringResource(selected.titleResource()), style = MaterialTheme.typography.headlineMedium,
                     color = colors.ink)
                 Text(stringResource(selected.descriptionResource()), style = MaterialTheme.typography.bodyLarge,
@@ -156,13 +153,12 @@ internal fun LazyListScope.quranTopicItems(
 @Composable
 private fun QuranTopicCard(topic: QuranTopic, open: () -> Unit) {
     val colors = quranPaperColors()
-    Surface(onClick = open, shape = RoundedCornerShape(18.dp), color = colors.paper,
-        border = BorderStroke(1.dp, colors.rule),
-        modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp).testTag("quran_topic_" + topic.id)) {
-        Row(Modifier.padding(18.dp), verticalAlignment = Alignment.CenterVertically,
+    Surface(onClick = open, shape = MaterialTheme.shapes.small, color = colors.canvas,
+        modifier = Modifier.fillMaxWidth().testTag("quran_topic_" + topic.id)) {
+        Row(Modifier.padding(vertical = 20.dp, horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(7.dp)) {
-                Text(stringResource(topic.titleResource()), style = MaterialTheme.typography.titleLarge,
+                Text(stringResource(topic.titleResource()), style = MaterialTheme.typography.titleMedium,
                     color = colors.ink)
                 Text(stringResource(topic.descriptionResource()), style = MaterialTheme.typography.bodyMedium,
                     color = colors.muted)
@@ -172,6 +168,7 @@ private fun QuranTopicCard(topic: QuranTopic, open: () -> Unit) {
             Icon(Icons.AutoMirrored.Filled.ArrowForward, null, Modifier.size(20.dp), tint = colors.accent)
         }
     }
+    HorizontalDivider(color = colors.rule)
 }
 
 @Composable
@@ -182,7 +179,7 @@ private fun QuranTopicPassageCard(book: QuranBook, topicId: String, passage: Qur
     val ru = Lang.content(LocalContext.current) == "ru"
     val surah = book.surahs.first { it.id == passage.surah }
     val first = book.verses(passage.surah).first { it.number == passage.first }
-    Surface(shape = RoundedCornerShape(18.dp), color = colors.paper, border = BorderStroke(1.dp, colors.rule),
+    Surface(shape = MaterialTheme.shapes.medium, color = colors.paper, border = BorderStroke(1.dp, colors.rule),
         modifier = Modifier.fillMaxWidth().padding(bottom = 14.dp)) {
         Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Text(passage.reference, style = MaterialTheme.typography.titleLarge, color = colors.accent)

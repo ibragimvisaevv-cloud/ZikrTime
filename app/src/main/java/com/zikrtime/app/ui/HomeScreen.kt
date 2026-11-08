@@ -159,17 +159,16 @@ fun HomeScreen() {
                 clarityCopy(UiClarity0825.ReadingHint)) { nav.open(Screen.READING_REMINDERS) }
         }
         MyDayActions()
-        LandscapePanel(R.drawable.tasbih_still, Modifier.clickable { nav.open(Screen.TASBIH) }) {
-            Row(Modifier.fillMaxWidth().padding(22.dp), verticalAlignment = Alignment.CenterVertically) {
-                Column(Modifier.weight(1f)) {
-                    Text(stringResource(R.string.tasbih_title), style = MaterialTheme.typography.headlineSmall)
-                    Text(stringResource(R.string.tasbih_subtitle), style = MaterialTheme.typography.bodyMedium)
-                    Text(clarityCopy(UiClarity0825.StartDhikr) + " →", style = MaterialTheme.typography.labelLarge,
-                        modifier = Modifier.padding(top = 8.dp))
-                    Spacer(Modifier.height(16.dp))
-                    if (Store.personalProgressEnabled) Text(stringResource(R.string.tasbih_today, Store.tasbihToday(today)), color = Sand)
-                }
-                Text("›", fontSize = 32.sp)
+        Column(Modifier.fillMaxWidth()) {
+            Text(stringResource(R.string.tasbih_title), style = MaterialTheme.typography.headlineSmall)
+            Spacer(Modifier.height(8.dp))
+            Text(stringResource(R.string.tasbih_subtitle), style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant)
+            if (Store.personalProgressEnabled) Text(stringResource(R.string.tasbih_today, Store.tasbihToday(today)),
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(top = 8.dp))
+            TextButton(onClick = { nav.open(Screen.TASBIH) }, modifier = Modifier.testTag("home_tasbih_open")) {
+                Text(clarityCopy(UiClarity0825.StartDhikr)); Spacer(Modifier.width(8.dp)); Text("→")
             }
         }
 
@@ -206,29 +205,37 @@ fun HomeScreen() {
 private fun PrayerRow(prayer: Prayer, time: String, isCurrent: Boolean, isNext: Boolean, started: Boolean, done: Boolean, onToggle: () -> Unit) {
     val scheme = MaterialTheme.colorScheme
     val large = LocalDensity.current.fontScale > 1.3f
-    val shape = RoundedCornerShape(18.dp)
-    val fill = when { isCurrent -> scheme.primaryContainer; isNext -> scheme.secondaryContainer.copy(alpha = .65f); else -> Color.Transparent }
-    val line = scheme.outlineVariant.copy(alpha = .45f)
-    Row(Modifier.fillMaxWidth().padding(vertical = 3.dp).clip(shape).background(fill)
-        .then(if (isNext) Modifier.then(Modifier.drawBehind {
-            drawLine(Clay, androidx.compose.ui.geometry.Offset(2.dp.toPx(), 14.dp.toPx()),
-                androidx.compose.ui.geometry.Offset(2.dp.toPx(), size.height - 14.dp.toPx()), 3.dp.toPx(), StrokeCap.Round)
-        }) else Modifier)
-        .padding(horizontal = 10.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        if (!large) Icon(painterResource(prayerIconRes(prayer)), null, tint = prayerAccent(prayer), modifier = Modifier.size(24.dp))
+    val line = scheme.outlineVariant
+    Row(Modifier.fillMaxWidth().heightIn(min = 64.dp)
+        .drawBehind {
+            val x = 8.dp.toPx()
+            if (prayer != Prayer.FAJR) drawLine(line, androidx.compose.ui.geometry.Offset(x, 0f),
+                androidx.compose.ui.geometry.Offset(x, size.height / 2), 1.dp.toPx())
+            if (prayer != Prayer.ISHA) drawLine(line, androidx.compose.ui.geometry.Offset(x, size.height / 2),
+                androidx.compose.ui.geometry.Offset(x, size.height), 1.dp.toPx())
+            drawCircle(if (isCurrent || isNext) scheme.primary else scheme.background,
+                (if (isNext) 5.dp else 3.dp).toPx(), androidx.compose.ui.geometry.Offset(x, size.height / 2))
+            if (!isCurrent && !isNext) drawCircle(scheme.outline, 3.dp.toPx(), androidx.compose.ui.geometry.Offset(x, size.height / 2),
+                style = androidx.compose.ui.graphics.drawscope.Stroke(1.dp.toPx()))
+        }.padding(start = 28.dp, top = 8.dp, bottom = 8.dp),
+        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
         Column(Modifier.weight(1f)) {
-            Text(prayerName(prayer), style = MaterialTheme.typography.titleMedium)
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                if (prayer == Prayer.SUNRISE) Icon(painterResource(prayerIconRes(prayer)), null,
+                    tint = scheme.secondary, modifier = Modifier.size(18.dp))
+                Text(prayerName(prayer), style = MaterialTheme.typography.titleMedium,
+                    color = if (isNext) scheme.primary else scheme.onSurface)
+            }
             if (isCurrent || isNext) Text(stringResource(if (isCurrent) R.string.home_now else R.string.home_next_prayer),
                 style = MaterialTheme.typography.labelSmall, color = scheme.onSurfaceVariant)
             if (large) Text(time, style = MaterialTheme.typography.titleLarge.merge(Tabular))
         }
-        if (!large) Text(time, style = MaterialTheme.typography.titleLarge.merge(Tabular), fontWeight = FontWeight.Medium)
+        if (!large) Text(time, style = MaterialTheme.typography.titleLarge.merge(Tabular),
+            color = if (isNext) scheme.primary else scheme.onSurface, fontWeight = FontWeight.Medium)
         if (prayer.isPrayer) CheckCircle(checked = done, enabled = started, onToggle = onToggle,
             contentDescription = prayerName(prayer) + ": " + stringResource(R.string.home_mark_prayed))
         else Spacer(Modifier.size(48.dp))
     }
-    if (!isCurrent && !isNext && prayer != Prayer.ISHA) androidx.compose.material3.HorizontalDivider(color = line)
 }
 
 @Composable
@@ -268,14 +275,7 @@ private fun FocusSummary(usedMillis: Long?, onOpen: () -> Unit, onQuiz: () -> Un
     val allowed = Store.allowedMinutes()
     ZCard {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            ProgressRing(
-                progress = usedMin.toFloat() / allowed.coerceAtLeast(1),
-                modifier = Modifier.size(64.dp),
-                stroke = 7.dp,
-                color = if (usedMin >= allowed) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
-            ) {
-                Text("${(usedMin * 100 / allowed.coerceAtLeast(1)).coerceAtMost(999)}%", style = MaterialTheme.typography.labelMedium)
-            }
+            IconBadge(painterResource(R.drawable.ic_nav_focus), size = 40.dp)
             Spacer(Modifier.width(16.dp))
             Column(Modifier.weight(1f)) {
                 Text(stringResource(R.string.focus_today), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -308,7 +308,7 @@ private fun FridayCard(today: java.time.LocalDate) {
     val n = items[index]
     ZCard(onClick = { index = (index + 1) % items.size }) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            IconBadge(painterResource(R.drawable.ic_shop_book), container = Gold.copy(alpha = 0.35f), tint = Color(0xFF8A6414))
+            IconBadge(painterResource(R.drawable.ic_shop_book), container = MaterialTheme.colorScheme.primaryContainer, tint = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.width(12.dp))
             Text(stringResource(R.string.home_friday_title), style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
             Text("${index + 1}/${items.size}", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -351,8 +351,8 @@ private fun MyDayActions() {
 private fun prayerAccent(prayer: Prayer): Color {
     val dark = com.zikrtime.app.ui.theme.LocalDarkTheme.current
     return when (prayer) {
-        Prayer.FAJR, Prayer.ISHA -> if (dark) Color(0xFFA9D5B9) else Olive
-        Prayer.SUNRISE, Prayer.DHUHR -> if (dark) Sand else Color(0xFF98602E)
-        Prayer.ASR, Prayer.MAGHRIB -> if (dark) Color(0xFFE6AC8B) else Clay
+        Prayer.FAJR, Prayer.ISHA -> MaterialTheme.colorScheme.primary
+        Prayer.SUNRISE, Prayer.DHUHR -> MaterialTheme.colorScheme.secondary
+        Prayer.ASR, Prayer.MAGHRIB -> MaterialTheme.colorScheme.onSurfaceVariant
     }
 }

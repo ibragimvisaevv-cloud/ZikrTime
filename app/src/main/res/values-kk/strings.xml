@@ -219,7 +219,7 @@
     <string name="tasbih_subtitle">Зікір санауышы</string>
     <string name="tasbih_of">%1$d ішінен</string>
     <string name="tasbih_laps">Айналым: %1$d</string>
-    <string name="tasbih_tap_hint">Санау үшін шеңберді басыңыз</string>
+    <string name="tasbih_tap_hint">Санау үшін санауышты басыңыз</string>
     <string name="tasbih_target">Мақсат</string>
     <string name="tasbih_today">Бүгін: %1$d</string>
     <string name="zikr_1_name">Субханаллаһ</string>

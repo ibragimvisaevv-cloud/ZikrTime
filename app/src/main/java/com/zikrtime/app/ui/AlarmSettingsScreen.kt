@@ -187,70 +187,48 @@ fun AlarmSettingsScreen() {
     }
 }
 
-/** Главная карточка: включатель и время следующего будильника крупно. */
+/** The enabled state and next ring stay visible on an open typographic surface. */
 @Composable
 private fun AlarmHero(enabled: Boolean, next: ZonedDateTime?, onToggle: (Boolean) -> Unit) {
-    LandscapePanel(R.drawable.horizon_dawn) {
-        Column(Modifier.padding(horizontal = 22.dp, vertical = 20.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(painterResource(R.drawable.ic_alarm), contentDescription = null, tint = Gold, modifier = Modifier.size(26.dp))
-                Spacer(Modifier.width(12.dp))
-                Text(
-                    stringResource(R.string.alarm_enable),
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Cream,
-                    modifier = Modifier.weight(1f),
-                )
-                Spacer(Modifier.width(8.dp))
-                Switch(
-                    checked = enabled,
-                    onCheckedChange = onToggle,
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = EmeraldDeep,
-                        checkedTrackColor = Gold,
-                        uncheckedThumbColor = Cream.copy(alpha = 0.8f),
-                        uncheckedTrackColor = Color.Transparent,
-                        uncheckedBorderColor = Cream.copy(alpha = 0.5f),
-                    ),
-                )
-            }
-            Spacer(Modifier.height(10.dp))
-            if (enabled && next != null) {
-                BigClock(next, fontSize = 56.sp, color = Gold)
-                Text(
-                    gregorianDate(next.toLocalDate()) + " · " + stringResource(R.string.alarm_fajr_at, clock(FajrAlarm.fajrFor(next))),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Cream.copy(alpha = 0.85f),
-                )
-            } else {
-                Text(
-                    if (enabled) stringResource(R.string.alarm_next_none) else stringResource(R.string.alarm_enable_hint),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Cream.copy(alpha = 0.85f),
-                )
-            }
+    val scheme = MaterialTheme.colorScheme
+    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Icon(painterResource(R.drawable.ic_alarm), contentDescription = null,
+                tint = scheme.primary, modifier = Modifier.size(24.dp))
+            Text(stringResource(R.string.alarm_enable), style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.weight(1f))
+            Switch(checked = enabled, onCheckedChange = onToggle)
         }
+        if (enabled && next != null) {
+            BigClock(next, fontSize = 56.sp, color = scheme.onSurface)
+            Text(gregorianDate(next.toLocalDate()) + " · " + stringResource(R.string.alarm_fajr_at, clock(FajrAlarm.fajrFor(next))),
+                style = MaterialTheme.typography.bodyMedium, color = scheme.onSurfaceVariant)
+        } else {
+            Text(if (enabled) stringResource(R.string.alarm_next_none) else stringResource(R.string.alarm_enable_hint),
+                style = MaterialTheme.typography.bodyMedium, color = scheme.onSurfaceVariant)
+        }
+        androidx.compose.material3.HorizontalDivider(color = scheme.outlineVariant)
     }
 }
 
-/** Кружок дня недели: выбран — закрашен. */
+/** Selected days have both the semantic checkbox state and a visible checkmark. */
 @Composable
 private fun DayToggle(label: String, selected: Boolean, modifier: Modifier = Modifier, onClick: () -> Unit) {
     val scheme = MaterialTheme.colorScheme
     Box(
         modifier
             .heightIn(min = 48.dp)
-            .clip(RoundedCornerShape(16.dp))
+            .clip(MaterialTheme.shapes.small)
             .background(if (selected) scheme.primary else scheme.surfaceContainerHigh)
             .toggleable(value = selected, role = Role.Checkbox, onValueChange = { onClick() }).padding(horizontal = 10.dp, vertical = 12.dp),
         contentAlignment = Alignment.Center,
     ) {
-        Text(
-            label,
-            style = MaterialTheme.typography.labelMedium,
-            color = if (selected) scheme.onPrimary else scheme.onSurfaceVariant,
-
-        )
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+            if (selected) Icon(painterResource(R.drawable.ic_check), contentDescription = null,
+                tint = scheme.onPrimary, modifier = Modifier.size(14.dp))
+            Text(label, style = MaterialTheme.typography.labelMedium,
+                color = if (selected) scheme.onPrimary else scheme.onSurfaceVariant)
+        }
     }
 }
 

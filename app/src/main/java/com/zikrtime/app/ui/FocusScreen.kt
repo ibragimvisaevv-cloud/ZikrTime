@@ -30,6 +30,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -111,31 +112,6 @@ fun FocusScreen() {
     HorizonSection(title = clarityCopy(UiClarity0825.Limits), subtitle = sectionCopy(SectionClarity.LimitsIntro),
         image = R.drawable.focus_courtyard, heroHeight = 270.dp,
         hero = {
-            Spacer(Modifier.height(8.dp))
-            if (hasUsage) ProgressRing(progress = if (usedMillis == null) 0f else remaining.toFloat() / allowed.coerceAtLeast(1),
-                modifier = Modifier.align(Alignment.CenterHorizontally).size(if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 210.dp else 158.dp),
-                stroke = 3.dp, color = Sand, track = Porcelain.copy(alpha = .24f)) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(if (usedMillis == null) "—" else remaining.toString(), color = Porcelain,
-                        style = MaterialTheme.typography.displayLarge, fontSize = 64.sp)
-                    Text(stringResource(R.string.unit_min), color = Sand, style = MaterialTheme.typography.titleMedium)
-                }
-            }
-            Text(if (!hasUsage || usedMillis == null) stringResource(R.string.focus_no_access) else stringResource(R.string.focus_remaining),
-                style = MaterialTheme.typography.titleMedium, color = Porcelain,
-                textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
-            if (!hasUsage) GoldButton(sectionCopy(SectionClarity.SetPhoneAccess), onClick = { showPermissions = true },
-                modifier = Modifier.testTag("focus_setup").semantics { testTagsAsResourceId = true })
-        }) {
-        ZCard {
-            Text(sectionCopy(SectionClarity.LimitMeaning), style = MaterialTheme.typography.bodyMedium)
-            Spacer(Modifier.height(12.dp))
-            PrimaryButton(uiCopy(UiCopy0823.ChooseApps), onClick = { nav.open(Screen.APPS) },
-                modifier = Modifier.testTag("focus_choose_apps").semantics { testTagsAsResourceId = true })
-            Spacer(Modifier.height(8.dp))
-            TonalButton(uiCopy(UiCopy0823.ConfigureLimits), onClick = { showSettings = true },
-                modifier = Modifier.testTag("focus_settings_open").semantics { testTagsAsResourceId = true })
-            Spacer(Modifier.height(12.dp))
             Text(when {
                 Store.blockedPackages.isEmpty() -> uiCopy(UiCopy0823.NeedApps)
                 !hasUsage || !canBlock -> uiCopy(UiCopy0823.NeedAccess)
@@ -145,6 +121,32 @@ fun FocusScreen() {
             }, style = MaterialTheme.typography.titleSmall,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.testTag("focus_setup_status").semantics { testTagsAsResourceId = true })
+            if (hasUsage) {
+                Row(verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    Text(if (usedMillis == null) "—" else remaining.toString(),
+                        style = MaterialTheme.typography.displayLarge.merge(com.zikrtime.app.ui.theme.Tabular),
+                        color = MaterialTheme.colorScheme.onSurface, fontSize = 64.sp)
+                    Text(stringResource(R.string.unit_min), style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(bottom = 10.dp))
+                }
+                LinearProgressIndicator(progress = { if (usedMillis == null) 0f else remaining.toFloat() / allowed.coerceAtLeast(1) },
+                    modifier = Modifier.fillMaxWidth(), color = MaterialTheme.colorScheme.primary,
+                    trackColor = MaterialTheme.colorScheme.outlineVariant)
+            }
+            Text(if (!hasUsage || usedMillis == null) stringResource(R.string.focus_no_access) else stringResource(R.string.focus_remaining),
+                style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            if (!hasUsage) PrimaryButton(sectionCopy(SectionClarity.SetPhoneAccess), onClick = { showPermissions = true },
+                modifier = Modifier.testTag("focus_setup").semantics { testTagsAsResourceId = true })
+        }) {
+        Column(Modifier.fillMaxWidth()) {
+            Text(sectionCopy(SectionClarity.LimitMeaning), style = MaterialTheme.typography.bodyMedium)
+            Spacer(Modifier.height(12.dp))
+            PrimaryButton(uiCopy(UiCopy0823.ChooseApps), onClick = { nav.open(Screen.APPS) },
+                modifier = Modifier.testTag("focus_choose_apps").semantics { testTagsAsResourceId = true })
+            Spacer(Modifier.height(8.dp))
+            TonalButton(uiCopy(UiCopy0823.ConfigureLimits), onClick = { showSettings = true },
+                modifier = Modifier.testTag("focus_settings_open").semantics { testTagsAsResourceId = true })
+            Spacer(Modifier.height(12.dp))
             Text("${uiCopy(UiCopy0823.SelectedApps)} · ${Store.blockedPackages.size}",
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             val selectedNames = AppsCache.apps.orEmpty().filter { it.packageName in Store.blockedPackages }.map { it.label }
@@ -435,7 +437,7 @@ fun PermissionRow(title: String, text: String, granted: Boolean, actionTag: Stri
             if (granted) Icon(Icons.Default.CheckCircle, contentDescription = stringResource(R.string.state_granted), tint = MaterialTheme.colorScheme.primary)
         }
         Text(text, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        if (!granted) FilledTonalButton(onClick = onGrant, modifier = Modifier.heightIn(min = 48.dp).testTag(actionTag)) { Text(stringResource(R.string.action_open_settings)) }
+        if (!granted) FilledTonalButton(onClick = onGrant, shape = MaterialTheme.shapes.medium, modifier = Modifier.heightIn(min = 48.dp).testTag(actionTag)) { Text(stringResource(R.string.action_open_settings)) }
     }
 }
 
@@ -468,7 +470,7 @@ fun AppsScreen() {
             leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
             placeholder = { Text(stringResource(R.string.action_search)) },
             singleLine = true,
-            shape = RoundedCornerShape(16.dp),
+            shape = MaterialTheme.shapes.small,
             modifier = Modifier.fillMaxWidth(),
         )
         val apps = AppsCache.apps
@@ -496,7 +498,7 @@ private fun AppRow(app: AppInfo) {
     Row(
         Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(14.dp))
+            .clip(MaterialTheme.shapes.small)
             .toggleable(value = checked, role = Role.Checkbox, onValueChange = { selected ->
                 Store.blockedPackages = Store.blockedPackages.let { if (selected) it + app.packageName else it - app.packageName }
                 FocusPause.selectionChanged(context)

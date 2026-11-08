@@ -49,6 +49,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -576,15 +577,17 @@ fun Modifier.shake(trigger: Boolean): Modifier = composed {
 
 // ---------------- Заставка ----------------
 
-/** Утверждённый знак «Купол и горизонт» на общей пейзажной сцене. */
+/** The retained app mark on the same neutral surface as the rest of the interface. */
 @Composable
 fun HorizonSplash(modifier: Modifier = Modifier) {
-    Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        SceneBackdrop(Modifier.fillMaxSize(), controlBars = false)
-        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            AppIconImage(Modifier.size(88.dp))
-            Text(stringResource(R.string.app_name), color = Cream, style = MaterialTheme.typography.headlineLarge)
-            Text(stringResource(R.string.slogan), color = Cream, style = MaterialTheme.typography.bodyLarge)
+    val colors = MaterialTheme.colorScheme
+    Box(modifier.fillMaxSize().background(colors.background), contentAlignment = Alignment.Center) {
+        Column(Modifier.padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            AppIconImage(Modifier.size(64.dp))
+            Text(stringResource(R.string.app_name), color = colors.onSurface, style = MaterialTheme.typography.headlineLarge)
+            Text(stringResource(R.string.slogan), color = colors.onSurfaceVariant, style = MaterialTheme.typography.bodyLarge,
+                textAlign = TextAlign.Center)
         }
     }
 }

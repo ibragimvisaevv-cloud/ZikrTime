@@ -3,7 +3,6 @@ package com.zikrtime.app.ui
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
@@ -36,7 +35,7 @@ internal fun QuranSelectionBar(
     val copyLabel = stringResource(R.string.qt_copy)
     Surface(
         modifier = Modifier.fillMaxWidth().testTag("quran_selection"),
-        shape = RoundedCornerShape(16.dp), color = colors.paper,
+        shape = MaterialTheme.shapes.medium, color = colors.paper,
         border = BorderStroke(1.dp, colors.rule),
     ) {
         if (compact) {

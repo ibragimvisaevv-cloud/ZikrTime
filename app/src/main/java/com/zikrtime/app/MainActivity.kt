@@ -358,14 +358,11 @@ private fun Tabs() {
             onSelect = { nav.tab = it.first },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .background(androidx.compose.ui.graphics.Brush.verticalGradient(
-                    0f to androidx.compose.ui.graphics.Color.Transparent,
-                    .35f to MaterialTheme.colorScheme.background.copy(alpha = .96f),
-                    1f to MaterialTheme.colorScheme.background))
+                .background(MaterialTheme.colorScheme.surfaceContainerLow)
                 .windowInsetsPadding(WindowInsets.navigationBars)
                 .padding(horizontal = 0.dp, vertical = 0.dp),
         ) { (tab, icon, label), selected ->
-            val color = if (selected) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
+            val color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
             val title = when (tab) {
                 Tab.FOCUS -> com.zikrtime.app.ui.clarityCopy(com.zikrtime.app.ui.UiClarity0825.Limits)
                 Tab.MORE -> com.zikrtime.app.ui.clarityCopy(com.zikrtime.app.ui.UiClarity0825.Settings)

@@ -25,7 +25,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -38,7 +37,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -54,13 +52,8 @@ import com.zikrtime.app.quiz.QuestionBank
 import com.zikrtime.app.ui.BigClock
 import com.zikrtime.app.ui.GhostButton
 import com.zikrtime.app.ui.QuizRound
-import com.zikrtime.app.ui.StarPattern
 import com.zikrtime.app.ui.clock
 import com.zikrtime.app.ui.theme.ArabicStyle
-import com.zikrtime.app.ui.theme.Cream
-import com.zikrtime.app.ui.theme.EmeraldDeep
-import com.zikrtime.app.ui.theme.EmeraldNight
-import com.zikrtime.app.ui.theme.Gold
 import com.zikrtime.app.ui.theme.ZikrTheme
 import kotlinx.coroutines.delay
 import java.time.ZonedDateTime
@@ -93,17 +86,21 @@ class AlarmActivity : ComponentActivity() {
         val test = intent.getBooleanExtra(FajrAlarm.EXTRA_TEST, false)
         setContent {
             ZikrTheme {
-                AlarmScreen(
-                    test = test,
-                    onStop = {
-                        AlarmService.stop(this)
-                        finish()
-                    },
-                    onSnooze = {
-                        AlarmService.snooze(this)
-                        finish()
-                    },
-                )
+                androidx.compose.runtime.CompositionLocalProvider(com.zikrtime.app.ui.theme.LocalDarkTheme provides true) {
+                    MaterialTheme(colorScheme = com.zikrtime.app.ui.theme.DarkColors) {
+                        AlarmScreen(
+                            test = test,
+                            onStop = {
+                                AlarmService.stop(this)
+                                finish()
+                            },
+                            onSnooze = {
+                                AlarmService.snooze(this)
+                                finish()
+                            },
+                        )
+                    }
+                }
             }
         }
     }
@@ -154,7 +151,7 @@ private fun AlarmScreen(test: Boolean, onStop: () -> Unit, onSnooze: () -> Unit)
     Box(
         Modifier
             .fillMaxSize()
-            .background(Brush.verticalGradient(listOf(EmeraldNight, EmeraldDeep, EmeraldNight))),
+            .background(MaterialTheme.colorScheme.background),
     ) {
         com.zikrtime.app.ui.SceneBackdrop(Modifier.fillMaxSize(), night = true)
         Column(
@@ -165,10 +162,11 @@ private fun AlarmScreen(test: Boolean, onStop: () -> Unit, onSnooze: () -> Unit)
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             if (test) {
-                Text(stringResource(R.string.alarm_test_label), style = MaterialTheme.typography.labelLarge, color = Gold)
+                Text(stringResource(R.string.alarm_test_label), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
             }
             // Время и слова азана — по центру экрана; если не помещаются, прокручиваются.
             BoxWithConstraints(Modifier.weight(1f).fillMaxWidth()) {
+                val clockWidth = maxWidth
                 Column(
                     Modifier
                         .fillMaxWidth()
@@ -177,11 +175,13 @@ private fun AlarmScreen(test: Boolean, onStop: () -> Unit, onSnooze: () -> Unit)
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(14.dp, Alignment.CenterVertically),
                 ) {
-                    BigClock(now, fontSize = if (checking) 48.sp else 84.sp, color = Cream)
+                    BigClock(now, fontSize = if (checking) 40.sp else
+                        (clockWidth.value / (4.8f * androidx.compose.ui.platform.LocalDensity.current.fontScale)).coerceIn(36f, 76f).sp,
+                        color = MaterialTheme.colorScheme.onSurface)
                     Text(
                         stringResource(R.string.alarm_fajr_at, clock(fajr)),
                         style = MaterialTheme.typography.titleLarge,
-                        color = Gold,
+                        color = MaterialTheme.colorScheme.primary,
                         textAlign = TextAlign.Center,
                     )
                     if (!checking) {
@@ -190,17 +190,17 @@ private fun AlarmScreen(test: Boolean, onStop: () -> Unit, onSnooze: () -> Unit)
                         Text(
                             "الصَّلَاةُ خَيْرٌ مِنَ النَّوْمِ",
                             style = ArabicStyle.copy(fontSize = 34.sp, textDirection = TextDirection.Rtl),
-                            color = Cream,
+                            color = MaterialTheme.colorScheme.onSurface,
                             textAlign = TextAlign.Center,
                         )
                         Text(
                             stringResource(R.string.alarm_better_than_sleep),
                             style = MaterialTheme.typography.titleMedium,
-                            color = Cream.copy(alpha = 0.85f),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textAlign = TextAlign.Center,
                         )
                     } else {
-                        Surface(shape = RoundedCornerShape(28.dp), color = MaterialTheme.colorScheme.surface, modifier = Modifier.fillMaxWidth()) {
+                        Surface(shape = MaterialTheme.shapes.large, color = MaterialTheme.colorScheme.surface, modifier = Modifier.fillMaxWidth()) {
                             QuizRound(
                                 bank = bank,
                                 category = null,
@@ -226,7 +226,7 @@ private fun AlarmScreen(test: Boolean, onStop: () -> Unit, onSnooze: () -> Unit)
                 }
                 if (!test && Store.alarmSnoozeAllowed) {
                     Spacer(Modifier.height(10.dp))
-                    GhostButton(stringResource(R.string.alarm_snooze, AlarmService.SNOOZE_MINUTES), onClick = onSnooze, color = Cream)
+                    GhostButton(stringResource(R.string.alarm_snooze, AlarmService.SNOOZE_MINUTES), onClick = onSnooze, color = MaterialTheme.colorScheme.onSurface)
                 }
             }
         }
@@ -237,8 +237,8 @@ private fun AlarmScreen(test: Boolean, onStop: () -> Unit, onSnooze: () -> Unit)
 private fun AlarmButton(text: String, onClick: () -> Unit) {
     androidx.compose.material3.Button(
         onClick = onClick,
-        colors = androidx.compose.material3.ButtonDefaults.buttonColors(containerColor = Gold, contentColor = androidx.compose.ui.graphics.Color(0xFF2B1E00)),
-        shape = RoundedCornerShape(20.dp),
+        colors = androidx.compose.material3.ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary),
+        shape = MaterialTheme.shapes.medium,
         modifier = Modifier.fillMaxWidth().heightIn(min = 64.dp),
     ) { Text(text, style = MaterialTheme.typography.titleMedium) }
 }

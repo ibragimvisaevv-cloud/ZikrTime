@@ -12,6 +12,7 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,7 +39,9 @@ fun WeakTopicsOverview(bank: QuizBank) {
     val topics = LearningStore.topics(bank)
     val answered = topics.sumOf { it.answered }
     val mistakes = topics.sumOf { it.mistakes }
-    ZCard {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+        Spacer(Modifier.height(8.dp))
         Text(stringResource(R.string.training_title), style = MaterialTheme.typography.titleLarge)
         Text(stringResource(if(answered == 0) R.string.training_first_hint else R.string.training_overview_hint),
             style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -89,7 +92,7 @@ private fun TrainingDashboard(bank: QuizBank) {
     }
     Column(Modifier.fillMaxWidth().testTag("training_dashboard").semantics { testTagsAsResourceId = true },
         verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        ZCard {
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(stringResource(R.string.training_personal_plan), style = MaterialTheme.typography.headlineSmall)
             Text(stringResource(R.string.training_method), style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -142,8 +145,11 @@ private fun TrainingDashboard(bank: QuizBank) {
 private fun TrainingTopicCard(bank: QuizBank, topic: TopicLearning, onStart: (String?) -> Unit) {
     val nav = LocalNav.current
     val scheme = MaterialTheme.colorScheme
-    ZCard(modifier = Modifier.testTag("training_topic_${topic.category}")) {
-        Text(bank.categoryName(topic.category), style = MaterialTheme.typography.titleLarge)
+    Column(Modifier.fillMaxWidth().testTag("training_topic_${topic.category}"),
+        verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        HorizontalDivider(color = scheme.outlineVariant)
+        Spacer(Modifier.height(8.dp))
+        Text(bank.categoryName(topic.category), style = MaterialTheme.typography.titleMedium)
         Text(stringResource(when(topic.status) {
             TopicLearningStatus.NEW -> R.string.training_status_new
             TopicLearningStatus.LIMITED -> R.string.training_status_limited
@@ -157,7 +163,7 @@ private fun TrainingTopicCard(bank: QuizBank, topic: TopicLearning, onStart: (St
             modifier = Modifier.testTag("training_coverage_${topic.category}"),
             style = MaterialTheme.typography.bodyMedium)
         LinearProgressIndicator(progress = { topic.coverage },
-            modifier = Modifier.fillMaxWidth().height(5.dp), drawStopIndicator = {})
+            modifier = Modifier.fillMaxWidth().height(3.dp), drawStopIndicator = {})
         Spacer(Modifier.height(8.dp))
         if(topic.answered > 0) {
             Text(stringResource(R.string.training_error_count,topic.mistakes),

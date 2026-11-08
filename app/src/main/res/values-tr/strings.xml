@@ -219,7 +219,7 @@
     <string name="tasbih_subtitle">Zikir sayacı</string>
     <string name="tasbih_of">/ %1$d</string>
     <string name="tasbih_laps">Tur: %1$d</string>
-    <string name="tasbih_tap_hint">Saymak için daireye dokunun</string>
+    <string name="tasbih_tap_hint">Saymak için sayaca dokunun</string>
     <string name="tasbih_target">Hedef</string>
     <string name="tasbih_today">Bugün: %1$d</string>
     <string name="zikr_1_name">Sübhânallah</string>

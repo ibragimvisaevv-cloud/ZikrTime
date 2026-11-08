@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -75,10 +76,6 @@ import com.zikrtime.app.R
 import com.zikrtime.app.data.Store
 import com.zikrtime.app.prayer.Qibla
 import com.zikrtime.app.ui.theme.ArabicStyle
-import com.zikrtime.app.ui.theme.Cream
-import com.zikrtime.app.ui.theme.Emerald
-import com.zikrtime.app.ui.theme.EmeraldDeep
-import com.zikrtime.app.ui.theme.Gold
 import com.zikrtime.app.ui.theme.Tabular
 import kotlin.math.abs
 import kotlin.math.sin
@@ -115,7 +112,7 @@ fun QiblaScreen() {
 
     ScreenScaffold(title = stringResource(R.string.qibla_title), onBack = { nav.back() }, showHeading = false) {
         PageHeading(stringResource(R.string.qibla_title), com.zikrtime.app.data.Cities.displayName(LocalContext.current, loc))
-        Box(Modifier.fillMaxWidth().aspectRatio(1f).testTag("qibla_compass").padding(8.dp), contentAlignment = Alignment.Center) {
+        Box(Modifier.fillMaxWidth().heightIn(max = 340.dp).aspectRatio(1f).testTag("qibla_compass").padding(12.dp), contentAlignment = Alignment.Center) {
             Compass(heading = shownHeading, qibla = qibla, aligned = aligned)
         }
         Text(
@@ -147,8 +144,8 @@ fun QiblaScreen() {
 
 @Composable
 private fun InfoLine(label: String, value: String) {
-    Row(Modifier.fillMaxWidth().padding(vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
-        Text(label, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
+    Column(Modifier.fillMaxWidth().padding(vertical = 6.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        Text(label, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         Text(value, style = MaterialTheme.typography.titleMedium.merge(Tabular))
     }
 }
@@ -156,34 +153,19 @@ private fun InfoLine(label: String, value: String) {
 @Composable
 private fun Compass(heading: Float, qibla: Float, aligned: Boolean) {
     val scheme = MaterialTheme.colorScheme
-    val ring = if (aligned) Gold else scheme.outlineVariant
+    val ring = if (aligned) scheme.primary else scheme.outlineVariant
     val letters = listOf(
         stringResource(R.string.compass_n), stringResource(R.string.compass_e),
         stringResource(R.string.compass_s), stringResource(R.string.compass_w),
     )
-    val glowOn by androidx.compose.animation.core.animateFloatAsState(if (aligned) 1f else 0f, androidx.compose.animation.core.tween(450), label = "qibla-glow")
+    val alignmentFraction by androidx.compose.animation.core.animateFloatAsState(if (aligned) 1f else 0f,
+        androidx.compose.animation.core.tween(if (motionEnabled()) 180 else 0), label = "qibla-alignment")
     BoxWithConstraints(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         val radius = with(LocalDensity.current) { (minOf(maxWidth, maxHeight) / 2).toPx() }
         Canvas(Modifier.fillMaxSize()) {
             val r = size.minDimension / 2
-            if (glowOn > 0f) {
-                // Золотое сияние вокруг компаса, когда телефон смотрит на Каабу
-                val g = r * 1.10f
-                drawCircle(
-                    Brush.radialGradient(
-                        0.78f to Color.Transparent,
-                        0.9f to Gold.copy(alpha = 0.55f * glowOn),
-                        1f to Color.Transparent,
-                        center = center, radius = g,
-                    ),
-                    radius = g,
-                )
-            }
-            drawCircle(
-                Brush.radialGradient(listOf(scheme.surfaceContainerLowest, scheme.surfaceContainerLow, scheme.surfaceContainer), center, r),
-                radius = r,
-            )
-            drawCircle(ring, radius = r - 2.dp.toPx(), style = Stroke(3.dp.toPx()))
+            drawCircle(scheme.surfaceContainerLow, radius = r)
+            drawCircle(ring, radius = r - 2.dp.toPx(), style = Stroke((1f + alignmentFraction).dp.toPx()))
             // Циферблат поворачивается вместе с телефоном: север указывает на север.
             rotate(-heading) {
                 for (deg in 0 until 360 step 5) {
@@ -199,14 +181,14 @@ private fun Compass(heading: Float, qibla: Float, aligned: Boolean) {
                     }
                 }
                 rotate(qibla) {
-                    // Золотая метка на кольце и стрелка от центра к Каабе
+                    // Направление Каабы выделено меткой и стрелкой; оно не зависит только от цвета.
                     val mark = Path().apply {
                         moveTo(center.x, center.y - r + 8.dp.toPx())
                         lineTo(center.x - 8.dp.toPx(), center.y - r + 24.dp.toPx())
                         lineTo(center.x + 8.dp.toPx(), center.y - r + 24.dp.toPx())
                         close()
                     }
-                    drawPath(mark, Gold)
+                    drawPath(mark, scheme.secondary)
                     val tipY = center.y - r * 0.5f + 22.dp.toPx()
                     val w = 6.dp.toPx()
                     val needle = Path().apply {
@@ -216,7 +198,7 @@ private fun Compass(heading: Float, qibla: Float, aligned: Boolean) {
                         lineTo(center.x - w, center.y)
                         close()
                     }
-                    drawPath(needle, Gold)
+                    drawPath(needle, scheme.secondary)
                 }
             }
             // Неподвижная метка «куда смотрит телефон»
@@ -226,9 +208,9 @@ private fun Compass(heading: Float, qibla: Float, aligned: Boolean) {
                 lineTo(center.x + 10.dp.toPx(), center.y - r + 12.dp.toPx())
                 close()
             }
-            drawPath(pointer, if (aligned) Gold else scheme.primary)
+            drawPath(pointer, scheme.primary)
             drawCircle(scheme.surface, radius = 10.dp.toPx())
-            drawCircle(if (aligned) Gold else scheme.primary, radius = 6.dp.toPx())
+            drawCircle(scheme.primary, radius = 6.dp.toPx())
         }
         // Буквы сторон света: двигаются по кругу, но всегда стоят ровно.
         letters.forEachIndexed { i, letter ->
@@ -244,17 +226,17 @@ private fun Compass(heading: Float, qibla: Float, aligned: Boolean) {
             Modifier
                 .offset { polar(qibla - heading, radius * 0.5f) }
                 .graphicsLayer {
-                    val sc = 1f + glowOn * 0.12f
+                    val sc = 1f + alignmentFraction * 0.06f
                     scaleX = sc
                     scaleY = sc
                 }
                 .size(42.dp)
                 .clip(CircleShape)
-                .background(Brush.linearGradient(listOf(Emerald, EmeraldDeep)))
-                .border(2.dp, Gold, CircleShape),
+                .background(scheme.primaryContainer)
+                .border(1.dp, scheme.primary, CircleShape),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(painterResource(R.drawable.ic_kaaba), contentDescription = null, tint = Gold, modifier = Modifier.size(24.dp))
+            Icon(painterResource(R.drawable.ic_kaaba), contentDescription = null, tint = scheme.onPrimaryContainer, modifier = Modifier.size(24.dp))
         }
     }
 }

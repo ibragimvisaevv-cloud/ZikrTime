@@ -49,15 +49,15 @@ internal object PrayerWidgetRenderer {
         val dark = darkOverride ?: WidgetPreferences.dark(c, id)
         val automatic = darkOverride == null && Build.VERSION.SDK_INT >= 31 && WidgetPreferences.followsSystem(c,id)
         val showDates = datesOverride ?: WidgetPreferences.dates(c,id)
-        val ink = if (dark) 0xFFF1EFE7.toInt() else 0xFF242923.toInt()
-        val secondary = if (dark) 0xFFC0C4BA.toInt() else 0xFF62675E.toInt()
-        val gold = if (dark) 0xFFD6BD8E.toInt() else 0xFF796039.toInt()
+        val ink = if (dark) 0xFFF0F2F6.toInt() else 0xFF20242D.toInt()
+        val secondary = if (dark) 0xFFB9C0CD.toInt() else 0xFF5C626F.toInt()
+        val accent = if (dark) 0xFFB5C5FF.toInt() else 0xFF3157C8.toInt()
         fun paint(view: RemoteViews, viewId: Int, color: Int) {
             if (automatic && Build.VERSION.SDK_INT >= 31) {
                 val pair = when (color) {
-                    ink -> 0xFF242923.toInt() to 0xFFF1EFE7.toInt()
-                    gold -> 0xFF796039.toInt() to 0xFFD6BD8E.toInt()
-                    else -> 0xFF62675E.toInt() to 0xFFC0C4BA.toInt()
+                    ink -> 0xFF20242D.toInt() to 0xFFF0F2F6.toInt()
+                    accent -> 0xFF3157C8.toInt() to 0xFFB5C5FF.toInt()
+                    else -> 0xFF5C626F.toInt() to 0xFFB9C0CD.toInt()
                 }
                 view.setColorInt(viewId, "setTextColor", pair.first, pair.second)
             } else view.setTextColor(viewId, color)
@@ -72,11 +72,11 @@ internal object PrayerWidgetRenderer {
         }
         val v = RemoteViews(c.packageName, layout)
         v.setInt(R.id.widget_root, "setBackgroundResource", if (automatic) R.drawable.widget_surface_auto else if (dark) R.drawable.widget_surface_dark else R.drawable.widget_surface_light)
-        // Architecture is a separate non-text layer; fully opaque surfaces protect against busy wallpapers.
-        v.setImageViewResource(R.id.w_bg, if (type == PrayerWidgetModel.Layout.SQUARE) { if (automatic) R.drawable.widget_arch_auto else if (dark) R.drawable.widget_arch_dark else R.drawable.widget_arch_light } else { if (automatic) R.drawable.widget_horizon_auto else if (dark) R.drawable.widget_horizon_dark else R.drawable.widget_horizon_light })
+        // Text and event marks carry the hierarchy; the launcher wallpaper stays outside the opaque surface.
+        v.setViewVisibility(R.id.w_bg, View.GONE)
         v.setOnClickPendingIntent(R.id.widget_root, open(c, if (hasData) "prayer" else "city"))
         if (!hasData) {
-            paint(v, R.id.w_empty_title, ink); paint(v, R.id.w_empty_action, gold)
+            paint(v, R.id.w_empty_title, ink); paint(v, R.id.w_empty_action, accent)
             v.setTextViewText(R.id.w_empty_action, res.getString(R.string.widget_setup_city))
             return v
         }
@@ -115,7 +115,7 @@ internal object PrayerWidgetRenderer {
         paint(v, R.id.w_name, ink)
         v.setTextViewText(R.id.w_time, at.format(clockFormatter(local)))
         paint(v, R.id.w_time, ink)
-        paint(v, R.id.w_countdown, gold)
+        paint(v, R.id.w_countdown, accent)
         val exact = Build.VERSION.SDK_INT < 31 || c.getSystemService(AlarmManager::class.java).canScheduleExactAlarms()
         if (exact) {
             v.setChronometer(R.id.w_countdown, PrayerWidgetModel.countdownBase(SystemClock.elapsedRealtime(), now.toInstant().toEpochMilli(), at.toInstant().toEpochMilli()),
@@ -161,8 +161,8 @@ internal object PrayerWidgetRenderer {
                     val mark = if (prayer in prayed) "✓ " else if (!prayer.isPrayer) "☀ " else if (active) "› " else ""
                     cell.setTextViewText(R.id.w_cell_name, mark + prayerName(res, prayer))
                     cell.setTextViewText(R.id.w_cell_time, times[prayer].format(clockFormatter(local)))
-                    paint(cell, R.id.w_cell_name, if (active) gold else secondary)
-                    paint(cell, R.id.w_cell_time, if (active) gold else ink)
+                    paint(cell, R.id.w_cell_name, if (active) accent else secondary)
+                    paint(cell, R.id.w_cell_time, if (active) accent else ink)
                     val available = prayer.isPrayer && !times[prayer].isAfter(now)
                     val description = prayerName(res,prayer) + " " + times[prayer].format(clockFormatter(local)) +
                         if (available) ", " + res.getString(R.string.widget_tap_to_mark) else ""

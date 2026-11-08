@@ -26,9 +26,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.zikrtime.app.ui.theme.*
 
-internal val EmeraldBright = Color(0xFF397C60)
-internal val GoldLight = Color(0xFFF0D5A4)
-internal val GoldDark = Color(0xFF956B3E)
+internal val EmeraldBright = Color(0xFF3157C8)
+internal val GoldLight = Color(0xFFE7AB96)
+internal val GoldDark = Color(0xFFA4523B)
 
 @Composable
 fun AuroraBackground(modifier: Modifier = Modifier) = HorizonBackground(modifier)
@@ -38,7 +38,7 @@ fun Modifier.pressScale(interaction: MutableInteractionSource, pressedScale: Flo
     val pressed by interaction.collectIsPressedAsState()
     val motion = motionEnabled()
     val scale by animateFloatAsState(if (pressed && motion) pressedScale else 1f,
-        tween(if (motion) 140 else 0, easing = FastOutSlowInEasing), label = "press")
+        tween(if (motion) RhythmMotion.Press else 0, easing = FastOutSlowInEasing), label = "press")
     graphicsLayer { scaleX = scale; scaleY = scale }
 }
 
@@ -57,8 +57,7 @@ fun glassBorder(): BorderStroke = BorderStroke(1.dp, MaterialTheme.colorScheme.o
 @Composable
 fun Modifier.glass(shape: Shape = RoundedCornerShape(20.dp), elevation: Dp = 10.dp): Modifier {
     val dark = LocalDarkTheme.current
-    return this.shadow(if (dark) 0.dp else 2.dp, shape, ambientColor = Clay.copy(alpha = .08f), spotColor = Clay.copy(alpha = .12f))
-        .clip(shape).background(glassFill()).border(glassBorder(), shape)
+    return this.clip(shape).background(glassFill()).border(glassBorder(), shape)
 }
 
 @Composable
@@ -100,33 +99,24 @@ fun CategoryChip(text: String, modifier: Modifier = Modifier) {
     }
 }
 
-/** The same neutral surface as the cards, with one clear selected destination. */
+/** Stable navigation rail at the bottom; selection has an underline, icon and label. */
 @Composable
 fun <T> GlassNavBar(items: List<T>, selected: T, onSelect: (T) -> Unit, modifier: Modifier = Modifier,
     item: @Composable (T, Boolean) -> Unit) {
-    val motion = motionEnabled()
-    val position by animateFloatAsState(items.indexOf(selected).coerceAtLeast(0).toFloat(),
-        tween(if (motion) 220 else 0, easing = FastOutSlowInEasing), label = "nav-selection")
     val scheme = MaterialTheme.colorScheme
-    Box(modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp)
-        .shadow(6.dp, RoundedCornerShape(26.dp), ambientColor = Color.Black.copy(alpha = .12f), spotColor = Color.Black.copy(alpha = .12f))
-        .clip(RoundedCornerShape(26.dp))
-        .background(scheme.surfaceContainerLow)
-        .border(1.dp, scheme.outlineVariant.copy(alpha = .8f), RoundedCornerShape(26.dp))) {
-        Canvas(Modifier.matchParentSize()) {
-            val width = (size.width - 12.dp.toPx()) / items.size
-            drawRoundRect(scheme.primaryContainer,
-                topLeft = Offset(6.dp.toPx() + position * width + 2.dp.toPx(), 7.dp.toPx()),
-                size = androidx.compose.ui.geometry.Size(width - 4.dp.toPx(), size.height - 14.dp.toPx()),
-                cornerRadius = androidx.compose.ui.geometry.CornerRadius(19.dp.toPx()))
-        }
-        Row(Modifier.fillMaxWidth().selectableGroup().padding(horizontal = 6.dp, vertical = 8.dp)) {
+    Column(modifier.fillMaxWidth().background(scheme.surfaceContainerLow)) {
+        HorizontalDivider(color = scheme.outlineVariant)
+        Row(Modifier.fillMaxWidth().selectableGroup().padding(horizontal = 8.dp, vertical = 8.dp)) {
             items.forEach { value ->
                 val interaction = remember { MutableInteractionSource() }
-                Box(Modifier.weight(1f).heightIn(min = 54.dp).pressScale(interaction, .95f)
+                Column(Modifier.weight(1f).heightIn(min = 60.dp).pressScale(interaction, .98f)
+                    .clip(MaterialTheme.shapes.small)
                     .selectable(selected = value == selected, role = Role.Tab, interactionSource = interaction,
-                        indication = ripple(), onClick = { onSelect(value) }), contentAlignment = Alignment.Center) {
+                        indication = ripple(), onClick = { onSelect(value) }).padding(vertical = 5.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(5.dp)) {
                     item(value, value == selected)
+                    Box(Modifier.width(20.dp).height(3.dp).background(
+                        if (value == selected) scheme.primary else Color.Transparent, RoundedCornerShape(2.dp)))
                 }
             }
         }

@@ -43,21 +43,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zikrtime.app.R
 import com.zikrtime.app.data.Reviews
-import com.zikrtime.app.ui.theme.Gold
 import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-private val StarOff = Color(0x55B9A57A)
-
 /** Звёзды рейтинга (дробные округляются до половинки — показываем целые и пустые). */
 @Composable
 fun Stars(rating: Double, size: TextUnit = 14.sp) {
     val full = (rating + 0.25).toInt().coerceIn(0, 5)
     Row {
-        repeat(5) { i -> Text("★", fontSize = size, color = if (i < full) Gold else StarOff) }
+        repeat(5) { i -> Text(if (i < full) "★" else "☆", fontSize = size,
+            color = if (i < full) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) }
     }
 }
 
@@ -66,7 +64,7 @@ fun Stars(rating: Double, size: TextUnit = 14.sp) {
 fun RatingBadge(target: String, modifier: Modifier = Modifier) {
     val s = Reviews.data?.reviews?.get(target) ?: return
     Row(modifier, verticalAlignment = Alignment.CenterVertically) {
-        Text("★", color = Gold, fontSize = 14.sp)
+        Text("★", color = MaterialTheme.colorScheme.primary, fontSize = 14.sp)
         Spacer(Modifier.width(3.dp))
         Text(
             String.format(Locale.US, "%.1f", s.avg).replace('.', ',') + " (${s.count})",
@@ -172,10 +170,10 @@ private fun ReviewDialog(target: String, onDismiss: () -> Unit, onSent: () -> Un
         }
         OutlinedTextField(value = name, onValueChange = { name = it.take(40) }, singleLine = true,
             label = { Text(stringResource(R.string.reviews_name_hint)) }, enabled = !sending,
-            shape = RoundedCornerShape(18.dp), modifier = Modifier.fillMaxWidth())
+            shape = MaterialTheme.shapes.medium, modifier = Modifier.fillMaxWidth())
         OutlinedTextField(value = text, onValueChange = { text = it.take(600) }, minLines = 3, maxLines = 6,
             label = { Text(stringResource(R.string.reviews_text_hint)) }, enabled = !sending,
-            shape = RoundedCornerShape(18.dp), modifier = Modifier.fillMaxWidth())
+            shape = MaterialTheme.shapes.medium, modifier = Modifier.fillMaxWidth())
         Text(stringResource(R.string.reviews_rules), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         sendError?.let { StatePanel(it, error = true) }
         PrimaryButton(stringResource(R.string.reviews_send), enabled = rating > 0 && !sending, onClick = {

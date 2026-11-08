@@ -3,6 +3,8 @@ package com.zikrtime.app.ui
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -44,8 +46,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -60,10 +60,6 @@ import coil.compose.AsyncImage
 import com.zikrtime.app.R
 import com.zikrtime.app.data.Places
 import com.zikrtime.app.data.Store
-import com.zikrtime.app.ui.theme.Cream
-import com.zikrtime.app.ui.theme.Emerald
-import com.zikrtime.app.ui.theme.EmeraldDeep
-import com.zikrtime.app.ui.theme.Gold
 import com.zikrtime.app.ui.theme.LocalDarkTheme
 import java.util.Locale
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -121,7 +117,7 @@ fun PlacesScreen() {
     var locationUnavailable by remember { mutableStateOf(false) }
     val largeText = LocalDensity.current.fontScale >= 1.3f
     // Leave a real scroll surface below the map even on a landscape phone.
-    val mapHeight = (LocalConfiguration.current.screenHeightDp.dp * .34f).coerceIn(96.dp, 220.dp)
+    val mapHeight = (LocalConfiguration.current.screenHeightDp.dp * .40f).coerceIn(112.dp, 280.dp)
     var showMap by rememberSaveable { mutableStateOf(!largeText) }
     var tilesLoaded by remember { mutableStateOf(false) }
     var slowMap by remember { mutableStateOf(false) }
@@ -182,7 +178,7 @@ fun PlacesScreen() {
             state = listState,
             userScrollEnabled = !mapGestureActive,
             modifier = Modifier.weight(1f).fillMaxWidth().testTag("places_scroll"),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(bottom = 8.dp),
         ) {
             if (hasYandexMap && showMap) {
@@ -195,7 +191,7 @@ fun PlacesScreen() {
                             centerLon = origin.second,
                             dark = LocalDarkTheme.current,
                             onSelect = { id -> openPlace(id) },
-                            modifier = Modifier.fillMaxSize().clip(RoundedCornerShape(26.dp)),
+                            modifier = Modifier.fillMaxSize().clip(MaterialTheme.shapes.medium),
                             me = here,
                             focusMe = focusMe,
                             onLoaded = { tilesLoaded = true; slowMap = false },
@@ -298,16 +294,14 @@ fun PlacesScreen() {
                 }
             }
             item(key = "places_suggest") {
-                LandscapePanel(R.drawable.azkar_morning) {
-                    Column(Modifier.padding(20.dp)) {
-                        Text(stringResource(R.string.places_suggest_title), style = MaterialTheme.typography.titleMedium, color = Cream)
-                        Spacer(Modifier.height(6.dp))
-                        Text(stringResource(R.string.places_suggest_text), style = MaterialTheme.typography.bodyMedium, color = Cream.copy(alpha = 0.85f))
-                        if (bot.isNotBlank()) {
-                            Spacer(Modifier.height(14.dp))
-                            GoldButton(stringResource(R.string.places_suggest), onClick = { openUrl(context, "https://t.me/$bot?start=place") })
-                        }
-                    }
+                Column(Modifier.fillMaxWidth().padding(vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    androidx.compose.material3.HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+                    Text(stringResource(R.string.places_suggest_title), style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.padding(top = 12.dp))
+                    Text(stringResource(R.string.places_suggest_text), style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    if (bot.isNotBlank()) TonalButton(stringResource(R.string.places_suggest),
+                        onClick = { openUrl(context, "https://t.me/$bot?start=place") })
                 }
             }
         }
@@ -325,19 +319,20 @@ fun PlacesScreen() {
 
 @Composable
 private fun FilterPill(text: String, selected: Boolean, onClick: () -> Unit) {
-    val shape = RoundedCornerShape(16.dp)
+    val scheme = MaterialTheme.colorScheme
+    val shape = MaterialTheme.shapes.small
     val interaction = remember { MutableInteractionSource() }
-    Box(
-        Modifier
-            .pressScale(interaction)
-            .then(
-                if (selected) Modifier.clip(shape).background(Brush.linearGradient(listOf(Emerald, EmeraldDeep)))
-                else Modifier.glass(shape, elevation = 3.dp),
-            )
-            .clickable(interactionSource = interaction, indication = null, onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 14.dp),
-    ) {
-        Text(text, style = MaterialTheme.typography.labelLarge, color = if (selected) Color.White else MaterialTheme.colorScheme.onSurface)
+    Row(Modifier.pressScale(interaction).clip(shape)
+        .background(if (selected) scheme.primaryContainer else scheme.surfaceContainerLow)
+        .then(Modifier.border(1.dp, if (selected) scheme.primary else scheme.outlineVariant, shape))
+        .selectable(selected = selected, role = androidx.compose.ui.semantics.Role.Button,
+            interactionSource = interaction, indication = androidx.compose.material3.ripple(), onClick = onClick)
+        .heightIn(min = 48.dp).padding(horizontal = 14.dp, vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+        if (selected) Icon(painterResource(R.drawable.ic_check), null, tint = scheme.onPrimaryContainer,
+            modifier = Modifier.size(16.dp))
+        Text(text, style = MaterialTheme.typography.labelLarge,
+            color = if (selected) scheme.onPrimaryContainer else scheme.onSurface)
     }
 }
 
@@ -345,7 +340,7 @@ private fun FilterPill(text: String, selected: Boolean, onClick: () -> Unit) {
 private fun PlaceCard(place: Places.Place, distanceKm: Double, onClick: () -> Unit) {
     ZCard(onClick = onClick, modifier = Modifier.testTag("place_card_${place.id}"), padding = PaddingValues(16.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            IconBadge(painterResource(kindIcon(place.kind)), container = if (place.kind == "mosque") Gold.copy(alpha = 0.45f) else MaterialTheme.colorScheme.primaryContainer)
+            IconBadge(painterResource(kindIcon(place.kind)), container = MaterialTheme.colorScheme.primaryContainer)
             Spacer(Modifier.width(14.dp))
             Column(Modifier.weight(1f)) {
                 Text(place.name, style = MaterialTheme.typography.titleMedium)
@@ -377,7 +372,7 @@ private fun PlaceDetailsSheet(place: Places.Place, distanceKm: Double, onDismiss
         onDismissRequest = onDismiss,
         sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
         containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
-        shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
+        shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
     ) {
         // A tap first shows a compact summary. Only the explicit details action
         // grows the panel; neither a long address nor missing fields force it open.
@@ -406,7 +401,7 @@ private fun PlaceDetailsSheet(place: Places.Place, distanceKm: Double, onDismiss
                 RatingBadge("place:${place.id}")
                 if (place.photo.isNotBlank()) {
                     AsyncImage(model = place.photo, contentDescription = null, contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxWidth().height(170.dp).clip(RoundedCornerShape(18.dp)))
+                        modifier = Modifier.fillMaxWidth().height(170.dp).clip(MaterialTheme.shapes.medium))
                 }
                 PlaceDetail(R.string.place_address, place.address.ifBlank { unknown })
                 PlaceDetail(R.string.place_access_hours, place.hours.ifBlank { unknown })
@@ -528,7 +523,7 @@ fun DonateCard(modifier: Modifier = Modifier, prominent: Boolean = false) {
 fun PlacesEntryCard(onOpen: () -> Unit) {
     ZCard(onClick = onOpen, padding = PaddingValues(horizontal = 16.dp, vertical = 14.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            IconBadge(painterResource(R.drawable.ic_mosque), container = Gold.copy(alpha = 0.45f))
+            IconBadge(painterResource(R.drawable.ic_mosque), container = MaterialTheme.colorScheme.primaryContainer)
             Spacer(Modifier.width(14.dp))
             Column(Modifier.weight(1f)) {
                 Text(stringResource(R.string.places_title), style = MaterialTheme.typography.titleSmall)

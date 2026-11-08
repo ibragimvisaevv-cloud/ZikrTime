@@ -219,7 +219,7 @@
     <string name="tasbih_subtitle">Zikr sayğacı</string>
     <string name="tasbih_of">%1$d-dən</string>
     <string name="tasbih_laps">Dövrə: %1$d</string>
-    <string name="tasbih_tap_hint">Saymaq üçün dairəyə toxunun</string>
+    <string name="tasbih_tap_hint">Saymaq üçün sayğaca toxunun</string>
     <string name="tasbih_target">Hədəf</string>
     <string name="tasbih_today">Bu gün: %1$d</string>
     <string name="zikr_1_name">Sübhanallah</string>

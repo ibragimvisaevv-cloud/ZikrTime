@@ -1,183 +1,125 @@
 @file:OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
-
 package com.zikrtime.app.ui
 
-import android.provider.Settings
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.CompositingStrategy
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.*
 import androidx.compose.ui.res.*
 import androidx.compose.ui.semantics.*
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.*
+import androidx.compose.ui.layout.onSizeChanged
 import com.zikrtime.app.R
 import com.zikrtime.app.data.Cities
 import com.zikrtime.app.data.Store
 import com.zikrtime.app.prayer.*
-import com.zikrtime.app.ui.theme.LocalDarkTheme
+import com.zikrtime.app.ui.theme.RhythmSpace
 import java.time.Duration
 import java.time.ZonedDateTime
 
-/** One native scroll owner covers both the open landscape and the sheet. No drag sheet,
- * nested scrolling hand-off, blur, or bitmap allocation in a scroll frame. */
+/** Open prayer-time composition. One scroll owner retains the complete daily schedule. */
 @Composable
 fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: PrayerTimes,
     content: @Composable ColumnScope.() -> Unit) {
+    StandardSystemBars()
     val scroll = rememberScrollState()
     val density = LocalDensity.current
-    val large = density.fontScale > 1.3f
-    val dark = LocalDarkTheme.current
     val context = LocalContext.current
     val nav = LocalNav.current
     val scheme = MaterialTheme.colorScheme
-    val view = LocalView.current
-    val motion = remember(AppEvents.resumeCount) {
-        Settings.Global.getFloat(context.contentResolver, Settings.Global.ANIMATOR_DURATION_SCALE, 1f) > 0f
-    }
-    val period = if (com.zikrtime.app.BuildConfig.DEBUG && com.zikrtime.app.QaHooks.skyPreview != null)
-        com.zikrtime.app.QaHooks.skyPreview!! else naturalPeriod(now.toInstant(), times[Prayer.FAJR].toInstant(),
-            times[Prayer.SUNRISE].toInstant(), times[Prayer.MAGHRIB].toInstant(), times[Prayer.ISHA].toInstant())
     val remaining = ((Duration.between(now, at).seconds.coerceAtLeast(0) + 59) / 60)
-    val countdown = stringResource(R.string.home_in_time, durationText(remaining))
-    BoxWithConstraints(Modifier.fillMaxSize()) {
-        val status = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
-        val compactHeight = status + if (large) 112.dp else 76.dp
-        // Keep the next prayer prominent while bringing the schedule into view sooner.
-        val revealHeight = maxOf(maxHeight * .52f, status + if (large) 330.dp else 310.dp)
-        var measuredHero by remember { mutableIntStateOf(0) }
-        val collapsePx = (if (measuredHero > 0) measuredHero - with(density) { compactHeight.toPx() }
-            else with(density) { (revealHeight - compactHeight).toPx() }).coerceAtLeast(1f)
-        val compact by remember(collapsePx) { derivedStateOf { scroll.value / collapsePx >= .86f } }
-        // A light sheet uses dark status icons only once it reaches the system bar.
-        SideEffect {
-            (view.context as? android.app.Activity)?.let { activity ->
-                androidx.core.view.WindowCompat.getInsetsController(activity.window, view).apply {
-                    isAppearanceLightStatusBars = compact && !dark
-                    isAppearanceLightNavigationBars = !dark
-                }
-            }
-        }
-
-        val topScrim = remember { Brush.verticalGradient(0f to Color(0xB309242D), .44f to Color(0x2409242D), .66f to Color.Transparent) }
-        val sideScrim = remember { Brush.horizontalGradient(listOf(Color(0x4807242B), Color.Transparent)) }
-        val imageId = if (period == NaturalPeriod.NIGHT) R.drawable.horizon_portrait_night else R.drawable.horizon_portrait_day
-        Box(Modifier.matchParentSize().background(Color(0xFF353E36))) {
-            if (!(com.zikrtime.app.BuildConfig.DEBUG && com.zikrtime.app.QaHooks.hideScene)) {
-                Image(painterResource(imageId), null, Modifier.fillMaxSize().graphicsLayer {
-                    // Image overfill keeps the frame covered throughout its small parallax travel.
-                    scaleX = 1.08f; scaleY = 1.08f
-                    translationY = if (motion) -scroll.value.coerceAtMost(collapsePx.toInt()) * .055f else 0f
-                }, contentScale = ContentScale.Crop, alignment = Alignment.Center)
-            }
-            Box(Modifier.matchParentSize().drawBehind {
-                val p = (scroll.value / collapsePx).coerceIn(0f, 1f)
-                // Local protection for typography, leaving the mosque and warm light exposed.
-                drawRect(topScrim)
-                drawRect(sideScrim)
-                val tint = when (period) {
-                    NaturalPeriod.DAWN -> Color(0x12E6B18D)
-                    NaturalPeriod.SUNSET -> Color(0x28C67A49)
-                    else -> Color.Transparent
-                }
-                drawRect(tint)
-                drawRect(Color(0xFF061D24).copy(alpha = p * .28f))
-            })
-        }
-
+    var heroHeight by remember { mutableIntStateOf(0) }
+    val compact by remember { derivedStateOf { heroHeight > 0 && scroll.value > heroHeight } }
+    Box(Modifier.fillMaxSize().background(scheme.background)) {
         Column(Modifier.fillMaxSize().testTag("horizon_scroll").semantics { testTagsAsResourceId = true }
-            .verticalScroll(scroll)) {
-            Column(Modifier.fillMaxWidth().heightIn(min = revealHeight).onSizeChanged { measuredHero = it.height }.padding(horizontal = 24.dp)
-                .padding(top = status + 8.dp)
-                .graphicsLayer {
-                    compositingStrategy = CompositingStrategy.ModulateAlpha
-                    alpha = ((.72f - scroll.value / collapsePx) / .12f).coerceIn(0f, 1f)
-                }
-                .then(if (compact) Modifier.clearAndSetSemantics {} else Modifier),
-                verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.Top) {
-                    Column(Modifier.weight(1f)) {
-                        Text(stringResource(R.string.app_name), color = Porcelain, style = MaterialTheme.typography.titleLarge)
-                        TextButton(onClick = { nav.open(Screen.READING_REMINDERS) },
-                            contentPadding = PaddingValues(end = 8.dp),
-                            modifier = Modifier.testTag("home_reading_reminders")) {
-                            Text(clarityCopy(UiClarity0825.Reading), color = Porcelain)
-                        }
+            .windowInsetsPadding(WindowInsets.statusBars).verticalScroll(scroll)
+            .padding(horizontal = RhythmSpace.Page)) {
+            Column(Modifier.fillMaxWidth().onSizeChanged { heroHeight = it.height }
+                .padding(top = 8.dp, bottom = 28.dp)) {
+                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                    RhythmMark(Modifier.size(24.dp))
+                    Spacer(Modifier.width(10.dp))
+                    Text(stringResource(R.string.app_name), style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.weight(1f))
+                    IconButton(onClick = { nav.tab = Tab.MORE }, modifier = Modifier.testTag("home_settings")) {
+                        Icon(painterResource(R.drawable.ic_nav_more), clarityCopy(UiClarity0825.Settings))
                     }
-                    ThemeQuickButton(compact = true, onLandscape = true)
+                    ThemeQuickButton(compact = true)
                 }
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    TextButton(onClick = { nav.open(Screen.CITY) },
-                        modifier = Modifier.testTag("home_change_city"),
-                        contentPadding = PaddingValues(end = 8.dp)) {
-                        Icon(painterResource(R.drawable.ic_mosque), null, tint = Sand, modifier = Modifier.size(18.dp))
-                        Spacer(Modifier.width(6.dp))
-                        Column {
-                            Text(Cities.displayName(context, Store.location), color = Porcelain,
-                                style = MaterialTheme.typography.labelLarge, maxLines = 2)
-                            Text(clarityCopy(UiClarity0825.ChangeCity), color = Sand,
-                                style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
+                TextButton(onClick = { nav.open(Screen.CITY) }, modifier = Modifier.testTag("home_change_city"),
+                    contentPadding = PaddingValues(0.dp)) {
+                    Icon(painterResource(R.drawable.ic_pin), null, modifier = Modifier.size(16.dp))
+                    Spacer(Modifier.width(6.dp))
+                    Text(Cities.displayName(context, Store.location), style = MaterialTheme.typography.labelLarge)
+                    Spacer(Modifier.width(6.dp))
+                    Text("›", style = MaterialTheme.typography.titleMedium)
                 }
                 Text(gregorianDate(now.toLocalDate()) + " · " + hijriDate(now.toLocalDate()),
-                    color = Sand, style = MaterialTheme.typography.labelMedium)
-                Text(stringResource(R.string.home_next_prayer), color = Porcelain.copy(alpha = .88f), style = MaterialTheme.typography.labelLarge)
-                Text(prayerName(prayer), color = Porcelain, style = MaterialTheme.typography.headlineLarge,
-                    fontSize = 28.sp)
-                BigClock(at, if (large) 44.sp else 60.sp, Porcelain, modifier = Modifier.testTag("horizon_time").semantics { testTagsAsResourceId = true }, weight = FontWeight.Normal)
-                Text(countdown, color = Sand, style = MaterialTheme.typography.labelLarge,
-                    modifier = Modifier.clip(RoundedCornerShape(18.dp)).background(Color(0xB319211D))
-                        .padding(horizontal = 12.dp, vertical = 7.dp))
-                Spacer(Modifier.height(14.dp))
+                    color = scheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
+                Spacer(Modifier.height(28.dp))
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Box(Modifier.size(6.dp).background(scheme.primary, androidx.compose.foundation.shape.CircleShape))
+                    Text(stringResource(R.string.home_next_prayer), color = scheme.primary, style = MaterialTheme.typography.labelLarge)
+                }
+                Spacer(Modifier.height(6.dp))
+                Text(prayerName(prayer), style = MaterialTheme.typography.headlineMedium)
+                BigClock(at, if (density.fontScale > 1.3f) 52.sp else 76.sp, scheme.onSurface,
+                    modifier = Modifier.testTag("horizon_time").semantics { testTagsAsResourceId = true }, weight = FontWeight.Medium)
+                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                    Text(stringResource(R.string.home_in_time, durationText(remaining)),
+                        style = MaterialTheme.typography.titleSmall, color = scheme.primary,
+                        modifier = Modifier.weight(1f))
+                }
+                TextButton(onClick = { nav.open(Screen.READING_REMINDERS) },
+                    contentPadding = PaddingValues(0.dp), modifier = Modifier.testTag("home_reading_reminders")) {
+                    Text(clarityCopy(UiClarity0825.Reading), style = MaterialTheme.typography.labelMedium)
+                    Spacer(Modifier.width(6.dp)); Text("→")
+                }
             }
+            HorizontalDivider(color = scheme.outlineVariant)
             Column(Modifier.fillMaxWidth().testTag("horizon_panel").semantics { testTagsAsResourceId = true }
-                .clip(RoundedCornerShape(topStart = 34.dp, topEnd = 34.dp))
-                .background(scheme.background)
-                .padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(18.dp)) {
-                Spacer(Modifier.height(4.dp))
+                .padding(top = 24.dp), verticalArrangement = Arrangement.spacedBy(RhythmSpace.Section)) {
                 content()
-                Spacer(Modifier.height(if (large) 140.dp else 96.dp))
+                Spacer(Modifier.height(if (density.fontScale > 1.3f) 132.dp else 96.dp))
                 Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
             }
         }
-
-        val compactAlpha by remember(collapsePx) { derivedStateOf {
-            ((scroll.value / collapsePx - .72f) / .22f).coerceIn(0f, 1f)
-        } }
-        if (compactAlpha > 0f) {
-            Column(Modifier.fillMaxWidth().height(compactHeight).graphicsLayer { compositingStrategy = CompositingStrategy.ModulateAlpha; alpha = compactAlpha }
-                .background(scheme.background)
-                .padding(top = status).padding(horizontal = 20.dp)
-                .testTag("horizon_compact").semantics { testTagsAsResourceId = true },
-                verticalArrangement = Arrangement.Center) {
-                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        if (compact) Surface(color = scheme.background, modifier = Modifier.fillMaxWidth()
+            .testTag("horizon_compact").semantics { testTagsAsResourceId = true }) {
+            Column(Modifier.windowInsetsPadding(WindowInsets.statusBars)) {
+                Row(Modifier.fillMaxWidth().heightIn(min = 64.dp).padding(horizontal = RhythmSpace.Page),
+                    verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     Column(Modifier.weight(1f)) {
-                        Text(stringResource(R.string.home_next_prayer), style = MaterialTheme.typography.labelSmall,
-                            color = scheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                        Text(prayerName(prayer), style = MaterialTheme.typography.titleMedium,
-                            maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        Text(stringResource(R.string.home_next_prayer), style = MaterialTheme.typography.labelSmall, color = scheme.onSurfaceVariant)
+                        Text(prayerName(prayer), style = MaterialTheme.typography.titleMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)
                     }
-                    BigClock(at, if (large) 22.sp else 30.sp, scheme.onSurface, weight = FontWeight.Medium)
+                    BigClock(at, 28.sp, scheme.primary, weight = FontWeight.Medium)
                     ThemeQuickButton(compact = true)
                 }
+                HorizontalDivider(color = scheme.outlineVariant)
             }
         }
+    }
+}
+
+/** The app's rhythm: two intervals and a quiet pause. Not the launcher icon. */
+@Composable
+fun RhythmMark(modifier: Modifier = Modifier) {
+    val ink = MaterialTheme.colorScheme.primary
+    Canvas(modifier) {
+        val stroke = size.width * .12f
+        drawLine(ink, Offset(size.width * .2f, size.height * .18f), Offset(size.width * .2f, size.height * .82f), stroke, StrokeCap.Round)
+        drawLine(ink, Offset(size.width * .5f, size.height * .38f), Offset(size.width * .5f, size.height * .82f), stroke, StrokeCap.Round)
+        drawCircle(ink, stroke * .65f, Offset(size.width * .82f, size.height * .76f))
     }
 }

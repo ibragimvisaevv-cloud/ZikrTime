@@ -76,15 +76,15 @@ internal fun AppGuidePreview(topic: GuideTopic, step: Int, modifier: Modifier = 
                 // A full phone screenshot stays visible as a map of the screen.
                 // Enlargement is explicit; the user need not hunt for a marker below a giant image.
                 val width = minOf(maxWidth, imageHeight * frame.aspectRatio)
-                Surface(onClick = { zoom = true }, shape = RoundedCornerShape(16.dp),
+                Surface(onClick = { zoom = true }, shape = MaterialTheme.shapes.medium,
                     border = BorderStroke(1.dp, colors.outlineVariant),
                     modifier = Modifier.width(width).height(width / frame.aspectRatio).testTag("guide_screenshot")) {
                     ScreenshotWithTarget(frame, step + 1, topic.key,
-                        Modifier.fillMaxSize().clip(RoundedCornerShape(16.dp)))
+                        Modifier.fillMaxSize().clip(MaterialTheme.shapes.medium))
                 }
             }
         } else {
-            Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(20.dp), color = colors.surfaceContainer) {
+            Surface(Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.medium, color = colors.surfaceContainer) {
                 Box(Modifier.fillMaxWidth().heightIn(min = 180.dp).padding(24.dp), contentAlignment = Alignment.Center) {
                     if (frames == null) CircularProgressIndicator(Modifier.size(32.dp))
                     else Text(stringResource(R.string.guide_visual_unavailable), style = MaterialTheme.typography.bodyMedium)
@@ -102,8 +102,11 @@ private fun ScreenshotWithTarget(frame: GuideScreenshot, number: Int, topic: Str
     var loaded by remember(frame.image) { mutableStateOf(false) }
     var failed by remember(frame.image) { mutableStateOf(false) }
     val description = stringResource(R.string.guide_visual_highlight, number)
-    val accent = Color(0xFFFFD16A)
-    BoxWithConstraints(modifier.background(Color(0xFF151913))) {
+    val accent = MaterialTheme.colorScheme.primary
+    val onAccent = MaterialTheme.colorScheme.onPrimary
+    val surface = MaterialTheme.colorScheme.surfaceContainerHighest
+    val onSurface = MaterialTheme.colorScheme.onSurface
+    BoxWithConstraints(modifier.background(surface)) {
         AsyncImage(model = "file:///android_asset/${frame.assetPath}", contentDescription = null,
             contentScale = ContentScale.FillBounds,
             onSuccess = { loaded = true; failed = false }, onError = { failed = true },
@@ -124,10 +127,10 @@ private fun ScreenshotWithTarget(frame: GuideScreenshot, number: Int, topic: Str
             val x = (maxWidth * target.left).coerceIn(2.dp, (maxWidth - badge - 2.dp).coerceAtLeast(2.dp))
             val y = (maxHeight * target.top - badge / 2).coerceIn(2.dp, (maxHeight - badge - 2.dp).coerceAtLeast(2.dp))
             Box(Modifier.offset(x, y).size(badge).background(accent, CircleShape), contentAlignment = Alignment.Center) {
-                Text(number.toString(), style = MaterialTheme.typography.labelLarge, color = Color(0xFF191A13))
+                Text(number.toString(), style = MaterialTheme.typography.labelLarge, color = onAccent)
             }
         } else if (failed) {
-            Text(stringResource(R.string.guide_visual_unavailable), color = Color.White,
+            Text(stringResource(R.string.guide_visual_unavailable), color = onSurface,
                 modifier = Modifier.align(Alignment.Center).padding(24.dp))
         } else {
             CircularProgressIndicator(Modifier.size(32.dp).align(Alignment.Center), color = accent)
