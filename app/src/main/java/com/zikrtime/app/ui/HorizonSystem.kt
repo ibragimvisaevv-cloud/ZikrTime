@@ -1,7 +1,6 @@
 package com.zikrtime.app.ui
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -25,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import com.zikrtime.app.R
 import com.zikrtime.app.data.Store
 import com.zikrtime.app.ui.theme.LocalDarkTheme
-import com.zikrtime.app.ui.theme.LocalChocolateTheme
 
 /** One movement preference for page, sheet and reading transitions. No persistent animation loop. */
 @Composable
@@ -49,7 +47,6 @@ fun StandardSystemBars() {
 @Composable
 fun SceneBackdrop(modifier: Modifier = Modifier, night: Boolean = LocalDarkTheme.current, controlBars: Boolean = true) {
     val view = androidx.compose.ui.platform.LocalView.current
-    val scrim = if (LocalChocolateTheme.current) Color(0xFF281A12) else Color(0xFF171B18)
     if (controlBars) SideEffect {
         (view.context as? android.app.Activity)?.let {
             androidx.core.view.WindowCompat.getInsetsController(it.window, view).isAppearanceLightStatusBars = false
@@ -59,7 +56,7 @@ fun SceneBackdrop(modifier: Modifier = Modifier, night: Boolean = LocalDarkTheme
         Image(painterResource(if (night) R.drawable.horizon_portrait_night else R.drawable.horizon_portrait_day),
             contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
         Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(
-            scrim.copy(alpha = .52f), scrim.copy(alpha = .16f), scrim.copy(alpha = .82f)))))
+            Color(0xFF171B18).copy(alpha = .52f), Color(0xFF171B18).copy(alpha = .16f), Color(0xFF171B18).copy(alpha = .82f)))))
     }
 }
 
@@ -88,9 +85,7 @@ fun PageHeading(title: String, subtitle: String? = null, scene: Int? = null) {
 fun StatePanel(title: String, text: String? = null, icon: Int = R.drawable.ic_nav_knowledge,
     action: String? = null, onAction: (() -> Unit)? = null, error: Boolean = false) {
     Surface(shape = RoundedCornerShape(24.dp), color = if (error) MaterialTheme.colorScheme.errorContainer.copy(alpha = .45f)
-        else MaterialTheme.colorScheme.surfaceContainerHigh,
-        border = if (LocalChocolateTheme.current && !error) BorderStroke(.7.dp, MaterialTheme.colorScheme.outlineVariant) else null,
-        modifier = Modifier.fillMaxWidth()) {
+        else MaterialTheme.colorScheme.surfaceContainerHigh, modifier = Modifier.fillMaxWidth()) {
         Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             IconBadge(painterResource(icon), size = 44.dp)
             Text(title, style = MaterialTheme.typography.titleMedium)
@@ -154,9 +149,7 @@ fun ReadingTools(scale: Float, onScale: (Float) -> Unit) {
 @Composable
 fun StatusLine(text: String, error: Boolean = false) {
     Surface(shape = RoundedCornerShape(16.dp), color = if (error) MaterialTheme.colorScheme.errorContainer.copy(alpha = .5f)
-        else MaterialTheme.colorScheme.secondaryContainer.copy(alpha = .5f),
-        border = if (LocalChocolateTheme.current && !error) BorderStroke(.7.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = .65f)) else null,
-        modifier = Modifier.fillMaxWidth()) {
+        else MaterialTheme.colorScheme.secondaryContainer.copy(alpha = .5f), modifier = Modifier.fillMaxWidth()) {
         Row(Modifier.padding(14.dp), horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
             Icon(painterResource(R.drawable.ic_pin), null, tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(20.dp))
             Text(text, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))

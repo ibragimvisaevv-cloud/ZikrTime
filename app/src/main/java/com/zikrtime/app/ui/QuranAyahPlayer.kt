@@ -11,19 +11,16 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
@@ -108,20 +105,17 @@ internal fun QuranAyahActionsSheet(
         Column(Modifier.fillMaxWidth().heightIn(max = maxContentHeight)
             .semantics { testTagsAsResourceId = true }.testTag("quran_ayah_sheet")
             .verticalScroll(rememberScrollState()).padding(horizontal = 20.dp).padding(bottom = 24.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp)) {
-            QuranSceneSurface(Modifier.fillMaxWidth()) {
-                Row(Modifier.fillMaxWidth().padding(start = 16.dp, end = 4.dp, top = 14.dp, bottom = 14.dp),
-                    verticalAlignment = Alignment.CenterVertically) {
-                    Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                        Text(stringResource(R.string.audio_ayah_title, name, ayah), color = Color(0xFFF5F0E3),
-                            style = MaterialTheme.typography.titleLarge,
-                            modifier = Modifier.testTag("ayah_selection_reference").semantics { heading() })
-                        Text(stringResource(R.string.qaudio_reciter), color = Color(0xFFD3DFD1),
-                            style = MaterialTheme.typography.bodySmall)
-                    }
-                    IconButton(onClick = close, modifier = Modifier.testTag("ayah_close")) {
-                        Icon(Icons.Default.Close, stringResource(R.string.qaudio_close))
-                    }
+            verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) {
+                    Text(stringResource(R.string.audio_ayah_title, name, ayah), color = colors.ink,
+                        style = MaterialTheme.typography.titleLarge,
+                        modifier = Modifier.testTag("ayah_selection_reference").semantics { heading() })
+                    Text(stringResource(R.string.qaudio_reciter), color = colors.muted,
+                        style = MaterialTheme.typography.bodySmall)
+                }
+                IconButton(onClick = close, modifier = Modifier.testTag("ayah_close")) {
+                    Icon(Icons.Default.Close, stringResource(R.string.qaudio_close))
                 }
             }
             if (!active && playback.playWhenReady) Text(stringResource(R.string.ql_reading_now, playback.title),
@@ -135,8 +129,7 @@ internal fun QuranAyahActionsSheet(
                     active && !playback.ended && playback.error == null -> QuranAudioPlayer.togglePlayPause()
                     else -> QuranAudioPlayer.playAyah(surah.id, ayah, repeats, speed, continueAfter && repeats != 0)
                 }
-            }, modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp).testTag("ayah_play_pause"),
-                shape = RoundedCornerShape(16.dp)) {
+            }, modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp).testTag("ayah_play_pause")) {
                 Text(stringResource(when {
                     (active || !playback.connected) && playback.error != null -> R.string.qaudio_retry
                     active && playback.playWhenReady && !playback.ended -> R.string.qaudio_pause
@@ -158,31 +151,21 @@ internal fun QuranAyahActionsSheet(
                     else stringResource(R.string.ql_repeat_progress, playback.repeatIteration, playback.repeatCount),
                     style = MaterialTheme.typography.bodyMedium, modifier = Modifier.testTag("ayah_repeat_progress"))
             }
-            Surface(color = colors.paper, shape = RoundedCornerShape(18.dp), border = BorderStroke(1.dp, colors.rule)) {
-                Column(Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 12.dp),
-                    verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                    Text(stringResource(R.string.ql_repeat), style = MaterialTheme.typography.titleSmall)
-                    FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        listOf(1, 3, 5, 10, 0).forEach { count ->
-                            val repeatLabel = when (count) {
-                                0 -> stringResource(R.string.ql_repeat_forever)
-                                1 -> stringResource(R.string.ql_repeat_once)
-                                else -> stringResource(R.string.ql_repeat_count, count)
-                            }
-                            FilterChip(selected = repeats == count, onClick = {
-                                repeats = count
-                                if (count == 0) continueAfter = false
-                                configure()
-                            }, leadingIcon = if (repeats == count) {
-                                { Icon(Icons.Default.Check, null, Modifier.size(16.dp)) }
-                            } else null, label = { Text(if (count == 0) "∞" else count.toString()) },
-                                modifier = Modifier.testTag("ayah_repeat_$count").semantics { contentDescription = repeatLabel })
-                        }
-                    }
-                    HorizontalDivider(color = colors.rule.copy(alpha = .6f))
-                    QuranSpeedControls(speed, "ayah") { speed = it; configure() }
+            Text(stringResource(R.string.ql_repeat), style = MaterialTheme.typography.titleSmall)
+            FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                listOf(1, 3, 5, 10, 0).forEach { count ->
+                    FilterChip(selected = repeats == count, onClick = {
+                        repeats = count
+                        if (count == 0) continueAfter = false
+                        configure()
+                    }, label = { Text(when (count) {
+                        0 -> stringResource(R.string.ql_repeat_forever)
+                        1 -> stringResource(R.string.ql_repeat_once)
+                        else -> stringResource(R.string.ql_repeat_count, count)
+                    }) }, modifier = Modifier.testTag("ayah_repeat_$count"))
                 }
             }
+            QuranSpeedControls(speed, "ayah") { speed = it; configure() }
             Surface(color = colors.paper, shape = RoundedCornerShape(16.dp), border = BorderStroke(1.dp, colors.rule)) {
                 Column(Modifier.fillMaxWidth().toggleable(continueAfter, enabled = repeats != 0, role = Role.Checkbox,
                     onValueChange = { continueAfter = it; configure() }).testTag("ayah_continue").padding(12.dp)) {
@@ -224,9 +207,6 @@ internal fun QuranSpeedControls(speed: Float, tagPrefix: String, change: (Float)
     FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         listOf(.5f, .75f, 1f, 1.25f, 1.5f).forEach { value ->
             FilterChip(selected = speed == value, onClick = { change(value) },
-                leadingIcon = if (speed == value) {
-                    { Icon(Icons.Default.Check, null, Modifier.size(16.dp)) }
-                } else null,
                 label = { Text("${value.toString().removeSuffix(".0")}×") },
                 modifier = Modifier.testTag("${tagPrefix}_speed_${(value * 100).toInt()}"))
         }

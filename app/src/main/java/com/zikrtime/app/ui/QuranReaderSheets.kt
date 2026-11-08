@@ -1,8 +1,6 @@
 package com.zikrtime.app.ui
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.text.KeyboardOptions
@@ -24,12 +22,7 @@ import com.zikrtime.app.data.*
 
 @Composable
 internal fun ReaderAction(label: Int, tag: String, action: () -> Unit) {
-    val colors = quranPaperColors()
-    OutlinedButton(onClick = action, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp).testTag(tag),
-        shape = RoundedCornerShape(14.dp), border = BorderStroke(1.dp, colors.rule),
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp)) {
-        Text(stringResource(label))
-    }
+    OutlinedButton(onClick = action, modifier = Modifier.fillMaxWidth().testTag(tag)) { Text(stringResource(label)) }
 }
 
 @Composable
