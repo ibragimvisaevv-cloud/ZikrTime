@@ -1,6 +1,7 @@
 package com.zikrtime.app.ui
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,9 +15,12 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -38,14 +42,14 @@ internal data class QuranPaperColors(
 )
 
 private val DayPaper = QuranPaperColors(
-    canvas = Color(0xFFECE5D8), paper = Color(0xFFFCF7EB), ink = Color(0xFF292C30),
-    muted = Color(0xFF6C6559), accent = Color(0xFF80602B), rule = Color(0xFFD5C6A8),
-    selection = Color(0xFFE9DAB9),
+    canvas = Color(0xFFECE9E0), paper = Color(0xFFFAF7EF), ink = Color(0xFF243D34),
+    muted = Color(0xFF626B60), accent = Color(0xFF506B56), rule = Color(0xFFCBCDBC),
+    selection = Color(0xFFDCE5D8),
 )
 private val NightPaper = QuranPaperColors(
-    canvas = Color(0xFF11171D), paper = Color(0xFF1A222B), ink = Color(0xFFF0E6D1),
-    muted = Color(0xFFB7AFA0), accent = Color(0xFFD8B876), rule = Color(0xFF4E4D48),
-    selection = Color(0xFF4C4534),
+    canvas = Color(0xFF0E2520), paper = Color(0xFF192F28), ink = Color(0xFFF1EBDD),
+    muted = Color(0xFFBAC8BC), accent = Color(0xFFD1BA8C), rule = Color(0xFF40584A),
+    selection = Color(0xFF354B3E),
 )
 
 @Composable
@@ -74,17 +78,32 @@ internal fun QuranReadingTheme(content: @Composable () -> Unit) {
     }
 }
 
+/** A real existing scene anchors the Quran section; none of its decoration is text. */
+@Composable
+internal fun QuranSceneSurface(modifier: Modifier = Modifier, content: @Composable BoxScope.() -> Unit) {
+    Box(modifier.clip(RoundedCornerShape(22.dp)).background(Color(0xFF17382D))) {
+        Image(painterResource(R.drawable.focus_courtyard), contentDescription = null,
+            modifier = Modifier.matchParentSize(), contentScale = ContentScale.Crop,
+            alignment = Alignment.CenterEnd)
+        Box(Modifier.matchParentSize().background(Brush.horizontalGradient(listOf(
+            Color(0xF00D2A21), Color(0xC0143027), Color(0x30162E25)))))
+        Box(Modifier.matchParentSize().background(Brush.verticalGradient(listOf(
+            Color.Transparent, Color(0x70112B22)))))
+        CompositionLocalProvider(LocalContentColor provides Color(0xFFF5F0E3)) { content() }
+    }
+}
+
 /** Ornament lives in the margins. It never adds characters to the source text. */
 @Composable
 internal fun QuranPageFrame(modifier: Modifier = Modifier, content: @Composable BoxScope.() -> Unit) {
     val p = quranPaperColors()
-    Box(modifier.clip(RoundedCornerShape(6.dp)).background(p.paper).drawBehind {
+    Box(modifier.clip(RoundedCornerShape(16.dp)).background(p.paper).drawBehind {
         val outer = 5.dp.toPx()
         val inner = 9.dp.toPx()
         if (size.width > inner * 2 && size.height > inner * 2) {
-            drawRect(p.rule, Offset(outer, outer), Size(size.width - outer * 2, size.height - outer * 2),
-                style = Stroke(1.dp.toPx()))
-            drawRect(p.rule.copy(alpha = .55f), Offset(inner, inner),
+            drawRect(p.rule.copy(alpha = .65f), Offset(outer, outer), Size(size.width - outer * 2, size.height - outer * 2),
+                style = Stroke(.75.dp.toPx()))
+            drawRect(p.rule.copy(alpha = .3f), Offset(inner, inner),
                 Size(size.width - inner * 2, size.height - inner * 2), style = Stroke(.5.dp.toPx()))
             val length = 14.dp.toPx()
             for (right in listOf(false, true)) for (bottom in listOf(false, true)) {
@@ -92,8 +111,8 @@ internal fun QuranPageFrame(modifier: Modifier = Modifier, content: @Composable 
                 val y = if (bottom) size.height - outer else outer
                 val dx = if (right) -length else length
                 val dy = if (bottom) -length else length
-                drawLine(p.accent, Offset(x, y), Offset(x + dx, y), 1.5.dp.toPx())
-                drawLine(p.accent, Offset(x, y), Offset(x, y + dy), 1.5.dp.toPx())
+                drawLine(p.accent.copy(alpha = .65f), Offset(x, y), Offset(x + dx, y), 1.dp.toPx())
+                drawLine(p.accent.copy(alpha = .65f), Offset(x, y), Offset(x, y + dy), 1.dp.toPx())
             }
         }
     }, content = content)

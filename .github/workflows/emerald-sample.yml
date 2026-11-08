@@ -1,0 +1,160 @@
+name: Emerald sample - home and Quran
+on:
+  push:
+    branches: [codex/emerald-concept-0828]
+    paths:
+      - 'app/**'
+      - 'gradle/**'
+      - 'gradlew'
+      - 'build.gradle.kts'
+      - 'settings.gradle.kts'
+      - 'gradle.properties'
+      - '.github/workflows/emerald-sample.yml'
+      - 'tools/ci/emerald_sample_smoke.py'
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: emerald-sample-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  sample:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      BASELINE: 362244c46133feb9b7ef3d55cc716531a8b521f8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Resolve existing APK reuse for automation-only fixes
+        run: |
+          mkdir -p ci-out/screens
+          python3 - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          message = json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text())['head_commit']['message']
+          match = re.search(r'\[emerald-sample\]\s+reuse=(\d+)', message)
+          with open(os.environ['GITHUB_ENV'], 'a') as out:
+              out.write('REUSE_RUN=' + (match.group(1) if match else '') + '\n')
+          PY
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        if: env.REUSE_RUN == ''
+      - name: Protect Quran, translations, audio timing and quiz data
+        run: |
+          git diff --exit-code "$BASELINE" HEAD -- app/src/main/assets/quran app/src/main/assets/quran_audio app/src/main/assets/quiz app/src/main/java/com/zikrtime/app/data/QuranContent.kt
+      - name: Compile, run targeted policy tests and lint
+        if: env.REUSE_RUN == ''
+        run: |
+          bash gradlew :app:testDebugUnitTest --tests 'com.zikrtime.app.ui.NavigationTest' --tests 'com.zikrtime.app.prayer.PrayerNextTest' --tests 'com.zikrtime.app.data.QuranReadingTest' --tests 'com.zikrtime.app.data.QuranProgressTest' --tests 'com.zikrtime.app.audio.QuranAyahPlaybackPolicyTest' :app:lintDebug :app:assembleDebug --console=plain
+      - name: Sign the release sample with the existing key
+        if: env.REUSE_RUN == ''
+        env:
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          test -n "$RELEASE_KEY_PASSWORD"
+          openssl enc -d -aes-256-cbc -pbkdf2 -iter 300000 -in keystore/release.jks.enc -out keystore/release.jks -pass env:RELEASE_KEY_PASSWORD
+          bash gradlew :app:assembleRelease --console=plain
+      - name: Remove decrypted key
+        if: always()
+        run: rm -f keystore/release.jks
+      - name: Download identical checked APKs after harness-only fixes
+        if: env.REUSE_RUN != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download "$REUSE_RUN" --repo "$GITHUB_REPOSITORY" -n emerald-sample-inputs -D .
+          python3 - <<'PY'
+          import hashlib, json, re, subprocess
+          from pathlib import Path
+          data = json.loads(Path('ci-out/build.json').read_text())
+          assert re.fullmatch(r'[0-9a-f]{40}', data['source_sha'])
+          subprocess.run(['git', 'diff', '--exit-code', data['source_sha'], 'HEAD', '--', 'app', 'gradle', 'gradlew', 'gradlew.bat', 'build.gradle.kts', 'settings.gradle.kts', 'gradle.properties', 'keystore/release.jks.enc'], check=True)
+          for name, expected in data['apk_sha256'].items():
+              assert hashlib.sha256(Path(name).read_bytes()).hexdigest() == expected, name
+          assert data['tests_passed'] > 0 and data['tests_failed'] == 0 and data['tests_skipped'] == 0
+          assert data['lint_errors'] == 0
+          PY
+      - name: Verify APK identity, original signature and 128 protected resources
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, re, shutil, subprocess, zipfile
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+          release = Path('app/build/outputs/apk/release/app-release.apk')
+          debug = Path('app/build/outputs/apk/debug/app-debug.apk')
+          sdk = Path(os.environ['ANDROID_HOME']) / 'build-tools'
+          def tool(name):
+              return str(max(sdk.glob('*/' + name), key=lambda p: tuple(map(int, re.findall(r'\d+', p.parent.name)))))
+          signature = subprocess.check_output([tool('apksigner'), 'verify', '--verbose', '--print-certs', str(release)], text=True)
+          cert = '7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf'
+          assert 'certificate SHA-256 digest: ' + cert in signature
+          for apk in [debug, release]:
+              badge = subprocess.check_output([tool('aapt'), 'dump', 'badging', str(apk)], text=True)
+              identity = re.search(r"package: name='([^']+)' versionCode='([^']+)' versionName='([^']+)'", badge)
+              assert identity and identity.groups() == ('com.zikrtime.app', '43', '0.8.30'), str(apk)
+          dirs = ['app/src/main/assets/quran', 'app/src/main/assets/quran_audio', 'app/src/main/assets/quiz']
+          names = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', os.environ['BASELINE'], '--', *dirs], text=True).splitlines()
+          assert len(names) == 128
+          with zipfile.ZipFile(debug) as d, zipfile.ZipFile(release) as r:
+              for name in names:
+                  expected = subprocess.check_output(['git', 'show', os.environ['BASELINE'] + ':' + name])
+                  entry = name.removeprefix('app/src/main/')
+                  assert d.read(entry) == expected and r.read(entry) == expected, name
+          reuse = os.environ.get('REUSE_RUN', '')
+          if reuse:
+              report = json.loads(Path('ci-out/build.json').read_text())
+          else:
+              suites = [ET.parse(p).getroot() for p in Path('app/build/test-results/testDebugUnitTest').glob('TEST-*.xml')]
+              assert suites, 'No test XML found'
+              failed = sum(int(s.get('failures', 0)) + int(s.get('errors', 0)) for s in suites)
+              skipped = sum(int(s.get('skipped', 0)) for s in suites)
+              total = sum(int(s.get('tests', 0)) for s in suites)
+              assert total > 0 and failed == 0 and skipped == 0
+              lint = ET.parse('app/build/reports/lint-results-debug.xml').getroot()
+              errors = sum(i.get('severity') in {'Fatal', 'Error'} for i in lint.findall('issue'))
+              assert errors == 0
+              report = {'source_sha': os.environ['GITHUB_SHA'], 'source_run': os.environ['GITHUB_RUN_ID'], 'tests_passed': total, 'tests_failed': failed, 'tests_skipped': skipped, 'lint_errors': errors}
+          report.update({'verification_sha': os.environ['GITHUB_SHA'], 'verification_run': os.environ['GITHUB_RUN_ID'], 'reused_from_run': reuse or None, 'baseline': os.environ['BASELINE'], 'version_name': '0.8.30', 'version_code': 43, 'application_id': 'com.zikrtime.app', 'certificate_sha256': cert, 'protected_assets_verified': len(names), 'apk_sha256': {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in [debug, release]}, 'release_bytes': release.stat().st_size, 'store_published': False, 'physical_phone_tested': False})
+          Path('ci-out/build.json').write_text(json.dumps(report, indent=2) + '\n')
+          shutil.copyfile(release, 'ci-out/ZikrTime-0.8.30-emerald-sample.apk')
+          print(json.dumps(report))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: emerald-sample-inputs
+          compression-level: 0
+          if-no-files-found: error
+          path: |
+            app/build/outputs/apk/debug/app-debug.apk
+            app/build/outputs/apk/release/app-release.apk
+            ci-out/build.json
+      - run: python3 -m pip install 'Pillow>=11,<13'
+      - name: Enable emulator acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-emerald.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Check and capture the two changed areas on Android 15
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -camera-back none -camera-front none
+          script: adb install -r app/build/outputs/apk/debug/app-debug.apk && python3 tools/ci/emerald_sample_smoke.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: emerald-sample-evidence
+          compression-level: 0
+          if-no-files-found: error
+          path: |
+            ci-out/
+            app/build/reports/lint-results-debug.xml
+            app/build/test-results/testDebugUnitTest/

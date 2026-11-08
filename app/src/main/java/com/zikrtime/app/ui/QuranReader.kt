@@ -13,6 +13,10 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.graphics.Color
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -213,33 +217,41 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
         .windowInsetsPadding(if (fullscreen) WindowInsets.displayCutout else WindowInsets.safeDrawing)) {
         Column(Modifier.fillMaxSize().padding(horizontal = if (compact) 8.dp else 14.dp),
             verticalArrangement = Arrangement.spacedBy(if (compact) 4.dp else 8.dp)) {
-            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                if (fullscreen) {
-                    IconButton(onClick = { fullscreen = false }, modifier = Modifier.testTag("quran_exit_fullscreen")) {
-                        Text("⛶", fontSize = 26.sp, modifier = Modifier.semanticsDescription(stringResource(R.string.qf_controls)))
+            val headerInk = if (compact) colors.ink else Color(0xFFF5F0E3)
+            val headerMuted = if (compact) colors.muted else Color(0xFFD3DFD1)
+            val header: @Composable () -> Unit = {
+                Row(Modifier.fillMaxWidth().padding(vertical = if (compact) 0.dp else 12.dp, horizontal = if (compact) 0.dp else 4.dp), verticalAlignment = Alignment.CenterVertically) {
+                    if (fullscreen) {
+                        IconButton(onClick = { fullscreen = false }, modifier = Modifier.testTag("quran_exit_fullscreen")) {
+                            Text("⛶", fontSize = 26.sp, modifier = Modifier.semanticsDescription(stringResource(R.string.qf_controls)))
+                        }
+                    } else {
+                        IconButton(onClick = showIndex, modifier = Modifier.testTag("quran_surahs")) {
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(backLabel))
+                        }
                     }
-                } else {
-                    IconButton(onClick = showIndex, modifier = Modifier.testTag("quran_surahs")) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(backLabel))
+                    Column(Modifier.weight(1f)) {
+                        Text(if (ru) surah.nameRu else surah.nameLatin, style = MaterialTheme.typography.titleMedium,
+                            maxLines = 1, overflow = TextOverflow.Ellipsis, color = headerInk)
+                        if (!compact) Text(stringResource(R.string.qp_selected_ayah, surahId, currentAyah),
+                            style = MaterialTheme.typography.labelMedium, color = headerMuted)
                     }
-                }
-                Column(Modifier.weight(1f)) {
-                    Text(if (ru) surah.nameRu else surah.nameLatin, style = MaterialTheme.typography.titleMedium,
-                        maxLines = 1, overflow = TextOverflow.Ellipsis, color = colors.ink)
-                    if (!compact) Text(stringResource(R.string.qp_selected_ayah, surahId, currentAyah),
-                        style = MaterialTheme.typography.labelMedium, color = colors.muted)
-                }
-                QuranQuickBookmark(QuranProgress.Location(surahId, currentAyah) in bookmarks, quickBookmark)
-                if (!fullscreen) IconButton(onClick = { fullscreen = true }, modifier = Modifier.testTag("quran_fullscreen")) {
-                    Text("⛶", fontSize = 26.sp, modifier = Modifier.semanticsDescription(stringResource(R.string.qf_fullscreen)))
-                }
-                IconButton(onClick = { openSheet("tools") }, modifier = Modifier.testTag("quran_tools")) {
-                    Icon(Icons.Filled.MoreVert, stringResource(R.string.qf_tools))
+                    QuranQuickBookmark(QuranProgress.Location(surahId, currentAyah) in bookmarks, quickBookmark)
+                    if (!fullscreen) IconButton(onClick = { fullscreen = true }, modifier = Modifier.testTag("quran_fullscreen")) {
+                        Text("⛶", fontSize = 26.sp, modifier = Modifier.semanticsDescription(stringResource(R.string.qf_fullscreen)))
+                    }
+                    IconButton(onClick = { openSheet("tools") }, modifier = Modifier.testTag("quran_tools")) {
+                        Icon(Icons.Filled.MoreVert, stringResource(R.string.qf_tools))
+                    }
                 }
             }
+            if (compact) header() else QuranSceneSurface(Modifier.fillMaxWidth()) { header() }
             if (!fullscreen) {
                 FilledTonalButton(onClick = { openAyahSheet(currentAyah, "actions") },
-                    modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp).testTag("quran_audio_reader_entry")) {
+                    modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp).testTag("quran_audio_reader_entry"),
+                    shape = RoundedCornerShape(16.dp)) {
+                    Icon(Icons.Default.PlayArrow, null, Modifier.size(20.dp))
+                    Spacer(Modifier.width(8.dp))
                     Text(stringResource(R.string.ql_listen_ayah_short))
                 }
                 BoxWithConstraints(Modifier.fillMaxWidth()) {
@@ -247,10 +259,16 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
                     val stackModes = maxWidth / LocalDensity.current.fontScale < 320.dp
                     val modeChips: @Composable (Modifier) -> Unit = { chipModifier ->
                         FilterChip(selected = wholeSurah, onClick = { switchMode(true) },
+                            leadingIcon = if (wholeSurah) {
+                                { Icon(Icons.Default.Check, null, Modifier.size(16.dp)) }
+                            } else null,
                             modifier = chipModifier.then(if (!wholeSurah) Modifier.testTag("quran_read_mode") else Modifier),
                             label = { Text(stringResource(R.string.qp_reading_mode),
                                 Modifier.fillMaxWidth().testTag("quran_mode_read"), textAlign = TextAlign.Center) })
                         FilterChip(selected = !wholeSurah, onClick = { switchMode(false) },
+                            leadingIcon = if (!wholeSurah) {
+                                { Icon(Icons.Default.Check, null, Modifier.size(16.dp)) }
+                            } else null,
                             modifier = chipModifier.then(if (wholeSurah) Modifier.testTag("quran_read_mode") else Modifier),
                             label = { Text(stringResource(R.string.qp_translation_mode),
                                 Modifier.fillMaxWidth().testTag("quran_mode_translation"), textAlign = TextAlign.Center) })

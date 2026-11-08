@@ -16,11 +16,13 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -160,25 +162,28 @@ private fun QuranIndex(book: QuranBook, progress: QuranProgress, open: (QuranPro
         if (selectedTopic == null) "quran_topics_list" else "quran_topics_detail_list"), state = listState,
         contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 32.dp)) {
         if (tab != 3) item("book_heading") {
-            Column(Modifier.fillMaxWidth().padding(top = 12.dp, bottom = 20.dp),
-                horizontalAlignment = Alignment.CenterHorizontally) {
-                QuranOrnament(Modifier.width(104.dp).height(16.dp))
-                Text(stringResource(R.string.qp_index_title),
-                    style = MaterialTheme.typography.headlineMedium, color = colors.ink,
-                    modifier = Modifier.padding(top = 12.dp, bottom = 6.dp), textAlign = TextAlign.Center)
-                Text(stringResource(R.string.qp_surah_total, book.surahs.size),
-                    style = MaterialTheme.typography.labelLarge, color = colors.accent,
-                    modifier = Modifier.padding(bottom = 6.dp))
-                Text(stringResource(R.string.qp_index_subtitle), style = MaterialTheme.typography.bodyMedium,
-                    color = colors.muted, textAlign = TextAlign.Center)
+            QuranSceneSurface(Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 16.dp)) {
+                Column(Modifier.fillMaxWidth().padding(20.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(stringResource(R.string.qp_index_title),
+                        style = MaterialTheme.typography.headlineMedium, color = Color(0xFFF5F0E3))
+                    Text(stringResource(R.string.qp_surah_total, book.surahs.size),
+                        style = MaterialTheme.typography.labelLarge, color = Color(0xFFE1D1AD))
+                    Text(stringResource(R.string.qp_index_subtitle), style = MaterialTheme.typography.bodyMedium,
+                        color = Color(0xFFE1E7DC), modifier = Modifier.widthIn(max = 290.dp))
+                }
             }
         }
         if (selectedTopic == null) item("read_and_listen") {
-            Column(Modifier.fillMaxWidth().padding(bottom = 12.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                QuranEntryCard(stringResource(R.string.ql_read_title), stringResource(R.string.ql_read_detail),
-                    "quran_read_entry") { open(last ?: QuranProgress.Location(1, 1)) }
-                QuranEntryCard(stringResource(R.string.qaudio_title), stringResource(R.string.ql_listen_detail),
-                    "quran_audio_entry") { nav.openQuranAudio(0) }
+            BoxWithConstraints(Modifier.fillMaxWidth().padding(bottom = 14.dp)) {
+                val stacked = maxWidth / androidx.compose.ui.platform.LocalDensity.current.fontScale < 280.dp
+                val entries: @Composable (Modifier) -> Unit = { entryModifier ->
+                    QuranEntryCard(stringResource(R.string.ql_read_title), stringResource(R.string.ql_read_detail),
+                        "quran_read_entry", false, entryModifier) { open(last ?: QuranProgress.Location(1, 1)) }
+                    QuranEntryCard(stringResource(R.string.qaudio_title), stringResource(R.string.ql_listen_detail),
+                        "quran_audio_entry", true, entryModifier) { nav.openQuranAudio(0) }
+                }
+                if (stacked) Column(verticalArrangement = Arrangement.spacedBy(10.dp)) { entries(Modifier.fillMaxWidth()) }
+                else Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) { entries(Modifier.weight(1f)) }
             }
         }
         if (selectedTopic == null) item("sections") {
@@ -371,18 +376,25 @@ internal fun QuranSources(close: () -> Unit) {
 }
 
 @Composable
-private fun QuranEntryCard(title: String, detail: String, tag: String, open: () -> Unit) {
+private fun QuranEntryCard(title: String, detail: String, tag: String, audio: Boolean,
+    modifier: Modifier = Modifier, open: () -> Unit) {
     val colors = quranPaperColors()
-    OutlinedCard(onClick = open, modifier = Modifier.fillMaxWidth().testTag(tag),
-        shape = RoundedCornerShape(18.dp), colors = CardDefaults.outlinedCardColors(containerColor = colors.paper),
-        border = BorderStroke(1.dp, colors.accent.copy(alpha = .5f))) {
-        Row(Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                Text(title, style = MaterialTheme.typography.titleLarge, color = colors.accent)
-                Text(detail, style = MaterialTheme.typography.bodySmall, color = colors.muted)
+    OutlinedCard(onClick = open, modifier = modifier.testTag(tag),
+        shape = RoundedCornerShape(20.dp), colors = CardDefaults.outlinedCardColors(containerColor = colors.paper),
+        border = BorderStroke(1.dp, colors.rule)) {
+        Column(Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                Surface(shape = RoundedCornerShape(12.dp), color = colors.selection) {
+                    Box(Modifier.size(40.dp), contentAlignment = Alignment.Center) {
+                        if (audio) Icon(Icons.Default.PlayArrow, null, tint = colors.accent)
+                        else Icon(painterResource(R.drawable.ic_shop_book), null, tint = colors.accent)
+                    }
+                }
+                Spacer(Modifier.weight(1f))
+                Icon(Icons.AutoMirrored.Filled.ArrowForward, null, tint = colors.muted, modifier = Modifier.size(18.dp))
             }
-            Icon(Icons.AutoMirrored.Filled.ArrowForward, null, tint = colors.accent)
+            Text(title, style = MaterialTheme.typography.titleMedium, color = colors.ink)
+            Text(detail, style = MaterialTheme.typography.bodySmall, color = colors.muted)
         }
     }
 }

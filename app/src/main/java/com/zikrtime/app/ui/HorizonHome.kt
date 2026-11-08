@@ -4,6 +4,7 @@ package com.zikrtime.app.ui
 
 import android.provider.Settings
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -12,6 +13,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
@@ -59,8 +61,9 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val status = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
         val compactHeight = status + if (large) 112.dp else 76.dp
-        // Keep the next prayer prominent while bringing the schedule into view sooner.
-        val revealHeight = maxOf(maxHeight * .52f, status + if (large) 330.dp else 310.dp)
+        // The next prayer stays above a complete six-time schedule. Only large-text
+        // layouts grow naturally; the regular hero no longer consumes half the page.
+        val revealHeight = if (large) status + 330.dp else maxOf(maxHeight * .34f, status + 260.dp)
         var measuredHero by remember { mutableIntStateOf(0) }
         val collapsePx = (if (measuredHero > 0) measuredHero - with(density) { compactHeight.toPx() }
             else with(density) { (revealHeight - compactHeight).toPx() }).coerceAtLeast(1f)
@@ -75,16 +78,16 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
             }
         }
 
-        val topScrim = remember { Brush.verticalGradient(0f to Color(0xB309242D), .44f to Color(0x2409242D), .66f to Color.Transparent) }
-        val sideScrim = remember { Brush.horizontalGradient(listOf(Color(0x4807242B), Color.Transparent)) }
+        val topScrim = remember { Brush.verticalGradient(0f to Color(0xB30B241E), .38f to Color(0x400B241E), .7f to Color.Transparent) }
+        val sideScrim = remember { Brush.horizontalGradient(listOf(Color(0x400B241E), Color.Transparent)) }
         val imageId = if (period == NaturalPeriod.NIGHT) R.drawable.horizon_portrait_night else R.drawable.horizon_portrait_day
         Box(Modifier.matchParentSize().background(Color(0xFF353E36))) {
             if (!(com.zikrtime.app.BuildConfig.DEBUG && com.zikrtime.app.QaHooks.hideScene)) {
-                Image(painterResource(imageId), null, Modifier.fillMaxSize().graphicsLayer {
+                Image(painterResource(imageId), null, Modifier.fillMaxWidth().height(revealHeight + 110.dp).graphicsLayer {
                     // Image overfill keeps the frame covered throughout its small parallax travel.
                     scaleX = 1.08f; scaleY = 1.08f
                     translationY = if (motion) -scroll.value.coerceAtMost(collapsePx.toInt()) * .055f else 0f
-                }, contentScale = ContentScale.Crop, alignment = Alignment.Center)
+                }, contentScale = ContentScale.Crop, alignment = BiasAlignment(0f, .6f))
             }
             Box(Modifier.matchParentSize().drawBehind {
                 val p = (scroll.value / collapsePx).coerceIn(0f, 1f)
@@ -103,55 +106,72 @@ fun HorizonHome(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times: Pr
 
         Column(Modifier.fillMaxSize().testTag("horizon_scroll").semantics { testTagsAsResourceId = true }
             .verticalScroll(scroll)) {
-            Column(Modifier.fillMaxWidth().heightIn(min = revealHeight).onSizeChanged { measuredHero = it.height }.padding(horizontal = 24.dp)
-                .padding(top = status + 8.dp)
+            Column(Modifier.fillMaxWidth().heightIn(min = revealHeight).onSizeChanged { measuredHero = it.height }.padding(horizontal = 20.dp)
+                .padding(top = status + 2.dp)
                 .graphicsLayer {
                     compositingStrategy = CompositingStrategy.ModulateAlpha
                     alpha = ((.72f - scroll.value / collapsePx) / .12f).coerceIn(0f, 1f)
                 }
                 .then(if (compact) Modifier.clearAndSetSemantics {} else Modifier),
-                verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.Top) {
-                    Column(Modifier.weight(1f)) {
-                        Text(stringResource(R.string.app_name), color = Porcelain, style = MaterialTheme.typography.titleLarge)
-                        TextButton(onClick = { nav.open(Screen.READING_REMINDERS) },
-                            contentPadding = PaddingValues(end = 8.dp),
-                            modifier = Modifier.testTag("home_reading_reminders")) {
-                            Text(clarityCopy(UiClarity0825.Reading), color = Porcelain)
-                        }
-                    }
+                verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                Row(Modifier.fillMaxWidth().heightIn(min = 44.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Text(stringResource(R.string.app_name), color = Porcelain,
+                        style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
                     ThemeQuickButton(compact = true, onLandscape = true)
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     TextButton(onClick = { nav.open(Screen.CITY) },
                         modifier = Modifier.testTag("home_change_city"),
                         contentPadding = PaddingValues(end = 8.dp)) {
-                        Icon(painterResource(R.drawable.ic_mosque), null, tint = Sand, modifier = Modifier.size(18.dp))
-                        Spacer(Modifier.width(6.dp))
+                        Icon(painterResource(R.drawable.ic_pin), null, tint = Sand, modifier = Modifier.size(18.dp))
+                        Spacer(Modifier.width(8.dp))
                         Column {
                             Text(Cities.displayName(context, Store.location), color = Porcelain,
-                                style = MaterialTheme.typography.labelLarge, maxLines = 2)
+                                style = MaterialTheme.typography.labelLarge)
                             Text(clarityCopy(UiClarity0825.ChangeCity), color = Sand,
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
                 }
-                Text(gregorianDate(now.toLocalDate()) + " · " + hijriDate(now.toLocalDate()),
-                    color = Sand, style = MaterialTheme.typography.labelMedium)
-                Text(stringResource(R.string.home_next_prayer), color = Porcelain.copy(alpha = .88f), style = MaterialTheme.typography.labelLarge)
-                Text(prayerName(prayer), color = Porcelain, style = MaterialTheme.typography.headlineLarge,
-                    fontSize = 28.sp)
-                BigClock(at, if (large) 44.sp else 60.sp, Porcelain, modifier = Modifier.testTag("horizon_time").semantics { testTagsAsResourceId = true }, weight = FontWeight.Normal)
-                Text(countdown, color = Sand, style = MaterialTheme.typography.labelLarge,
-                    modifier = Modifier.clip(RoundedCornerShape(18.dp)).background(Color(0xB319211D))
-                        .padding(horizontal = 12.dp, vertical = 7.dp))
-                Spacer(Modifier.height(14.dp))
+                Text(gregorianDate(now.toLocalDate()), color = Porcelain,
+                    style = MaterialTheme.typography.labelMedium)
+                Text(hijriDate(now.toLocalDate()), color = Porcelain.copy(alpha = .92f),
+                    style = MaterialTheme.typography.labelMedium)
+                Spacer(Modifier.height(12.dp))
+                Surface(Modifier.fillMaxWidth().testTag("home_next_prayer_card"), shape = RoundedCornerShape(22.dp),
+                    color = Color(0xEB14372C), border = BorderStroke(.7.dp, Sand.copy(alpha = .48f))) {
+                    Column(Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                        verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                        if (large) {
+                            Text(stringResource(R.string.home_next_prayer), color = Porcelain.copy(alpha = .85f),
+                                style = MaterialTheme.typography.labelLarge)
+                            Text(prayerName(prayer), color = Porcelain, style = MaterialTheme.typography.headlineMedium)
+                            BigClock(at, 44.sp, Porcelain,
+                                modifier = Modifier.testTag("horizon_time").semantics { testTagsAsResourceId = true },
+                                weight = FontWeight.Normal)
+                        } else Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
+                                Text(stringResource(R.string.home_next_prayer), color = Porcelain.copy(alpha = .85f),
+                                    style = MaterialTheme.typography.labelMedium)
+                                Text(prayerName(prayer), color = Porcelain, style = MaterialTheme.typography.headlineSmall)
+                            }
+                            BigClock(at, 44.sp, Porcelain,
+                                modifier = Modifier.testTag("horizon_time").semantics { testTagsAsResourceId = true },
+                                weight = FontWeight.Normal)
+                        }
+                        Text(countdown, color = Sand, style = MaterialTheme.typography.labelMedium,
+                            modifier = Modifier.testTag("home_countdown"))
+                    }
+                }
+                Spacer(Modifier.height(16.dp))
             }
             Column(Modifier.fillMaxWidth().testTag("horizon_panel").semantics { testTagsAsResourceId = true }
                 .clip(RoundedCornerShape(topStart = 34.dp, topEnd = 34.dp))
-                .background(scheme.background)
+                .background(Brush.verticalGradient(listOf(scheme.surfaceContainerLow, scheme.background),
+                    endY = with(density) { 560.dp.toPx() }))
                 .padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(18.dp)) {
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(0.dp))
                 content()
                 Spacer(Modifier.height(if (large) 140.dp else 96.dp))
                 Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
