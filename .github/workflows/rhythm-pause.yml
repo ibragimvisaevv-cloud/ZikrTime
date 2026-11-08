@@ -12,14 +12,22 @@ jobs:
   android:
     if: ${{ contains(github.event.head_commit.message, '[rhythm-preview]') || contains(github.event.head_commit.message, '[rhythm-final]') }}
     runs-on: ubuntu-latest
-    timeout-minutes: 55
+    timeout-minutes: 65
     env:
       RHYTHM_BASELINE: c451791056a717846adad432f5b9d5884729d27e
+    outputs:
+      mode: ${{ steps.stage.outputs.mode }}
+      guide: ${{ steps.stage.outputs.guide }}
+      reuse: ${{ steps.stage.outputs.reuse }}
+      matrix: ${{ steps.stage.outputs.matrix }}
+      source_sha: ${{ steps.provenance.outputs.source_sha }}
+      source_run: ${{ steps.provenance.outputs.source_run }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Select one explicit stage
+        id: stage
         run: |
           python3 - <<'PY'
           import json, os, re
@@ -32,6 +40,11 @@ jobs:
               out.write('RHYTHM_GUIDE_CAPTURE=' + str('guide=true' in message).lower() + '\n')
               reuse = re.search(r'\breuse=(\d+)\b', message)
               out.write('RHYTHM_REUSE_RUN=' + (reuse.group(1) if reuse else '') + '\n')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+              out.write('mode=' + ('final' if final else 'preview') + '\n')
+              out.write('guide=' + str('guide=true' in message).lower() + '\n')
+              out.write('reuse=' + (reuse.group(1) if reuse else '') + '\n')
+              out.write('matrix=' + json.dumps(['actions', 'layout'] if final else ['preview']) + '\n')
           PY
       - uses: actions/setup-java@v4
         with:
@@ -41,7 +54,7 @@ jobs:
         if: env.RHYTHM_REUSE_RUN == ''
       - name: Validate protected inputs and evidence scripts
         run: |
-          python3 -m py_compile tools/ci/rhythm_pause.py tools/ci/rhythm_pause_delivery.py tools/ci/rhythm_pause_guide.py
+          python3 -m py_compile tools/ci/rhythm_pause.py tools/ci/rhythm_pause_delivery.py tools/ci/rhythm_pause_guide.py tools/ci/rhythm_pause_retry.py tools/ci/rhythm_pause_shards.py
           python3 tools/ci/rhythm_pause_delivery.py inputs
       - name: Build baseline only for the actual update journey
         if: env.RHYTHM_MODE == 'final' && env.RHYTHM_REUSE_RUN == ''
@@ -76,6 +89,11 @@ jobs:
           gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RHYTHM_REUSE_RUN" > ci-out/rhythm-requested-reuse-run.json
           gh run download "$RHYTHM_REUSE_RUN" --repo "$GITHUB_REPOSITORY" -n "rhythm-$RHYTHM_MODE-inputs" -D .
           python3 tools/ci/rhythm_pause_delivery.py reuse
+      - name: Preserve and validate passed UI groups from the same APK
+        if: env.RHYTHM_MODE == 'final' && env.RHYTHM_REUSE_RUN != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/ci/rhythm_pause_retry.py prepare
       - name: Record APK provenance and original release certificate
         id: provenance
         run: |
@@ -87,6 +105,9 @@ jobs:
           with open(os.environ['GITHUB_ENV'], 'a') as out:
               out.write('RHYTHM_APK_SOURCE_SHA=' + report['source_sha'] + '\n')
               out.write('RHYTHM_APK_SOURCE_RUN=' + str(report['run_id']) + '\n')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+              out.write('source_sha=' + report['source_sha'] + '\n')
+              out.write('source_run=' + str(report['run_id']) + '\n')
           PY
       - uses: actions/upload-artifact@v4
         with:
@@ -98,17 +119,55 @@ jobs:
             ci-out/rhythm-inputs.json
             ci-out/rhythm-delivery.json
             ci-out/release-signature.txt
+            ci-out/rhythm-reuse.json
+            ci-out/rhythm-retry-source.json
+            ci-out/rhythm-requested-reuse-run.json
+            ci-out/rhythm-original-build-run.json
+            ci-out/inherited/
             ci-out/baseline/
             app/build/test-results/
             app/build/reports/lint-results-debug.xml
+      - name: Remove decrypted signing material
+        if: always()
+        run: rm -f keystore/release.jks
+
+  ui:
+    needs: android
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: ${{ fromJSON(needs.android.outputs.matrix || '["preview"]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    env:
+      RHYTHM_MODE: ${{ needs.android.outputs.mode }}
+      RHYTHM_GUIDE_CAPTURE: ${{ needs.android.outputs.guide }}
+      RHYTHM_REUSE_RUN: ${{ needs.android.outputs.reuse }}
+      RHYTHM_SHARD: ${{ matrix.shard }}
+      RHYTHM_APK_SOURCE_SHA: ${{ needs.android.outputs.source_sha }}
+      RHYTHM_APK_SOURCE_RUN: ${{ needs.android.outputs.source_run }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/download-artifact@v4
+        with:
+          name: rhythm-${{ env.RHYTHM_MODE }}-inputs
+          path: .
+      - name: Verify identical APKs before this independent UI shard
+        run: python3 tools/ci/rhythm_pause_shards.py verify-inputs
       - run: python3 -m pip install 'Pillow>=11,<13'
       - name: Enable emulator acceleration
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-rhythm.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      - name: Actual app journeys, screenshots and transition recording
-        timeout-minutes: 32
+      - name: Actual independent app journeys
+        timeout-minutes: 45
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 35
@@ -117,8 +176,8 @@ jobs:
           disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -camera-back none -camera-front none
           script: python3 tools/ci/rhythm_pause.py "$RHYTHM_MODE"
-      - name: Make the first six screenshots available before guide capture
-        if: always() && steps.provenance.outcome == 'success'
+      - name: Make the first six screenshots available promptly
+        if: always() && (matrix.shard == 'actions' || matrix.shard == 'preview')
         uses: actions/upload-artifact@v4
         with:
           name: rhythm-${{ env.RHYTHM_MODE }}-first-screens
@@ -132,8 +191,8 @@ jobs:
             ci-out/screens/settings-light.*
             ci-out/rhythm-ui.json
             ci-out/rhythm-transitions.mp4
-      - name: Capture 30 new guide illustrations when explicitly selected
-        if: always() && env.RHYTHM_GUIDE_CAPTURE == 'true' && steps.provenance.outcome == 'success'
+      - name: Capture 30 new guide illustrations only in the preview shard
+        if: always() && env.RHYTHM_GUIDE_CAPTURE == 'true' && matrix.shard == 'preview'
         timeout-minutes: 18
         uses: reactivecircus/android-emulator-runner@v2
         env:
@@ -146,10 +205,44 @@ jobs:
           disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -camera-back none -camera-front none
           script: python3 tools/ci/rhythm_pause_guide.py capture
-      - name: Remove decrypted signing material
+      - name: Preserve this shard's complete success and failure evidence
         if: always()
-        run: rm -f keystore/release.jks
-      - name: Prepare user-facing signed file
+        uses: actions/upload-artifact@v4
+        with:
+          name: rhythm-${{ env.RHYTHM_MODE }}-evidence-${{ matrix.shard }}
+          path: |
+            ci-out/
+            !ci-out/baseline/*.apk
+            docs/RHYTHM_PAUSE_SCREEN_MAP.md
+            docs/RHYTHM_PAUSE_DESIGN.md
+
+  delivery:
+    needs: [android, ui]
+    if: always() && needs.android.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      RHYTHM_MODE: ${{ needs.android.outputs.mode }}
+      RHYTHM_GUIDE_CAPTURE: ${{ needs.android.outputs.guide }}
+      RHYTHM_APK_SOURCE_SHA: ${{ needs.android.outputs.source_sha }}
+      RHYTHM_APK_SOURCE_RUN: ${{ needs.android.outputs.source_run }}
+      RHYTHM_UI_RESULT: ${{ needs.ui.result }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          name: rhythm-${{ env.RHYTHM_MODE }}-inputs
+          path: .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: rhythm-${{ env.RHYTHM_MODE }}-evidence-*
+          path: ci-shards
+      - run: python3 -m pip install 'Pillow>=11,<13'
+      - name: Require all planned groups on the exact same APK
+        run: python3 tools/ci/rhythm_pause_shards.py merge --mode "$RHYTHM_MODE" --root ci-shards
+      - name: Prepare user-facing signed file only after aggregate success
         if: env.RHYTHM_MODE == 'final'
         run: cp app/build/outputs/apk/release/app-release.apk ZikrTime-0.8.29.apk
       - uses: actions/upload-artifact@v4
@@ -159,7 +252,7 @@ jobs:
           compression-level: 0
           path: ZikrTime-0.8.29.apk
           if-no-files-found: error
-      - name: Preserve success and failure evidence
+      - name: Preserve aggregate and original shard evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:

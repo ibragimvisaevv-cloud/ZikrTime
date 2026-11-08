@@ -19,6 +19,9 @@ import xml.etree.ElementTree as ET
 
 from PIL import Image
 
+import rhythm_pause_retry as retry
+import rhythm_pause_shards as shards
+
 SUPPORT = {'__name__': 'rhythm_support'}
 SOURCE = Path('tools/ci/learning_journeys.py')
 exec(compile(SOURCE.read_text(), str(SOURCE), 'exec'), SUPPORT)
@@ -354,7 +357,11 @@ def preferences_snapshot():
 
 
 def upgrade():
-    adb('uninstall', PKG) if 'package:' in shell('pm', 'path', PKG) else None
+    # pm path exits 1 for a correctly empty fresh emulator; package listing
+    # distinguishes absence without turning expected setup into a failure.
+    installed = shell('pm', 'list', 'packages', PKG).splitlines()
+    if 'package:' + PKG in installed:
+        adb('uninstall', PKG)
     adb('install', '-r', BASE_APK)
     first_run()
     theme('light')
@@ -426,7 +433,9 @@ def reader_actions():
     observe('quran_whole_surah')
     shot('quran-whole-surah-dark', presentation=True)
     tap('quran_mode_translation')
-    observe('quran_translation_1')
+    # The first ayah's Arabic text can fill the viewport; its translation is
+    # below it, not absent. Scroll the real reader before asserting the text.
+    locate('quran_translation_1')
     tap('quran_fullscreen')
     observe('quran_exit_fullscreen')
     shot('quran-fullscreen-translation-dark', presentation=True)
@@ -463,7 +472,7 @@ def reader_actions():
     enter_text('quran_ayah_input', '2')
     back()
     tap('quran_go')
-    root = observe('quran_translation_2')
+    root, _, _ = locate('quran_translation_2')
     assert prefs('quran_reading').get('last') == '114:2', 'Jump did not persist the exact ayah'
     translation = find(root, 'quran_translation_2').get('text', '')
     assert translation.strip(), 'Expected existing translated verse'
@@ -531,7 +540,9 @@ def tasbih_azkar():
     back()
     tap('azkar_count')
     tap('azkar_next')
-    observe('azkar_previous')
+    # Moving to the next material intentionally resets its scroll position.
+    # Previous is below the text and must be reached by normal scrolling.
+    locate('azkar_previous')
     tap('azkar_previous')
     return {'map_ids': ['32', '40'], 'verified': ['counter', 'reset_cancel', 'phrase', 'target', 'restart', 'azkar_source', 'azkar_count_next_previous']}
 
@@ -547,13 +558,31 @@ def knowledge():
         locate('learning_level_1')
     tap('learning_level_1')
     tap('learning_level_confirm')
+    # Selecting a level changes the height above this button while preserving
+    # the list offset. A clipped semantic bound can overlap the system bar;
+    # center the actual button in the list before issuing its one tap.
+    for _ in range(5):
+        root, node, (l, t, r, b) = locate('learning_start')
+        viewport = visible_bounds(root, find(root, 'section_scroll'))
+        left, top, right, bottom = viewport
+        span = bottom - top
+        if t >= top + span * .18 and b <= top + span * .82:
+            break
+        middle = (top + bottom) // 2
+        distance = max(-int(span * .25), min(int(span * .25), middle - (t+b)//2))
+        assert distance, 'Start button could not be centered in the visible knowledge list'
+        shell('input', 'swipe', left+16, middle, left+16, middle+distance, 650)
+        time.sleep(.25)
+    else:
+        raise AssertionError('Quiz start remained clipped after bounded list scrolling')
     tap('learning_start')
-    if find(ui(), 'learning_skip') is not None:
-        tap('learning_skip')
+    # A new normal session offers preparation. Require that real next screen
+    # and scroll to Skip instead of silently continuing after a missed tap.
+    tap('learning_skip')
     bank = json.loads(Path('app/src/main/assets/quiz/ru.json').read_text())['questions']
     wrong_seen = correct_seen = False
     for index in range(8):
-        root = observe('learning_question')
+        root, _, _ = locate('learning_question')
         question_text = find(root, 'learning_question').get('text')
         question = next(q for q in bank if q['q'] == question_text)
         wanted = question['options'][question['answer']]
@@ -564,8 +593,8 @@ def knowledge():
             choices.append((number, wanted in texts or wanted == node.get('text')))
         selected = next(number for number, correct in choices if correct != (index == 0))
         tap('learning_answer_' + str(selected))
-        observe('learning_feedback')
-        locate('learning_feedback')
+        root, _, _ = locate('learning_feedback')
+        locate('Не совсем' if index == 0 else 'Верно!', 'text')
         root = ui()
         feedback_text = ' '.join(n.get('text', '') for n in find(root, 'learning_feedback').iter('node'))
         if index == 0:
@@ -576,9 +605,13 @@ def knowledge():
             assert 'Верно' in feedback_text
             correct_seen = True
             shot('test-quiz-correct-feedback')
-        if find(root, 'learning_finish') is not None:
+        # The continuation follows the explanation/source and can start
+        # offscreen. Both branches still require the actual enabled UI action.
+        try:
+            locate('learning_next')
+        except AssertionError:
             tap('learning_finish')
-            observe('МашаАллах!', 'text')
+            locate('МашаАллах!', 'text')
             shot('test-quiz-result')
             break
         tap('learning_next')
@@ -598,7 +631,11 @@ def focus_journal():
     tap('focus_apps_done')
     tap('focus_settings_open')
     shot('focus-settings-dark', presentation=True)
-    pause_before = prefs('focus_pause_v1')
+    # SharedPreferences is created on the first write, not on the first read.
+    # Only a genuinely absent file represents defaults; invalid existing XML
+    # must still fail the normal persistence reader.
+    pref_files = shell('run-as', PKG, 'ls', 'shared_prefs').splitlines()
+    pause_before = prefs('focus_pause_v1') if 'focus_pause_v1.xml' in pref_files else {}
     assert pause_before.get('enabled', 'false') == 'false', 'This journey expects the fresh opt-out profile'
     tap('Зикр перед открытием', 'text')
     assert prefs('focus_pause_v1').get('enabled') == 'true'
@@ -640,24 +677,76 @@ def focus_journal():
 
 
 def route_gallery():
+    # The split gallery job starts after a clean first launch. Quran's entry
+    # in Knowledge is outside the gate, but TrainingDashboard requires a level.
+    # Resolve the actual Training UI; never seed preferences or overwrite an
+    # existing choice merely to make the gallery available.
+    route('training')
+    level_chosen = False
+    if find(ui(), 'learning_level_current') is None:
+        try:
+            locate('learning_level_1')
+        except AssertionError:
+            # A saved level renders this dashboard instead of the picker.
+            locate('training_dashboard')
+        else:
+            tap('learning_level_1')
+            tap('learning_level_confirm')
+            locate('learning_level_current')
+            level_chosen = True
+    locate('training_dashboard')
     targets = [('knowledge', 'quran_open'), ('focus', 'focus_choose_apps'),
+               ('tasbih', 'tasbih_counter'), ('azkar', 'azkar_arabic'),
                ('quran_audio', 'audio_screen'), ('qibla', 'qibla_compass'),
                ('places', 'places_map'), ('shop', 'shop_search'),
                ('prayer_journal', 'journal_previous'), ('reading_reminders', 'reading_open_BEDTIME'),
                ('progress', 'personal_progress_toggle'), ('training', 'training_dashboard'),
                ('alarm', None), ('prayer_settings', 'prayer_regional_mode'),
                ('language', None), ('city', None), ('ramadan', None), ('zakat', None), ('about', None)]
+    strings = {element.get('name'): ''.join(element.itertext())
+               for file in Path('app/src/main/res/values-ru').glob('*.xml')
+               for element in ET.parse(file).getroot() if element.tag == 'string'}
+    titles = {'alarm': 'alarm_title', 'language': 'settings_language', 'city': 'settings_city',
+              'ramadan': 'ramadan_title', 'zakat': 'zakat_title', 'about': 'about_title'}
     visited = []
+    loading_states = {}
     for palette in ('dark', 'light'):
         theme(palette)
         for name, tag in targets:
+            if palette == 'dark' and name in ('tasbih', 'azkar'):
+                # Their dark captures belong to the interaction group; add the
+                # missing light views without overwriting earlier evidence.
+                continue
             route(name)
+            if name == 'quran_audio':
+                # audio_screen is present during corpus/storage loading too.
+                # The actual player appears only after those inputs are ready.
+                observe('audio_player', attempts=30)
+            if name == 'places':
+                # Give real map tiles time to load. A network-limited map is
+                # captured as that state, never reported as a ready map.
+                for _ in range(20):
+                    root = ui()
+                    if find(root, strings['places_loading'], 'text') is None:
+                        break
+                    time.sleep(.5)
+                root = ui()
+                loading_states[name + ':' + palette] = (
+                    'slow_tiles_notice' if find(root, strings['map_slow'], 'text') is not None else
+                    'loading_notice' if find(root, strings['places_loading'], 'text') is not None else
+                    'no_loading_notice_visible')
             if tag:
-                observe(tag)
+                # Entry controls such as journal date navigation follow the
+                # summary and can legitimately start below the viewport.
+                locate(tag)
+            else:
+                observe(strings[titles[name]], 'text')
             shot(name + '-' + palette, presentation=True)
             visited.append(name + ':' + palette)
-    return {'map_ids': ['06', '08', '09', '10', '14', '15', '28', '33', '38', '39', '41', '47', '52', '55', '56', '57', '58', '61'],
-            'rendered_routes': visited, 'scope': 'Rendering and named entry controls; not every conditional action.'}
+    return {'map_ids': ['06', '08', '09', '10', '14', '15', '28', '32', '33', '38', '39', '40', '41', '47', '52', '55', '56', '57', '58', '61'],
+            'rendered_routes': visited, 'map_loading_states': loading_states,
+            'initial_level_chosen_through_existing_picker': level_chosen,
+            'scope': 'Rendering and named entry controls; not every conditional action. Map notices are recorded, not certified as loaded tiles.'}
 
 
 def shop_and_places():
@@ -688,7 +777,9 @@ def widgets_gallery(palette, font=1.0):
     """Actual native RemoteViews in the existing debug preview, not a mock or launcher."""
     global LOCALE
     LOCALE = 'ru'
-    display(960 if font > 1 else 1080, 2400, font)
+    # This emulator accepts 1920px height. Keep the measured 320/360dp width
+    # and 150% font; test full widget visibility in the real 640dp viewport.
+    display(960 if font > 1 else 1080, 1920, font)
     theme(palette)
     size = '320dp-150' if font > 1 else '360dp-100'
     variants = [
@@ -794,6 +885,10 @@ def compact_and_languages():
 
 def group(name, action):
     global ACTIVE
+    if not shards.owns(REPORT, name):
+        return True
+    if retry.skip_inherited(REPORT, name):
+        return True
     ACTIVE = name
     print('Rhythm UI:', name, flush=True)
     start = time.monotonic()
@@ -822,6 +917,8 @@ def main():
     REPORT.update(mode=mode, source_sha=delivery['source_sha'], source_run=delivery['run_id'],
                   verification_sha=os.environ.get('GITHUB_SHA'), run_id=os.environ.get('GITHUB_RUN_ID'),
                   debug_sha256=hashlib.sha256(APK.read_bytes()).hexdigest())
+    retry.inherit(REPORT, delivery)
+    shards.configure(REPORT)
     adb('wait-for-device')
     shell('svc', 'power', 'stayon', 'true')
     shell('input', 'keyevent', 'KEYCODE_WAKEUP')
@@ -834,6 +931,8 @@ def main():
         adb('install', '-r', APK)
         if not group('fresh_first_launch', lambda: first_run(mode == 'final')):
             raise AssertionError('First launch must succeed before presentation captures')
+        if shards.needs_setup(REPORT):
+            REPORT['independent_setup'] = first_run(False)
         for palette in ('dark', 'light'):
             group('presentation_' + palette, lambda palette=palette: presentation(palette))
         group('transitions', transition_recording)
@@ -855,7 +954,7 @@ def main():
         crashes = adb('logcat', '-d', '-b', 'crash')
         (OUT / 'rhythm-crashes.txt').write_text(crashes)
         REPORT['app_crashes'] = bool(re.search(r'FATAL EXCEPTION|Fatal signal', crashes))
-        REPORT['planned_groups_passed'] = all(g['status'] == 'passed' for g in REPORT['groups'].values()) and not REPORT['app_crashes']
+        shards.finish(REPORT)
         persist()
         assert REPORT['planned_groups_passed'], 'One or more planned UI groups failed; preserved evidence is authoritative'
     finally:

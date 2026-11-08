@@ -380,8 +380,12 @@ private fun Tabs() {
                     style = MaterialTheme.typography.labelSmall,
                     color = color,
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-                    minLines = if (androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.3f) 2 else 1,
-                    maxLines = 2,
+                    // Keep the complete destination name in Text semantics.
+                    // At large text sizes, ellipsize a single readable line
+                    // instead of breaking one word across two navigation rows.
+                    maxLines = 1,
+                    softWrap = false,
+                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
                 )
             }
         }
