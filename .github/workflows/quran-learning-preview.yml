@@ -27,11 +27,14 @@ jobs:
           capture = '[quran-learning-preview]' in message
           assert audio != capture, 'Select exactly one preview or audio verification marker'
           marker = '[quran-audio-qa-0828]' if audio else '[quran-learning-preview]'
-          match = re.search(re.escape(marker) + r'\s+reuse=(\d+)', message)
+          match = re.search(re.escape(marker) + r'\s+reuse=(\d+)(?:\s+mode=(\S+))?', message)
           assert not audio or match, 'Audio verification must reuse an existing checked APK'
+          selected_mode = (match.group(2) or 'audio') if audio else 'capture'
+          assert selected_mode in ({'audio', 'offline'} if audio else {'capture'}), 'Unknown verification mode'
+          assert audio or not match or match.group(2) is None, 'A capture marker cannot select an audio mode'
           with open(os.environ['GITHUB_ENV'], 'a') as out:
               out.write('REUSE_RUN=' + (match.group(1) if match else '') + '\n')
-              out.write('LEARNING_PREVIEW_MODE=' + ('audio' if audio else 'capture') + '\n')
+              out.write('LEARNING_PREVIEW_MODE=' + selected_mode + '\n')
           PY
       - uses: actions/setup-java@v4
         with:
@@ -71,13 +74,13 @@ jobs:
           subprocess.run(['git','diff','--exit-code',data['source_sha'],'HEAD','--','app',
               'gradle','gradlew','gradlew.bat','build.gradle.kts','settings.gradle.kts','gradle.properties'], check=True)
           assert hashlib.sha256(Path('app/build/outputs/apk/debug/app-debug.apk').read_bytes()).hexdigest() == data['debug_sha256']
-          if os.environ['LEARNING_PREVIEW_MODE'] == 'audio':
+          if os.environ['LEARNING_PREVIEW_MODE'] in {'audio', 'offline'}:
               Path('ci-out/audio-qa-reuse.json').write_text(json.dumps({
                   'apk_source_sha': data['source_sha'], 'apk_source_run': data['source_run'],
                   'downloaded_from_run': os.environ['REUSE_RUN'],
                   'verification_sha': os.environ['GITHUB_SHA'], 'verification_run': os.environ['GITHUB_RUN_ID'],
                   'debug_sha256': data['debug_sha256'], 'unchanged_android_inputs': True,
-                  'apk_hash_verified': True, 'mode': 'audio_only',
+                  'apk_hash_verified': True, 'mode': os.environ['LEARNING_PREVIEW_MODE'],
               }, indent=2))
           PY
       - uses: actions/upload-artifact@v4
@@ -111,9 +114,9 @@ jobs:
           arch: x86_64
           disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -camera-back none -camera-front none
-          script: ${{ env.LEARNING_PREVIEW_MODE == 'audio' && 'bash tools/ci/learning_smoke.sh audio' || 'adb install -r app/build/outputs/apk/debug/app-debug.apk && python3 tools/ci/guide_capture_0828.py quran' }}
+          script: ${{ env.LEARNING_PREVIEW_MODE == 'offline' && 'bash tools/ci/learning_smoke.sh offline' || env.LEARNING_PREVIEW_MODE == 'audio' && 'bash tools/ci/learning_smoke.sh audio' || 'adb install -r app/build/outputs/apk/debug/app-debug.apk && python3 tools/ci/guide_capture_0828.py quran' }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: ${{ env.LEARNING_PREVIEW_MODE == 'audio' && 'learning-audio-qa-0828' || 'learning-preview-screens' }}
+          name: ${{ env.LEARNING_PREVIEW_MODE == 'offline' && 'learning-offline-qa-0828' || env.LEARNING_PREVIEW_MODE == 'audio' && 'learning-audio-qa-0828' || 'learning-preview-screens' }}
           path: ci-out/

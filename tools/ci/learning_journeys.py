@@ -188,7 +188,7 @@ def learning_audio():
             "prayerAndBlockingSettingsUnchanged": True}
 
 
-def offline_ayah_and_saved_marks():
+def offline_ayah_and_saved_marks(check_saved_marks=True):
     # Reuse the same checked full-surah download for clipped ayah listening.
     # The app must not require a second set of per-ayah audio files.
     select(SURAH)
@@ -197,11 +197,28 @@ def offline_ayah_and_saved_marks():
                           "Surah download for offline ayah test did not complete", 150)
     expected = next(t["size_bytes"] for t in json.loads(Path(
         "app/src/main/assets/quran_audio/alafasy.json").read_text())["tracks"] if t["surah_id"] == SURAH)
+    assert downloadable(SURAH, finished)["totalBytes"] == expected
     assert downloadable(SURAH, finished)["bytesDownloaded"] >= expected
     online(False)
+    # Restart releases buffered media and any old cache reads. Restoring the
+    # paused item does not prepare a source. Clear temporary bytes through the
+    # real settings controls so offline success can only use the explicit copy.
+    select(SURAH, restart=True)
+    before_clear = probe()["storage"]
+    tap_control("audio_storage_open")
+    tap_control("audio_clear_cache")
+    tap_control("audio_confirm_clear_cache")
+    cleared = wait_state(lambda s: not s["storage"]["clearingCache"] and s["storage"]["temporaryBytes"] == 0,
+                         "Temporary cache was not empty before offline playback")
+    assert downloadable(SURAH, cleared)["status"] == "COMPLETED"
+    assert downloadable(SURAH, cleared)["totalBytes"] == expected
+    assert downloadable(SURAH, cleared)["bytesDownloaded"] >= expected
+    assert cleared["storage"]["downloadedBytes"] == before_clear["downloadedBytes"], \
+        "Clearing temporary audio removed explicit download bytes"
+    capture("learning-offline-cache-cleared")
+    tap_control("audio_storage_close")
     # A previously selected ayah must not make the full-surah player's Listen
     # button silently resume that clipped item just because the surah matches.
-    select(SURAH, restart=True)
     tap_control("audio_play_pause")
     full = playing(SURAH, timeout=30)["player"]
     assert full.get("ayah") is None and full["durationMs"] > 45_000, full
@@ -215,8 +232,21 @@ def offline_ayah_and_saved_marks():
     offline = verse_playing(timeout=30)
     verify_clip(offline)
     verse_paused()
+    after_clip = probe()
+    assert after_clip["storage"]["temporaryBytes"] == 0, "Offline clip populated temporary audio unexpectedly"
+    assert downloadable(SURAH, after_clip)["status"] == "COMPLETED"
+    assert after_clip["storage"]["downloadedBytes"] == before_clear["downloadedBytes"]
     capture("learning-offline-ayah")
     tap_control("ayah_stop")
+    result = {"sameFullSurahDownload": True, "downloadBytes": expected,
+              "temporaryBytesBeforeClear": before_clear["temporaryBytes"],
+              "temporaryCacheClearedBeforeOfflinePlayback": True,
+              "temporaryCacheRemainsEmptyAfterOfflineClip": True,
+              "clearCachePreservesExplicitDownload": True,
+              "offlineAfterProcessRestart": True}
+    if not check_saved_marks:
+        online(True)
+        return result
     # Bookmark and note are real local user operations on the selected verse;
     # audio selection must not retarget them to another verse or erase them.
     tap_control("quran_action_bookmark")
@@ -237,8 +267,28 @@ def offline_ayah_and_saved_marks():
     assert not probe()["player"]["playWhenReady"]
     capture("learning-saved-ayah-actions")
     online(True)
-    return {"sameFullSurahDownload": True, "downloadBytes": expected,
-            "offlineAfterProcessRestart": True, "selectedAyahBookmarkAndNoteSurviveRestart": True}
+    result["selectedAyahBookmarkAndNoteSurviveRestart"] = True
+    return result
+
+
+def isolated_offline_check():
+    """Seed just the media prerequisite; do not rerun repetition/background tests."""
+    online(True)
+    shell("wm", "size", "1080x2400")
+    shell("settings", "put", "system", "font_scale", "1.0")
+    seed("dark", onboarded=True, dismissed=True)
+    open_reader(restart=True)
+    ayah_sheet()
+    assert not probe()["storage"]["downloads"], "Focused offline check requires a fresh debug profile"
+    assert not probe()["player"]["playWhenReady"]
+    tap_control("ayah_play_pause")
+    verify_clip(verse_playing())
+    tap_control("ayah_stop")
+    primed = wait_state(lambda s: not s["player"]["playWhenReady"] and s["storage"]["temporaryBytes"] > 0,
+                        "Real streaming did not populate temporary cache for the focused check")
+    result = offline_ayah_and_saved_marks(check_saved_marks=False)
+    result["temporaryCachePrimedByRealStream"] = primed["storage"]["temporaryBytes"]
+    return result
 
 
 def accessible_ayah_controls():
@@ -347,7 +397,7 @@ if __name__ == "__main__":
     OUT.mkdir(exist_ok=True)
     (OUT / "screens").mkdir(exist_ok=True)
     mode = sys.argv[1] if len(sys.argv) > 1 else "all"
-    assert mode in {"all", "audio", "guide"}, mode
+    assert mode in {"all", "audio", "offline", "guide"}, mode
     report = {"profile": "isolated_debug_emulator", "productionWrites": False,
               "previousSuitesRerun": False, "mode": mode, "groups": {}}
     try:
@@ -361,6 +411,8 @@ if __name__ == "__main__":
             actions.update({"ayah_repeats_speed_background": learning_audio,
                             "offline_ayah_saved_marks": offline_ayah_and_saved_marks,
                             "accessible_ayah_controls": accessible_ayah_controls})
+        if mode == "offline":
+            actions["offline_download_without_temporary_cache"] = isolated_offline_check
         if mode in {"all", "guide"}:
             actions["illustrated_guide"] = illustrated_guide
         for ACTIVE_GROUP, action in actions.items():
