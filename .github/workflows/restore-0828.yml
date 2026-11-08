@@ -1,10 +1,11 @@
-name: Restore ZikrTime 0.8.28
+name: Restore original ZikrTime 0.8.28 (code 45)
 on:
   push:
     branches: [codex/restore-0.8.28]
+    paths: ['app/**', 'gradle/**', 'gradlew', 'gradlew.bat', 'build.gradle.kts', 'settings.gradle.kts', 'gradle.properties', '.github/workflows/restore-0828.yml']
 permissions:
   contents: read
-  actions: write
+  actions: read
 concurrency:
   group: restore-028-${{ github.ref }}
   cancel-in-progress: true
@@ -15,20 +16,6 @@ jobs:
     env:
       RESTORE_BASE: c451791056a717846adad432f5b9d5884729d27e
     steps:
-      - name: Stop the superseded redesign run
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          python3 - <<'PY'
-          import json, os, subprocess
-          endpoint = 'repos/' + os.environ['GITHUB_REPOSITORY'] + '/actions/runs/42499852750'
-          def status():
-              return json.loads(subprocess.check_output(['gh', 'api', endpoint], text=True))['status']
-          if status() != 'completed':
-              result = subprocess.run(['gh', 'api', '--method', 'POST', endpoint + '/cancel'])
-              if result.returncode and status() != 'completed':
-                  raise RuntimeError('Could not cancel the superseded redesign run')
-          PY
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -46,12 +33,12 @@ jobs:
           path = 'app/build.gradle.kts'
           before = subprocess.check_output(['git', 'show', base + ':' + path], text=True)
           assert before.count('versionCode = 40') == 1
-          assert Path(path).read_text() == before.replace('versionCode = 40', 'versionCode = 42')
+          assert Path(path).read_text() == before.replace('versionCode = 40', 'versionCode = 45')
           inputs = ['app', 'gradle', 'gradlew', 'gradlew.bat', 'build.gradle.kts',
                     'settings.gradle.kts', 'gradle.properties', 'keystore/release.jks.enc']
           changed = subprocess.check_output(['git', 'diff', '--name-only', base, 'HEAD', '--', *inputs], text=True).splitlines()
           assert changed == [path], ('Unexpected application/build changes', changed)
-          print('Original 0.8.28 application sources verified; versionCode 40 -> 42 only.')
+          print('Original 0.8.28 application sources verified; versionCode 40 -> 45 only.')
           PY
       - name: Restore the existing signing key and build the original interface
         env:
@@ -76,7 +63,7 @@ jobs:
           assert 'certificate SHA-256 digest: ' + cert in signature
           badging = run(tool('aapt'), 'dump', 'badging', str(apk))
           identity = re.search(r"package: name='([^']+)' versionCode='([^']+)' versionName='([^']+)'", badging)
-          assert identity and identity.groups() == ('com.zikrtime.app', '42', '0.8.28')
+          assert identity and identity.groups() == ('com.zikrtime.app', '45', '0.8.28')
           directories = ['app/src/main/assets/quran', 'app/src/main/assets/quran_audio', 'app/src/main/assets/quiz']
           protected = run('git', 'ls-tree', '-r', '--name-only', os.environ['RESTORE_BASE'], '--', *directories).splitlines()
           assert len(protected) == 128
@@ -84,15 +71,15 @@ jobs:
               for name in protected:
                   original = subprocess.check_output(['git', 'show', os.environ['RESTORE_BASE'] + ':' + name])
                   assert archive.read(name.removeprefix('app/src/main/')) == original, name
-          output = Path('ZikrTime-0.8.28-restore-code42.apk')
+          output = Path('ZikrTime-0.8.28-restore-code45.apk')
           shutil.copyfile(apk, output)
           report = {'restored_source_commit': os.environ['RESTORE_BASE'], 'build_commit': os.environ['GITHUB_SHA'],
                     'build_run': os.environ['GITHUB_RUN_ID'], 'application_id': 'com.zikrtime.app',
-                    'version_name': '0.8.28', 'version_code': 42, 'certificate_sha256': cert,
-                    'only_android_source_change': 'versionCode 40 -> 42', 'protected_assets_verified': len(protected),
+                    'version_name': '0.8.28', 'version_code': 45, 'certificate_sha256': cert,
+                    'only_android_source_change': 'versionCode 40 -> 45', 'protected_assets_verified': len(protected),
                     'apk_sha256': hashlib.sha256(output.read_bytes()).hexdigest(), 'apk_bytes': output.stat().st_size,
                     'ui_or_emulator_tests_run': False, 'on_device_update_tested': False, 'store_published': False}
-          Path('ZikrTime-0.8.28-restore-verification.json').write_text(json.dumps(report, indent=2) + '\n')
+          Path('ZikrTime-0.8.28-restore-code45-verification.json').write_text(json.dumps(report, indent=2) + '\n')
           print(json.dumps(report))
           PY
       - name: Remove decrypted signing material
@@ -100,9 +87,9 @@ jobs:
         run: rm -f keystore/release.jks
       - uses: actions/upload-artifact@v4
         with:
-          name: ZikrTime-0.8.28-restored-APK
+          name: ZikrTime-0.8.28-restored-code45-APK
           compression-level: 0
           if-no-files-found: error
           path: |
-            ZikrTime-0.8.28-restore-code42.apk
-            ZikrTime-0.8.28-restore-verification.json
+            ZikrTime-0.8.28-restore-code45.apk
+            ZikrTime-0.8.28-restore-code45-verification.json
