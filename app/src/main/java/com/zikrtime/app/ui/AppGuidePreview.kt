@@ -51,8 +51,9 @@ import kotlin.math.min
 @Composable
 internal fun AppGuidePreview(topic: GuideTopic, step: Int, modifier: Modifier = Modifier, imageHeight: Dp = 340.dp) {
     val context = LocalContext.current.applicationContext
-    val frames by produceState<Map<String, List<GuideScreenshot>>?>(null, context) {
-        value = withContext(Dispatchers.IO) {
+    var frames by remember(context) { mutableStateOf<Map<String, List<GuideScreenshot>>?>(null) }
+    LaunchedEffect(context) {
+        frames = withContext(Dispatchers.IO) {
             runCatching { context.assets.open(GuideScreenshots.MANIFEST).bufferedReader().use {
                 GuideScreenshots.parse(it.readText())
             } }.getOrDefault(emptyMap())
