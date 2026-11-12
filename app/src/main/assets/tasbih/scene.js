@@ -7,7 +7,7 @@
     const worlds = el("planets").getContext("2d");
     const strand = el("strand").getContext("2d");
     const backdrop = new Image();
-    let width, height, unit, skyScale, ratio;
+    let width, height, unit, skyScale, ratio, viewPixels = null;
     let settings = null, latestTotal = 0, latestGoal = 0;
     let travel = null, pulses = [], queue = [], animation = 0, turns = 0;
     let strandDirty = true, lastWorlds = -Infinity, worldTime = 0, worldClock = 0;
@@ -183,12 +183,32 @@
         text.setAttribute("transform","translate(0 "+height*.231+") scale(1 .83)");
     }
 
+    function setViewport(physicalWidth,physicalHeight) {
+        if (!(physicalWidth>0 && physicalHeight>0)) return;
+        if (viewPixels && viewPixels.width===physicalWidth && viewPixels.height===physicalHeight) return;
+        viewPixels={width:physicalWidth,height:physicalHeight};
+        resize();
+    }
+
     function resize() {
-        width=document.documentElement.clientWidth;
-        height=document.documentElement.clientHeight;
+        const dpr=window.devicePixelRatio || 1;
+        if (viewPixels) {
+            // The AndroidView is measured by Compose. Pin an all-absolute
+            // document to that measured size even when WebView initially
+            // reports a zero-height layout viewport while it is attaching.
+            width=viewPixels.width/dpr;
+            height=viewPixels.height/dpr;
+            for (const node of [document.documentElement,document.body]) {
+                node.style.width=width+"px";
+                node.style.height=height+"px";
+            }
+        } else {
+            width=window.innerWidth || document.documentElement.clientWidth;
+            height=window.innerHeight || document.documentElement.clientHeight;
+        }
         if (!width || !height) return;
         unit=Math.min(width/480,height/designHeight);
-        ratio=Math.min(3,window.devicePixelRatio || 1);
+        ratio=Math.min(3,dpr);
         skyScale=height/designHeight;
         document.body.style.setProperty("--u",unit+"px");
         // Only the two moving strips need high-DPI buffers. Coordinates stay in
@@ -387,7 +407,7 @@
         queue.push({total,goal});
         startNext(performance.now());
     }
-    window.tasbih={configure,step,updateCount,settle};
+    window.tasbih={configure,step,updateCount,settle,setViewport};
 
     const button=el("beads");
     button.dataset.testid="tasbih_counter";

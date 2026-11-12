@@ -66,9 +66,9 @@ def connect_scene():
     raise RuntimeError('The installed debug WebView did not expose the tasbih scene') from last
 
 
-def read_js(socket, expression):
+def read_js(socket, expression, await_promise=False):
     socket.send(json.dumps({'id': 1, 'method': 'Runtime.evaluate',
-                            'params': {'expression': expression, 'returnByValue': True}}))
+                            'params': {'expression': expression, 'returnByValue': True, 'awaitPromise': await_promise}}))
     while True:
         response = json.loads(socket.recv())
         if response.get('id') == 1:
@@ -88,6 +88,69 @@ def visible_count(socket, expected):
 def screenshot(path):
     with path.open('wb') as out:
         run('adb', 'exec-out', 'screencap', '-p', stdout=out)
+
+
+def scene_pixels(path):
+    # Check physical pixels from three separate layers of the real Android window.
+    with Image.open(path) as frame:
+        w, h = frame.size
+        def bright(x, y, right, bottom, percentile):
+            region = frame.crop((int(w*x), int(h*y), int(w*right), int(h*bottom))).convert('RGB')
+            return round(float(np.percentile(np.asarray(region).max(axis=2), percentile)), 1)
+        return {'sun': bright(.42,.89,.58,.96,97), 'beads': bright(.40,.51,.60,.59,96),
+                'arabic': bright(.10,.15,.90,.31,99.5)}
+
+
+def scene_diagnostics(socket):
+    state = read_js(socket, """(() => {
+      const box = node => Array.from(['x','y','width','height'], key => node.getBoundingClientRect()[key]);
+      const center = (canvas, x, y) => Array.from(canvas.getContext('2d').getImageData(
+        Math.max(0, Math.floor(canvas.width*x)), Math.max(0, Math.floor(canvas.height*y)),1,1).data);
+      return {
+        hidden: document.hidden, ready: document.readyState, dpr: devicePixelRatio,
+        root: box(document.documentElement), body: box(document.body),
+        viewport: [innerWidth,innerHeight,document.documentElement.clientWidth,document.documentElement.clientHeight],
+        visualViewport: [visualViewport?.width,visualViewport?.height,visualViewport?.scale],
+        bodyUnit: getComputedStyle(document.body).getPropertyValue('--u'),
+        Arabic: box(document.getElementById('arabic')), count: box(document.getElementById('count')),
+        canvas: Array.from(document.querySelectorAll('canvas[id]'), c => ({
+          id:c.id, size:[c.width,c.height], box:box(c),
+          middle:center(c,.5,.5), sun:center(c,.5,.925)
+        })),
+        resources:performance.getEntriesByType('resource').map(entry =>
+          [entry.name.split('/').pop(), Math.round(entry.duration),entry.decodedBodySize])
+      };
+    })()""")
+    # No scene state is changed by measuring two animation-frame callbacks.
+    try:
+        state['raf_elapsed_ms'] = read_js(socket, """new Promise(resolve => {
+          const t=performance.now();
+          setTimeout(()=>resolve(null), 700);
+          requestAnimationFrame(()=>requestAnimationFrame(()=>resolve(Math.round(performance.now()-t))));
+        })""", await_promise=True)
+    except (OSError, websocket.WebSocketException):
+        state['raf_elapsed_ms'] = 'timed out'
+    return state
+
+
+def wait_for_drawn_scene(socket, path):
+    started = time.monotonic()
+    checks = []
+    while time.monotonic() - started < 25:
+        screenshot(path)
+        metrics = scene_pixels(path)
+        checks.append(dict(after=round(time.monotonic()-started, 2), **metrics))
+        if metrics['sun'] > 205 and metrics['beads'] > 125 and metrics['arabic'] > 150:
+            REPORT['scene_pixels'] = checks[-1]
+            return
+        if len(checks) == 1:
+            (MEDIA / 'first-viewport.json').write_text(json.dumps(scene_diagnostics(socket), indent=2))
+        time.sleep(.65)
+    shutil.copyfile(path, MEDIA / 'scene-before-touch.png')
+    (MEDIA / 'blank-viewport.json').write_text(json.dumps({
+        'screenshots': checks, 'webview':scene_diagnostics(socket)
+    }, indent=2))
+    raise AssertionError(f'Android did not paint the sun, beads and selected zikr within 25 s: {checks[-1]}')
 
 
 def decode_audio(path):
@@ -195,16 +258,19 @@ def exercise():
         initial = read_js(scene, "['arabic','transcription','translation','goal'].map(k => document.getElementById(k)?.textContent?.trim())")
         assert all(initial) and '100' in initial[-1], initial
         assert 'прощен' in initial[2].lower().replace('ё', 'е'), initial
-        # Let the texture finish decoding before capturing idle motion.
-        time.sleep(1)
         still = temp / 'idle.png'
-        screenshot(still)
+        wait_for_drawn_scene(scene, still)
         time.sleep(1.2)
-        screenshot(temp / 'idle-later.png')
-        with Image.open(still) as before, Image.open(temp / 'idle-later.png') as after:
+        later = temp / 'idle-later.png'
+        screenshot(later)
+        with Image.open(still) as before, Image.open(later) as after:
             w, h = before.size
             diff = ImageChops.difference(before.convert('RGB'), after.convert('RGB'))
-            assert diff.crop((0, int(.84*h), w, int(.97*h))).getbbox(), 'Planets did not move during idle'
+            if not diff.crop((0, int(.84*h), w, int(.97*h))).getbbox():
+                shutil.copyfile(still, MEDIA / 'idle-a.png')
+                shutil.copyfile(later, MEDIA / 'idle-b.png')
+                (MEDIA / 'frozen-viewport.json').write_text(json.dumps(scene_diagnostics(scene), indent=2))
+                raise AssertionError('Planets did not move during idle')
         visible_count(scene, 26)
         record(scene, temp)
         assert prefs()['tasbih_count'] == '33'
@@ -245,6 +311,18 @@ try:
 except Exception:
     (MEDIA / 'failure.txt').write_text(traceback.format_exc())
     screenshot(MEDIA / 'failure.png')
+    for name, args in (
+        ('surfaces', ['dumpsys','SurfaceFlinger','--list']),
+        ('activity', ['dumpsys','activity','top']),
+        ('frames', ['dumpsys','gfxinfo',PKG]),
+        ('webview-provider', ['dumpsys','webviewupdate']),
+    ):
+        (MEDIA / (name + '.txt')).write_text(shell(*args))
+    pid = shell('pidof', PKG).strip().split()
+    if pid:
+        (MEDIA / 'app-log.txt').write_text(adb('logcat', '-d', '--pid=' + pid[0]))
+    (MEDIA / 'chromium-log.txt').write_text(adb('logcat','-d','chromium:V','WebViewFactory:I',
+                                                  'OpenGLRenderer:W','HWUI:W','EGL_emulation:W','*:S'))
     raise
 finally:
     (MEDIA / 'verification.json').write_text(json.dumps(REPORT, ensure_ascii=False, indent=2))

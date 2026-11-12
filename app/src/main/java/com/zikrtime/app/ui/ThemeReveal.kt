@@ -43,7 +43,7 @@ fun rememberAppearanceChange(): (String, Offset) -> Unit {
 }
 
 @Composable
-fun ThemeRevealHost(content: @Composable () -> Unit) {
+fun ThemeRevealHost(captureEnabled: Boolean = true, content: @Composable () -> Unit) {
     val context = LocalContext.current
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     val scope = rememberCoroutineScope()
@@ -81,7 +81,7 @@ fun ThemeRevealHost(content: @Composable () -> Unit) {
             // A second request supersedes the previous one. The capture layer never contains
             // the old overlay, so rapid taps cannot recursively capture snapshots.
             stop()
-            if (!motion || bounds.width == 0 || bounds.height == 0 ||
+            if (!captureEnabled || !motion || bounds.width == 0 || bounds.height == 0 ||
                 !lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
                 commit(value)
             } else {
@@ -121,8 +121,13 @@ fun ThemeRevealHost(content: @Composable () -> Unit) {
             bounds = it.size
         }) {
             Box(Modifier.fillMaxSize().drawWithContent {
-                layer.record { this@drawWithContent.drawContent() }
-                drawLayer(layer)
+                if (captureEnabled) {
+                    layer.record { this@drawWithContent.drawContent() }
+                    drawLayer(layer)
+                } else {
+                    // The tasbih WebView submits its own live frames to Android's compositor.
+                    drawContent()
+                }
             }) { content() }
             previous?.let { bitmap ->
                 // Decorative canvas has no pointer handler or accessibility semantics.

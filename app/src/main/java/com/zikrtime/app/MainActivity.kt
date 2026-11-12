@@ -114,7 +114,7 @@ class MainActivity : ComponentActivity() {
             (intent?.hasExtra("qa_screen") != true || intent?.getBooleanExtra("qa_splash", false) == true)
         setContent {
             val natural = Store.onboarded && (nav.stack.lastOrNull()?.screen in setOf(Screen.TASBIH, Screen.AZKAR, Screen.QURAN, Screen.QURAN_AUDIO, Screen.READING_BEDTIME, Screen.READING_FRIDAY, Screen.PROGRESS, Screen.REVIEW, Screen.TRAINING) || (nav.stack.isEmpty() && nav.tab == Tab.PRAYER))
-            com.zikrtime.app.ui.ThemeRevealHost {
+            com.zikrtime.app.ui.ThemeRevealHost(captureEnabled = nav.stack.lastOrNull()?.screen != Screen.TASBIH) {
                 ZikrTheme(natural = natural) {
                     val tilt = com.zikrtime.app.ui.rememberTilt(enabled = false)
                     var splash by androidx.compose.runtime.saveable.rememberSaveable { androidx.compose.runtime.mutableStateOf(showSplash) }

@@ -5,12 +5,14 @@ import android.content.Context
 import android.graphics.Color
 import android.media.AudioAttributes
 import android.media.SoundPool
+import android.view.ViewGroup
 import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.Keep
+import androidx.core.view.doOnLayout
 import com.zikrtime.app.BuildConfig
 import com.zikrtime.app.R
 import com.zikrtime.app.data.Store
@@ -74,7 +76,10 @@ internal class TasbihSceneView(context: Context) : WebView(context) {
         if (BuildConfig.DEBUG) WebView.setWebContentsDebuggingEnabled(true)
         webViewClient = SceneClient()
         addJavascriptInterface(SceneActions(), "AndroidTasbih")
-        loadUrl(PAGE)
+        // The scene uses viewport-relative heights. A wrap-content WebView resolves those
+        // against its document (which has only absolutely positioned children) instead.
+        layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        doOnLayout { if (!disposed) loadUrl(PAGE) }
     }
 
     fun bind(newConfig: TasbihSceneConfig, total: Int, acceptingInput: Boolean) {
@@ -90,6 +95,17 @@ internal class TasbihSceneView(context: Context) : WebView(context) {
         if (!pageReady || disposed) return
         if (changed) configurePage()
         else if (externalChange) evaluateJavascript("window.tasbih.updateCount($total,${newConfig.goal})", null)
+    }
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        if (pageReady && !disposed) setPageViewport(w, h)
+    }
+
+    private fun setPageViewport(widthPx: Int, heightPx: Int) {
+        if (widthPx > 0 && heightPx > 0) {
+            evaluateJavascript("window.tasbih.setViewport($widthPx,$heightPx)", null)
+        }
     }
 
     private fun configurePage() {
@@ -173,6 +189,7 @@ internal class TasbihSceneView(context: Context) : WebView(context) {
         override fun onPageFinished(view: WebView, url: String) {
             if (disposed || url != PAGE) return
             pageReady = true
+            setPageViewport(width, height)
             configurePage()
         }
     }
