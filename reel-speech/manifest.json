@@ -1,0 +1,8 @@
+{
+  "length": 1145601,
+  "sha256": "087b449391249e7ee61579a53e0487713737a62cffb825a8c74d0d417e948393",
+  "chunks": 19,
+  "sample_rate": 22050,
+  "codec": "wav.gz",
+  "voice": "Piper ru_RU-dmitri-medium"
+}
