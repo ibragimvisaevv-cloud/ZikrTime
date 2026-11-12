@@ -18,7 +18,7 @@ label{display:block;margin:16px 0 8px;font-size:14px;font-weight:600}input{font:
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}button:active,.action:active{transform:none}}
 </style></head><body>
 <main><header><div class="brand"><span class="emblem" aria-hidden="true"></span>Зикр-тайм · Для бизнеса</div><h1>Кабинет продавца</h1><p>Управляйте размещением компании и выбирайте срок продвижения.</p></header>
-<div id="view" aria-busy="true"><p class="loading">Открываем кабинет…</p></div><p id="message" role="status" aria-live="polite"></p><footer>Оплата относится к услугам размещения и продвижения в приложении «Зикр-тайм».</footer></main>
+<div id="view" aria-busy="true"><p class="loading">Открываем кабинет…</p></div><p id="message" role="status" aria-live="polite"></p></main>
 <script>
 "use strict";
 const view = document.getElementById("view"), message = document.getElementById("message");
@@ -73,15 +73,18 @@ function paymentResult(result,providerName) {
   const link=add(payment,"a","Перейти к оплате · "+providerName,"action");link.href=result.url;link.target="_blank";link.rel="noopener noreferrer";
   button(payment,"Проверить оплату",async()=>{await request("sync",{id:result.id});await show();},"secondary");link.focus();
 }
-function orderRow(parent,order) {
+function orderRow(parent,order,listingFeeEnabled) {
   const row=add(parent,"div",undefined,"order"),head=add(row,"div",undefined,"row");
   const title=order.kind==="listing"?"Размещение компании":"Продвижение на "+order.days+" дней";
-  add(head,"strong",title);add(head,"span",money(order.amount/100));
-  add(row,"small",(labels[order.state]||order.state)+(order.test?" · тестовый заказ":"")+" · "+new Date(order.created*1000).toLocaleDateString("ru-RU"));
+  const open=["waiting","initializing"].includes(order.state);
+  const waived=order.kind==="listing"&&!listingFeeEnabled&&open;
+  add(head,"strong",title);
+  if(!waived)add(head,"span",money(order.amount/100));
+  add(row,"small",(waived?"Оплата размещения не требуется":labels[order.state]||order.state)+(order.test?" · тестовый заказ":"")+" · "+new Date(order.created*1000).toLocaleDateString("ru-RU"));
   const info=add(row,"details");add(info,"summary","Номер заказа");add(info,"small",order.id);
-  if(["waiting","initializing"].includes(order.state)){
+  if(open){
     const actions=add(row,"div",undefined,"order-actions");
-    if(order.expires>Date.now()/1000)button(actions,"Продолжить оплату",async()=>{
+    if(!waived&&order.expires>Date.now()/1000)button(actions,"Продолжить оплату",async()=>{
       const result=await request("resume",{id:order.id});paymentResult(result,order.provider==="robokassa"?"Robokassa · СБП":"Т-Банк");
     },"secondary");
     button(actions,"Обновить статус",async()=>{await request("sync",{id:order.id});await show();},"text-button");
@@ -91,16 +94,18 @@ async function show() {
   view.setAttribute("aria-busy","true");let data;
   try{data=await request("list");}finally{view.setAttribute("aria-busy","false");}
   view.replaceChildren();
+  const listingFeeEnabled=data.listing_fee_enabled===true;
   const toolbar=add(view,"div",undefined,"toolbar");add(toolbar,"span","Мои компании","badge");const actions=add(toolbar,"div");
   button(actions,"Обновить",show,"text-button");button(actions,"Выйти",async()=>{await request("logout");saveSession("");login();},"text-button");
-  if(!data.ready)add(view,"p","Приём оплаты готовится к запуску. Здесь уже доступны ваши компании и история заказов.","notice");
-  else if(data.test)add(view,"p","Тестовый режим оплаты. Деньги не списываются, размещение и продвижение не включаются.","notice");
+  if(!listingFeeEnabled)add(view,"p","Размещение компаний бесплатно.","notice");
+  else if(!data.ready)add(view,"p","Приём оплаты готовится к запуску.","notice");
+  if(data.test&&data.ready)add(view,"p","Оплата работает в тестовом режиме. Тестовый заказ не включает платную услугу.","notice");
   if(!data.shops.length){const empty=add(view,"section",undefined,"empty");add(empty,"h2","Добавьте свою компанию");add(empty,"p","Откройте кабинет Telegram, выберите «Мои компании» → «Добавить компанию». После проверки карточка появится здесь.","muted");return;}
   for(const shop of data.shops){
-    const card=add(view,"section"),head=add(card,"div",undefined,"card-head");add(head,"h2",shop.name);add(head,"span",labels[shop.status]||shop.status,"pill");
+    const card=add(view,"section"),head=add(card,"div",undefined,"card-head");add(head,"h2",shop.name);add(head,"span",shop.status==="awaiting_payment"&&!listingFeeEnabled?"Одобрена":labels[shop.status]||shop.status,"pill");
     if(hints[shop.status])add(card,"p",hints[shop.status],"intro");
     const pending=shop.orders.some(order=>["initializing","waiting","review","refund_review"].includes(order.state));
-    if(data.ready&&!pending&&["awaiting_payment","approved"].includes(shop.status)){
+    if(data.ready&&!pending&&(shop.status==="approved"||(listingFeeEnabled&&shop.status==="awaiting_payment"))){
       add(card,"p",shop.status==="awaiting_payment"?"Размещение стоит 200 ₽ один раз. Товары внутри карточки включены в стоимость.":"Поднимите компанию в каталоге на выбранный срок. Продвижение отмечается пометкой «Реклама».","intro");
       const email=add(add(card,"label","Электронная почта для чека"),"input");email.type="email";email.required=true;email.autocomplete="email";email.placeholder="name@example.ru";
       const consent=add(card,"label",undefined,"consent"),checked=add(consent,"input");checked.type="checkbox";
@@ -118,7 +123,7 @@ async function show() {
         });
       }
     }
-    if(shop.orders.length){add(card,"h3","История заказов");for(const order of shop.orders)orderRow(card,order);}
+    if(shop.orders.length){add(card,"h3","История заказов");for(const order of shop.orders)orderRow(card,order,listingFeeEnabled);}
   }
 }
 if(session){show().catch(error=>{message.textContent=error.message;if(session){view.replaceChildren();button(view,"Повторить",show,"secondary");}});}else login();

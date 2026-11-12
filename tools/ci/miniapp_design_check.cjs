@@ -23,7 +23,7 @@ const server = http.createServer((request, response) => {
 function fixture(owner) {
   return {
     user: { id: owner ? 1 : 2, first_name: owner ? "Владелец" : "Ибрагим", username: "fixture" },
-    admin: owner, owner,
+    admin: owner, owner, listing_fee_enabled: false,
     sellers: [], categories: [{ id: "other", name: "Другое" }], prices: { 7: 100, 30: 300 },
     limits: { sellers: 3, products: 60, photos: 5 }, bot: "FixtureBot",
     tickets: { total: 0, tickets: [], offset: 0 }, places: { total: 0, places: [], offset: 0 },
@@ -31,12 +31,54 @@ function fixture(owner) {
   };
 }
 
-async function scenario(browser, base, owner, theme) {
+async function companyJourney(page, owner, actions) {
+  await page.locator('[data-tab="mine"]').click();
+  await page.getByRole("button", { name: "Добавить компанию", exact: true }).click();
+  const name = owner ? "Автопрокат владельца" : "Автопрокат продавца";
+  await page.getByText("Размещение бесплатно.", { exact: false }).waitFor();
+  await page.getByLabel("Название *", { exact: true }).fill(name);
+  await page.getByLabel("Город *", { exact: true }).fill("Грозный");
+  await page.getByRole("button", { name: owner ? "Опубликовать компанию" : "Отправить на проверку", exact: true }).click();
+  await page.locator("#edit").getByText(owner ? "Опубликована" : "На проверке", { exact: true }).waitFor();
+  assert.equal(actions.filter(a => a.action === "seller_save" && a.fields.name === name).length, 1);
+  assert.doesNotMatch(await page.locator("#app").innerText(), /ожидает оплаты|200\s*₽/i);
+  if (!owner) {
+    assert.equal(await page.locator("#vis").count(), 0);
+    return;
+  }
+  await page.getByRole("button", { name: "← Назад", exact: true }).click();
+  await page.locator('[data-tab="manage"]').click();
+  await page.locator('[data-owner-view="moderation"]').click();
+  await page.getByRole("heading", { name: "Новые компании (1)", exact: true }).waitFor();
+  const adminRow = page.locator(".product").filter({ hasText: name });
+  await adminRow.getByRole("button", { name: "Сделать партнёром", exact: true }).click();
+  await adminRow.getByRole("button", { name: "Снять отметку партнёра", exact: true }).waitFor();
+  await adminRow.getByRole("button", { name: "Скрыть", exact: true }).click();
+  await adminRow.getByText(/Скрыта ·/).waitFor();
+  await adminRow.getByRole("button", { name: "Показать в приложении", exact: true }).click();
+  await adminRow.getByText(/Опубликована ·/).waitFor();
+  assert.equal(await adminRow.locator('[data-mod="partner"]').getAttribute("aria-pressed"), "true");
+  await page.getByRole("button", { name: "Одобрить", exact: true }).click();
+  await page.getByText("Новых компаний нет", { exact: true }).waitFor();
+  await page.locator(".product").filter({ hasText: "Автопрокат продавца" }).getByText(/Опубликована ·/).waitFor();
+  assert.deepEqual(actions.filter(a => a.action === "mod_seller").map(a => [a.sid, a.do]),
+    [["owner-company", "partner"], ["owner-company", "hide"], ["owner-company", "ok"], ["seller-company", "ok"]]);
+}
+
+async function scenario(browser, base, owner, theme, companies) {
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1, reducedMotion: "reduce" });
   const page = await context.newPage();
   const errors = [];
   page.on("pageerror", error => errors.push(error.message));
   const data = fixture(owner);
+  function syncCompanies() {
+    data.sellers = companies.filter(s => s.id === (owner ? "owner-company" : "seller-company"));
+    if (owner) {
+      data.moderation.pending = companies.filter(s => s.status === "pending");
+      data.moderation.all = companies.map(s => ({ ...s, products: s.products.length }));
+    }
+  }
+  syncCompanies();
   const actions = [];
   await context.addInitScript(({ theme }) => {
     window.Telegram = { WebApp: { initData: "SYNTHETIC_TEST_ONLY", colorScheme: theme,
@@ -52,6 +94,26 @@ async function scenario(browser, base, owner, theme) {
     let result;
     switch (body.action) {
       case "me": result = data; break;
+      case "seller_save": {
+        const seller = { ...body.fields, id: owner ? "owner-company" : "seller-company",
+          status: owner ? "approved" : "pending", partner: false, products: [], orders: [] };
+        companies.push(seller);
+        syncCompanies();
+        result = { seller, me: data };
+        break;
+      }
+      case "mod_seller": {
+        assert.equal(owner, true);
+        const seller = companies.find(s => s.id === body.sid);
+        assert.ok(seller);
+        if (body.do === "partner") seller.partner = !seller.partner;
+        else if (body.do === "hide") seller.status = "hidden";
+        else if (body.do === "ok") seller.status = "approved";
+        else throw new Error("Unexpected moderation action " + body.do);
+        syncCompanies();
+        result = { moderation: data.moderation, me: data };
+        break;
+      }
       case "private_photo_upload": result = { photo_id: "fixture-photo-1" }; break;
       case "ticket_create": {
         const ticket = { id: "1", kind: body.kind, text: body.text, context: body.context, status: "new", created: 1794000000, updated: 1794000000, photos: body.photos, replies: [] };
@@ -80,7 +142,7 @@ async function scenario(browser, base, owner, theme) {
   assert.equal(await page.locator("#toast").evaluate(element => getComputedStyle(element).opacity), "0");
   await page.screenshot({ path: path.join(output, `miniapp-${owner ? "owner" : "user"}-${theme}.png`), fullPage: true });
   if (owner) {
-    await page.getByRole("button", { name: "Админ", exact: true }).click();
+    await page.locator('[data-tab="manage"]').click();
     await page.getByRole("button", { name: "Пользователи", exact: true }).click();
     await page.getByText("128", { exact: true }).waitFor();
     await page.screenshot({ path: path.join(output, `miniapp-admin-stats-${theme}.png`), fullPage: true });
@@ -109,6 +171,7 @@ async function scenario(browser, base, owner, theme) {
   await page.setViewportSize({ width: 320, height: 700 });
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
   await page.screenshot({ path: path.join(output, `miniapp-${owner ? "owner" : "user"}-${theme}-320.png`), fullPage: true });
+  if (owner || theme === "light") await companyJourney(page, owner, actions);
   assert.deepEqual(errors, []);
   await context.close();
 }
@@ -118,10 +181,11 @@ async function scenario(browser, base, owner, theme) {
   const browser = await chromium.launch({ headless: true });
   try {
     const base = `http://127.0.0.1:${server.address().port}/`;
-    await scenario(browser, base, false, "dark");
-    await scenario(browser, base, false, "light");
-    await scenario(browser, base, true, "dark");
-    fs.writeFileSync(path.join(output, "miniapp-result.json"), JSON.stringify({ passed: true, fixtures: "synthetic", scenarios: ["private photo and issue", "place submission", "owner statistics", "light and dark", "320px layout"] }, null, 2));
+    const companies = [];
+    await scenario(browser, base, false, "dark", companies);
+    await scenario(browser, base, false, "light", companies);
+    await scenario(browser, base, true, "dark", companies);
+    fs.writeFileSync(path.join(output, "miniapp-result.json"), JSON.stringify({ passed: true, fixtures: "synthetic", scenarios: ["private photo and issue", "place submission", "free owner listing", "seller review", "partner and publication controls", "owner statistics", "light and dark", "320px layout"] }, null, 2));
   } finally {
     await browser.close();
     server.close();

@@ -108,8 +108,23 @@ def provider_for_order(order, current):
     raise CheckoutError("Способ оплаты этого заказа пока недоступен.", 503)
 
 
+def listing_fee_enabled():
+    # Connecting a payment provider for promotion must not switch on listing charges.
+    return os.environ.get("LISTING_FEE_ENABLED", "").lower() in ("1", "true")
+
+
 def unpaid(seller):
-    return seller.get("listing_fee") == "due"
+    return listing_fee_enabled() and seller.get("listing_fee") == "due"
+
+
+def approved_status(seller):
+    return "awaiting_payment" if unpaid(seller) else "approved"
+
+
+def new_listing(admin):
+    fields = {"listing_fee": "due" if listing_fee_enabled() else "waived"}
+    fields["status"] = approved_status(fields) if admin else "pending"
+    return fields
 
 
 def active_order(bot, sid):
@@ -155,6 +170,8 @@ def history(bot, sid):
 
 
 def reserve(bot, uid, req, bank):
+    if req.get("kind") == "listing" and not listing_fee_enabled():
+        raise CheckoutError("Размещение компании сейчас бесплатно.", 409)
     if not bank.ready:
         raise CheckoutError("Приём платежей ещё не подключён.", 503)
     s = bot.db["sellers"].get(req.get("sid"))
@@ -218,9 +235,9 @@ def apply_state(bot, order, data):
     if status == "REFUNDED":
         if s and order.get("applied") and order["state"] != "refunded":
             if order["kind"] == "listing":
-                s["listing_fee"] = "due"
+                s["listing_fee"] = "due" if listing_fee_enabled() else "waived"
                 if s["status"] == "approved":
-                    s["status"] = "awaiting_payment"
+                    s["status"] = approved_status(s)
             else:
                 unserved = max(0, order.get("ends", 0) - max(time.time(), order.get("starts", 0)))
                 if unserved:
@@ -249,11 +266,11 @@ def apply_state(bot, order, data):
             # Also repair the public projection if a preceding upload failed after the DB commit.
             bot.catalog_dirty = True
         elif order["state"] not in ("refund_review", "refunded", "review"):
-            if s and order["kind"] == "listing":
+            if s and order["kind"] == "listing" and s.get("listing_fee") != "waived":
                 s["listing_fee"] = "paid"
                 if s["status"] == "awaiting_payment":
                     s["status"] = "approved"
-            elif s and s["status"] == "approved":
+            elif s and order["kind"] == "promo" and s["status"] == "approved":
                 order["starts"] = max(time.time(), s.get("promo_until", 0))
                 order["ends"] = order["starts"] + 86400 * order["days"]
                 s["promo_until"] = order["ends"]
@@ -367,6 +384,7 @@ def dispatch(factory, bank, req, callback=False):
             return {"ok": True}
         if action == "list":
             return {"ready": bank.ready, "offer": bank.offer if bank.ready else "", "prices": bot.promo_prices(),
+                    "listing_fee_enabled": listing_fee_enabled(),
                     "provider": getattr(bank, "provider", "tbank"), "provider_name": getattr(bank, "name", "Т-Банк"),
                     "test": getattr(bank, "test", False),
                     "shops": [{"sid": s["id"], "name": s["name"], "status": s["status"], "orders": history(bot, s["id"])}
@@ -376,6 +394,8 @@ def dispatch(factory, bank, req, callback=False):
         if action in ("sync", "resume"):
             order = bot.db.get("shop_orders", {}).get(req.get("id"))
             if order and uid in bot.db["sellers"].get(order["sid"], {}).get("owners", []):
+                if action == "resume" and order["kind"] == "listing" and not listing_fee_enabled():
+                    raise CheckoutError("Размещение компании сейчас бесплатно.", 409)
                 return (order, False) if action == "resume" else order
         raise CheckoutError("Заказ не найден.", 404)
     result = transact(factory, owned)
