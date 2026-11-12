@@ -42,17 +42,20 @@
     function stone(seed) {
         return makeSphere(96,(x,y,z) => {
             const rim = (1-z) ** 3;
-            const cloud = 1.8 * Math.sin(12*x + 4*Math.sin(7*y+seed) + seed)
-                        + 1.3 * Math.cos(18*y - 8*x + seed);
+            const cloud = .76 * Math.sin(12*x + 4*Math.sin(7*y+seed) + seed)
+                        + .6 * Math.cos(18*y - 8*x + seed);
             const diffuse = -13*x - 21*y + 8*z + 10*rim + cloud;
             const lower = Math.exp(-((x-.07)**2/.52 + (y-.62)**2/.10));
             const caustic = Math.exp(-((x-.09)**2/.076 + (y-.60)**2/.023));
             const dx = x+.31, dy = y+.43;
             const gleam = Math.exp(-((dx+.32*dy)**2/.014 + dy*dy/.010));
             const haze = Math.exp(-(dx*dx + dy*dy)/.13);
-            return [87+diffuse+46*lower+26*caustic+85*gleam+16*haze,
-                    137+diffuse+10*lower+20*caustic+65*gleam+13*haze,
-                    152+diffuse+3*lower+21*caustic+57*gleam+11*haze,
+            const foot = Math.max(0,y);
+            const reflection = Math.exp(-((x-.03)**2/.67+(y-.52)**2/.18));
+            const shade = Math.max(0,x)*9+foot*foot*15;
+            return [84+diffuse+46*lower+38*caustic+86*gleam+16*haze+17*foot+12*reflection,
+                    139+diffuse+10*lower+26*caustic+67*gleam+13*haze-shade+5*reflection,
+                    156+diffuse+3*lower+28*caustic+59*gleam+11*haze-1.36*shade-6*foot,
                     .89+.06*z];
         });
     }
@@ -229,13 +232,13 @@
     function drawStrand(phase,now) {
         strand.clearRect(0,0,width,height);
         const mid=width/2, center=height*.55, sag=height*.09;
-        const k=2*sag/(mid*mid), spacing=33.4*unit;
+        const k=2*sag/(mid*mid), spacing=31.4*unit;
         const limit=Math.ceil((mid+sag)/spacing)+2;
         strand.beginPath();
         strand.moveTo(0,center-sag);
         strand.quadraticCurveTo(mid,center+sag,width,center-sag);
         strand.strokeStyle="rgba(196,201,189,.63)";
-        strand.lineWidth=1.8*unit;
+        strand.lineWidth=1.55*unit;
         strand.stroke();
 
         let kick=0;
@@ -245,7 +248,7 @@
         }
         for (let i=-limit; i<=limit; i++) {
             const index=i-phase;
-            const x=xAtDistance(index*spacing,k);
+            const x=xAtDistance(index*spacing+5.5*unit*Math.tanh(1.35*index),k);
             const y=center-k*x*x/2;
             const lift=Math.exp(-3.3*index*index);
             const radius=unit*(14.0-1.35*Math.min(1,Math.abs(x)/mid) + 4.25*lift)*(1+kick*lift);
