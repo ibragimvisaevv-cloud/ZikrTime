@@ -1,0 +1,51 @@
+name: Reel - collect licensed photographic plates
+on:
+  push:
+    branches: [media/zikrtime-reel-20261112]
+    paths: ['.github/workflows/reel-licensed-plates.yml']
+permissions:
+  contents: write
+jobs:
+  plates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: media/zikrtime-reel-20261112
+      - name: Prepare production copies of Pexels photographs
+        shell: bash
+        run: |
+          set -eu
+          dest=.reel-plates
+          mkdir -p "$dest"
+          for item in desk:7984774 beads:8860296; do
+            name=${item%:*}
+            id=${item#*:}
+            curl --fail --silent --show-error --location --retry 2 --max-time 40 "https://images.pexels.com/photos/$id/pexels-photo-$id.jpeg?auto=compress&w=1800&q=90" -o "/tmp/$name.jpg"
+            test "$(file -b --mime-type "/tmp/$name.jpg")" = image/jpeg
+          done
+          python3 - <<'PY'
+          from pathlib import Path
+          from PIL import Image, ImageOps
+          for name in ('desk','beads'):
+              image=ImageOps.exif_transpose(Image.open('/tmp/'+name+'.jpg')).convert('RGB')
+              image.thumbnail((1800,2200), Image.Resampling.LANCZOS)
+              image.save('.reel-plates/'+name+'.jpg',quality=88,optimize=True,subsampling=0)
+              print(name,image.size)
+          PY
+          cat > "$dest/SOURCES.txt" <<'SOURCES'
+          Production sources for the ZikrTime Reel
+          Desk: Thirdman, Pexels photo 7984774
+          https://www.pexels.com/photo/close-up-shot-of-a-person-using-a-laptop-beside-a-smartphone-on-a-wooden-table-7984774/
+          Beads: Towfiqu barbhuiya, Pexels photo 8860296
+          https://www.pexels.com/photo/hand-of-muslim-person-praying-using-prayer-beads-8860296/
+          Used under the Pexels License for a product advertisement.
+          https://www.pexels.com/license/
+          SOURCES
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$dest"
+          git commit -m "Prepare credited photographic plates for the ZikrTime reel"
+          git pull --rebase origin media/zikrtime-reel-20261112
+          git push origin HEAD:media/zikrtime-reel-20261112
