@@ -120,6 +120,11 @@ jobs:
           (out/"manifest.json").write_text(json.dumps({"length":len(audio_raw),"sha256":hashlib.sha256(audio_raw).hexdigest(),"chunks":chunks,"sample_rate":sr,"codec":"wav.gz","voice":"Piper ru_RU-dmitri-medium"},indent=2))
           print(json.dumps(timings,ensure_ascii=False))
           PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: zikrtime-voice
+          path: reel-speech
+          retention-days: 2
       - name: Save the voice take
         run: |
           git config user.name "github-actions[bot]"
@@ -127,8 +132,8 @@ jobs:
           git add reel-speech
           git commit -m "Save Russian ZikrTime reel narration on media branch"
           for attempt in 1 2 3; do
-            git pull --rebase origin media/zikrtime-reel-20261112
             git push origin HEAD:media/zikrtime-reel-20261112 && exit 0
+            git pull --rebase --autostash origin media/zikrtime-reel-20261112
             sleep 2
           done
           exit 1
