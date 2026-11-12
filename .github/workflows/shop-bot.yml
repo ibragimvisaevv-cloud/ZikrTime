@@ -6,7 +6,7 @@ name: Shop bot
 
 on:
   push:
-    branches: [main]
+    branches: [main, codex/quran-reader-0814]
     paths: ["shop-bot/**", ".github/workflows/shop-bot.yml"]
   workflow_dispatch:
   # Раз в месяц обновляем мечети и молельные комнаты из OpenStreetMap
@@ -27,17 +27,43 @@ env:
 
 jobs:
   test:
+    if: ${{ github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[bot-release]') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Проверка бота
         run: python3 shop-bot/test_bot.py
 
+      - name: Проверка обращений и исправлений
+        run: |
+          python3 shop-bot/test_feedback.py
+          python3 shop-bot/test_place_corrections.py
+
       - name: Проверка API кабинета
-        run: python3 shop-bot/test_miniapi.py
+        run: |
+          python3 shop-bot/test_miniapi.py
+          python3 shop-bot/test_acquiring.py
+          python3 shop-bot/test_robokassa.py
+          python3 shop-bot/test_community.py
+          python3 shop-bot/test_places_sources.py
+          python3 shop-bot/test_import_publication.py
+          python3 shop-bot/test_upload_miniapp.py
 
       - name: Проверка мини-приложения (синтаксис)
         run: node --check shop-bot/miniapp/app.js
+
+      - name: Mini App browser journeys
+        env:
+          NODE_PATH: ${{ runner.temp }}/miniapp-qa/node_modules
+        run: |
+          npm install --prefix "$RUNNER_TEMP/miniapp-qa" playwright
+          "$RUNNER_TEMP/miniapp-qa/node_modules/.bin/playwright" install --with-deps chromium
+          node tools/ci/miniapp_design_check.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: MiniApp-0.8.23-ui
+          path: ci-out/miniapp/
 
   deploy:
     needs: test
@@ -102,45 +128,52 @@ jobs:
       - name: Хранилище (фото и каталог)
         if: steps.keys.outputs.ready == 'true'
         run: |
-          if ! yc storage bucket get --name "$BUCKET" > /dev/null 2>&1; then
-            yc storage bucket create --name "$BUCKET" --default-storage-class standard --public-read > diag/bucket.txt 2>&1 || { cat diag/bucket.txt; exit 1; }
-          fi
-          yc storage bucket update --name "$BUCKET" --public-read > /dev/null 2>> diag/bucket.txt || true
-          # Закрытый бакет для базы бота и отзывов на проверке (без публичного чтения)
-          if ! yc storage bucket get --name "$BUCKET-data" > /dev/null 2>&1; then
-            yc storage bucket create --name "$BUCKET-data" --default-storage-class standard >> diag/bucket.txt 2>&1 || { cat diag/bucket.txt; exit 1; }
-          fi
+          yc storage bucket get --name "$BUCKET" > /dev/null
+          yc storage bucket get --name "$BUCKET-data" > /dev/null
+          echo "Existing public and private buckets found." > diag/bucket.txt
+          for PRIVATE_PATH in "$BUCKET/data/db.json" "$BUCKET-data/data/db.json"; do
+            STATUS=$(curl -s -I -m 30 -o /dev/null -w '%{http_code}' "https://storage.yandexcloud.net/$PRIVATE_PATH")
+            echo "$PRIVATE_PATH http: $STATUS" >> diag/bucket.txt
+            test "$STATUS" = 403 || test "$STATUS" = 404
+          done
 
       - name: Сервисный аккаунт функции
         if: steps.keys.outputs.ready == 'true'
         run: |
-          if ! yc iam service-account get --name "$RUNTIME_SA" > /dev/null 2>&1; then
-            yc iam service-account create --name "$RUNTIME_SA" > diag/sa.txt 2>&1 || { cat diag/sa.txt; exit 1; }
-          fi
           SA_ID=$(yc iam service-account get --name "$RUNTIME_SA" --format json 2>> diag/sa.txt | jq -r .id)
+          test -n "$SA_ID" && test "$SA_ID" != null
           echo "sa id length: ${#SA_ID}" >> diag/sa.txt
-          yc resource-manager folder add-access-binding --id "$FOLDER" --role storage.editor \
-            --subject "serviceAccount:$SA_ID" >> diag/sa.txt 2>&1 || echo "binding: см. выше" >> diag/sa.txt
           echo "SA_ID=$SA_ID" >> "$GITHUB_ENV"
 
       - name: Ключ доступа к хранилищу для бота
         if: steps.keys.outputs.ready == 'true'
+        env:
+          BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
         run: |
-          # Старые ключи удаляем, создаём один свежий
-          for k in $(yc iam access-key list --service-account-id "$SA_ID" --format json | jq -r '.[].id'); do
-            yc iam access-key delete "$k" > /dev/null 2>&1 || true
-          done
-          yc iam access-key create --service-account-id "$SA_ID" --description "shop bot on vercel" --format json > "$RUNNER_TEMP/ak.json"
-          KEY_ID=$(jq -r .access_key.key_id "$RUNNER_TEMP/ak.json"); SECRET=$(jq -r .secret "$RUNNER_TEMP/ak.json")
-          echo "::add-mask::$SECRET"
-          echo "S3_KEY_ID=$KEY_ID" >> "$GITHUB_ENV"
-          echo "S3_SECRET=$SECRET" >> "$GITHUB_ENV"
-          rm "$RUNNER_TEMP/ak.json"
+          export IAM_TOKEN=$(yc iam create-token)
+          python3 shop-bot/deploy_storage_key.py
 
       - name: API кабинета продавца (функция Яндекса — открывается из России без VPN)
         if: steps.keys.outputs.ready == 'true'
         env:
+          PRESERVE_PAYMENT_CONFIG: 'true'
           BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
+          TBANK_TERMINAL: ${{ secrets.TBANK_TERMINAL }}
+          PAYMENT_PROVIDER: ${{ vars.PAYMENT_PROVIDER }}
+          ROBOKASSA_ENABLED: ${{ vars.ROBOKASSA_ENABLED }}
+          ROBOKASSA_MERCHANT_LOGIN: ${{ secrets.ROBOKASSA_MERCHANT_LOGIN }}
+          ROBOKASSA_PASSWORD1: ${{ secrets.ROBOKASSA_PASSWORD1 }}
+          ROBOKASSA_PASSWORD2: ${{ secrets.ROBOKASSA_PASSWORD2 }}
+          ROBOKASSA_TEST_PASSWORD1: ${{ secrets.ROBOKASSA_TEST_PASSWORD1 }}
+          ROBOKASSA_TEST_PASSWORD2: ${{ secrets.ROBOKASSA_TEST_PASSWORD2 }}
+          ROBOKASSA_TEST_MODE: ${{ vars.ROBOKASSA_TEST_MODE }}
+          ROBOKASSA_HASH: ${{ vars.ROBOKASSA_HASH }}
+          ROBOKASSA_NPD_RECEIPTS: ${{ vars.ROBOKASSA_NPD_RECEIPTS }}
+          TBANK_ENABLED: ${{ vars.TBANK_ENABLED }}
+          TBANK_PASSWORD: ${{ secrets.TBANK_PASSWORD }}
+          TBANK_TAXATION: ${{ vars.TBANK_TAXATION }}
+          TBANK_TAX: ${{ vars.TBANK_TAX }}
+          SELLER_OFFER_URL: ${{ vars.SELLER_OFFER_URL }}
         run: |
           export IAM_TOKEN=$(yc iam create-token)
           export SA_ID FOLDER BUCKET S3_KEY_ID S3_SECRET API_FUNCTION=shop-api DATA_BUCKET="$BUCKET-data"
@@ -157,14 +190,6 @@ jobs:
           python3 shop-bot/upload_miniapp.py > diag/miniapp.txt 2>&1 || { cat diag/miniapp.txt; exit 1; }
           cat diag/miniapp.txt
 
-      - name: Мечети и молельные комнаты из OpenStreetMap
-        if: steps.keys.outputs.ready == 'true' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
-        env:
-          BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
-        run: |
-          sleep 15  # новый ключ хранилища начинает работать не сразу
-          python3 shop-bot/import_osm.py 2>&1 | tail -5 | tee diag/osm.txt
-
       - name: Бот на Vercel
         if: steps.keys.outputs.ready == 'true'
         env:
@@ -172,22 +197,19 @@ jobs:
           BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
           OWNER_USERNAME: ${{ secrets.SHOP_OWNER_USERNAME }}
         run: |
-          cd shop-bot
-          URL=$(npx --yes vercel@latest deploy --prod --yes --token "$VERCEL_TOKEN" \
-            -e BOT_TOKEN="$BOT_TOKEN" -e BUCKET="$BUCKET" -e DATA_BUCKET="$BUCKET-data" -e S3_KEY_ID="$S3_KEY_ID" -e S3_SECRET="$S3_SECRET" \
-            -e OWNER_USERNAME="${OWNER_USERNAME#@}" 2> ../diag/vercel.txt) || { tail -20 ../diag/vercel.txt; exit 1; }
-          cd ..
-          HOST=${URL#https://}
-          API=https://api.vercel.com
-          DEP=$(curl -s -H "Authorization: Bearer $VERCEL_TOKEN" "$API/v13/deployments/$HOST")
-          PROJECT=$(echo "$DEP" | jq -r .projectId)
-          # Telegram должен достучаться без входа в Vercel — снимаем защиту развёртываний
-          curl -s -X PATCH -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" \
-            "$API/v9/projects/$PROJECT" -d '{"ssoProtection": null}' | jq -c '{name, ssoProtection}' >> diag/vercel.txt
-          ALIAS=$(echo "$DEP" | jq -r '[.alias[]? | select(endswith(".vercel.app"))] | sort_by(length) | .[0] // empty')
-          BASE=https://${ALIAS:-$HOST}
-          echo "deploy: $HOST alias: $ALIAS" >> diag/vercel.txt
-          echo "FUNCTION_URL=$BASE/api/webhook" >> "$GITHUB_ENV"
+          export IAM_TOKEN=$(yc iam create-token)
+          python3 shop-bot/deploy_feedback.py
+          FUNCTION_URL=$(python3 -c "import json;print(json.load(open('ci-out/feedback-deploy.json'))['webhook'])")
+          echo "FUNCTION_URL=$FUNCTION_URL" >> "$GITHUB_ENV"
+          cp ci-out/feedback-deploy.json diag/vercel-deploy.json
+
+      - name: Обновление карточек и сверка каталога приложения
+        if: steps.keys.outputs.ready == 'true'
+        run: |
+          set -euo pipefail
+          export DATA_BUCKET="$BUCKET-data"
+          python3 shop-bot/publish_companies.py | tee diag/company-publication.json
+          jq -e '.public_catalog_matches == true' diag/company-publication.json > /dev/null
 
       - name: Подключение к Telegram
         if: steps.keys.outputs.ready == 'true'
@@ -199,47 +221,108 @@ jobs:
           API="https://api.telegram.org/bot$SHOP_BOT_TOKEN"
           curl -s "$API/setWebhook" -H 'Content-Type: application/json' -d "{\"url\":\"$FUNCTION_URL\",\"secret_token\":\"$SECRET\",\"max_connections\":1,\"allowed_updates\":[\"message\",\"callback_query\"]}" > diag/webhook.txt
           grep -q '"ok":true' diag/webhook.txt
-          curl -sf "$API/setMyCommands" -H 'Content-Type: application/json' \
-            -d '{"commands":[{"command":"menu","description":"Главное меню"},{"command":"help","description":"Как это работает"},{"command":"cancel","description":"Отменить шаг"}]}' > /dev/null
+          for SCOPE in default all_private_chats all_group_chats all_chat_administrators; do
+            curl -sf "$API/deleteMyCommands" -H 'Content-Type: application/json' -d "{\"scope\":{\"type\":\"$SCOPE\"}}" > /dev/null
+          done
           curl -sf "$API/setMyDescription" -H 'Content-Type: application/json' \
-            -d '{"description":"Кабинет продавца магазина в приложении «Зикр-тайм»: добавьте свою компанию, товары, цены и фото — после проверки их увидят пользователи приложения."}' > /dev/null
+            -d '{"description":"Кабинет «Зикр-тайм»: компании и товары, продвижение, сообщения об ошибках, предложения и места для намаза."}' > /dev/null
           curl -sf "$API/setMyShortDescription" -H 'Content-Type: application/json' \
-            -d '{"short_description":"Добавьте свою компанию в магазин приложения «Зикр-тайм»"}' > /dev/null
+            -d '{"short_description":"Ваш кабинет в «Зикр-тайм»"}' > /dev/null
           # Кнопка «Кабинет» слева от поля ввода — открывает мини-приложение
           curl -sf "$API/setChatMenuButton" -H 'Content-Type: application/json' \
             -d "{\"menu_button\":{\"type\":\"web_app\",\"text\":\"Кабинет\",\"web_app\":{\"url\":\"https://storage.yandexcloud.net/$BUCKET/miniapp/index.html\"}}}" > diag/menubutton.txt || echo "menu button: fail" > diag/menubutton.txt
           BOT=$(curl -sf "$API/getMe" | jq -r .result.username)
           echo "bot=$BOT" > diag/bot.txt
           echo "webhook=$FUNCTION_URL" >> diag/bot.txt
-          [ -z "$OWNER_USERNAME" ] && echo "owner_code=$(python3 -c "import hashlib,os;print(hashlib.sha256((os.environ['SHOP_BOT_TOKEN']+':owner').encode()).hexdigest()[:8])")" >> diag/bot.txt || echo "owner=by_username" >> diag/bot.txt
-          CODE=$(python3 -c "import hashlib,os;print(hashlib.sha256((os.environ['SHOP_BOT_TOKEN']+':owner').encode()).hexdigest()[:8])")
+          [ -n "$OWNER_USERNAME" ] && echo "owner=by_username" >> diag/bot.txt || echo "owner=existing_database" >> diag/bot.txt
           {
             echo "### ✅ Бот @$BOT работает"
             echo ""
-            echo "Чтобы стать владельцем магазина, напишите боту: \`/owner $CODE\`"
+            echo "Вход владельца — через существующий аккаунт Telegram и личный кабинет."
             echo ""
             echo "Каталог для приложения: https://storage.yandexcloud.net/$BUCKET/catalog.json"
           } >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Отзывы и перенос базы в закрытый бакет
-        if: steps.keys.outputs.ready == 'true'
+      - name: Мечети и молельные комнаты из OpenStreetMap
+        if: steps.keys.outputs.ready == 'true' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[places-refresh]'))
+        continue-on-error: true
         env:
-          SHOP_BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
+          BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
         run: |
-          K=$(python3 -c "import hashlib,os;print(hashlib.sha256((os.environ['SHOP_BOT_TOKEN']+':cron').encode()).hexdigest()[:32])")
-          CRON=${FUNCTION_URL%/api/webhook}/api/cron
-          sleep 10
-          curl -s -m 70 "$CRON?k=$K&force=1" > diag/cron.txt || echo "cron timeout" >> diag/cron.txt
-          cat diag/cron.txt
-          # База бота больше не должна открываться по прямой ссылке
-          curl -s -o /dev/null -w "public db.json http: %{http_code}\n" "https://storage.yandexcloud.net/$BUCKET/data/db.json" >> diag/cron.txt
-          curl -s -o /dev/null -w "private db.json http: %{http_code}\n" "https://storage.yandexcloud.net/$BUCKET-data/data/db.json" >> diag/cron.txt
-          curl -s -o /dev/null -w "reviews.json http: %{http_code}\n" "https://storage.yandexcloud.net/$BUCKET/reviews.json" >> diag/cron.txt
-          curl -s -o /dev/null -w "miniapp http: %{http_code}\n" "https://storage.yandexcloud.net/$BUCKET/miniapp/index.html" >> diag/cron.txt
-          curl -s -m 30 -X POST "$API_URL" -d '{"action":"me","initData":""}' -w "\napi (без подписи должно быть 401): %{http_code}\n" >> diag/cron.txt || echo "api timeout" >> diag/cron.txt
+          sleep 15  # новый ключ хранилища начинает работать не сразу
+          python3 shop-bot/import_osm.py 2>&1 | tail -5 | tee diag/osm.txt
+
+      - name: Дополнительные сведения Wikidata и кандидаты мест
+        if: steps.keys.outputs.ready == 'true' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[places-refresh]'))
+        continue-on-error: true
+        env:
+          BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
+        run: python3 shop-bot/import_wikidata.py 2>&1 | tail -5 | tee diag/wikidata.txt
+
+      - name: Проверенные мечети Беркат-Юрта
+        if: steps.keys.outputs.ready == 'true' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[places-refresh]'))
+        env:
+          BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
+        run: |
+          export DATA_BUCKET="$BUCKET-data"
+          python3 shop-bot/import_curated.py 2>&1 | tee diag/curated.txt
+
+      - name: Проверка опубликованных файлов и защиты данных
+        if: steps.keys.outputs.ready == 'true'
+        run: |
+          for FILE in catalog.json places.json privacy.html seller.html; do
+            STATUS=$(curl -s -m 30 -o /dev/null -w '%{http_code}' "https://storage.yandexcloud.net/$BUCKET/$FILE")
+            echo "$FILE http: $STATUS" >> diag/published.txt
+            test "$STATUS" = 200
+          done
+          python3 - <<'PY' > diag/published-assets.txt
+          import hashlib, os, re, urllib.request
+          from html.parser import HTMLParser
+          base = 'https://storage.yandexcloud.net/' + os.environ['BUCKET'] + '/miniapp/'
+          class Assets(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.paths = []
+              def handle_starttag(self, tag, pairs):
+                  attributes = dict(pairs)
+                  if tag == 'script' and attributes.get('src'):
+                      self.paths.append(attributes['src'])
+                  if tag == 'link' and attributes.get('rel') == 'stylesheet':
+                      self.paths.append(attributes.get('href', ''))
+          parser = Assets()
+          with urllib.request.urlopen(base + 'index.html', timeout=30) as response:
+              parser.feed(response.read().decode('utf-8'))
+          found = set()
+          for name in parser.paths:
+              if name == 'https://telegram.org/js/telegram-web-app.js':
+                  print('Telegram SDK uses its official remote URL.')
+                  continue
+              match = re.fullmatch(r'(app|style|config|telegram-web-app)\.([0-9a-f]{64})\.(js|css)', name)
+              if not match:
+                  raise SystemExit('Unexpected asset reference in published Mini App index.')
+              with urllib.request.urlopen(base + name, timeout=30) as response:
+                  body = response.read()
+              if hashlib.sha256(body).hexdigest() != match.group(2):
+                  raise SystemExit('Published Mini App asset digest mismatch.')
+              found.add(match.group(1))
+              print(name + ' SHA-256 verified')
+          if not {'app', 'style', 'config'}.issubset(found):
+              raise SystemExit('Published Mini App index is incomplete.')
+          print('Published Mini App index and referenced assets verified.')
+          PY
+          cat diag/published-assets.txt
+          for PRIVATE_PATH in "$BUCKET/data/db.json" "$BUCKET-data/data/db.json"; do
+            STATUS=$(curl -s -I -m 30 -o /dev/null -w '%{http_code}' "https://storage.yandexcloud.net/$PRIVATE_PATH")
+            echo "$PRIVATE_PATH http: $STATUS" >> diag/published.txt
+            test "$STATUS" = 403 || test "$STATUS" = 404
+          done
+          STATUS=$(curl -s -m 30 -X POST "$API_URL" -H 'Content-Type: application/json' -d '{"action":"me","initData":""}' -o /dev/null -w '%{http_code}')
+          echo "api without Telegram signature http: $STATUS" >> diag/published.txt
+          test "$STATUS" = 401
+          cat diag/published.txt
 
       - name: Состояние вебхука
-        if: always() && steps.keys.outputs.ready == 'true'
+        if: always() && steps.keys.outputs.ready == 'true' && env.FUNCTION_URL != ''
         env:
           SHOP_BOT_TOKEN: ${{ secrets.SHOP_BOT_TOKEN }}
         run: |
@@ -247,11 +330,12 @@ jobs:
           sleep 20
           curl -s "https://api.telegram.org/bot$SHOP_BOT_TOKEN/getWebhookInfo" | jq '.result | {url, pending_update_count, last_error_date, last_error_message, max_connections}' > diag/webhookinfo.txt || true
           # Пробный вызов функции без секрета — должен вернуть 403 (значит функция доступна)
-          curl -s -o /dev/null -w "function http: %{http_code}\n" -X POST "$FUNCTION_URL" -d '{}' >> diag/webhookinfo.txt || true
-          curl -s "https://storage.yandexcloud.net/$BUCKET/catalog.json" -o /dev/null -w "catalog http: %{http_code}\n" >> diag/webhookinfo.txt || true
+          STATUS=$(curl -s -m 30 -o /dev/null -w '%{http_code}' -X POST "$FUNCTION_URL" -d '{}')
+          echo "function without secret http: $STATUS" >> diag/webhookinfo.txt
+          test "$STATUS" = 403
           SECRET=$(python3 -c "import hashlib,os;print(hashlib.sha256((os.environ['SHOP_BOT_TOKEN']+':webhook').encode()).hexdigest()[:32])")
-          echo "probe:" >> diag/webhookinfo.txt
-          curl -s -m 60 -X POST "$FUNCTION_URL" -H "X-Telegram-Bot-Api-Secret-Token: $SECRET" -d '{"probe": true}' >> diag/webhookinfo.txt || echo "probe timeout" >> diag/webhookinfo.txt
+          curl -sf -m 60 -X POST "$FUNCTION_URL" -H "X-Telegram-Bot-Api-Secret-Token: $SECRET" -d '{"feedback_probe": true}' > diag/private-probe.json
+          jq -e '.owner_configured == true and .private_database == true' diag/private-probe.json > /dev/null
 
       - name: Диагностика (без секретов)
         if: always() && steps.keys.outputs.ready == 'true'

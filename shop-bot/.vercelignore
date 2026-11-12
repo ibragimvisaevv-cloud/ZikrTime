@@ -1,4 +1,4 @@
-test_bot.py
-deploy_function.py
+test_*.py
+deploy_*.py
 README.md
 __pycache__
