@@ -82,7 +82,7 @@
     <string name="guide_tools_title">Kundalik vositalar</string>
     <string name="guide_tools_summary">Qibla va Tasbehni bosh ekran yoki Sozlamalardan ochish mumkin.</string>
     <string name="guide_tools_step1">«Qibla»da telefonni yo‘nalish ko‘rsatkichiga qarab burang; kamera kerak emas.</string>
-    <string name="guide_tools_step2">«Tasbeh»da zikrning har takroridan keyin hisoblagichni bosing.</string>
+    <string name="guide_tools_step2">@string/tb_gesture_hint</string>
     <string name="guide_tools_step3">Uyqu oldidan va juma kuni o‘qishni sozlash uchun bosh ekrandagi «Eslatmalar»ni bosing.</string>
     <string name="guide_tools_control1">Qibla</string>
     <string name="guide_tools_control2">Tasbeh</string>

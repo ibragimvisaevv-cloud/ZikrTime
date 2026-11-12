@@ -5,6 +5,6 @@
     <string name="tb_completed_laps">Tamamlanan turlar</string>
     <string name="tb_unlimited">Sınırsız</string>
     <string name="tb_cycle_complete">Tur tamamlandı</string>
-    <string name="tb_gesture_hint">Saymak için tesbihe dokunun veya aşağı çekin.</string>
+    <string name="tb_gesture_hint">Bir tekrar eklemek için boncuklara veya ekranda boş bir yere dokunun ya da aşağı kaydırın. Ayarları açmak için sayıya veya zikir metnine dokunun.</string>
     <string name="tb_phrase_change_hint">Başka bir zikir seçildiğinde bu sayaç sıfırlanır. Günlük ilerlemeniz korunur.</string>
 </resources>

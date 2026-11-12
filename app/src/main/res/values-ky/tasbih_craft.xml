@@ -5,6 +5,6 @@
     <string name="tb_completed_laps">Аяктаган айлампалар</string>
     <string name="tb_unlimited">Чексиз</string>
     <string name="tb_cycle_complete">Айлампа аяктады</string>
-    <string name="tb_gesture_hint">Санаш үчүн теспени басыңыз же ылдый тартыңыз.</string>
+    <string name="tb_gesture_hint">Бир кайталоону кошуу үчүн теспенин мончогун же экрандын бош жерин басыңыз же манжаңызды ылдый сүрүңүз. Жөндөөлөрдү ачуу үчүн санды же зикирдин текстин басыңыз.</string>
     <string name="tb_phrase_change_hint">Башка зикир тандалганда эсептегич нөлгө түшөт. Күндүк жыйынтык сакталат.</string>
 </resources>

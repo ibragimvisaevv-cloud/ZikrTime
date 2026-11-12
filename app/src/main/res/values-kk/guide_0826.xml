@@ -82,7 +82,7 @@
     <string name="guide_tools_title">Күнделікті құралдар</string>
     <string name="guide_tools_summary">Құбыла мен Тәспіні басты экраннан және Баптаулардан ашуға болады.</string>
     <string name="guide_tools_step1">«Құбылада» телефонды бағыт көрсеткішімен бұрыңыз; телефон камерасы қажет емес.</string>
-    <string name="guide_tools_step2">«Тәспіде» зікірді әр қайталағаннан кейін санауышты басыңыз.</string>
+    <string name="guide_tools_step2">@string/tb_gesture_hint</string>
     <string name="guide_tools_step3">Ұйқы алдындағы және жұмадағы оқуды баптау үшін басты экранда «Еске салулар» түймесін басыңыз.</string>
     <string name="guide_tools_control1">Құбыла</string>
     <string name="guide_tools_control2">Тәспі</string>

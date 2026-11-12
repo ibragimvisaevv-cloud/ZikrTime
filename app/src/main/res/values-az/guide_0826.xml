@@ -82,7 +82,7 @@
     <string name="guide_tools_title">Gündəlik alətlər</string>
     <string name="guide_tools_summary">Qiblə və Təsbeh əsas ekranda və Ayarlar bölməsindədir.</string>
     <string name="guide_tools_step1">Qiblə bölməsində istiqamət göstəricisinə uyğun telefonu döndərin; kamera lazım deyil.</string>
-    <string name="guide_tools_step2">Təsbeh bölməsində hər zikr təkrarından sonra sayğaca toxunun.</string>
+    <string name="guide_tools_step2">@string/tb_gesture_hint</string>
     <string name="guide_tools_step3">Yatmazdan əvvəl və cümə günü oxunuşunu qurmaq üçün əsas ekranda Xatırlatmalar düyməsinə toxunun.</string>
     <string name="guide_tools_control1">Qiblə</string>
     <string name="guide_tools_control2">Təsbeh</string>

@@ -5,6 +5,6 @@
     <string name="tb_completed_laps">Tamamlanan dövrlər</string>
     <string name="tb_unlimited">Limitsiz</string>
     <string name="tb_cycle_complete">Dövr tamamlandı</string>
-    <string name="tb_gesture_hint">Saymaq üçün təsbehə toxunun və ya aşağı çəkin.</string>
+    <string name="tb_gesture_hint">Bir təkrar əlavə etmək üçün təsbeh dənələrinə və ya ekranın boş yerinə toxunun, yaxud aşağı sürüşdürün. Ayarları açmaq üçün rəqəmə və ya zikrin mətninə toxunun.</string>
     <string name="tb_phrase_change_hint">Başqa zikr seçildikdə bu sayğac sıfırlanır. Gündəlik nəticə saxlanılır.</string>
 </resources>

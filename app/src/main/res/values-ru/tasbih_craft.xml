@@ -5,6 +5,6 @@
     <string name="tb_completed_laps">Завершено кругов</string>
     <string name="tb_unlimited">Без лимита</string>
     <string name="tb_cycle_complete">Круг завершён</string>
-    <string name="tb_gesture_hint">Нажимайте на чётки или тяните вниз, чтобы считать.</string>
+    <string name="tb_gesture_hint">Коснитесь бусин или свободного места на экране либо проведите пальцем вниз, чтобы добавить одно повторение. Нажмите на число или текст зикра, чтобы открыть настройки.</string>
     <string name="tb_phrase_change_hint">При выборе другого зикра счётчик обнулится. Прогресс за день сохранится.</string>
 </resources>

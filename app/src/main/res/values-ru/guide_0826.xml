@@ -82,7 +82,7 @@
     <string name="guide_tools_title">Ежедневные инструменты</string>
     <string name="guide_tools_summary">Кыбла и тасбих доступны с главной и из настроек.</string>
     <string name="guide_tools_step1">В «Кыбле» поворачивайте телефон по указателю направления; камера телефона не нужна.</string>
-    <string name="guide_tools_step2">В «Тасбихе» нажимайте на счётчик после каждого повторения зикра.</string>
+    <string name="guide_tools_step2">@string/tb_gesture_hint</string>
     <string name="guide_tools_step3">Нажмите «Напоминания» на главной, чтобы настроить чтение перед сном и в пятницу.</string>
     <string name="guide_tools_control1">Кыбла</string>
     <string name="guide_tools_control2">Тасбих</string>

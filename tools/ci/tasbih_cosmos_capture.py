@@ -27,7 +27,7 @@ SAMPLE = MEDIA / 'tasbih-bead.wav'
 shutil.copyfile('app/src/main/res/raw/tasbih_bead.wav', SAMPLE)
 MODE = sys.argv[1]
 assert MODE in ('record', 'controls')
-REPORT = {'source_commit': os.environ.get('GITHUB_SHA'), 'mode': MODE, 'tap_count': 7}
+REPORT = {'source_commit': os.environ.get('GITHUB_SHA'), 'mode': MODE}
 W, H = 720, 1280
 
 
@@ -40,9 +40,12 @@ def start(route):
           '--es', 'qa_lang', 'ru', '--ez', 'qa_onboarded', 'true')
 
 
-def seed(count):
+def seed(count, goal=100):
     root = prefs_tree()
-    for key, val in {'tasbih_phrase': 4, 'tasbih_target': 100, 'tasbih_count': count}.items():
+    fixture = {'tasbih_phrase': 4, 'tasbih_target': goal, 'tasbih_count': count}
+    if goal == 34:
+        fixture['tasbih_day_2026-01-01'] = 72
+    for key, val in fixture.items():
         for entry in list(root):
             if entry.get('name') == key:
                 root.remove(entry)
@@ -244,9 +247,11 @@ def device_recording(temp, name):
 def record(socket, temp):
     movie = MEDIA / 'tasbih.mp4'
     with device_recording(temp, 'tasbih'):
-        # A single guest-side shell schedules the seven real InputManager taps.
+        # Device-side input includes one fast swipe through the text and dial,
+        # one planet tap, one sky tap and four separate quick bead taps.
         # Do not synchronously screenshot, inspect DOM or poll preferences while tapping.
-        shell('sleep 1.15; for i in 1 2 3; do input tap 360 704; sleep .78; done; '
+        shell('sleep 1.15; input swipe 360 116 360 1190 90; sleep .78; '
+              'input tap 360 1178; sleep .78; input tap 88 870; sleep .78; '
               'for i in 1 2 3 4; do input tap 360 704; sleep .06; done')
         visible_count(socket, 33)
         time.sleep(1.35)
@@ -364,11 +369,11 @@ def record_entrance(temp):
             time.sleep(.65)
             tap_scene_text(scene,'count','dial-control')
             time.sleep(.7)
-            goal = locate_control('tasbih_target_34')
+            goal = locate_control('tasbih_target_33')
             screenshot(MEDIA / 'tasbih-quick-settings.png')
             assert prefs()['tasbih_count'] == '0'
             shell('input','tap',*native_center(goal))
-            assert prefs()['tasbih_target']=='34'
+            assert prefs()['tasbih_target']=='33'
             close_quick_settings(scene)
             tap_bead_after_settings(scene)
             time.sleep(.63)
@@ -377,7 +382,7 @@ def record_entrance(temp):
             close_quick_settings(scene)
             visible_count(scene,1)
     state = prefs()
-    assert state['tasbih_count']=='1' and state['tasbih_target']=='34',state.get('tasbih_count')
+    assert state['tasbih_count']=='1' and state['tasbih_target']=='33',state.get('tasbih_count')
     movie = MEDIA / 'tasbih-entry.mp4'
     blank = longest_blank_interval(movie)
     REPORT['entry_longest_blank'] = blank
@@ -401,7 +406,11 @@ def exercise():
     adb('install', '-r', 'app/build/outputs/apk/debug/app-debug.apk')
     start('home')
     time.sleep(2)
-    seed(26 if MODE=='record' else 33)
+    if MODE == 'record':
+        seed(26)
+    else:
+        # SharedPreferences written by build 47 with manually selected goal 34.
+        seed(33, goal=34)
     start('tasbih')
     if MODE=='controls':
         exercise_controls()
@@ -435,31 +444,66 @@ def exercise():
         visible_count(scene, 33)
     with tempfile.TemporaryDirectory() as directory:
         record_entrance(Path(directory))
-    REPORT.update(verified=True, initial=26, slow_taps=[27,28,29], rapid_result=33,
+    REPORT.update(verified=True, initial=26, full_height_swipe_and_surface_taps=[27,28,29], rapid_result=33,
                   idle_planets_moved=True, restored=33)
+
+
+def exercise_surface(scene):
+    # Coordinates are physical pixels of the 720×1280 Android window. The slow
+    # swipe crosses many former bead steps, the fast swipe crosses both labels.
+    gestures = {
+        'top_sky': ('tap', 360, 108),
+        'planet': ('tap', 360, 1180),
+        'beside_dial': ('tap', 105, 870),
+        'beside_title': ('tap', 634, 302),
+        'long_swipe': ('swipe', 350, 610, 350, 1180, 640),
+        'fast_full_height_swipe': ('swipe', 360, 116, 360, 1190, 70),
+    }
+    state = prefs()
+    def daily_total(snapshot):
+        return sum(int(value) for key,value in snapshot.items() if key.startswith('tasbih_day_'))
+    initial_daily = daily_total(state)
+    results = {}
+    for expected,(label,event) in enumerate(gestures.items(), 1):
+        shell('input', *event)
+        visible_count(scene, expected)
+        # Reading the stored counter after the visible transition also catches
+        # extra increments that the animation may still have queued.
+        state = prefs()
+        assert int(state['tasbih_count']) == expected, (label, expected, state['tasbih_count'])
+        assert daily_total(state) == initial_daily + expected, ('Unexpected daily count', label)
+        results[label] = expected
+    REPORT['surface_counts'] = results
+    return len(gestures)
 
 
 def exercise_controls():
     with closing(connect_scene()) as scene:
         visible_count(scene, 33)
         wait_for_entrance(scene)
-        # The positive total is loaded from the existing preference on a fresh launch.
+        # A legacy target changes to 33 at startup; saved count, selected phrase
+        # and daily totals must survive the migration.
+        state = prefs()
+        assert (state['tasbih_target'],state['tasbih_count'],state['tasbih_phrase'],
+                state['tasbih_day_2026-01-01']) == ('33','33','4','72')
+        assert read_js(scene,"document.getElementById('goal').textContent.trim()")=='/ 33'
         tap_scene_text(scene,'count','dial-control')
-        locate_control('tasbih_target_34')
+        locate_control('tasbih_target_33')
         options = ui()
-        for goal in (33,34,99,100,0):
+        assert find_control(options, 'tasbih_target_34') is None
+        for goal in (33,99,100,0):
             tag = 'tasbih_target_' + str(goal)
             if find_control(options,tag) is None:
                 locate_control(tag)
         assert prefs()['tasbih_count']=='33'
-        tap_control('tasbih_target_34')
-        tap_control('tasbih_quick_done')
+        tap_control('tasbih_target_100')
+        close_quick_settings(scene)
         visible_count(scene,33)
-        assert prefs()['tasbih_target']=='34'
+        assert prefs()['tasbih_target']=='100'
         name = read_js(scene,"document.getElementById('transcription').textContent")
         tap_scene_text(scene,'transcription','phrase-control')
         tap_control('tasbih_phrase_0')
-        tap_control('tasbih_quick_done')
+        close_quick_settings(scene)
         visible_count(scene,0)
         assert read_js(scene,"document.getElementById('transcription').textContent") != name
     start('tasbih')
@@ -467,8 +511,8 @@ def exercise_controls():
         visible_count(scene,0)
         wait_for_entrance(scene)
         state=prefs()
-        assert (state['tasbih_phrase'],state['tasbih_target'])==('0','34')
-        assert read_js(scene,"document.getElementById('goal').textContent.trim()")=='/ 34'
+        assert (state['tasbih_phrase'],state['tasbih_target'])==('0','100')
+        assert read_js(scene,"document.getElementById('goal').textContent.trim()")=='/ 100'
         # With system motion disabled the idle planet strip must stay still.
         with tempfile.TemporaryDirectory() as directory:
             a,b=Path(directory)/'still.png',Path(directory)/'later.png'
@@ -478,20 +522,18 @@ def exercise_controls():
             with Image.open(a) as first,Image.open(b) as last:
                 delta=ImageChops.difference(first.convert('RGB'),last.convert('RGB'))
                 assert not delta.crop((0,int(H*.84),W,int(H*.97))).getbbox(), 'Reduced motion kept moving the planets'
-        shell('input', 'swipe', 350, 600, 350, 770, 400)
-        time.sleep(.6)
-        dragged = int(prefs()['tasbih_count'])
-        assert dragged > 0, 'Existing vertical bead gesture failed'
+        counted = exercise_surface(scene)
         tap_control('tasbih_settings')
+        assert find_control(ui(), 'tasbih_target_34') is None
         tap_control('tasbih_sound')
         assert prefs()['tasbih_bead_sound'] == 'false'
         tap_control('tasbih_sound')
         assert prefs()['tasbih_bead_sound'] == 'true'
         tap_control('tasbih_target_99')
-        assert prefs()['tasbih_target'] == '99' and int(prefs()['tasbih_count']) == dragged
+        assert prefs()['tasbih_target'] == '99' and int(prefs()['tasbih_count']) == counted
         tap_control('tasbih_reset')
         tap_control('tasbih_reset_cancel')
-        visible_count(scene, (dragged - 1) % 99 + 1)
+        visible_count(scene, counted)
         tap_control('tasbih_settings')
         tap_control('tasbih_reset')
         tap_control('tasbih_reset_confirm')
@@ -501,8 +543,9 @@ def exercise_controls():
     with closing(connect_scene()) as scene:
         visible_count(scene, 0)
         assert '99' in read_js(scene, "document.getElementById('goal').innerText")
-    REPORT.update(verified=True, drag_increment=dragged, saved_33_open=True, phrase_open=True,
-                  restored_phrase_and_goal_34=True, reduced_motion_idle_still=True,
+    REPORT.update(verified=True, saved_33_open=True, phrase_open=True, removed_goal_absent=True,
+                  legacy_goal_migrated_to_33=True, stored_count_and_daily_preserved=True,
+                  restored_phrase_and_goal_100=True, reduced_motion_idle_still=True,
                   reset_confirmed_after_restart=True, target_after_restart=99)
 
 

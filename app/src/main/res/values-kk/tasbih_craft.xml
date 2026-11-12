@@ -5,6 +5,6 @@
     <string name="tb_completed_laps">Аяқталған айналымдар</string>
     <string name="tb_unlimited">Шектеусіз</string>
     <string name="tb_cycle_complete">Айналым аяқталды</string>
-    <string name="tb_gesture_hint">Санау үшін тәспіні басыңыз немесе төмен тартыңыз.</string>
+    <string name="tb_gesture_hint">Бір қайталауды қосу үшін тәспі моншағын немесе экранның бос жерін түртіңіз не төмен қарай сырғытыңыз. Баптауларды ашу үшін санды немесе зікір мәтінін түртіңіз.</string>
     <string name="tb_phrase_change_hint">Басқа зікірді таңдағанда санауыш нөлге түседі. Күндік нәтиже сақталады.</string>
 </resources>

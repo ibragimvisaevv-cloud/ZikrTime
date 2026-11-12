@@ -17,7 +17,7 @@ html, body {
     -webkit-user-select: none;
     user-select: none;
 }
-body { position: relative; --u: min(.208333vw, .117096vh); --dial-hit: max(48px, calc(100 * var(--u))); }
+body { position: relative; --u: min(.208333vw, .117096vh); }
 canvas, #words {
     position: absolute;
     inset: 0;
@@ -50,8 +50,11 @@ canvas, #words {
 }
 #caption {
     position: absolute;
-    left: 4%;
-    width: 92%;
+    left: 0;
+    right: 0;
+    width: fit-content;
+    max-width: 92%;
+    margin-inline: auto;
     top: 33.35%;
     text-align: center;
     pointer-events: none;
@@ -94,28 +97,36 @@ canvas, #words {
 .hit:focus { outline: none; }
 .hit:focus-visible { outline: 1px dashed #f6dbaba8; outline-offset: -4px; }
 #phrase-control {
-    top: 13%;
+    top: 23.1%;
     left: 50%;
-    width: 88%;
-    width: min(94%, calc(420 * var(--u)));
-    height: 27%;
+    width: var(--arabic-width, 48px);
+    height: var(--arabic-height, 48px);
+    transform: translate(-50%, -50%);
+    border-radius: 8px;
+}
+/* The caption is a second hit area of the same settings button. The sky
+   between the Arabic and the caption belongs to the counting surface. */
+#phrase-control::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: calc(50% + var(--caption-offset, 0px));
     transform: translateX(-50%);
-    border-radius: 12px;
+    width: var(--caption-width, 48px);
+    height: var(--caption-height, 48px);
 }
 #beads {
-    left: 0;
-    top: 40.5%;
+    inset: 0;
     width: 100%;
-    bottom: 39%;
-    bottom: max(39%, calc(32.35% + var(--dial-hit) / 2 + 1px));
+    height: 100%;
     touch-action: none;
 }
 #dial-control {
     left: 50%;
     top: 67.65%;
     transform: translate(-50%, -50%);
-    width: var(--dial-hit);
-    height: var(--dial-hit);
+    width: max(48px, calc(64 * var(--u)));
+    height: max(48px, calc(61 * var(--u)));
     border-radius: 50%;
 }
 

@@ -82,7 +82,7 @@
     <string name="guide_tools_title">Күнүмдүк куралдар</string>
     <string name="guide_tools_summary">Кыбыла менен Теспени башкы экрандан жана Жөндөөлөрдөн ачууга болот.</string>
     <string name="guide_tools_step1">«Кыбылада» телефонду багыт көрсөткүчүнө жараша буруңуз; телефон камерасы кереги жок.</string>
-    <string name="guide_tools_step2">«Теспеде» зикирди ар кайталагандан кийин эсептегичти басыңыз.</string>
+    <string name="guide_tools_step2">@string/tb_gesture_hint</string>
     <string name="guide_tools_step3">Уктаар алдындагы жана жума күнкү окууну жөндөө үчүн башкы экранда «Эскертүүлөрдү» басыңыз.</string>
     <string name="guide_tools_control1">Кыбыла</string>
     <string name="guide_tools_control2">Теспе</string>

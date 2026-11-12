@@ -42,6 +42,7 @@ object Store {
         }
         cleanupOldDailyKeys()
         cache.putAll(prefs.all)
+        if (tasbihTarget == 34) tasbihTarget = 33
         migratePrayerAdjustments()
         ProgressMigration.additions(prefs.all).forEach { (key, value) -> put(key, value) }
     }

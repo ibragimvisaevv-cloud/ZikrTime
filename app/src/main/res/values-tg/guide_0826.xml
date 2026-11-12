@@ -82,7 +82,7 @@
     <string name="guide_tools_title">Абзорҳои ҳаррӯза</string>
     <string name="guide_tools_summary">Қибла ва Тасбеҳ аз экрани асосӣ ва Танзимот дастрасанд.</string>
     <string name="guide_tools_step1">Дар «Қибла» телефонро мувофиқи нишондиҳандаи самт гардонед; камера лозим нест.</string>
-    <string name="guide_tools_step2">Дар «Тасбеҳ» пас аз ҳар такрори зикр ҳисобкунакро пахш кунед.</string>
+    <string name="guide_tools_step2">@string/tb_gesture_hint</string>
     <string name="guide_tools_step3">Барои танзими хониши пеш аз хоб ва рӯзи ҷумъа дар экрани асосӣ «Ёдраскуниҳо»-ро пахш кунед.</string>
     <string name="guide_tools_control1">Қибла</string>
     <string name="guide_tools_control2">Тасбеҳ</string>

@@ -82,7 +82,7 @@
     <string name="guide_tools_title">Everyday tools</string>
     <string name="guide_tools_summary">Qibla and Tasbih are available from the home screen and Settings.</string>
     <string name="guide_tools_step1">In Qibla, turn your phone following the direction indicator; the camera is not needed.</string>
-    <string name="guide_tools_step2">In Tasbih, tap the counter after each dhikr repetition.</string>
+    <string name="guide_tools_step2">@string/tb_gesture_hint</string>
     <string name="guide_tools_step3">Tap Reminders on the home screen to set up bedtime and Friday reading.</string>
     <string name="guide_tools_control1">Qibla</string>
     <string name="guide_tools_control2">Tasbih</string>

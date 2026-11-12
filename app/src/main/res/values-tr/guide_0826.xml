@@ -82,7 +82,7 @@
     <string name="guide_tools_title">Günlük araçlar</string>
     <string name="guide_tools_summary">Kıble ve Tesbih, ana ekrandan ve Ayarlar bölümünden açılabilir.</string>
     <string name="guide_tools_step1">Kıble bölümünde yön göstergesini izleyerek telefonu çevirin; kamera gerekmez.</string>
-    <string name="guide_tools_step2">Tesbih bölümünde her zikir tekrarından sonra sayaca dokunun.</string>
+    <string name="guide_tools_step2">@string/tb_gesture_hint</string>
     <string name="guide_tools_step3">Yatmadan önce ve cuma günü okumalarını ayarlamak için ana ekranda Hatırlatmalar düğmesine dokunun.</string>
     <string name="guide_tools_control1">Kıble</string>
     <string name="guide_tools_control2">Tesbih</string>

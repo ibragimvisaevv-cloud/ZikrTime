@@ -195,6 +195,13 @@
         const baseline=Number.isFinite(ascent) ? (ascent-descent)*.5 : -bounds.y-bounds.height/2;
         text.setAttribute("y",baseline);
         text.setAttribute("transform","translate(0 "+height*.231+") scale(1 .83)");
+        const phrase=el("phrase-control").style, caption=el("caption");
+        const inkHeight=Number.isFinite(ascent+descent) ? ascent+descent : bounds.height;
+        phrase.setProperty("--arabic-width",Math.max(48,bounds.width+12)+"px");
+        phrase.setProperty("--arabic-height",Math.max(48,inkHeight*.83+8)+"px");
+        phrase.setProperty("--caption-offset",(caption.offsetTop-height*.231-4)+"px");
+        phrase.setProperty("--caption-width",Math.max(48,caption.offsetWidth+12)+"px");
+        phrase.setProperty("--caption-height",Math.max(48,caption.offsetHeight+8)+"px");
     }
 
     function setViewport(physicalWidth,physicalHeight) {
@@ -225,7 +232,6 @@
         ratio=Math.min(3,dpr);
         skyScale=height/designHeight;
         document.body.style.setProperty("--u",unit+"px");
-        document.body.style.setProperty("--dial-hit",Math.max(48,100*unit)+"px");
         // Only the two moving strips need high-DPI buffers. Coordinates stay in
         // the full scene's coordinate system so rotation and resizing agree.
         for (const [ctx, top, bottom, density] of [
@@ -475,28 +481,40 @@
     const button=el("beads");
     button.dataset.testid="tasbih_counter";
     el("count").dataset.testid="tasbih_count_value";
-    let pointer=null, lastY=0, dragged=0, moved=false, originX=0, originY=0;
+    let gesture=null;
     const tap=() => { if (window.AndroidTasbih) window.AndroidTasbih.tap(); };
     button.addEventListener("pointerdown",e => {
-        if (pointer!==null || !e.isPrimary || e.button!==0) return;
-        pointer=e.pointerId; lastY=originY=e.clientY; originX=e.clientX; dragged=0; moved=false;
-        button.setPointerCapture(pointer);
+        if (gesture || !e.isPrimary || e.button!==0) return;
+        gesture={id:e.pointerId,x:e.clientX,y:e.clientY,moved:false,swipedDown:false};
+        button.setPointerCapture(e.pointerId);
     });
-    button.addEventListener("pointermove",e => {
-        if (e.pointerId!==pointer) return;
-        dragged+=e.clientY-lastY;
-        lastY=e.clientY;
-        if (Math.hypot(e.clientX-originX,e.clientY-originY)>8) moved=true;
-        while (dragged>=46) { dragged-=46; tap(); }
+    function trackGesture(e) {
+        if (!gesture || gesture.id!==e.pointerId) return;
+        const dy=e.clientY-gesture.y;
+        if (Math.hypot(e.clientX-gesture.x,dy)>8) gesture.moved=true;
+        if (dy>=46) gesture.swipedDown=true;
+    }
+    button.addEventListener("pointermove",trackGesture);
+    button.addEventListener("pointerup",e => {
+        if (!gesture || gesture.id!==e.pointerId) return;
+        trackGesture(e); // A fast swipe can reach its endpoint without an intermediate move.
+        const count=!gesture.moved || gesture.swipedDown;
+        gesture=null;
+        if (count) tap();
     });
-    button.addEventListener("pointerup",e => { if (pointer===e.pointerId) pointer=null; });
-    button.addEventListener("pointercancel",e => { if (pointer===e.pointerId) { pointer=null; moved=true; } });
+    function cancelGesture(e) {
+        if (gesture && gesture.id===e.pointerId) gesture=null;
+    }
+    button.addEventListener("pointercancel",cancelGesture);
+    button.addEventListener("lostpointercapture",cancelGesture);
     button.addEventListener("click",e => {
-        // Keyboard and accessibility services activate using a detail=0 click.
-        if (e.detail===0 || !moved) tap();
+        // Physical pointers commit on release. Enter, Space and TalkBack can
+        // activate the same button directly without sending pointer events.
+        if (e.detail===0 && !e.pointerType) tap();
     });
     document.addEventListener("visibilitychange",() => {
         if (document.hidden) {
+            gesture=null;
             if (animation) cancelAnimationFrame(animation);
             animation=0;
             worldClock=0;

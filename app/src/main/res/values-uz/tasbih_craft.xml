@@ -5,6 +5,6 @@
     <string name="tb_completed_laps">Tugallangan davralar</string>
     <string name="tb_unlimited">Cheksiz</string>
     <string name="tb_cycle_complete">Davra tugallandi</string>
-    <string name="tb_gesture_hint">Sanash uchun tasbehni bosing yoki pastga torting.</string>
+    <string name="tb_gesture_hint">Bitta takror qo‘shish uchun tasbeh donalariga yoki ekranning bo‘sh joyiga bosing yoxud barmog‘ingizni pastga suring. Sozlamalarni ochish uchun raqam yoki zikr matnini bosing.</string>
     <string name="tb_phrase_change_hint">Boshqa zikr tanlansa, bu hisoblagich nolga qaytadi. Kunlik natija saqlanadi.</string>
 </resources>

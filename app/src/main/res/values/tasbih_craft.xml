@@ -5,6 +5,6 @@
     <string name="tb_completed_laps">Completed rounds</string>
     <string name="tb_unlimited">No limit</string>
     <string name="tb_cycle_complete">Round complete</string>
-    <string name="tb_gesture_hint">Tap the beads or pull down to count.</string>
+    <string name="tb_gesture_hint">Tap the beads or an empty spot on the screen, or swipe down, to add one repetition. Tap the number or the dhikr text to open settings.</string>
     <string name="tb_phrase_change_hint">Choosing another dhikr resets this counter. Your daily progress is kept.</string>
 </resources>

@@ -214,7 +214,7 @@ private fun TasbihGoalChoices(goal: Int) {
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
         Text(stringResource(R.string.tasbih_target), style = MaterialTheme.typography.titleMedium)
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            listOf(33, 34, 99, 100, 0).forEach { value ->
+            listOf(33, 99, 100, 0).forEach { value ->
                 FilterChip(selected = value == goal, onClick = { Store.tasbihTarget = value },
                     label = { Text(if (value == 0) stringResource(R.string.tb_unlimited) else value.toString()) },
                     modifier = Modifier.testTag("tasbih_target_$value"))
