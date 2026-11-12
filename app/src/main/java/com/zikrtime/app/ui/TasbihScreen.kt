@@ -1,5 +1,10 @@
 package com.zikrtime.app.ui
 
+import android.graphics.BitmapFactory
+import android.graphics.Paint
+import android.graphics.Rect
+import android.graphics.RectF
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,10 +35,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -59,7 +66,7 @@ private enum class TasbihPanel { SETTINGS, PHRASES, RESET }
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalLayoutApi::class)
 @Composable
-fun TasbihScreen() {
+fun TasbihScreen(entered: Boolean) {
     val context = LocalContext.current
     val nav = LocalNav.current
     val phrase = Store.tasbihPhrase.coerceIn(TASBIH_ARABIC.indices)
@@ -74,25 +81,17 @@ fun TasbihScreen() {
         stringResource(R.string.tb_cycle_complete), stringResource(R.string.action_open_settings)
     )
     var panel by rememberSaveable { mutableStateOf<TasbihPanel?>(null) }
-    val scene = remember(context) { TasbihSceneView(context) { panel = TasbihPanel.PHRASES } }
-    val lifecycle = LocalLifecycleOwner.current.lifecycle
-    DisposableEffect(scene, lifecycle) {
-        val observer = LifecycleEventObserver { _, event ->
-            when (event) {
-                Lifecycle.Event.ON_RESUME -> scene.resumeScene()
-                Lifecycle.Event.ON_PAUSE -> scene.pauseScene()
-                else -> Unit
-            }
-        }
-        lifecycle.addObserver(observer)
-        onDispose { lifecycle.removeObserver(observer) }
-    }
-    DisposableEffect(scene) {
-        onDispose {
-            scene.releaseScene()
-            Widgets.updateTasbih(context)
+    var mountScene by remember(context) { mutableStateOf(false) }
+    var showBackdrop by remember(context) { mutableStateOf(true) }
+    LaunchedEffect(context, entered) {
+        if (entered && !mountScene) {
+            // Present the native sky before WebView initializes Chromium on the main thread.
+            withFrameNanos { }
+            withFrameNanos { }
+            mountScene = true
         }
     }
+    DisposableEffect(context) { onDispose { Widgets.updateTasbih(context) } }
     // Store accepts every input immediately. Only the launcher redraw is debounced.
     LaunchedEffect(count, phrase, goal) {
         delay(300)
@@ -111,8 +110,28 @@ fun TasbihScreen() {
         }
     }
     Box(Modifier.fillMaxSize().semantics { testTagsAsResourceId = true }) {
-        AndroidView(factory = { scene }, modifier = Modifier.fillMaxSize(),
-            update = { it.bind(config, Store.tasbihCount, acceptingInput = panel == null) })
+        if (showBackdrop) TasbihEntranceBackdrop()
+        if (mountScene) {
+            val scene = remember(context) {
+                TasbihSceneView(context, showQuickSettings = { panel = TasbihPanel.PHRASES },
+                    onBackgroundShown = { showBackdrop = false })
+            }
+            val lifecycle = LocalLifecycleOwner.current.lifecycle
+            DisposableEffect(scene, lifecycle) {
+                val observer = LifecycleEventObserver { _, event ->
+                    when (event) {
+                        Lifecycle.Event.ON_RESUME -> scene.resumeScene()
+                        Lifecycle.Event.ON_PAUSE -> scene.pauseScene()
+                        else -> Unit
+                    }
+                }
+                lifecycle.addObserver(observer)
+                onDispose { lifecycle.removeObserver(observer) }
+            }
+            AndroidView(factory = { scene }, modifier = Modifier.fillMaxSize(), onReset = null,
+                onRelease = { it.releaseScene() },
+                update = { it.bind(config, Store.tasbihCount, acceptingInput = panel == null) })
+        }
         Row(Modifier.fillMaxWidth().align(Alignment.TopCenter)
             .windowInsetsPadding(WindowInsets.safeDrawing).padding(horizontal = 6.dp),
             horizontalArrangement = Arrangement.SpaceBetween) {
@@ -201,5 +220,45 @@ private fun TasbihGoalChoices(goal: Int) {
                     modifier = Modifier.testTag("tasbih_target_$value"))
             }
         }
+    }
+}
+
+/** The same fixed sun and mirrored cloud edges that the live scene draws on its sky canvas. */
+@Composable
+private fun TasbihEntranceBackdrop() {
+    val assets = LocalContext.current.assets
+    val sky = remember(assets) { assets.open("tasbih/nebula.webp").use { BitmapFactory.decodeStream(it) } } ?: return
+    val paint = remember { Paint(Paint.FILTER_BITMAP_FLAG) }
+    Canvas(Modifier.fillMaxSize()) {
+        val scale = size.height / sky.height
+        if (scale <= 0f) return@Canvas
+        val left = (size.width / scale - sky.width) * .5f
+        val canvas = drawContext.canvas.nativeCanvas
+        canvas.save()
+        canvas.clipRect(0f, 0f, size.width, size.height)
+        canvas.scale(scale, scale)
+        canvas.translate(left, 0f)
+        val width = sky.width.toFloat()
+        val height = sky.height.toFloat()
+        canvas.drawBitmap(sky, null, RectF(0f, 0f, width, height), paint)
+        val edgeWidth = (width * .32f).toInt().coerceAtLeast(1)
+        val leftEdge = Rect(0, 0, edgeWidth, sky.height)
+        val rightEdge = Rect(sky.width - edgeWidth, 0, sky.width, sky.height)
+        val edge = RectF(0f, 0f, edgeWidth.toFloat(), height)
+        var distance = 0f
+        var mirror = true
+        while (distance < left) {
+            for (isLeft in listOf(true, false)) {
+                canvas.save()
+                canvas.translate(if (isLeft) -distance - edgeWidth else width + distance, 0f)
+                if (mirror) canvas.scale(-1f, 1f, edgeWidth * .5f, 0f)
+                canvas.drawBitmap(sky, if (isLeft) leftEdge else rightEdge, edge, paint)
+                canvas.restore()
+            }
+            distance += edgeWidth
+            mirror = !mirror
+        }
+        canvas.restore()
+        drawRect(Color(0x2410191C))
     }
 }

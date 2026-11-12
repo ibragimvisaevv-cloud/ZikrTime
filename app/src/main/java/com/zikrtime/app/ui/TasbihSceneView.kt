@@ -40,7 +40,11 @@ internal data class TasbihSceneConfig(
 
 /** Store owns every count. The local page only animates counts that Store has already accepted. */
 @SuppressLint("SetJavaScriptEnabled", "ViewConstructor")
-internal class TasbihSceneView(context: Context, private val showQuickSettings: () -> Unit) : WebView(context) {
+internal class TasbihSceneView(
+    context: Context,
+    private val showQuickSettings: () -> Unit,
+    private val onBackgroundShown: () -> Unit,
+) : WebView(context) {
     private var config: TasbihSceneConfig? = null
     private var lastTotal = 0
     private var pageReady = false
@@ -66,7 +70,7 @@ internal class TasbihSceneView(context: Context, private val showQuickSettings: 
             waitingStrikes = 0
         }
         beadSample = pool.load(context, R.raw.tasbih_bead, 1)
-        setBackgroundColor(Color.rgb(16, 24, 26))
+        setBackgroundColor(Color.TRANSPARENT)
         isSoundEffectsEnabled = false
         isHapticFeedbackEnabled = false
         isVerticalScrollBarEnabled = false
@@ -162,6 +166,19 @@ internal class TasbihSceneView(context: Context, private val showQuickSettings: 
                     total % 33 == 0 -> Haptics.lap(context)
                     else -> Haptics.tick(context)
                 }
+            }
+        }
+
+        @JavascriptInterface
+        fun backgroundReady() {
+            post {
+                if (disposed) return@post
+                // Keep the native backdrop until the fully opaque sky is in a drawable WebView frame.
+                postVisualStateCallback(0L, object : WebView.VisualStateCallback() {
+                    override fun onComplete(requestId: Long) {
+                        if (!disposed) onBackgroundShown()
+                    }
+                })
             }
         }
 

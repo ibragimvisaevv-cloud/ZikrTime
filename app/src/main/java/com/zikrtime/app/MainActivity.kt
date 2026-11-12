@@ -17,6 +17,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.EnterExitState
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
@@ -220,6 +222,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 private fun AppRoot() {
     val context = LocalContext.current
@@ -266,7 +269,8 @@ private fun AppRoot() {
             Screen.PRAYER_SETTINGS -> PrayerSettingsScreen()
             Screen.ALARM -> AlarmSettingsScreen()
             Screen.QIBLA -> QiblaScreen()
-            Screen.TASBIH -> TasbihScreen()
+            Screen.TASBIH -> TasbihScreen(entered = transition.currentState == EnterExitState.Visible &&
+                transition.targetState == EnterExitState.Visible)
             Screen.QUIZ -> QuizScreen()
             Screen.REVIEW -> com.zikrtime.app.ui.ReviewScreen()
             Screen.TRAINING -> com.zikrtime.app.ui.TrainingScreen()

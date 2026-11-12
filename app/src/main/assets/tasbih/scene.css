@@ -9,7 +9,8 @@ html, body {
     width: 100%;
     overflow: hidden;
     margin: 0;
-    background: #10191c;
+    /* The native sky is already visible while the WebView and its assets warm up. */
+    background: transparent;
     color: #fffaf2;
     font-family: Roboto, "Noto Sans", sans-serif;
     -webkit-tap-highlight-color: transparent;

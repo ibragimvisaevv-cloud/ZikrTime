@@ -190,6 +190,27 @@ def numeral_changes(path):
     return times
 
 
+def longest_blank_interval(movie):
+    # Use the actual muxed video timeline. The crop excludes native navigation
+    # icons and bars so they cannot disguise a nearly uniform dark WebView.
+    fps = 20
+    pixels = subprocess.check_output(['ffmpeg','-v','error','-i',str(movie),'-an','-vf',
+        f'fps={fps}:start_time=0,scale=80:144:flags=area,crop=72:112:4:16','-pix_fmt','rgb24','-f','rawvideo','-'])
+    frames = np.frombuffer(pixels,dtype=np.uint8).reshape(-1,72*112,3)
+    assert len(frames), 'The entrance recording has no decodable frames'
+    flat = []
+    for frame in frames:
+        median = np.median(frame, axis=0)
+        contrast = np.max(np.abs(frame-median),axis=1)
+        flat.append(median.max() < 75 and np.mean(contrast > 10) < .02)
+    # Difference across two padded endpoints covers runs at either end of the clip.
+    changes = np.flatnonzero(np.diff(np.r_[False,flat,False])).reshape(-1,2)
+    start,end = max(changes,key=lambda pair: pair[1]-pair[0],default=(0,0))
+    return {'duration_seconds': round((int(end)-int(start))/fps,2),
+            'start_seconds': int(start)/fps if end else None, 'end_seconds': int(end)/fps if end else None,
+            'analysis_fps': fps}
+
+
 @contextmanager
 def device_recording(temp, name):
     # Both encoders run in the guest. scrcpy preserves their device presentation
@@ -320,7 +341,11 @@ def record_entrance(temp):
             visible_count(scene,1)
     state = prefs()
     assert state['tasbih_count']=='1' and state['tasbih_target']=='34',state.get('tasbih_count')
-    impacts = impact_times(MEDIA / 'tasbih-entry.mp4')
+    movie = MEDIA / 'tasbih-entry.mp4'
+    blank = longest_blank_interval(movie)
+    REPORT['entry_longest_blank'] = blank
+    assert blank['duration_seconds'] <= .30, ('Visible uniform dark hold during tasbih entry',blank)
+    impacts = impact_times(movie)
     assert len(impacts)==1, ('Two settings opens and one bead should produce exactly one bead impact',impacts)
     REPORT.update(entry_route='More → Tasbih' if row is not None else 'in-process qa_screen', entry_animation_scale=1, entry_impact_seconds=impacts,
                   zero_and_positive_open_preserved_count=True)

@@ -3,7 +3,7 @@
     const el = id => document.getElementById(id);
     const tau = 2 * Math.PI;
     const designHeight = 854;
-    const sky = el("sky").getContext("2d", {alpha: false});
+    const sky = el("sky").getContext("2d");
     const worlds = el("planets").getContext("2d");
     const strand = el("strand").getContext("2d");
     const backdrop = new Image();
@@ -13,6 +13,7 @@
     let strandDirty = true, lastWorlds = -Infinity, worldTime = 0, worldClock = 0;
     const strikes = new Set();
     let backdropSettled = false, fontSettled = !document.fonts, entryTimeout = 0;
+    let skyPainted = false, backgroundReported = false;
 
     // Rasterize the polished stone in local sphere coordinates once. The broad,
     // rose-grey reflection underneath is separate from the small white window highlight.
@@ -118,6 +119,18 @@
                 }
             }
         }
+        skyPainted=true;
+        reportBackground();
+    }
+
+    function reportBackground() {
+        if (!skyPainted || backgroundReported || document.body.dataset.entry!=="ready" ||
+            !window.AndroidTasbih || typeof window.AndroidTasbih.backgroundReady!=="function") return;
+        backgroundReported=true;
+        // The host waits for this fully opaque canvas frame to reach its compositor.
+        requestAnimationFrame(() => {
+            if (window.AndroidTasbih) window.AndroidTasbih.backgroundReady();
+        });
     }
 
     function drawWorlds(elapsed) {
@@ -239,9 +252,13 @@
         const body=document.body;
         const reduced=settings.reducedMotion ||
             (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-        if (reduced) {
+        function finish() {
             clearTimeout(entryTimeout);
             body.dataset.entry="ready";
+            reportBackground();
+        }
+        if (reduced) {
+            finish();
             return;
         }
         if (body.dataset.entry!=="waiting") return;
@@ -249,7 +266,7 @@
             clearTimeout(entryTimeout);
             body.dataset.entry="entering";
             // A fixed endpoint also covers a paused or unsupported CSS animation.
-            entryTimeout=setTimeout(() => { body.dataset.entry="ready"; },650);
+            entryTimeout=setTimeout(finish,650);
         }
         if (backdropSettled && fontSettled) reveal();
         else if (!entryTimeout) entryTimeout=setTimeout(reveal,700);
