@@ -1,0 +1,1 @@
+{"setup": "CalledProcessError(1, ['adb', 'shell', 'setprop', 'persist.sys.timezone', 'Europe/Moscow'])", "alarm": "StopIteration()", "focus": "AssertionError('Control not reachable: focus_settings_open')"}
