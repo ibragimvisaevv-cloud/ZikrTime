@@ -1,0 +1,181 @@
+name: Capture actual ZikrTime prayer beads and Quran pages for Reels
+on:
+  push:
+    branches: [media/zikrtime-reel-details-20261112]
+    paths: ['.github/workflows/reel-details.yml']
+permissions:
+  contents: write
+  actions: read
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: media/zikrtime-reel-details-20261112
+      - name: Retrieve verified 0.8.28 debug application
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 42474183725 -n learning-verified-inputs --repo "$GITHUB_REPOSITORY" -D .
+          AAPT=$(find "$ANDROID_HOME/build-tools" -name aapt | sort -V | tail -1)
+          "$AAPT" dump badging app/build/outputs/apk/debug/app-debug.apk | sed -n '1p' | tee /tmp/version.txt
+          grep -F "versionName='0.8.28'" /tmp/version.txt
+      - name: Prepare internal Android test fixtures
+        run: |
+          mkdir -p fixtures
+          keytool -genkeypair -keystore fixtures/test.jks -storepass android -keypass android -alias test -dname 'CN=Temporary local target' -keyalg RSA -keysize 2048 -validity 2
+          bash tools/ci/build_focus_fixture.sh fixtures/test.jks fixtures/focus.apk
+          bash tools/ci/build_widget_ui.sh
+          python3 -m pip install 'Pillow>=11,<13'
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Write camera script
+        run: |
+          cat > /tmp/reel_camera.py <<'PY'
+          from pathlib import Path
+          import hashlib, subprocess, time, json, traceback, re
+          import xml.etree.ElementTree as ET
+          from PIL import Image
+          exec(compile(Path('tools/ci/guide_journeys.py').read_text().split('\ndef fresh_skip_and_upgrade():')[0], 'helpers', 'exec'))
+          wd=Path('reel-details-output');wd.mkdir(exist_ok=True);OUT.mkdir(exist_ok=True);(OUT/'screens').mkdir(exist_ok=True)
+          problems={}
+          def show(route):
+              shell('am','start','-S','-W','-n',PKG+'/.MainActivity','--es','qa_screen',route,'--es','qa_lang','ru','--ez','qa_onboarded','true')
+              time.sleep(1.8)
+          def snap(name):
+              with (wd/(name+'.png')).open('wb') as f:subprocess.run(['adb','exec-out','screencap','-p'],stdout=f,check=True)
+              (wd/(name+'.xml')).write_bytes(ET.tostring(ui(),encoding='utf-8'))
+          def run(name,fn):
+              try:fn()
+              except Exception as e:
+                  problems[name]=repr(e);traceback.print_exc()
+                  try:snap('diag-'+name)
+                  except Exception:pass
+          def center(n):
+              a,b,c,d=bounds(n);return ((a+c)//2,(b+d)//2)
+          def press(n):
+              shell('input','tap',*center(n));time.sleep(.6)
+          def seek(tag,steps=4):
+              for i in range(steps+1):
+                  r=ui();n=find_control(r,tag)
+                  if n is not None:
+                      l,t,ri,b=visible_bounds(r,n)
+                      if b-t>24:
+                          n.set('bounds',f'[{l},{t}][{ri},{b}]')
+                          return n
+                  if i<steps:shell('input','swipe',45,1470,45,650,450);time.sleep(.4)
+              raise AssertionError('Cannot reach '+tag)
+          def rec(name,act,sec=5):
+              remote='/sdcard/'+name+'.mp4'
+              proc=subprocess.Popen(['adb','shell','screenrecord','--size','1080x1920','--bit-rate','6500000','--time-limit',str(sec),remote])
+              time.sleep(1.8)
+              try:act()
+              finally:
+                  proc.wait(timeout=sec+15);subprocess.run(['adb','pull',remote,str(wd/(name+'.mp4'))],check=True)
+          def setup():
+              shell('wm','size','1080x1920');shell('wm','density','400');shell('cmd','uimode','night','yes')
+              shell('cmd','locale','set-app-locales',PKG,'--user','0','--locales','ru')
+              seed('dark',True,True)
+              show('home')
+          def tasbih():
+              show('tasbih')
+              seek('tasbih_counter')
+              for _ in range(4):
+                  r=ui();n=find_control(r,'tasbih_counter');l,t,ri,b=visible_bounds(r,n)
+                  if b-t>=(ri-l)*.9:break
+                  shell('input','swipe',35,1430,35,950,450);time.sleep(.6)
+              n=seek('tasbih_counter'); xy=center(n)
+              before=int(prefs().get('tasbih_count','0'))
+              snap('tasbih-before')
+              rec('tasbih-one',lambda:shell('input','tap',*xy),5)
+              after=int(prefs()['tasbih_count']);snap('tasbih-after')
+              (wd/'tasbih-step.txt').write_text(str(before)+' -> '+str(after));assert after==before+1
+          def quran():
+              show('quran');r=ui()
+              if find_control(r,'quran_read_entry') is not None:press(find_control(r,'quran_read_entry'))
+              r=ui()
+              if find_control(r,'quran_surah_1') is None:
+                  press(seek('quran_search'));shell('input','text','1');shell('input','keyevent','KEYCODE_BACK')
+              press(seek('quran_surah_1',7));time.sleep(1.2)
+              snap('quran-fatiha')
+              r=ui();whole=find_control(r,'quran_whole_surah');mode=find_control(r,'quran_read_mode')
+              if whole is None and mode is not None:press(mode);time.sleep(.6);snap('quran-fatiha-whole')
+              r=ui();node=find_control(r,'quran_fullscreen')
+              if node is not None:
+                  press(node);r=ui();ok=next((n for n in r.iter('node') if n.get('resource-id')=='android:id/ok'),None)
+                  if ok is not None:press(ok)
+                  snap('quran-fatiha-fullscreen')
+              rec('quran-reading',lambda:shell('input','swipe',130,1500,130,920,850),5)
+          def azkar():
+              show('azkar');snap('azkar-morning')
+              rec('azkar-reading',lambda:shell('input','swipe',120,1390,120,1010,800),5)
+              snap('azkar-text')
+          def quiz():
+              show('knowledge');r=ui()
+              if find_control(r,'learning_level_1') is not None:
+                  press(seek('learning_level_1'));press(seek('learning_level_confirm'))
+              r=ui()
+              if find_control(r,'learning_start') is not None:press(seek('learning_start'))
+              else:show('quiz')
+              r=ui()
+              if find_control(r,'learning_skip') is not None:press(find_control(r,'learning_skip'))
+              r=ui()
+              if find_control(r,'learning_answer_0') is None:
+                  node=seek('learning_skip',3);press(node)
+              seek('learning_answer_0');snap('quiz-question')
+          def shop():
+              show('shop');time.sleep(4);snap('shop-live')
+          def places():
+              # Seed only published records and coordinates from the app's verified local catalogue.
+              records=json.loads(Path('shop-bot/places/berkat_yurt_verified_2026-11-07.json').read_text())['places']
+              first=records[0]
+              shell('am','force-stop',PKG)
+              put_pref('places_json','string',json.dumps({'places':records,'seller_bot':'','donate_url':''},ensure_ascii=False))
+              put_pref('places_at','string',str(int(time.time()*1000)+3600000))
+              put_pref('city','string','Беркат-Юрт');put_pref('city_id','string','')
+              put_pref('lat','float',str(first['lat']));put_pref('lon','float',str(first['lon']))
+              show('places');time.sleep(8);snap('places-map');press(seek('place_card_'+first['id'],5));snap('places-detail')
+          run('setup',setup);run('tasbih',tasbih);run('quran',quran);run('azkar',azkar);run('quiz',quiz);run('shop',shop);run('places',places)
+          (wd/'problems.json').write_text(json.dumps(problems));print(problems,flush=True)
+          PY
+      - name: Capture actual interface on Android 15
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_2
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -camera-back none -camera-front none -timezone Europe/Moscow
+          script: adb install -r -g app/build/outputs/apk/debug/app-debug.apk && adb install -r fixtures/focus.apk && adb install -r fixtures/widget-ui.apk && python3 /tmp/reel_camera.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ZikrTime-reel-authentic-details
+          path: reel-details-output/
+      - name: Transfer verified frames to the same isolated media branch
+        if: always()
+        run: |
+          test -d reel-details-output
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib,json
+          out=Path('reel-details');out.mkdir(exist_ok=True)
+          index={}
+          for f in sorted(Path('reel-details-output').iterdir()):
+              data=f.read_bytes()
+              chunks=[]
+              for i in range(0,len(data),55000):
+                  p=out/(f.name+'.part%03d'%(i//55000));p.write_bytes(data[i:i+55000]);chunks.append(p.name)
+              index[f.name]={'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest(),'parts':chunks}
+          (out/'index.json').write_text(json.dumps(index))
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f reel-details/
+          git commit -m 'Save captured interface for the ZikrTime film'
+          git pull --rebase origin media/zikrtime-reel-details-20261112
+          git push origin HEAD:media/zikrtime-reel-details-20261112
