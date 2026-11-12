@@ -1,5 +1,5 @@
 """Capture the installed Android screen with real taps. CDP only reads the visible WebView."""
-from contextlib import closing
+from contextlib import closing, contextmanager
 import json
 import os
 import shutil
@@ -190,12 +190,13 @@ def numeral_changes(path):
     return times
 
 
-def record(socket, temp):
+@contextmanager
+def device_recording(temp, name):
     # Both encoders run in the guest. scrcpy preserves their device presentation
     # timestamps when muxing. Host audio and wall-clock video are never combined.
-    movie = MEDIA / 'tasbih.mp4'
-    raw = temp / 'guest.mp4'
-    log = MEDIA / 'recorder.txt'
+    movie = MEDIA / (name + '.mp4')
+    raw = temp / (name + '-guest.mp4')
+    log = MEDIA / (name + '-recorder.txt')
     with log.open('w') as journal:
         recorder = subprocess.Popen(['stdbuf', '-oL', '-eL', os.environ['SCRCPY_BIN'], '--no-playback', '--no-window', '--no-control',
             '--require-audio', '--audio-codec=aac', '--audio-source=output', '--video-codec=h264',
@@ -207,19 +208,27 @@ def record(socket, temp):
                 if recorder.poll() is not None or time.monotonic() >= deadline:
                     raise RuntimeError('Android recorder did not start: ' + log.read_text()[-1600:])
                 time.sleep(.1)
-            # A single guest-side shell schedules the seven real InputManager taps.
-            # Do not synchronously screenshot, inspect DOM or poll preferences while tapping.
-            shell('sleep 1.15; for i in 1 2 3; do input tap 360 704; sleep .78; done; '
-                  'for i in 1 2 3 4; do input tap 360 704; sleep .06; done')
-            visible_count(socket, 33)
-            time.sleep(1.35)
+            yield
         finally:
             if recorder.poll() is None:
                 recorder.send_signal(signal.SIGINT)
             recorder.wait(timeout=15)
+            if sys.exc_info()[0] is not None and raw.is_file():
+                shutil.copyfile(raw, movie)
     assert recorder.returncode == 0, log.read_text()[-1600:]
     run('ffmpeg','-loglevel','error','-y','-i',raw,'-map','0:v:0','-map','0:a:0','-c','copy',
         '-movflags','+faststart',movie)
+
+
+def record(socket, temp):
+    movie = MEDIA / 'tasbih.mp4'
+    with device_recording(temp, 'tasbih'):
+        # A single guest-side shell schedules the seven real InputManager taps.
+        # Do not synchronously screenshot, inspect DOM or poll preferences while tapping.
+        shell('sleep 1.15; for i in 1 2 3; do input tap 360 704; sleep .78; done; '
+              'for i in 1 2 3 4; do input tap 360 704; sleep .06; done')
+        visible_count(socket, 33)
+        time.sleep(1.35)
     changes = numeral_changes(movie)
     strikes = impact_times(movie)
     lags = [round(s-c, 3) for s,c in zip(strikes,changes)]
@@ -234,6 +243,87 @@ def record(socket, temp):
     assert all(-.05 <= lag <= .45 for lag in lags) and .03 <= np.median(lags) <= .35, \
         ('Captured sound is out of sync with the visible numbers', lags)
     REPORT['audio_sync_verified'] = True
+
+
+def wait_for_entrance(scene):
+    deadline = time.monotonic() + 6
+    while time.monotonic() < deadline:
+        if read_js(scene, "document.body.dataset.entry") == 'ready':
+            return
+        time.sleep(.05)
+    raise AssertionError('Entrance did not finish on its own')
+
+
+def tap_scene_text(scene, label_id, hit_id):
+    # A real touch at the painted glyphs. Querying read-only bounds avoids a
+    # passing test when an invisible button is positioned elsewhere.
+    point = read_js(scene, f"""(() => {{
+      const r=document.getElementById('{label_id}').getBoundingClientRect();
+      const x=r.left+r.width/2, y=r.top+r.height/2;
+      return [x/document.documentElement.clientWidth,y/document.documentElement.clientHeight,
+              document.elementFromPoint(x,y)?.closest('button')?.id];
+    }})()""")
+    assert point and point[2] == hit_id, ('The displayed text has no matching hit target',point)
+    shell('input','tap',round(W*point[0]),round(H*point[1]))
+
+
+def native_center(node):
+    x,y,right,bottom = map(int,re.findall(r'\d+', node.get('bounds')))
+    return (x+right)//2, (y+bottom)//2
+
+
+def record_entrance(temp):
+    # Restore a legitimate zero on the disposable profile and film the native
+    # route exactly as a person would open it. Settings do not reset the count.
+    seed(0)
+    start('more')
+    row = None
+    for _ in range(8):
+        tree = ui()
+        # Compose can merge the row title and its short explanation for TalkBack.
+        row = next((n for n in tree.iter('node')
+                    if 'Тасбих' in n.get('text','').splitlines()
+                    and n.get('bounds','[0,0][0,0]') != '[0,0][0,0]'), None)
+        if row is not None:
+            break
+        shell('input','swipe',42,1010,42,355,370)
+        time.sleep(.25)
+    with device_recording(temp, 'tasbih-entry'):
+        time.sleep(.65)
+        if row is not None:
+            shell('input','tap',*native_center(row))
+        else:
+            # Use the app's existing debug route if this launcher layout cannot expose
+            # the row. The same live screen opens inside the already-running Activity.
+            shell('am','start','-W','-n',PKG+'/.MainActivity','--es','qa_screen','tasbih',
+                  '--es','qa_lang','ru','--ez','qa_onboarded','true')
+        with closing(connect_scene()) as scene:
+            visible_count(scene,0)
+            wait_for_entrance(scene)
+            time.sleep(.65)
+            tap_scene_text(scene,'count','dial-control')
+            time.sleep(.7)
+            goal = locate_control('tasbih_target_34')
+            screenshot(MEDIA / 'tasbih-quick-settings.png')
+            assert prefs()['tasbih_count'] == '0'
+            shell('input','tap',*native_center(goal))
+            time.sleep(.35)
+            shell('input','keyevent','KEYCODE_BACK')
+            time.sleep(.5)
+            shell('input','tap',360,704)
+            visible_count(scene,1)
+            time.sleep(.63)
+            tap_scene_text(scene,'count','dial-control')
+            time.sleep(.85)
+            shell('input','keyevent','KEYCODE_BACK')
+            time.sleep(.55)
+            visible_count(scene,1)
+    state = prefs()
+    assert state['tasbih_count']=='1' and state['tasbih_target']=='34',state.get('tasbih_count')
+    impacts = impact_times(MEDIA / 'tasbih-entry.mp4')
+    assert len(impacts)==1, ('Two settings opens and one bead should produce exactly one bead impact',impacts)
+    REPORT.update(entry_route='More → Tasbih' if row is not None else 'in-process qa_screen', entry_animation_scale=1, entry_impact_seconds=impacts,
+                  zero_and_positive_open_preserved_count=True)
 
 
 def exercise():
@@ -257,6 +347,7 @@ def exercise():
     with closing(connect_scene()) as scene, tempfile.TemporaryDirectory() as directory:
         temp = Path(directory)
         visible_count(scene, 26)
+        wait_for_entrance(scene)
         initial = read_js(scene, "['arabic','transcription','translation','goal'].map(k => document.getElementById(k)?.textContent?.trim())")
         assert all(initial) and '100' in initial[-1], initial
         assert 'прощен' in initial[2].lower().replace('ё', 'е'), initial
@@ -280,6 +371,8 @@ def exercise():
     start('tasbih')
     with closing(connect_scene()) as scene:
         visible_count(scene, 33)
+    with tempfile.TemporaryDirectory() as directory:
+        record_entrance(Path(directory))
     REPORT.update(verified=True, initial=26, slow_taps=[27,28,29], rapid_result=33,
                   idle_planets_moved=True, restored=33)
 
@@ -287,10 +380,46 @@ def exercise():
 def exercise_controls():
     with closing(connect_scene()) as scene:
         visible_count(scene, 33)
-        shell('input', 'swipe', 350, 600, 350, 900, 400)
-        time.sleep(1.6)
+        wait_for_entrance(scene)
+        # The positive total is loaded from the existing preference on a fresh launch.
+        tap_scene_text(scene,'count','dial-control')
+        locate_control('tasbih_target_34')
+        options = ui()
+        for goal in (33,34,99,100,0):
+            tag = 'tasbih_target_' + str(goal)
+            if find_control(options,tag) is None:
+                locate_control(tag)
+        assert prefs()['tasbih_count']=='33'
+        tap_control('tasbih_target_34')
+        tap_control('tasbih_quick_done')
+        visible_count(scene,33)
+        assert prefs()['tasbih_target']=='34'
+        name = read_js(scene,"document.getElementById('transcription').textContent")
+        tap_scene_text(scene,'transcription','phrase-control')
+        tap_control('tasbih_phrase_0')
+        tap_control('tasbih_quick_done')
+        visible_count(scene,0)
+        assert read_js(scene,"document.getElementById('transcription').textContent") != name
+    start('tasbih')
+    with closing(connect_scene()) as scene:
+        visible_count(scene,0)
+        wait_for_entrance(scene)
+        state=prefs()
+        assert (state['tasbih_phrase'],state['tasbih_target'])==('0','34')
+        assert read_js(scene,"document.getElementById('goal').textContent.trim()")=='/ 34'
+        # With system motion disabled the idle planet strip must stay still.
+        with tempfile.TemporaryDirectory() as directory:
+            a,b=Path(directory)/'still.png',Path(directory)/'later.png'
+            wait_for_drawn_scene(scene,a)
+            time.sleep(.7)
+            screenshot(b)
+            with Image.open(a) as first,Image.open(b) as last:
+                delta=ImageChops.difference(first.convert('RGB'),last.convert('RGB'))
+                assert not delta.crop((0,int(H*.84),W,int(H*.97))).getbbox(), 'Reduced motion kept moving the planets'
+        shell('input', 'swipe', 350, 600, 350, 770, 400)
+        time.sleep(.6)
         dragged = int(prefs()['tasbih_count'])
-        assert dragged > 33, 'Existing vertical bead gesture failed'
+        assert dragged > 0, 'Existing vertical bead gesture failed'
         tap_control('tasbih_settings')
         tap_control('tasbih_sound')
         assert prefs()['tasbih_bead_sound'] == 'false'
@@ -310,7 +439,8 @@ def exercise_controls():
     with closing(connect_scene()) as scene:
         visible_count(scene, 0)
         assert '99' in read_js(scene, "document.getElementById('goal').innerText")
-    REPORT.update(verified=True, drag_increment=dragged - 33,
+    REPORT.update(verified=True, drag_increment=dragged, saved_33_open=True, phrase_open=True,
+                  restored_phrase_and_goal_34=True, reduced_motion_idle_still=True,
                   reset_confirmed_after_restart=True, target_after_restart=99)
 
 

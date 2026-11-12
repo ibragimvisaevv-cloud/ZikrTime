@@ -29,16 +29,18 @@ internal data class TasbihSceneConfig(
     val tapLabel: String,
     val unlimitedLabel: String,
     val completedLabel: String,
+    val settingsLabel: String,
 ) {
     fun json(count: Int): JSONObject = JSONObject()
         .put("arabic", arabic).put("transcription", transcription).put("translation", translation)
         .put("goal", goal).put("count", count).put("lang", lang).put("reducedMotion", reducedMotion)
+        .put("settingsLabel", settingsLabel)
         .put("tapLabel", tapLabel).put("unlimitedLabel", unlimitedLabel).put("completedLabel", completedLabel)
 }
 
 /** Store owns every count. The local page only animates counts that Store has already accepted. */
 @SuppressLint("SetJavaScriptEnabled", "ViewConstructor")
-internal class TasbihSceneView(context: Context) : WebView(context) {
+internal class TasbihSceneView(context: Context, private val showQuickSettings: () -> Unit) : WebView(context) {
     private var config: TasbihSceneConfig? = null
     private var lastTotal = 0
     private var pageReady = false
@@ -83,11 +85,7 @@ internal class TasbihSceneView(context: Context) : WebView(context) {
     }
 
     fun bind(newConfig: TasbihSceneConfig, total: Int, acceptingInput: Boolean) {
-        if (this.acceptingInput != acceptingInput) {
-            this.acceptingInput = acceptingInput
-            importantForAccessibility = if (acceptingInput) IMPORTANT_FOR_ACCESSIBILITY_AUTO
-                else IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
-        }
+        setSceneInput(acceptingInput)
         val changed = config != newConfig
         val externalChange = lastTotal != total
         config = newConfig
@@ -95,6 +93,13 @@ internal class TasbihSceneView(context: Context) : WebView(context) {
         if (!pageReady || disposed) return
         if (changed) configurePage()
         else if (externalChange) evaluateJavascript("window.tasbih.updateCount($total,${newConfig.goal})", null)
+    }
+
+    private fun setSceneInput(enabled: Boolean) {
+        if (acceptingInput == enabled) return
+        acceptingInput = enabled
+        importantForAccessibility = if (enabled) IMPORTANT_FOR_ACCESSIBILITY_AUTO
+            else IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -157,6 +162,15 @@ internal class TasbihSceneView(context: Context) : WebView(context) {
                     total % 33 == 0 -> Haptics.lap(context)
                     else -> Haptics.tick(context)
                 }
+            }
+        }
+
+        @JavascriptInterface
+        fun openSettings() {
+            post {
+                if (!active || disposed || !pageReady || !acceptingInput) return@post
+                setSceneInput(false)
+                showQuickSettings()
             }
         }
 

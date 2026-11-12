@@ -53,7 +53,7 @@ jobs:
           "$sdk_tools/apksigner" verify --print-certs ZikrTime-tasbih.apk > ci-out/tasbih/signature.txt
           grep -F 'certificate SHA-256 digest: 7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf' ci-out/tasbih/signature.txt
           "$sdk_tools/aapt" dump badging ZikrTime-tasbih.apk > ci-out/tasbih/badging.txt
-          grep -F "package: name='com.zikrtime.app' versionCode='46' versionName='0.8.28'" ci-out/tasbih/badging.txt
+          grep -F "package: name='com.zikrtime.app' versionCode='47' versionName='0.8.28'" ci-out/tasbih/badging.txt
           sha256sum ZikrTime-tasbih.apk > ci-out/tasbih/apk.sha256
       - name: Save verified APKs for capture-only retries
         if: steps.apk.outputs.cache-hit != 'true'
@@ -95,7 +95,7 @@ jobs:
           else
             echo 'target=google_apis' >> "$GITHUB_OUTPUT"
           fi
-      - name: Record real gestures and check count persistence on Android 15
+      - name: Record the entrance, quick settings and real bead taps on Android 15
         id: capture
         timeout-minutes: 17
         uses: reactivecircus/android-emulator-runner@v2
@@ -109,7 +109,7 @@ jobs:
           disable-animations: false
           emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -feature -Vulkan -no-boot-anim -camera-back none -camera-front none
           script: python3 tools/ci/tasbih_cosmos_capture.py record
-      - name: Check settings, gestures and reset on a fresh Android 15 instance
+      - name: Check saved counts, goals, phrases and reduced motion on a fresh Android 15 instance
         if: ${{ !cancelled() && (steps.capture.outcome == 'success' || steps.capture.outcome == 'failure') }}
         timeout-minutes: 17
         uses: reactivecircus/android-emulator-runner@v2

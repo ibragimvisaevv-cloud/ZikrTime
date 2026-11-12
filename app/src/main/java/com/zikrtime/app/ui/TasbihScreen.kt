@@ -39,6 +39,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.unit.dp
@@ -70,10 +71,10 @@ fun TasbihScreen() {
         TASBIH_ARABIC[phrase], transcription, meaning, goal,
         LocalConfiguration.current.locales[0].toLanguageTag(), !motionEnabled(),
         stringResource(R.string.tb_gesture_hint), stringResource(R.string.tb_unlimited),
-        stringResource(R.string.tb_cycle_complete)
+        stringResource(R.string.tb_cycle_complete), stringResource(R.string.action_open_settings)
     )
     var panel by rememberSaveable { mutableStateOf<TasbihPanel?>(null) }
-    val scene = remember(context) { TasbihSceneView(context) }
+    val scene = remember(context) { TasbihSceneView(context) { panel = TasbihPanel.PHRASES } }
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     DisposableEffect(scene, lifecycle) {
         val observer = LifecycleEventObserver { _, event ->
@@ -131,14 +132,7 @@ fun TasbihScreen() {
             TextButton(onClick = { panel = TasbihPanel.PHRASES }, modifier = Modifier.testTag("tasbih_phrase_open")) {
                 Text(stringResource(R.string.tb_choose_phrase) + " · " + transcription)
             }
-            Text(stringResource(R.string.tasbih_target), style = MaterialTheme.typography.titleMedium)
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                listOf(33, 99, 100, 0).forEach { value ->
-                    FilterChip(selected = value == goal, onClick = { Store.tasbihTarget = value },
-                        label = { Text(if (value == 0) stringResource(R.string.tb_unlimited) else value.toString()) },
-                        modifier = Modifier.testTag("tasbih_target_$value"))
-                }
-            }
+            TasbihGoalChoices(goal)
             Box(Modifier.testTag("tasbih_sound")) {
                 SwitchRow(stringResource(R.string.alarm_sound), Store.tasbihSoundEnabled,
                     { Store.tasbihSoundEnabled = it })
@@ -159,17 +153,22 @@ fun TasbihScreen() {
         }
         TasbihPanel.PHRASES -> HorizonSheet(stringResource(R.string.tb_choose_phrase), { panel = null }) {
             Text(stringResource(R.string.tb_phrase_change_hint), style = MaterialTheme.typography.bodySmall)
-            TASBIH_NAMES.forEachIndexed { index, (name, meaningId) ->
-                Box(Modifier.testTag("tasbih_phrase_$index")) {
-                    RadioLine(stringResource(name), selected = index == phrase, subtitle = stringResource(meaningId)) {
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                TASBIH_NAMES.forEachIndexed { index, (name, meaningId) ->
+                    val label = stringResource(name)
+                    val description = "$label. " + stringResource(meaningId)
+                    FilterChip(selected = index == phrase, onClick = {
                         if (index != phrase) {
                             Store.tasbihPhrase = index
                             Store.tasbihCount = 0
                         }
-                        panel = null
-                    }
+                    }, label = { Text(label) }, modifier = Modifier.testTag("tasbih_phrase_$index")
+                        .semantics { contentDescription = description })
                 }
             }
+            TasbihGoalChoices(goal)
+            PrimaryButton(stringResource(R.string.action_done), onClick = { panel = null },
+                modifier = Modifier.fillMaxWidth().testTag("tasbih_quick_done"))
         }
         TasbihPanel.RESET -> HorizonDialog(onDismissRequest = { panel = null },
             title = { Text(stringResource(R.string.action_reset)) },
@@ -187,5 +186,20 @@ fun TasbihScreen() {
                 }
             })
         null -> Unit
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun TasbihGoalChoices(goal: Int) {
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Text(stringResource(R.string.tasbih_target), style = MaterialTheme.typography.titleMedium)
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            listOf(33, 34, 99, 100, 0).forEach { value ->
+                FilterChip(selected = value == goal, onClick = { Store.tasbihTarget = value },
+                    label = { Text(if (value == 0) stringResource(R.string.tb_unlimited) else value.toString()) },
+                    modifier = Modifier.testTag("tasbih_target_$value"))
+            }
+        }
     }
 }

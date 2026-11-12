@@ -12,6 +12,7 @@
     let travel = null, pulses = [], queue = [], animation = 0, turns = 0;
     let strandDirty = true, lastWorlds = -Infinity, worldTime = 0, worldClock = 0;
     const strikes = new Set();
+    let backdropSettled = false, fontSettled = !document.fonts, entryTimeout = 0;
 
     // Rasterize the polished stone in local sphere coordinates once. The broad,
     // rose-grey reflection underneath is separate from the small white window highlight.
@@ -211,6 +212,7 @@
         ratio=Math.min(3,dpr);
         skyScale=height/designHeight;
         document.body.style.setProperty("--u",unit+"px");
+        document.body.style.setProperty("--dial-hit",Math.max(48,100*unit)+"px");
         // Only the two moving strips need high-DPI buffers. Coordinates stay in
         // the full scene's coordinate system so rotation and resizing agree.
         for (const [ctx, top, bottom, density] of [
@@ -232,10 +234,43 @@
         lastWorlds=-Infinity;
         requestFrame();
     }
-    backdrop.addEventListener("load",drawBackdrop);
+    function showEntrance() {
+        if (!settings) return;
+        const body=document.body;
+        const reduced=settings.reducedMotion ||
+            (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+        if (reduced) {
+            clearTimeout(entryTimeout);
+            body.dataset.entry="ready";
+            return;
+        }
+        if (body.dataset.entry!=="waiting") return;
+        function reveal() {
+            clearTimeout(entryTimeout);
+            body.dataset.entry="entering";
+            // A fixed endpoint also covers a paused or unsupported CSS animation.
+            entryTimeout=setTimeout(() => { body.dataset.entry="ready"; },650);
+        }
+        if (backdropSettled && fontSettled) reveal();
+        else if (!entryTimeout) entryTimeout=setTimeout(reveal,700);
+    }
+
+    backdrop.addEventListener("load",() => {
+        drawBackdrop();
+        backdropSettled=true;
+        showEntrance();
+    });
+    backdrop.addEventListener("error",() => { backdropSettled=true; showEntrance(); });
     backdrop.src="nebula.webp";
     window.addEventListener("resize",resize);
-    if (document.fonts) document.fonts.ready.then(positionArabic);
+    if (document.fonts) {
+        const fontDone=() => {
+            fontSettled=true;
+            positionArabic();
+            showEntrance();
+        };
+        document.fonts.load("44px SceneAmiri").then(fontDone,fontDone);
+    }
 
     // Invert arc length along the parabola, so adjacent beads keep a constant
     // distance even as they climb the sides. Slopes are shallow and monotonic.
@@ -347,6 +382,7 @@
         const countGoal=goal>0 ? cycle+" / "+goal : total+", "+((settings && settings.unlimitedLabel) || "∞");
         const complete=goal>0 && cycle===goal ? settings && settings.completedLabel : "";
         el("beads").setAttribute("aria-label",[settings && settings.tapLabel,countGoal,complete].filter(Boolean).join(", "));
+        el("dial-control").setAttribute("aria-label",[settings && settings.settingsLabel,countGoal].filter(Boolean).join(", "));
     }
     function commitStep(event,now,effects) {
         renderNumber(event.total,event.goal);
@@ -388,13 +424,15 @@
         el("arabic").textContent=data.arabic;
         el("transcription").textContent=data.transcription;
         el("translation").textContent=data.translation;
-        el("beads").disabled=false;
+        for (const id of ["beads","phrase-control","dial-control"]) el(id).disabled=false;
+        el("phrase-control").setAttribute("aria-label", [data.settingsLabel,data.transcription].filter(Boolean).join(", "));
         latestGoal=data.goal;
         latestTotal=data.count;
         if (refresh) settle();
         else if (!travel && !queue.length) renderNumber(data.count,data.goal);
         positionArabic();
         if (document.fonts) document.fonts.ready.then(positionArabic);
+        showEntrance();
         worldClock=0;
         requestFrame();
     }
@@ -408,6 +446,14 @@
         startNext(performance.now());
     }
     window.tasbih={configure,step,updateCount,settle,setViewport};
+
+    // HTML buttons synthesize the same click for touch, Enter, Space and TalkBack.
+    // These targets are siblings of the bead button, so opening the controls cannot count.
+    for (const id of ["phrase-control","dial-control"]) {
+        el(id).addEventListener("click",() => {
+            if (window.AndroidTasbih) window.AndroidTasbih.openSettings();
+        });
+    }
 
     const button=el("beads");
     button.dataset.testid="tasbih_counter";

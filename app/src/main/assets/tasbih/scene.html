@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="scene.css">
     <script src="scene.js" defer></script>
 </head>
-<body>
+<body data-entry="waiting">
     <canvas id="sky" aria-hidden="true"></canvas>
     <canvas id="planets" aria-hidden="true"></canvas>
     <svg id="words" xmlns="http://www.w3.org/2000/svg">
@@ -36,6 +36,8 @@
             <span id="count"></span><span id="goal"></span>
         </div>
     </div>
-    <button id="beads" type="button" disabled></button>
+    <button id="phrase-control" class="hit" type="button" disabled></button>
+    <button id="beads" class="hit" type="button" disabled></button>
+    <button id="dial-control" class="hit" type="button" disabled></button>
 </body>
 </html>

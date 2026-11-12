@@ -16,7 +16,7 @@ html, body {
     -webkit-user-select: none;
     user-select: none;
 }
-body { position: relative; --u: min(.208333vw, .117096vh); }
+body { position: relative; --u: min(.208333vw, .117096vh); --dial-hit: max(48px, calc(100 * var(--u))); }
 canvas, #words {
     position: absolute;
     inset: 0;
@@ -81,18 +81,61 @@ canvas, #words {
 #digits { position: absolute; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 #count { font-size: calc(37.2 * var(--u)); font-weight: 500; font-variant-numeric: tabular-nums; line-height: 1.06; }
 #goal { color: #bbbdb9; font-weight: 300; font-size: calc(12 * var(--u)); margin-top: calc(1 * var(--u)); line-height: 1; }
-#beads {
+.hit {
     position: absolute;
-    left: 0;
-    top: 41%;
-    width: 100%;
-    height: 36%;
     border: 0;
     padding: 0;
     background: transparent;
     appearance: none;
     cursor: pointer;
+    touch-action: manipulation;
+}
+.hit:focus { outline: none; }
+.hit:focus-visible { outline: 1px dashed #f6dbaba8; outline-offset: -4px; }
+#phrase-control {
+    top: 13%;
+    left: 50%;
+    width: 88%;
+    width: min(94%, calc(420 * var(--u)));
+    height: 27%;
+    transform: translateX(-50%);
+    border-radius: 12px;
+}
+#beads {
+    left: 0;
+    top: 40.5%;
+    width: 100%;
+    bottom: 39%;
+    bottom: max(39%, calc(32.35% + var(--dial-hit) / 2 + 1px));
     touch-action: none;
 }
-#beads:focus { outline: none; }
-#beads:focus-visible { outline: 1px dashed #f6dbaba8; outline-offset: -4px; }
+#dial-control {
+    left: 50%;
+    top: 67.65%;
+    transform: translate(-50%, -50%);
+    width: var(--dial-hit);
+    height: var(--dial-hit);
+    border-radius: 50%;
+}
+
+body[data-entry="waiting"] > :not(button) { opacity: 0; }
+body[data-entry="entering"] #sky { animation: sky-opens 630ms cubic-bezier(.18,.68,.27,1) both; }
+body[data-entry="entering"] #planets,
+body[data-entry="entering"] #strand,
+body[data-entry="entering"] #dial { animation: sky-opens 480ms ease-out both; }
+body[data-entry="entering"] #words,
+body[data-entry="entering"] #caption { animation: words-appear 490ms 65ms cubic-bezier(.18,.68,.27,1) both; }
+body[data-entry="entering"] #rule { animation: rule-appears 470ms 75ms ease-out both; }
+
+@keyframes sky-opens { from { opacity: 0; } to { opacity: 1; } }
+@keyframes words-appear {
+    from { opacity: 0; transform: translateY(calc(5 * var(--u))); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes rule-appears {
+    from { opacity: 0; transform: translateX(-50%) scaleX(.72); }
+    to { opacity: 1; transform: translateX(-50%) scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+    body[data-entry="entering"] > * { animation: none !important; }
+}
