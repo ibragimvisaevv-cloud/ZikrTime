@@ -4,22 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.background
-import androidx.compose.ui.res.pluralStringResource
-import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.key
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -40,7 +30,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -57,7 +46,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -107,20 +95,8 @@ fun ShopScreen() {
         try { Shop.refresh(context, force = refreshAttempt > 0) } finally { refreshing = false }
     }
     LaunchedEffect(Unit) { com.zikrtime.app.data.Reviews.refresh() }
-    var category by rememberSaveable { mutableStateOf<String?>(null) }
-    var query by rememberSaveable { mutableStateOf("") }
-
-    val search = query.trim()
-    val filtered = category != null || search.isNotEmpty()
-    val products = Shop.rankProducts(catalog.products, catalog).filter { product ->
-        (category == null || category == product.category) &&
-            (product.title.get(lang).contains(search, ignoreCase = true) ||
-                catalog.seller(product.seller)?.name?.contains(search, ignoreCase = true) == true)
-    }
-    val matchingSellers = Shop.rankSellers(catalog.sellers).filter { seller ->
-        (category == null || category in seller.categories) && seller.name.contains(search, ignoreCase = true)
-    }
-    val (partners, sellers) = matchingSellers.partition { it.partner }
+    val (partners, sellers) = remember(catalog) { Shop.rankSellers(catalog.sellers).partition { it.partner } }
+    var sellerLimit by rememberSaveable { mutableStateOf(12) }
     val openSeller: (Shop.Seller) -> Unit = { seller ->
         nav.shopSeller = seller.id
         nav.open(Screen.SHOP_SELLER)
@@ -129,66 +105,36 @@ fun ShopScreen() {
     val hasMerchantContact = catalog.sellerBot.isNotBlank() || catalog.contactTelegram.isNotBlank()
     val hasMerchantEntry = hasMerchantContact || catalog.sellerPortal != null
     HorizonSection(title = stringResource(R.string.shop_title), image = R.drawable.shop_market, heroHeight = 146.dp) {
-        StoreSearch(query) { query = it }
-        if (catalog.categories.isNotEmpty()) {
-            LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                item { CategoryPill(stringResource(R.string.shop_all), R.drawable.ic_shop_store, "all", category == null) { category = null } }
-                items(catalog.categories, key = { it.id }) { item ->
-                    CategoryPill(item.name.get(lang), shopIcon(item.icon), item.id, category == item.id) {
-                        category = if (category == item.id) null else item.id
-                    }
-                }
-            }
+        val scheme = MaterialTheme.colorScheme
+        val searchShape = RoundedCornerShape(16.dp)
+        Row(Modifier.fillMaxWidth().testTag("shop_open_search").clip(searchShape)
+            .background(scheme.surfaceContainerHigh).border(1.dp, scheme.outlineVariant, searchShape)
+            .clickable(role = Role.Button) { nav.open(Screen.SHOP_SEARCH) }
+            .heightIn(min = 52.dp).padding(horizontal = 16.dp, vertical = 10.dp),
+            verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Icon(Icons.Default.Search, null, tint = scheme.primary)
+            Text(stringResource(R.string.shop_search), style = MaterialTheme.typography.bodyLarge)
         }
         if (catalog.demo) StatusLine(stringResource(R.string.shop_demo_note))
         if (Shop.offline && catalog.sellers.isNotEmpty()) StatusLine(stringResource(R.string.shop_offline))
 
-        if (partners.isNotEmpty()) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                SectionLabel(stringResource(R.string.shop_partners_title))
-                if (partners.size == 1) {
-                    PartnerCard(partners.first(), lang, catalog, Modifier.fillMaxWidth(), openSeller)
-                } else {
-                    BoxWithConstraints(Modifier.fillMaxWidth()) {
-                        val cardWidth = (maxWidth - 28.dp).coerceAtMost(416.dp)
-                        LazyRow(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                            items(partners, key = { it.id }) { seller ->
-                                PartnerCard(seller, lang, catalog, Modifier.width(cardWidth), openSeller)
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        if (partners.isNotEmpty()) PartnerGrid(partners, catalog, lang, openSeller)
         if (sellers.isNotEmpty()) {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                SectionLabel(stringResource(R.string.shop_sellers))
-                if (sellers.size == 1) {
-                    SellerCard(sellers.first(), lang, Modifier.fillMaxWidth(), openSeller)
-                } else {
-                    LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        items(sellers, key = { it.id }) { seller ->
-                            SellerCard(seller, lang, Modifier.width(208.dp), openSeller)
-                        }
+                SectionLabel(stringResource(R.string.store_companies))
+                sellers.take(sellerLimit).forEach { seller ->
+                    key(seller.id) { SellerCard(seller, lang, Modifier.fillMaxWidth(), openSeller) }
+                }
+                if (sellers.size > sellerLimit) {
+                    TextButton(onClick = { sellerLimit += 12 }, modifier = Modifier.align(Alignment.CenterHorizontally)) {
+                        Text(stringResource(R.string.store_more_companies))
                     }
                 }
             }
         }
-        if (products.isNotEmpty()) {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                SectionLabel(stringResource(R.string.shop_products))
-                key(category, search) {
-                    ProductList(products, catalog, lang) { product ->
-                        nav.shopProduct = product.id
-                        nav.open(Screen.SHOP_PRODUCT)
-                    }
-                }
-            }
-        } else if (matchingSellers.isEmpty()) {
+        if (catalog.sellers.isEmpty()) {
             Box(Modifier.fillMaxWidth().testTag("shop_empty")) {
                 when {
-                    filtered -> StatePanel(stringResource(R.string.shop_empty), icon = R.drawable.ic_shop_store,
-                        action = stringResource(R.string.action_reset), onAction = { query = ""; category = null })
                     refreshing -> LinearProgressIndicator(Modifier.fillMaxWidth())
                     Shop.refreshFailed -> StatePanel(stringResource(R.string.store_unavailable), icon = R.drawable.ic_shop_store,
                         action = stringResource(R.string.store_retry), onAction = { refreshAttempt++ })
@@ -205,7 +151,6 @@ fun ShopScreen() {
     }
     if (showTerms && hasMerchantEntry) {
         HorizonSheet(stringResource(R.string.store_terms_title), { showTerms = false }) {
-            Text(Shop.price(200, "RUB"), style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.primary)
             Text(stringResource(R.string.store_listing_terms), style = MaterialTheme.typography.bodyLarge)
             Text(stringResource(R.string.store_promotion_terms), style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -230,53 +175,7 @@ fun ShopScreen() {
 }
 
 @Composable
-private fun StoreSearch(query: String, onChange: (String) -> Unit) {
-    val scheme = MaterialTheme.colorScheme
-    val label = stringResource(R.string.shop_search)
-    val clear = stringResource(R.string.store_clear)
-    val shape = RoundedCornerShape(16.dp)
-    BasicTextField(
-        value = query, onValueChange = onChange, singleLine = true,
-        textStyle = MaterialTheme.typography.bodyLarge.copy(color = scheme.onSurface),
-        cursorBrush = SolidColor(scheme.primary),
-        modifier = Modifier.fillMaxWidth().testTag("shop_search").semantics { contentDescription = label },
-        decorationBox = { field ->
-            Row(Modifier.fillMaxWidth().clip(shape).background(scheme.surfaceContainerHigh)
-                .heightIn(min = 52.dp).padding(start = 16.dp, end = 4.dp),
-                verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                Icon(Icons.Default.Search, null, tint = scheme.onSurfaceVariant, modifier = Modifier.size(20.dp))
-                Box(Modifier.weight(1f)) {
-                    if (query.isEmpty()) Text(label, color = scheme.onSurfaceVariant)
-                    field()
-                }
-                if (query.isNotEmpty()) {
-                    IconButton(onClick = { onChange("") }, modifier = Modifier.testTag("shop_clear_search")) {
-                        Icon(Icons.Default.Close, contentDescription = clear)
-                    }
-                }
-            }
-        },
-    )
-}
-
-@Composable
-private fun CategoryPill(text: String, icon: Int, id: String, selected: Boolean, onClick: () -> Unit) {
-    val shape = RoundedCornerShape(16.dp)
-    val scheme = MaterialTheme.colorScheme
-    Row(Modifier.testTag("shop_category_$id").clip(shape)
-        .background(if (selected) scheme.secondaryContainer else scheme.surfaceContainerLow)
-        .border(1.dp, if (selected) scheme.secondary else scheme.outlineVariant, shape)
-        .selectable(selected = selected, role = Role.RadioButton, onClick = onClick)
-        .heightIn(min = 48.dp).padding(horizontal = 12.dp, vertical = 8.dp),
-        horizontalArrangement = Arrangement.spacedBy(7.dp), verticalAlignment = Alignment.CenterVertically) {
-        val ink = if (selected) scheme.onSecondaryContainer else scheme.onSurfaceVariant
-        Icon(painterResource(icon), null, tint = ink, modifier = Modifier.size(16.dp))
-        Text(text, style = MaterialTheme.typography.labelLarge, color = ink)
-    }
-}
-
-@Composable
-private fun SellerCard(seller: Shop.Seller, lang: String, modifier: Modifier, onClick: (Shop.Seller) -> Unit) {
+internal fun SellerCard(seller: Shop.Seller, lang: String, modifier: Modifier, onClick: (Shop.Seller) -> Unit) {
     val scheme = MaterialTheme.colorScheme
     val shape = RoundedCornerShape(16.dp)
     Row(modifier.testTag("shop_seller_${seller.id}").clip(shape).background(scheme.surfaceContainerLow)
@@ -295,49 +194,7 @@ private fun SellerCard(seller: Shop.Seller, lang: String, modifier: Modifier, on
 }
 
 @Composable
-private fun PartnerCard(seller: Shop.Seller, lang: String, catalog: Shop.Catalog, modifier: Modifier, onClick: (Shop.Seller) -> Unit) {
-    val shape = RoundedCornerShape(topStart = 26.dp, topEnd = 12.dp, bottomEnd = 26.dp, bottomStart = 12.dp)
-    val accent = accentOf(seller)
-    Box(modifier.testTag("shop_partner_${seller.id}").clip(shape)
-        .background(Brush.linearGradient(listOf(accent, EmeraldDeep))).border(1.dp, Gold.copy(alpha = .6f), shape)
-        .clickable(role = Role.Button) { onClick(seller) }) {
-        // Always draw a backdrop so a missing or failed cover still has a readable contrast layer.
-        StarPattern(Modifier.matchParentSize(), color = Cream.copy(alpha = .12f), cell = 48f)
-        Shop.imageUrl(seller.cover)?.let { url ->
-            AsyncImage(model = url, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.matchParentSize())
-        }
-        Box(Modifier.matchParentSize().background(Brush.verticalGradient(listOf(Color(0x40171B18), Color(0xF0171B18)))))
-        Column(Modifier.fillMaxWidth().heightIn(min = 166.dp).padding(16.dp),
-            verticalArrangement = Arrangement.SpaceBetween) {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Box(Modifier.clip(RoundedCornerShape(8.dp)).background(Cream).padding(horizontal = 8.dp, vertical = 4.dp)) {
-                    Text(stringResource(R.string.shop_partner), style = MaterialTheme.typography.labelSmall, color = EmeraldDeep)
-                }
-                if (seller.promoted) AdLabel(Modifier.testTag("shop_ad_${seller.id}"))
-                Spacer(Modifier.weight(1f))
-                RatingBadge("seller:${seller.id}", Modifier.clip(RoundedCornerShape(8.dp))
-                    .background(MaterialTheme.colorScheme.surface).padding(horizontal = 6.dp, vertical = 3.dp))
-            }
-            Spacer(Modifier.height(20.dp))
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                SellerLogo(seller, 46.dp)
-                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Text(seller.name, style = MaterialTheme.typography.headlineSmall, color = Cream,
-                        maxLines = 2, overflow = TextOverflow.Ellipsis)
-                    val count = catalog.products.count { it.seller == seller.id }
-                    val details = listOf(seller.city.get(lang), if (count > 0) pluralStringResource(R.plurals.shop_products_count, count, count) else "")
-                        .filter(String::isNotBlank).joinToString(" · ")
-                    if (details.isNotEmpty()) Text(details, style = MaterialTheme.typography.bodySmall, color = Cream,
-                        maxLines = 2, overflow = TextOverflow.Ellipsis)
-                }
-                Icon(Icons.AutoMirrored.Filled.ArrowForward, null, tint = Cream, modifier = Modifier.size(20.dp))
-            }
-        }
-    }
-}
-
-@Composable
-private fun SellerLogo(seller: Shop.Seller, size: androidx.compose.ui.unit.Dp) {
+internal fun SellerLogo(seller: Shop.Seller, size: androidx.compose.ui.unit.Dp) {
     val accent = accentOf(seller)
     Box(
         Modifier
@@ -402,7 +259,7 @@ private fun ProductImage(product: Shop.Product, catalog: Shop.Catalog, modifier:
 }
 
 @Composable
-private fun ProductCard(product: Shop.Product, catalog: Shop.Catalog, lang: String, onClick: () -> Unit) {
+internal fun ProductCard(product: Shop.Product, catalog: Shop.Catalog, lang: String, onClick: () -> Unit) {
     val scheme = MaterialTheme.colorScheme
     val seller = catalog.seller(product.seller)
     Row(Modifier.fillMaxWidth().testTag("shop_product_${product.id}").clip(RoundedCornerShape(16.dp))
@@ -642,7 +499,7 @@ private fun openMap(context: Context, seller: Shop.Seller) {
 
 /** Пометка «Реклама» у продвигаемых за плату компаний и их товаров. */
 @Composable
-private fun AdLabel(modifier: Modifier = Modifier) {
+internal fun AdLabel(modifier: Modifier = Modifier) {
     Box(
         modifier.clip(RoundedCornerShape(6.dp)).background(Color(0xFF343732)).padding(horizontal = 8.dp, vertical = 3.dp),
     ) {

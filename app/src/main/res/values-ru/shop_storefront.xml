@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="store_terms_title">Условия размещения</string>
-    <string name="store_listing_terms">Разовый платёж после одобрения заявки покрывает карточку компании и все её товары.</string>
+    <string name="store_listing_terms">Размещение компании и её товаров сейчас бесплатно.</string>
     <string name="store_promotion_terms">Продвижение можно подключить отдельно за дополнительную плату.</string>
     <string name="store_apply">Подать заявку</string>
     <string name="store_unavailable">Не удалось загрузить каталог</string>
@@ -11,4 +11,17 @@
     <string name="store_more_products">Показать ещё товары</string>
     <string name="store_seller_portal">Кабинет продавца</string>
     <string name="store_browser_unavailable">Не удалось открыть браузер</string>
+    <string name="store_search_title">Поиск в каталоге</string>
+    <string name="store_search_products">Найти товар</string>
+    <string name="store_search_companies">Найти компанию</string>
+    <string name="store_companies">Компании</string>
+    <string name="store_filters">Фильтры</string>
+    <string name="store_category">Категория</string>
+    <string name="store_any_city">Все города</string>
+    <string name="store_price_from">Цена от, ₽</string>
+    <string name="store_price_to">Цена до, ₽</string>
+    <string name="store_price_range_error">Минимальная цена выше максимальной.</string>
+    <string name="store_apply_filters">Применить</string>
+    <string name="store_search_prompt">Введите запрос или выберите фильтры.</string>
+    <string name="store_more_companies">Показать ещё компании</string>
 </resources>

@@ -301,7 +301,7 @@
     <string name="shop_subtitle">Güvenilir satıcılardan İslami ürünler ve hizmetler</string>
     <string name="shop_demo_note">Bu örnek bir katalogdur: satıcılar ve ürünler örnektir. Yakında gerçek ortaklar burada olacak.</string>
     <string name="shop_offline">İnternet yok — kayıtlı katalog gösteriliyor</string>
-    <string name="shop_search">Ürün ve satıcı ara</string>
+    <string name="shop_search">Ürün veya şirket ara</string>
     <string name="shop_all">Tümü</string>
     <string name="shop_sellers">Satıcılar</string>
     <string name="shop_products">Ürünler</string>

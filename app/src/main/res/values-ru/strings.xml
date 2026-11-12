@@ -301,7 +301,7 @@
     <string name="shop_subtitle">Исламские товары и услуги от проверенных продавцов</string>
     <string name="shop_demo_note">Это пример каталога: продавцы и товары условные. Скоро здесь появятся настоящие партнёры.</string>
     <string name="shop_offline">Нет интернета — показан сохранённый каталог</string>
-    <string name="shop_search">Поиск товаров и продавцов</string>
+    <string name="shop_search">Найти товар или компанию</string>
     <string name="shop_all">Все</string>
     <string name="shop_sellers">Продавцы</string>
     <string name="shop_products">Товары</string>

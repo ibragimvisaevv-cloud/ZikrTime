@@ -301,7 +301,7 @@
     <string name="shop_subtitle">Etibarlı satıcılardan İslami mallar və xidmətlər</string>
     <string name="shop_demo_note">Bu nümunə kataloqdur: satıcılar və mallar misal üçündür. Tezliklə əsl tərəfdaşlar görünəcək.</string>
     <string name="shop_offline">İnternet yoxdur — saxlanmış kataloq göstərilir</string>
-    <string name="shop_search">Mal və satıcı axtarışı</string>
+    <string name="shop_search">Məhsul və ya şirkət axtar</string>
     <string name="shop_all">Hamısı</string>
     <string name="shop_sellers">Satıcılar</string>
     <string name="shop_products">Mallar</string>

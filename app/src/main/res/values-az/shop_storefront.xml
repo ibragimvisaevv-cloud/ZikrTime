@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="store_terms_title">Yerləşdirmə şərtləri</string>
-    <string name="store_listing_terms">Müraciət təsdiqləndikdən sonra birdəfəlik ödəniş şirkətin səhifəsini və bütün məhsullarını əhatə edir.</string>
+    <string name="store_listing_terms">Şirkətinizi və məhsullarını hazırda pulsuz yerləşdirə bilərsiniz.</string>
     <string name="store_promotion_terms">İstəyə görə ayrıca ödənişlə tanıtım sifariş edə bilərsiniz.</string>
     <string name="store_apply">Müraciət göndər</string>
     <string name="store_unavailable">Kataloqu yükləmək mümkün olmadı</string>
@@ -11,4 +11,17 @@
     <string name="store_more_products">Daha çox məhsul göstər</string>
     <string name="store_seller_portal">Satıcı kabineti</string>
     <string name="store_browser_unavailable">Brauzeri açmaq mümkün olmadı</string>
+    <string name="store_search_title">Kataloqda axtarış</string>
+    <string name="store_search_products">Məhsul axtar</string>
+    <string name="store_search_companies">Şirkət axtar</string>
+    <string name="store_companies">Şirkətlər</string>
+    <string name="store_filters">Filtrlər</string>
+    <string name="store_category">Kateqoriya</string>
+    <string name="store_any_city">Bütün şəhərlər</string>
+    <string name="store_price_from">Min. qiymət, ₽</string>
+    <string name="store_price_to">Maks. qiymət, ₽</string>
+    <string name="store_price_range_error">Minimum qiymət maksimum qiymətdən yüksəkdir.</string>
+    <string name="store_apply_filters">Tətbiq et</string>
+    <string name="store_search_prompt">Axtarış sözü daxil edin və ya filtrləri seçin.</string>
+    <string name="store_more_companies">Daha çox şirkət göstər</string>
 </resources>

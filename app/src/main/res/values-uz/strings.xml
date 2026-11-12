@@ -301,7 +301,7 @@
     <string name="shop_subtitle">Ishonchli sotuvchilardan islomiy mahsulot va xizmatlar</string>
     <string name="shop_demo_note">Bu namunaviy katalog: sotuvchilar va mahsulotlar misol uchun. Tez orada haqiqiy hamkorlar paydo boʻladi.</string>
     <string name="shop_offline">Internet yoʻq — saqlangan katalog koʻrsatilmoqda</string>
-    <string name="shop_search">Mahsulot va sotuvchilarni qidirish</string>
+    <string name="shop_search">Mahsulot yoki kompaniyani qidirish</string>
     <string name="shop_all">Hammasi</string>
     <string name="shop_sellers">Sotuvchilar</string>
     <string name="shop_products">Mahsulotlar</string>

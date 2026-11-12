@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="store_terms_title">Жарыялоо шарттары</string>
-    <string name="store_listing_terms">Өтүнмө жактырылгандан кийинки бир жолку төлөмгө компаниянын баракчасы жана анын бардык товарлары кирет.</string>
+    <string name="store_listing_terms">Компанияны жана анын товарларын каталогго жайгаштыруу азырынча акысыз.</string>
     <string name="store_promotion_terms">Кааласаңыз, кошумча акы төлөп жарнама бере аласыз.</string>
     <string name="store_apply">Өтүнмө берүү</string>
     <string name="store_unavailable">Каталог жүктөлгөн жок</string>
@@ -11,4 +11,17 @@
     <string name="store_more_products">Дагы товарларды көрсөтүү</string>
     <string name="store_seller_portal">Сатуучунун кабинети</string>
     <string name="store_browser_unavailable">Браузер ачылган жок</string>
+    <string name="store_search_title">Каталогдон издөө</string>
+    <string name="store_search_products">Товар издөө</string>
+    <string name="store_search_companies">Компания издөө</string>
+    <string name="store_companies">Компаниялар</string>
+    <string name="store_filters">Чыпкалар</string>
+    <string name="store_category">Категория</string>
+    <string name="store_any_city">Бардык шаарлар</string>
+    <string name="store_price_from">Эң төмөн баа, ₽</string>
+    <string name="store_price_to">Эң жогору баа, ₽</string>
+    <string name="store_price_range_error">Эң төмөн баа эң жогорку баадан ашып кетти.</string>
+    <string name="store_apply_filters">Колдонуу</string>
+    <string name="store_search_prompt">Издөө сөзүн жазыңыз же чыпкаларды тандаңыз.</string>
+    <string name="store_more_companies">Дагы компанияларды көрсөтүү</string>
 </resources>

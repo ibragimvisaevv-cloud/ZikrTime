@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="store_terms_title">Шартҳои ҷойгиркунӣ</string>
-    <string name="store_listing_terms">Пардохти якдафъаина пас аз тасдиқи дархост саҳифаи ширкат ва ҳамаи молҳои онро фаро мегирад.</string>
+    <string name="store_listing_terms">Ҳоло ҷойгир кардани ширкат ва молҳои он дар феҳрист ройгон аст.</string>
     <string name="store_promotion_terms">Таблиғ ихтиёрӣ аст ва алоҳида пардохт мешавад.</string>
     <string name="store_apply">Фиристодани дархост</string>
     <string name="store_unavailable">Каталог бор нашуд</string>
@@ -11,4 +11,17 @@
     <string name="store_more_products">Нишон додани молҳои бештар</string>
     <string name="store_seller_portal">Ҳуҷраи фурӯшанда</string>
     <string name="store_browser_unavailable">Браузер кушода нашуд</string>
+    <string name="store_search_title">Ҷустуҷӯ дар феҳрист</string>
+    <string name="store_search_products">Ҷустуҷӯи мол</string>
+    <string name="store_search_companies">Ҷустуҷӯи ширкат</string>
+    <string name="store_companies">Ширкатҳо</string>
+    <string name="store_filters">Филтрҳо</string>
+    <string name="store_category">Гурӯҳ</string>
+    <string name="store_any_city">Ҳамаи шаҳрҳо</string>
+    <string name="store_price_from">Нарх аз, ₽</string>
+    <string name="store_price_to">Нарх то, ₽</string>
+    <string name="store_price_range_error">Нархи ҳадди ақал аз нархи ҳадди аксар баландтар аст.</string>
+    <string name="store_apply_filters">Татбиқ кардан</string>
+    <string name="store_search_prompt">Калимаеро ворид кунед ё филтрҳоро интихоб кунед.</string>
+    <string name="store_more_companies">Нишон додани ширкатҳои бештар</string>
 </resources>

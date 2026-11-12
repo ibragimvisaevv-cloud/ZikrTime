@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="store_terms_title">Listing terms</string>
-    <string name="store_listing_terms">One payment after approval covers your business listing and all its products.</string>
+    <string name="store_listing_terms">Listing a company and its products is currently free.</string>
     <string name="store_promotion_terms">Promotion is optional and paid for separately.</string>
     <string name="store_apply">Apply to list a business</string>
     <string name="store_unavailable">Could not load the catalogue</string>
@@ -11,4 +11,17 @@
     <string name="store_more_products">Show more products</string>
     <string name="store_seller_portal">Seller dashboard</string>
     <string name="store_browser_unavailable">Could not open the browser</string>
+    <string name="store_search_title">Search the catalog</string>
+    <string name="store_search_products">Find a product</string>
+    <string name="store_search_companies">Find a company</string>
+    <string name="store_companies">Companies</string>
+    <string name="store_filters">Filters</string>
+    <string name="store_category">Category</string>
+    <string name="store_any_city">All cities</string>
+    <string name="store_price_from">Min. price, ₽</string>
+    <string name="store_price_to">Max. price, ₽</string>
+    <string name="store_price_range_error">The minimum price exceeds the maximum.</string>
+    <string name="store_apply_filters">Apply</string>
+    <string name="store_search_prompt">Enter a search term or choose filters.</string>
+    <string name="store_more_companies">Show more companies</string>
 </resources>

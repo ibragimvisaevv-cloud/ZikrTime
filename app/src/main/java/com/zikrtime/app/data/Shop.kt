@@ -85,7 +85,9 @@ object Shop {
         val products: List<Product>,
         val sellerPortal: String? = null,
     ) {
-        fun seller(id: String?) = sellers.firstOrNull { it.id == id }
+        private val sellersById = sellers.asReversed().associateBy { it.id }
+
+        fun seller(id: String?) = sellersById[id]
         fun product(id: String?) = products.firstOrNull { it.id == id }
         fun category(id: String) = categories.firstOrNull { it.id == id }
     }
@@ -205,6 +207,7 @@ object Shop {
                 promoUntil = it.optLong("promo_until"),
             )
         }
+        val sellerIds = sellers.mapTo(HashSet()) { it.id }
         val products = objects("products").map {
             Product(
                 id = it.getString("id"),
@@ -218,7 +221,7 @@ object Shop {
                 currency = it.optString("currency", "RUB"),
                 images = strings(it.optJSONArray("images")),
             )
-        }.filter { p -> sellers.any { it.id == p.seller } }
+        }.filter { p -> p.seller in sellerIds }
         // Old releases cached an example directory. Only debug builds may render its fictitious shops.
         val demo = root.optBoolean("demo")
         val visible = !demo || BuildConfig.DEBUG

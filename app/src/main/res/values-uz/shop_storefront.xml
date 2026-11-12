@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="store_terms_title">Joylashtirish shartlari</string>
-    <string name="store_listing_terms">Ariza tasdiqlangandan keyingi bir martalik to‘lov korxona sahifasi va uning barcha mahsulotlarini qamrab oladi.</string>
+    <string name="store_listing_terms">Hozircha kompaniya va uning mahsulotlarini katalogga joylashtirish bepul.</string>
     <string name="store_promotion_terms">Reklama ixtiyoriy va alohida to‘lanadi.</string>
     <string name="store_apply">Ariza yuborish</string>
     <string name="store_unavailable">Katalogni yuklab bo‘lmadi</string>
@@ -11,4 +11,17 @@
     <string name="store_more_products">Ko‘proq mahsulot ko‘rsatish</string>
     <string name="store_seller_portal">Sotuvchi kabineti</string>
     <string name="store_browser_unavailable">Brauzerni ochib bo‘lmadi</string>
+    <string name="store_search_title">Katalogdan qidirish</string>
+    <string name="store_search_products">Mahsulot qidirish</string>
+    <string name="store_search_companies">Kompaniya qidirish</string>
+    <string name="store_companies">Kompaniyalar</string>
+    <string name="store_filters">Filtrlar</string>
+    <string name="store_category">Toifa</string>
+    <string name="store_any_city">Barcha shaharlar</string>
+    <string name="store_price_from">Eng past narx, ₽</string>
+    <string name="store_price_to">Eng yuqori narx, ₽</string>
+    <string name="store_price_range_error">Eng past narx eng yuqori narxdan katta.</string>
+    <string name="store_apply_filters">Qo‘llash</string>
+    <string name="store_search_prompt">Qidiruv so‘zini kiriting yoki filtrlarni tanlang.</string>
+    <string name="store_more_companies">Yana kompaniyalarni ko‘rsatish</string>
 </resources>

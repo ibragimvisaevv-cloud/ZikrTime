@@ -284,6 +284,7 @@ private fun AppRoot() {
             Screen.READING_FRIDAY -> com.zikrtime.app.ui.QuranScreen(18, 1)
             Screen.APPS -> AppsScreen()
             Screen.ABOUT -> AboutScreen()
+            Screen.SHOP_SEARCH -> com.zikrtime.app.ui.ShopSearchScreen()
             Screen.SHOP_SELLER -> com.zikrtime.app.ui.SellerScreen(entry?.seller)
             Screen.SHOP_PRODUCT -> com.zikrtime.app.ui.ProductScreen(entry?.product)
             Screen.PLACES -> com.zikrtime.app.ui.PlacesScreen()

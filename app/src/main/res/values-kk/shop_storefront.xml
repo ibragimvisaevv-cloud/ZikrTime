@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="store_terms_title">Жариялау шарттары</string>
-    <string name="store_listing_terms">Өтінім мақұлданғаннан кейінгі бір реттік төлем компания парақшасы мен оның барлық тауарларын қамтиды.</string>
+    <string name="store_listing_terms">Компания мен оның тауарларын каталогқа орналастыру әзірге тегін.</string>
     <string name="store_promotion_terms">Қаласаңыз, жарнаманы бөлек ақыға қоса аласыз.</string>
     <string name="store_apply">Өтінім беру</string>
     <string name="store_unavailable">Каталогты жүктеу мүмкін болмады</string>
@@ -11,4 +11,17 @@
     <string name="store_more_products">Тағы тауар көрсету</string>
     <string name="store_seller_portal">Сатушы кабинеті</string>
     <string name="store_browser_unavailable">Браузерді ашу мүмкін болмады</string>
+    <string name="store_search_title">Каталогтан іздеу</string>
+    <string name="store_search_products">Тауар іздеу</string>
+    <string name="store_search_companies">Компания іздеу</string>
+    <string name="store_companies">Компаниялар</string>
+    <string name="store_filters">Сүзгілер</string>
+    <string name="store_category">Санат</string>
+    <string name="store_any_city">Барлық қала</string>
+    <string name="store_price_from">Ең төмен баға, ₽</string>
+    <string name="store_price_to">Ең жоғары баға, ₽</string>
+    <string name="store_price_range_error">Ең төмен баға ең жоғары бағадан асып тұр.</string>
+    <string name="store_apply_filters">Қолдану</string>
+    <string name="store_search_prompt">Іздеу сөзін енгізіңіз немесе сүзгілерді таңдаңыз.</string>
+    <string name="store_more_companies">Тағы компания көрсету</string>
 </resources>
