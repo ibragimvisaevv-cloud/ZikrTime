@@ -71,12 +71,14 @@ jobs:
           compression-level: 0
       - name: Prepare guest audio, recording tools and KVM
         run: |
+          if jps | grep -q GradleDaemon; then bash gradlew --stop; fi
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends ffmpeg pulseaudio pulseaudio-utils
           python3 -m pip install Pillow websocket-client numpy scipy
           pulseaudio --start --exit-idle-time=-1
           sink=$(pactl load-module module-null-sink sink_name=tasbih)
           pactl set-default-sink tasbih
+          echo "PULSE_SERVER=$(pactl info | sed -n 's/^Server String: //p')" >> "$GITHUB_ENV"
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-tasbih.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
@@ -88,8 +90,10 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: pixel_2
+          ram-size: 2048M
+          heap-size: 256M
           disable-animations: false
-          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -no-boot-anim -camera-back none
+          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -feature -Vulkan -no-boot-anim -camera-back none -camera-front none
           script: python3 tools/ci/tasbih_cosmos_capture.py
       - uses: actions/upload-artifact@v4
         if: always()
