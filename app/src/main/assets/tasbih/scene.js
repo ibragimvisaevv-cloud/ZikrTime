@@ -8,7 +8,7 @@
     const strand = el("strand").getContext("2d");
     const backdrop = new Image();
     let width, height, unit, skyScale, ratio;
-    let settings = null, latestTotal = 0, latestGoal = 0, visibleTotal = 0;
+    let settings = null, latestTotal = 0, latestGoal = 0;
     let travel = null, pulses = [], queue = [], animation = 0, turns = 0;
     let strandDirty = true, lastWorlds = -Infinity, worldTime = 0, worldClock = 0;
     const strikes = new Set();
@@ -146,7 +146,7 @@
             worlds.beginPath();
             worlds.strokeStyle=["#89745a","#c1a079","#8e775d","#d0ad83"][i];
             worlds.globalAlpha=.84;
-            worlds.lineWidth=i===2?.7:1;
+            worlds.lineWidth=i===2 ? .7 : 1;
             worlds.ellipse(0,0,r*(1.27+i*.22),r*(.25+i*.055),0,
                 front?0:Math.PI,front?Math.PI:tau);
             worlds.stroke();
@@ -187,11 +187,21 @@
         unit=Math.min(width/480,height/designHeight);
         ratio=Math.min(3,window.devicePixelRatio || 1);
         skyScale=height/designHeight;
-        for (const ctx of [sky,worlds,strand]) {
-            const surface=ctx.canvas;
-            surface.width=Math.round(width*ratio);
-            surface.height=Math.round(height*ratio);
-            ctx.setTransform(surface.width/width,0,0,surface.height/height,0,0);
+        document.body.style.setProperty("--u",unit+"px");
+        // Only the two moving strips need high-DPI buffers. Coordinates stay in
+        // the full scene's coordinate system so rotation and resizing agree.
+        for (const [ctx, top, bottom, density] of [
+            [sky, 0, 1, Math.min(1.5,ratio)],
+            [worlds, .73, 1, ratio],
+            [strand, .38, .66, ratio]
+        ]) {
+            const surface=ctx.canvas, stripHeight=height*(bottom-top);
+            surface.style.top=100*top+"%";
+            surface.style.height=100*(bottom-top)+"%";
+            surface.width=Math.round(width*density);
+            surface.height=Math.max(1,Math.round(stripHeight*density));
+            const sy=surface.height/stripHeight;
+            ctx.setTransform(surface.width/width,0,0,sy,0,-top*height*sy);
         }
         drawBackdrop();
         positionArabic();
@@ -273,7 +283,7 @@
     function frame(now) {
         animation=0;
         if (!width || document.hidden) return;
-        const reduced=settings?.reducedMotion === true;
+        const reduced=settings && settings.reducedMotion === true;
         if (lastWorlds===-Infinity || (!reduced && now-lastWorlds>=32)) {
             if (worldClock && !reduced) worldTime+=(now-worldClock)/1000;
             drawWorlds(worldTime);
@@ -281,7 +291,7 @@
         }
         let phase=0;
         if (travel) {
-            const t=Math.min(1,(now-travel.start)/travel.duration);
+            const t=Math.min(1,Math.max(0,(now-travel.start)/travel.duration));
             phase=t*t*(3-2*t);
             if (t>=1) {
                 turns=(turns+1)%glass.length;
@@ -301,7 +311,6 @@
     }
 
     function renderNumber(total,goal) {
-        visibleTotal=total;
         const cycle=goal>0 && total>0 ? (total-1)%goal+1 : total;
         const fraction=goal>0 ? cycle/goal : 0;
         const angle=tau*fraction-Math.PI/2, length=tau*47;
@@ -312,16 +321,16 @@
         el("arc").setAttribute("stroke-dasharray",(fraction*length)+" "+length);
         el("tip").setAttribute("cx",50+47*Math.cos(angle));
         el("tip").setAttribute("cy",50+47*Math.sin(angle));
-        const countGoal=goal>0 ? cycle+" / "+goal : total+", "+(settings?.unlimitedLabel || "∞");
-        const complete=goal>0 && cycle===goal ? settings?.completedLabel : "";
-        el("beads").setAttribute("aria-label",[settings?.tapLabel,countGoal,complete].filter(Boolean).join(", "));
+        const countGoal=goal>0 ? cycle+" / "+goal : total+", "+((settings && settings.unlimitedLabel) || "∞");
+        const complete=goal>0 && cycle===goal ? settings && settings.completedLabel : "";
+        el("beads").setAttribute("aria-label",[settings && settings.tapLabel,countGoal,complete].filter(Boolean).join(", "));
     }
     function commitStep(event,now,effects) {
         renderNumber(event.total,event.goal);
         if (effects) pulses.push(now);
         const timer=setTimeout(() => {
             strikes.delete(timer);
-            if (!document.hidden) window.AndroidTasbih?.strike();
+            if (!document.hidden && window.AndroidTasbih) window.AndroidTasbih.strike();
         },160);
         strikes.add(timer);
         strandDirty=true;
@@ -381,7 +390,7 @@
     button.dataset.testid="tasbih_counter";
     el("count").dataset.testid="tasbih_count_value";
     let pointer=null, lastY=0, dragged=0, moved=false, originX=0, originY=0;
-    const tap=() => window.AndroidTasbih?.tap();
+    const tap=() => { if (window.AndroidTasbih) window.AndroidTasbih.tap(); };
     button.addEventListener("pointerdown",e => {
         if (pointer!==null || !e.isPrimary || e.button!==0) return;
         pointer=e.pointerId; lastY=originY=e.clientY; originX=e.clientX; dragged=0; moved=false;
