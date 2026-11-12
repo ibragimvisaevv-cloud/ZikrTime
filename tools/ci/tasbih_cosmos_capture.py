@@ -117,8 +117,9 @@ def record(socket, temp):
     pulse_start = time.monotonic()
     time.sleep(.3)
     start_time = time.monotonic()
-    answer = adb('emu', 'screenrecord', 'start', '--time-limit', '30', raw.resolve())
-    console = 'OK' in answer and 'KO' not in answer
+    attempt = subprocess.run(['adb', 'emu', 'screenrecord', 'start', '--time-limit', '30',
+                              str(raw.resolve())], capture_output=True, text=True, timeout=15)
+    console = attempt.returncode == 0 and 'OK' in attempt.stdout and 'KO' not in attempt.stdout
     fallback = None
     if not console:
         raw = temp / 'guest.mp4'
