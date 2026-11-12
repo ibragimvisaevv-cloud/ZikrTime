@@ -1,0 +1,98 @@
+@font-face {
+    font-family: SceneAmiri;
+    src: url("amiri.ttf") format("truetype");
+    font-display: swap;
+}
+* { box-sizing: border-box; }
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    margin: 0;
+    background: #10191c;
+    color: #fffaf2;
+    font-family: Roboto, "Noto Sans", sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    user-select: none;
+}
+body { position: relative; --u: min(.208333vw, .117096vh); }
+canvas, #words {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+#arabic { font-family: SceneAmiri, "Noto Naskh Arabic", serif; fill: #fffaf0; }
+#rule {
+    pointer-events: none;
+    position: absolute;
+    width: calc(166 * var(--u));
+    height: max(1px, calc(1.1 * var(--u)));
+    left: 50%;
+    top: 31.75%;
+    transform: translateX(-50%);
+    background: linear-gradient(to right, transparent, #e0c4a561, #e5b186b8, #d7c4af61, transparent);
+}
+#rule i {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: calc(5 * var(--u));
+    height: calc(5 * var(--u));
+    transform: translate(-50%, -50%) rotate(45deg);
+    border-radius: 25%;
+    background: #ffae72;
+    box-shadow: 0 0 calc(5 * var(--u)) calc(1.1 * var(--u)) #f58343cc;
+}
+#caption {
+    position: absolute;
+    left: 4%;
+    width: 92%;
+    top: 33.35%;
+    text-align: center;
+    pointer-events: none;
+    text-shadow: 0 1px 3px #181a1860;
+}
+#transcription {
+    font-size: calc(25.5 * var(--u));
+    font-weight: 500;
+    line-height: 1.22;
+}
+#translation {
+    color: #dedad2;
+    font-size: calc(16.2 * var(--u));
+    font-weight: 300;
+    margin-top: calc(1 * var(--u));
+    line-height: 1.18;
+}
+#dial {
+    position: absolute;
+    top: 67.65%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(86 * var(--u));
+    height: calc(86 * var(--u));
+    pointer-events: none;
+}
+#dial svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+#digits { position: absolute; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+#count { font-size: calc(37.2 * var(--u)); font-weight: 500; font-variant-numeric: tabular-nums; line-height: 1.06; }
+#goal { color: #bbbdb9; font-weight: 300; font-size: calc(12 * var(--u)); margin-top: calc(1 * var(--u)); line-height: 1; }
+#beads {
+    position: absolute;
+    left: 0;
+    top: 41%;
+    width: 100%;
+    height: 36%;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    appearance: none;
+    cursor: pointer;
+    touch-action: none;
+}
+#beads:focus { outline: none; }
+#beads:focus-visible { outline: 1px dashed #f6dbaba8; outline-offset: -4px; }

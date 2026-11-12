@@ -318,6 +318,10 @@ object Store {
         get() = int(K_TASBIH_TARGET, 33)
         set(v) = put(K_TASBIH_TARGET, v)
 
+    var tasbihSoundEnabled: Boolean
+        get() = bool("tasbih_bead_sound", true)
+        set(v) = put("tasbih_bead_sound", v)
+
     /** Отмеченные дни поста (ISO-даты). */
     var ramadanFasts: Set<String>
         get() = strSet("ramadan_fasts")

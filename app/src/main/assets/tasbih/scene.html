@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link rel="stylesheet" href="scene.css">
+    <script src="scene.js" defer></script>
+</head>
+<body>
+    <canvas id="sky" aria-hidden="true"></canvas>
+    <canvas id="planets" aria-hidden="true"></canvas>
+    <svg id="words" xmlns="http://www.w3.org/2000/svg">
+        <text id="arabic" lang="ar" direction="rtl" text-anchor="middle"></text>
+    </svg>
+    <div id="rule" aria-hidden="true"><i></i></div>
+    <div id="caption">
+        <div id="transcription"></div>
+        <div id="translation"></div>
+    </div>
+    <canvas id="strand" aria-hidden="true"></canvas>
+    <div id="dial">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+            <defs>
+                <radialGradient id="halo">
+                    <stop stop-color="#fff1d5" stop-opacity=".98"></stop>
+                    <stop offset=".22" stop-color="#ffd3a4" stop-opacity=".98"></stop>
+                    <stop offset=".40" stop-color="#ff9870" stop-opacity=".5"></stop>
+                    <stop offset="1" stop-color="#fa8a53" stop-opacity="0"></stop>
+                </radialGradient>
+            </defs>
+            <circle cx="50" cy="50" r="47" fill="rgba(8,16,19,.48)" stroke="rgba(198,210,209,.37)" stroke-width="1.6"></circle>
+            <circle id="arc" cx="50" cy="50" r="47" fill="none" stroke="#ff9759" stroke-width="3.65" stroke-linecap="round" transform="rotate(-90 50 50)"></circle>
+            <circle id="tip" r="10.3" fill="url(#halo)"></circle>
+        </svg>
+        <div id="digits" aria-live="polite" aria-atomic="true">
+            <span id="count"></span><span id="goal"></span>
+        </div>
+    </div>
+    <button id="beads" type="button" disabled></button>
+</body>
+</html>
