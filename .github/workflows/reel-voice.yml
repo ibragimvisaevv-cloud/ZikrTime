@@ -59,8 +59,8 @@ jobs:
           (28.15,34.72,[
            ["Можно проверить свои знания, / найти место на карте / или заглянуть в магазин."]]),
           (35.08,42.72,[
-           ["А чтобы меньше отвлекаться, / я ставлю лимит для приложений.","И откладываю телефон.","Эти минуты — для нама́за."],
-           ["Я ставлю лимит для приложений / и откладываю телефон.","Эти минуты — для нама́за."]]),
+           ["А чтобы меньше отвлекаться, / я включаю паузу перед открытием приложений.","И откладываю телефон.","Эти минуты — для нама́за."],
+           ["Я включаю паузу перед открытием приложений.","И откладываю телефон.","Эти минуты — для нама́за."]]),
           (44.10,47.75,[
            ["Зикр Тайм.","Время для главного."]])]
           out=pathlib.Path("reel-speech");out.mkdir(exist_ok=True)
@@ -110,14 +110,14 @@ jobs:
           track *= .77/max(.01,np.max(abs(track)))
           with wave.open("/tmp/voice.wav","wb") as f:
               f.setnchannels(1);f.setsampwidth(2);f.setframerate(sr);f.writeframes(np.clip(track*32767,-32767,32767).astype("<i2").tobytes())
-          subprocess.run(["ffmpeg","-hide_banner","-loglevel","error","-y","-i","/tmp/voice.wav","-c:a","flac","-compression_level","8","/tmp/voice.flac"],check=True)
-          audio_raw=pathlib.Path("/tmp/voice.flac").read_bytes()
+          import gzip
+          audio_raw=gzip.compress(pathlib.Path("/tmp/voice.wav").read_bytes(),compresslevel=6,mtime=0)
           chunks=0
           for i,start in enumerate(range(0,len(audio_raw),62000)):
               (out/f"voice_{i:02}.part").write_bytes(audio_raw[start:start+62000]);chunks+=1
           import hashlib
           (out/"timings.json").write_text(json.dumps(timings,ensure_ascii=False,indent=2))
-          (out/"manifest.json").write_text(json.dumps({"length":len(audio_raw),"sha256":hashlib.sha256(audio_raw).hexdigest(),"chunks":chunks,"sample_rate":sr,"codec":"flac","voice":"Piper ru_RU-dmitri-medium"},indent=2))
+          (out/"manifest.json").write_text(json.dumps({"length":len(audio_raw),"sha256":hashlib.sha256(audio_raw).hexdigest(),"chunks":chunks,"sample_rate":sr,"codec":"wav.gz","voice":"Piper ru_RU-dmitri-medium"},indent=2))
           print(json.dumps(timings,ensure_ascii=False))
           PY
       - name: Save the voice take
