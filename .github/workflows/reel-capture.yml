@@ -1,0 +1,180 @@
+name: Record ZikrTime 0.8.28 on Android for Reels
+on:
+  push:
+    branches: [media/zikrtime-reel-20261112]
+    paths: ['.github/workflows/reel-capture.yml']
+permissions:
+  contents: write
+  actions: read
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: media/zikrtime-reel-20261112
+      - name: Retrieve verified 0.8.28 debug application
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 42474183725 -n learning-verified-inputs --repo "$GITHUB_REPOSITORY" -D .
+          AAPT=$(find "$ANDROID_HOME/build-tools" -name aapt | sort -V | tail -1)
+          "$AAPT" dump badging app/build/outputs/apk/debug/app-debug.apk | sed -n '1p' | tee /tmp/version.txt
+          grep -F "versionName='0.8.28'" /tmp/version.txt
+      - name: Prepare internal Android test fixtures
+        run: |
+          mkdir -p fixtures
+          keytool -genkeypair -keystore fixtures/test.jks -storepass android -keypass android -alias test -dname 'CN=Temporary local target' -keyalg RSA -keysize 2048 -validity 2
+          bash tools/ci/build_focus_fixture.sh fixtures/test.jks fixtures/focus.apk
+          bash tools/ci/build_widget_ui.sh
+          python3 -m pip install 'Pillow>=11,<13'
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Write camera script
+        run: |
+          cat > /tmp/reel_camera.py <<'PY'
+          from pathlib import Path
+          import os
+          import hashlib
+          import contextlib
+          import traceback
+          exec(compile(Path('tools/ci/guide_journeys.py').read_text().split('\ndef fresh_skip_and_upgrade():')[0],'guide','exec'))
+          real_guide_ui=ui
+          original_locate=locate_control
+          work=Path('reel-output'); work.mkdir(exist_ok=True)
+          OUT.mkdir(exist_ok=True); (OUT/'screens').mkdir(exist_ok=True)
+          errors={}
+          def still(name):
+              subprocess.run(['adb','exec-out','screencap','-p'],stdout=(work/(name+'.png')).open('wb'),check=True)
+              (work/(name+'.xml')).write_bytes(ET.tostring(ui(),encoding='utf-8'))
+          def show(route):
+              shell('am','start','-S','-W','-n',PKG+'/.MainActivity','--es','qa_screen',route,'--es','qa_lang','ru')
+              time.sleep(1.5)
+          def shot(name,duration,action,pause=.7):
+              dest='/sdcard/'+name+'.mp4'
+              rec=subprocess.Popen(['adb','shell','screenrecord','--size','720x1280','--bit-rate','2400000','--time-limit',str(duration),dest])
+              time.sleep(pause)
+              try: action()
+              finally:
+                  rec.wait(timeout=duration+10)
+                  subprocess.run(['adb','pull',dest,str(work/(name+'.mp4'))],check=True)
+          def attempt(name,action):
+              print('Capturing '+name,flush=True)
+              try: action()
+              except Exception as err:
+                  errors[name]=repr(err);traceback.print_exc()
+                  try: still('diag-'+name)
+                  except Exception: pass
+          def center(node):
+              l,t,r,b=map(int,re.findall(r'-?\d+',node.get('bounds')))
+              return (l+r)//2,(t+b)//2
+          def press(node):
+              shell('input','tap',*center(node))
+          def setup():
+              shell('wm','size','1080x1920');shell('wm','density','400')
+              shell('cmd','uimode','night','yes')
+              shell('settings','put','global','auto_time','0')
+              shell('settings','put','global','auto_time_zone','0')
+              shell('setprop','persist.sys.timezone','Europe/Moscow')
+              localclock=subprocess.run(['adb','shell','su','0','date','111213052026.00'],capture_output=True,text=True)
+              print('device date',shell('date'),localclock.returncode,flush=True)
+              shell('cmd','locale','set-app-locales',PKG,'--user','0','--locales','ru')
+              seed('dark',True,True)
+              shell('pm','grant',PKG,'android.permission.POST_NOTIFICATIONS')
+              put_pref('appearance','string','dark')
+              show('home')
+          def home_swipe():
+              show('home');still('home-start')
+              shot('home-swipe',8,lambda:shell('input','swipe',500,1260,500,470,1050),2)
+              still('home-finish')
+          def alarm_shot():
+              show('alarm');root=ui()
+              node=next(n for n in root.iter('node') if n.attrib.get('checkable')=='true' or n.attrib.get('class')=='android.widget.Switch')
+              a,b=center(node);still('alarm-off')
+              shot('alarm-switch',6,lambda:shell('input','tap',a,b),1.6)
+              still('alarm-on')
+          def focus_shot():
+              # Configure a disposable target only; the feature is initially switched off.
+              shell('am','force-stop',PKG)
+              put_pref('packages','set',[FOCUS_TARGET]);put_pref('apps_init','boolean','true')
+              shell('appops','set',PKG,'GET_USAGE_STATS','allow');shell('appops','set',PKG,'SYSTEM_ALERT_WINDOW','allow')
+              shell('settings','put','secure','enabled_accessibility_services',PKG+'/.screentime.BlockerService')
+              shell('settings','put','secure','accessibility_enabled','1')
+              show('focus');time.sleep(1.5);still('focus-home')
+              # Open the real settings sheet, then flip the row's actual Compose Switch.
+              tap_control('focus_settings_open')
+              node=locate_control('Зикр перед открытием','text')
+              root=ui(); label=find_control(root,'Зикр перед открытием','text')
+              x0,y0=center(label)
+              switches=[n for n in root.iter('node') if n.get('checkable')=='true']
+              target=min(switches,key=lambda n:abs(center(n)[1]-y0)) if switches else label
+              if target.get('checked')=='true': press(target);time.sleep(.5)
+              still('focus-off')
+              shot('focus-switch',7,lambda:press(target),1.5)
+              still('focus-on')
+              print('enabled after actual tap',prefs('focus_pause_v1').get('enabled'),flush=True)
+              assert prefs('focus_pause_v1').get('enabled')=='true'
+              open_focus_target();wait_pause();still('focus-pause')
+          def widget_shot():
+              # Use the repository's actual stock Launcher pinning fixture.
+              global ui
+              loc={}
+              exec(compile(Path('tools/ci/widgets_launcher.py').read_text().split("shell('pm','clear',PKG)")[0],'widgets','exec'),loc)
+              loc['pin']('NextPrayerWidget')
+              loc['probe']('theme','NextPrayerWidget',theme='dark')
+              root=loc['show_provider']('NextPrayerWidget')
+              found=[n for n in root.iter('node') if '2×2' in n.get('content-desc','')]
+              marker=found[0] if found else next(n for n in root.iter('node') if 'w_value' in n.get('resource-id',''))
+              xy=center(marker);still('widget-home')
+              (work/'widget-marker.txt').write_text(json.dumps(marker.attrib,ensure_ascii=False))
+              shot('widget-open',7,lambda:shell('input','tap',*xy),2.4)
+              still('widget-opened')
+          attempt('setup',setup)
+          attempt('home',home_swipe)
+          attempt('alarm',alarm_shot)
+          attempt('focus',focus_shot)
+          attempt('widget',widget_shot)
+          (work/'errors.json').write_text(json.dumps(errors,ensure_ascii=False))
+          print(errors,flush=True)
+          
+          PY
+      - name: Capture actual interface on Android 15
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_2
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -camera-back none -camera-front none -timezone Europe/Moscow
+          script: adb install -r -g app/build/outputs/apk/debug/app-debug.apk && adb install -r fixtures/focus.apk && adb install -r fixtures/widget-ui.apk && python3 /tmp/reel_camera.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ZikrTime-reel-actual-interface
+          path: reel-output/
+      - name: Transfer verified frames to the same isolated media branch
+        if: always()
+        run: |
+          test -d reel-output
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib,json
+          out=Path('reel-capture');out.mkdir(exist_ok=True)
+          index={}
+          for f in sorted(Path('reel-output').iterdir()):
+              data=f.read_bytes()
+              chunks=[]
+              for i in range(0,len(data),96000):
+                  p=out/(f.name+'.part%03d'%(i//96000));p.write_bytes(data[i:i+96000]);chunks.append(p.name)
+              index[f.name]={'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest(),'parts':chunks}
+          (out/'index.json').write_text(json.dumps(index))
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f reel-capture/
+          git commit -m 'Save captured interface for the ZikrTime film'
+          git pull --rebase origin media/zikrtime-reel-20261112
+          git push origin HEAD:media/zikrtime-reel-20261112
