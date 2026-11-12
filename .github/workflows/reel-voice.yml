@@ -1,0 +1,134 @@
+name: Reel 48 - Russian voiceover
+on:
+  push:
+    branches: [media/zikrtime-reel-20261112]
+    paths: ['.github/workflows/reel-voice.yml']
+permissions:
+  contents: write
+jobs:
+  voiceover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    env:
+      OMP_NUM_THREADS: 2
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: media/zikrtime-reel-20261112
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install open speech engine and official Russian voice
+        run: |
+          python -m pip install --disable-pip-version-check piper-tts numpy
+          mkdir -p /tmp/voice-model
+          cd /tmp/voice-model
+          voice=ru_RU-dmitri-medium.onnx
+          url=https://huggingface.co/rhasspy/piper-voices/resolve/main/ru/ru_RU/dmitri/medium
+          curl --fail --location --silent --show-error --retry 3 "$url/$voice" -o "$voice"
+          curl --fail --location --silent --show-error --retry 3 "$url/$voice.json" -o "$voice.json"
+          test "$(stat -c %s "$voice")" -gt 30000000
+      - name: Record Russian narration and subtitle cues
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import pathlib
+          import subprocess
+          import wave
+          import io
+          import re
+          import unicodedata
+          import numpy as np
+          from piper import PiperVoice
+          
+          # The same Russian VITS speaker and unmodified speaking rate are used for every word.
+          # Slashes indicate optional subtitle breaks. Each sentence is synthesized in full.
+          scenes = [
+          (0.08,3.90,[
+           ["Сколько осталось до а́сра?","Одного взгляда достаточно."]]),
+          (4.08,11.72,[
+           ["Это Зикр Тайм.","До следующего нама́за — время на виджете.","А здесь — всё расписание на сегодня."],
+           ["Это Зикр Тайм.","На виджете — время до нама́за.","А здесь — всё расписание на сегодня."]]),
+          (12.15,17.68,[
+           ["Можно заранее поставить напоминание / и выбрать аза́н."]]),
+          (18.05,27.75,[
+           ["Здесь можно почитать Кора́н, / открыть утренние или вечерние азка́ры.","А для зи́кра есть тасби́х: / одно касание — один отсчёт."],
+           ["Читайте Кора́н и утренние / или вечерние азка́ры.","А для зи́кра есть тасби́х: / одно касание — один отсчёт."]]),
+          (28.15,34.72,[
+           ["Можно проверить свои знания, / найти место на карте / или заглянуть в магазин."]]),
+          (35.08,42.72,[
+           ["А чтобы меньше отвлекаться, / я ставлю лимит для приложений.","И откладываю телефон.","Эти минуты — для нама́за."],
+           ["Я ставлю лимит для приложений / и откладываю телефон.","Эти минуты — для нама́за."]]),
+          (44.10,47.75,[
+           ["Зикр Тайм.","Время для главного."]])]
+          out=pathlib.Path("reel-speech");out.mkdir(exist_ok=True)
+          voice=PiperVoice.load("/tmp/voice-model/ru_RU-dmitri-medium.onnx")
+          sr=voice.config.sample_rate
+          track=np.zeros(round(48*sr),dtype=np.float32)
+          timings=[]
+          
+          def clean(s):
+              return s.replace("\u0301","").replace("Зикр Тайм","ZikrTime")
+          
+          def synth(line):
+              buf=io.BytesIO()
+              with wave.open(buf,"wb") as w: voice.synthesize_wav(line.replace(" / "," "),w)
+              buf.seek(0)
+              with wave.open(buf,"rb") as r:
+                  channels=r.getnchannels(); width=r.getsampwidth()
+                  assert r.getframerate()==sr and channels==1 and width==2
+                  data=np.frombuffer(r.readframes(r.getnframes()),dtype="<i2").astype(np.float32)/32768
+              idx=np.flatnonzero(abs(data)>0.0045)
+              if not idx.size: raise Exception("Empty speech")
+              return data[max(0,idx[0]-int(.025*sr)):min(len(data),idx[-1]+int(.06*sr))]
+          
+          for begin,end,alts in scenes:
+              for alt in alts:
+                  audio=[synth(l) for l in alt]
+                  lengths=[len(a)/sr for a in audio]
+                  pause=.13
+                  total=sum(lengths)+pause*(len(audio)-1)
+                  if total<=end-begin: break
+              if total>end-begin:
+                  if len(audio)>1:
+                      pause=max(.035,min(pause,(end-begin-sum(lengths))/(len(audio)-1)))
+                      total=sum(lengths)+pause*(len(audio)-1)
+                  if total>end-begin+.65:
+                      raise ValueError(f"Cannot fit sentence at natural rate: {alt} {total} vs {end-begin}")
+              t=begin
+              for line,audio_arr in zip(alt,audio):
+                  n=len(audio_arr); pos=round(t*sr);track[pos:pos+n]=audio_arr
+                  end_s=t+n/sr
+                  subtitles=[clean(s) for s in line.split(" / ")]
+                  durations=np.array([max(1,len(s)) for s in subtitles],dtype=float);duration=(n/sr)*durations/durations.sum()
+                  tt=t
+                  for s,dd in zip(subtitles,duration):
+                      timings.append(dict(start=round(tt,3),end=round(tt+dd,3),text=s));tt+=dd
+                  t=end_s+pause
+          track *= .77/max(.01,np.max(abs(track)))
+          with wave.open("/tmp/voice.wav","wb") as f:
+              f.setnchannels(1);f.setsampwidth(2);f.setframerate(sr);f.writeframes(np.clip(track*32767,-32767,32767).astype("<i2").tobytes())
+          subprocess.run(["ffmpeg","-hide_banner","-loglevel","error","-y","-i","/tmp/voice.wav","-c:a","flac","-compression_level","8","/tmp/voice.flac"],check=True)
+          audio_raw=pathlib.Path("/tmp/voice.flac").read_bytes()
+          chunks=0
+          for i,start in enumerate(range(0,len(audio_raw),62000)):
+              (out/f"voice_{i:02}.part").write_bytes(audio_raw[start:start+62000]);chunks+=1
+          import hashlib
+          (out/"timings.json").write_text(json.dumps(timings,ensure_ascii=False,indent=2))
+          (out/"manifest.json").write_text(json.dumps({"length":len(audio_raw),"sha256":hashlib.sha256(audio_raw).hexdigest(),"chunks":chunks,"sample_rate":sr,"codec":"flac","voice":"Piper ru_RU-dmitri-medium"},indent=2))
+          print(json.dumps(timings,ensure_ascii=False))
+          PY
+      - name: Save the voice take
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reel-speech
+          git commit -m "Save Russian ZikrTime reel narration on media branch"
+          for attempt in 1 2 3; do
+            git pull --rebase origin media/zikrtime-reel-20261112
+            git push origin HEAD:media/zikrtime-reel-20261112 && exit 0
+            sleep 2
+          done
+          exit 1
