@@ -25,15 +25,8 @@ jobs:
             curl --fail --silent --show-error --location --retry 2 --max-time 40 "https://images.pexels.com/photos/$id/pexels-photo-$id.jpeg?auto=compress&w=1800&q=90" -o "/tmp/$name.jpg"
             test "$(file -b --mime-type "/tmp/$name.jpg")" = image/jpeg
           done
-          python3 - <<'PY'
-          from pathlib import Path
-          from PIL import Image, ImageOps
-          for name in ('desk','beads'):
-              image=ImageOps.exif_transpose(Image.open('/tmp/'+name+'.jpg')).convert('RGB')
-              image.thumbnail((1800,2200), Image.Resampling.LANCZOS)
-              image.save('.reel-plates/'+name+'.jpg',quality=88,optimize=True,subsampling=0)
-              print(name,image.size)
-          PY
+          cp /tmp/desk.jpg "$dest/desk.jpg"
+          cp /tmp/beads.jpg "$dest/beads.jpg"
           cat > "$dest/SOURCES.txt" <<'SOURCES'
           Production sources for the ZikrTime Reel
           Desk: Thirdman, Pexels photo 7984774
