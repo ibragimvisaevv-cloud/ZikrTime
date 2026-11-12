@@ -1,0 +1,35 @@
+name: Reel - align spoken cues
+on:
+  push:
+    branches: [media/zikrtime-reel-20261112]
+    paths: ['.github/workflows/reel-voice-alignment.yml']
+permissions:
+  contents: read
+jobs:
+  align:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Find spoken word boundaries
+        run: |
+          pip -q install vosk
+          curl -fsSL --retry 2 https://alphacephei.com/vosk/models/vosk-model-small-ru-0.22.zip -o /tmp/align.zip
+          unzip -q /tmp/align.zip -d /tmp
+          python - <<'PY'
+          from pathlib import Path
+          import gzip,io,wave,json,audioop,vosk
+          audio=gzip.decompress(b''.join(f.read_bytes() for f in sorted(Path('reel-speech').glob('*.part'))))
+          with wave.open(io.BytesIO(audio)) as w:
+              data=audioop.ratecv(w.readframes(w.getnframes()),2,1,w.getframerate(),16000,None)[0]
+          rec=vosk.KaldiRecognizer(vosk.Model('/tmp/vosk-model-small-ru-0.22'),16000)
+          rec.SetWords(True)
+          out=[]
+          for i in range(0,len(data),8000):
+              if rec.AcceptWaveform(data[i:i+8000]):out.extend(json.loads(rec.Result()).get('result',[]))
+          out.extend(json.loads(rec.FinalResult()).get('result',[]))
+          print('VO_WORDS='+json.dumps([[a['word'],a['start'],a['end']] for a in out],ensure_ascii=False))
+          PY
