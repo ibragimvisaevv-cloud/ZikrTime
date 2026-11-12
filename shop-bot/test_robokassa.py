@@ -17,7 +17,7 @@ from test_acquiring import Storage, FakeBank
 
 class RobokassaOrders(unittest.TestCase):
     def setUp(self):
-        config = {"ROBOKASSA_ENABLED": "true", "ROBOKASSA_NPD_RECEIPTS": "true", "ROBOKASSA_TEST_MODE": "false",
+        config = {"LISTING_FEE_ENABLED": "1", "ROBOKASSA_ENABLED": "true", "ROBOKASSA_NPD_RECEIPTS": "true", "ROBOKASSA_TEST_MODE": "false",
                   "ROBOKASSA_MERCHANT_LOGIN": "fixture", "ROBOKASSA_PASSWORD1": "fixture-one",
                   "ROBOKASSA_PASSWORD2": "fixture-two", "ROBOKASSA_TEST_PASSWORD1": "test-one",
                   "ROBOKASSA_TEST_PASSWORD2": "test-two", "ROBOKASSA_HASH": "sha256",

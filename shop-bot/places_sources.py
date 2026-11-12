@@ -106,24 +106,35 @@ class _NoTelegram:
         raise RuntimeError("Place imports do not make Telegram requests")
 
 
-class _ImportSnapshot:
+class ExistingDatabaseSnapshot:
     """Give Bot one existing tagged snapshot, without its legacy migration path."""
     def __init__(self, storage, key):
         self.storage = storage
         self.key = key
         self.raw, self.etag = storage.get_tagged(key)
+        self.saved = False
         if self.raw is None or not self.etag:
-            raise RuntimeError("Place import requires an existing private database with ETag")
+            raise RuntimeError("Publication requires an existing private database with ETag")
 
     def get_tagged(self, key):
         if key != self.key:
-            raise RuntimeError("Unexpected import database key")
+            raise RuntimeError("Unexpected private database key")
+        if self.saved:
+            self.raw, self.etag = self.storage.get_tagged(key)
         return self.raw, self.etag
 
+    def get(self, key):
+        # Catalog publication reads the latest committed state after a conditional save.
+        if key != self.key:
+            raise RuntimeError("Unexpected private database key")
+        return self.storage.get_tagged(key)[0]
+
     def put(self, key, *args, **kwargs):
-        if key != self.key or kwargs.get("if_match") != self.etag:
-            raise RuntimeError("Place import requires a conditional database write")
-        return self.storage.put(key, *args, **kwargs)
+        if key != self.key or not self.etag or kwargs.get("if_match") != self.etag:
+            raise RuntimeError("Publication requires a conditional database write")
+        result = self.storage.put(key, *args, **kwargs)
+        self.saved = True
+        return result
 
 
 def publish_import(apply, storage=None, data=None):
@@ -136,7 +147,7 @@ def publish_import(apply, storage=None, data=None):
     import index
     storage = storage if storage is not None else index.make_storage()
     data = data if data is not None else index.make_storage(bucket=index.DATA_BUCKET)
-    snapshot = _ImportSnapshot(data, index.DB_KEY)
+    snapshot = ExistingDatabaseSnapshot(data, index.DB_KEY)
     bot = index.Bot(storage, _NoTelegram(), data=snapshot)
     if not re.fullmatch(r"[A-Za-z0-9_]{5,32}", str(bot.db.get("bot_username", ""))):
         raise RuntimeError("Stored bot_username is required for offline place publication")

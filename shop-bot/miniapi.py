@@ -96,6 +96,7 @@ def me(bot, uid, user):
     out = {
         "user": {"id": uid, "first_name": user.get("first_name", ""), "username": user.get("username", "")},
         "admin": admin, "owner": uid == bot.db.get("owner"),
+        "listing_fee_enabled": acquiring.listing_fee_enabled(),
         "sellers": [seller_out(bot, s) for s in sorted(bot.my_sellers(uid), key=lambda x: x["created"])],
         "categories": [{"id": c["id"], "name": c["names"]["ru"]} for c in CATEGORIES],
         "prices": bot.promo_prices(),
@@ -214,7 +215,7 @@ def act_seller_save(bot, uid, req):
         raise ApiError(f"Не больше {MAX_SELLERS_PER_USER} компаний на одного продавца")
     sid = new_id("s")
     admin = bot.is_admin(uid)
-    s = dict(f, id=sid, lat=None, lon=None, status="awaiting_payment" if admin else "pending", listing_fee="due", partner=False,
+    s = dict(f, id=sid, lat=None, lon=None, **acquiring.new_listing(admin), partner=False,
              owners=[uid], created=time.time(), products={})
     bot.db["sellers"][sid] = s
     bot.changed(s)
@@ -236,10 +237,11 @@ def act_seller_delete(bot, uid, req):
 
 def act_seller_visibility(bot, uid, req):
     s = own_seller(bot, uid, req.get("sid"))
-    # Как в боте: продавец сам скрывает и снова показывает уже одобренную компанию
-    if s["status"] in ("approved", "hidden"):
-        s["status"] = "hidden" if s["status"] == "approved" else ("awaiting_payment" if acquiring.unpaid(s) else "approved")
-        bot.dirty = bot.catalog_dirty = True
+    visible = req.get("visible", s["status"] == "hidden")
+    if type(visible) is not bool:
+        raise ApiError("Неверное состояние видимости.")
+    if not bot.set_visibility(s, visible):
+        raise ApiError("Показывать и скрывать можно только одобренную компанию.", 409)
     return {"seller": seller_out(bot, s)}
 
 
@@ -306,7 +308,16 @@ def act_mod_seller(bot, uid, req):
     action = req.get("do")
     if action not in ("ok", "no", "hide", "partner"):
         raise ApiError("Неизвестное действие")
-    bot.moderate(uid, action, str(req.get("sid") or ""))
+    sid = str(req.get("sid") or "")
+    s = bot.db["sellers"].get(sid)
+    if not s:
+        raise ApiError("Компания не найдена.", 404)
+    if action == "hide" and s["status"] not in ("approved", "hidden"):
+        raise ApiError("Скрыть можно опубликованную компанию.", 409)
+    partner = req.get("partner")
+    if "partner" in req and type(partner) is not bool:
+        raise ApiError("Неверное значение признака партнёра.")
+    bot.moderate(uid, action, sid, partner=partner)
     return {"moderation": moderation(bot)}
 
 

@@ -203,6 +203,14 @@ jobs:
           echo "FUNCTION_URL=$FUNCTION_URL" >> "$GITHUB_ENV"
           cp ci-out/feedback-deploy.json diag/vercel-deploy.json
 
+      - name: Обновление карточек и сверка каталога приложения
+        if: steps.keys.outputs.ready == 'true'
+        run: |
+          set -euo pipefail
+          export DATA_BUCKET="$BUCKET-data"
+          python3 shop-bot/publish_companies.py | tee diag/company-publication.json
+          jq -e '.public_catalog_matches == true' diag/company-publication.json > /dev/null
+
       - name: Подключение к Telegram
         if: steps.keys.outputs.ready == 'true'
         env:

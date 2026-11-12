@@ -6,10 +6,12 @@ import json
 import os
 import sys
 import time
+from unittest.mock import patch
 from urllib.parse import urlencode
 
 sys.path.insert(0, os.path.dirname(__file__))
 os.environ["BOT_TOKEN"] = "123:TEST"
+os.environ.pop("LISTING_FEE_ENABLED", None)
 import index  # noqa: E402
 import miniapi  # noqa: E402
 
@@ -76,6 +78,10 @@ def db():
     return json.loads(priv.files["data/db.json"])
 
 
+def public_companies():
+    return {s["id"]: s for s in json.loads(pub.files.get("catalog.json", b'{"sellers":[]}'))["sellers"]}
+
+
 # Подпись
 check(miniapi.check_init_data(init_data(5), TOKEN)["id"] == 5, "подпись: верная принимается")
 check(miniapi.check_init_data(init_data(5).replace("Ali", "Bob"), TOKEN) is None, "подпись: подделка отклоняется")
@@ -116,11 +122,61 @@ check(r["seller"]["products"][0]["old_price"] == 1300, "товар изменё�
 # Модерация владельцем из кабинета
 code, r = call(5, "mod_seller", sid=sid, do="ok")
 check(code == 403, "продавец не модерирует")
+code, r = call(1, "me")
+check(r.get("listing_fee_enabled") is False and sid in {s["id"] for s in r["moderation"]["pending"]},
+      "бесплатное размещение: новая заявка есть в очереди")
+code, r = call(1, "mod_seller", sid=sid, do="partner")
+call(5, "seller_visibility", sid=sid)
+check(db()["sellers"][sid]["status"] == "pending" and sid not in public_companies(),
+      "партнёрская метка и кнопка продавца не обходят проверку")
 code, r = call(1, "mod_seller", sid=sid, do="ok")
-check(code == 200 and db()["sellers"][sid]["status"] == "awaiting_payment", "ожидание оплаты после модерации")
-check(not pub.files.get("catalog.json") or not json.loads(pub.files["catalog.json"])["sellers"], "до оплаты карточки в каталоге нет")
+check(code == 200 and db()["sellers"][sid]["status"] == "approved" and sid in public_companies(),
+      "после одобрения компания сразу попадает в каталог")
+check(not r["moderation"]["pending"], "одобренная заявка исчезает из очереди")
 code, r = call(5, "promo_request", sid=sid, days=7)
 check(code == 400, "старое приложение не может создать ручную оплату")
+
+# Основной администратор создаёт автопрокат из мини-приложения.
+code, r = call(1, "seller_save", fields={"name": "Автопрокат", "category": "auto", "city": "Грозный"})
+rental = r["seller"]["id"]
+check(code == 200 and r["seller"]["status"] == "approved" and rental in public_companies(),
+      "своя компания администратора публикуется сразу")
+for _ in range(2):
+    call(1, "mod_seller", sid=rental, do="partner", partner=True)
+check(public_companies()[rental]["partner"], "метка партнёра публикуется в карточке")
+code, r = call(6, "seller_visibility", sid=rental)
+check(code == 404 and rental in public_companies(), "посторонний не может скрыть компанию")
+call(1, "mod_seller", sid=rental, do="hide")
+check(rental not in public_companies(), "автопрокат скрывается")
+call(1, "mod_seller", sid=rental, do="ok")
+check(rental in public_companies() and public_companies()[rental]["partner"], "автопрокат снова виден с прежней меткой")
+for visible in (False, True):
+    for _ in range(2):
+        call(1, "seller_visibility", sid=rental, visible=visible)
+    check((rental in public_companies()) == visible, "повтор запроса не переключает видимость обратно")
+
+# Снимок старой базы: в ожидание оплаты попадали только уже одобренные карточки.
+legacy = db()
+for status in ("awaiting_payment", "hidden", "pending", "rejected"):
+    legacy["sellers"][status] = dict(legacy["sellers"][rental], id=status, status=status, listing_fee="due")
+priv.put(index.DB_KEY, json.dumps(legacy).encode(), "application/json")
+with patch.object(pub, "put", side_effect=OSError("interrupted catalog write")):
+    check(call(1, "me")[0] == 500, "сбой записи публичного каталога замечен")
+check(db()["sellers"]["awaiting_payment"]["status"] == "approved" and "awaiting_payment" not in public_companies(),
+      "при прерывании приватная база уже сохранена, а в каталоге ещё старая версия")
+for _ in range(2):
+    code, r = call(1, "me")
+    check(code == 200 and db()["sellers"]["awaiting_payment"]["status"] == "approved"
+          and "awaiting_payment" in public_companies(), "старая одобренная карточка восстановлена в каталоге")
+    check(set(public_companies()).isdisjoint(("hidden", "pending", "rejected")),
+          "скрытые и непрошедшие проверку карточки остаются закрытыми")
+    check({s["id"] for s in r["moderation"]["pending"]} == {"pending"}, "старая заявка остаётся в очереди")
+    check(not db().get("catalog_publish_pending"), "после успешной публикации повторная отправка не требуется")
+for status in ("pending", "rejected"):
+    check(call(1, "mod_seller", sid=status, do="hide")[0] == 409, "скрыть ещё не опубликованную карточку нельзя")
+    check(call(1, "seller_visibility", sid=status, visible=True)[0] == 409, "до одобрения показать нельзя")
+    check(db()["sellers"][status]["status"] == status and status not in public_companies(),
+          "старые кнопки скрытия и показа не публикуют карточку до одобрения")
 
 # Настройки владельца
 code, r = call(5, "settings", prices={"7": 1, "30": 2})

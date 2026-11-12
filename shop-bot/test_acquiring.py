@@ -2,6 +2,7 @@
 import hashlib
 import io
 import json
+import os
 import time
 import unittest
 from types import SimpleNamespace
@@ -60,6 +61,9 @@ class FakeBank:
 
 class Orders(unittest.TestCase):
     def setUp(self):
+        fee = patch.dict(os.environ, {"LISTING_FEE_ENABLED": "1"})
+        fee.start()
+        self.addCleanup(fee.stop)
         self.pub, self.priv, self.bank = Storage(), Storage(), FakeBank()
         self.factory = lambda bucket: self.priv if bucket == index.DATA_BUCKET else self.pub
         self.shop = {"id":"s1", "owners":[5], "status":"awaiting_payment", "listing_fee":"due",
@@ -105,6 +109,34 @@ class Orders(unittest.TestCase):
         self.bank.status="REFUNDED";self.notice();self.notice()
         self.assertEqual(json.loads(self.pub.files["catalog.json"])["sellers"], [])
         self.assertEqual(self.db()["sellers"]["s1"]["listing_fee"],"due")
+
+    def test_disabling_fee_blocks_new_and_resumed_listing_orders_but_accepts_settlement(self):
+        # Existing customers may have already visited the bank when the fee is suspended.
+        order = self.buy()
+        with patch.dict(os.environ, {"LISTING_FEE_ENABLED": "0"}):
+            info = self.call("list")
+            self.assertFalse(info["listing_fee_enabled"])
+            self.assertEqual(info["shops"][0]["status"], "approved")
+            self.assertEqual(info["shops"][0]["orders"][0]["id"], order["id"])
+            with self.assertRaises(a.CheckoutError):
+                self.buy(intent="b" * 32)
+            with self.assertRaises(a.CheckoutError):
+                self.call("resume", id=order["id"])
+            self.bank.status = "CONFIRMED"
+            self.assertEqual(self.notice(), "OK")
+            confirmed = self.db()["shop_orders"][order["id"]]
+            self.assertEqual(confirmed["state"], "review")
+            self.assertTrue(confirmed["alerted"])
+            alerts = len(self.db().get("outbox", []))
+            self.assertEqual(self.notice(), "OK")
+            self.assertEqual(len(self.db().get("outbox", [])), alerts)
+            self.bank.status = "REFUNDED"
+            self.assertEqual(self.notice(), "OK")
+            self.assertEqual(self.db()["shop_orders"][order["id"]]["state"], "refunded")
+            self.assertEqual([s["id"] for s in json.loads(self.pub.files["catalog.json"])["sellers"]], ["s1"])
+            self.assertEqual(len(self.bank.payments), 1)
+            promo = self.buy(kind="promo", days=7, intent="c" * 32)
+            self.assertEqual(promo["amount"], 10_000)
 
     def test_server_pricing_authentication_and_tamper(self):
         for req in ({"amount":1},{"price":0},{"currency":"USD"},{"sid":"other"},{"email":"missing"},

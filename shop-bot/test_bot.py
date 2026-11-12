@@ -5,6 +5,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
 os.environ["BOT_TOKEN"] = "123:TEST"
+os.environ.pop("LISTING_FEE_ENABLED", None)
 import index  # noqa: E402
 
 TOKEN = "123:TEST"
@@ -163,12 +164,6 @@ check(p["price"] == 1500 and p["unit"] == "6 мл" and len(p["images"]) == 2, "�
 press(SELLER, f"mod:ok:{sid}")  # не админ — ничего
 check(db()["sellers"][sid]["status"] == "pending", "продавец не может одобрить себя")
 press(OWNER, f"mod:ok:{sid}")
-check(db()["sellers"][sid]["status"] == "awaiting_payment", "новая карточка ждёт банковского подтверждения")
-# The rest of this suite exercises pre-existing published cards; settlement is covered in test_acquiring.
-legacy_db = db()
-del legacy_db["sellers"][sid]["listing_fee"]
-storage.files["data/db.json"] = json.dumps(legacy_db).encode()
-press(OWNER, f"mod:ok:{sid}")
 c = catalog()
 check(db()["sellers"][sid]["status"] == "approved", "одобрено")
 check(len(c["sellers"]) == 1 and len(c["products"]) == 1, "в каталоге")
@@ -229,8 +224,8 @@ press(OWNER, "skip")        # telegram
 press(OWNER, "skip")        # instagram
 press(OWNER, "skip")        # логотип
 press(OWNER, "skip")        # обложка
-check(len(catalog()["sellers"]) == 1 and any(s["status"] == "awaiting_payment" for s in db()["sellers"].values()),
-      "новая компания владельца тоже ожидает оплаты")
+check(len(catalog()["sellers"]) == 2 and any(s["name"] == "Автопрокат «Дорога»" for s in catalog()["sellers"]),
+      "автопрокат владельца сразу виден в приложении")
 
 # Каталог читается приложением (тот же разбор, что в Android/iOS: обязательные поля)
 for s_ in catalog()["sellers"]:
@@ -407,7 +402,7 @@ check(json.loads(_priv2.files["data/db.json"])["outbox"][0][1]["text"] == "в о
 
 # Удаление
 press(SELLER, f"del2:{sid}")
-check(sid not in db()["sellers"] and not catalog()["sellers"], "удаление")
+check(sid not in db()["sellers"] and [s["name"] for s in catalog()["sellers"]] == ["Автопрокат «Дорога»"], "удалена только выбранная компания")
 
 # Подпись SigV4 — официальный пример AWS (GET Object с Range)
 from datetime import datetime as _dt, timezone as _tz

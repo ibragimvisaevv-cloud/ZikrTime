@@ -835,7 +835,17 @@ class Bot(FeedbackMixin, PlacesMixin, ReviewsMixin, PromoMixin):
         self.db.setdefault("place_corrections", {})
         self.db.setdefault("donate_url", "")
         self.dirty = False
-        self.catalog_dirty = False
+        self.catalog_dirty = bool(self.db.get("catalog_publish_pending"))
+        if not acquiring.listing_fee_enabled():
+            for seller in self.db["sellers"].values():
+                if seller.get("listing_fee") == "due":
+                    seller["listing_fee"] = "waived"
+                    self.changed(seller)
+                # In the old flow only an admin's own or an approved submission
+                # could enter this state. Partner, hidden and pending are independent.
+                if seller.get("status") == "awaiting_payment":
+                    seller["status"] = "approved"
+                    self.changed(seller)
         self.places_dirty = False
         self.reviews_dirty = False
         self.delete_after_save = []
@@ -852,6 +862,10 @@ class Bot(FeedbackMixin, PlacesMixin, ReviewsMixin, PromoMixin):
         """Сначала база (условная запись: если её успели изменить — Conflict, всё повторяем), потом файлы для приложения."""
         if self.reviews_dirty:
             self.reviews_data = self.build_reviews()  # здесь же обновляется upload_at в базе
+        if self.catalog_dirty:
+            # If catalog upload fails after the DB commit, the next request must
+            # publish again even though the seller's transition already completed.
+            self.db["catalog_publish_pending"] = True
         if self.dirty or self.catalog_dirty or self.places_dirty or self.reviews_dirty:
             body = json.dumps(self.db, ensure_ascii=False).encode()
             if self.db_etag:
@@ -868,6 +882,19 @@ class Bot(FeedbackMixin, PlacesMixin, ReviewsMixin, PromoMixin):
         self.delete_after_save = []
         if self.catalog_dirty:
             self.write_catalog()
+            # Clear the retry flag only on the exact DB snapshot we committed.
+            # A newer writer owns its own flag and publication.
+            if hasattr(self.data, "get_tagged"):
+                current, tag = self.data.get_tagged(DB_KEY)
+            else:
+                current, tag = self.data.get(DB_KEY), None
+            if current == body:
+                del self.db["catalog_publish_pending"]
+                try:
+                    self.data.put(DB_KEY, json.dumps(self.db, ensure_ascii=False).encode(), "application/json",
+                                  **({"if_match": tag} if tag else {}))
+                except Conflict:
+                    pass
         if self.places_dirty:
             self.write_places()
         if self.reviews_dirty:
@@ -1108,7 +1135,8 @@ class Bot(FeedbackMixin, PlacesMixin, ReviewsMixin, PromoMixin):
             return self.send(uid, "Можно добавить не больше трёх компаний.")
         self.user(uid)["state"] = {"flow": "add", "step": "name", "data": {}}
         self.dirty = True
-        self.send(uid, "Размещение карточки — 200 ₽ один раз после проверки. Добавление товаров входит в стоимость.\n\nШаг 1 из 11. Как называется ваша компания или магазин?\n\n/cancel — отменить")
+        terms = "Размещение карточки — 200 ₽ один раз после проверки." if acquiring.listing_fee_enabled() else "Размещение компании бесплатно."
+        self.send(uid, terms + "\n\nШаг 1 из 11. Как называется ваша компания или магазин?\n\n/cancel — отменить")
 
     def ask_add_step(self, uid, step):
         uname = self.user(uid).get("username")
@@ -1160,14 +1188,15 @@ class Bot(FeedbackMixin, PlacesMixin, ReviewsMixin, PromoMixin):
             "lat": data.get("lat"), "lon": data.get("lon"), "phone": data.get("phone", ""),
             "whatsapp": data.get("whatsapp", ""), "telegram": data.get("telegram", ""),
             "instagram": data.get("instagram", ""), "logo": data.get("logo", ""), "cover": data.get("cover", ""),
-            "status": "awaiting_payment" if admin else "pending", "listing_fee": "due", "partner": False,
+            **acquiring.new_listing(admin), "partner": False,
             "owners": [uid], "created": time.time(), "products": {},
         }
         self.db["sellers"][sid] = seller
         self.user(uid)["state"] = None
         self.changed(seller)
         if admin:
-            self.send(uid, "Карточка одобрена. Для публикации требуется оплата размещения — 200 ₽.")
+            self.send(uid, "Компания опубликована в приложении." if seller["status"] == "approved"
+                      else "Карточка одобрена. Для публикации требуется оплата размещения — 200 ₽.")
         else:
             self.send(uid, "🙏 Спасибо! Компания отправлена на проверку. Мы сообщим, когда она появится в приложении.\n"
                            "А пока можно добавить товары — они станут видны вместе с компанией.")
@@ -1302,11 +1331,13 @@ class Bot(FeedbackMixin, PlacesMixin, ReviewsMixin, PromoMixin):
             [btn("🖼 Логотип", f"e:{sid}:logo"), btn("🌄 Обложка", f"e:{sid}:cover")],
             [btn("⬆️ Продвинуть" + (" (активно)" if self.promo_active(s) else ""), f"promo:{sid}")] if s["status"] == "approved" else None,
             [btn("🔗 Пригласить совладельца", f"inv:{sid}")],
-            [btn("🙈 Скрыть" if s["status"] == "approved" else "👁 Показать", f"vis:{sid}")]
+            [btn("🙈 Скрыть" if s["status"] == "approved" else "👁 Показать",
+                 f"vis:{sid}:" + ("hide" if s["status"] == "approved" else "show"))]
             if s["status"] in ("approved", "hidden") else None,
         ]
         if self.is_admin(uid):
-            rows.append([btn("⭐ Партнёр: " + ("да" if s.get("partner") else "нет"), f"mod:partner:{sid}")])
+            rows.append([btn("⭐ Партнёр: " + ("да" if s.get("partner") else "нет"),
+                             f"mod:partner:{sid}:" + ("0" if s.get("partner") else "1"))])
             if s["status"] in ("pending", "rejected", "hidden"):
                 rows.append([btn("✅ Одобрить", f"mod:ok:{sid}"), btn("❌ Отклонить", f"mod:no:{sid}")])
         rows.append([btn("🗑 Удалить компанию", f"del:{sid}"), btn("⬅️ Меню", "menu")])
@@ -1701,8 +1732,8 @@ class Bot(FeedbackMixin, PlacesMixin, ReviewsMixin, PromoMixin):
         if act == "vis":
             s = self.db["sellers"].get(parts[1])
             if self.can_edit(uid, s) and s["status"] in ("approved", "hidden"):
-                s["status"] = "hidden" if s["status"] == "approved" else ("awaiting_payment" if acquiring.unpaid(s) else "approved")
-                self.dirty = self.catalog_dirty = True
+                show = s["status"] == "hidden" if len(parts) == 2 else parts[2] == "show"
+                self.set_visibility(s, show)
                 return self.seller_menu(uid, s["id"])
         if act == "wa2":
             s = self.db["sellers"].get(parts[1])
@@ -1762,7 +1793,7 @@ class Bot(FeedbackMixin, PlacesMixin, ReviewsMixin, PromoMixin):
         if act == "adm" and self.is_admin(uid):
             return self.admin_list(uid, parts[1])
         if act == "mod" and self.is_admin(uid):
-            return self.moderate(uid, parts[1], parts[2])
+            return self.moderate(uid, parts[1], parts[2], partner=parts[3] == "1" if len(parts) == 4 else None)
         return None
 
     # ---------- модерация ----------
@@ -1779,16 +1810,24 @@ class Bot(FeedbackMixin, PlacesMixin, ReviewsMixin, PromoMixin):
         rows.append([btn("⬅️ Меню", "menu")])
         self.send(uid, f"Все компании ({len(sellers)}):", {"inline_keyboard": rows})
 
-    def moderate(self, uid, action, sid):
+    def set_visibility(self, s, visible):
+        if s["status"] not in ("approved", "hidden"):
+            return False
+        s["status"] = acquiring.approved_status(s) if visible else "hidden"
+        self.dirty = self.catalog_dirty = True
+        return True
+
+    def moderate(self, uid, action, sid, partner=None):
         s = self.db["sellers"].get(sid)
         if not s:
             return self.send(uid, "Компания не найдена (возможно, удалена).")
         was_public = s["status"] == "approved"
         if action == "ok":
-            s["status"] = "awaiting_payment" if acquiring.unpaid(s) else "approved"
+            was_approved = s["status"] in ("approved", "awaiting_payment")
+            s["status"] = acquiring.approved_status(s)
             result = "Одобрена. Публикация после оплаты 200 ₽." if acquiring.unpaid(s) else "Одобрена и опубликована."
             for o in s["owners"]:
-                if o != uid:
+                if o != uid and not was_approved:
                     self.send(o, f"Компания «{esc(s['name'])}». {result}")
             self.send(uid, f"✅ «{esc(s['name'])}». {result}")
         elif action == "no":
@@ -1800,10 +1839,11 @@ class Bot(FeedbackMixin, PlacesMixin, ReviewsMixin, PromoMixin):
                                  + (f" Напишите @{esc(contact)}, чтобы узнать подробности." if contact else ""))
             self.send(uid, f"❌ «{esc(s['name'])}» отклонена.")
         elif action == "hide":
-            s["status"] = "hidden"
+            if not self.set_visibility(s, False):
+                return self.send(uid, "Скрыть можно опубликованную компанию.")
             self.send(uid, f"🙈 «{esc(s['name'])}» скрыта. Показать снова — в карточке компании.")
         elif action == "partner":
-            s["partner"] = not s.get("partner")
+            s["partner"] = not s.get("partner") if partner is None else partner
             self.send(uid, f"⭐ Партнёр: {'да' if s['partner'] else 'нет'}.")
         self.dirty = True
         if was_public or s["status"] == "approved":

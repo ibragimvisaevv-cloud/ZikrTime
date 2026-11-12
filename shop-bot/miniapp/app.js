@@ -29,7 +29,7 @@
     toast.t = setTimeout(() => el.classList.remove("show"), 2600);
   }
 
-  async function api(action, data) {
+  async function api(action, data, updateMe = true) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 30000);
     let res;
@@ -46,7 +46,7 @@
     let body = {};
     try { body = await res.json(); } catch (e) { /* пусто */ }
     if (!res.ok) throw new Error(body.error || "Нет связи с сервером");
-    if (action === "me") me = body;
+    if (action === "me" && updateMe) me = body;
     else if (body.me) me = body.me;
     return body;
   }
@@ -140,9 +140,13 @@
     });
   }
 
+  function companyStatus(status) {
+    const map = { awaiting_payment: ["wait", me.listing_fee_enabled === true ? "Одобрена · ожидает оплаты" : "Одобрена"], approved: ["ok", "Опубликована"], pending: ["wait", "На проверке"], rejected: ["bad", "Отклонена"], hidden: ["", "Скрыта"] };
+    return map[status] || ["", "Статус уточняется"];
+  }
+
   function statusChip(s) {
-    const map = { awaiting_payment: ["wait", "Одобрена · ожидает оплаты 200 ₽"], approved: ["ok", "Опубликована"], pending: ["wait", "На проверке"], rejected: ["bad", "Отклонена"], hidden: ["", "Скрыта"] };
-    const [cls, txt] = map[s.status] || ["", s.status];
+    const [cls, txt] = companyStatus(s.status);
     let out = `<span class="chip ${cls}">${txt}</span>`;
     if (s.partner) out += `<span class="chip gold">Партнёр</span>`;
     if (s.promo_until) out += `<span class="chip gold">Продвигается до ${date(s.promo_until)}</span>`;
@@ -181,7 +185,11 @@
       if (me.sellers.length < me.limits.sellers || me.admin) html += `<button class="btn primary" id="add">Добавить компанию</button>`;
     }
     app.innerHTML = html;
-    app.querySelectorAll("[data-tab]").forEach((b) => b.onclick = () => { tab = b.dataset.tab; tap(); render(); });
+    app.querySelectorAll("[data-tab]").forEach((b) => b.onclick = () => {
+      tab = b.dataset.tab; tap();
+      if (tab === "manage" && ownerView === "moderation") loadOwner("moderation");
+      else render();
+    });
     app.querySelectorAll(".seller[data-sid]").forEach((el) => el.onclick = () => go({ type: "products", sid: el.dataset.sid }));
     const add = document.getElementById("add");
     if (add) add.onclick = () => go({ type: "seller", sid: null });
@@ -214,7 +222,18 @@
     ownerView = view;
     ownerData = null;
     render();
-    if (view === "settings" || view === "moderation") return;
+    if (view === "settings") return;
+    if (view === "moderation") {
+      const previous = me;
+      try {
+        const latest = await api("me", {}, false);
+        // A moderation action may already have returned a more recent snapshot.
+        if (tab === "manage" && ownerView === view && me === previous) { me = latest; render(); }
+      } catch (error) {
+        if (tab === "manage" && ownerView === view) toast(error.message);
+      }
+      return;
+    }
     const action = view === "places" ? "my_places" : view;
     try {
       const result = await api(action, { inbox: true, offset });
@@ -362,7 +381,7 @@
     let html = sellerCard(s).replace('class="card seller"', 'class="card seller" id="edit"');
     html += `<div class="row"><button class="btn ghost" id="editBtn">Изменить данные</button>
       ${s.status === "approved" ? `<button class="btn gold" id="promo">Продвинуть</button>` : ""}</div>`;
-    if (s.orders && s.orders.length) html += `<div class="card"><h2>Операции</h2>${s.orders.map(o => `<p>${o.kind === "listing" ? "Размещение" : "Продвижение"} · ${money(o.amount / 100)} · ${esc(orderStatus(o.state))}</p>`).join("")}</div>`;
+    if (s.orders && s.orders.length) html += `<div class="card"><h2>Операции</h2>${s.orders.map(orderLine).join("")}</div>`;
     if (s.status === "pending") html += `<p class="sub" style="margin-top:10px">Компания на проверке. Товары можно добавлять уже сейчас — они появятся вместе с компанией.</p>`;
     html += `<h2>Товары (${s.products.length}/${me.limits.products})</h2><div class="card">`;
     html += s.products.length ? s.products.map((p) => `<div class="product" data-pid="${esc(p.id)}">
@@ -386,7 +405,10 @@
       go({ type: "product", sid: s.id, pid: null });
     };
     const vis = document.getElementById("vis");
-    if (vis) vis.onclick = () => run(vis, async () => { await api("seller_visibility", { sid: s.id }); haptic("success"); render(); });
+    if (vis) vis.onclick = () => run(vis, async () => {
+      const result = await api("seller_visibility", { sid: s.id, visible: s.status === "hidden" });
+      haptic("success"); render(); toast(companyStatus(result.seller.status)[1]);
+    });
     document.getElementById("del").onclick = (e) => confirmAsk(`Удалить «${s.name}» вместе с товарами?`, () => run(e.target, async () => {
       await api("seller_delete", { sid: s.id }); haptic("success"); toast("Компания удалена"); stack.length = 0; render();
     }));
@@ -402,8 +424,15 @@
     const s = scr.sid ? sellerById(scr.sid) : null;
     const f = scr.form || (scr.form = s ? Object.assign({}, s) : { name: "", category: "other", city: "", description: "", address: "", phone: "", whatsapp: false, telegram: (me.user.username || ""), instagram: "", logo: "", cover: "" });
     const cats = me.categories.map((c) => `<option value="${esc(c.id)}" ${c.id === f.category ? "selected" : ""}>${esc(c.name)}</option>`).join("");
+    const feeRequired = me.listing_fee_enabled === true;
+    const publishDirectly = me.admin && !feeRequired;
+    const createHint = feeRequired ? "Размещение карточки — 200 ₽ один раз после одобрения." : publishDirectly ?
+      "Компания появится в каталоге сразу после публикации. Размещение бесплатно." : "После проверки компания появится в каталоге. Размещение бесплатно.";
+    const hint = s ? (s.status === "rejected" ? "Исправьте данные и отправьте карточку на повторную проверку." : "Изменения в опубликованной компании видны в приложении через пару минут.") : createHint;
+    const submit = s ? (s.status === "rejected" ? "Отправить повторно" : "Сохранить") :
+      publishDirectly ? "Опубликовать компанию" : me.admin ? "Добавить компанию" : "Отправить на проверку";
     app.innerHTML = `<h1>${s ? "Данные компании" : "Новая компания"}</h1>
-      <p class="sub">${s ? "Изменения в опубликованной компании видны в приложении через пару минут." : "Размещение карточки — 200 ₽ один раз после одобрения. Товары входят в стоимость."}</p>
+      <p class="sub">${hint}</p>
       <div class="card">
         <label>Обложка</label><div class="pic wide" id="cover" style="${f.cover ? `background-image:url('${esc(f.cover)}')` : ""}">${f.cover ? "" : "🌄"}</div>
         <label>Логотип</label><div class="pics"><div class="pic" id="logo" style="${f.logo ? `background-image:url('${esc(f.logo)}')` : ""}">${f.logo ? "" : "🏪"}</div></div>
@@ -419,7 +448,7 @@
         <label>Telegram</label><input id="telegram" value="${esc(f.telegram)}" placeholder="@shop">
         <label>Instagram</label><input id="instagram" value="${esc(f.instagram)}" placeholder="shop">
       </div>
-      <button class="btn primary" id="save">${s ? "Сохранить" : "Отправить на проверку"}</button>`;
+      <button class="btn primary" id="save">${submit}</button>`;
     const read = () => ["name", "category", "city", "description", "address", "phone", "telegram", "instagram"].forEach((k) => f[k] = document.getElementById(k).value);
     ["cover", "logo"].forEach((k) => document.getElementById(k).onclick = () => run(null, async () => {
       read();
@@ -431,7 +460,7 @@
       f.whatsapp = document.getElementById("whatsapp").checked;
       const r = await api("seller_save", { sid: s ? s.id : null, fields: f });
       haptic("success");
-      toast(s ? "Сохранено" : "Отправлено на проверку");
+      toast(s && s.status !== "rejected" ? "Сохранено" : companyStatus(r.seller.status)[1]);
       stack.pop();
       if (!s) stack.push({ type: "products", sid: r.seller.id });
       render();
@@ -475,12 +504,19 @@
   function renderPromo(scr) {
     const s = sellerById(scr.sid);
     const rates = Object.entries(me.prices).map(([days, price]) => `<p>${esc(days)} дн. · ${money(price)}</p>`).join("");
-    const orders = (s.orders || []).map(o => `<p>${esc(o.kind === "listing" ? "Размещение" : "Продвижение")} · ${money(o.amount / 100)} · ${esc(orderStatus(o.state))}</p>`).join("");
+    const orders = (s.orders || []).map(orderLine).join("");
     app.innerHTML = `<div class="hero"><h1>Продвижение</h1><p>${esc(s.name)}</p></div><div class="card">${rates}</div>${orders ? '<div class="card">' + orders + '</div>' : ''}`;
   }
 
   function orderStatus(state) {
     return ({initializing: "Создаётся", waiting: "Ожидает оплаты", paid: "Оплачено", failed: "Не оплачено", review: "На проверке", refund_review: "Возврат на проверке", refunded: "Возвращено"})[state] || state;
+  }
+
+  function orderLine(order) {
+    if (order.kind === "listing" && me.listing_fee_enabled !== true && ["waiting", "initializing"].includes(order.state)) {
+      return "<p>Размещение · оплата не требуется</p>";
+    }
+    return `<p>${order.kind === "listing" ? "Размещение" : "Продвижение"} · ${money(order.amount / 100)} · ${esc(orderStatus(order.state))}</p>`;
   }
 
   // ---------------------------------------------------------------- модерация (владелец и модераторы)
@@ -500,9 +536,9 @@
       : `<div class="card empty">Заявок нет</div>`;
     html += `<h2>Все компании (${m.all.length})</h2><div class="card">`;
     html += m.all.map((s) => `<div class="product"><div class="t"><div>${esc(s.name)}</div>
-      <div class="muted">${{ approved: "✅", pending: "⏳", rejected: "❌", hidden: "🙈" }[s.status] || ""} товаров: ${s.products}${s.promo_until ? " · до " + date(s.promo_until) : ""}</div></div>
-      <button class="chip ${s.partner ? "gold" : ""}" data-mod="partner" data-sid="${esc(s.id)}">${s.partner ? "Партнёр" : "Сделать партнёром"}</button>
-      ${s.status === "approved" ? `<button class="chip bad" data-mod="hide" data-sid="${esc(s.id)}">Скрыть</button>` : s.status !== "pending" ? `<button class="chip ok" data-mod="ok" data-sid="${esc(s.id)}">Показать</button>` : ""}</div>`).join("");
+      <div class="muted">${companyStatus(s.status)[1]} · товаров: ${s.products}${s.promo_until ? " · до " + date(s.promo_until) : ""}</div></div>
+      <button class="chip ${s.partner ? "gold" : ""}" data-mod="partner" data-sid="${esc(s.id)}" aria-pressed="${!!s.partner}">${s.partner ? "Снять отметку партнёра" : "Сделать партнёром"}</button>
+      ${s.status === "approved" ? `<button class="chip bad" data-mod="hide" data-sid="${esc(s.id)}">Скрыть</button>` : s.status === "hidden" ? `<button class="chip ok" data-mod="ok" data-sid="${esc(s.id)}">Показать в приложении</button>` : s.status === "rejected" ? `<button class="chip ok" data-mod="ok" data-sid="${esc(s.id)}">Одобрить</button>` : ""}</div>`).join("");
     return html + `</div>`;
   }
 
@@ -511,9 +547,14 @@
       e.stopPropagation();
       const data = { do: b.dataset[key.split(":")[0]] };
       data[key.split(":")[1]] = b.dataset[key.split(":")[1]];
+      if (action === "mod_seller" && data.do === "partner") data.partner = b.getAttribute("aria-pressed") !== "true";
       const r = await api(action, data);
       if (r.moderation) me.moderation = r.moderation;
       haptic("success"); render();
+      if (action === "mod_seller") {
+        const company = me.moderation.all.find(s => s.id === data.sid);
+        if (company) toast(data.do === "partner" ? (company.partner ? "Отметка партнёра добавлена" : "Отметка партнёра снята") : companyStatus(company.status)[1]);
+      }
     }));
     act("[data-mod]", "mod_seller", "mod:sid");
     act("[data-promo]", "mod_promo", "promo:rid");
