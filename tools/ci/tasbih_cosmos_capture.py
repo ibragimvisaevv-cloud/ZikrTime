@@ -293,6 +293,46 @@ def native_center(node):
     return (x+right)//2, (y+bottom)//2
 
 
+def close_quick_settings(scene):
+    done = locate_control('tasbih_quick_done')
+    shell('input','tap',*native_center(done))
+    # A Compose modal can still consume touches while its exit animates. Wait for
+    # the underlying native activity's controls and WebView, not just the DOM counter.
+    deadline = time.monotonic()+18
+    while time.monotonic() < deadline:
+        tree = ui()
+        if find_control(tree,'tasbih_quick_done') is None and find_control(tree,'tasbih_settings') is not None:
+            ready = read_js(scene, """(() => {
+                const b=document.querySelector('#beads');
+                return !document.hidden && !b.disabled && document.body.dataset.entry==='ready'
+                  && document.elementFromPoint(document.documentElement.clientWidth*.5,
+                       document.documentElement.clientHeight*.55)===b;
+            })()""")
+            if ready:
+                return
+        time.sleep(.12)
+    raise AssertionError('The native quick sheet still owned the window, or the bead hit area was unavailable')
+
+
+def tap_bead_after_settings(scene):
+    # Passive observers are diagnostic only. Count and sound must come from one
+    # real Android tap after the modal has relinquished the window.
+    read_js(scene, """(() => {
+        window.__beadTapTrace = [];
+        for (const name of ['pointerdown','pointerup','click'])
+          document.addEventListener(name,e=>window.__beadTapTrace.push([e.type,e.target.id,e.clientX,e.clientY]),
+                                    {once:true,capture:true,passive:true});
+    })()""")
+    shell('input','tap',360,704)
+    try:
+        visible_count(scene,1)
+    finally:
+        REPORT['bead_input_after_settings'] = {
+            'events': read_js(scene,'window.__beadTapTrace'),
+            'saved_count':prefs().get('tasbih_count')
+        }
+
+
 def record_entrance(temp):
     # Restore a legitimate zero on the disposable profile and film the native
     # route exactly as a person would open it. Settings do not reset the count.
@@ -328,16 +368,13 @@ def record_entrance(temp):
             screenshot(MEDIA / 'tasbih-quick-settings.png')
             assert prefs()['tasbih_count'] == '0'
             shell('input','tap',*native_center(goal))
-            time.sleep(.35)
-            shell('input','keyevent','KEYCODE_BACK')
-            time.sleep(.5)
-            shell('input','tap',360,704)
-            visible_count(scene,1)
+            assert prefs()['tasbih_target']=='34'
+            close_quick_settings(scene)
+            tap_bead_after_settings(scene)
             time.sleep(.63)
             tap_scene_text(scene,'count','dial-control')
             time.sleep(.85)
-            shell('input','keyevent','KEYCODE_BACK')
-            time.sleep(.55)
+            close_quick_settings(scene)
             visible_count(scene,1)
     state = prefs()
     assert state['tasbih_count']=='1' and state['tasbih_target']=='34',state.get('tasbih_count')
