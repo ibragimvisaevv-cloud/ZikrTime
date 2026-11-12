@@ -70,11 +70,18 @@ jobs:
           if-no-files-found: error
           compression-level: 0
       - name: Prepare guest audio, recording tools and KVM
+        id: guest
         run: |
           if jps | grep -q GradleDaemon; then bash gradlew --stop; fi
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends ffmpeg pulseaudio pulseaudio-utils
           python3 -m pip install Pillow websocket-client numpy scipy
+          arc="$RUNNER_TEMP/scrcpy-linux-x86_64-v3.3.4.tar.gz"
+          curl -fsSL --retry 3 "https://github.com/Genymobile/scrcpy/releases/download/v3.3.4/scrcpy-linux-x86_64-v3.3.4.tar.gz" -o "$arc"
+          echo "0305d98c06178c67e12427bbf340c436d0d58c9e2a39bf9ffbbf8f54d7ef95a5  $arc" | sha256sum -c -
+          tar -xzf "$arc" -C "$RUNNER_TEMP"
+          echo "SCRCPY_BIN=$RUNNER_TEMP/scrcpy-linux-x86_64-v3.3.4/scrcpy" >> "$GITHUB_ENV"
+          echo "ADB=$ANDROID_HOME/platform-tools/adb" >> "$GITHUB_ENV"
           pulseaudio --start --exit-idle-time=-1
           sink=$(pactl load-module module-null-sink sink_name=tasbih)
           pactl set-default-sink tasbih
@@ -82,19 +89,39 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-tasbih.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --list > "$RUNNER_TEMP/tasbih-system-images.txt"
+          if grep -q 'system-images;android-35;default;x86_64' "$RUNNER_TEMP/tasbih-system-images.txt"; then
+            echo 'target=default' >> "$GITHUB_OUTPUT"
+          else
+            echo 'target=google_apis' >> "$GITHUB_OUTPUT"
+          fi
       - name: Record real gestures and check count persistence on Android 15
         timeout-minutes: 17
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 35
-          target: google_apis
+          target: ${{ steps.guest.outputs.target }}
           arch: x86_64
           profile: pixel_2
           ram-size: 2048M
           heap-size: 256M
           disable-animations: false
           emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -feature -Vulkan -no-boot-anim -camera-back none -camera-front none
-          script: python3 tools/ci/tasbih_cosmos_capture.py
+          script: python3 tools/ci/tasbih_cosmos_capture.py record
+      - name: Check settings, gestures and reset on a fresh Android 15 instance
+        timeout-minutes: 17
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          avd-name: tasbih_controls
+          api-level: 35
+          target: ${{ steps.guest.outputs.target }}
+          arch: x86_64
+          profile: pixel_2
+          ram-size: 2048M
+          heap-size: 256M
+          disable-animations: true
+          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -feature -Vulkan -no-boot-anim -camera-back none -camera-front none
+          script: python3 tools/ci/tasbih_cosmos_capture.py controls
       - uses: actions/upload-artifact@v4
         if: always()
         with:

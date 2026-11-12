@@ -25,7 +25,9 @@ MEDIA = OUT / 'tasbih'
 MEDIA.mkdir(parents=True, exist_ok=True)
 SAMPLE = MEDIA / 'tasbih-bead.wav'
 shutil.copyfile('app/src/main/res/raw/tasbih_bead.wav', SAMPLE)
-REPORT = {'source_commit': os.environ.get('GITHUB_SHA'), 'tap_count': 7}
+MODE = sys.argv[1]
+assert MODE in ('record', 'controls')
+REPORT = {'source_commit': os.environ.get('GITHUB_SHA'), 'mode': MODE, 'tap_count': 7}
 W, H = 720, 1280
 
 
@@ -38,9 +40,9 @@ def start(route):
           '--es', 'qa_lang', 'ru', '--ez', 'qa_onboarded', 'true')
 
 
-def seed():
+def seed(count):
     root = prefs_tree()
-    for key, val in {'tasbih_phrase': 4, 'tasbih_target': 100, 'tasbih_count': 26}.items():
+    for key, val in {'tasbih_phrase': 4, 'tasbih_target': 100, 'tasbih_count': count}.items():
         for entry in list(root):
             if entry.get('name') == key:
                 root.remove(entry)
@@ -159,7 +161,7 @@ def wait_for_drawn_scene(socket, path):
 
 def decode_audio(path):
     result = subprocess.run(['ffmpeg', '-v', 'error', '-i', str(path), '-vn', '-map', '0:a:0',
-                             '-ac', '1', '-ar', '12000', '-f', 'f32le', '-'], capture_output=True)
+                             '-af', 'aresample=12000:async=1:first_pts=0', '-ac', '1', '-ar', '12000', '-f', 'f32le', '-'], capture_output=True)
     return np.frombuffer(result.stdout, dtype='<f4') if result.returncode == 0 else np.array([])
 
 
@@ -173,72 +175,65 @@ def impact_times(path):
     return [round(float(t) / 12000, 3) for t in times]
 
 
+def numeral_changes(path):
+    # Sample only the white numeral inside the dial, excluding the changing orange arc.
+    data = subprocess.check_output(['ffmpeg', '-v', 'error', '-i', str(path), '-an', '-vf',
+        'fps=30:start_time=0,scale=360:640,crop=52:29:154:411,format=gray', '-f', 'rawvideo', '-'])
+    masks = np.frombuffer(data, dtype=np.uint8).reshape(-1, 29, 52) > 204
+    assert masks[0].sum() > 30, 'Missing initial numeral in the device capture'
+    base = masks[0]
+    times = []
+    for i in range(1, len(masks)-1):
+        if np.sum(base != masks[i]) >= 15 and np.sum(base != masks[i+1]) >= 15:
+            times.append(round(i/30, 3))
+            base = masks[i+1]
+    return times
+
+
 def record(socket, temp):
-    # The AVD console records its own audio and display on one timeline. Capture the
-    # runner's actual guest-output sink too in case that encoder exposes no audio.
-    raw = temp / 'emulator.webm'
-    host_audio = temp / 'sink.wav'
-    host_log = (temp / 'pulse.log').open('w')
-    pulse = subprocess.Popen(['parec', '-d', 'tasbih.monitor', '--rate=48000', '--channels=1',
-                              '--file-format=wav', str(host_audio)], stderr=host_log)
-    pulse_start = time.monotonic()
-    time.sleep(.3)
-    start_time = time.monotonic()
-    attempt = subprocess.run(['adb', 'emu', 'screenrecord', 'start', '--time-limit', '30',
-                              str(raw.resolve())], capture_output=True, text=True, timeout=15)
-    console = attempt.returncode == 0 and 'OK' in attempt.stdout and 'KO' not in attempt.stdout
-    fallback = None
-    if not console:
-        raw = temp / 'guest.mp4'
-        fallback = subprocess.Popen(['adb', 'shell', 'screenrecord', '--time-limit', '25',
-                                     '--size', f'{W}x{H}', '/sdcard/tasbih-guest.mp4'])
-    try:
-        time.sleep(1.05)
-        for count in (27, 28, 29):
-            tap_time = time.monotonic()
-            shell('input', 'tap', W // 2, round(H * .55))
-            visible_count(socket, count)
-            if count == 27:
-                screenshot(MEDIA / 'tasbih.png')
-            time.sleep(max(0, tap_time + .87 - time.monotonic()))
-        # Four quick real tap events, without waiting for a frame between events.
-        shell('for i in 1 2 3 4; do input tap 360 704; sleep .06; done')
-        visible_count(socket, 33)
-        time.sleep(1.2)
-    finally:
-        if console:
-            adb('emu', 'screenrecord', 'stop')
-        else:
-            shell('pkill', '-2', 'screenrecord')
-            fallback.wait(timeout=12)
-            adb('pull', '/sdcard/tasbih-guest.mp4', raw)
-        pulse.send_signal(signal.SIGINT)
-        pulse.wait(timeout=8)
-        host_log.close()
-    for _ in range(15):
-        if raw.exists() and raw.stat().st_size > 4096:
-            break
-        time.sleep(.2)
-    source_audio = 'emulator internal recording'
-    hits = impact_times(raw)
-    video_args = ['-i', str(raw)]
-    audio_args = ['-map', '0:a:0']
-    if len(hits) != REPORT['tap_count']:
-        sink_hits = impact_times(host_audio)
-        if len(sink_hits) == REPORT['tap_count']:
-            offset = start_time - pulse_start
-            hits = [round(t - offset, 3) for t in sink_hits]
-            source_audio = 'live emulator audio output (PulseAudio monitor)'
-            video_args.extend(['-ss', f'{offset:.3f}', '-i', str(host_audio)])
-            audio_args = ['-map', '1:a:0', '-shortest']
-        elif not hits:
-            source_audio = 'unavailable; separate bead sample provided'
-            audio_args = ['-an']
-    REPORT.update(audio_source=source_audio, captured_impact_times_seconds=hits,
-                  all_seven_sounds_verified=len(hits) == REPORT['tap_count'])
-    run('ffmpeg', '-loglevel', 'error', '-y', *video_args, '-map', '0:v:0', *audio_args,
-        '-vf', 'scale=720:-2', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '18', '-pix_fmt',
-        'yuv420p', '-c:a', 'aac', '-b:a', '160k', '-movflags', '+faststart', MEDIA / 'tasbih.mp4')
+    # Both encoders run in the guest. scrcpy preserves their device presentation
+    # timestamps when muxing. Host audio and wall-clock video are never combined.
+    movie = MEDIA / 'tasbih.mp4'
+    raw = temp / 'guest.mp4'
+    log = MEDIA / 'recorder.txt'
+    with log.open('w') as journal:
+        recorder = subprocess.Popen([os.environ['SCRCPY_BIN'], '--no-playback', '--no-window', '--no-control',
+            '--require-audio', '--audio-codec=aac', '--audio-source=output', '--video-codec=h264',
+            '--max-size=960', '--max-fps=30', '--video-bit-rate=4M', '--audio-bit-rate=192K',
+            '--record=' + str(raw)], stdout=journal, stderr=subprocess.STDOUT)
+        try:
+            deadline = time.monotonic()+35
+            while 'Recording started to' not in log.read_text(errors='replace'):
+                if recorder.poll() is not None or time.monotonic() >= deadline:
+                    raise RuntimeError('Android recorder did not start: ' + log.read_text()[-1600:])
+                time.sleep(.1)
+            # A single guest-side shell schedules the seven real InputManager taps.
+            # Do not synchronously screenshot, inspect DOM or poll preferences while tapping.
+            shell('sleep 1.15; for i in 1 2 3; do input tap 360 704; sleep .78; done; '
+                  'for i in 1 2 3 4; do input tap 360 704; sleep .06; done')
+            visible_count(socket, 33)
+            time.sleep(1.35)
+        finally:
+            if recorder.poll() is None:
+                recorder.send_signal(signal.SIGINT)
+            recorder.wait(timeout=15)
+    assert recorder.returncode == 0, log.read_text()[-1600:]
+    run('ffmpeg','-loglevel','error','-y','-i',raw,'-map','0:v:0','-map','0:a:0','-c','copy',
+        '-movflags','+faststart',movie)
+    changes = numeral_changes(movie)
+    strikes = impact_times(movie)
+    lags = [round(s-c, 3) for s,c in zip(strikes,changes)]
+    REPORT.update(audio_source='Android internal playback captured via REMOTE_SUBMIX',
+        visible_transitions_seconds=changes, captured_impact_times_seconds=strikes,
+        sound_delay_seconds=lags, all_seven_sounds_verified=len(strikes)==7)
+    if changes:
+        run('ffmpeg','-v','error','-y','-ss',str(changes[0]+.10),'-i',movie,'-frames:v','1', MEDIA/'tasbih.png')
+    assert len(changes) == len(strikes) == 7, ('Expected seven visible counts and bead sounds', changes,strikes)
+    # 30 fps sampling and guest audio buffering permit some jitter around the
+    # renderer's measured 160 ms delay. Gross clock skew must fail this check.
+    assert all(-.05 <= lag <= .45 for lag in lags) and .03 <= np.median(lags) <= .35, \
+        ('Captured sound is out of sync with the visible numbers', lags)
+    REPORT['audio_sync_verified'] = True
 
 
 def exercise():
@@ -248,14 +243,17 @@ def exercise():
     shell('wm', 'size', f'{W}x{H}')
     shell('wm', 'density', '320')
     shell('settings', 'put', 'secure', 'immersive_mode_confirmations', 'confirmed')
-    shell('settings', 'put', 'global', 'animator_duration_scale', '1')
+    shell('settings', 'put', 'global', 'animator_duration_scale', '1' if MODE=='record' else '0')
     shell('settings', 'put', 'system', 'sound_effects_enabled', '0')
     shell('cmd', 'media_session', 'volume', '--stream', '3', '--set', '13')
     adb('install', '-r', 'app/build/outputs/apk/debug/app-debug.apk')
     start('home')
     time.sleep(2)
-    seed()
+    seed(26 if MODE=='record' else 33)
     start('tasbih')
+    if MODE=='controls':
+        exercise_controls()
+        return
     with closing(connect_scene()) as scene, tempfile.TemporaryDirectory() as directory:
         temp = Path(directory)
         visible_count(scene, 26)
@@ -282,6 +280,13 @@ def exercise():
     start('tasbih')
     with closing(connect_scene()) as scene:
         visible_count(scene, 33)
+    REPORT.update(verified=True, initial=26, slow_taps=[27,28,29], rapid_result=33,
+                  idle_planets_moved=True, restored=33)
+
+
+def exercise_controls():
+    with closing(connect_scene()) as scene:
+        visible_count(scene, 33)
         shell('input', 'swipe', 350, 600, 350, 900, 400)
         time.sleep(1.6)
         dragged = int(prefs()['tasbih_count'])
@@ -305,15 +310,14 @@ def exercise():
     with closing(connect_scene()) as scene:
         visible_count(scene, 0)
         assert '99' in read_js(scene, "document.getElementById('goal').innerText")
-    REPORT.update(verified=True, initial=26, slow_taps=[27, 28, 29], rapid_result=33,
-                  idle_planets_moved=True, restored=33, drag_increment=dragged - 33,
+    REPORT.update(verified=True, drag_increment=dragged - 33,
                   reset_confirmed_after_restart=True, target_after_restart=99)
 
 
 try:
     exercise()
 except Exception:
-    (MEDIA / 'failure.txt').write_text(traceback.format_exc())
+    (MEDIA / (MODE + '-failure.txt')).write_text(traceback.format_exc())
     screenshot(MEDIA / 'failure.png')
     for name, args in (
         ('surfaces', ['dumpsys','SurfaceFlinger','--list']),
@@ -329,5 +333,5 @@ except Exception:
                                                   'OpenGLRenderer:W','HWUI:W','EGL_emulation:W','*:S'))
     raise
 finally:
-    (MEDIA / 'verification.json').write_text(json.dumps(REPORT, ensure_ascii=False, indent=2))
-    (MEDIA / 'android-log.txt').write_text(adb('logcat', '-d', '-t', '1000'))
+    (MEDIA / ('verification.json' if MODE=='record' else 'controls.json')).write_text(json.dumps(REPORT, ensure_ascii=False, indent=2))
+    (MEDIA / (MODE + '-android-log.txt')).write_text(adb('logcat', '-d', '-t', '1000'))
