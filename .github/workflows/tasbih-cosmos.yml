@@ -96,6 +96,7 @@ jobs:
             echo 'target=google_apis' >> "$GITHUB_OUTPUT"
           fi
       - name: Record real gestures and check count persistence on Android 15
+        id: capture
         timeout-minutes: 17
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -109,6 +110,7 @@ jobs:
           emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -feature -Vulkan -no-boot-anim -camera-back none -camera-front none
           script: python3 tools/ci/tasbih_cosmos_capture.py record
       - name: Check settings, gestures and reset on a fresh Android 15 instance
+        if: ${{ !cancelled() && (steps.capture.outcome == 'success' || steps.capture.outcome == 'failure') }}
         timeout-minutes: 17
         uses: reactivecircus/android-emulator-runner@v2
         with:

@@ -197,13 +197,13 @@ def record(socket, temp):
     raw = temp / 'guest.mp4'
     log = MEDIA / 'recorder.txt'
     with log.open('w') as journal:
-        recorder = subprocess.Popen([os.environ['SCRCPY_BIN'], '--no-playback', '--no-window', '--no-control',
+        recorder = subprocess.Popen(['stdbuf', '-oL', '-eL', os.environ['SCRCPY_BIN'], '--no-playback', '--no-window', '--no-control',
             '--require-audio', '--audio-codec=aac', '--audio-source=output', '--video-codec=h264',
             '--max-size=960', '--max-fps=30', '--video-bit-rate=4M', '--audio-bit-rate=192K',
             '--record=' + str(raw)], stdout=journal, stderr=subprocess.STDOUT)
         try:
             deadline = time.monotonic()+35
-            while 'Recording started to' not in log.read_text(errors='replace'):
+            while not (raw.exists() and raw.stat().st_size > 0) and 'Recording started to' not in log.read_text(errors='replace'):
                 if recorder.poll() is not None or time.monotonic() >= deadline:
                     raise RuntimeError('Android recorder did not start: ' + log.read_text()[-1600:])
                 time.sleep(.1)
