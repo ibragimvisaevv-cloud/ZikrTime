@@ -13,6 +13,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: media/zikrtime-reel-20261112
+          fetch-depth: 0
+          sparse-checkout: |
+            .reel-plates
       - name: Prepare production copies of Pexels photographs
         shell: bash
         run: |
@@ -40,5 +43,7 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add "$dest"
           git commit -m "Prepare credited photographic plates for the ZikrTime reel"
-          git pull --rebase origin media/zikrtime-reel-20261112
-          git push origin HEAD:media/zikrtime-reel-20261112
+          if ! git push origin HEAD:media/zikrtime-reel-20261112; then
+            git pull --rebase --autostash origin media/zikrtime-reel-20261112
+            git push origin HEAD:media/zikrtime-reel-20261112
+          fi
