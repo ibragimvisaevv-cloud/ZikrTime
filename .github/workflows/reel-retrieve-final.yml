@@ -44,5 +44,4 @@ jobs:
           git config user.email github-actions@users.noreply.github.com
           git add reel-final-shots
           git commit -m 'Collect the completed Android camera takes for film editing'
-          git pull --rebase origin media/zikrtime-reel-20261112
-          git push origin HEAD:media/zikrtime-reel-20261112
+          git push origin HEAD:media/zikrtime-reel-20261112 || (git pull --rebase --autostash origin media/zikrtime-reel-20261112 && git push origin HEAD:media/zikrtime-reel-20261112)
