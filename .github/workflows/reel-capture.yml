@@ -50,7 +50,7 @@ jobs:
               subprocess.run(['adb','exec-out','screencap','-p'],stdout=(work/(name+'.png')).open('wb'),check=True)
               (work/(name+'.xml')).write_bytes(ET.tostring(ui(),encoding='utf-8'))
           def show(route):
-              shell('am','start','-S','-W','-n',PKG+'/.MainActivity','--es','qa_screen',route,'--es','qa_lang','ru')
+              shell('am','start','-S','-W','-n',PKG+'/.MainActivity','--es','qa_screen',route,'--es','qa_lang','ru','--ez','qa_onboarded','true')
               time.sleep(1.5)
           def shot(name,duration,action,pause=.7):
               dest='/sdcard/'+name+'.mp4'
@@ -77,16 +77,16 @@ jobs:
               shell('cmd','uimode','night','yes')
               shell('settings','put','global','auto_time','0')
               shell('settings','put','global','auto_time_zone','0')
-              shell('setprop','persist.sys.timezone','Europe/Moscow')
+              seed('dark',True,True)
               localclock=subprocess.run(['adb','shell','su','0','date','111213052026.00'],capture_output=True,text=True)
               print('device date',shell('date'),localclock.returncode,flush=True)
               shell('cmd','locale','set-app-locales',PKG,'--user','0','--locales','ru')
               seed('dark',True,True)
-              shell('pm','grant',PKG,'android.permission.POST_NOTIFICATIONS')
+              subprocess.run(['adb','shell','pm','grant',PKG,'android.permission.POST_NOTIFICATIONS'],check=False)
               put_pref('appearance','string','dark')
               show('home')
           def home_swipe():
-              show('home');still('home-start')
+              show('home');still('home-start'); assert 'Следующий намаз' in (work/'home-start.xml').read_text(encoding='utf-8')
               shot('home-swipe',8,lambda:shell('input','swipe',500,1260,500,470,1050),2)
               still('home-finish')
           def alarm_shot():
@@ -127,7 +127,7 @@ jobs:
               root=loc['show_provider']('NextPrayerWidget')
               found=[n for n in root.iter('node') if '2×2' in n.get('content-desc','')]
               marker=found[0] if found else next(n for n in root.iter('node') if 'w_value' in n.get('resource-id',''))
-              xy=center(marker);still('widget-home')
+              xy=center(marker);still('widget-home');assert 'Выбрать город' not in (work/'widget-home.xml').read_text(encoding='utf-8')
               (work/'widget-marker.txt').write_text(json.dumps(marker.attrib,ensure_ascii=False))
               shot('widget-open',7,lambda:shell('input','tap',*xy),2.4)
               still('widget-opened')
