@@ -145,6 +145,10 @@ def wait_for_drawn_scene(socket, path):
             return
         if len(checks) == 1:
             (MEDIA / 'first-viewport.json').write_text(json.dumps(scene_diagnostics(socket), indent=2))
+        # The Pixel Launcher can show its own ANR over an otherwise healthy app
+        # during cold boot. The shared UI helper dismisses that named dialog only.
+        if 'Application Not Responding' in shell('dumpsys', 'window', 'windows') or len(checks) == 2:
+            ui()
         time.sleep(.65)
     shutil.copyfile(path, MEDIA / 'scene-before-touch.png')
     (MEDIA / 'blank-viewport.json').write_text(json.dumps({
