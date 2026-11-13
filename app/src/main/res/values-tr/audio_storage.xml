@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="audio_download_channel">Kur’an indirmeleri</string>
+    <string name="audio_download_channel_description">Çevrimdışı kaydetmek için seçtiğiniz surelerin indirme ilerlemesi. Sessiz bildirimler.</string>
+    <string name="audio_download_waiting_network">İnternet bağlantısı bekleniyor</string>
+    <string name="audio_download_waiting_wifi">Sınırsız ağ bekleniyor</string>
+    <string name="audio_download_running">Sure çevrimdışı dinlemek için kaydediliyor</string>
+    <string name="audio_download_preparing">İndirme hazırlanıyor</string>
+</resources>

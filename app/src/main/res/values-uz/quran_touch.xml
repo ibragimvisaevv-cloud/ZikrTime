@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qt_note">Qayd</string>
+    <string name="qt_save_note">Qaydni saqlash</string>
+    <string name="qt_save_place">O‘qish joyini saqlash</string>
+    <string name="qt_remove_bookmark">Xatcho‘pni olib tashlash</string>
+    <string name="qt_copy">Oyatni nusxalash</string>
+    <string name="qt_touch_hint">Oyatni tanlash uchun bosing, qayd qo‘shish uchun bosib turing. O‘qish joyini yuqoridagi xatcho‘p bilan saqlang.</string>
+    <string name="qt_ayah_actions">%1$d-oyat amallari</string>
+    <string name="qt_bookmark_added">O‘qish joyi saqlandi</string>
+    <string name="qt_bookmark_removed">Xatcho‘p olib tashlandi</string>
+</resources>

@@ -8,41 +8,62 @@ import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.zikrtime.app.R
 
-/**
- * Записи азана (res/raw, свободные лицензии — см. «О приложении»):
- *  adhan   — «Beautiful adhan», Adam-synagda, CC0;
- *  adhan_2 — «Azan», Andrewler, CC BY-SA 4.0;
- *  adhan_3 — «The Adhan», Aaqib Azeez (запись Atcovi), CC BY-SA 4.0.
- * Ищем по имени, чтобы приложение собиралось и без файлов: тогда используется мелодия будильника телефона.
- */
+/** Credits and transformation details accompany each recording in the sound picker. */
 object AdhanSound {
 
     /** Идентификатор записи (он же имя файла в res/raw) и длительность в секундах. */
-    data class Voice(val id: String, val number: Int, val seconds: Int)
-
-    val voices = listOf(
-        Voice("adhan", 1, 154),
-        Voice("adhan_2", 2, 183),
-        Voice("adhan_3", 3, 84),
+    data class Voice(
+        val id: String,
+        val number: Int,
+        val seconds: Int,
+        val titleRes: Int,
+        val credit: String,
+        val sourceUrl: String,
+        val licenseUrl: String,
+        val fajrOnly: Boolean = false,
     )
 
-    fun voice(id: String): Voice = voices.firstOrNull { it.id == id } ?: voices.first()
+    private const val SOURCE = "https://github.com/nandxorandor/Athan/blob/ad2bf1799add51cca4aaf1f123b1c212378c7786/"
+    private const val LICENSE = "https://creativecommons.org/licenses/by/4.0/"
+    private const val AUTHOR = "Ahmed Khalaf · CC BY 4.0"
+    val voices = listOf(
+        Voice("athan_khalaf_one", 1, 143, R.string.adhan_khalaf_one, AUTHOR,
+            SOURCE + "app/src/main/assets/athan/developer/Developer_Athan-1.mp3", LICENSE),
+        Voice("athan_khalaf_two", 2, 131, R.string.adhan_khalaf_two, AUTHOR,
+            SOURCE + "app/src/main/assets/athan/developer/Developer_Athan-2.mp3", LICENSE),
+        Voice("athan_khalaf_fajr", 3, 99, R.string.adhan_khalaf_fajr, AUTHOR,
+            SOURCE + "app/src/main/assets/athan/fajr/Developer_Athan-3_Fajr.mp3", LICENSE, fajrOnly = true),
+    )
+
+    fun voice(id: String): Voice = when (id) {
+        "adhan_2", "adhan_makkah" -> voices[1]
+        "adhan_fajr" -> voices[2]
+        else -> voices.firstOrNull { it.id == id } ?: voices.first()
+    }
 
     @SuppressLint("DiscouragedApi")
-    fun resId(context: Context, id: String = "adhan"): Int = context.resources.getIdentifier(id, "raw", context.packageName)
+    fun resId(context: Context, id: String = voices.first().id): Int =
+        context.resources.getIdentifier(voice(id).id, "raw", context.packageName)
 
-    fun available(context: Context, id: String = "adhan"): Boolean = resId(context, id) != 0
+    fun available(context: Context, id: String = voices.first().id): Boolean = resId(context, id) != 0
 
-    fun uri(context: Context, id: String = "adhan"): Uri? =
-        resId(context, id).takeIf { it != 0 }?.let { Uri.parse("android.resource://${context.packageName}/$it") }
+    fun uri(context: Context, id: String): Uri? = if (available(context, id))
+        Uri.parse("android.resource://${context.packageName}/raw/${voice(id).id}") else null
 
-    // ---------- Прослушивание в настройках (тихо, ~30% громкости) ----------
+    fun eligibleVoices(forFajrAlarm: Boolean): List<Voice> = voices.filter { forFajrAlarm || !it.fajrOnly }
+
+    fun notificationVoice(id: String): Voice = voice(id).takeUnless { it.fajrOnly } ?: voices.first()
+
+    // Preview follows the device's media volume; it never changes the system volume.
 
     /** Какая запись сейчас звучит в предпрослушивании (для кнопки ▶/■). */
     var previewing by mutableStateOf<String?>(null)
         private set
     private var player: MediaPlayer? = null
+    var previewFailed by mutableStateOf(false)
+        private set
 
     fun togglePreview(context: Context, id: String) {
         if (previewing == id) {
@@ -50,29 +71,62 @@ object AdhanSound {
             return
         }
         stopPreview()
-        val res = resId(context, id).takeIf { it != 0 } ?: return
-        player = runCatching {
-            MediaPlayer().apply {
+        previewFailed = false
+        com.zikrtime.app.audio.QuranPlaybackService.pauseForInterruption(context)
+        val res = resId(context, id).takeIf { it != 0 }
+        if (res == null) {
+            previewFailed = true
+            return
+        }
+        val candidate = runCatching { MediaPlayer() }.getOrElse {
+            previewFailed = true
+            return
+        }
+        player = candidate
+        previewing = id
+        runCatching {
+            candidate.apply {
                 setAudioAttributes(
                     AudioAttributes.Builder()
                         .setUsage(AudioAttributes.USAGE_MEDIA)
-                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
                         .build(),
                 )
                 context.resources.openRawResourceFd(res).use { setDataSource(it.fileDescriptor, it.startOffset, it.length) }
-                setVolume(0.3f, 0.3f)
-                setOnCompletionListener { stopPreview() }
-                prepare()
-                start()
+                setVolume(1f, 1f)
+                setOnPreparedListener { prepared ->
+                    if (player === prepared) {
+                        runCatching { prepared.start() }.onFailure {
+                            stopPreview()
+                            previewFailed = true
+                        }
+                    }
+                }
+                setOnCompletionListener { completed -> if (player === completed) stopPreview() }
+                setOnErrorListener { failed, _, _ ->
+                    if (player === failed) {
+                        stopPreview()
+                        previewFailed = true
+                    }
+                    true
+                }
+                prepareAsync()
             }
-        }.getOrNull()
-        previewing = if (player != null) id else null
+        }.onFailure {
+            stopPreview()
+            previewFailed = true
+        }
     }
 
     fun stopPreview() {
-        player?.runCatching { stop() }
-        player?.release()
+        val previous = player
         player = null
         previewing = null
+        previous?.runCatching {
+            setOnPreparedListener(null)
+            setOnCompletionListener(null)
+            setOnErrorListener(null)
+            release()
+        }
     }
 }

@@ -1,0 +1,3683 @@
+[
+  {
+    "id": "l2_covenant",
+    "cat": "prophets",
+    "difficulty": 2,
+    "reference": "Quran 2:124",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:124"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какая группа исключена из завета в ответе Ибрахиму в 2:124?",
+        "options": [
+          "Несправедливые из его потомства",
+          "Неимущие из его потомства",
+          "Не имеющие царской власти потомки",
+          "Рождённые за пределами Мекки потомки"
+        ],
+        "info": "Аят исключает несправедливых, а не связывает завет с богатством или местом рождения."
+      },
+      "en": {
+        "q": "Which group is excluded from the covenant in the answer to Ibrahim in 2:124?",
+        "options": [
+          "Wrongdoers among his descendants",
+          "Poor people among his descendants",
+          "Descendants without royal authority",
+          "Descendants born outside Makkah"
+        ],
+        "info": "The verse excludes wrongdoers; it does not link the covenant to wealth or birthplace."
+      },
+      "uz": {
+        "q": "2:124 da Ibrohimga berilgan javobda qaysi guruh ahddan istisno qilingan?",
+        "options": [
+          "Uning zurriyotidagi zolimlar",
+          "Uning zurriyotidagi kambag‘allar",
+          "Podshohlik hokimiyatiga ega bo‘lmagan avlodlar",
+          "Makka tashqarisida tug‘ilgan avlodlar"
+        ],
+        "info": "Oyat zolimlarni istisno qiladi; ahdni boylik yoki tug‘ilgan joyga bog‘lamaydi."
+      },
+      "tg": {
+        "q": "Дар ҷавоб ба Иброҳим дар 2:124 кадом гурӯҳ аз аҳд истисно шудааст?",
+        "options": [
+          "Ситамкорон аз насли ӯ",
+          "Камбағалон аз насли ӯ",
+          "Фарзандоне, ки қудрати подшоҳӣ надоранд",
+          "Фарзандоне, ки берун аз Макка таваллуд шудаанд"
+        ],
+        "info": "Оят ситамкоронро истисно мекунад ва аҳдро ба сарват ё зодгоҳ вобаста намесозад."
+      },
+      "kk": {
+        "q": "2:124 аятында Ибраһимге берілген жауапта қай топ уәдеден тыс қалады?",
+        "options": [
+          "Оның ұрпағындағы әділетсіздер",
+          "Оның ұрпағындағы кедейлер",
+          "Патшалық билігі жоқ ұрпақтары",
+          "Меккеден тыс жерде туған ұрпақтары"
+        ],
+        "info": "Аят әділетсіздерді уәдеден тыс қалдырады; уәдені байлыққа не туған жерге байланыстырмайды."
+      },
+      "ky": {
+        "q": "2:124 аятында Ибрахимге берилген жоопто кайсы топ убададан тышкары калат?",
+        "options": [
+          "Анын урпактарынын ичиндеги адилетсиздер",
+          "Анын урпактарынын ичиндеги жакырлар",
+          "Падышалык бийликке ээ болбогон урпактары",
+          "Меккеден тышкары жерде төрөлгөн урпактары"
+        ],
+        "info": "Аят адилетсиздерди убададан тышкары калтырат; убаданы байлыкка же туулган жерге байланыштырбайт."
+      },
+      "az": {
+        "q": "2:124-də İbrahimə verilən cavabda hansı qrup əhddən kənarda qalır?",
+        "options": [
+          "Onun nəslindən olan zalımlar",
+          "Onun nəslindən olan yoxsullar",
+          "Onun nəslindən padşahlıq hakimiyyəti olmayanlar",
+          "Onun nəslindən Məkkədən kənarda doğulanlar"
+        ],
+        "info": "Ayə zalımları istisna edir; əhdi sərvət və ya doğum yeri ilə əlaqələndirmir."
+      },
+      "tr": {
+        "q": "2:124’te İbrahim’e verilen cevapta hangi grup ahdin dışında tutulur?",
+        "options": [
+          "Onun soyundan gelen zalimler",
+          "Onun soyundan gelen yoksullar",
+          "Onun soyundan krallık yetkisi olmayanlar",
+          "Onun soyundan Mekke dışında doğanlar"
+        ],
+        "info": "Ayet zalimleri dışarıda tutar; ahdi servete veya doğum yerine bağlamaz."
+      }
+    }
+  },
+  {
+    "id": "l2_witnesses",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 2:143",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:143"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как распределены роли свидетелей в 2:143?",
+        "options": [
+          "Община — о людях, Посланник — об общине",
+          "Люди — об общине, община — о Посланнике",
+          "Посланник — о людях, люди — об общине",
+          "Община — о Посланнике, Посланник — об ангелах"
+        ],
+        "info": "Срединная община названа свидетелем о людях, а Посланник — свидетелем о ней."
+      },
+      "en": {
+        "q": "How are the roles of witnesses assigned in 2:143?",
+        "options": [
+          "The community witnesses over people; the Messenger over the community",
+          "People witness over the community; the community over the Messenger",
+          "The Messenger witnesses over people; people over the community",
+          "The community witnesses over the Messenger; the Messenger over angels"
+        ],
+        "info": "The middle community is called a witness over people, and the Messenger a witness over it."
+      },
+      "uz": {
+        "q": "2:143 da guvohlik vazifalari qanday taqsimlangan?",
+        "options": [
+          "Ummat odamlarga, Payg‘ambar ummatga guvoh",
+          "Odamlar ummatga, ummat Payg‘ambarga guvoh",
+          "Payg‘ambar odamlarga, odamlar ummatga guvoh",
+          "Ummat Payg‘ambarga, Payg‘ambar farishtalarga guvoh"
+        ],
+        "info": "O‘rta ummat odamlarga guvoh, Payg‘ambar esa shu ummatga guvoh deb atalgan."
+      },
+      "tg": {
+        "q": "Дар 2:143 нақшҳои шоҳидӣ чӣ гуна тақсим шудаанд?",
+        "options": [
+          "Уммат бар мардум, Паёмбар бар уммат шоҳид аст",
+          "Мардум бар уммат, уммат бар Паёмбар шоҳид аст",
+          "Паёмбар бар мардум, мардум бар уммат шоҳид аст",
+          "Уммат бар Паёмбар, Паёмбар бар фариштагон шоҳид аст"
+        ],
+        "info": "Уммати миёнарав шоҳид бар мардум ва Паёмбар шоҳид бар ин уммат номида шудааст."
+      },
+      "kk": {
+        "q": "2:143 аятында куәлік ету міндеттері қалай бөлінген?",
+        "options": [
+          "Үммет адамдарға, Елші үмметке куә",
+          "Адамдар үмметке, үммет Елшіге куә",
+          "Елші адамдарға, адамдар үмметке куә",
+          "Үммет Елшіге, Елші періштелерге куә"
+        ],
+        "info": "Орташа жолды ұстанған үммет адамдарға куә, ал Елші сол үмметке куә деп аталған."
+      },
+      "ky": {
+        "q": "2:143 аятында күбөлүк кылуу милдеттери кандай бөлүштүрүлгөн?",
+        "options": [
+          "Үммөт адамдарга, Элчи үммөткө күбө",
+          "Адамдар үммөткө, үммөт Элчиге күбө",
+          "Элчи адамдарга, адамдар үммөткө күбө",
+          "Үммөт Элчиге, Элчи периштелерге күбө"
+        ],
+        "info": "Орто жолду карманган үммөт адамдарга күбө, ал эми Элчи ошол үммөткө күбө деп аталган."
+      },
+      "az": {
+        "q": "2:143-də şahidlik rolları necə bölüşdürülür?",
+        "options": [
+          "Ümmət insanlara, Elçi ümmətə şahiddir",
+          "İnsanlar ümmətə, ümmət Elçiyə şahiddir",
+          "Elçi insanlara, insanlar ümmətə şahiddir",
+          "Ümmət Elçiyə, Elçi mələklərə şahiddir"
+        ],
+        "info": "Orta ümmət insanlara, Elçi isə ümmətə şahid adlandırılır."
+      },
+      "tr": {
+        "q": "2:143’te şahitlik rolleri nasıl dağıtılır?",
+        "options": [
+          "Ümmet insanlara, Elçi ümmete şahittir",
+          "İnsanlar ümmete, ümmet Elçi’ye şahittir",
+          "Elçi insanlara, insanlar ümmete şahittir",
+          "Ümmet Elçi’ye, Elçi meleklere şahittir"
+        ],
+        "info": "Orta ümmet insanlara, Elçi ise ümmete şahit olarak belirtilir."
+      }
+    }
+  },
+  {
+    "id": "l2_safa_marwa_signs",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 2:158",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:158"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как ас-Сафа и аль-Марва описаны в 2:158?",
+        "options": [
+          "Как обрядовые знаки Аллаха",
+          "Как места начала ихрама",
+          "Как границы запретной территории",
+          "Как места стояния в день Арафа"
+        ],
+        "info": "Аят относит ас-Сафу и аль-Марву к установленным Аллахом обрядовым знакам."
+      },
+      "en": {
+        "q": "How are as-Safa and al-Marwah described in 2:158?",
+        "options": [
+          "As ritual symbols established by Allah",
+          "As places where ihram begins",
+          "As boundaries of the sacred territory",
+          "As places of standing on the day of Arafah"
+        ],
+        "info": "The verse counts as-Safa and al-Marwah among the ritual symbols established by Allah."
+      },
+      "uz": {
+        "q": "2:158 da Safo va Marva qanday ta’riflangan?",
+        "options": [
+          "Alloh belgilagan ibodat alomatlari sifatida",
+          "Ehromga kirish joylari sifatida",
+          "Muqaddas hudud chegaralari sifatida",
+          "Arafa kuni turish joylari sifatida"
+        ],
+        "info": "Oyat Safo va Marvani Alloh belgilagan ibodat alomatlari qatoriga kiritadi."
+      },
+      "tg": {
+        "q": "Сафо ва Марва дар 2:158 чӣ гуна тавсиф шудаанд?",
+        "options": [
+          "Ҳамчун нишонаҳои маросимии муқарраркардаи Аллоҳ",
+          "Ҳамчун ҷойҳои ворид шудан ба эҳром",
+          "Ҳамчун ҳудуди сарзамини муқаддас",
+          "Ҳамчун ҷойҳои истодан дар рӯзи Арафа"
+        ],
+        "info": "Оят Сафо ва Марваро аз нишонаҳои маросимии муқарраркардаи Аллоҳ мешуморад."
+      },
+      "kk": {
+        "q": "2:158 аятында Сафа мен Мәруа қалай сипатталған?",
+        "options": [
+          "Алланың ғибадат рәміздері ретінде",
+          "Ихрамға кіретін орындар ретінде",
+          "Қасиетті аумақтың шекаралары ретінде",
+          "Арафа күнінде тұратын орындар ретінде"
+        ],
+        "info": "Аят Сафа мен Мәруаны Алла белгілеген ғибадат рәміздеріне жатқызады."
+      },
+      "ky": {
+        "q": "2:158 аятында Сафа менен Марва кандай сүрөттөлөт?",
+        "options": [
+          "Аллахтын ибадат белгилери катары",
+          "Ихрамга кире турган жерлер катары",
+          "Ыйык аймактын чек аралары катары",
+          "Арафа күнү туруучу жерлер катары"
+        ],
+        "info": "Аят Сафа менен Марваны Аллах белгилеген ибадат белгилерине кошот."
+      },
+      "az": {
+        "q": "Səfa və Mərvə 2:158-də necə təsvir olunur?",
+        "options": [
+          "Allahın ibadət əlamətləri kimi",
+          "İhrama girilən yerlər kimi",
+          "Hərəm ərazisinin sərhədləri kimi",
+          "Ərəfə günü vəqfə yerləri kimi"
+        ],
+        "info": "Ayə Səfa və Mərvəni Allahın müəyyən etdiyi ibadət əlamətlərinə aid edir."
+      },
+      "tr": {
+        "q": "Safâ ve Merve 2:158’de nasıl tanımlanır?",
+        "options": [
+          "Allah’ın ibadet nişaneleri olarak",
+          "İhrama girilen yerler olarak",
+          "Harem bölgesinin sınırları olarak",
+          "Arefe günü vakfe yerleri olarak"
+        ],
+        "info": "Ayet, Safâ ve Merve’yi Allah’ın belirlediği ibadet nişaneleri arasında sayar."
+      }
+    }
+  },
+  {
+    "id": "l2_harm_comparison",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 2:219",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:219"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как в 2:219 соотносятся грех и польза вина и азартных игр?",
+        "options": [
+          "Грех больше пользы",
+          "Польза больше греха",
+          "Грех и польза равны",
+          "Они не приносят ни греха, ни пользы"
+        ],
+        "info": "В аяте упомянута некоторая польза, но грех назван большим."
+      },
+      "en": {
+        "q": "How does 2:219 compare the sin and benefit of wine and gambling?",
+        "options": [
+          "Their sin exceeds their benefit",
+          "Their benefit exceeds their sin",
+          "Their sin and benefit are equal",
+          "They have neither sin nor benefit"
+        ],
+        "info": "The verse acknowledges some benefit but describes the sin as greater."
+      },
+      "uz": {
+        "q": "2:219 da may va qimorning gunohi hamda foydasi qanday solishtirilgan?",
+        "options": [
+          "Gunohi foydasidan kattaroq",
+          "Foydasi gunohidan kattaroq",
+          "Gunohi va foydasi teng",
+          "Ularda na gunoh, na foyda bor"
+        ],
+        "info": "Oyat ayrim foydani tilga oladi, ammo gunohni kattaroq deb ta’riflaydi."
+      },
+      "tg": {
+        "q": "Дар 2:219 гуноҳ ва фоидаи шаробу қимор чӣ гуна муқоиса шудаанд?",
+        "options": [
+          "Гуноҳашон аз фоидаашон бештар аст",
+          "Фоидаашон аз гуноҳашон бештар аст",
+          "Гуноҳу фоидаашон баробаранд",
+          "На гуноҳ доранд ва на фоида"
+        ],
+        "info": "Оят баъзе фоидаро зикр мекунад, вале гуноҳро бештар медонад."
+      },
+      "kk": {
+        "q": "2:219 аятында ішімдік пен құмардың күнәсі мен пайдасы қалай салыстырылған?",
+        "options": [
+          "Күнәсі пайдасынан үлкен",
+          "Пайдасы күнәсінен үлкен",
+          "Күнәсі мен пайдасы тең",
+          "Күнәсі де, пайдасы да жоқ"
+        ],
+        "info": "Аят кейбір пайдасын атайды, бірақ күнәсін одан үлкен дейді."
+      },
+      "ky": {
+        "q": "2:219 аятында ичимдик менен кумардын күнөөсү жана пайдасы кандай салыштырылган?",
+        "options": [
+          "Күнөөсү пайдасынан чоң",
+          "Пайдасы күнөөсүнөн чоң",
+          "Күнөөсү менен пайдасы тең",
+          "Күнөөсү да, пайдасы да жок"
+        ],
+        "info": "Аят айрым пайдасын айтат, бирок күнөөсүн андан чоң деп көрсөтөт."
+      },
+      "az": {
+        "q": "2:219-da şərabın və qumarın günahı ilə faydası necə müqayisə edilir?",
+        "options": [
+          "Günahı faydasından böyükdür",
+          "Faydası günahından böyükdür",
+          "Günahı və faydası bərabərdir",
+          "Nə günahı, nə də faydası var"
+        ],
+        "info": "Ayədə müəyyən fayda qeyd olunur, lakin günahın daha böyük olduğu bildirilir."
+      },
+      "tr": {
+        "q": "2:219’da şarap ve kumarın günahı ile faydası nasıl karşılaştırılır?",
+        "options": [
+          "Günahları faydalarından büyüktür",
+          "Faydaları günahlarından büyüktür",
+          "Günahları ve faydaları eşittir",
+          "Ne günahları ne de faydaları vardır"
+        ],
+        "info": "Ayette bazı faydalarından söz edilir, fakat günahlarının daha büyük olduğu belirtilir."
+      }
+    }
+  },
+  {
+    "id": "l2_river_exception",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 2:249",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:249"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какое исключение сделал Талут при испытании рекой?",
+        "options": [
+          "Зачерпнуть одну пригоршню",
+          "Наполнить один кувшин",
+          "Пить до полного насыщения",
+          "Напоить только своего коня"
+        ],
+        "info": "В 2:249 исключением была пригоршня воды, зачерпнутая рукой."
+      },
+      "en": {
+        "q": "What exception did Talut allow during the river test?",
+        "options": [
+          "One handful of water",
+          "One full jug of water",
+          "Drinking until fully satisfied",
+          "Giving water only to one's horse"
+        ],
+        "info": "In 2:249 the exception is a single handful drawn by hand."
+      },
+      "uz": {
+        "q": "Tolut daryo sinovida qanday istisnoga ruxsat bergan?",
+        "options": [
+          "Bir hovuch suv olishga",
+          "Bir ko‘za to‘ldirishga",
+          "To‘yguncha ichishga",
+          "Faqat otini sug‘orishga"
+        ],
+        "info": "2:249 da qo‘l bilan bir hovuch suv olish istisno qilingan."
+      },
+      "tg": {
+        "q": "Толут ҳангоми озмоиш бо дарё ба чӣ истисно иҷозат дод?",
+        "options": [
+          "Як каф об гирифтан",
+          "Як кӯза об пур кардан",
+          "То сер шудан нӯшидан",
+          "Танҳо аспи худро об додан"
+        ],
+        "info": "Дар 2:249 як каф об, ки бо даст гирифта мешавад, истисно шудааст."
+      },
+      "kk": {
+        "q": "Талут өзенмен сынағанда қандай ерекшелікке рұқсат берді?",
+        "options": [
+          "Бір уыс су алуға",
+          "Бір құмыра толтыруға",
+          "Шөлі толық қанғанша ішуге",
+          "Тек өз атын суаруға"
+        ],
+        "info": "2:249 аятында қолмен бір уыс су алу ерекшелік ретінде аталады."
+      },
+      "ky": {
+        "q": "Талут дарыя менен сынаганда кандай өзгөчөлүккө уруксат берген?",
+        "options": [
+          "Бир ууч суу алууга",
+          "Бир кумура толтурууга",
+          "Суусуну толук канганча ичүүгө",
+          "Атын гана сугарууга"
+        ],
+        "info": "2:249 аятында кол менен бир ууч суу алуу өзгөчө учур катары айтылат."
+      },
+      "az": {
+        "q": "Talut çayla sınaq zamanı hansı istisnanı etdi?",
+        "options": [
+          "Bir ovuc su götürmək",
+          "Bir kuzə doldurmaq",
+          "Doyana qədər su içmək",
+          "Yalnız öz atını sulamaq"
+        ],
+        "info": "2:249-da istisna olaraq əllə bir ovuc su götürməyə icazə verilir."
+      },
+      "tr": {
+        "q": "Tâlût, nehirle sınanma sırasında hangi istisnayı belirtti?",
+        "options": [
+          "Bir avuç su almak",
+          "Bir testi doldurmak",
+          "Doyuncaya kadar su içmek",
+          "Yalnız kendi atını sulamak"
+        ],
+        "info": "2:249’da elle bir avuç su almak istisna olarak belirtilir."
+      }
+    }
+  },
+  {
+    "id": "l2_ibrahim_reassurance",
+    "cat": "prophets",
+    "difficulty": 2,
+    "reference": "Quran 2:260",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:260"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Зачем Ибрахим попросил показать оживление мёртвых?",
+        "options": [
+          "Чтобы его сердце обрело покой",
+          "Чтобы впервые уверовать",
+          "Чтобы узнать срок своей смерти",
+          "Чтобы выбрать место переселения"
+        ],
+        "info": "В 2:260 Ибрахим подтверждает веру и объясняет просьбу желанием успокоить сердце."
+      },
+      "en": {
+        "q": "Why did Ibrahim ask to see the dead brought to life?",
+        "options": [
+          "To reassure his heart",
+          "To believe for the first time",
+          "To learn the time of his death",
+          "To choose where to migrate"
+        ],
+        "info": "In 2:260 Ibrahim affirms his faith and asks for reassurance of his heart."
+      },
+      "uz": {
+        "q": "Ibrohim nega o‘liklarning tiriltirilishini ko‘rishni so‘ragan?",
+        "options": [
+          "Qalbi xotirjam bo‘lishi uchun",
+          "Birinchi marta iymon keltirish uchun",
+          "O‘lim vaqtini bilish uchun",
+          "Ko‘chib boradigan joyni tanlash uchun"
+        ],
+        "info": "2:260 da Ibrohim iymonini tasdiqlab, qalbi xotirjam bo‘lishini istagan."
+      },
+      "tg": {
+        "q": "Чаро Иброҳим хост зинда шудани мурдагонро бинад?",
+        "options": [
+          "Барои ором гирифтани дилаш",
+          "Барои бори аввал имон овардан",
+          "Барои донистани вақти маргаш",
+          "Барои интихоби макони ҳиҷрат"
+        ],
+        "info": "Дар 2:260 Иброҳим имонашро тасдиқ карда, оромии дил мехоҳад."
+      },
+      "kk": {
+        "q": "Ибраһим өлілердің тірілуін көруді не үшін сұрады?",
+        "options": [
+          "Жүрегі орнығуы үшін",
+          "Алғаш рет иман келтіру үшін",
+          "Өлетін уақытын білу үшін",
+          "Қоныс аударатын жерді таңдау үшін"
+        ],
+        "info": "2:260 аятында Ибраһим сенетінін айтып, жүрегінің тынышталуын қалайды."
+      },
+      "ky": {
+        "q": "Ибрахим өлүктөрдүн тирилгенин көрүүнү эмне үчүн суранган?",
+        "options": [
+          "Жүрөгү тынчтанышы үчүн",
+          "Биринчи жолу ыйман келтирүү үчүн",
+          "Өлүм убактысын билүү үчүн",
+          "Көчө турган жерди тандоо үчүн"
+        ],
+        "info": "2:260 аятында Ибрахим ишенерин ырастап, жүрөгүнүн тынчтанышын каалайт."
+      },
+      "az": {
+        "q": "İbrahim ölülərin dirildilməsinin ona göstərilməsini nə üçün istədi?",
+        "options": [
+          "Qəlbinin rahatlıq tapması üçün",
+          "İlk dəfə iman gətirmək üçün",
+          "Ölüm vaxtını öyrənmək üçün",
+          "Köçəcəyi yeri seçmək üçün"
+        ],
+        "info": "2:260-da İbrahim iman etdiyini təsdiqləyir və istəyini qəlbinin rahatlıq tapması ilə izah edir."
+      },
+      "tr": {
+        "q": "İbrahim, ölülerin diriltilmesinin kendisine gösterilmesini neden istedi?",
+        "options": [
+          "Kalbinin huzur bulması için",
+          "İlk kez iman etmek için",
+          "Ölüm vaktini öğrenmek için",
+          "Göç edeceği yeri seçmek için"
+        ],
+        "info": "2:260’ta İbrahim iman ettiğini belirtir ve isteğini kalbinin huzur bulmasıyla açıklar."
+      }
+    }
+  },
+  {
+    "id": "l2_grain_parable",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 2:261",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:261"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как устроен образ зерна в притче о расходовании имущества?",
+        "options": [
+          "Семь колосьев, по сто зёрен",
+          "Сто колосьев, по семь зёрен",
+          "Семь колосьев, по десять зёрен",
+          "Десять колосьев, по сто зёрен"
+        ],
+        "info": "В 2:261 одно зерно даёт семь колосьев со ста зёрнами в каждом."
+      },
+      "en": {
+        "q": "How is the grain described in the parable of spending?",
+        "options": [
+          "Seven ears with one hundred grains each",
+          "One hundred ears with seven grains each",
+          "Seven ears with ten grains each",
+          "Ten ears with one hundred grains each"
+        ],
+        "info": "In 2:261 one grain grows seven ears, each holding one hundred grains."
+      },
+      "uz": {
+        "q": "Mol sarflash haqidagi misolda don qanday tasvirlangan?",
+        "options": [
+          "Yetti boshoq, har birida yuz don",
+          "Yuz boshoq, har birida yetti don",
+          "Yetti boshoq, har birida o‘n don",
+          "O‘n boshoq, har birida yuz don"
+        ],
+        "info": "2:261 da bir don har birida yuztadan don bo‘lgan yetti boshoq yetishtiradi."
+      },
+      "tg": {
+        "q": "Дар масали харҷ кардани мол дона чӣ гуна тасвир мешавад?",
+        "options": [
+          "Ҳафт хӯша, дар ҳар кадом сад дона",
+          "Сад хӯша, дар ҳар кадом ҳафт дона",
+          "Ҳафт хӯша, дар ҳар кадом даҳ дона",
+          "Даҳ хӯша, дар ҳар кадом сад дона"
+        ],
+        "info": "Дар 2:261 як дона ҳафт хӯша медиҳад ва ҳар хӯша сад дона дорад."
+      },
+      "kk": {
+        "q": "Мал жұмсау мысалындағы дән қалай сипатталған?",
+        "options": [
+          "Жеті масақ, әрқайсысында жүз дән",
+          "Жүз масақ, әрқайсысында жеті дән",
+          "Жеті масақ, әрқайсысында он дән",
+          "Он масақ, әрқайсысында жүз дән"
+        ],
+        "info": "2:261 аятында бір дән әрқайсысы жүз дәнді жеті масақ шығарады."
+      },
+      "ky": {
+        "q": "Мал сарптоо мисалында дан кандай сүрөттөлгөн?",
+        "options": [
+          "Жети баш, ар биринде жүз дан",
+          "Жүз баш, ар биринде жети дан",
+          "Жети баш, ар биринде он дан",
+          "Он баш, ар биринде жүз дан"
+        ],
+        "info": "2:261 аятында бир дан ар биринде жүз даны бар жети баш чыгарат."
+      },
+      "az": {
+        "q": "Mal xərcləmək haqqında məsəldə bir dənənin verdiyi məhsul necə təsvir olunur?",
+        "options": [
+          "Hərəsində yüz dənə olan yeddi sünbül",
+          "Hərəsində yeddi dənə olan yüz sünbül",
+          "Hərəsində on dənə olan yeddi sünbül",
+          "Hərəsində yüz dənə olan on sünbül"
+        ],
+        "info": "2:261-də bir dənə hərəsində yüz dənə olan yeddi sünbül verir."
+      },
+      "tr": {
+        "q": "Mal harcamayla ilgili benzetmede bir tanenin ürünü nasıl anlatılır?",
+        "options": [
+          "Her birinde yüz tane bulunan yedi başak",
+          "Her birinde yedi tane bulunan yüz başak",
+          "Her birinde on tane bulunan yedi başak",
+          "Her birinde yüz tane bulunan on başak"
+        ],
+        "info": "2:261’de bir tane, her birinde yüz tane bulunan yedi başak verir."
+      }
+    }
+  },
+  {
+    "id": "l2_wisdom_gift",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 2:269",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:269"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какой дар прямо назван обильным благом в 2:269?",
+        "options": [
+          "Мудрость",
+          "Красноречие",
+          "Материальный достаток",
+          "Телесная сила"
+        ],
+        "info": "В этом аяте получение обильного блага связано с дарованием мудрости."
+      },
+      "en": {
+        "q": "Which gift is explicitly described as abundant good in 2:269?",
+        "options": [
+          "Wisdom",
+          "Eloquence",
+          "Material prosperity",
+          "Physical strength"
+        ],
+        "info": "In this verse, receiving abundant good is linked to being granted wisdom."
+      },
+      "uz": {
+        "q": "2:269 da qaysi ne’mat bevosita ko‘p yaxshilik deb atalgan?",
+        "options": [
+          "Hikmat",
+          "Notiqlik",
+          "Moddiy farovonlik",
+          "Jismoniy kuch"
+        ],
+        "info": "Bu oyatda ko‘p yaxshilikka erishish hikmat berilishi bilan bog‘langan."
+      },
+      "tg": {
+        "q": "Дар 2:269 кадом неъмат бевосита хайри фаровон номида шудааст?",
+        "options": [
+          "Ҳикмат",
+          "Суханварӣ",
+          "Фаровонии молӣ",
+          "Нерӯи ҷисмонӣ"
+        ],
+        "info": "Дар ин оят гирифтани хайри фаровон бо дода шудани ҳикмат вобаста аст."
+      },
+      "kk": {
+        "q": "2:269 аятында қай сый тікелей мол игілік деп аталған?",
+        "options": [
+          "Даналық",
+          "Шешендік",
+          "Материалдық әл-ауқат",
+          "Дене күші"
+        ],
+        "info": "Бұл аятта мол игілікке ие болу даналықтың берілуімен байланыстырылады."
+      },
+      "ky": {
+        "q": "2:269 аятында кайсы белек түздөн-түз мол жакшылык деп аталган?",
+        "options": [
+          "Даанышмандык",
+          "Чечендик",
+          "Материалдык жетиштүүлүк",
+          "Дене күчү"
+        ],
+        "info": "Бул аятта мол жакшылыкка ээ болуу даанышмандыктын берилиши менен байланышкан."
+      },
+      "az": {
+        "q": "2:269-da hansı nemət açıq şəkildə çoxlu xeyirlə əlaqələndirilir?",
+        "options": [
+          "Hikmət",
+          "Natiqlik qabiliyyəti",
+          "Maddi bolluq",
+          "Bədən gücü"
+        ],
+        "info": "Bu ayədə çoxlu xeyir əldə etmək hikmət verilməsi ilə əlaqələndirilir."
+      },
+      "tr": {
+        "q": "2:269’da hangi bağış açıkça bol hayırla ilişkilendirilir?",
+        "options": [
+          "Hikmet",
+          "Güzel konuşma yeteneği",
+          "Maddi bolluk",
+          "Beden gücü"
+        ],
+        "info": "Bu ayette bol hayra erişmek hikmet verilmesiyle ilişkilendirilir."
+      }
+    }
+  },
+  {
+    "id": "l2_debt_dictation",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 2:282",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:282"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Кто должен диктовать долговое обязательство, если способен, согласно 2:282?",
+        "options": [
+          "Тот, на ком лежит долг",
+          "Тот, кто дал в долг",
+          "Один из свидетелей",
+          "Писец от своего имени"
+        ],
+        "info": "Аят поручает запись писцу, а диктовку — должнику."
+      },
+      "en": {
+        "q": "Who should dictate a debt agreement, when able, according to 2:282?",
+        "options": [
+          "The debtor",
+          "The lender",
+          "One of the witnesses",
+          "The scribe on their own behalf"
+        ],
+        "info": "The verse assigns writing to the scribe and dictation to the debtor."
+      },
+      "uz": {
+        "q": "2:282 ga ko‘ra, qarz bitimini aytib turishga qodir bo‘lsa, kim aytib turadi?",
+        "options": [
+          "Qarzdor",
+          "Qarz beruvchi",
+          "Guvohlardan biri",
+          "Kotib o‘z nomidan"
+        ],
+        "info": "Oyat yozishni kotibga, aytib turishni esa qarzdorga topshiradi."
+      },
+      "tg": {
+        "q": "Мувофиқи 2:282, агар тавонад, кӣ бояд матни қарзро бигӯяд?",
+        "options": [
+          "Қарздор",
+          "Қарздиҳанда",
+          "Яке аз шоҳидон",
+          "Котиб аз номи худ"
+        ],
+        "info": "Оят навиштанро ба котиб ва гуфтани шартҳоро ба қарздор месупорад."
+      },
+      "kk": {
+        "q": "2:282 бойынша қарыз құжатын жаздыруға шамасы болса, кім айтып тұрады?",
+        "options": [
+          "Қарыз алушы",
+          "Қарыз беруші",
+          "Куәлардың бірі",
+          "Жазушы өз атынан"
+        ],
+        "info": "Аят жазуды жазушыға, ал айтып тұруды қарыз алушыға тапсырады."
+      },
+      "ky": {
+        "q": "2:282 боюнча карыз келишимин айтып жаздырууга кудурети жетсе, ким айтып турат?",
+        "options": [
+          "Карыз алган адам",
+          "Карыз берген адам",
+          "Күбөлөрдүн бири",
+          "Катчы өз атынан"
+        ],
+        "info": "Аят жазууну катчыга, айтып турууну карыз алган адамга тапшырат."
+      },
+      "az": {
+        "q": "2:282-yə görə, bacarırsa, borc sənədini yazdıran kim olmalıdır?",
+        "options": [
+          "Borc öhdəliyi olan şəxs",
+          "Borc verən şəxs",
+          "Şahidlərdən biri",
+          "Katib öz adından"
+        ],
+        "info": "Ayədə yazmaq katibə, yazılacaq sözləri demək isə borcluya tapşırılır."
+      },
+      "tr": {
+        "q": "2:282’ye göre, yapabiliyorsa borç belgesini kâtibe kim yazdırmalıdır?",
+        "options": [
+          "Borçlu olan kişi",
+          "Borç veren kişi",
+          "Şahitlerden biri",
+          "Kâtip kendi adına"
+        ],
+        "info": "Ayette yazma görevi kâtibe, yazılacakları söyleme görevi borçluya verilir."
+      }
+    }
+  },
+  {
+    "id": "l2_concealed_testimony",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 2:283",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/2",
+    "sourceVerses": [
+      "2:283"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как в 2:283 оценивается сокрытие свидетельства?",
+        "options": [
+          "Грех ложится на сердце скрывающего",
+          "Ответственность переходит к писцу",
+          "Скрывающий отвечает только перед должником",
+          "Ответственность есть лишь при отсутствии залога"
+        ],
+        "info": "Аят связывает сокрытие свидетельства с грехом сердца."
+      },
+      "en": {
+        "q": "How is concealing testimony judged in 2:283?",
+        "options": [
+          "The concealer's heart bears sin",
+          "Responsibility passes to the scribe",
+          "The concealer answers only to the debtor",
+          "Responsibility exists only when there is no pledge"
+        ],
+        "info": "The verse links concealing testimony to sin in the heart."
+      },
+      "uz": {
+        "q": "2:283 da guvohlikni yashirish qanday baholanadi?",
+        "options": [
+          "Uni yashirgan kishining qalbi gunohkor bo‘ladi",
+          "Mas’uliyat kotibga o‘tadi",
+          "Yashirgan kishi faqat qarzdor oldida javob beradi",
+          "Mas’uliyat faqat garov bo‘lmaganda mavjud"
+        ],
+        "info": "Oyat guvohlikni yashirishni qalbning gunohkorligi bilan bog‘laydi."
+      },
+      "tg": {
+        "q": "Дар 2:283 пинҳон кардани шаҳодат чӣ гуна арзёбӣ мешавад?",
+        "options": [
+          "Дили пинҳонкунанда гунаҳкор мешавад",
+          "Масъулият ба котиб мегузарад",
+          "Пинҳонкунанда танҳо назди қарздор ҷавобгар аст",
+          "Масъулият танҳо ҳангоми набудани гарав вуҷуд дорад"
+        ],
+        "info": "Оят пинҳон кардани шаҳодатро бо гуноҳи дил мепайвандад."
+      },
+      "kk": {
+        "q": "2:283 аятында куәлікті жасыру қалай бағаланады?",
+        "options": [
+          "Жасырған адамның жүрегі күнәға батады",
+          "Жауапкершілік хатшыға өтеді",
+          "Жасырған адам тек борышкер алдында жауапты",
+          "Жауапкершілік тек кепіл болмаған кезде болады"
+        ],
+        "info": "Аят куәлікті жасыруды жүректің күнәсімен байланыстырады."
+      },
+      "ky": {
+        "q": "2:283 аятында күбөлүктү жашыруу кандай бааланат?",
+        "options": [
+          "Жашырган адамдын жүрөгү күнөөгө батат",
+          "Жоопкерчилик катчыга өтөт",
+          "Жашырган адам карызкордун алдында гана жооп берет",
+          "Жоопкерчилик күрөө жок болгондо гана болот"
+        ],
+        "info": "Аят күбөлүктү жашырууну жүрөктүн күнөөсү менен байланыштырат."
+      },
+      "az": {
+        "q": "2:283-də şahidliyi gizlətmək necə qiymətləndirilir?",
+        "options": [
+          "Gizlədənin qəlbi günah daşıyır",
+          "Məsuliyyət katibə keçir",
+          "Gizlədən yalnız borcluya cavabdehdir",
+          "Məsuliyyət yalnız girov olmadıqda yaranır"
+        ],
+        "info": "Ayə şahidliyin gizlədilməsini qəlbin günahı ilə əlaqələndirir."
+      },
+      "tr": {
+        "q": "2:283’te şahitliği gizlemek nasıl değerlendirilir?",
+        "options": [
+          "Gizleyenin kalbi günah yüklenir",
+          "Sorumluluk kâtibe geçer",
+          "Gizleyen yalnız borçluya karşı sorumludur",
+          "Sorumluluk yalnız rehin olmadığında doğar"
+        ],
+        "info": "Ayet, şahitliğin gizlenmesini kalbin günahıyla ilişkilendirir."
+      }
+    }
+  },
+  {
+    "id": "l2_clear_verses",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 3:7",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "sourceVerses": [
+      "3:7"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какая группа аятов названа основой Писания в 3:7?",
+        "options": [
+          "Ясные по смыслу аяты",
+          "Многозначные аяты",
+          "Аяты о долговых обязательствах",
+          "Аяты с рассказами о пророках"
+        ],
+        "info": "Основой Писания названы ясные аяты, в отличие от многозначных."
+      },
+      "en": {
+        "q": "Which group of verses is called the foundation of the Scripture in 3:7?",
+        "options": [
+          "Verses clear in meaning",
+          "Verses open to more than one meaning",
+          "Verses about debt obligations",
+          "Verses containing stories of prophets"
+        ],
+        "info": "Clear verses are called the foundation of the Scripture, in contrast to ambiguous ones."
+      },
+      "uz": {
+        "q": "3:7 da qaysi guruh oyatlar Kitobning asosi deb atalgan?",
+        "options": [
+          "Ma’nosi aniq oyatlar",
+          "Bir necha ma’noga yo‘yilishi mumkin bo‘lgan oyatlar",
+          "Qarz majburiyatlari haqidagi oyatlar",
+          "Payg‘ambarlar qissalari keltirilgan oyatlar"
+        ],
+        "info": "Kitobning asosi deb ma’nosi aniq oyatlar ataladi; ular ko‘p ma’noga yo‘yiladigan oyatlardan farqlanadi."
+      },
+      "tg": {
+        "q": "Дар 3:7 кадом гурӯҳи оятҳо асоси Китоб номида шудааст?",
+        "options": [
+          "Оятҳои маънояшон равшан",
+          "Оятҳои дорои чанд маъно",
+          "Оятҳо дар бораи ӯҳдадориҳои қарзӣ",
+          "Оятҳое, ки қиссаҳои паёмбаронро доранд"
+        ],
+        "info": "Оятҳои маънояшон равшан асоси Китоб номида шудаанд, бар хилофи оятҳои чандмаъно."
+      },
+      "kk": {
+        "q": "3:7 аятында аяттардың қай тобы Кітаптың негізі деп аталған?",
+        "options": [
+          "Мағынасы айқын аяттар",
+          "Бірнеше мағынада түсінуге болатын аяттар",
+          "Қарыз міндеттемелері туралы аяттар",
+          "Пайғамбарлар туралы қиссалар баяндалған аяттар"
+        ],
+        "info": "Бірнеше мағынада түсінуге болатын аяттардан бөлек, мағынасы айқын аяттар Кітаптың негізі деп аталған."
+      },
+      "ky": {
+        "q": "3:7 аятында аяттардын кайсы тобу Китептин негизи деп аталган?",
+        "options": [
+          "Мааниси ачык аяттар",
+          "Бир нече мааниде түшүнүлө турган аяттар",
+          "Карыз милдеттенмелери тууралуу аяттар",
+          "Пайгамбарлардын окуялары баяндалган аяттар"
+        ],
+        "info": "Бир нече мааниде түшүнүлө турган аяттардан айырмаланып, мааниси ачык аяттар Китептин негизи деп аталган."
+      },
+      "az": {
+        "q": "3:7-də hansı ayələr Kitabın əsası adlandırılır?",
+        "options": [
+          "Mənası aydın ayələr",
+          "Çoxmənalı ayələr",
+          "Borc öhdəlikləri haqqında ayələr",
+          "Peyğəmbərlər haqqında hekayələr olan ayələr"
+        ],
+        "info": "Çoxmənalı ayələrdən fərqli olaraq, mənası aydın ayələr Kitabın əsası adlandırılır."
+      },
+      "tr": {
+        "q": "3:7’de hangi ayetler Kitab’ın temeli olarak adlandırılır?",
+        "options": [
+          "Anlamı açık ayetler",
+          "Birden çok anlama gelebilen ayetler",
+          "Borç yükümlülükleriyle ilgili ayetler",
+          "Peygamber kıssalarını anlatan ayetler"
+        ],
+        "info": "Birden çok anlama gelebilen ayetlerden farklı olarak, anlamı açık ayetler Kitab’ın temeli sayılır."
+      }
+    }
+  },
+  {
+    "id": "l2_dominion",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 3:26",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "sourceVerses": [
+      "3:26"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие действия со властью названы в 3:26?",
+        "options": [
+          "Аллах дарует её и лишает её",
+          "Аллах дарует, но не лишает её",
+          "Аллах лишает, но не дарует её",
+          "Власть переходит только по наследству"
+        ],
+        "info": "В аяте и дарование власти, и её отнятие отнесены к воле Аллаха."
+      },
+      "en": {
+        "q": "Which actions concerning dominion are mentioned in 3:26?",
+        "options": [
+          "Allah grants it and takes it away",
+          "Allah grants it but never takes it away",
+          "Allah takes it away but never grants it",
+          "Dominion passes only by inheritance"
+        ],
+        "info": "The verse attributes both granting and removing dominion to Allah's will."
+      },
+      "uz": {
+        "q": "3:26 da hokimiyat haqida qaysi amallar aytilgan?",
+        "options": [
+          "Alloh uni beradi va qaytarib oladi",
+          "Alloh beradi, ammo olmaydi",
+          "Alloh oladi, ammo bermaydi",
+          "Hokimiyat faqat meros bo‘lib o‘tadi"
+        ],
+        "info": "Oyat hokimiyatni berish va olishni Allohning irodasiga bog‘laydi."
+      },
+      "tg": {
+        "q": "Дар 3:26 дар бораи ҳокимият кадом амалҳо зикр шудаанд?",
+        "options": [
+          "Аллоҳ онро медиҳад ва мегирад",
+          "Аллоҳ медиҳад, вале намегирад",
+          "Аллоҳ мегирад, вале намедиҳад",
+          "Ҳокимият танҳо мерос мешавад"
+        ],
+        "info": "Оят додан ва гирифтани ҳокимиятро ба иродаи Аллоҳ нисбат медиҳад."
+      },
+      "kk": {
+        "q": "3:26 аятында билікке қатысты қандай әрекеттер айтылған?",
+        "options": [
+          "Алла оны береді әрі қайтарып алады",
+          "Алла береді, бірақ қайтарып алмайды",
+          "Алла алады, бірақ бермейді",
+          "Билік тек мұрамен өтеді"
+        ],
+        "info": "Аят билікті беруді де, алуды да Алланың қалауына жатқызады."
+      },
+      "ky": {
+        "q": "3:26 аятында бийлик жөнүндө кандай иштер айтылган?",
+        "options": [
+          "Аллах аны берет жана алат",
+          "Аллах берет, бирок албайт",
+          "Аллах алат, бирок бербейт",
+          "Бийлик мурас менен гана өтөт"
+        ],
+        "info": "Аят бийликти берүүнү да, алууну да Аллахтын каалоосуна таандык кылат."
+      },
+      "az": {
+        "q": "3:26-da hakimiyyətlə bağlı hansı əməllər qeyd olunur?",
+        "options": [
+          "Allah onu verir və geri alır",
+          "Allah onu verir, lakin geri almır",
+          "Allah onu geri alır, lakin vermir",
+          "Hakimiyyət yalnız mirasla keçir"
+        ],
+        "info": "Ayədə həm hakimiyyətin verilməsi, həm də alınması Allahın iradəsinə aid edilir."
+      },
+      "tr": {
+        "q": "3:26’da iktidarla ilgili hangi eylemler belirtilir?",
+        "options": [
+          "Allah onu verir ve geri alır",
+          "Allah onu verir, fakat geri almaz",
+          "Allah onu geri alır, fakat vermez",
+          "İktidar yalnız miras yoluyla geçer"
+        ],
+        "info": "Ayette iktidarın hem verilmesi hem alınması Allah’ın iradesine bağlanır."
+      }
+    }
+  },
+  {
+    "id": "l2_beloved_giving",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 3:92",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "sourceVerses": [
+      "3:92"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какое расходование связано с достижением благочестия в 3:92?",
+        "options": [
+          "Из того, что человек любит",
+          "Только из ненужных вещей",
+          "Только из найденного имущества",
+          "Лишь из того, что нельзя продать"
+        ],
+        "info": "Аят связывает благочестие с расходованием любимого имущества."
+      },
+      "en": {
+        "q": "What kind of giving is linked to attaining righteousness in 3:92?",
+        "options": [
+          "Giving from what one loves",
+          "Giving only unwanted things",
+          "Giving only found property",
+          "Giving only unsellable things"
+        ],
+        "info": "The verse links righteousness with giving from cherished possessions."
+      },
+      "uz": {
+        "q": "3:92 da yaxshilikka erishish qanday sarf bilan bog‘langan?",
+        "options": [
+          "O‘zi yaxshi ko‘rgan narsadan sarflash",
+          "Faqat keraksiz narsalardan sarflash",
+          "Faqat topib olingan moldan sarflash",
+          "Faqat sotib bo‘lmaydigan narsadan sarflash"
+        ],
+        "info": "Oyat yaxshilikka erishishni sevimli moldan sarflash bilan bog‘laydi."
+      },
+      "tg": {
+        "q": "Дар 3:92 расидан ба некӣ бо кадом харҷ вобаста аст?",
+        "options": [
+          "Харҷ аз чизи дӯстдошта",
+          "Танҳо аз чизҳои нолозим",
+          "Танҳо аз моли ёфташуда",
+          "Танҳо аз чизи фурӯхтанашаванда"
+        ],
+        "info": "Оят некиро бо харҷ аз моли дӯстдошта мепайвандад."
+      },
+      "kk": {
+        "q": "3:92 аятында ізгілікке жету қандай жұмсаумен байланысты?",
+        "options": [
+          "Өзі жақсы көрген нәрседен жұмсау",
+          "Тек қажетсіз заттардан жұмсау",
+          "Тек тауып алған мүліктен жұмсау",
+          "Тек сатылмайтын заттардан жұмсау"
+        ],
+        "info": "Аят ізгілікке жетуді сүйікті мүліктен жұмсаумен байланыстырады."
+      },
+      "ky": {
+        "q": "3:92 аятында жакшылыкка жетүү кандай сарптоо менен байланышкан?",
+        "options": [
+          "Өзү жакшы көргөн нерседен берүү",
+          "Керексиз нерседен гана берүү",
+          "Табылган мүлктөн гана берүү",
+          "Сатылбай турган нерседен гана берүү"
+        ],
+        "info": "Аят жакшылыкка жетүүнү сүйүктүү мүлктөн сарптоо менен байланыштырат."
+      },
+      "az": {
+        "q": "3:92-də yaxşılığa çatmaq hansı xərcləmə ilə əlaqələndirilir?",
+        "options": [
+          "İnsanın sevdiyi şeylərdən xərcləməklə",
+          "Yalnız lazımsız əşyalardan xərcləməklə",
+          "Yalnız tapılmış maldan xərcləməklə",
+          "Yalnız satıla bilməyən şeylərdən xərcləməklə"
+        ],
+        "info": "Ayə yaxşılığa çatmağı insanın sevdiyi maldan xərcləməsi ilə əlaqələndirir."
+      },
+      "tr": {
+        "q": "3:92’de iyiliğe erişmek hangi harcamayla ilişkilendirilir?",
+        "options": [
+          "Kişinin sevdiği şeylerden harcamasıyla",
+          "Yalnız gereksiz eşyalardan harcamasıyla",
+          "Yalnız bulunmuş maldan harcamasıyla",
+          "Yalnız satılamayan şeylerden harcamasıyla"
+        ],
+        "info": "Ayet iyiliğe erişmeyi, kişinin sevdiği maldan harcamasıyla ilişkilendirir."
+      }
+    }
+  },
+  {
+    "id": "l2_consult_then_trust",
+    "cat": "seerah",
+    "difficulty": 2,
+    "reference": "Quran 3:159",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/3",
+    "sourceVerses": [
+      "3:159"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Что следует после совета и принятого решения в 3:159?",
+        "options": [
+          "Упование на Аллаха",
+          "Отказ от всякого действия",
+          "Новое решение по жребию",
+          "Сокрытие решения от всех"
+        ],
+        "info": "После наставления советоваться Посланнику велено, решившись, уповать на Аллаха."
+      },
+      "en": {
+        "q": "What follows consultation and a firm decision in 3:159?",
+        "options": [
+          "Trust in Allah",
+          "Abandoning every action",
+          "Drawing lots for another decision",
+          "Hiding the decision from everyone"
+        ],
+        "info": "After being told to consult, the Messenger is told to trust Allah once resolved."
+      },
+      "uz": {
+        "q": "3:159 da maslahat va qat’iy qarordan keyin nima keladi?",
+        "options": [
+          "Allohga tavakkal qilish",
+          "Har qanday harakatdan voz kechish",
+          "Yana qur’a tashlab qaror qilish",
+          "Qarorni hammadan yashirish"
+        ],
+        "info": "Maslahatlashishdan so‘ng Payg‘ambarga qaror qilib, Allohga tavakkal qilish buyurilgan."
+      },
+      "tg": {
+        "q": "Дар 3:159 пас аз машварат ва тасмим чӣ меояд?",
+        "options": [
+          "Таваккал ба Аллоҳ",
+          "Даст кашидан аз ҳар амал",
+          "Қарори дигар бо қуръакашӣ",
+          "Пинҳон кардани қарор аз ҳама"
+        ],
+        "info": "Баъди амри машварат ба Паёмбар гуфта мешавад, ки пас аз тасмим ба Аллоҳ таваккал кунад."
+      },
+      "kk": {
+        "q": "3:159 аятында кеңесіп, шешім қабылдағаннан кейін не келеді?",
+        "options": [
+          "Аллаға тәуекел ету",
+          "Кез келген әрекеттен бас тарту",
+          "Жеребемен жаңа шешім шығару",
+          "Шешімді барлығынан жасыру"
+        ],
+        "info": "Кеңесу бұйрығынан кейін Елшіге шешім қабылдағанда Аллаға тәуекел ету айтылған."
+      },
+      "ky": {
+        "q": "3:159 аятында кеңешип, чечим кабыл алгандан кийин эмне келет?",
+        "options": [
+          "Аллахка тобокел кылуу",
+          "Ар кандай аракеттен баш тартуу",
+          "Чүчүкулак менен жаңы чечим чыгаруу",
+          "Чечимди баарынан жашыруу"
+        ],
+        "info": "Кеңешүү буйругунан кийин Элчиге чечим кабыл алганда Аллахка тобокел кылуу айтылган."
+      },
+      "az": {
+        "q": "3:159-da məsləhətləşib qərar verdikdən sonra nə etmək buyurulur?",
+        "options": [
+          "Allaha təvəkkül etmək",
+          "Hər cür fəaliyyətdən əl çəkmək",
+          "Püşklə yeni qərar vermək",
+          "Qərarı hamıdan gizlətmək"
+        ],
+        "info": "Məsləhətləşmək göstərişindən sonra Elçiyə qərar verincə Allaha təvəkkül etmək buyurulur."
+      },
+      "tr": {
+        "q": "3:159’da danışıp karar verdikten sonra ne yapılması istenir?",
+        "options": [
+          "Allah’a tevekkül etmek",
+          "Her türlü eylemden vazgeçmek",
+          "Kura ile yeni bir karar vermek",
+          "Kararı herkesten gizlemek"
+        ],
+        "info": "Danışma öğüdünün ardından Elçi’ye, karar verdiğinde Allah’a tevekkül etmesi buyurulur."
+      }
+    }
+  },
+  {
+    "id": "l2_mutual_consent",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 4:29",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "sourceVerses": [
+      "4:29"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какое условие торговли прямо указано в 4:29?",
+        "options": [
+          "Взаимное согласие",
+          "Обязательное родство сторон",
+          "Оплата только серебром",
+          "Продажа только в пути"
+        ],
+        "info": "Аят упоминает торговлю, основанную на согласии обеих сторон."
+      },
+      "en": {
+        "q": "What condition of trade is expressly mentioned in 4:29?",
+        "options": [
+          "Mutual consent",
+          "Both parties being relatives",
+          "Payment only in silver",
+          "Trading only while travelling"
+        ],
+        "info": "The verse mentions trade based on the consent of both parties."
+      },
+      "uz": {
+        "q": "4:29 da savdoning qaysi sharti aniq aytilgan?",
+        "options": [
+          "O‘zaro rozilik",
+          "Tomonlarning qarindosh bo‘lishi",
+          "Faqat kumush bilan to‘lash",
+          "Faqat safarda savdo qilish"
+        ],
+        "info": "Oyat ikki tomonning roziligiga asoslangan savdoni tilga oladi."
+      },
+      "tg": {
+        "q": "Дар 4:29 кадом шарти тиҷорат ошкоро зикр шудааст?",
+        "options": [
+          "Розигии тарафайн",
+          "Хешованд будани тарафҳо",
+          "Пардохт танҳо бо нуқра",
+          "Тиҷорат танҳо дар сафар"
+        ],
+        "info": "Оят тиҷорати бо розигии ҳар ду тарафро зикр мекунад."
+      },
+      "kk": {
+        "q": "4:29 аятында сауданың қай шарты нақты аталған?",
+        "options": [
+          "Өзара келісім",
+          "Тараптардың туыс болуы",
+          "Тек күміспен төлеу",
+          "Тек сапарда сауда жасау"
+        ],
+        "info": "Аят екі жақтың келісіміне негізделген сауданы атайды."
+      },
+      "ky": {
+        "q": "4:29 аятында сооданын кайсы шарты так айтылган?",
+        "options": [
+          "Өз ара ыраазылык",
+          "Тараптардын тууган болушу",
+          "Күмүш менен гана төлөө",
+          "Сапарда гана соода кылуу"
+        ],
+        "info": "Аят эки тараптын ыраазылыгына негизделген сооданы атайт."
+      },
+      "az": {
+        "q": "4:29-da ticarətin hansı şərti açıq şəkildə göstərilir?",
+        "options": [
+          "Qarşılıqlı razılıq",
+          "Tərəflərin mütləq qohum olması",
+          "Yalnız gümüşlə ödəniş",
+          "Yalnız səfərdə satış"
+        ],
+        "info": "Ayədə hər iki tərəfin razılığına əsaslanan ticarət qeyd olunur."
+      },
+      "tr": {
+        "q": "4:29’da ticaretin hangi şartı açıkça belirtilir?",
+        "options": [
+          "Karşılıklı rıza",
+          "Tarafların mutlaka akraba olması",
+          "Yalnız gümüşle ödeme",
+          "Yalnız yolculukta satış"
+        ],
+        "info": "Ayette iki tarafın rızasına dayanan ticaretten söz edilir."
+      }
+    }
+  },
+  {
+    "id": "l2_family_arbiters",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 4:35",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "sourceVerses": [
+      "4:35"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Откуда следует выбрать двух посредников при семейном разладе в 4:35?",
+        "options": [
+          "По одному из каждой семьи",
+          "Обоих только из семьи мужа",
+          "Обоих только из семьи жены",
+          "Обоих только из другого города"
+        ],
+        "info": "Аят называет посредника из его семьи и посредника из её семьи."
+      },
+      "en": {
+        "q": "Where should the two arbiters in a marital dispute come from in 4:35?",
+        "options": [
+          "One from each spouse's family",
+          "Both from the husband's family",
+          "Both from the wife's family",
+          "Both from another city"
+        ],
+        "info": "The verse names one arbiter from his family and one from hers."
+      },
+      "uz": {
+        "q": "4:35 da oilaviy nizodagi ikki hakam qayerdan tanlanadi?",
+        "options": [
+          "Har ikki oiladan bittadan",
+          "Ikkalasi erning oilasidan",
+          "Ikkalasi xotinning oilasidan",
+          "Ikkalasi boshqa shahardan"
+        ],
+        "info": "Oyat erning oilasidan bir va xotinning oilasidan bir hakamni tilga oladi."
+      },
+      "tg": {
+        "q": "Дар 4:35 ду миёнарави низои оилавӣ аз куҷо интихоб мешаванд?",
+        "options": [
+          "Аз ҳар оила як нафар",
+          "Ҳар ду аз оилаи шавҳар",
+          "Ҳар ду аз оилаи зан",
+          "Ҳар ду аз шаҳри дигар"
+        ],
+        "info": "Оят як довар аз оилаи шавҳар ва як довар аз оилаи занро зикр мекунад."
+      },
+      "kk": {
+        "q": "4:35 аятында отбасылық даудағы екі төреші қайдан таңдалады?",
+        "options": [
+          "Екі әулеттің әрқайсысынан біреу",
+          "Екеуі де күйеуінің әулетінен",
+          "Екеуі де әйелінің әулетінен",
+          "Екеуі де басқа қаладан"
+        ],
+        "info": "Аят ердің әулетінен бір және әйелдің әулетінен бір төрешіні атайды."
+      },
+      "ky": {
+        "q": "4:35 аятында үй-бүлөлүк чатактагы эки калыс кайдан тандалат?",
+        "options": [
+          "Ар бир үй-бүлөдөн бирден",
+          "Экөө тең күйөөсүнүн үй-бүлөсүнөн",
+          "Экөө тең аялынын үй-бүлөсүнөн",
+          "Экөө тең башка шаардан"
+        ],
+        "info": "Аят эркектин үй-бүлөсүнөн бир жана аялдын үй-бүлөсүнөн бир калысты атайт."
+      },
+      "az": {
+        "q": "4:35-də ailə münaqişəsi zamanı iki vasitəçi haradan seçilməlidir?",
+        "options": [
+          "Hər ailədən bir nəfər",
+          "Hər ikisi yalnız ərin ailəsindən",
+          "Hər ikisi yalnız arvadın ailəsindən",
+          "Hər ikisi yalnız başqa şəhərdən"
+        ],
+        "info": "Ayədə bir vasitəçinin ərin, digərinin isə qadının ailəsindən olması göstərilir."
+      },
+      "tr": {
+        "q": "4:35’te aile anlaşmazlığında iki hakem nereden seçilmelidir?",
+        "options": [
+          "Her aileden bir kişi",
+          "İkisi de yalnız kocanın ailesinden",
+          "İkisi de yalnız kadının ailesinden",
+          "İkisi de yalnız başka bir şehirden"
+        ],
+        "info": "Ayet, bir hakemin erkeğin ailesinden, diğerinin kadının ailesinden olmasını belirtir."
+      }
+    }
+  },
+  {
+    "id": "l2_good_deed_multiplied",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 4:40",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "sourceVerses": [
+      "4:40"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какое сочетание утверждений содержится в 4:40?",
+        "options": [
+          "Нет несправедливости даже на малую частицу, а добро приумножается",
+          "Малые поступки не учитываются, а большие приумножаются",
+          "Засчитываются только явные поступки, а скрытые не учитываются",
+          "Добро и зло всегда приумножаются одинаково"
+        ],
+        "info": "Аят говорит об отсутствии малейшей несправедливости и о приумножении доброго дела."
+      },
+      "en": {
+        "q": "Which combination of statements appears in 4:40?",
+        "options": [
+          "There is no injustice even by a tiny particle, and good is multiplied",
+          "Small deeds are not counted, while great deeds are multiplied",
+          "Only visible deeds are counted; hidden ones are not",
+          "Good and evil are always multiplied equally"
+        ],
+        "info": "The verse speaks of the absence of the slightest injustice and of multiplying a good deed."
+      },
+      "uz": {
+        "q": "4:40 da qaysi ikki fikr birga kelgan?",
+        "options": [
+          "Zarracha ham zulm qilinmaydi, yaxshilik esa ko‘paytiriladi",
+          "Kichik amallar hisobga olinmaydi, kattalari esa ko‘paytiriladi",
+          "Faqat oshkora amallar hisoblanadi, yashirinlari hisobga olinmaydi",
+          "Yaxshilik va yomonlik doimo bir xil ko‘paytiriladi"
+        ],
+        "info": "Oyat zarracha ham zulm bo‘lmasligini va yaxshi amal ko‘paytirilishini aytadi."
+      },
+      "tg": {
+        "q": "Дар 4:40 кадом ду баён якҷо омадааст?",
+        "options": [
+          "Ҳатто ба андозаи зарра ситам нест ва некӣ афзун мегардад",
+          "Амалҳои хурд ҳисоб намешаванд ва амалҳои бузург афзун мегарданд",
+          "Танҳо амалҳои ошкор ҳисоб мешаванд ва амалҳои пинҳон ҳисоб намешаванд",
+          "Некӣ ва бадӣ ҳамеша яксон афзун мегарданд"
+        ],
+        "info": "Оят аз набудани хурдтарин ситам ва афзун кардани кори нек сухан мегӯяд."
+      },
+      "kk": {
+        "q": "4:40 аятында қандай екі тұжырым қатар айтылады?",
+        "options": [
+          "Түйірдей де әділетсіздік жоқ, ал жақсылық еселенеді",
+          "Ұсақ істер есепке алынбайды, ал үлкен істер еселенеді",
+          "Тек ашық істер есепке алынып, жасырын істер ескерілмейді",
+          "Жақсылық пен жамандық әрдайым бірдей еселенеді"
+        ],
+        "info": "Аят титтей де әділетсіздіктің болмайтынын және жақсы істің еселенетінін айтады."
+      },
+      "ky": {
+        "q": "4:40 аятында кандай эки билдирүү чогуу айтылат?",
+        "options": [
+          "Кыпындай да адилетсиздик жок, ал эми жакшылык көбөйтүлөт",
+          "Кичине иштер эсептелбейт, ал эми чоң иштер көбөйтүлөт",
+          "Ачык иштер гана эсептелип, жашыруун иштер эске алынбайт",
+          "Жакшылык менен жамандык дайыма бирдей көбөйтүлөт"
+        ],
+        "info": "Аят кыпындай да адилетсиздик болбой турганын жана жакшы иш көбөйтүлөрүн айтат."
+      },
+      "az": {
+        "q": "4:40-da hansı iki fikir birlikdə bildirilir?",
+        "options": [
+          "Zərrə qədər haqsızlıq edilmir, yaxşılıq isə artırılır",
+          "Kiçik əməllər nəzərə alınmır, böyüklər isə artırılır",
+          "Yalnız açıq əməllər sayılır, gizlilər nəzərə alınmır",
+          "Yaxşılıq və pislik həmişə eyni dərəcədə artırılır"
+        ],
+        "info": "Ayə zərrə qədər haqsızlığın olmadığını və yaxşı əməlin artırıldığını bildirir."
+      },
+      "tr": {
+        "q": "4:40’ta hangi iki düşünce birlikte belirtilir?",
+        "options": [
+          "Zerre kadar haksızlık edilmez, iyilik ise katlanır",
+          "Küçük ameller sayılmaz, büyükler ise katlanır",
+          "Yalnız açık ameller sayılır, gizliler hesaba katılmaz",
+          "İyilik ve kötülük her zaman aynı oranda katlanır"
+        ],
+        "info": "Ayet, zerre kadar haksızlık edilmediğini ve iyi amelin katlandığını bildirir."
+      }
+    }
+  },
+  {
+    "id": "l2_dispute_reference",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 4:59",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "sourceVerses": [
+      "4:59"
+    ],
+    "locales": {
+      "ru": {
+        "q": "К кому велено возвращать предмет спора в 4:59?",
+        "options": [
+          "К Аллаху и Посланнику",
+          "К Посланнику и обладателям власти",
+          "К старейшинам и учёным общины",
+          "К свидетелям и писцу"
+        ],
+        "info": "Вопрос спора аят велит возвращать к Аллаху и Посланнику."
+      },
+      "en": {
+        "q": "To whom must a disputed matter be referred in 4:59?",
+        "options": [
+          "To Allah and the Messenger",
+          "To the Messenger and those in authority",
+          "To the community's elders and scholars",
+          "To the witnesses and the scribe"
+        ],
+        "info": "The verse directs a disputed matter to Allah and the Messenger."
+      },
+      "uz": {
+        "q": "4:59 da nizoli masalani kimga qaytarish buyurilgan?",
+        "options": [
+          "Alloh va Payg‘ambarga",
+          "Payg‘ambar va hokimiyat egalariga",
+          "Ummat oqsoqollari va olimlariga",
+          "Guvohlar va kotibga"
+        ],
+        "info": "Oyat nizoli masalani Alloh va Payg‘ambarga qaytarishni buyuradi."
+      },
+      "tg": {
+        "q": "Дар 4:59 баргардондани масъалаи баҳс ба кӣ фармуда шудааст?",
+        "options": [
+          "Ба Аллоҳ ва Паёмбар",
+          "Ба Паёмбар ва соҳибони амр",
+          "Ба бузургон ва олимони уммат",
+          "Ба шоҳидон ва котиб"
+        ],
+        "info": "Оят фармудааст, ки масъалаи баҳс ба Аллоҳ ва Паёмбар баргардонда шавад."
+      },
+      "kk": {
+        "q": "4:59 аятында даулы мәселені кімге қайтару бұйырылған?",
+        "options": [
+          "Аллаға және Елшіге",
+          "Елшіге және билік иелеріне",
+          "Үмметтің ақсақалдары мен ғалымдарына",
+          "Куәлар мен хатшыға"
+        ],
+        "info": "Аят даулы мәселені Аллаға және Елшіге қайтаруды бұйырады."
+      },
+      "ky": {
+        "q": "4:59 аятында талаштуу маселени кимге кайтаруу буйрулат?",
+        "options": [
+          "Аллахка жана Элчиге",
+          "Элчиге жана бийлик ээлерине",
+          "Үммөттүн аксакалдарына жана аалымдарына",
+          "Күбөлөргө жана катчыга"
+        ],
+        "info": "Аят талаштуу маселени Аллахка жана Элчиге кайтарууну буйруйт."
+      },
+      "az": {
+        "q": "4:59-da mübahisə mövzusunu kimə qaytarmaq buyurulur?",
+        "options": [
+          "Allaha və Elçiyə",
+          "Elçiyə və rəhbərliyə sahib olanlara",
+          "Ümmətin ağsaqqallarına və alimlərinə",
+          "Şahidlərə və katibə"
+        ],
+        "info": "Ayə mübahisə mövzusunu Allaha və Elçiyə qaytarmağı buyurur."
+      },
+      "tr": {
+        "q": "4:59’da anlaşmazlık konusu kime götürülmelidir?",
+        "options": [
+          "Allah’a ve Elçi’ye",
+          "Elçi’ye ve yetki sahiplerine",
+          "Ümmetin büyüklerine ve âlimlerine",
+          "Şahitlere ve kâtibe"
+        ],
+        "info": "Ayet, anlaşmazlık konusunun Allah’a ve Elçi’ye götürülmesini emreder."
+      }
+    }
+  },
+  {
+    "id": "l2_fortified_towers",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 4:78",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "sourceVerses": [
+      "4:78"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какой образ в 4:78 показывает, что от смерти не укрыться?",
+        "options": [
+          "Укреплённые башни",
+          "Корабли с белыми парусами",
+          "Сады с высокими пальмами",
+          "Пустынные караванные пути"
+        ],
+        "info": "Аят говорит, что смерть настигнет даже находящихся в укреплённых башнях."
+      },
+      "en": {
+        "q": "Which image in 4:78 shows that death cannot be escaped?",
+        "options": [
+          "Fortified towers",
+          "Ships with white sails",
+          "Gardens of tall palms",
+          "Desert caravan routes"
+        ],
+        "info": "The verse says death reaches people even inside fortified towers."
+      },
+      "uz": {
+        "q": "4:78 da o‘limdan qochib bo‘lmasligini qaysi tasvir ko‘rsatadi?",
+        "options": [
+          "Mustahkam minoralar",
+          "Oq yelkanli kemalar",
+          "Baland xurmoli bog‘lar",
+          "Cho‘l karvon yo‘llari"
+        ],
+        "info": "Oyat o‘lim mustahkam minoralarda bo‘lganlarga ham yetishini bildiradi."
+      },
+      "tg": {
+        "q": "Кадом тасвир дар 4:78 ногузирии маргро нишон медиҳад?",
+        "options": [
+          "Бурҷҳои мустаҳкам",
+          "Киштиҳои бодбонашон сафед",
+          "Боғҳои хурмояшон баланд",
+          "Роҳҳои корвони биёбон"
+        ],
+        "info": "Оят мегӯяд, ки марг ҳатто дар бурҷҳои мустаҳкам ҳам мерасад."
+      },
+      "kk": {
+        "q": "4:78 аятындағы қай бейне өлімнен құтылу мүмкін еместігін көрсетеді?",
+        "options": [
+          "Бекітілген мұнаралар",
+          "Ақ желкенді кемелер",
+          "Биік құрмалы бақтар",
+          "Шөлдегі керуен жолдары"
+        ],
+        "info": "Аят өлімнің бекітілген мұнараларда отырғандарға да жететінін айтады."
+      },
+      "ky": {
+        "q": "4:78 аятындагы кайсы образ өлүмдөн кача албастыкты көрсөтөт?",
+        "options": [
+          "Бекем мунаралар",
+          "Ак парустуу кемелер",
+          "Бийик курмалуу бактар",
+          "Чөлдөгү кербен жолдору"
+        ],
+        "info": "Аят өлүм бекем мунараларда тургандарга да жетерин айтат."
+      },
+      "az": {
+        "q": "4:78-də hansı təsvir ölümdən gizlənməyin mümkün olmadığını göstərir?",
+        "options": [
+          "Möhkəmləndirilmiş qüllələr",
+          "Ağ yelkənli gəmilər",
+          "Hündür xurmalı bağlar",
+          "Kimsəsiz karvan yolları"
+        ],
+        "info": "Ayədə ölümün hətta möhkəmləndirilmiş qüllələrdə olanlara da çatacağı bildirilir."
+      },
+      "tr": {
+        "q": "4:78’de hangi tasvir ölümden saklanılamayacağını gösterir?",
+        "options": [
+          "Sağlamlaştırılmış kuleler",
+          "Beyaz yelkenli gemiler",
+          "Yüksek hurma ağaçlı bahçeler",
+          "Issız kervan yolları"
+        ],
+        "info": "Ayet, sağlamlaştırılmış kulelerde bulunanlara bile ölümün ulaşacağını bildirir."
+      }
+    }
+  },
+  {
+    "id": "l2_news_referral",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 4:83",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/4",
+    "sourceVerses": [
+      "4:83"
+    ],
+    "locales": {
+      "ru": {
+        "q": "К кому следовало отнести весть о безопасности или страхе в 4:83?",
+        "options": [
+          "К Посланнику и обладателям власти",
+          "К Аллаху и Посланнику",
+          "К двум свидетелям и писцу",
+          "К путникам, прибывшим из той местности"
+        ],
+        "info": "Аят противопоставляет разглашению вести обращение к Посланнику и обладателям власти."
+      },
+      "en": {
+        "q": "To whom should news of security or fear have been referred in 4:83?",
+        "options": [
+          "To the Messenger and those in authority",
+          "To Allah and the Messenger",
+          "To two witnesses and the scribe",
+          "To travellers arriving from that area"
+        ],
+        "info": "The verse contrasts spreading the news with referring it to the Messenger and those in authority."
+      },
+      "uz": {
+        "q": "4:83 da xavfsizlik yoki xavf haqidagi xabarni kimga yetkazish kerak edi?",
+        "options": [
+          "Payg‘ambar va hokimiyat egalariga",
+          "Alloh va Payg‘ambarga",
+          "Ikki guvoh va kotibga",
+          "O‘sha hududdan kelgan yo‘lovchilarga"
+        ],
+        "info": "Oyat xabarni tarqatish o‘rniga Payg‘ambar va hokimiyat egalariga murojaat qilishni aytadi."
+      },
+      "tg": {
+        "q": "Дар 4:83 хабари амният ё тарсро бояд ба кӣ мерасонданд?",
+        "options": [
+          "Ба Паёмбар ва соҳибони амр",
+          "Ба Аллоҳ ва Паёмбар",
+          "Ба ду шоҳид ва котиб",
+          "Ба мусофироне, ки аз он минтақа омадаанд"
+        ],
+        "info": "Оят ба ҷойи паҳн кардани хабар муроҷиат ба Паёмбар ва соҳибони амрро зикр мекунад."
+      },
+      "kk": {
+        "q": "4:83 аятында қауіпсіздік не қауіп туралы хабарды кімге жеткізу керек еді?",
+        "options": [
+          "Елшіге және билік иелеріне",
+          "Аллаға және Елшіге",
+          "Екі куәгерге және хатшыға",
+          "Сол аймақтан келген жолаушыларға"
+        ],
+        "info": "Аят хабарды таратып жіберудің орнына Елшіге және билік иелеріне жүгінуді көрсетеді."
+      },
+      "ky": {
+        "q": "4:83 аятында коопсуздук же коркунуч тууралуу кабарды кимге жеткирүү керек эле?",
+        "options": [
+          "Элчиге жана бийлик ээлерине",
+          "Аллахка жана Элчиге",
+          "Эки күбөгө жана катчыга",
+          "Ошол жерден келген жолоочуларга"
+        ],
+        "info": "Аят кабарды таратып жиберүүнүн ордуна Элчиге жана бийлик ээлерине кайрылууну көрсөтөт."
+      },
+      "az": {
+        "q": "4:83-də təhlükəsizlik və ya qorxu xəbəri kimə çatdırılmalı idi?",
+        "options": [
+          "Elçiyə və rəhbərliyə sahib olanlara",
+          "Allaha və Elçiyə",
+          "İki şahidə və katibə",
+          "Həmin ərazidən gələn yolçulara"
+        ],
+        "info": "Ayə xəbəri yaymağın əvəzinə Elçiyə və rəhbərliyə sahib olanlara müraciəti göstərir."
+      },
+      "tr": {
+        "q": "4:83’te güvenlik veya korkuyla ilgili haber kime götürülmeliydi?",
+        "options": [
+          "Elçi’ye ve yetki sahiplerine",
+          "Allah’a ve Elçi’ye",
+          "İki şahide ve kâtibe",
+          "O bölgeden gelen yolculara"
+        ],
+        "info": "Ayet, haberi yaymak yerine Elçi’ye ve yetki sahiplerine başvurmayı belirtir."
+      }
+    }
+  },
+  {
+    "id": "l2_ablution_wiping",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 5:6",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "sourceVerses": [
+      "5:6"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какую часть тела в 5:6 прямо велено протереть при омовении?",
+        "options": [
+          "Голову",
+          "Грудь",
+          "Спину",
+          "Колени"
+        ],
+        "info": "При описании омовения аят отдельно упоминает протирание головы."
+      },
+      "en": {
+        "q": "Which body part does 5:6 expressly instruct believers to wipe during ablution?",
+        "options": [
+          "The head",
+          "The chest",
+          "The back",
+          "The knees"
+        ],
+        "info": "The ablution passage specifically mentions wiping the head."
+      },
+      "uz": {
+        "q": "5:6 da tahorat paytida qaysi a’zoga mash tortish aniq buyurilgan?",
+        "options": [
+          "Boshga",
+          "Ko‘krakka",
+          "Orqaga",
+          "Tizzalarga"
+        ],
+        "info": "Tahorat haqidagi oyatda boshga mash tortish alohida tilga olinadi."
+      },
+      "tg": {
+        "q": "Дар 5:6 ҳангоми вузӯ масҳ кардани кадом узв ошкоро амр шудааст?",
+        "options": [
+          "Сар",
+          "Сина",
+          "Пушт",
+          "Зонуҳо"
+        ],
+        "info": "Дар ояти вузӯ масҳ кардани сар алоҳида зикр шудааст."
+      },
+      "kk": {
+        "q": "5:6 аятында дәретте қай мүшеге мәсіх тарту нақты бұйырылған?",
+        "options": [
+          "Басқа",
+          "Кеудеге",
+          "Арқаға",
+          "Тізеге"
+        ],
+        "info": "Дәрет сипатталған аятта басқа мәсіх тарту бөлек аталады."
+      },
+      "ky": {
+        "q": "5:6 аятында дааратта кайсы мүчөгө масх тартуу так буйрулган?",
+        "options": [
+          "Башка",
+          "Көкүрөккө",
+          "Аркага",
+          "Тизеге"
+        ],
+        "info": "Даарат сүрөттөлгөн аятта башка масх тартуу өзүнчө айтылат."
+      },
+      "az": {
+        "q": "5:6-da dəstəmaz alarkən bədənin hansı hissəsinə məsh etmək açıq şəkildə buyurulur?",
+        "options": [
+          "Başa",
+          "Sinəyə",
+          "Kürəyə",
+          "Dizlərə"
+        ],
+        "info": "Dəstəmaz təsvir edilərkən ayədə başa məsh çəkilməsi ayrıca qeyd olunur."
+      },
+      "tr": {
+        "q": "5:6’da abdest alırken vücudun hangi bölümünün mesh edilmesi açıkça emredilir?",
+        "options": [
+          "Başın",
+          "Göğsün",
+          "Sırtın",
+          "Dizlerin"
+        ],
+        "info": "Abdest anlatılırken ayette başın mesh edilmesi ayrıca belirtilir."
+      }
+    }
+  },
+  {
+    "id": "l2_oath_fasting",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 5:89",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "sourceVerses": [
+      "5:89"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какой пост указан в 5:89 при невозможности перечисленных способов искупления клятвы?",
+        "options": [
+          "Три дня",
+          "Семь дней",
+          "Десять дней",
+          "Два месяца"
+        ],
+        "info": "После перечисления способов искупления аят указывает пост три дня для не имеющего возможности."
+      },
+      "en": {
+        "q": "What fast does 5:89 specify when the listed means of expiating an oath are beyond one's means?",
+        "options": [
+          "Three days",
+          "Seven days",
+          "Ten days",
+          "Two months"
+        ],
+        "info": "After listing expiation options, the verse specifies three days of fasting for someone unable to provide them."
+      },
+      "uz": {
+        "q": "5:89 da qasam kafforatining sanalgan yo‘llariga imkoni bo‘lmaganga qanday ro‘za belgilangan?",
+        "options": [
+          "Uch kun",
+          "Yetti kun",
+          "O‘n kun",
+          "Ikki oy"
+        ],
+        "info": "Kafforat yo‘llari sanalgach, imkon topolmagan kishiga uch kun ro‘za ko‘rsatilgan."
+      },
+      "tg": {
+        "q": "Дар 5:89 барои касе, ки роҳҳои зикршудаи каффорати қасамро наметавонад, чӣ рӯза аст?",
+        "options": [
+          "Се рӯз",
+          "Ҳафт рӯз",
+          "Даҳ рӯз",
+          "Ду моҳ"
+        ],
+        "info": "Пас аз роҳҳои каффорат барои каси нотавон се рӯз рӯза нишон дода шудааст."
+      },
+      "kk": {
+        "q": "5:89 аятында ант кәффаратының аталған жолдарына шамасы жетпегенге қандай ораза көрсетілген?",
+        "options": [
+          "Үш күн",
+          "Жеті күн",
+          "Он күн",
+          "Екі ай"
+        ],
+        "info": "Кәффарат жолдарынан кейін мүмкіндігі жоқ адамға үш күн ораза көрсетілген."
+      },
+      "ky": {
+        "q": "5:89 аятында ант каффаратынын аталган жолдоруна мүмкүнчүлүгү жокко кандай орозо көрсөтүлгөн?",
+        "options": [
+          "Үч күн",
+          "Жети күн",
+          "Он күн",
+          "Эки ай"
+        ],
+        "info": "Каффарат жолдорунан кийин мүмкүнчүлүгү жок адамга үч күн орозо көрсөтүлгөн."
+      },
+      "az": {
+        "q": "5:89-da and kəffarəsinin sadalanan yollarına imkan olmayanda hansı oruc göstərilir?",
+        "options": [
+          "Üç gün",
+          "Yeddi gün",
+          "On gün",
+          "İki ay"
+        ],
+        "info": "Ayədə kəffarə yollarından sonra buna imkanı olmayan üçün üç gün oruc göstərilir."
+      },
+      "tr": {
+        "q": "5:89’da yeminin sayılan kefaret yollarına gücü yetmeyen için hangi oruç belirtilir?",
+        "options": [
+          "Üç gün",
+          "Yedi gün",
+          "On gün",
+          "İki ay"
+        ],
+        "info": "Ayette kefaret yollarının ardından, bunlara gücü yetmeyen için üç gün oruç belirtilir."
+      }
+    }
+  },
+  {
+    "id": "l2_game_assessment",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 5:95",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "sourceVerses": [
+      "5:95"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Сколько справедливых людей определяют равноценную жертву за дичь в 5:95?",
+        "options": [
+          "Двое",
+          "Один",
+          "Трое",
+          "Четверо"
+        ],
+        "info": "В случае умышленного убийства дичи в ихраме аят называет двух справедливых судей."
+      },
+      "en": {
+        "q": "How many just people assess the equivalent livestock offering for game in 5:95?",
+        "options": [
+          "Two",
+          "One",
+          "Three",
+          "Four"
+        ],
+        "info": "For deliberately killing game in ihram, the verse names two just assessors."
+      },
+      "uz": {
+        "q": "5:95 da ov hayvoniga teng qurbonlikni nechta adolatli kishi belgilaydi?",
+        "options": [
+          "Ikki kishi",
+          "Bir kishi",
+          "Uch kishi",
+          "To‘rt kishi"
+        ],
+        "info": "Ehromda ov hayvonini qasddan o‘ldirish masalasida oyat ikki adolatli hakamni ko‘rsatadi."
+      },
+      "tg": {
+        "q": "Дар 5:95 чанд шахси одил қурбонии ҳамарзиши сайдро муайян мекунанд?",
+        "options": [
+          "Ду нафар",
+          "Як нафар",
+          "Се нафар",
+          "Чор нафар"
+        ],
+        "info": "Барои қасдан куштани сайд дар эҳром оят ду довари одилро ном мебарад."
+      },
+      "kk": {
+        "q": "5:95 аятында аңға тең мал құрбандығын неше әділ адам бағалайды?",
+        "options": [
+          "Екі адам",
+          "Бір адам",
+          "Үш адам",
+          "Төрт адам"
+        ],
+        "info": "Ихрамда аңды әдейі өлтіру жағдайында аят екі әділ бағалаушыны атайды."
+      },
+      "ky": {
+        "q": "5:95 аятында аңга тең курмандык малын канча адилеттүү адам баалайт?",
+        "options": [
+          "Эки адам",
+          "Бир адам",
+          "Үч адам",
+          "Төрт адам"
+        ],
+        "info": "Ихрамда аңды атайылап өлтүрүү үчүн аят эки адилеттүү баалоочуну атайт."
+      },
+      "az": {
+        "q": "5:95-də ov heyvanına bərabər qurbanı neçə ədalətli şəxs müəyyən edir?",
+        "options": [
+          "İki",
+          "Bir",
+          "Üç",
+          "Dörd"
+        ],
+        "info": "İhramda ov heyvanının qəsdən öldürülməsi halında ayə iki ədalətli hakimi qeyd edir."
+      },
+      "tr": {
+        "q": "5:95’te av hayvanına denk kurbanı kaç adaletli kişi belirler?",
+        "options": [
+          "İki",
+          "Bir",
+          "Üç",
+          "Dört"
+        ],
+        "info": "İhramdayken av hayvanının kasten öldürülmesi durumunda ayet iki adaletli hakemden söz eder."
+      }
+    }
+  },
+  {
+    "id": "l2_sea_provision",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 5:96",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/5",
+    "sourceVerses": [
+      "5:96"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какое различие между морской и сухопутной охотой названо в 5:96?",
+        "options": [
+          "Морская дозволена, сухопутная запрещена в ихраме",
+          "Обе запрещены в ихраме",
+          "Обе дозволены в ихраме",
+          "Сухопутная дозволена, морская запрещена"
+        ],
+        "info": "Аят дозволяет морскую охоту и запрещает охоту на суше в состоянии ихрама."
+      },
+      "en": {
+        "q": "What distinction between sea and land hunting is stated in 5:96?",
+        "options": [
+          "Sea hunting is allowed; land hunting is forbidden during ihram",
+          "Both are forbidden during ihram",
+          "Both are allowed during ihram",
+          "Land hunting is allowed; sea hunting is forbidden"
+        ],
+        "info": "The verse permits sea hunting and forbids hunting on land while in ihram."
+      },
+      "uz": {
+        "q": "5:96 da dengiz va quruqlik ovi o‘rtasida qanday farq aytilgan?",
+        "options": [
+          "Dengiz ovi halol, quruqlik ovi esa ehromda man etilgan",
+          "Ehromda ikkalasi ham man etilgan",
+          "Ehromda ikkalasi ham halol",
+          "Quruqlik ovi halol, dengiz ovi man etilgan"
+        ],
+        "info": "Oyat dengiz ovini halol qiladi, ehrom holatida quruqlikda ov qilishni esa taqiqlaydi."
+      },
+      "tg": {
+        "q": "Дар 5:96 байни шикори баҳрӣ ва хушкӣ кадом фарқ гуфта шудааст?",
+        "options": [
+          "Шикори баҳрӣ ҳалол ва шикори хушкӣ дар эҳром манъ аст",
+          "Ҳар ду дар эҳром манъ аст",
+          "Ҳар ду дар эҳром ҳалол аст",
+          "Шикори хушкӣ ҳалол ва шикори баҳрӣ манъ аст"
+        ],
+        "info": "Оят шикори баҳриро ҳалол ва шикор дар хушкӣ ҳангоми эҳромро манъ мекунад."
+      },
+      "kk": {
+        "q": "5:96 аятында теңіздегі және құрлықтағы аңшылықтың қандай айырмасы айтылған?",
+        "options": [
+          "Теңіздегі аңшылық рұқсат, құрлықтағысы ихрамда тыйым салынған",
+          "Ихрамда екеуіне де тыйым салынған",
+          "Ихрамда екеуіне де рұқсат берілген",
+          "Құрлықтағы аңшылық рұқсат, теңіздегіге тыйым салынған"
+        ],
+        "info": "Аят теңіздегі аңшылыққа рұқсат беріп, ихрам кезінде құрлықтағы аңшылыққа тыйым салады."
+      },
+      "ky": {
+        "q": "5:96 аятында деңиздеги жана кургактыктагы аңчылыктын кандай айырмасы айтылган?",
+        "options": [
+          "Деңиздеги аңчылыкка уруксат, кургактыктагыга ихрамда тыюу салынган",
+          "Ихрамда экөөнө тең тыюу салынган",
+          "Ихрамда экөөнө тең уруксат берилген",
+          "Кургактыктагы аңчылыкка уруксат, деңиздегиге тыюу салынган"
+        ],
+        "info": "Аят деңиздеги аңчылыкка уруксат берип, ихрам учурунда кургактыктагы аңчылыкка тыюу салат."
+      },
+      "az": {
+        "q": "5:96-da dənizdə və quruda ov arasında hansı fərq göstərilir?",
+        "options": [
+          "Dənizdə ov halaldır, quruda ov ihramda haramdır",
+          "İhramda hər ikisi haramdır",
+          "İhramda hər ikisi halaldır",
+          "Quruda ov halaldır, dənizdə ov haramdır"
+        ],
+        "info": "Ayə dənizdə ova icazə verir və ihram halında quruda ovu qadağan edir."
+      },
+      "tr": {
+        "q": "5:96’da deniz ve kara avı arasında hangi fark belirtilir?",
+        "options": [
+          "Deniz avı helaldir, kara avı ihramda haramdır",
+          "İhramda ikisi de haramdır",
+          "İhramda ikisi de helaldir",
+          "Kara avı helaldir, deniz avı haramdır"
+        ],
+        "info": "Ayet deniz avına izin verir ve ihram hâlinde kara avını yasaklar."
+      }
+    }
+  },
+  {
+    "id": "l2_falling_leaf",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 6:59",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "sourceVerses": [
+      "6:59"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Что подчёркивает образ падающего листа в 6:59?",
+        "options": [
+          "Ничто не скрыто от знания Аллаха",
+          "Знание доступно только ночью",
+          "Листья не могут падать без ветра",
+          "Человеку известно всё сокровенное"
+        ],
+        "info": "Аят говорит, что ни один лист не падает без знания Аллаха."
+      },
+      "en": {
+        "q": "What does the falling leaf image in 6:59 emphasize?",
+        "options": [
+          "Nothing escapes Allah's knowledge",
+          "Knowledge is available only at night",
+          "Leaves cannot fall without wind",
+          "Humans know all the unseen"
+        ],
+        "info": "The verse says no leaf falls without Allah knowing it."
+      },
+      "uz": {
+        "q": "6:59 dagi tushayotgan barg tasviri nimani ta’kidlaydi?",
+        "options": [
+          "Hech narsa Allohning ilmidan yashirin emas",
+          "Ilm faqat tunda mavjud",
+          "Barg shamolsiz tusha olmaydi",
+          "Inson barcha g‘aybni biladi"
+        ],
+        "info": "Oyat hech bir barg Allohning xabarisiz tushmasligini bildiradi."
+      },
+      "tg": {
+        "q": "Тасвири барги афтанда дар 6:59 чиро таъкид мекунад?",
+        "options": [
+          "Ҳеҷ чиз аз илми Аллоҳ пинҳон нест",
+          "Дониш танҳо шаб дастрас аст",
+          "Барг бе шамол намеафтад",
+          "Инсон тамоми ғайбро медонад"
+        ],
+        "info": "Оят мегӯяд, ки ҳеҷ барг бе огоҳии Аллоҳ намеафтад."
+      },
+      "kk": {
+        "q": "6:59 аятындағы түскен жапырақ бейнесі нені көрсетеді?",
+        "options": [
+          "Алланың білімінен ештеңе жасырын емес",
+          "Білім тек түнде беріледі",
+          "Жапырақ желсіз түсе алмайды",
+          "Адам бүкіл ғайыпты біледі"
+        ],
+        "info": "Аят ешбір жапырақ Алланың білуінсіз түспейтінін айтады."
+      },
+      "ky": {
+        "q": "6:59 аятындагы түшкөн жалбырак эмнени баса белгилейт?",
+        "options": [
+          "Аллахтын илиминен эч нерсе жашыруун эмес",
+          "Илим түнкүсүн гана берилет",
+          "Жалбырак шамалсыз түшө албайт",
+          "Адам бардык кайыпты билет"
+        ],
+        "info": "Аят эч бир жалбырак Аллахтын билүүсүз түшпөй турганын айтат."
+      },
+      "az": {
+        "q": "6:59-da düşən yarpaq təsviri nəyi vurğulayır?",
+        "options": [
+          "Allahın elmindən heç nə gizli deyil",
+          "Bilik yalnız gecə əldə edilir",
+          "Yarpaqlar küləksiz düşə bilməz",
+          "İnsan bütün qeybi bilir"
+        ],
+        "info": "Ayə bildirir ki, Allahın xəbəri olmadan heç bir yarpaq düşmür."
+      },
+      "tr": {
+        "q": "6:59’da düşen yaprak tasviri neyi vurgular?",
+        "options": [
+          "Allah’ın bilgisinden hiçbir şey gizli değildir",
+          "Bilgiye yalnız gece ulaşılır",
+          "Yapraklar rüzgârsız düşemez",
+          "İnsan bütün gaybı bilir"
+        ],
+        "info": "Ayet, Allah’ın bilgisi dışında tek bir yaprağın bile düşmediğini bildirir."
+      }
+    }
+  },
+  {
+    "id": "l2_harvest_due",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 6:141",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "sourceVerses": [
+      "6:141"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Когда в 6:141 велено отдавать должное от урожая?",
+        "options": [
+          "В день его сбора",
+          "Только через год после сбора",
+          "Только при следующем посеве",
+          "Лишь после продажи всего урожая"
+        ],
+        "info": "Наставление об отдаче должного связано с днём сбора урожая."
+      },
+      "en": {
+        "q": "When does 6:141 instruct that the harvest's due be given?",
+        "options": [
+          "On the day of harvest",
+          "Only a year after harvest",
+          "Only at the next sowing",
+          "Only after selling the entire crop"
+        ],
+        "info": "The instruction to give the due is tied to harvest day."
+      },
+      "uz": {
+        "q": "6:141 da hosilning haqqini qachon berish buyurilgan?",
+        "options": [
+          "Hosil yig‘ilgan kuni",
+          "Faqat hosildan bir yil o‘tgach",
+          "Faqat keyingi ekish vaqtida",
+          "Faqat butun hosil sotilgach"
+        ],
+        "info": "Hosil haqqini berish ko‘rsatmasi yig‘im kuni bilan bog‘langan."
+      },
+      "tg": {
+        "q": "Дар 6:141 ҳаққи ҳосилро кай додан амр шудааст?",
+        "options": [
+          "Дар рӯзи ҷамъоварии ҳосил",
+          "Танҳо як сол пас аз ҷамъоварӣ",
+          "Танҳо ҳангоми кишти нав",
+          "Танҳо пас аз фурӯши тамоми ҳосил"
+        ],
+        "info": "Додани ҳаққи ҳосил бо рӯзи ҷамъоварии он вобаста шудааст."
+      },
+      "kk": {
+        "q": "6:141 аятында өнімнің ақысын қашан беру бұйырылған?",
+        "options": [
+          "Өнімді жинаған күні",
+          "Тек жинағаннан бір жыл өткенде",
+          "Тек келесі егіс кезінде",
+          "Тек бүкіл өнім сатылған соң"
+        ],
+        "info": "Өнімнің ақысын беру жинау күнімен байланыстырылған."
+      },
+      "ky": {
+        "q": "6:141 аятында түшүмдүн акысын качан берүү буйрулган?",
+        "options": [
+          "Түшүм жыйналган күнү",
+          "Жыйналгандан бир жыл өткөндө гана",
+          "Кийинки себүү маалында гана",
+          "Бүт түшүм сатылгандан кийин гана"
+        ],
+        "info": "Түшүмдүн акысын берүү жыйноо күнү менен байланыштырылган."
+      },
+      "az": {
+        "q": "6:141-də məhsuldan verilməli olan payı nə vaxt vermək buyurulur?",
+        "options": [
+          "Məhsul yığılan gün",
+          "Yalnız yığımdan bir il sonra",
+          "Yalnız növbəti səpin zamanı",
+          "Yalnız bütün məhsul satıldıqdan sonra"
+        ],
+        "info": "Verilməli olan pay haqqında göstəriş məhsulun yığıldığı günlə əlaqələndirilir."
+      },
+      "tr": {
+        "q": "6:141’de ürünün hakkını ne zaman vermek emredilir?",
+        "options": [
+          "Hasat edildiği gün",
+          "Yalnız hasattan bir yıl sonra",
+          "Yalnız bir sonraki ekimde",
+          "Yalnız ürünün tamamı satıldıktan sonra"
+        ],
+        "info": "Ürünün hakkını verme emri hasat gününe bağlanır."
+      }
+    }
+  },
+  {
+    "id": "l2_recitation_attention",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 7:204",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/7",
+    "sourceVerses": [
+      "7:204"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какая пара действий предписана слушателю при чтении Корана в 7:204?",
+        "options": [
+          "Слушать и хранить молчание",
+          "Обсуждать и задавать вопросы",
+          "Перебивать и исправлять каждого",
+          "Продолжать разговор и торговаться"
+        ],
+        "info": "Аят связывает слушание Корана с вниманием и молчанием."
+      },
+      "en": {
+        "q": "Which two actions are prescribed when listening to Quran recitation in 7:204?",
+        "options": [
+          "Listen and remain silent",
+          "Discuss and ask questions",
+          "Interrupt and correct everyone",
+          "Keep talking and bargaining"
+        ],
+        "info": "The verse pairs listening to the Quran with attentive silence."
+      },
+      "uz": {
+        "q": "7:204 da Qur’on o‘qilganda qaysi ikki amal buyurilgan?",
+        "options": [
+          "Tinglash va jim turish",
+          "Muhokama qilish va savol berish",
+          "Gapni bo‘lish va hammani tuzatish",
+          "Gaplashish va savdolashishni davom ettirish"
+        ],
+        "info": "Oyat Qur’onni tinglash bilan jim turishni birga zikr qiladi."
+      },
+      "tg": {
+        "q": "Дар 7:204 ҳангоми қироати Қуръон кадом ду амал амр шудаанд?",
+        "options": [
+          "Гӯш кардан ва хомӯш мондан",
+          "Муҳокима ва савол додан",
+          "Буридани сухан ва ислоҳи ҳама",
+          "Идомаи суҳбат ва савдо"
+        ],
+        "info": "Оят гӯш кардани Қуръонро бо хомӯшӣ якҷо зикр мекунад."
+      },
+      "kk": {
+        "q": "7:204 аятында Құран оқылғанда қандай екі амал бұйырылған?",
+        "options": [
+          "Тыңдау және үнсіз болу",
+          "Талқылау және сұрақ қою",
+          "Сөзді бөліп, бәрін түзету",
+          "Сөйлесу мен сауданы жалғастыру"
+        ],
+        "info": "Аят Құран тыңдауды үнсіздікпен бірге атайды."
+      },
+      "ky": {
+        "q": "7:204 аятында Куран окулганда кайсы эки амал буйрулган?",
+        "options": [
+          "Угуу жана унчукпоо",
+          "Талкуулоо жана суроо берүү",
+          "Сөздү бөлүп, баарын оңдоо",
+          "Сүйлөшүүнү жана сооданы улантуу"
+        ],
+        "info": "Аят Куран угууну унчукпоо менен бирге атайт."
+      },
+      "az": {
+        "q": "7:204-də Quran oxunarkən dinləyiciyə hansı iki davranış buyurulur?",
+        "options": [
+          "Dinləmək və susmaq",
+          "Müzakirə etmək və sual vermək",
+          "Söz kəsmək və hər kəsi düzəltmək",
+          "Söhbəti və alveri davam etdirmək"
+        ],
+        "info": "Ayə Quranı dinləməyi diqqət və sükutla əlaqələndirir."
+      },
+      "tr": {
+        "q": "7:204’te Kur’an okunurken dinleyiciye hangi iki davranış emredilir?",
+        "options": [
+          "Dinlemek ve susmak",
+          "Tartışmak ve soru sormak",
+          "Söz kesmek ve herkesi düzeltmek",
+          "Konuşmayı ve pazarlığı sürdürmek"
+        ],
+        "info": "Ayet, Kur’an’ı dinlemeyi dikkat ve sessizlikle ilişkilendirir."
+      }
+    }
+  },
+  {
+    "id": "l2_dispute_weakness",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 8:46",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/8",
+    "sourceVerses": [
+      "8:46"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие последствия раздора прямо названы в 8:46?",
+        "options": [
+          "Потеря решимости и силы",
+          "Утрата имущества и урожая",
+          "Сокращение срока договоров",
+          "Обязанность покинуть родину"
+        ],
+        "info": "Аят предупреждает, что споры ведут к слабости и потере силы."
+      },
+      "en": {
+        "q": "Which consequences of discord are explicitly named in 8:46?",
+        "options": [
+          "Loss of resolve and strength",
+          "Loss of property and harvest",
+          "Shortening of treaty terms",
+          "An obligation to leave one's homeland"
+        ],
+        "info": "The verse warns that disputes lead to weakness and loss of strength."
+      },
+      "uz": {
+        "q": "8:46 da nizoning qaysi oqibatlari bevosita aytilgan?",
+        "options": [
+          "Qat’iyat va kuchni yo‘qotish",
+          "Mol-mulk va hosilni yo‘qotish",
+          "Shartnomalar muddatining qisqarishi",
+          "Vatanni tark etish majburiyati"
+        ],
+        "info": "Oyat nizolar zaiflikka va kuchning ketishiga olib kelishidan ogohlantiradi."
+      },
+      "tg": {
+        "q": "Дар 8:46 кадом паёмадҳои низоъ бевосита номбар шудаанд?",
+        "options": [
+          "Аз даст рафтани ирода ва нерӯ",
+          "Аз даст рафтани молу мулк ва ҳосил",
+          "Кӯтоҳ шудани муҳлати паймонҳо",
+          "Ӯҳдадории тарки ватан"
+        ],
+        "info": "Оят ҳушдор медиҳад, ки низоъ ба сустӣ ва аз даст рафтани нерӯ меорад."
+      },
+      "kk": {
+        "q": "8:46 аятында алауыздықтың қандай салдары тікелей аталған?",
+        "options": [
+          "Жігер мен күштің жоғалуы",
+          "Мүлік пен егіннен айырылу",
+          "Келісімдердің мерзімінің қысқаруы",
+          "Туған жерден кету міндеті"
+        ],
+        "info": "Аят талас-тартыстың әлсіздікке және күштен айырылуға әкелетінін ескертеді."
+      },
+      "ky": {
+        "q": "8:46 аятында ынтымаксыздыктын кандай кесепеттери түз айтылган?",
+        "options": [
+          "Чечкиндүүлүктү жана күчтү жоготуу",
+          "Мал-мүлк менен түшүмдөн ажыроо",
+          "Келишимдердин мөөнөтүнүн кыскарышы",
+          "Мекенден кетүү милдети"
+        ],
+        "info": "Аят талаштар алсыздыкка жана күчтү жоготууга алып келерин эскертет."
+      },
+      "az": {
+        "q": "8:46-da ixtilafın hansı nəticələri açıq şəkildə göstərilir?",
+        "options": [
+          "Qətiyyətin və gücün itirilməsi",
+          "Malın və məhsulun itirilməsi",
+          "Müqavilə müddətinin qısalması",
+          "Vətəni tərk etmək öhdəliyi"
+        ],
+        "info": "Ayə mübahisələrin zəifləməyə və güc itkisinə gətirdiyi barədə xəbərdarlıq edir."
+      },
+      "tr": {
+        "q": "8:46’da çekişmenin hangi sonuçları açıkça belirtilir?",
+        "options": [
+          "Kararlılığın ve gücün kaybı",
+          "Malın ve ürünün kaybı",
+          "Sözleşme süresinin kısalması",
+          "Yurdu terk etme yükümlülüğü"
+        ],
+        "info": "Ayet, çekişmelerin zayıflamaya ve güç kaybına yol açacağı konusunda uyarır."
+      }
+    }
+  },
+  {
+    "id": "l2_inclining_peace",
+    "cat": "seerah",
+    "difficulty": 2,
+    "reference": "Quran 8:61",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/8",
+    "sourceVerses": [
+      "8:61"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какой ответ на склонность другой стороны к миру указан в 8:61?",
+        "options": [
+          "Тоже склониться к миру и уповать на Аллаха",
+          "Отвергнуть мир при любых условиях",
+          "Согласиться только после нового спора",
+          "Отложить ответ до смены времён года"
+        ],
+        "info": "Наставление о мире сопровождается призывом уповать на Аллаха."
+      },
+      "en": {
+        "q": "What response to the other side inclining to peace is given in 8:61?",
+        "options": [
+          "Also incline to peace and trust Allah",
+          "Reject peace under every circumstance",
+          "Agree only after another dispute",
+          "Delay the reply until the seasons change"
+        ],
+        "info": "The instruction to incline to peace is accompanied by trust in Allah."
+      },
+      "uz": {
+        "q": "8:61 da boshqa tomon tinchlikka moyil bo‘lsa, qanday javob ko‘rsatilgan?",
+        "options": [
+          "Tinchlikka moyil bo‘lib, Allohga tavakkal qilish",
+          "Har qanday holda tinchlikni rad etish",
+          "Faqat yangi nizodan so‘ng rozi bo‘lish",
+          "Javobni fasl almashguncha kechiktirish"
+        ],
+        "info": "Tinchlikka moyil bo‘lish ko‘rsatmasi Allohga tavakkal bilan birga keladi."
+      },
+      "tg": {
+        "q": "Дар 8:61 ба майли тарафи дигар ба сулҳ чӣ ҷавоб дода мешавад?",
+        "options": [
+          "Ба сулҳ майл кардан ва ба Аллоҳ таваккал кардан",
+          "Рад кардани сулҳ дар ҳар ҳол",
+          "Розӣ шудан танҳо баъди баҳси нав",
+          "Ба таъхир гузоштан то ивазшавии фасл"
+        ],
+        "info": "Амри майл ба сулҳ бо таваккал ба Аллоҳ ҳамроҳ аст."
+      },
+      "kk": {
+        "q": "8:61 аятында қарсы жақ бейбітшілікке бейім болса, қандай жауап айтылған?",
+        "options": [
+          "Бейбітшілікке бейім болып, Аллаға тәуекел ету",
+          "Кез келген жағдайда бейбітшілікті қабылдамау",
+          "Тек жаңа даудан кейін келісу",
+          "Жауапты маусым ауысқанша кешіктіру"
+        ],
+        "info": "Бейбітшілікке бейім болу бұйрығы Аллаға тәуекел етумен қатар келеді."
+      },
+      "ky": {
+        "q": "8:61 аятында башка тарап тынчтыкка ыктаганда кандай жооп айтылган?",
+        "options": [
+          "Тынчтыкка ыктап, Аллахка тобокел кылуу",
+          "Бардык шартта тынчтыкты четке кагуу",
+          "Жаңы талаштан кийин гана макул болуу",
+          "Жоопту мезгил алмашканча кечиктирүү"
+        ],
+        "info": "Тынчтыкка ыктоо буйругу Аллахка тобокел кылуу менен коштолот."
+      },
+      "az": {
+        "q": "8:61-də qarşı tərəfin sülhə meylinə hansı cavab göstərilir?",
+        "options": [
+          "Sülhə meyl etmək və Allaha təvəkkül etmək",
+          "Hər şəraitdə sülhü rədd etmək",
+          "Yalnız yeni mübahisədən sonra razılaşmaq",
+          "Cavabı fəsil dəyişənədək təxirə salmaq"
+        ],
+        "info": "Sülh haqqında göstəriş Allaha təvəkkül çağırışı ilə birlikdə verilir."
+      },
+      "tr": {
+        "q": "8:61’de karşı tarafın barışa yönelmesine nasıl karşılık verilmesi belirtilir?",
+        "options": [
+          "Barışa yönelmek ve Allah’a tevekkül etmek",
+          "Her durumda barışı reddetmek",
+          "Yalnız yeni bir tartışmadan sonra kabul etmek",
+          "Cevabı mevsim değişene kadar ertelemek"
+        ],
+        "info": "Barışla ilgili öğüde Allah’a tevekkül çağrısı eşlik eder."
+      }
+    }
+  },
+  {
+    "id": "l2_charity_recipients",
+    "cat": "fiqh",
+    "difficulty": 2,
+    "reference": "Quran 9:60",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/9",
+    "sourceVerses": [
+      "9:60"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какая пара прямо входит в перечень получателей пожертвований в 9:60?",
+        "options": [
+          "Должники и путники",
+          "Поэты и писцы",
+          "Земледельцы и кузнецы",
+          "Правители и их родственники"
+        ],
+        "info": "Должники и путники прямо названы в перечне получателей в этом аяте."
+      },
+      "en": {
+        "q": "Which pair is explicitly listed among charity recipients in 9:60?",
+        "options": [
+          "Debtors and travellers",
+          "Poets and scribes",
+          "Farmers and blacksmiths",
+          "Rulers and their relatives"
+        ],
+        "info": "Debtors and travellers are expressly named among the recipients in this verse."
+      },
+      "uz": {
+        "q": "9:60 da sadaqa oluvchilar orasida qaysi juftlik aniq sanalgan?",
+        "options": [
+          "Qarzdorlar va yo‘lovchilar",
+          "Shoirlar va kotiblar",
+          "Dehqonlar va temirchilar",
+          "Hukmdorlar va ularning qarindoshlari"
+        ],
+        "info": "Bu oyatda qarzdorlar va yo‘lovchilar sadaqa oluvchilar orasida ochiq sanalgan."
+      },
+      "tg": {
+        "q": "Кадом ҷуфт дар 9:60 дар байни гирандагони садақа ошкоро номбар шудааст?",
+        "options": [
+          "Қарздорон ва мусофирон",
+          "Шоирон ва котибон",
+          "Деҳқонон ва оҳангарон",
+          "Ҳокимон ва хешовандони онҳо"
+        ],
+        "info": "Қарздорон ва мусофирон дар рӯйхати гирандагони ин оят ошкоро зикр шудаанд."
+      },
+      "kk": {
+        "q": "9:60 аятында садақа алушылар арасында қай жұп тікелей аталған?",
+        "options": [
+          "Қарыздарлар мен жолаушылар",
+          "Ақындар мен жазушылар",
+          "Егіншілер мен ұсталар",
+          "Билеушілер мен олардың туыстары"
+        ],
+        "info": "Бұл аятта қарыздарлар мен жолаушылар алушылар қатарында нақты аталады."
+      },
+      "ky": {
+        "q": "9:60 аятында садака алуучулардын арасында кайсы жуп түз айтылган?",
+        "options": [
+          "Карыздарлар жана жолоочулар",
+          "Акындар жана катчылар",
+          "Дыйкандар жана темир усталар",
+          "Башчылар жана алардын туугандары"
+        ],
+        "info": "Бул аятта карыздарлар менен жолоочулар алуучулардын катарында так аталат."
+      },
+      "az": {
+        "q": "9:60-da sədəqə alanlar siyahısında hansı iki qrup açıq şəkildə göstərilir?",
+        "options": [
+          "Borclular və yolçular",
+          "Şairlər və katiblər",
+          "Əkinçilər və dəmirçilər",
+          "Hökmdarlar və onların qohumları"
+        ],
+        "info": "Bu ayədə sədəqə alanlar arasında borclular və yolçular açıq şəkildə sadalanır."
+      },
+      "tr": {
+        "q": "9:60’ta sadaka alacaklar arasında hangi iki grup açıkça sayılır?",
+        "options": [
+          "Borçlular ve yolcular",
+          "Şairler ve kâtipler",
+          "Çiftçiler ve demirciler",
+          "Yöneticiler ve akrabaları"
+        ],
+        "info": "Bu ayette sadaka alacaklar arasında borçlular ve yolcular açıkça sayılır."
+      }
+    }
+  },
+  {
+    "id": "l2_three_repentance",
+    "cat": "seerah",
+    "difficulty": 2,
+    "reference": "Quran 9:118",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/9",
+    "sourceVerses": [
+      "9:118"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как описано переживание троих, чьё покаяние принято в 9:118?",
+        "options": [
+          "Земля стала тесна при всей её широте",
+          "Море стало сушей перед ними",
+          "Ночь показалась короче часа",
+          "Горы превратились в сады"
+        ],
+        "info": "Аят передаёт их тесноту души через образ просторной земли, ставшей тесной."
+      },
+      "en": {
+        "q": "How is the distress of the three whose repentance was accepted described in 9:118?",
+        "options": [
+          "The vast earth felt narrow to them",
+          "The sea became dry land before them",
+          "The night seemed shorter than an hour",
+          "The mountains became gardens"
+        ],
+        "info": "The verse expresses their distress through the image of the spacious earth feeling narrow."
+      },
+      "uz": {
+        "q": "9:118 da tavbasi qabul qilingan uch kishining holati qanday tasvirlangan?",
+        "options": [
+          "Keng yer ularga tor bo‘lib qoldi",
+          "Dengiz oldilarida quruqlikka aylandi",
+          "Tun bir soatdan qisqa tuyuldi",
+          "Tog‘lar bog‘larga aylandi"
+        ],
+        "info": "Oyat ularning iztirobini keng yerning tor tuyulishi orqali ifodalaydi."
+      },
+      "tg": {
+        "q": "Дар 9:118 ҳолати се нафаре, ки тавбаашон пазируфта шуд, чӣ гуна тасвир мешавад?",
+        "options": [
+          "Замини васеъ барояшон танг шуд",
+          "Баҳр пеши онҳо хушкӣ шуд",
+          "Шаб аз як соат кӯтоҳ намуд",
+          "Кӯҳҳо ба боғҳо табдил ёфтанд"
+        ],
+        "info": "Оят тангии дили онҳоро бо танг шудани замини васеъ ифода мекунад."
+      },
+      "kk": {
+        "q": "9:118 аятында тәубесі қабылданған үшеудің күйі қалай сипатталған?",
+        "options": [
+          "Кең жер оларға тар болды",
+          "Теңіз алдарында құрлыққа айналды",
+          "Түн бір сағаттан қысқа көрінді",
+          "Таулар баққа айналды"
+        ],
+        "info": "Аят олардың жан күйзелісін кең жердің тар көрінуі арқылы жеткізеді."
+      },
+      "ky": {
+        "q": "9:118 аятында тообосу кабыл алынган үчөөнүн абалы кандай сүрөттөлөт?",
+        "options": [
+          "Кең жер аларга тар болду",
+          "Деңиз алдыларында кургактык болду",
+          "Түн бир сааттан кыска сезилди",
+          "Тоолор бакка айланды"
+        ],
+        "info": "Аят алардын жан кыйналуусун кең жердин тар сезилиши аркылуу берет."
+      },
+      "az": {
+        "q": "9:118-də tövbəsi qəbul edilən üç nəfərin yaşadıqları necə təsvir olunur?",
+        "options": [
+          "Yer bütün genişliyinə baxmayaraq onlara dar gəldi",
+          "Dəniz onların qarşısında quruya çevrildi",
+          "Gecə onlara bir saatdan qısa göründü",
+          "Dağlar bağlara çevrildi"
+        ],
+        "info": "Ayə onların qəlb sıxıntısını geniş yerin dar gəlməsi təsviri ilə çatdırır."
+      },
+      "tr": {
+        "q": "9:118’de tövbeleri kabul edilen üç kişinin yaşadığı sıkıntı nasıl anlatılır?",
+        "options": [
+          "Yeryüzü bütün genişliğine rağmen onlara dar geldi",
+          "Deniz önlerinde karaya dönüştü",
+          "Gece onlara bir saatten kısa göründü",
+          "Dağlar bahçelere dönüştü"
+        ],
+        "info": "Ayet, onların iç sıkıntısını geniş yeryüzünün dar gelmesi tasviriyle anlatır."
+      }
+    }
+  },
+  {
+    "id": "l2_pharaoh_declaration",
+    "cat": "prophets",
+    "difficulty": 2,
+    "reference": "Quran 10:90, 10:91",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/10",
+    "sourceVerses": [
+      "10:90",
+      "10:91"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Когда Фараон объявил о вере в рассказе 10:90–91?",
+        "options": [
+          "Когда начал тонуть",
+          "Перед первым разговором с Мусой",
+          "Когда отпустил народ добровольно",
+          "Перед рождением Мусы"
+        ],
+        "info": "Фараон произнёс признание веры, когда его настигло утопление."
+      },
+      "en": {
+        "q": "When did Pharaoh declare belief in the account of 10:90–91?",
+        "options": [
+          "When he began drowning",
+          "Before first speaking with Musa",
+          "When he freely released the people",
+          "Before Musa was born"
+        ],
+        "info": "Pharaoh declared belief when drowning overtook him."
+      },
+      "uz": {
+        "q": "10:90–91 dagi hikoyada Fir’avn qachon iymon keltirganini aytdi?",
+        "options": [
+          "Cho‘ka boshlaganida",
+          "Muso bilan ilk suhbatdan oldin",
+          "Xalqni ixtiyoriy qo‘yib yuborganida",
+          "Muso tug‘ilishidan oldin"
+        ],
+        "info": "Fir’avn suvga g‘arq bo‘layotganida iymonini e’lon qilgan."
+      },
+      "tg": {
+        "q": "Дар қиссаи 10:90–91 Фиръавн кай имон оварданашро эълон кард?",
+        "options": [
+          "Ҳангоми ғарқ шудан",
+          "Пеш аз суҳбати аввал бо Мӯсо",
+          "Вақте мардумро ихтиёран озод кард",
+          "Пеш аз таваллуди Мӯсо"
+        ],
+        "info": "Фиръавн ҳангоми фаро гирифтани ғарқшавӣ имон оварданашро эълон кард."
+      },
+      "kk": {
+        "q": "10:90–91 оқиғасында Перғауын қашан иман келтіргенін айтты?",
+        "options": [
+          "Суға бата бастағанда",
+          "Мұсамен алғашқы әңгімеден бұрын",
+          "Халықты өз еркімен босатқанда",
+          "Мұса туылмай тұрып"
+        ],
+        "info": "Перғауын суға батуы таяғанда сенетінін жариялады."
+      },
+      "ky": {
+        "q": "10:90–91 окуясында Фараон качан ыйман келтиргенин айтты?",
+        "options": [
+          "Сууга чөгө баштаганда",
+          "Муса менен алгач сүйлөшкөнгө чейин",
+          "Элди өз эрки менен бошоткондо",
+          "Муса төрөлгөнгө чейин"
+        ],
+        "info": "Фараон сууга чөгүү жеткенде ишенерин жарыялаган."
+      },
+      "az": {
+        "q": "10:90–91-dəki hadisədə Firon imanını nə vaxt elan etdi?",
+        "options": [
+          "Boğulmağa başlayanda",
+          "Musa ilə ilk söhbətdən əvvəl",
+          "Xalqı könüllü buraxanda",
+          "Musa doğulmazdan əvvəl"
+        ],
+        "info": "Firon boğulmağa məruz qalanda iman etdiyini söylədi."
+      },
+      "tr": {
+        "q": "10:90–91’deki anlatıda Firavun iman ettiğini ne zaman açıkladı?",
+        "options": [
+          "Boğulmaya başladığında",
+          "Musa ile ilk görüşmesinden önce",
+          "Halkı gönüllü olarak bıraktığında",
+          "Musa doğmadan önce"
+        ],
+        "info": "Firavun, boğulma kendisine yetiştiğinde iman ettiğini söyledi."
+      }
+    }
+  },
+  {
+    "id": "l2_shuayb_reform",
+    "cat": "prophets",
+    "difficulty": 2,
+    "reference": "Quran 11:88",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
+    "sourceVerses": [
+      "11:88"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как Шуайб описывает свою цель в 11:88?",
+        "options": [
+          "Исправление по мере сил",
+          "Сбор богатств своего народа",
+          "Получение царской власти",
+          "Отмена ответственности за торговлю"
+        ],
+        "info": "Шуайб говорит об исправлении в меру сил и относит успех к Аллаху."
+      },
+      "en": {
+        "q": "How does Shuayb describe his aim in 11:88?",
+        "options": [
+          "Reform as far as he is able",
+          "Collecting his people's wealth",
+          "Obtaining royal authority",
+          "Ending accountability in trade"
+        ],
+        "info": "Shuayb seeks reform to the best of his ability and attributes success to Allah."
+      },
+      "uz": {
+        "q": "11:88 da Shuayb o‘z maqsadini qanday ta’riflaydi?",
+        "options": [
+          "Qo‘lidan kelganicha isloh qilish",
+          "Xalqining boyligini yig‘ish",
+          "Podshohlik hokimiyatini olish",
+          "Savdodagi javobgarlikni bekor qilish"
+        ],
+        "info": "Shuayb qo‘lidan kelganicha isloh istaydi va muvaffaqiyatni Allohdan deb biladi."
+      },
+      "tg": {
+        "q": "Шуайб дар 11:88 ҳадафи худро чӣ гуна баён мекунад?",
+        "options": [
+          "Ислоҳ ба қадри тавоноӣ",
+          "Ҷамъ кардани сарвати қавмаш",
+          "Ба даст овардани подшоҳӣ",
+          "Бекор кардани масъулияти тиҷорат"
+        ],
+        "info": "Шуайб то ҳадди тавонаш ислоҳ мехоҳад ва муваффақиятро аз Аллоҳ медонад."
+      },
+      "kk": {
+        "q": "11:88 аятында Шуғайып өз мақсатын қалай түсіндіреді?",
+        "options": [
+          "Шамасы келгенше түзету",
+          "Қауымының байлығын жинау",
+          "Патшалық билікке жету",
+          "Саудадағы жауапкершілікті жою"
+        ],
+        "info": "Шуғайып шамасы келгенше түзетуді қалайды және табысты Алладан көреді."
+      },
+      "ky": {
+        "q": "11:88 аятында Шуайб өз максатын кандай айтат?",
+        "options": [
+          "Колунан келишинче оңдоо",
+          "Элинин байлыгын чогултуу",
+          "Падышалык бийликке жетүү",
+          "Соодадагы жоопкерчиликти жоюу"
+        ],
+        "info": "Шуайб колунан келишинче оңдоону каалап, ийгиликти Аллахтан деп билет."
+      },
+      "az": {
+        "q": "Şüeyb 11:88-də öz məqsədini necə təsvir edir?",
+        "options": [
+          "Gücü çatdığı qədər islah etmək",
+          "Xalqının sərvətini toplamaq",
+          "Padşahlıq hakimiyyətini əldə etmək",
+          "Ticarətə görə məsuliyyəti ləğv etmək"
+        ],
+        "info": "Şüeyb gücü çatdığı qədər islahdan danışır və uğuru Allaha aid edir."
+      },
+      "tr": {
+        "q": "Şuayb 11:88’de amacını nasıl anlatır?",
+        "options": [
+          "Gücü yettiğince ıslah etmek",
+          "Halkının servetini toplamak",
+          "Krallık iktidarını elde etmek",
+          "Ticarette sorumluluğu kaldırmak"
+        ],
+        "info": "Şuayb gücü yettiğince ıslah etmekten söz eder ve başarıyı Allah’a bağlar."
+      }
+    }
+  },
+  {
+    "id": "l2_inner_change",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 13:11",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/13",
+    "sourceVerses": [
+      "13:11"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какое изменение предшествует перемене положения людей в 13:11?",
+        "options": [
+          "Изменение того, что в них самих",
+          "Смена их правителей",
+          "Перемена места проживания",
+          "Рост их материального достатка"
+        ],
+        "info": "Аят связывает перемену положения людей с переменой в них самих."
+      },
+      "en": {
+        "q": "What change precedes a change in people's condition in 13:11?",
+        "options": [
+          "A change in what is within themselves",
+          "A change of their rulers",
+          "A change of residence",
+          "An increase in their material prosperity"
+        ],
+        "info": "The verse connects a change in people's condition with a change within themselves."
+      },
+      "uz": {
+        "q": "13:11 da odamlarning holati o‘zgarishidan oldin qanday o‘zgarish aytilgan?",
+        "options": [
+          "Ularning o‘zlaridagi narsani o‘zgartirishi",
+          "Ularning hukmdorlari almashishi",
+          "Yashash joyining o‘zgarishi",
+          "Moddiy farovonligining ortishi"
+        ],
+        "info": "Oyat odamlarning holati o‘zgarishini ularning o‘zlaridagi o‘zgarish bilan bog‘laydi."
+      },
+      "tg": {
+        "q": "Дар 13:11 пеш аз тағйири ҳолати мардум кадом тағйир омадааст?",
+        "options": [
+          "Тағйири он чӣ дар худи онҳост",
+          "Иваз шудани ҳокимони онҳо",
+          "Тағйири ҷойи зист",
+          "Афзоиши фаровонии молии онҳо"
+        ],
+        "info": "Оят тағйири ҳолати мардумро бо тағйир дар худи онҳо мепайвандад."
+      },
+      "kk": {
+        "q": "13:11 аятында адамдардың жағдайы өзгермес бұрын қандай өзгеріс айтылған?",
+        "options": [
+          "Олардың өз бойындағыны өзгертуі",
+          "Олардың билеушілерінің ауысуы",
+          "Тұрғылықты жерінің өзгеруі",
+          "Материалдық әл-ауқатының өсуі"
+        ],
+        "info": "Аят адамдардың жағдайының өзгеруін олардың өз бойындағы өзгеріспен байланыстырады."
+      },
+      "ky": {
+        "q": "13:11 аятында адамдардын абалы өзгөрөрдөн мурда кандай өзгөрүү айтылган?",
+        "options": [
+          "Алардын өз ичиндеги нерсени өзгөртүүсү",
+          "Алардын башкаруучуларынын алмашуусу",
+          "Жашаган жеринин өзгөрүшү",
+          "Материалдык жетиштүүлүгүнүн өсүшү"
+        ],
+        "info": "Аят адамдардын абалынын өзгөрүшүн алардын өз ичиндеги өзгөрүү менен байланыштырат."
+      },
+      "az": {
+        "q": "13:11-də insanların vəziyyətinin dəyişməsindən əvvəl hansı dəyişiklik göstərilir?",
+        "options": [
+          "Özlərində olanı dəyişmələri",
+          "Rəhbərlərinin dəyişməsi",
+          "Yaşayış yerinin dəyişməsi",
+          "Maddi imkanlarının artması"
+        ],
+        "info": "Ayə insanların vəziyyətinin dəyişməsini özlərində olanı dəyişmələri ilə əlaqələndirir."
+      },
+      "tr": {
+        "q": "13:11’de insanların durumunun değişmesinden önce hangi değişiklik belirtilir?",
+        "options": [
+          "Kendilerinde olanı değiştirmeleri",
+          "Yöneticilerinin değişmesi",
+          "Yaşadıkları yerin değişmesi",
+          "Maddi imkânlarının artması"
+        ],
+        "info": "Ayet, insanların durumunun değişmesini kendilerinde olanı değiştirmelerine bağlar."
+      }
+    }
+  },
+  {
+    "id": "l2_bee_dwellings",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 16:68",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "sourceVerses": [
+      "16:68"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие места для жилищ пчелы перечислены в 16:68?",
+        "options": [
+          "Горы, деревья и людские постройки",
+          "Моря, реки и подводные пещеры",
+          "Только пустынные пески",
+          "Только крыши дворцов"
+        ],
+        "info": "В наставлении пчеле названы горы, деревья и то, что возводят люди."
+      },
+      "en": {
+        "q": "Which places for bee dwellings are listed in 16:68?",
+        "options": [
+          "Mountains, trees and human structures",
+          "Seas, rivers and underwater caves",
+          "Only desert sands",
+          "Only palace roofs"
+        ],
+        "info": "The instruction to the bee mentions mountains, trees and what people build."
+      },
+      "uz": {
+        "q": "16:68 da asalari uylari uchun qaysi joylar sanalgan?",
+        "options": [
+          "Tog‘lar, daraxtlar va odamlar qurgan narsalar",
+          "Dengizlar, daryolar va suvosti g‘orlari",
+          "Faqat cho‘l qumlari",
+          "Faqat saroy tomlari"
+        ],
+        "info": "Asalariga berilgan ko‘rsatmada tog‘lar, daraxtlar va odamlar qurgan narsalar sanalgan."
+      },
+      "tg": {
+        "q": "Дар 16:68 кадом ҷойҳо барои хонаи занбӯр зикр шудаанд?",
+        "options": [
+          "Кӯҳҳо, дарахтон ва сохтаҳои мардум",
+          "Баҳрҳо, дарёҳо ва ғорҳои зериобӣ",
+          "Танҳо регҳои биёбон",
+          "Танҳо боми қасрҳо"
+        ],
+        "info": "Дар дастури занбӯр кӯҳҳо, дарахтон ва он чӣ мардум месозанд, зикр шудаанд."
+      },
+      "kk": {
+        "q": "16:68 аятында араның ұясына қандай орындар аталған?",
+        "options": [
+          "Таулар, ағаштар және адам құрылыстары",
+          "Теңіздер, өзендер және суасты үңгірлері",
+          "Тек шөл құмдары",
+          "Тек сарай шатырлары"
+        ],
+        "info": "Араға берілген нұсқауда таулар, ағаштар және адамдар салған құрылыстар аталады."
+      },
+      "ky": {
+        "q": "16:68 аятында аарынын уясына кайсы жерлер аталган?",
+        "options": [
+          "Тоолор, дарактар жана адам курулуштары",
+          "Деңиздер, дарыялар жана суу алдындагы үңкүрлөр",
+          "Чөлдүн кумдары гана",
+          "Сарайдын чатырлары гана"
+        ],
+        "info": "Аарыга берилген көрсөтмөдө тоолор, дарактар жана адамдар курган нерселер аталат."
+      },
+      "az": {
+        "q": "16:68-də arının yuva qurması üçün hansı yerlər sadalanır?",
+        "options": [
+          "Dağlar, ağaclar və insanların tikililəri",
+          "Dənizlər, çaylar və sualtı mağaralar",
+          "Yalnız səhranın qumları",
+          "Yalnız sarayların damları"
+        ],
+        "info": "Arıya verilən göstərişdə dağlar, ağaclar və insanların tikdikləri qeyd olunur."
+      },
+      "tr": {
+        "q": "16:68’de arının yuva kuracağı hangi yerler sayılır?",
+        "options": [
+          "Dağlar, ağaçlar ve insanların kurduğu yapılar",
+          "Denizler, nehirler ve su altı mağaraları",
+          "Yalnız çöl kumları",
+          "Yalnız saray çatıları"
+        ],
+        "info": "Arıya verilen öğütte dağlar, ağaçlar ve insanların kurduğu yapılar belirtilir."
+      }
+    }
+  },
+  {
+    "id": "l2_faculties_gratitude",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 16:78",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/16",
+    "sourceVerses": [
+      "16:78"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какая цель названа в конце 16:78 после упоминания слуха, зрения и сердец?",
+        "options": [
+          "Благодарность",
+          "Терпение",
+          "Щедрость",
+          "Справедливость"
+        ],
+        "info": "Перечень этих даров завершается напоминанием о благодарности."
+      },
+      "en": {
+        "q": "What aim is named at the end of 16:78 after hearing, sight and hearts are mentioned?",
+        "options": [
+          "Gratitude",
+          "Patience",
+          "Generosity",
+          "Justice"
+        ],
+        "info": "The list of these gifts ends with a reminder of gratitude."
+      },
+      "uz": {
+        "q": "16:78 oxirida eshitish, ko‘rish va qalblar zikr etilgach, qaysi maqsad aytilgan?",
+        "options": [
+          "Shukr qilish",
+          "Sabr qilish",
+          "Saxovat ko‘rsatish",
+          "Adolat qilish"
+        ],
+        "info": "Bu ne’matlar sanog‘i shukr qilish eslatmasi bilan yakunlanadi."
+      },
+      "tg": {
+        "q": "Дар поёни 16:78 пас аз зикри шунавоӣ, биноӣ ва дилҳо кадом мақсад гуфта шудааст?",
+        "options": [
+          "Шукргузорӣ",
+          "Сабр",
+          "Саховат",
+          "Адолат"
+        ],
+        "info": "Номбар кардани ин неъматҳо бо ёдоварии шукргузорӣ анҷом меёбад."
+      },
+      "kk": {
+        "q": "16:78 аятының соңында есту, көру және жүректер аталғаннан кейін қандай мақсат айтылады?",
+        "options": [
+          "Шүкіршілік",
+          "Сабыр",
+          "Жомарттық",
+          "Әділеттілік"
+        ],
+        "info": "Осы сыйлардың тізімі шүкіршілік туралы еске салумен аяқталады."
+      },
+      "ky": {
+        "q": "16:78 аятынын аягында угуу, көрүү жана жүрөктөр айтылгандан кийин кандай максат көрсөтүлөт?",
+        "options": [
+          "Шүгүр кылуу",
+          "Сабырдуулук",
+          "Жоомарттык",
+          "Адилеттүүлүк"
+        ],
+        "info": "Бул белектердин тизмеси шүгүр кылууну эске салуу менен аяктайт."
+      },
+      "az": {
+        "q": "16:78-in sonunda eşitmə, görmə və qəlblərdən sonra hansı məqsəd göstərilir?",
+        "options": [
+          "Şükür",
+          "Səbir",
+          "Səxavət",
+          "Ədalət"
+        ],
+        "info": "Bu nemətlərin sadalanması şükür haqqında xatırlatma ilə bitir."
+      },
+      "tr": {
+        "q": "16:78’in sonunda işitme, görme ve kalplerden sonra hangi amaç belirtilir?",
+        "options": [
+          "Şükür",
+          "Sabır",
+          "Cömertlik",
+          "Adalet"
+        ],
+        "info": "Bu nimetlerin sıralanması şükür hatırlatmasıyla sona erer."
+      }
+    }
+  },
+  {
+    "id": "l2_living_water",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 21:30",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/21",
+    "sourceVerses": [
+      "21:30"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Из чего, согласно 21:30, создано всё живое?",
+        "options": [
+          "Из воды",
+          "Из железа",
+          "Из дыма",
+          "Из соли"
+        ],
+        "info": "В аяте вода названа источником создания всего живого."
+      },
+      "en": {
+        "q": "From what was every living thing made, according to 21:30?",
+        "options": [
+          "Water",
+          "Iron",
+          "Smoke",
+          "Salt"
+        ],
+        "info": "The verse identifies water as that from which every living thing was made."
+      },
+      "uz": {
+        "q": "21:30 ga ko‘ra, barcha tirik narsa nimadan yaratilgan?",
+        "options": [
+          "Suvdan",
+          "Temirdan",
+          "Tutundan",
+          "Tuzdan"
+        ],
+        "info": "Oyatda barcha tirik narsaning suvdan yaratilgani aytiladi."
+      },
+      "tg": {
+        "q": "Мувофиқи 21:30, ҳар чизи зинда аз чӣ офарида шудааст?",
+        "options": [
+          "Аз об",
+          "Аз оҳан",
+          "Аз дуд",
+          "Аз намак"
+        ],
+        "info": "Оят обро манбаи офариниши ҳар чизи зинда меномад."
+      },
+      "kk": {
+        "q": "21:30 бойынша барлық тіршілік неден жаратылған?",
+        "options": [
+          "Судан",
+          "Темірден",
+          "Түтіннен",
+          "Тұздан"
+        ],
+        "info": "Аят барлық тіршіліктің судан жаратылғанын айтады."
+      },
+      "ky": {
+        "q": "21:30 боюнча бардык тирүү нерсе эмнеден жаратылган?",
+        "options": [
+          "Суудан",
+          "Темирден",
+          "Түтүндөн",
+          "Туздан"
+        ],
+        "info": "Аят бардык тирүү нерсенин суудан жаратылганын айтат."
+      },
+      "az": {
+        "q": "21:30-a görə, bütün canlılar nədən yaradılıb?",
+        "options": [
+          "Sudan",
+          "Dəmirdən",
+          "Tüstüdən",
+          "Duzdan"
+        ],
+        "info": "Ayədə bütün canlıların sudan yaradıldığı bildirilir."
+      },
+      "tr": {
+        "q": "21:30’a göre bütün canlılar neden yaratılmıştır?",
+        "options": [
+          "Sudan",
+          "Demirden",
+          "Dumandan",
+          "Tuzdan"
+        ],
+        "info": "Ayette bütün canlıların sudan yaratıldığı belirtilir."
+      }
+    }
+  },
+  {
+    "id": "l2_privacy_times",
+    "cat": "quran",
+    "difficulty": 2,
+    "reference": "Quran 24:58",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/24",
+    "sourceVerses": [
+      "24:58"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие три времени уединения перечислены в 24:58?",
+        "options": [
+          "До фаджра, полуденный отдых, после иша",
+          "После фаджра, до асра, до магриба",
+          "До зухра, после асра, до иша",
+          "Восход, закат и полночь"
+        ],
+        "info": "Аят выделяет время до утренней молитвы, полуденного отдыха и после ночной молитвы."
+      },
+      "en": {
+        "q": "Which three times of privacy are listed in 24:58?",
+        "options": [
+          "Before Fajr, midday rest and after Isha",
+          "After Fajr, before Asr and before Maghrib",
+          "Before Dhuhr, after Asr and before Isha",
+          "Sunrise, sunset and midnight"
+        ],
+        "info": "The verse singles out the time before dawn prayer, midday rest and after night prayer."
+      },
+      "uz": {
+        "q": "24:58 da qaysi uch xilvat vaqti sanalgan?",
+        "options": [
+          "Bomdoddan oldin, peshindagi dam, xuftondan keyin",
+          "Bomdoddan keyin, asrdan oldin, shomdan oldin",
+          "Peshindan oldin, asrdan keyin, xuftondan oldin",
+          "Quyosh chiqishi, botishi va yarim tun"
+        ],
+        "info": "Oyat tonggi namozdan oldin, kunduzgi dam payti va tungi namozdan keyingi vaqtni ajratadi."
+      },
+      "tg": {
+        "q": "Дар 24:58 кадом се вақти хилват номбар шудаанд?",
+        "options": [
+          "Пеш аз бомдод, истироҳати нисфирӯзӣ, баъди хуфтан",
+          "Баъди бомдод, пеш аз аср, пеш аз шом",
+          "Пеш аз пешин, баъди аср, пеш аз хуфтан",
+          "Тулӯъ, ғуруб ва нисфи шаб"
+        ],
+        "info": "Оят вақти пеш аз намози саҳар, истироҳати нисфирӯзӣ ва баъди намози шабро ҷудо мекунад."
+      },
+      "kk": {
+        "q": "24:58 аятында оңаша қалудың қандай үш уақыты аталған?",
+        "options": [
+          "Таң намазына дейін, түскі демалыс, құптаннан кейін",
+          "Таң намазынан кейін, екінтіге дейін, ақшамға дейін",
+          "Бесінге дейін, екінтіден кейін, құптанға дейін",
+          "Күннің шығуы, батуы және түн ортасы"
+        ],
+        "info": "Аят таң намазына дейінгі, түскі демалыс және түнгі намаздан кейінгі уақытты бөледі."
+      },
+      "ky": {
+        "q": "24:58 аятында кайсы үч купуя убакыт аталган?",
+        "options": [
+          "Багымдатка чейин, түштөгү эс алуу, куптандан кийин",
+          "Багымдаттан кийин, асрга чейин, шамга чейин",
+          "Бешимге чейин, асрдан кийин, куптанга чейин",
+          "Күн чыгышы, батышы жана түн ортосу"
+        ],
+        "info": "Аят таңкы намазга чейинки, түштөгү эс алуу жана түнкү намаздан кийинки убакытты бөлөт."
+      },
+      "az": {
+        "q": "24:58-də hansı üç məhrəm vaxt sadalanır?",
+        "options": [
+          "Sübh namazından əvvəl, günorta istirahəti, işa namazından sonra",
+          "Sübh namazından sonra, əsrdən əvvəl, məğribdən əvvəl",
+          "Zöhrdən əvvəl, əsrdən sonra, işadan əvvəl",
+          "Günəşin doğması, batması və gecə yarısı"
+        ],
+        "info": "Ayə sübh namazından əvvəlki vaxtı, günorta istirahətini və işa namazından sonranı ayırır."
+      },
+      "tr": {
+        "q": "24:58’de hangi üç mahremiyet vakti sayılır?",
+        "options": [
+          "Sabah namazından önce, öğle istirahati, yatsı namazından sonra",
+          "Sabah namazından sonra, ikindiden önce, akşamdan önce",
+          "Öğleden önce, ikindiden sonra, yatsıdan önce",
+          "Güneşin doğuşu, batışı ve gece yarısı"
+        ],
+        "info": "Ayet, sabah namazından önceyi, öğle istirahatini ve yatsı namazından sonrayı ayırır."
+      }
+    }
+  },
+  {
+    "id": "l2_messenger_example",
+    "cat": "seerah",
+    "difficulty": 2,
+    "reference": "Quran 33:21",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/33",
+    "sourceVerses": [
+      "33:21"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие качества названы в 33:21 у тех, для кого Посланник — прекрасный пример?",
+        "options": [
+          "Надежда на Аллаха и Последний день, частое поминание",
+          "Терпение в беде, помощь путнику и щедрость",
+          "Справедливость в торговле, верность договорам и скромность",
+          "Забота о родителях, изучение Писания и примирение людей"
+        ],
+        "info": "Аят называет надежду на Аллаха и Последний день и частое поминание Аллаха."
+      },
+      "en": {
+        "q": "What qualities are named in 33:21 in those for whom the Messenger is an excellent example?",
+        "options": [
+          "Hope in Allah and the Last Day, and frequent remembrance",
+          "Patience in hardship, help for travellers and generosity",
+          "Fairness in trade, keeping agreements and modesty",
+          "Care for parents, study of Scripture and reconciliation"
+        ],
+        "info": "The verse names hope in Allah and the Last Day and frequent remembrance of Allah."
+      },
+      "uz": {
+        "q": "33:21 da Payg‘ambar go‘zal o‘rnak bo‘lgan kishilarning qaysi sifatlari aytilgan?",
+        "options": [
+          "Alloh va Oxirat kunidan umid qilish, ko‘p zikr qilish",
+          "Musibatda sabr, yo‘lovchiga yordam va saxovat",
+          "Savdoda adolat, ahdga vafo va kamtarlik",
+          "Ota-onaga g‘amxo‘rlik, Kitobni o‘rganish va odamlarni yarashtirish"
+        ],
+        "info": "Oyat Alloh va Oxirat kunidan umid qilishni va Allohni ko‘p zikr qilishni aytadi."
+      },
+      "tg": {
+        "q": "Дар 33:21 барои касоне, ки Паёмбар намунаи некӯст, кадом сифатҳо зикр шудаанд?",
+        "options": [
+          "Умед ба Аллоҳ ва рӯзи охират, бисёр ёд кардан",
+          "Сабр дар мусибат, ёрӣ ба мусофир ва саховат",
+          "Адолат дар тиҷорат, вафо ба аҳд ва фурӯтанӣ",
+          "Ғамхорӣ ба падару модар, омӯхтани Китоб ва оштӣ додани мардум"
+        ],
+        "info": "Оят умед ба Аллоҳ ва рӯзи охират ва бисёр ёд кардани Аллоҳро ном мебарад."
+      },
+      "kk": {
+        "q": "33:21 аятында Елшіні көркем үлгі тұтатындардың қандай қасиеттері аталған?",
+        "options": [
+          "Алладан және Ақырет күнінен үміттену, Алланы көп еске алу",
+          "Қиындыққа сабыр ету, жолаушыға көмектесу және жомарттық",
+          "Саудадағы әділдік, келісімге адалдық және қарапайымдылық",
+          "Ата-анаға қамқорлық, Кітапты үйрену және адамдарды татуластыру"
+        ],
+        "info": "Аят Алладан және Ақырет күнінен үміттенуді, Алланы көп еске алуды атайды."
+      },
+      "ky": {
+        "q": "33:21 аятында Элчини эң сонун үлгү туткандардын кайсы сапаттары аталган?",
+        "options": [
+          "Аллахтан жана Акырет күнүнөн үмүт кылуу, Аллахты көп эстөө",
+          "Кыйынчылыкта сабыр кылуу, жолоочуга жардам берүү жана жоомарттык",
+          "Соодадагы адилеттүүлүк, келишимге берилгендик жана жөнөкөйлүк",
+          "Ата-энеге кам көрүү, Китепти үйрөнүү жана адамдарды жараштыруу"
+        ],
+        "info": "Аят Аллахтан жана Акырет күнүнөн үмүт кылууну жана Аллахты көп эстөөнү атайт."
+      },
+      "az": {
+        "q": "33:21-də Elçinin gözəl nümunə olduğu insanlarda hansı xüsusiyyətlər qeyd olunur?",
+        "options": [
+          "Allaha və Axirət gününə ümid, çoxlu zikr",
+          "Çətinlikdə səbir, yolçuya yardım və səxavət",
+          "Ticarətdə ədalət, əhdə vəfa və təvazökarlıq",
+          "Valideynlərə qayğı, Kitabı öyrənmək və insanları barışdırmaq"
+        ],
+        "info": "Ayə Allaha və Axirət gününə ümid etməyi və Allahı çox zikr etməyi qeyd edir."
+      },
+      "tr": {
+        "q": "33:21’de Elçi’nin güzel örnek olduğu insanlarda hangi özellikler belirtilir?",
+        "options": [
+          "Allah’a ve ahiret gününe umut, sıkça zikir",
+          "Sıkıntıda sabır, yolcuya yardım ve cömertlik",
+          "Ticarette adalet, sözleşmelere bağlılık ve tevazu",
+          "Ana babaya özen, Kitab’ı öğrenmek ve insanları barıştırmak"
+        ],
+        "info": "Ayet Allah’a ve ahiret gününe umut bağlamayı ve Allah’ı çokça anmayı belirtir."
+      }
+    }
+  },
+  {
+    "id": "l2_tree_pledge",
+    "cat": "seerah",
+    "difficulty": 2,
+    "reference": "Quran 48:18",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/48",
+    "sourceVerses": [
+      "48:18"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Где верующие приносили присягу, упомянутую в 48:18?",
+        "options": [
+          "Под деревом",
+          "Внутри Каабы",
+          "На вершине Синая",
+          "На палубе корабля"
+        ],
+        "info": "Аят сообщает о довольстве Аллаха верующими, присягавшими под деревом."
+      },
+      "en": {
+        "q": "Where did the believers make the pledge mentioned in 48:18?",
+        "options": [
+          "Under a tree",
+          "Inside the Kaaba",
+          "On the summit of Sinai",
+          "On a ship's deck"
+        ],
+        "info": "The verse states Allah's pleasure with believers pledging under a tree."
+      },
+      "uz": {
+        "q": "48:18 da tilga olingan bay’at qayerda qilingan?",
+        "options": [
+          "Daraxt ostida",
+          "Ka’baning ichida",
+          "Sinay cho‘qqisida",
+          "Kema ustida"
+        ],
+        "info": "Oyat Alloh daraxt ostida bay’at qilgan mo‘minlardan rozi bo‘lganini bildiradi."
+      },
+      "tg": {
+        "q": "Байъати мӯъминон, ки дар 48:18 зикр шудааст, дар куҷо буд?",
+        "options": [
+          "Зери дарахт",
+          "Даруни Каъба",
+          "Бар қуллаи Сино",
+          "Дар саҳни киштӣ"
+        ],
+        "info": "Оят аз ризояти Аллоҳ ба мӯъминоне хабар медиҳад, ки зери дарахт байъат карданд."
+      },
+      "kk": {
+        "q": "48:18 аятында айтылған сертті мүміндер қайда берді?",
+        "options": [
+          "Ағаштың түбінде",
+          "Қағбаның ішінде",
+          "Синай шыңында",
+          "Кеменің үстінде"
+        ],
+        "info": "Аят Алланың ағаш түбінде серт берген мүміндерге разы болғанын айтады."
+      },
+      "ky": {
+        "q": "48:18 аятында айтылган антты момундар кайда беришкен?",
+        "options": [
+          "Дарактын түбүндө",
+          "Каабанын ичинде",
+          "Синайдын чокусунда",
+          "Кеменин үстүндө"
+        ],
+        "info": "Аят Аллах дарактын түбүндө ант берген момундардан ыраазы болгонун айтат."
+      },
+      "az": {
+        "q": "48:18-də qeyd olunan beyəti möminlər harada etdilər?",
+        "options": [
+          "Ağacın altında",
+          "Kəbənin içində",
+          "Sina dağının zirvəsində",
+          "Gəminin göyərtəsində"
+        ],
+        "info": "Ayə Allahın ağacın altında beyət edən möminlərdən razı qaldığını bildirir."
+      },
+      "tr": {
+        "q": "48:18’de belirtilen biati müminler nerede yaptılar?",
+        "options": [
+          "Ağacın altında",
+          "Kâbe’nin içinde",
+          "Sina dağının zirvesinde",
+          "Geminin güvertesinde"
+        ],
+        "info": "Ayet, Allah’ın ağacın altında biat eden müminlerden razı olduğunu bildirir."
+      }
+    }
+  }
+]

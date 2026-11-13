@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qibla_view_open">Каабанын көрүнүшү</string>
+    <string name="qibla_view_explain">Телефонду кыбылага буруңуз — Каабанын сүрөтү алдыңызда пайда болот.</string>
+    <string name="qibla_view_note">Сүрөт кыбыла багытын табууга жардам берет. Багыт телефондун компасына байланыштуу.</string>
+    <string name="qibla_view_image">Меккедеги Кааба</string>
+    <string name="qibla_view_close">Жабуу</string>
+    <string name="qibla_view_level">Телефонду алдыңызда кармаңыз</string>
+    <string name="qibla_view_no_sensor">Компас жеткиликсиз. Кыбыла багыты — %1$d°.</string>
+    <string name="qibla_view_found">Кыбыла табылды</string>
+    <string name="qibla_view_attribution">مانفی · CC BY-SA 4.0</string>
+</resources>

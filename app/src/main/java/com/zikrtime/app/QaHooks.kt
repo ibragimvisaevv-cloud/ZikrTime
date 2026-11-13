@@ -29,6 +29,7 @@ object QaHooks {
 
     fun handle(activity: Activity, intent: Intent?, nav: Nav): Boolean {
         intent ?: return false
+        QuranAudioQa.captureIfRequested(activity, intent)
         val lang = intent.getStringExtra("qa_lang")
         if (lang != null && lang != Lang.saved(activity)) {
             Lang.set(activity, lang)
@@ -42,7 +43,10 @@ object QaHooks {
         val screen = intent.getStringExtra("qa_screen") ?: return false
         nav.stack.clear()
         nav.onboardingStep = 0
-        if (intent.getBooleanExtra("qa_onboarded", false)) Store.onboarded = true
+        if (intent.getBooleanExtra("qa_onboarded", false)) {
+            Store.onboarded = true
+            Store.guideDismissed = true
+        }
         if (intent.getBooleanExtra("qa_demo", false)) seed(activity)
         when (screen) {
             "onboarding" -> Store.onboarded = false
@@ -67,14 +71,20 @@ object QaHooks {
             "language" -> nav.open(Screen.LANGUAGE)
             "city" -> nav.open(Screen.CITY)
             "prayer_settings" -> nav.open(Screen.PRAYER_SETTINGS)
+            "prayer_journal" -> nav.open(Screen.PRAYER_JOURNAL)
+            "reading_reminders" -> nav.open(Screen.READING_REMINDERS)
             "alarm" -> nav.open(Screen.ALARM)
             "qibla" -> nav.open(Screen.QIBLA)
             "tasbih" -> nav.open(Screen.TASBIH)
             "about" -> nav.open(Screen.ABOUT)
+            "guide" -> nav.open(Screen.GUIDE)
             "apps" -> nav.open(Screen.APPS)
             "review" -> nav.startReview()
+            "training" -> nav.openTraining()
             "progress" -> nav.open(Screen.PROGRESS)
             "azkar" -> nav.openAzkar("morning")
+            "quran" -> nav.open(Screen.QURAN)
+            "quran_audio" -> nav.openQuranAudio(intent.getIntExtra("qa_surah", 0))
             "quiz" -> nav.startQuiz(null)
             "quiz_cards" -> {
                 nav.quizStartWithCards = true

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="audio_download_channel">Загрузки Корана</string>
+    <string name="audio_download_channel_description">Загрузка выбранных сур для прослушивания без интернета. Без звука.</string>
+    <string name="audio_download_waiting_network">Ожидание подключения к интернету</string>
+    <string name="audio_download_waiting_wifi">Ожидание безлимитной сети</string>
+    <string name="audio_download_running">Сохраняем суру для прослушивания без интернета</string>
+    <string name="audio_download_preparing">Подготовка загрузки</string>
+</resources>

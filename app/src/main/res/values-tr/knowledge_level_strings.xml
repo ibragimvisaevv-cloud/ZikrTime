@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="learning_level_title">Bilgi seviyenizi seçin</string>
+    <string name="learning_level_intro">Sorular hazırlığınıza uygun olacak. Seviyeyi daha sonra değiştirebilirsiniz.</string>
+    <string name="learning_level_label">Bilgi seviyesi</string>
+    <string name="learning_level_not_selected">Henüz seçilmedi</string>
+    <string name="learning_level_choose">Seç</string>
+    <string name="learning_level_change">Değiştir</string>
+    <string name="learning_level_beginner">Başlangıç</string>
+    <string name="learning_level_intermediate">Orta</string>
+    <string name="learning_level_advanced">İleri</string>
+    <string name="learning_level_beginner_hint">Temel kavramlar ve bilinen bilgiler.</string>
+    <string name="learning_level_intermediate_hint">Bağlantılar, bağlam ve anlamlar.</string>
+    <string name="learning_level_advanced_hint">Ayrıntılı bilgiler ve birbirine yakın seçenekler.</string>
+    <string name="learning_level_count">Bu seviyedeki soru sayısı: %1$d</string>
+    <string name="learning_level_change_hint">Seviye değişince tamamlanmamış turlar yeniden başlar. Öğrenme geçmişi ve kazanılan dakikalar korunur.</string>
+    <string name="learning_level_confirm">Seviyeyi onayla</string>
+    <string name="learning_level_empty">Bu seviyede bu konu için soru yok</string>
+    <string name="learning_level_empty_hint">Başka bir konu seçin veya seviyeyi değiştirin.</string>
+</resources>

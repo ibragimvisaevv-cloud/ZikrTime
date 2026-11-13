@@ -189,7 +189,7 @@ private fun AlarmScreen(test: Boolean, onStop: () -> Unit, onSnooze: () -> Unit)
                         // «Намаз лучше сна» — слова из утреннего азана
                         Text(
                             "الصَّلَاةُ خَيْرٌ مِنَ النَّوْمِ",
-                            style = ArabicStyle.copy(fontSize = 34.sp, lineHeight = 58.sp, textDirection = TextDirection.Rtl),
+                            style = ArabicStyle.copy(fontSize = 34.sp, textDirection = TextDirection.Rtl),
                             color = Cream,
                             textAlign = TextAlign.Center,
                         )
@@ -224,7 +224,7 @@ private fun AlarmScreen(test: Boolean, onStop: () -> Unit, onSnooze: () -> Unit)
                 } else {
                     AlarmButton(stringResource(R.string.alarm_awake), onClick = onStop)
                 }
-                if (Store.alarmSnoozeAllowed) {
+                if (!test && Store.alarmSnoozeAllowed) {
                     Spacer(Modifier.height(10.dp))
                     GhostButton(stringResource(R.string.alarm_snooze, AlarmService.SNOOZE_MINUTES), onClick = onSnooze, color = Cream)
                 }

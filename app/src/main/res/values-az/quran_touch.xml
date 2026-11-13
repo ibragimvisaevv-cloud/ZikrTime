@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qt_note">Qeyd</string>
+    <string name="qt_save_note">Qeydi yadda saxla</string>
+    <string name="qt_save_place">Oxu yerini yadda saxla</string>
+    <string name="qt_remove_bookmark">Əlfəcini sil</string>
+    <string name="qt_copy">Ayəni kopyala</string>
+    <string name="qt_touch_hint">Ayəni seçmək üçün toxunun; qeyd əlavə etmək üçün basıb saxlayın. Oxu yerini yuxarıdakı əlfəcinlə yadda saxlayın.</string>
+    <string name="qt_ayah_actions">%1$d-ci ayə üçün əməliyyatlar</string>
+    <string name="qt_bookmark_added">Oxu yeri yadda saxlanıldı</string>
+    <string name="qt_bookmark_removed">Əlfəcin silindi</string>
+</resources>

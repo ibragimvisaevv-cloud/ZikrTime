@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="training_title">Konulara göre alıştırma</string>
+    <string name="training_first_hint">Seçtiğiniz düzeyde birkaç soruyu yanıtlayın. Yanıtlarınıza göre tekrar soruları seçilecektir.</string>
+    <string name="training_overview_hint">Neleri pekiştirdiğinizi ve hangi sorulara dönmeniz gerektiğini görün. Yanıtlarınıza dayalı kısa bir alıştırmaya başlayın.</string>
+    <string name="training_overview_counts">Yanıtlanan: %1$d · Tekrar edilecek hatalar: %2$d</string>
+    <string name="training_open">Konularımı aç</string>
+    <string name="training_personal_plan">Tekrar planınız</string>
+    <string name="training_method">En fazla 5 tanıdık soru: önce hatalar, sonra pekiştirilecek bilgiler. Her yanıttan sonra açıklama ve kaynak gösterilir.</string>
+    <string name="training_no_data">Henüz yeterli veri yok</string>
+    <string name="training_start">Alıştırmaya başla</string>
+    <string name="training_no_bonus">Bonus dakika verilmez. Yanıtlar öğrenme geçmişine kaydedilir.</string>
+    <string name="training_topics">Konularım</string>
+    <string name="training_scope_note">Göstergeler yalnızca seçtiğiniz düzeyde yanıtladığınız soruları kapsar. Çubuk bilgi notunu değil, konunun ne kadarının işlendiğini gösterir.</string>
+    <string name="training_status_new">Henüz çalışılmadı</string>
+    <string name="training_status_limited">Değerlendirme için az yanıt var</string>
+    <string name="training_status_practice">Tekrar edilmeli</string>
+    <string name="training_status_building">Pekiştiriliyor</string>
+    <string name="training_status_retained">İyi pekiştirilmiş</string>
+    <string name="training_coverage">Yanıtlanan: %2$d sorudan %1$d</string>
+    <string name="training_error_count">Son yanlış yanıtlar: %1$d</string>
+    <string name="training_retained_count">Farklı günlerde tekrarla pekiştirilen: %1$d</string>
+    <string name="training_topic_action">Bu konuda alıştırma yap</string>
+    <string name="training_discover">Konuyu öğren</string>
+    <string name="training_back_topics">Konularıma dön</string>
+    <string name="training_complete">Alıştırma tamamlandı</string>
+    <string name="training_result_score">Doğru yanıtlar: %2$d sorudan %1$d</string>
+    <string name="training_result_success">Bu turda hata yok. Daha sonra yeniden tekrar edin: tek bir başarılı tur henüz kalıcı öğrenme anlamına gelmez.</string>
+    <string name="training_result_repeat">Yanlış yanıtladığınız sorular aşağıda. Açıklamaları okuyun ve daha sonra bu sorulara dönün.</string>
+    <string name="training_review_errors">Hataları incele</string>
+    <string name="training_again">Bir tur daha</string>
+    <string name="training_round_hint">Acele etmeden yanıtlayın. Bu turdaki tüm soruları tamamlayın; bonus dakika verilmez.</string>
+    <string name="training_question_progress">%2$d sorudan %1$d. soru</string>
+    <string name="training_replace_title">Başka bir alıştırma başlatılsın mı?</string>
+    <string name="training_replace_hint">Bitmemiş tur değiştirilecek. Kaydedilen yanıtlar, normal testiniz ve bonus dakikalarınız korunacak.</string>
+    <string name="training_replace_confirm">Yeni alıştırmaya başla</string>
+</resources>

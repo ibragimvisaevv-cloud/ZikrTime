@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qibla_view_open">View the Kaaba</string>
+    <string name="qibla_view_explain">Turn your phone towards the Qibla to bring the image of the Kaaba into view.</string>
+    <string name="qibla_view_note">The image helps you find the Qibla direction. The guide relies on your phone’s compass.</string>
+    <string name="qibla_view_image">The Kaaba in Mecca</string>
+    <string name="qibla_view_close">Close</string>
+    <string name="qibla_view_level">Hold your phone in front of you</string>
+    <string name="qibla_view_no_sensor">Compass unavailable. The Qibla bearing is %1$d°.</string>
+    <string name="qibla_view_found">Qibla found</string>
+    <string name="qibla_view_attribution">مانفی · CC BY-SA 4.0</string>
+</resources>

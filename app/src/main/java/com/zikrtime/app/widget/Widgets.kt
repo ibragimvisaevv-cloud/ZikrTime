@@ -38,9 +38,9 @@ object Widgets {
         "dark" -> true
         else -> context.resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK == android.content.res.Configuration.UI_MODE_NIGHT_YES
     }
-    private fun ink(context: Context) = if (dark(context)) 0xFFF0F4E9.toInt() else 0xFF102D26.toInt()
-    private fun muted(context: Context) = if (dark(context)) 0xFFB8CBBE.toInt() else 0xFF4C6258.toInt()
-    private fun accent(context: Context) = if (dark(context)) WidgetArt.GOLD_LIGHT else 0xFF124C40.toInt()
+    private fun ink(context: Context) = if (dark(context)) 0xFFF1EFE7.toInt() else 0xFF242923.toInt()
+    private fun muted(context: Context) = if (dark(context)) 0xFFC0C4BA.toInt() else 0xFF62675E.toInt()
+    private fun accent(context: Context) = if (dark(context)) WidgetArt.GOLD_LIGHT else 0xFF235D4C.toInt()
 
 
     fun updateAll(context: Context) {
@@ -61,7 +61,7 @@ object Widgets {
         if (android.os.Build.VERSION.SDK_INT < 35) return
         val prefs = context.getSharedPreferences("widget_previews", Context.MODE_PRIVATE)
         val now = ZonedDateTime.now(com.zikrtime.app.ui.CityZones.forCity(Store.location.id))
-        val signature = "${Store.onboarded}:${Store.location.id}:${Store.appearance}:${Lang.content(context)}:${now.toLocalDate()}"
+        val signature = "${com.zikrtime.app.BuildConfig.VERSION_CODE}:${Store.onboarded}:${Store.location.id}:${Store.appearance}:${Lang.content(context)}:${now.toLocalDate()}"
         listOf(CompactPrayerWidget::class.java to (160 to 90), TimelineWidget::class.java to (340 to 90), NextPrayerWidget::class.java to (160 to 190), TodayWidget::class.java to (340 to 190)).forEach { (cls, size) ->
             val last = prefs.getLong(cls.name, 0)
             if (System.currentTimeMillis() - last >= 3_600_000 || prefs.getString(cls.name + "_signature", "") != signature) runCatching {

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="training_title">Mövzular üzrə məşq</string>
+    <string name="training_first_hint">Seçilmiş səviyyədə bir neçə suala cavab verin. Cavablarınıza əsasən təkrar sualları seçiləcək.</string>
+    <string name="training_overview_hint">Nələri möhkəmləndirdiyinizi və hansı suallara qayıtmalı olduğunuzu görün. Cavablarınıza əsaslanan qısa məşqə başlayın.</string>
+    <string name="training_overview_counts">Cavablandırılıb: %1$d · Təkrar ediləcək səhvlər: %2$d</string>
+    <string name="training_open">Mövzularımı aç</string>
+    <string name="training_personal_plan">Təkrar planınız</string>
+    <string name="training_method">5-ə qədər tanış sual: əvvəl səhvlər, sonra möhkəmləndiriləcək material. Hər cavabdan sonra izah və mənbə göstərilir.</string>
+    <string name="training_no_data">Hələ kifayət qədər məlumat yoxdur</string>
+    <string name="training_start">Məşqə başla</string>
+    <string name="training_no_bonus">Bonus dəqiqələr verilmir. Cavablar öyrənmə tarixçəsində saxlanılır.</string>
+    <string name="training_topics">Mövzularım</string>
+    <string name="training_scope_note">Göstəricilər yalnız seçilmiş səviyyədə cavablandırılan suallara aiddir. Zolaq biliyə verilən qiyməti deyil, mövzunun əhatəsini göstərir.</string>
+    <string name="training_status_new">Hələ öyrənilməyib</string>
+    <string name="training_status_limited">Nəticə üçün cavab azdır</string>
+    <string name="training_status_practice">Təkrar etmək faydalıdır</string>
+    <string name="training_status_building">Möhkəmləndirilir</string>
+    <string name="training_status_retained">Yaxşı möhkəmləndirilib</string>
+    <string name="training_coverage">Cavablandırılıb: %2$d sualdan %1$d</string>
+    <string name="training_error_count">Son yanlış cavablar: %1$d</string>
+    <string name="training_retained_count">Müxtəlif günlərdə təkrarla möhkəmləndirilib: %1$d</string>
+    <string name="training_topic_action">Bu mövzuda məşq et</string>
+    <string name="training_discover">Mövzunu öyrən</string>
+    <string name="training_back_topics">Mövzularıma qayıt</string>
+    <string name="training_complete">Məşq tamamlandı</string>
+    <string name="training_result_score">Düzgün cavablar: %2$d sualdan %1$d</string>
+    <string name="training_result_success">Bu mərhələdə səhv yoxdur. Sonra yenidən təkrar edin: bir uğurlu mərhələ hələ davamlı yadda saxlamaq demək deyil.</string>
+    <string name="training_result_repeat">Yanlış cavab verdiyiniz suallar aşağıdadır. İzahları oxuyun və sonra onlara qayıdın.</string>
+    <string name="training_review_errors">Səhvlərin təhlili</string>
+    <string name="training_again">Daha bir mərhələ</string>
+    <string name="training_round_hint">Tələsmədən cavab verin. Bu mərhələdə bütün sualları tamamlayın; bonus dəqiqələr verilmir.</string>
+    <string name="training_question_progress">%2$d sualdan %1$d-ci</string>
+    <string name="training_replace_title">Başqa məşq başlansın?</string>
+    <string name="training_replace_hint">Yarımçıq mərhələ əvəz olunacaq. Saxlanılmış cavablar, adi viktorina və bonus dəqiqələr qalacaq.</string>
+    <string name="training_replace_confirm">Yeni məşqə başla</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="audio_download_channel">Qur’on yuklamalari</string>
+    <string name="audio_download_channel_description">Internetsiz tinglash uchun tanlangan suralarni yuklab olish jarayoni. Ovozsiz bildirishnomalar.</string>
+    <string name="audio_download_waiting_network">Internet ulanishi kutilmoqda</string>
+    <string name="audio_download_waiting_wifi">Cheklanmagan tarmoq kutilmoqda</string>
+    <string name="audio_download_running">Sura internetsiz tinglash uchun saqlanmoqda</string>
+    <string name="audio_download_preparing">Yuklama tayyorlanmoqda</string>
+</resources>

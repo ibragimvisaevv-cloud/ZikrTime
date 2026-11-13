@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qibla_view_open">Kəbə görünüşü</string>
+    <string name="qibla_view_explain">Telefonu qibləyə tərəf çevirin — Kəbənin şəkli qarşınızda görünəcək.</string>
+    <string name="qibla_view_note">Şəkil qiblə istiqamətini tapmağa kömək edir. İstiqamət telefonun kompasından asılıdır.</string>
+    <string name="qibla_view_image">Məkkədəki Kəbə</string>
+    <string name="qibla_view_close">Bağla</string>
+    <string name="qibla_view_level">Telefonu qarşınızda saxlayın</string>
+    <string name="qibla_view_no_sensor">Kompas əlçatan deyil. Qiblə istiqaməti — %1$d°.</string>
+    <string name="qibla_view_found">Qiblə tapıldı</string>
+    <string name="qibla_view_attribution">مانفی · CC BY-SA 4.0</string>
+</resources>

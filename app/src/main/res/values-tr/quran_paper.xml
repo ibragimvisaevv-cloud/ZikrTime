@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qp_index_title">Kur’an-ı Kerim</string>
+    <string name="qp_reading_mode">Okuma</string>
+    <string name="qp_translation_mode">Mealli</string>
+    <string name="qp_selected_ayah">Ayet %1$d:%2$d</string>
+    <string name="qp_ayah_menu">%1$d. ayet işlemleri</string>
+    <string name="qp_clear_selection">Seçimi kaldır</string>
+    <string name="qp_selection_hint">İşlemleri açmak için ayete dokunun</string>
+    <string name="qp_copied">Ayet kopyalandı</string>
+    <string name="qp_note_saved">Not kaydedildi</string>
+    <string name="qp_discard_note_title">Değişiklikler kaydedilmesin mi?</string>
+    <string name="qp_discard_note_body">Nottaki değişiklikler kaybolacak.</string>
+    <string name="qp_keep_editing">Düzenlemeye devam et</string>
+    <string name="qp_discard">Kaydetme</string>
+    <string name="qp_delete_note">Notu sil</string>
+    <string name="qp_delete_note_title">Bu not silinsin mi?</string>
+    <string name="qp_delete_note_body">Not metni silinecek. Yer imi korunacak.</string>
+    <string name="qp_note_deleted">Not silindi</string>
+    <string name="qp_delete">Sil</string>
+    <string name="qp_copy_arabic">Arapça metin</string>
+    <string name="qp_copy_translation">Meal</string>
+    <string name="qp_copy_both">Arapça metin ve meal</string>
+    <string name="qp_copy_title">Ayeti kopyala</string>
+    <string name="qp_note_counter">%1$d / 2000</string>
+    <string name="qp_action_close">Okumaya dön</string>
+    <string name="qp_surah_total">%1$d sure</string>
+    <string name="qp_index_subtitle">Arapça metin ve meal</string>
+    <string name="qp_clear_search">Aramayı temizle</string>
+    <string name="qp_bookmark_short">Yer imi</string>
+    <string name="qp_copy_short">Kopyala</string>
+    <string name="qp_note_delete_cancel">İptal</string>
+</resources>

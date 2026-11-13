@@ -1,0 +1,8 @@
+<resources>
+    <string name="audio_player_reciter">Мишари Рашид Әл-Афаси</string>
+    <string name="audio_player_album">Құран · Хафс қырағаты</string>
+    <string name="audio_player_failure">Жазба ойнатылмады. Интернетті тексеріңіз немесе сүрені қайта жүктеп, тағы көріңіз.</string>
+    <string name="audio_player_connect_failure">Ойнатқыш іске қосылмады. Бұл экранды қайта ашып, тыңдап көріңіз.</string>
+    <string name="audio_player_catalog_failure">Аудио каталогы ашылмады. Бұл экранды қайта ашып көріңіз.</string>
+    <string name="audio_player_alarm_active">Құран тыңдамас бұрын оятқышты өшіріңіз немесе кейінге қалдырыңыз.</string>
+</resources>

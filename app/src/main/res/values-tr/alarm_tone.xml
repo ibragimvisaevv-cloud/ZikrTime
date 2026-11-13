@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tone_phone_default">Varsayılan alarm sesi</string>
+    <string name="tone_selected">Seçilen ses</string>
+    <string name="tone_hint">Saat uygulamanızdaki sesi seçebilirsiniz. Bazı telefonlar her alarm için ayrı bir ses kaydeder.</string>
+    <string name="tone_choose">Ses seç</string>
+    <string name="tone_stop">Durdur</string>
+    <string name="tone_file">Ses dosyası</string>
+    <string name="tone_failed">Ses çalınamadı. Başka bir ses veya dosya seçin.</string>
+</resources>

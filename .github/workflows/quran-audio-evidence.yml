@@ -1,0 +1,90 @@
+name: Quran audio evidence preview
+on:
+  push:
+    branches: [codex/quran-reader-0814]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: quran-audio-evidence-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  preview:
+    if: ${{ contains(github.event.head_commit.message, '[quran-audio-evidence]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Resolve completed source run
+        run: |
+          python3 - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          message = json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text()).get('head_commit', {}).get('message', '')
+          match = re.search(r'\[quran-audio-evidence\]\s+source=(\d+)', message)
+          assert match, 'Expected [quran-audio-evidence] source=RUN_ID'
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('SOURCE_RUN=' + match.group(1) + '\n')
+          PY
+      - name: Read source provenance and existing report
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$SOURCE_RUN" > source-run.json
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          run = json.loads(Path('source-run.json').read_text())
+          assert run['repository']['full_name'] == os.environ['GITHUB_REPOSITORY']
+          assert run['id'] == int(os.environ['SOURCE_RUN'])
+          assert run['status'] == 'completed', 'Source verification is still running'
+          assert run['name'] == 'Quran audio Alafasy 0.8.27'
+          print('AUDIO_EVIDENCE_SOURCE:' + json.dumps({
+              'repository': run['repository']['full_name'], 'run_id': run['id'],
+              'source_sha': run['head_sha'], 'conclusion': run['conclusion'],
+          }))
+          PY
+          gh run download "$SOURCE_RUN" --repo "$GITHUB_REPOSITORY" --name ZikrTime-0.8.27-audio-check --dir evidence
+      - run: python3 -m pip install 'Pillow>=11,<13'
+      - name: Print actual screenshots and compact checks
+        run: |
+          python3 - <<'PY'
+          import base64, io, json
+          from pathlib import Path
+          from PIL import Image, ImageOps
+          root = Path('evidence')
+          for filename, prefix in (
+              ('release-delivery.json', 'AUDIO_DELIVERY'),
+              ('recheck.json', 'AUDIO_RECHECK'),
+              ('audio-passed.json', 'AUDIO_CHECKS'),
+              ('audio-source-probe.json', 'AUDIO_SOURCE_PROBES'),
+          ):
+              matches = list(root.rglob(filename))
+              if matches:
+                  assert len(matches) == 1, filename
+                  print(prefix + ':' + json.dumps(json.loads(matches[0].read_text()), ensure_ascii=False))
+          preferred = [
+              'audio-playing-dark.png', 'audio-offline-playback.png',
+              'audio-large-light-player.png', 'audio-landscape-large-player.png',
+              'audio-landscape-large-download.png', 'audio-cache-and-downloads.png',
+          ]
+          fallback = [
+              'audio-failure.png', 'audio-ended-ready-to-replay.png',
+              'audio-large-light-reader-entry.png', 'audio-cache-and-downloads.png',
+          ]
+          emitted = []
+          for name in preferred + fallback:
+              if len(emitted) == 6:
+                  break
+              matches = list(root.rglob(name))
+              if not matches:
+                  continue
+              assert len(matches) == 1, name
+              with Image.open(matches[0]) as original:
+                  preview = ImageOps.contain(original.convert('RGB'), (480, 960), Image.Resampling.LANCZOS)
+                  encoded = io.BytesIO()
+                  preview.save(encoded, format='PNG', optimize=True)
+              print('AUDIO_IMAGE:' + name + ':' + base64.b64encode(encoded.getvalue()).decode('ascii'))
+              emitted.append(name)
+          print('AUDIO_IMAGES_EMITTED:' + json.dumps(emitted))
+          assert emitted, 'No screenshot exists in the source report'
+          PY

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prayer_check_title">Namazı işaretleme hatırlatması</string>
+    <string name="prayer_check_hint">Namaz işaretlenmediyse bir kez sessizce hatırlatırız. Bildirime dokunduğunuzda günlükte ilgili namaz açılır.</string>
+    <string name="prayer_check_delay">Namaz vakti girdikten sonra</string>
+    <string name="prayer_check_minutes">%1$d dk</string>
+    <string name="prayer_check_progress">Bu hatırlatmalar için kişisel ilerlemeyi etkinleştirin.</string>
+    <string name="prayer_check_notification">%1$s namazını henüz işaretlemediniz.</string>
+    <string name="prayer_check_open">Günlüğü aç</string>
+</resources>

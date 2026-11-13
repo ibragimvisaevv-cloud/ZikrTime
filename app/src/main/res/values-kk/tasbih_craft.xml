@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tb_choose_phrase">Зікірді таңдау</string>
+    <string name="tb_total_count">Барлық қайталаулар</string>
+    <string name="tb_completed_laps">Аяқталған айналымдар</string>
+    <string name="tb_unlimited">Шектеусіз</string>
+    <string name="tb_cycle_complete">Айналым аяқталды</string>
+    <string name="tb_gesture_hint">Санау үшін тәспіні басыңыз немесе төмен тартыңыз.</string>
+    <string name="tb_phrase_change_hint">Басқа зікірді таңдағанда санауыш нөлге түседі. Күндік нәтиже сақталады.</string>
+</resources>

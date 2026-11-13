@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tone_phone_default">Оҳанги пешфарзи зангдор</string>
+    <string name="tone_selected">Оҳанги интихобшуда</string>
+    <string name="tone_hint">Метавонед ҳамон оҳанги барномаи «Соат»-ро интихоб кунед. Баъзе телефонҳо оҳанги ҳар зангдорро ҷудо нигоҳ медоранд.</string>
+    <string name="tone_choose">Интихоби оҳанг</string>
+    <string name="tone_stop">Қатъ кардан</string>
+    <string name="tone_file">Файли садоӣ</string>
+    <string name="tone_failed">Садо пахш нашуд. Оҳанг ё файли дигарро интихоб кунед.</string>
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="regional_prefer">Шаардын намаз жадыбалы</string>
+    <string name="regional_prefer_hint">Тандалган шаар жана күн үчүн жарыяланган жадыбал колдонулат. Башка жерлер жана күндөр үчүн убакыт төмөнкү ыкма менен эсептелет.</string>
+    <string name="regional_fallback">Жадыбал жок кездеги эсептөө ыкмасы</string>
+    <string name="regional_network_hint">Интернет барда шаардын жадыбалын жана эсептелген убакыттарды жаңыртуу.</string>
+    <string name="regional_published">Шаардын жадыбалы · %1$s</string>
+    <string name="regional_calculated">Эсептелген убакыт · %1$s · %2$s</string>
+    <string name="regional_offline">телефондо</string>
+    <string name="regional_adjusted">%1$s · жеке түзөтүүлөр менен</string>
+    <string name="regional_polar">Уюл аймагы үчүн болжол · жакынкы ылайыктуу кеңдик · %1$s</string>
+    <string name="regional_gps_zone">GPS чекитинин убакыт алкагы, мисалы Europe/Moscow</string>
+    <string name="regional_device_zone">%1$s · телефондун убакыт алкагы (%2$s)</string>
+    <string name="regional_previous_day">%1$s (мурунку күнү)</string>
+    <string name="regional_next_day">%1$s (эртең)</string>
+</resources>

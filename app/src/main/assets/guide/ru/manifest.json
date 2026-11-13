@@ -1,0 +1,352 @@
+{
+  "welcome": [
+    {
+      "image": "welcome-1.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.099074,
+        0.901563,
+        0.199074,
+        0.926562
+      ]
+    },
+    {
+      "image": "welcome-2.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.611111,
+        0.901563,
+        0.738889,
+        0.926562
+      ]
+    },
+    {
+      "image": "welcome-3.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.767593,
+        0.901563,
+        0.935185,
+        0.926562
+      ]
+    }
+  ],
+  "prayer": [
+    {
+      "image": "prayer-1.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.066667,
+        0.178125,
+        0.409259,
+        0.253125
+      ]
+    },
+    {
+      "image": "prayer-2.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.266667,
+        0.479167,
+        0.547222,
+        0.510417
+      ]
+    },
+    {
+      "image": "prayer-3.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.055556,
+        0.797396,
+        0.532407,
+        0.840625
+      ]
+    }
+  ],
+  "journal": [
+    {
+      "image": "journal-1.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.783333,
+        0.568229,
+        0.916667,
+        0.643229
+      ]
+    },
+    {
+      "image": "journal-2.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.055556,
+        0.722396,
+        0.47037,
+        0.797396
+      ]
+    },
+    {
+      "image": "journal-3.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.122222,
+        0.495833,
+        0.877778,
+        0.567708
+      ]
+    }
+  ],
+  "limits": [
+    {
+      "image": "limits-1.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.116667,
+        0.678125,
+        0.883333,
+        0.7625
+      ]
+    },
+    {
+      "image": "limits-2.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.116667,
+        0.775,
+        0.883333,
+        0.840625
+      ]
+    },
+    {
+      "image": "limits-3.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.144444,
+        0.873958,
+        0.55463,
+        0.905208
+      ]
+    }
+  ],
+  "permissions": [
+    {
+      "image": "permissions-1.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.122222,
+        0.454688,
+        0.877778,
+        0.529687
+      ]
+    },
+    {
+      "image": "permissions-2.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.122222,
+        0.825,
+        0.877778,
+        0.9
+      ]
+    },
+    {
+      "image": "permissions-3.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.066667,
+        0.840625,
+        0.933333,
+        0.925
+      ]
+    }
+  ],
+  "knowledge": [
+    {
+      "image": "knowledge-1.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.061111,
+        0.494271,
+        0.938889,
+        0.684896
+      ]
+    },
+    {
+      "image": "knowledge-2.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.116667,
+        0.152604,
+        0.883333,
+        0.236979
+      ]
+    },
+    {
+      "image": "knowledge-3.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.116667,
+        0.622396,
+        0.883333,
+        0.703646
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "image": "tools-1.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.055556,
+        0.35625,
+        0.944444,
+        0.85625
+      ]
+    },
+    {
+      "image": "tools-2.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.044444,
+        0.442188,
+        0.955556,
+        0.954688
+      ]
+    },
+    {
+      "image": "tools-3.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.066667,
+        0.09375,
+        0.365741,
+        0.16875
+      ]
+    }
+  ],
+  "shop": [
+    {
+      "image": "shop-1.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.061111,
+        0.575,
+        0.938889,
+        0.834375
+      ]
+    },
+    {
+      "image": "shop-2.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.293519,
+        0.609375,
+        0.707407,
+        0.640625
+      ]
+    },
+    {
+      "image": "shop-3.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.061111,
+        0.6375,
+        0.938889,
+        0.74375
+      ]
+    }
+  ],
+  "places": [
+    {
+      "image": "places-1.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.055556,
+        0.16875,
+        0.944444,
+        0.508854
+      ]
+    },
+    {
+      "image": "places-2.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.513889,
+        0.853125,
+        0.944444,
+        0.9375
+      ]
+    },
+    {
+      "image": "places-3.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.055556,
+        0.853125,
+        0.486111,
+        0.9375
+      ]
+    }
+  ],
+  "quran": [
+    {
+      "image": "quran-1.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.055556,
+        0.345313,
+        0.944444,
+        0.473438
+      ]
+    },
+    {
+      "image": "quran-2.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.349074,
+        0.463542,
+        0.541667,
+        0.538542
+      ]
+    },
+    {
+      "image": "quran-3.webp",
+      "width": 720,
+      "height": 1280,
+      "target": [
+        0.055556,
+        0.615625,
+        0.944444,
+        0.690625
+      ]
+    }
+  ]
+}

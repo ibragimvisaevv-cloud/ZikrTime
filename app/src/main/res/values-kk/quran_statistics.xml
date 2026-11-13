@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qs_today">Бүгін</string>
+    <string name="qs_paused">Есептеу өшірілген</string>
+    <string name="qs_enable_progress">Жеке ілгерілеуді қосу</string>
+    <string name="qs_goal_complete">Бүгінгі мақсат орындалды</string>
+    <string name="qs_today_start">Өз қарқыныңызбен оқыңыз. Уақыт осында көрсетіледі.</string>
+    <string name="qs_goal_remaining">Мақсатқа дейін %1$d мин қалды</string>
+    <string name="qs_change_goal">Мақсатты өзгерту</string>
+    <string name="qs_empty_title">Оқу тарихыңыз осы жерден басталады</string>
+    <string name="qs_empty_body">Оқудан кейін уақыт пен есепке алынған аяттар осында автоматты түрде көрсетіледі.</string>
+    <string name="qs_period">Таңдалған кезең</string>
+    <string name="qs_reading_time">Оқу уақыты</string>
+    <string name="qs_observed_ayahs">Есепке алынған әртүрлі аяттар</string>
+    <string name="qs_active_days">Оқыған күндер</string>
+    <string name="qs_unique_hint">Бір аятты қайта оқу бұл санды арттырмайды.</string>
+    <string name="qs_all_time">Жалпы ілгерілеу</string>
+    <string name="qs_complete_surahs">Барлық аяты есепке алынған сүрелер</string>
+    <string name="qs_less_minute">Бір минуттан аз</string>
+    <string name="qs_duration_minutes">%1$d мин</string>
+    <string name="qs_duration_hours">%1$d сағ %2$d мин</string>
+    <string name="qs_week_minutes">Күн сайынғы оқу минуттары</string>
+    <string name="qs_goal_title">Күнделікті оқу мақсаты</string>
+    <string name="qs_goal_hint">Өзіңізге ыңғайлы уақытты таңдаңыз. Мақсатты кез келген уақытта өзгертуге болады.</string>
+    <string name="qs_goal_minutes">Күніне минут</string>
+    <string name="qs_goal_save">Мақсатты сақтау</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tb_choose_phrase">Интихоби зикр</string>
+    <string name="tb_total_count">Ҳамагӣ такрорҳо</string>
+    <string name="tb_completed_laps">Давраҳои анҷомшуда</string>
+    <string name="tb_unlimited">Бе маҳдудият</string>
+    <string name="tb_cycle_complete">Давра анҷом ёфт</string>
+    <string name="tb_gesture_hint">Барои ҳисоб кардан тасбеҳро пахш кунед ё ба поён кашед.</string>
+    <string name="tb_phrase_change_hint">Бо интихоби зикри дигар ҳисобкунак ба сифр бармегардад. Натиҷаи рӯз нигоҳ дошта мешавад.</string>
+</resources>

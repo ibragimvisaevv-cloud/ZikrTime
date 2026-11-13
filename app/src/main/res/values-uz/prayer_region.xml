@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="regional_prefer">Shahar namoz taqvimi</string>
+    <string name="regional_prefer_hint">Tanlangan shahar va sana uchun eʼlon qilingan vaqtlar ishlatiladi. Boshqa joy va sanalar uchun vaqt quyidagi usulda hisoblanadi.</string>
+    <string name="regional_fallback">Taqvim boʻlmaganda hisoblash usuli</string>
+    <string name="regional_network_hint">Internet mavjud boʻlganda shahar taqvimi va hisoblangan vaqtlarni yangilash.</string>
+    <string name="regional_published">Shahar taqvimi · %1$s</string>
+    <string name="regional_calculated">Hisoblangan vaqt · %1$s · %2$s</string>
+    <string name="regional_offline">telefonda</string>
+    <string name="regional_adjusted">%1$s · shaxsiy tuzatishlar bilan</string>
+    <string name="regional_polar">Qutb hududi uchun taxmin · eng yaqin mos kenglik · %1$s</string>
+    <string name="regional_gps_zone">GPS nuqtasining vaqt mintaqasi, masalan Europe/Moscow</string>
+    <string name="regional_device_zone">%1$s · telefonning vaqt mintaqasi (%2$s)</string>
+    <string name="regional_previous_day">%1$s (avvalgi kun)</string>
+    <string name="regional_next_day">%1$s (ertaga)</string>
+</resources>

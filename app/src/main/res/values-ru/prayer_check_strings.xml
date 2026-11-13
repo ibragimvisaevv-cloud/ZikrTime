@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prayer_check_title">Напомнить отметить намаз</string>
+    <string name="prayer_check_hint">Если намаз ещё не отмечен, напомним один раз без звука. Нажатие откроет нужный намаз в журнале.</string>
+    <string name="prayer_check_delay">После начала намаза</string>
+    <string name="prayer_check_minutes">%1$d мин</string>
+    <string name="prayer_check_progress">Включите личный прогресс, чтобы использовать эти напоминания.</string>
+    <string name="prayer_check_notification">Вы ещё не отметили %1$s.</string>
+    <string name="prayer_check_open">Открыть журнал</string>
+</resources>

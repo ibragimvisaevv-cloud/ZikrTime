@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ql_read_title">Құран оқу</string>
+    <string name="ql_read_detail">Сүрелер, аударма және сақталған аяттар</string>
+    <string name="ql_listen_detail">Әл-Афаси · толық сүрелер мен жүктеу</string>
+    <string name="ql_listen_ayah">Осы аятты тыңдау</string>
+    <string name="ql_listen_ayah_short">Аятты тыңдау</string>
+    <string name="ql_ayah_hint">Тыңдау, қайталау немесе сақтау үшін аятты басыңыз.</string>
+    <string name="ql_speed">Оқу жылдамдығы</string>
+    <string name="ql_repeat">Осы аятты қайталау</string>
+    <string name="ql_repeat_once">Бір рет</string>
+    <string name="ql_repeat_count">%1$d рет</string>
+    <string name="ql_repeat_forever">Тоқтатылғанша</string>
+    <string name="ql_repeat_progress">Қайталау %1$d / %2$d</string>
+    <string name="ql_repeat_progress_forever">Қайталау %1$d · тоқтатылғанша</string>
+    <string name="ql_continue">Содан кейін келесі аятты оқу</string>
+    <string name="ql_continue_detail">Келесі аяттар да осы параметрлермен қайталанады. Сүре соңында тоқтайды.</string>
+    <string name="ql_continue_infinite">Келесі аятқа өту үшін қайталау санын таңдаңыз.</string>
+    <string name="ql_verse_finished">Аят аяқталды</string>
+    <string name="ql_whole_surah">Сүрені толық тыңдау</string>
+    <string name="ql_previous_verse">Алдыңғы аят</string>
+    <string name="ql_next_verse">Келесі аят</string>
+    <string name="ql_saved_actions">Сақтау немесе көшіру</string>
+    <string name="ql_learning_title">Тыңдау және жаттау</string>
+    <string name="ql_learning_detail">Оқу кезінде аятты басып, қайталау мен жылдамдықты таңдаңыз.</string>
+    <string name="ql_open_reader">Аяттарды ашу</string>
+    <string name="ql_reading_now">Ойналып жатыр: %1$s</string>
+    <string name="ql_verse_counter">Аят %1$d / %2$d</string>
+    <string name="audio_ayah_title">%1$s · %2$d-аят</string>
+    <string name="audio_ayah_unavailable">Бұл аяттың жазбасы ашылмады. Қайталап көріңіз.</string>
+    <string name="audio_ayah_source">Аят жазбалары: MP3Quran</string>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qibla_view_open">Kâbe görünümü</string>
+    <string name="qibla_view_explain">Telefonunuzu kıbleye doğru çevirin — Kâbe görüntüsü önünüzde belirecek.</string>
+    <string name="qibla_view_note">Görüntü kıble yönünü bulmanıza yardımcı olur. Yönlendirme telefonun pusulasına bağlıdır.</string>
+    <string name="qibla_view_image">Mekke’deki Kâbe</string>
+    <string name="qibla_view_close">Kapat</string>
+    <string name="qibla_view_level">Telefonu önünüzde tutun</string>
+    <string name="qibla_view_no_sensor">Pusula kullanılamıyor. Kıble yönü %1$d°.</string>
+    <string name="qibla_view_found">Kıble bulundu</string>
+    <string name="qibla_view_attribution">مانفی · CC BY-SA 4.0</string>
+</resources>

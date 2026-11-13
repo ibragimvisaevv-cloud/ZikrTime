@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="places_search_label">Məscidin adı və ya ünvanı</string>
+    <string name="places_yandex_search">Yandex Xəritələrdə başqa məscidlər tapın</string>
+    <string name="places_search_empty">Məkan tapılmadı. Başqa ad daxil edin və ya Yandex Xəritələrdə axtarın.</string>
+    <string name="places_wikidata_credit">Əlavə məlumat — Wikidata, CC0</string>
+    <string name="places_less">Yığışdır</string>
+    <string name="places_details">Ətraflı</string>
+    <string name="places_access_check">Getməzdən əvvəl məscidə giriş imkanını dəqiqləşdirin.</string>
+    <string name="places_open_source">Mənbəni aç</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="audio_download_channel">Quran downloads</string>
+    <string name="audio_download_channel_description">Progress of the surahs you chose to save offline. No sound.</string>
+    <string name="audio_download_waiting_network">Waiting for an internet connection</string>
+    <string name="audio_download_waiting_wifi">Waiting for an unmetered network</string>
+    <string name="audio_download_running">Saving a surah for offline listening</string>
+    <string name="audio_download_preparing">Preparing your download</string>
+</resources>

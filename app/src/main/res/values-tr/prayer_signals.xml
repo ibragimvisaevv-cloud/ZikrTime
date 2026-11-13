@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="signal_short_title">Kısa bildirim sesi</string>
+    <string name="signal_short_hint">Ezan kapalıyken telefonun bildirim sesini kullan.</string>
+    <string name="signal_last_title">Uygulamanın son bildirimi</string>
+    <string name="signal_none">Henüz kayıt yok.</string>
+    <string name="signal_scheduled">Planlanan zaman · %1$s</string>
+    <string name="signal_delivered">Bildirim zamanı · %1$s</string>
+    <string name="signal_quiet">Sessiz</string>
+    <string name="signal_blocked">Engellenen bildirim kanalını aç</string>
+</resources>

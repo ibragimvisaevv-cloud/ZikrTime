@@ -827,7 +827,7 @@
    "id": "jalal_abad",
    "group": "kyrgyzstan",
    "lat": 40.9333,
-   "lon": 73.0,
+   "lon": 73,
    "names": {
     "ru": "Джалал-Абад",
     "en": "Jalal-Abad",
@@ -1093,6 +1093,310 @@
     "ky": "Нью-Йорк",
     "az": "Nyu-York",
     "tr": "New York"
+   }
+  },
+  {
+   "id": "agidel",
+   "group": "russia",
+   "lat": 55.899043,
+   "lon": 53.933439,
+   "names": {
+    "ru": "Агидель",
+    "en": "Agidel",
+    "uz": "Agidel",
+    "tg": "Агидель",
+    "kk": "Агидель",
+    "ky": "Агидель",
+    "az": "Agidel",
+    "tr": "Agidel"
+   }
+  },
+  {
+   "id": "baymak",
+   "group": "russia",
+   "lat": 52.5912,
+   "lon": 58.3112,
+   "names": {
+    "ru": "Баймак",
+    "en": "Baymak",
+    "uz": "Baymak",
+    "tg": "Баймак",
+    "kk": "Баймак",
+    "ky": "Баймак",
+    "az": "Baymak",
+    "tr": "Baymak"
+   }
+  },
+  {
+   "id": "belebey",
+   "group": "russia",
+   "lat": 54.1112,
+   "lon": 54.1034,
+   "names": {
+    "ru": "Белебей",
+    "en": "Belebey",
+    "uz": "Belebey",
+    "tg": "Белебей",
+    "kk": "Белебей",
+    "ky": "Белебей",
+    "az": "Belebey",
+    "tr": "Belebey"
+   }
+  },
+  {
+   "id": "beloretsk",
+   "group": "russia",
+   "lat": 53.9592,
+   "lon": 58.3904,
+   "names": {
+    "ru": "Белорецк",
+    "en": "Beloretsk",
+    "uz": "Beloretsk",
+    "tg": "Белорецк",
+    "kk": "Белорецк",
+    "ky": "Белорецк",
+    "az": "Beloretsk",
+    "tr": "Beloretsk"
+   }
+  },
+  {
+   "id": "birsk",
+   "group": "russia",
+   "lat": 55.417531,
+   "lon": 55.530716,
+   "names": {
+    "ru": "Бирск",
+    "en": "Birsk",
+    "uz": "Birsk",
+    "tg": "Бирск",
+    "kk": "Бирск",
+    "ky": "Бирск",
+    "az": "Birsk",
+    "tr": "Birsk"
+   }
+  },
+  {
+   "id": "blagoveshchensk_rb",
+   "group": "russia",
+   "lat": 55.0311,
+   "lon": 55.9818,
+   "names": {
+    "ru": "Благовещенск (Башкортостан)",
+    "en": "Blagoveshchensk, Bashkortostan",
+    "uz": "Blagoveshchensk (Boshqirdiston)",
+    "tg": "Благовещенск (Бошқирдистон)",
+    "kk": "Благовещенск (Башқұртстан)",
+    "ky": "Благовещенск (Башкортостан)",
+    "az": "Blagoveshchensk (Başqırdıstan)",
+    "tr": "Blagoveshchensk (Başkurdistan)"
+   }
+  },
+  {
+   "id": "davlekanovo",
+   "group": "russia",
+   "lat": 54.2227,
+   "lon": 55.0312,
+   "names": {
+    "ru": "Давлеканово",
+    "en": "Davlekanovo",
+    "uz": "Davlekanovo",
+    "tg": "Давлеканово",
+    "kk": "Давлеканово",
+    "ky": "Давлеканово",
+    "az": "Davlekanovo",
+    "tr": "Davlekanovo"
+   }
+  },
+  {
+   "id": "ishimbay",
+   "group": "russia",
+   "lat": 53.454626,
+   "lon": 56.04395,
+   "names": {
+    "ru": "Ишимбай",
+    "en": "Ishimbay",
+    "uz": "Ishimbay",
+    "tg": "Ишимбай",
+    "kk": "Ишимбай",
+    "ky": "Ишимбай",
+    "az": "Ishimbay",
+    "tr": "Ishimbay"
+   }
+  },
+  {
+   "id": "kumertau",
+   "group": "russia",
+   "lat": 52.7565,
+   "lon": 55.7969,
+   "names": {
+    "ru": "Кумертау",
+    "en": "Kumertau",
+    "uz": "Kumertau",
+    "tg": "Кумертау",
+    "kk": "Кумертау",
+    "ky": "Кумертау",
+    "az": "Kumertau",
+    "tr": "Kumertau"
+   }
+  },
+  {
+   "id": "mezhgorye",
+   "group": "russia",
+   "lat": 54.2373,
+   "lon": 57.947,
+   "names": {
+    "ru": "Межгорье",
+    "en": "Mezhgorye",
+    "uz": "Mezhgorye",
+    "tg": "Межгорье",
+    "kk": "Межгорье",
+    "ky": "Межгорье",
+    "az": "Mezhgorye",
+    "tr": "Mezhgorye"
+   }
+  },
+  {
+   "id": "meleuz",
+   "group": "russia",
+   "lat": 52.9589,
+   "lon": 55.9283,
+   "names": {
+    "ru": "Мелеуз",
+    "en": "Meleuz",
+    "uz": "Meleuz",
+    "tg": "Мелеуз",
+    "kk": "Мелеуз",
+    "ky": "Мелеуз",
+    "az": "Meleuz",
+    "tr": "Meleuz"
+   }
+  },
+  {
+   "id": "neftekamsk",
+   "group": "russia",
+   "lat": 56.0992,
+   "lon": 54.2615,
+   "names": {
+    "ru": "Нефтекамск",
+    "en": "Neftekamsk",
+    "uz": "Neftekamsk",
+    "tg": "Нефтекамск",
+    "kk": "Нефтекамск",
+    "ky": "Нефтекамск",
+    "az": "Neftekamsk",
+    "tr": "Neftekamsk"
+   }
+  },
+  {
+   "id": "oktyabrsky_rb",
+   "group": "russia",
+   "lat": 54.452,
+   "lon": 53.3381,
+   "names": {
+    "ru": "Октябрьский (Башкортостан)",
+    "en": "Oktyabrsky, Bashkortostan",
+    "uz": "Oktyabrsky (Boshqirdiston)",
+    "tg": "Октябрьский (Бошқирдистон)",
+    "kk": "Октябрьский (Башқұртстан)",
+    "ky": "Октябрьский (Башкортостан)",
+    "az": "Oktyabrsky (Başqırdıstan)",
+    "tr": "Oktyabrsky (Başkurdistan)"
+   }
+  },
+  {
+   "id": "salavat",
+   "group": "russia",
+   "lat": 53.3616,
+   "lon": 55.9245,
+   "names": {
+    "ru": "Салават",
+    "en": "Salavat",
+    "uz": "Salavat",
+    "tg": "Салават",
+    "kk": "Салават",
+    "ky": "Салават",
+    "az": "Salavat",
+    "tr": "Salavat"
+   }
+  },
+  {
+   "id": "sibay",
+   "group": "russia",
+   "lat": 52.72039,
+   "lon": 58.665665,
+   "names": {
+    "ru": "Сибай",
+    "en": "Sibay",
+    "uz": "Sibay",
+    "tg": "Сибай",
+    "kk": "Сибай",
+    "ky": "Сибай",
+    "az": "Sibay",
+    "tr": "Sibay"
+   }
+  },
+  {
+   "id": "sterlitamak",
+   "group": "russia",
+   "lat": 53.6323,
+   "lon": 55.9522,
+   "names": {
+    "ru": "Стерлитамак",
+    "en": "Sterlitamak",
+    "uz": "Sterlitamak",
+    "tg": "Стерлитамак",
+    "kk": "Стерлитамак",
+    "ky": "Стерлитамак",
+    "az": "Sterlitamak",
+    "tr": "Sterlitamak"
+   }
+  },
+  {
+   "id": "tuymazy",
+   "group": "russia",
+   "lat": 54.5999,
+   "lon": 53.6949,
+   "names": {
+    "ru": "Туймазы",
+    "en": "Tuymazy",
+    "uz": "Tuymazy",
+    "tg": "Туймазы",
+    "kk": "Туймазы",
+    "ky": "Туймазы",
+    "az": "Tuymazy",
+    "tr": "Tuymazy"
+   }
+  },
+  {
+   "id": "uchaly",
+   "group": "russia",
+   "lat": 54.3191,
+   "lon": 59.3785,
+   "names": {
+    "ru": "Учалы",
+    "en": "Uchaly",
+    "uz": "Uchaly",
+    "tg": "Учалы",
+    "kk": "Учалы",
+    "ky": "Учалы",
+    "az": "Uchaly",
+    "tr": "Uchaly"
+   }
+  },
+  {
+   "id": "yanaul",
+   "group": "russia",
+   "lat": 56.2713,
+   "lon": 54.9331,
+   "names": {
+    "ru": "Янаул",
+    "en": "Yanaul",
+    "uz": "Yanaul",
+    "tg": "Янаул",
+    "kk": "Янаул",
+    "ky": "Янаул",
+    "az": "Yanaul",
+    "tr": "Yanaul"
    }
   }
  ]

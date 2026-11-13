@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qibla_view_open">Вид на Каабу</string>
+    <string name="qibla_view_explain">Поверните телефон к кибле — изображение Каабы окажется перед вами.</string>
+    <string name="qibla_view_note">Изображение помогает увидеть направление киблы. Ориентир зависит от компаса телефона.</string>
+    <string name="qibla_view_image">Кааба в Мекке</string>
+    <string name="qibla_view_close">Закрыть</string>
+    <string name="qibla_view_level">Держите телефон перед собой</string>
+    <string name="qibla_view_no_sensor">Компас недоступен. Направление киблы — %1$d°.</string>
+    <string name="qibla_view_found">Кибла найдена</string>
+    <string name="qibla_view_attribution">مانفی · CC BY-SA 4.0</string>
+</resources>

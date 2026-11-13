@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ql_read_title">Қуръон хондан</string>
+    <string name="ql_read_detail">Сураҳо, тарҷума ва оятҳои захирашуда</string>
+    <string name="ql_listen_detail">Ал-Афосӣ · сураҳои пурра ва боргирӣ</string>
+    <string name="ql_listen_ayah">Ин оятро гӯш кардан</string>
+    <string name="ql_listen_ayah_short">Оятро гӯш кардан</string>
+    <string name="ql_ayah_hint">Барои гӯш кардан, такрор ё захира кардан оятро пахш кунед.</string>
+    <string name="ql_speed">Суръати хониш</string>
+    <string name="ql_repeat">Ин оятро такрор кардан</string>
+    <string name="ql_repeat_once">Як бор</string>
+    <string name="ql_repeat_count">%1$d бор</string>
+    <string name="ql_repeat_forever">То қатъ кардан</string>
+    <string name="ql_repeat_progress">Такрор %1$d аз %2$d</string>
+    <string name="ql_repeat_progress_forever">Такрор %1$d · то қатъ кардан</string>
+    <string name="ql_continue">Баъд ояти навбатиро хондан</string>
+    <string name="ql_continue_detail">Оятҳои баъдӣ низ бо ҳамин танзимот такрор мешаванд. Дар охири сура қатъ мешавад.</string>
+    <string name="ql_continue_infinite">Барои гузаштан ба ояти навбатӣ шумораи такрорро интихоб кунед.</string>
+    <string name="ql_verse_finished">Оят ба охир расид</string>
+    <string name="ql_whole_surah">Сураро пурра гӯш кардан</string>
+    <string name="ql_previous_verse">Ояти пешина</string>
+    <string name="ql_next_verse">Ояти навбатӣ</string>
+    <string name="ql_saved_actions">Захира ё нусхабардорӣ</string>
+    <string name="ql_learning_title">Гӯш кардан ва ёд гирифтан</string>
+    <string name="ql_learning_detail">Ҳангоми хондан оятро пахш карда, такрорҳо ва суръатро танзим кунед.</string>
+    <string name="ql_open_reader">Кушодани оятҳо</string>
+    <string name="ql_reading_now">Садо медиҳад: %1$s</string>
+    <string name="ql_verse_counter">Оят %1$d аз %2$d</string>
+    <string name="audio_ayah_title">%1$s · ояти %2$d</string>
+    <string name="audio_ayah_unavailable">Сабти ин оят кушода нашуд. Боз кӯшиш кунед.</string>
+    <string name="audio_ayah_source">Сабти оятҳо: MP3Quran</string>
+</resources>

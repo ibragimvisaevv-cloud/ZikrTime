@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tone_phone_default">Ойготкучтун демейки обону</string>
+    <string name="tone_selected">Тандалган обон</string>
+    <string name="tone_hint">Саат колдонмосундагы обонду тандай аласыз. Айрым телефондор ар бир ойготкучтун обонун өзүнчө сактайт.</string>
+    <string name="tone_choose">Обон тандоо</string>
+    <string name="tone_stop">Токтотуу</string>
+    <string name="tone_file">Аудиофайл</string>
+    <string name="tone_failed">Үн ойнотулбай калды. Башка обонду же файлды тандаңыз.</string>
+</resources>

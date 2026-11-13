@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="guide_visual_example">Ilova ekrani · ruscha namuna</string>
+    <string name="guide_visual_enlarge">Kattalashtirish</string>
+    <string name="guide_visual_reset">Ekranga sig‘dirish</string>
+    <string name="guide_visual_zoom_hint">Kattalashtirish uchun ikki barmog‘ingizni uzoqlashtiring. Tafsilotlarni ko‘rish uchun rasmni suring.</string>
+    <string name="guide_visual_unavailable">Skrinshot ochilmadi. Quyidagi tugma orqali bo‘limni ochishingiz mumkin.</string>
+    <string name="guide_visual_highlight">%1$d-amal uchun ajratilgan tugma</string>
+    <string name="guide_visual_step">Amal %1$d / %2$d</string>
+    <string name="guide_visual_skip">O‘tkazib yuborish</string>
+    <string name="guide_visual_open">Ilovada ochish</string>
+    <string name="guide_visual_intro">Bu ilovaning haqiqiy ekranlari. Kerakli tugmani ko‘rish uchun 1, 2 yoki 3 ni bosing. Istalgan rasmni kattalashtirish mumkin.</string>
+    <string name="guide_visual_quran_title">Qur’on: o‘qish va tinglash</string>
+    <string name="guide_visual_quran_summary">O‘qish, tinglash va saqlangan oyatlar</string>
+    <string name="guide_visual_quran_control1">O‘qish yoki tinglash</string>
+    <string name="guide_visual_quran_control2">Oyatni takrorlash</string>
+    <string name="guide_visual_quran_control3">Xatcho‘plar va qaydlar</string>
+    <string name="guide_visual_quran_step1">Qur’on bo‘limida O‘qish yoki Tinglashni tanlang. O‘qish uchun kerakli surani bosing.</string>
+    <string name="guide_visual_quran_step2">Oyatni bosing, so‘ng Ushbu oyatni tinglashni tanlang. Panelda tezlik va takrorlash sonini belgilang.</string>
+    <string name="guide_visual_quran_step3">Shu oyat panelida pastga suring: joyni saqlash yoki qayd yozish mumkin. Oyat matnda belgilangan bo‘lib qoladi.</string>
+</resources>

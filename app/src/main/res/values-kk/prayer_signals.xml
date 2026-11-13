@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="signal_short_title">Қысқа хабарландыру дыбысы</string>
+    <string name="signal_short_hint">Азан өшірілгенде телефонның хабарландыру дыбысын пайдалану.</string>
+    <string name="signal_last_title">Қолданбаның соңғы сигналы</string>
+    <string name="signal_none">Әзірге сигнал тіркелмеді.</string>
+    <string name="signal_scheduled">Белгіленген уақыт · %1$s</string>
+    <string name="signal_delivered">Жеткізілген уақыт · %1$s</string>
+    <string name="signal_quiet">Дыбыссыз</string>
+    <string name="signal_blocked">Бұғатталған хабарландыру арнасын ашу</string>
+</resources>

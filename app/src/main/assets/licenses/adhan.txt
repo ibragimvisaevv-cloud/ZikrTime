@@ -1,10 +1,16 @@
-Adhan recordings (Wikimedia Commons). Processing: silence trimmed, loudness normalized, mono Ogg Vorbis; 29-second fade-out versions for iOS notifications.
+Ahmed Khalaf recorded and performed these three adhans for the Athan app.
+The recordings are distributed under Creative Commons Attribution 4.0 International.
+https://creativecommons.org/licenses/by/4.0/
+Original author's license statement:
+https://github.com/nandxorandor/Athan/blob/ad2bf1799add51cca4aaf1f123b1c212378c7786/LICENSE
 
-1. "Beautiful adhan.ogg" by Adam-synagda — CC0 1.0 (public domain dedication)
-   https://commons.wikimedia.org/wiki/File:Beautiful_adhan.ogg
-2. "Azan.ogg" by Andrewler — CC BY-SA 4.0
-   https://commons.wikimedia.org/wiki/File:Azan.ogg
-3. "The Adhan - Muslim Call to Prayer - Aaqib Azeez.mp3" uploaded by Atcovi — CC BY-SA 4.0
-   https://commons.wikimedia.org/wiki/File:The_Adhan_-_Muslim_Call_to_Prayer_-_Aaqib_Azeez.mp3
+Developer_Athan-1
+https://github.com/nandxorandor/Athan/blob/ad2bf1799add51cca4aaf1f123b1c212378c7786/app/src/main/assets/athan/developer/Developer_Athan-1.mp3
 
-CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/ — the processed versions 2 and 3 are shared under the same license.
+Developer_Athan-2
+https://github.com/nandxorandor/Athan/blob/ad2bf1799add51cca4aaf1f123b1c212378c7786/app/src/main/assets/athan/developer/Developer_Athan-2.mp3
+
+Developer_Athan-3_Fajr
+https://github.com/nandxorandor/Athan/blob/ad2bf1799add51cca4aaf1f123b1c212378c7786/app/src/main/assets/athan/fajr/Developer_Athan-3_Fajr.mp3
+
+ZikrTime changes: removed the lead-in, attenuated sound below 80 Hz, matched loudness and converted to mono Ogg Vorbis. The Fajr recording is available only for the wake-up alarm.

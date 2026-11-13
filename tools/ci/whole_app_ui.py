@@ -456,7 +456,7 @@ elif GROUP=='actions':
     def bundled_products():
         # Existing repository examples, visibly labelled as samples; never live offers.
         previous=prefs().get('shop_catalog','')
-        fixture=json.loads(Path('app/src/main/assets/shop/catalog.json').read_text())
+        fixture=json.loads(Path('app/src/debug/assets/qa/shop_demo.json').read_text())
         assert fixture['demo'] is True
         shell('svc','wifi','disable');shell('svc','data','disable')
         try:
@@ -471,7 +471,7 @@ elif GROUP=='actions':
                 shot('bundled-product-seller-'+mode,['seller','navigation'])
                 back();shot('bundled-product-return-'+mode,['product','navigation'])
                 assert find_control(ui(),fixture['products'][0]['title']['ru'],'text') is not None
-            (OUT/'bundled-products-passed.json').write_text(json.dumps({'source':'app/src/main/assets/shop/catalog.json','demo':True,'seller_count':len(fixture['sellers']),'product_count':len(fixture['products']),'themes':['light','dark'],'product_seller_back':True}))
+            (OUT/'bundled-products-passed.json').write_text(json.dumps({'source':'app/src/debug/assets/qa/shop_demo.json','demo':True,'seller_count':len(fixture['sellers']),'product_count':len(fixture['products']),'themes':['light','dark'],'product_seller_back':True}))
         finally:
             put_pref('shop_catalog','string',previous);put_pref('shop_catalog_at','string','0')
             shell('svc','wifi','enable');shell('svc','data','enable');theme('light')

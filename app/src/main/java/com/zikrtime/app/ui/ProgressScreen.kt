@@ -42,6 +42,7 @@ fun ProgressScreen() {
     ScreenScaffold(title = stringResource(R.string.progress_title), onBack = { nav.back() }, scene = R.drawable.focus_courtyard) {
         ZCard { PersonalProgressSetting() }
         if (Store.personalProgressEnabled) {
+            OutlinedButton(onClick = { nav.open(Screen.PRAYER_JOURNAL) }) { Text(stringResource(R.string.journal_title)) }
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 listOf(7, 30, 90).forEach { d ->
                     FilterChip(selected = days == d, onClick = { days = d }, label = { Text(daysText(d)) })
@@ -72,6 +73,7 @@ fun ProgressScreen() {
                 }
             }
         }
+        QuranStatisticsCard()
         // Clearing is separate from disabling and remains available even with the switch off.
         TextButton(onClick = { clear = true }, modifier = Modifier.testTag("personal_progress_clear").semantics { testTagsAsResourceId = true }) {
             Text(stringResource(R.string.progress_clear))
@@ -80,7 +82,7 @@ fun ProgressScreen() {
     if (clear) HorizonDialog(
         onDismissRequest = { clear = false },
         title = { Text(stringResource(R.string.progress_clear)) },
-        text = { Text(stringResource(R.string.progress_clear_confirm)) },
+        text = { Text(stringResource(R.string.journal_clear_progress_confirm)) },
         confirmButton = { TextButton(onClick = { Store.clearPersonalProgress(); clear = false }, modifier = Modifier.testTag("personal_progress_clear_confirm").semantics { testTagsAsResourceId = true }) { Text(stringResource(R.string.action_reset)) } },
         dismissButton = { TextButton(onClick = { clear = false }) { Text(stringResource(R.string.action_close)) } },
     )

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="audio_download_channel">Құран жүктемелері</string>
+    <string name="audio_download_channel_description">Интернетсіз сақтау үшін таңдаған сүрелердің жүктелу барысы. Дыбыссыз хабарландырулар.</string>
+    <string name="audio_download_waiting_network">Интернет қосылымы күтілуде</string>
+    <string name="audio_download_waiting_wifi">Шектеусіз желі күтілуде</string>
+    <string name="audio_download_running">Сүре интернетсіз тыңдау үшін сақталуда</string>
+    <string name="audio_download_preparing">Жүктеу дайындалуда</string>
+</resources>

@@ -1,0 +1,8 @@
+<resources>
+    <string name="audio_player_reciter">Mişari Raşid el-Afasi</string>
+    <string name="audio_player_album">Kur’an · Hafs kıraati</string>
+    <string name="audio_player_failure">Kayıt oynatılamadı. İnternet bağlantınızı kontrol edin veya sureyi yeniden indirip tekrar deneyin.</string>
+    <string name="audio_player_connect_failure">Oynatıcı başlatılamadı. Bu ekranı yeniden açıp dinlemeyi deneyin.</string>
+    <string name="audio_player_catalog_failure">Ses kataloğu açılamadı. Bu ekranı yeniden açmayı deneyin.</string>
+    <string name="audio_player_alarm_active">Kur’an dinlemeden önce alarmı durdurun veya erteleyin.</string>
+</resources>

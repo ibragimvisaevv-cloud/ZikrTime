@@ -65,4 +65,16 @@ class PlacesTest {
         assertNull(Places.correctionUrl("", "osm_node_123"))
         assertNull(Places.correctionUrl("bad/bot", "osm_node_123"))
     }
+
+    @Test fun additionalSourcesKeepTheirIdentityAndRejectUnsafeLinks() {
+        val p = place(",\"src\":\"wikidata\",\"source_url\":\"https://www.wikidata.org/wiki/Q123\",\"wikidata_url\":\"https://www.wikidata.org/wiki/Q123\"")
+        assertEquals("wikidata", p.source)
+        assertEquals("https://www.wikidata.org/wiki/Q123", p.sourceUrl)
+        assertEquals(p.sourceUrl, p.wikidataUrl)
+        assertEquals("https://www.openstreetmap.org/way/123", Places.sourceUrl("https://www.openstreetmap.org/way/123"))
+        for (bad in listOf("javascript:alert(1)", "https://www.wikidata.org.evil.test/wiki/Q123", "https://www.wikidata.org/wiki/Q123?next=https://evil.test", "http://www.wikidata.org/wiki/Q123")) {
+            assertEquals("", Places.sourceUrl(bad))
+        }
+        assertEquals("", place().sourceUrl)
+    }
 }

@@ -1,0 +1,10 @@
+<resources>
+    <string name="fajr_history_title">Ойготкучтун акыркы коңгуроосу</string>
+    <string name="fajr_history_empty">Ойготкуч азырынча чалына элек.</string>
+    <string name="fajr_history_daily">Багымдатка ойготкуч</string>
+    <string name="fajr_history_test">Ойготкучту текшерүү</string>
+    <string name="fajr_history_snooze">Кийинкиге калтырылган коңгуроо</string>
+    <string name="fajr_history_planned">Белгиленген убакыт — %1$s</string>
+    <string name="fajr_history_fired">Чалынган убакыт — %1$s</string>
+    <string name="fajr_history_delay">Кечигүү — %1$d мүнөт</string>
+</resources>

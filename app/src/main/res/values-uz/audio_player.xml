@@ -1,0 +1,8 @@
+<resources>
+    <string name="audio_player_reciter">Mishoriy Roshid Al-Afosiy</string>
+    <string name="audio_player_album">Qur’on · Hafs qiroati</string>
+    <string name="audio_player_failure">Yozuvni ijro etib boʻlmadi. Internetni tekshiring yoki surani qayta yuklab olib, yana urinib koʻring.</string>
+    <string name="audio_player_connect_failure">Pleyerni ishga tushirib boʻlmadi. Bu ekranni qayta ochib, tinglashga urinib koʻring.</string>
+    <string name="audio_player_catalog_failure">Audio katalogni ochib boʻlmadi. Bu ekranni qayta ochishga urinib koʻring.</string>
+    <string name="audio_player_alarm_active">Qur’onni tinglashdan oldin budilnikni toʻxtating yoki keyinga qoldiring.</string>
+</resources>

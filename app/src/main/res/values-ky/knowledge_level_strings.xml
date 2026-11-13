@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="learning_level_title">Билим деңгээлин тандаңыз</string>
+    <string name="learning_level_intro">Суроолор даярдыгыңызга ылайык болот. Деңгээлди кийин өзгөртө аласыз.</string>
+    <string name="learning_level_label">Билим деңгээли</string>
+    <string name="learning_level_not_selected">Азырынча тандала элек</string>
+    <string name="learning_level_choose">Тандоо</string>
+    <string name="learning_level_change">Өзгөртүү</string>
+    <string name="learning_level_beginner">Баштапкы</string>
+    <string name="learning_level_intermediate">Орто</string>
+    <string name="learning_level_advanced">Жогорку</string>
+    <string name="learning_level_beginner_hint">Негизги түшүнүктөр жана тааныш фактылар.</string>
+    <string name="learning_level_intermediate_hint">Байланыштар, контекст жана маанилер.</string>
+    <string name="learning_level_advanced_hint">Так маалыматтар жана бири-бирине жакын жооптор.</string>
+    <string name="learning_level_count">Деңгээлдеги суроолор: %1$d</string>
+    <string name="learning_level_change_hint">Деңгээл өзгөргөндө бүтө элек раунддар кайра башталат. Окуу тарыхы жана топтолгон мүнөттөр сакталат.</string>
+    <string name="learning_level_confirm">Деңгээлди ырастоо</string>
+    <string name="learning_level_empty">Бул деңгээлде ушул тема боюнча суроо жок</string>
+    <string name="learning_level_empty_hint">Башка тема тандаңыз же деңгээлди өзгөртүңүз.</string>
+</resources>

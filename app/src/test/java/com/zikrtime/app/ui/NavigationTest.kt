@@ -4,6 +4,77 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class NavigationTest {
+    @Test fun listeningOpensSelectedVersesWithoutLosingThePlayer() {
+        val nav = Nav()
+        nav.openQuranAudio(114)
+        val player = nav.stack.last()
+        nav.openQuran(114, 3)
+        assertEquals(114, nav.stack.last().quranSurah)
+        assertEquals(3, nav.stack.last().quranAyah)
+        nav.openQuran(114, 3)
+        assertEquals(2, nav.stack.size)
+        assertTrue(nav.back())
+        assertEquals(player, nav.stack.last())
+    }
+
+    @Test fun invalidReadingSelectionFallsBackToTheCatalogue() {
+        val nav = Nav()
+        nav.openQuran(115, -2)
+        assertEquals(0, nav.stack.last().quranSurah)
+        assertEquals(1, nav.stack.last().quranAyah)
+    }
+
+    @Test fun audioReturnsToReaderAndNotificationsDoNotDuplicateThePlayer() {
+        val nav = Nav()
+        nav.open(Screen.QURAN)
+        val reader = nav.stack.last()
+        nav.openQuranAudio(112)
+        val audio = nav.stack.last()
+        nav.openQuranAudio(112)
+        assertEquals(audio, nav.stack.last())
+        assertEquals(2, nav.stack.size)
+        nav.openQuranAudio(114)
+        assertEquals(114, nav.stack.last().audioSurah)
+        assertEquals(2, nav.stack.size)
+        assertTrue(nav.back())
+        assertEquals(reader, nav.stack.last())
+    }
+
+    @Test fun invalidAudioSurahOpensCatalogueWithoutAnInvalidTrack() {
+        val nav = Nav()
+        nav.openQuranAudio(-1)
+        assertEquals(0, nav.stack.last().audioSurah)
+        nav.openQuranAudio(115)
+        assertEquals(1, nav.stack.size)
+        assertEquals(0, nav.stack.last().audioSurah)
+    }
+
+    @Test fun openingAFeatureFromTheGuidePreservesItsEntry() {
+        val nav = Nav()
+        nav.tab = Tab.MORE
+        nav.open(Screen.GUIDE)
+        val guide = nav.stack.last()
+        nav.open(Screen.QURAN)
+        assertTrue(nav.back())
+        assertEquals(guide, nav.stack.last())
+        assertEquals(Tab.MORE, nav.tab)
+    }
+
+    @Test fun visitingATabAndItsChildReturnsToTheSameGuide() {
+        val nav = Nav()
+        nav.tab = Tab.MORE
+        nav.open(Screen.GUIDE)
+        val guide = nav.stack.last()
+        nav.openGuideTab(Tab.FOCUS)
+        assertEquals(Tab.FOCUS, nav.tab)
+        nav.open(Screen.APPS)
+        assertTrue(nav.back())
+        assertEquals(Screen.GUIDE_DESTINATION, nav.stack.last().screen)
+        assertTrue(nav.back())
+        assertEquals(guide, nav.stack.last())
+        assertEquals(Tab.MORE, nav.tab)
+    }
+
     @Test fun sellerProductSellerBackRestoresTheOriginalEntry() {
         val nav = Nav()
         nav.shopSeller = "first"; nav.open(Screen.SHOP_SELLER)

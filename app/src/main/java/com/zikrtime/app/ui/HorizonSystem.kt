@@ -56,7 +56,7 @@ fun SceneBackdrop(modifier: Modifier = Modifier, night: Boolean = LocalDarkTheme
         Image(painterResource(if (night) R.drawable.horizon_portrait_night else R.drawable.horizon_portrait_day),
             contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
         Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(
-            Color(0xFF071F1B).copy(alpha = .52f), Color(0xFF071F1B).copy(alpha = .24f), Color(0xFF071F1B).copy(alpha = .88f)))))
+            Color(0xFF171B18).copy(alpha = .52f), Color(0xFF171B18).copy(alpha = .16f), Color(0xFF171B18).copy(alpha = .82f)))))
     }
 }
 
@@ -90,7 +90,7 @@ fun StatePanel(title: String, text: String? = null, icon: Int = R.drawable.ic_na
             IconBadge(painterResource(icon), size = 44.dp)
             Text(title, style = MaterialTheme.typography.titleMedium)
             if (text != null) Text(text, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            if (action != null && onAction != null) TextButton(onClick = onAction) { Text(action) }
+            if (action != null && onAction != null) TonalButton(action, onClick = onAction)
         }
     }
 }
@@ -100,8 +100,7 @@ fun HorizonDialog(onDismissRequest: () -> Unit, confirmButton: @Composable () ->
     title: @Composable (() -> Unit)? = null, text: @Composable (() -> Unit)? = null,
     dismissButton: @Composable (() -> Unit)? = null) {
     AlertDialog(onDismissRequest = onDismissRequest, confirmButton = confirmButton, dismissButton = dismissButton,
-        title = title, text = text, shape = RoundedCornerShape(30.dp),
-        icon = { Icon(painterResource(R.drawable.ic_prayer_isha), null, tint = MaterialTheme.colorScheme.secondary) },
+        title = title, text = text, shape = MaterialTheme.shapes.extraLarge,
         containerColor = MaterialTheme.colorScheme.surfaceContainerLow, tonalElevation = 0.dp)
 }
 

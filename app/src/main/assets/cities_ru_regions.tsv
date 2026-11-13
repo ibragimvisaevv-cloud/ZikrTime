@@ -1,0 +1,70 @@
+# Coordinates, time zones and names from GeoNames (https://www.geonames.org), CC BY 4.0 https://creativecommons.org/licenses/by/4.0/
+# https://download.geonames.org/export/dump/RU.zip and alternatenames/RU.zip, retrieved 2026-11-06. PPLA/PPLC; existing catalogue entries omitted.
+# RU.zip sha256 ff0b1ccc325d64bd56ae261059e56192855e4ad8d7e1c3362e009e52e0be1367. RU alternate names sha256 6cce694aeb04f6fb9930ac7c0f246cf6025a2e6ea8b9e6647a0016950bb0ba56.
+# id	geoname_id	latitude	longitude	iana	ru	en	az	kk	ky	tg	tr	uz
+abakan	1512236	53.7154	91.42593	Asia/Krasnoyarsk	Абакан	Abakan	Abakan	Абакан	Абакан шаары	Абакан	Abakan	Abakan
+anadyr	2127202	64.73424	177.5103	Asia/Anadyr	Анадырь	Anadyr	Anadır	Анадыр	Анадыр	Анадыр	Anadır	Anadir
+arkhangelsk	581049	64.5461	40.55183	Europe/Moscow	Архангельск	Arkhangelsk	Arxanqelsk	Архангельськ	Архангельськ	Архангельск	Arkhangelsk	Arkhangelsk
+barnaul	1510853	53.36199	83.72786	Asia/Barnaul	Барнаул	Barnaul	Barnaul	Барнауыл	Барнаул	Барнаул	Barnaul	Barnaul
+belgorod	578072	50.60343	36.58091	Europe/Moscow	Белгород	Belgorod	Belqorod	Белгород	Белгород шаары	Белгород	Belgorod	Belgorod
+birobidzhan	2026643	48.793	132.92033	Asia/Vladivostok	Биробиджан	Birobidzhan	Birobican	Биробиджан	Биробиджан	Биробиджан	Birobidzhan	Birobidzhan
+blagoveshchensk	2026609	50.27593	127.52637	Asia/Yakutsk	Благовещенск	Blagoveshchensk	Blagoveshchensk	Благовещенск	Благовещенск шаары	Благовешенск	Blagoveşçensk	Blagoveshchensk
+bryansk	571476	53.27096	34.32143	Europe/Moscow	Брянск	Bryansk	Bryansk	Брянськ	Брянськ	Брянск	Bryansk	Bryansk
+velikiy_novgorod	519336	58.52131	31.27104	Europe/Moscow	Великий Новгород	Novgorod	Velikiy Novgorod	Великий Новгород	Великий Новгород	Великий Новгород	Veliki Novgorod	Velikiy Novgorod
+vladivostok	2013348	43.10562	131.87353	Asia/Vladivostok	Владивосток	Vladivostok	Vladivostok	Владивосток	Владивосток	Владивосток	Vladivostok	Vladivostok
+vladimir	473247	56.13854	40.39976	Europe/Moscow	Владимир	Vladimir			Владимир шаары			
+volgograd	472757	48.71378	44.4976	Europe/Volgograd	Волгоград	Volgograd	Volqoqrad	Волгоград	Волгоград	Волгоград		
+vologda	472459	59.2239	39.88398	Europe/Moscow	Вологда	Vologda			Bологда			
+voronezh	472045	51.66833	39.19204	Europe/Moscow	Воронеж	Voronezh						
+gorno_altaysk	1506271	51.96056	85.91892	Asia/Barnaul	Горно-Алтайск	Gorno-Altaysk	Gorno-Altaysk	Горно-Алтайск	Горно-Алтайск	Горно-Алтойск	Gorno-Altaysk	Gorno-Altaysk
+ivanovo	555312	56.99988	40.97257	Europe/Moscow	Иваново	Ivanovo	İvanov	Иванов	Иваново шаары	Иванов	İvanovo	Ivanov
+izhevsk	554840	56.85225	53.19862	Europe/Samara	Ижевск	Izhevsk	İjevsk	Ижау	Ижевск	Ижевск	İjevsk	Izhevsk
+irkutsk	2023469	52.29566	104.29076	Asia/Irkutsk	Иркутск	Irkutsk	İrkutsk	Иркутск	Иркутск	Иркутск	İrkutsk	Irkutsk
+yoshkar_ola	466806	56.63877	47.89078	Europe/Moscow	Йошкар-Ола	Yoshkar-Ola						
+kaliningrad	554234	54.70639	20.51102	Europe/Kaliningrad	Калининград	Kaliningrad	Kalininqrad	Калининград	Калининград	Калининград	Kaliningrad	Kaliningrad
+kaluga	553915	54.53063	36.27	Europe/Moscow	Калуга	Kaluga	Kaluqa	Калуга	Калуга	Калуга	Kaluga	Kaluga
+kemerovo	1503901	55.35417	86.10435	Asia/Novokuznetsk	Кемерово	Kemerovo	Kemerovo	Кемерово	Кемерово	Кемерово	Kemerovo	Kemerovo
+kirov	548408	58.59809	49.65783	Europe/Kirov	Киров	Kirov	Kirov	Киров	Киров	Киров	Kirov	Kirov
+kostroma	543878	57.76638	40.92828	Europe/Moscow	Кострома	Kostroma	Kostroma	Кострома	Кострома	Кострома	Kostroma	Kostroma
+krasnodar	542420	45.04534	38.98178	Europe/Moscow	Краснодар	Krasnodar	Krasnodar	Краснодар	Краснодар	Краснодар	Krasnodar	Krasnodar
+krasnoyarsk	1502026	56.03742	92.93136	Asia/Krasnoyarsk	Красноярск	Krasnoyarsk	Krasnoyarsk	Қызылтас	Краснодор	Краснояр	Krasnoyarsk	Krasnoyarsk
+kurgan	1501321	55.44905	65.34344	Asia/Yekaterinburg	Курган	Kurgan	Kurqan	Қорған	Курган	Курғон	Kurgan	Kurgan
+kursk	538560	51.72689	36.18457	Europe/Moscow	Курск	Kursk	Kursk	Курськ	Курськ	Курск	Kursk	Kursk
+kyzyl	1500973	51.71108	94.43776	Asia/Krasnoyarsk	Кызыл	Kyzyl	Kızıl	Қызыл	Кызыл шаары	Қизил	Kızıl	Qizil
+lipetsk	535121	52.5876	39.55151	Europe/Moscow	Липецк	Lipetsk	Lipetsk	Липецк	Липецк шаары	Липеск	Lipetsk	Lipetsk
+magadan	2123628	59.56274	150.80211	Asia/Magadan	Магадан	Magadan	Maqadan	Магадан	Магадан	Магадан	Magadan	Magadan
+magas	6313621	43.22257	44.77261	Europe/Moscow	Магас	Magas	Maqas	Магас	Магас	Магас	Magas	Magas
+murmansk	524305	68.96778	33.09922	Europe/Moscow	Мурманск	Murmansk	Murmansk	Мурманск	Мурманск	Мурманск	Murmansk	Murmansk
+naryan_mar	523392	67.63869	53.00371	Europe/Moscow	Нарьян-Мар	Naryan-Mar	Nar'yan-Mar	Нарьян-Мар	Нарьян-Мар	Нарьян-Мар	Nar'yan-Mar	Nar'yan-Mar
+omsk	1496153	54.99244	73.36859	Asia/Omsk	Омск	Omsk	Omsk	Омбы	Омск	Омск	Omsk	Omsk
+orenburg	515003	51.76712	55.09883	Asia/Yekaterinburg	Оренбург	Orenburg	Orenburq	Орынбор	Орунбор	Оренбург	Orenburg	Orenburg
+orel	515012	52.96879	36.0791	Europe/Moscow	Орёл	Oryol	Orel	Орёл	Орёл	Орёл	Orel	Orel
+penza	511565	53.19568	45.01075	Europe/Moscow	Пенза	Penza	Penza	Пенза	Пенза	Пенза	Penza	Penza
+perm	511196	58.01046	56.25017	Asia/Yekaterinburg	Пермь	Perm	Perm	Пермь	Пермь	Пермь	Perm	Perm
+petrozavodsk	509820	61.78491	34.34691	Europe/Moscow	Петрозаводск	Petrozavodsk	Petrozavodsk	Петрозаводск	Петрозаводск	Петрозаводск	Petrozavodsk	Petrozavodsk
+petropavlovsk_kamchatsky	2122104	53.06393	158.62751	Asia/Kamchatka	Петропавловск-Камчатский	Petropavlovsk-Kamchatskiy	Petropavlovsk-Kamçatski	Петропавловск-Камчатский	Петропавловск-Камчатский	Петропавловск-Камчатский	Petropavlovsk-Kamçatski	Petropavlovsk-Kamchatsky
+pskov	504341	57.81922	28.33181	Europe/Moscow	Псков	Pskov	Pskov	Псков	Псков	Псков	Pskov	Pskov
+rostov_on_don	501175	47.21997	39.70769	Europe/Moscow	Ростов-на-Дону	Rostov-on-Don	Rostov-na-Donu	Ростов-на-Дону	Ростов-на-Дону	Ростов-на-Дону	Rostov-na-Donu	Rostov-Don
+ryazan	500096	54.62696	39.70415	Europe/Moscow	Рязань	Ryazan	Ryazan	Рязань	Рязань	Рязань	Ryazan	Ryazan
+salekhard	1493197	66.53373	66.60955	Asia/Yekaterinburg	Салехард	Salekhard	Salekhard	Салехард	Салехард	Салехард	Salekhard	Salekhard
+saransk	498698	54.18485	45.17166	Europe/Moscow	Саранск	Saransk	Saransk	Саранск	Саранск	Саранск	Saransk	Saransk
+saratov	498677	51.54048	45.9901	Europe/Saratov	Саратов	Saratov	Saratov	Саратов	Саратов	Саратов	Saratov	Saratov
+smolensk	491687	54.77826	32.05088	Europe/Moscow	Смоленск	Smolensk	Smolensk	Смоленск	Смоленск	Смоленск	Smolensk	Smolensk
+stavropol	487846	45.03442	41.9642	Europe/Moscow	Ставрополь	Stavropol	Stavropol	Ставрополь	Ставрополь	Ставропол	Stavropol	Stavropol
+syktyvkar	485239	61.66393	50.8163	Europe/Moscow	Сыктывкар	Syktyvkar	Sıktıvkar	Сыктывкар	Сыктывкар	Сиктивкар	Sıktıvkar	Siktivkar
+tambov	484646	52.73632	41.44102	Europe/Moscow	Тамбов	Tambov	Tambov	Тамбов	Тамбов	Тамбов	Tambov	Tambov
+tver	480060	56.85836	35.90057	Europe/Moscow	Тверь	Tver'			Тверь	Твер		
+tomsk	1489425	56.50049	84.98216	Asia/Tomsk	Томск	Tomsk	Tomsk	Томськ	Томськ	Томск	Tomsk	Tomsk
+tula	480562	54.19609	37.61822	Europe/Moscow	Тула	Tula	Tula		Тула	Тула		
+tyumen	1488754	57.15222	65.52722	Asia/Yekaterinburg	Тюмень	Tyumen	Tümen	Түмен	Түмень	Тюмень	Tümen	Tyumen
+ulan_ude	2014407	51.82648	107.59979	Asia/Irkutsk	Улан-Удэ	Ulan-Ude	Ulan-Ude	Улан-Удэ	Улан-Удэ	Улан-Удэ	Ulan Ude	Ulan-Ude
+ulyanovsk	479123	54.32824	48.38657	Europe/Ulyanovsk	Ульяновск	Ulyanovsk		Сімбір				
+khabarovsk	2022890	48.46204	135.0971	Asia/Vladivostok	Хабаровск	Khabarovsk	Khabarovsk	Хабаровск	Хабаровск	Хабаровск	Habarovsk	Xabarovsk
+khanty_mansiysk	1503772	61.00187	69.02728	Asia/Yekaterinburg	Ханты-Мансийск	Khanty-Mansiysk	Xanti-Mansi	Ханты-Мансийск	Ханты-Мансийск	Ханти-Мансийск	Hantı-Mansiysk	Xanti-mansiysk
+cheboksary	569696	56.13218	47.246	Europe/Moscow	Чебоксары	Cheboksary	Çeboksarı	Чебоксары	Чебоксары	Чебоксарҳо	Şupaşkar	Cheboksari
+chelyabinsk	1508291	55.1611	61.42877	Asia/Yekaterinburg	Челябинск	Chelyabinsk	Çelyabinsk	Челябі	Челябинск	Чилобинск	Çelyabinsk	Chelyabinsk
+chita	2025339	52.04311	113.49171	Asia/Chita	Чита	Chita	Çita	Чита	Чита	Чита	Çita	Chita
+elista	563514	46.30794	44.25537	Europe/Moscow	Элиста	Elista	Elista	Элиста	Элиста	Элиста	Elista	Elista
+yuzhno_sakhalinsk	2119441	46.9543	142.73559	Asia/Sakhalin	Южно-Сахалинск	Yuzhno-Sakhalinsk	Yujno-Saxalinsk	Оңтүстік-Сахалинск	Түндүк-Сахалинск	Юҷно-Сахалинск	Yujno-Sahalinsk	Yuzhno-Sakhalinsk
+yakutsk	2013159	62.03114	129.72288	Asia/Yakutsk	Якутск	Yakutsk	Yakutsk	Якутск	Якутск	Якутск	Yakutsk	Yakutsk
+yaroslavl	468902	57.62987	39.87368	Europe/Moscow	Ярославль	Yaroslavl						

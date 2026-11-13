@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qm_saved_here">Suradagi saqlanganlar</string>
+    <string name="qm_in_surah">Bu surada saqlangan oyatlar: %1$d</string>
+    <string name="qm_your_note">Qaydingiz</string>
+    <string name="qm_empty">Bu suraning xatcho‘plari va qaydlari shu yerda ko‘rinadi. Ularni oyat menyusidan qo‘shing.</string>
+    <string name="qm_go_to_ayah">Oyatga o‘tish</string>
+    <string name="qm_open_note">Qaydni ochish</string>
+</resources>

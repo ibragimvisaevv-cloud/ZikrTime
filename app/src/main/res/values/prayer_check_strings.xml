@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prayer_check_title">Prayer check reminders</string>
+    <string name="prayer_check_hint">If a prayer has no mark, remind me once, silently. Tap the reminder to open that prayer in my journal.</string>
+    <string name="prayer_check_delay">After the prayer starts</string>
+    <string name="prayer_check_minutes">%1$d min</string>
+    <string name="prayer_check_progress">Enable personal progress to use these reminders.</string>
+    <string name="prayer_check_notification">You have not marked %1$s yet.</string>
+    <string name="prayer_check_open">Open journal</string>
+</resources>

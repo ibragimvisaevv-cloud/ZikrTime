@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qp_index_title">Қасиетті Құран</string>
+    <string name="qp_reading_mode">Оқу</string>
+    <string name="qp_translation_mode">Аудармамен</string>
+    <string name="qp_selected_ayah">Аят %1$d:%2$d</string>
+    <string name="qp_ayah_menu">%1$d-аят әрекеттері</string>
+    <string name="qp_clear_selection">Таңдауды алып тастау</string>
+    <string name="qp_selection_hint">Әрекеттерді ашу үшін аятты басыңыз</string>
+    <string name="qp_copied">Аят көшірілді</string>
+    <string name="qp_note_saved">Жазба сақталды</string>
+    <string name="qp_discard_note_title">Өзгерістерді сақтамау керек пе?</string>
+    <string name="qp_discard_note_body">Жазбадағы өзгерістер жоғалады.</string>
+    <string name="qp_keep_editing">Өңдеуді жалғастыру</string>
+    <string name="qp_discard">Сақтамау</string>
+    <string name="qp_delete_note">Жазбаны жою</string>
+    <string name="qp_delete_note_title">Осы жазба жойылсын ба?</string>
+    <string name="qp_delete_note_body">Жазбаның мәтіні жойылады. Бетбелгі сақталады.</string>
+    <string name="qp_note_deleted">Жазба жойылды</string>
+    <string name="qp_delete">Жою</string>
+    <string name="qp_copy_arabic">Арабша мәтін</string>
+    <string name="qp_copy_translation">Аударма</string>
+    <string name="qp_copy_both">Арабша мәтін және аударма</string>
+    <string name="qp_copy_title">Аятты көшіру</string>
+    <string name="qp_note_counter">%1$d / 2000</string>
+    <string name="qp_action_close">Оқуға оралу</string>
+    <string name="qp_surah_total">%1$d сүре</string>
+    <string name="qp_index_subtitle">Арабша мәтін және мағыналар аудармасы</string>
+    <string name="qp_clear_search">Іздеуді тазалау</string>
+    <string name="qp_bookmark_short">Бетбелгі</string>
+    <string name="qp_copy_short">Көшіру</string>
+    <string name="qp_note_delete_cancel">Бас тарту</string>
+</resources>

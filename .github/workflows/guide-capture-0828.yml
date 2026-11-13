@@ -1,0 +1,51 @@
+name: Capture real guide screens 0.8.28
+on:
+  push:
+    branches: [codex/quran-reader-0814]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: guide-capture-0828-${{ contains(github.event.head_commit.message, '[guide-capture-0828]') && github.ref || github.run_id }}
+  cancel-in-progress: true
+jobs:
+  capture:
+    if: ${{ contains(github.event.head_commit.message, '[guide-capture-0828]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      GUIDE_APK_SOURCE_SHA: b755cffca95923b63c75f3b3c105f2c954f9e4f9
+      GUIDE_APK_SOURCE_RUN: '42426787159'
+      GUIDE_CAPTURE_REUSE_RUN: '42467593443'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download previously verified app without rebuilding
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 42426787159 --repo "$GITHUB_REPOSITORY" -n audio-verified-inputs -D .
+          echo 'f48bfbfaed2b19bef31c7adc307cdcce016b5c511a74f429d6a73bf82ea09dec  app/build/outputs/apk/debug/app-debug.apk' | sha256sum --check
+          gh run download "$GUIDE_CAPTURE_REUSE_RUN" --repo "$GITHUB_REPOSITORY" -n real-guide-screens-0828 -D prior-capture
+          cp -a prior-capture/guide-assets prior-capture/screens ci-out/
+          cp prior-capture/guide-capture-provenance.json ci-out/
+      - run: python3 -m pip install 'Pillow>=11,<13'
+      - name: Enable emulator acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-guide.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Capture existing unchanged screens on Android 15
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -camera-back none -camera-front none
+          script: adb install -r app/build/outputs/apk/debug/app-debug.apk && python3 tools/ci/guide_capture_0828.py resume-common
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: real-guide-screens-0828
+          path: |
+            ci-out/

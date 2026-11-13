@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="guide_visual_example">Экрани барнома · намуна ба русӣ</string>
+    <string name="guide_visual_enlarge">Калон кардан</string>
+    <string name="guide_visual_reset">Тамоми экран</string>
+    <string name="guide_visual_zoom_hint">Барои калон кардан ду ангуштро аз ҳам дур кунед. Барои дидани ҷузъиёт тасвирро ҳаракат диҳед.</string>
+    <string name="guide_visual_unavailable">Тасвири экран кушода нашуд. Бо тугмаи поён худи бахшро кушоед.</string>
+    <string name="guide_visual_highlight">Тугмаи ҷудошуда барои амали %1$d</string>
+    <string name="guide_visual_step">Амали %1$d аз %2$d</string>
+    <string name="guide_visual_skip">Гузарондан</string>
+    <string name="guide_visual_open">Дар барнома кушодан</string>
+    <string name="guide_visual_intro">Инҳо тасвирҳои худи барномаанд. 1, 2 ё 3-ро пахш кунед: тугмаи лозимиро нишон медиҳем. Ҳар тасвирро калон кардан мумкин аст.</string>
+    <string name="guide_visual_quran_title">Қуръон: хондан ва шунидан</string>
+    <string name="guide_visual_quran_summary">Хондан, шунидан ва оятҳои сабтшуда</string>
+    <string name="guide_visual_quran_control1">Хондан ё шунидан</string>
+    <string name="guide_visual_quran_control2">Такрори оят</string>
+    <string name="guide_visual_quran_control3">Хатчӯбҳо ва қайдҳо</string>
+    <string name="guide_visual_quran_step1">Дар бахши «Қуръон» хондан ё шуниданро интихоб кунед. Барои хондан сураи лозимиро пахш кунед.</string>
+    <string name="guide_visual_quran_step2">Оятро пахш карда, «Шунидани ин оят»-ро интихоб кунед. Дар панел суръат ва шумораи такрорро интихоб кунед.</string>
+    <string name="guide_visual_quran_step3">Дар ҳамин панели оят поён ҳаракат кунед: ҷойро сабт ё қайд нависед. Оят дар матн ишорашуда мемонад.</string>
+</resources>

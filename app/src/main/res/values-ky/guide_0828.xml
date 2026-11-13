@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="guide_visual_example">Колдонмо экраны · орусча үлгү</string>
+    <string name="guide_visual_enlarge">Чоңойтуу</string>
+    <string name="guide_visual_reset">Экранга батыруу</string>
+    <string name="guide_visual_zoom_hint">Чоңойтуу үчүн эки манжаңызды алыстатыңыз. Толук көрүү үчүн сүрөттү жылдырыңыз.</string>
+    <string name="guide_visual_unavailable">Экран сүрөтү ачылган жок. Төмөнкү баскыч менен бөлүмдү ача аласыз.</string>
+    <string name="guide_visual_highlight">%1$d-аракет үчүн белгиленген баскыч</string>
+    <string name="guide_visual_step">%2$d аракеттин %1$d-си</string>
+    <string name="guide_visual_skip">Өткөрүү</string>
+    <string name="guide_visual_open">Колдонмодо ачуу</string>
+    <string name="guide_visual_intro">Бул — колдонмонун чыныгы экрандары. Керектүү баскычты көрүү үчүн 1, 2, 3тү басыңыз. Ар бир сүрөттү чоңойтууга болот.</string>
+    <string name="guide_visual_quran_title">Куран: окуу жана угуу</string>
+    <string name="guide_visual_quran_summary">Окуу, угуу жана сакталган аяттар</string>
+    <string name="guide_visual_quran_control1">Окуу же угуу</string>
+    <string name="guide_visual_quran_control2">Аятты кайталоо</string>
+    <string name="guide_visual_quran_control3">Кыстармалар жана эскертмелер</string>
+    <string name="guide_visual_quran_step1">«Куран» бөлүмүндө «Окуу» же «Угуу» тандаңыз. Окуу үчүн керектүү сүрөнү басыңыз.</string>
+    <string name="guide_visual_quran_step2">Аятты басып, «Бул аятты угуу» тандаңыз. Панелде ылдамдык менен кайталоо санын белгилеңиз.</string>
+    <string name="guide_visual_quran_step3">Ушул аят панелин ылдый жылдырыңыз: ордун сактап же эскертме жаза аласыз. Аят текстте белгиленип калат.</string>
+</resources>

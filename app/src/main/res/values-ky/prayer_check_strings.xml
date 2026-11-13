@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prayer_check_title">Намазды белгилөөнү эскертүү</string>
+    <string name="prayer_check_hint">Намаз белгиленбесе, бир жолу үнсүз эскертебиз. Эскертмени басканда журналдагы ошол намаз ачылат.</string>
+    <string name="prayer_check_delay">Намаз убактысы киргенден кийин</string>
+    <string name="prayer_check_minutes">%1$d мүн</string>
+    <string name="prayer_check_progress">Бул эскертмелер үчүн жеке жетишкендиктерди күйгүзүңүз.</string>
+    <string name="prayer_check_notification">Сиз %1$s намазын белгилей элексиз.</string>
+    <string name="prayer_check_open">Журналды ачуу</string>
+</resources>

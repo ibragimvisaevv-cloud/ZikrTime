@@ -180,8 +180,9 @@ private fun BlockScreen(reason: BlockReason, onClose: () -> Unit, onBackToApp: (
     val context = LocalContext.current
     var mode by remember(reason) { mutableStateOf<BlockMode>(BlockMode.Info) }
     val scroll = rememberScrollState()
-    val questionIndex = LearningStore.session("blocking")?.index
-    LaunchedEffect(mode, questionIndex) { scroll.scrollTo(0) }
+    val session = LearningStore.session("blocking")
+    val sessionKey = "${LearningStore.selectedLevel?.id}-${session?.id}-${session?.index}"
+    LaunchedEffect(mode, sessionKey) { scroll.scrollTo(0) }
 
     Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Emerald, EmeraldDeep)))) {
         com.zikrtime.app.ui.SceneBackdrop(Modifier.fillMaxSize(), night = true)

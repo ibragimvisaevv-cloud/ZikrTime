@@ -1,0 +1,3696 @@
+[
+  {
+    "id": "l3n_dream_bodies",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 12:4",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "sourceVerses": [
+      "12:4"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие небесные тела и действие соединены во сне Юсуфа в 12:4?",
+        "options": [
+          "Одиннадцать звёзд, солнце и луна падают ниц",
+          "Двенадцать звёзд, солнце и луна падают ниц",
+          "Одиннадцать звёзд вращаются вокруг луны",
+          "Семь звёзд и солнце скрываются за луной"
+        ],
+        "info": "Юсуф описывает одиннадцать звёзд вместе с солнцем и луной, склонившимися перед ним."
+      },
+      "en": {
+        "q": "Which bodies and action appear together in Yusuf's dream in 12:4?",
+        "options": [
+          "Eleven stars, the sun and moon prostrate",
+          "Twelve stars, the sun and moon prostrate",
+          "Eleven stars circle the moon",
+          "Seven stars and the sun hide behind the moon"
+        ],
+        "info": "Yusuf describes eleven stars together with the sun and moon bowing before him."
+      },
+      "uz": {
+        "q": "12:4 da Yusufning tushida qaysi jismlar va harakat birga keladi?",
+        "options": [
+          "O‘n bir yulduz, quyosh va oy sajda qiladi",
+          "O‘n ikki yulduz, quyosh va oy sajda qiladi",
+          "O‘n bir yulduz oy atrofida aylanadi",
+          "Yetti yulduz va quyosh oy ortida yashirinadi"
+        ],
+        "info": "Yusuf o‘n bir yulduz, quyosh va oy unga ta’zim qilganini aytadi."
+      },
+      "tg": {
+        "q": "Дар хоби Юсуф дар 12:4 кадом ҷирмҳо ва амал якҷо омадаанд?",
+        "options": [
+          "Ёздаҳ ситора, офтобу моҳ саҷда мекунанд",
+          "Дувоздаҳ ситора, офтобу моҳ саҷда мекунанд",
+          "Ёздаҳ ситора гирди моҳ мегарданд",
+          "Ҳафт ситора ва офтоб паси моҳ пинҳон мешаванд"
+        ],
+        "info": "Юсуф ёздаҳ ситораро ҳамроҳи офтобу моҳ дар ҳоли саҷда назди худ тасвир мекунад."
+      },
+      "kk": {
+        "q": "12:4-тегі Жүсіптің түсінде қандай денелер мен әрекет бірге аталған?",
+        "options": [
+          "Он бір жұлдыз, күн мен ай сәжде етеді",
+          "Он екі жұлдыз, күн мен ай сәжде етеді",
+          "Он бір жұлдыз айды айналады",
+          "Жеті жұлдыз бен күн ай артына жасырынады"
+        ],
+        "info": "Жүсіп он бір жұлдыздың, күн мен айдың өзіне тағзым еткенін айтады."
+      },
+      "ky": {
+        "q": "12:4 аятындагы Жусуптун түшүндө кайсы нерселер жана аракет бирге айтылат?",
+        "options": [
+          "Он бир жылдыз, күн жана ай сажда кылат",
+          "Он эки жылдыз, күн жана ай сажда кылат",
+          "Он бир жылдыз айды айланат",
+          "Жети жылдыз менен күн ай артына жашынат"
+        ],
+        "info": "Жусуп он бир жылдыздын, күн менен айдын өзүнө таазим кылганын айтат."
+      },
+      "az": {
+        "q": "12:4-də Yusifin yuxusunda hansı cisimlər və hərəkət birlikdədir?",
+        "options": [
+          "On bir ulduz, günəş və ay səcdə edir",
+          "On iki ulduz, günəş və ay səcdə edir",
+          "On bir ulduz ayın ətrafında dövr edir",
+          "Yeddi ulduz və günəş ayın arxasında gizlənir"
+        ],
+        "info": "Yusif on bir ulduzun, günəşin və ayın qarşısında səcdəsini təsvir edir."
+      },
+      "tr": {
+        "q": "12:4'te Yûsuf'un rüyasında hangi gök cisimleri ve eylem birliktedir?",
+        "options": [
+          "On bir yıldız, güneş ve ay secde eder",
+          "On iki yıldız, güneş ve ay secde eder",
+          "On bir yıldız ayın çevresinde döner",
+          "Yedi yıldız ve güneş ayın ardına gizlenir"
+        ],
+        "info": "Yûsuf, on bir yıldızla güneşin ve ayın önünde eğildiğini anlatır."
+      }
+    }
+  },
+  {
+    "id": "l3n_dream_warning",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 12:6",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "sourceVerses": [
+      "12:6"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие три обещания Якуб перечисляет Юсуфу после рассказа о сне в 12:6?",
+        "options": [
+          "Избрание, толкование снов, завершение милости ему и роду Якуба",
+          "Избрание, толкование снов, завершение милости ему и всем египтянам",
+          "Избрание, управление хранилищами, завершение милости ему и роду Якуба",
+          "Царская власть, толкование снов, завершение милости ему и роду Якуба"
+        ],
+        "info": "Здесь названы избрание, обучение толкованию и завершение милости Юсуфу и роду Якуба."
+      },
+      "en": {
+        "q": "Which three promises does Yaqub list after Yusuf's dream in 12:6?",
+        "options": [
+          "Being chosen, interpreting dreams, completed favour to him and Yaqub's family",
+          "Being chosen, interpreting dreams, completed favour to him and all Egyptians",
+          "Being chosen, managing storehouses, completed favour to him and Yaqub's family",
+          "Kingship, interpreting dreams, completed favour to him and Yaqub's family"
+        ],
+        "info": "The promises concern being chosen, learning interpretation, and completed favour to Yusuf and Yaqub's family."
+      },
+      "uz": {
+        "q": "12:6 da Ya’qub Yusufning tushidan keyin qaysi uch va’dani sanaydi?",
+        "options": [
+          "Tanlanish, tush ta’biri, unga va Ya’qub oilasiga ne’matning to‘liq berilishi",
+          "Tanlanish, tush ta’biri, unga va barcha misrliklarga ne’matning to‘liq berilishi",
+          "Tanlanish, omborlarni boshqarish, unga va Ya’qub oilasiga ne’matning to‘liq berilishi",
+          "Podshohlik, tush ta’biri, unga va Ya’qub oilasiga ne’matning to‘liq berilishi"
+        ],
+        "info": "Bu yerda tanlanish, ta’birni o‘rganish va Yusuf hamda Ya’qub oilasiga ne’matning to‘liq berilishi aytiladi."
+      },
+      "tg": {
+        "q": "Яъқуб баъди хоби Юсуф дар 12:6 кадом се ваъдаро меорад?",
+        "options": [
+          "Интихоб, таъбири хоб, комил шудани неъмат ба ӯ ва хонадони Яъқуб",
+          "Интихоб, таъбири хоб, комил шудани неъмат ба ӯ ва ҳамаи мисриён",
+          "Интихоб, идораи анборҳо, комил шудани неъмат ба ӯ ва хонадони Яъқуб",
+          "Подшоҳӣ, таъбири хоб, комил шудани неъмат ба ӯ ва хонадони Яъқуб"
+        ],
+        "info": "Ин ҷо интихоб, омӯхтани таъбир ва комил шудани неъмат ба Юсуфу хонадони Яъқуб зикр мешавад."
+      },
+      "kk": {
+        "q": "12:6-да Жақып Жүсіптің түсінен кейін қандай үш уәдені атайды?",
+        "options": [
+          "Таңдалу, түс жору, оған және Жақып әулетіне нығметтің толық берілуі",
+          "Таңдалу, түс жору, оған және барлық мысырлықтарға нығметтің толық берілуі",
+          "Таңдалу, қоймаларды басқару, оған және Жақып әулетіне нығметтің толық берілуі",
+          "Патшалық, түс жору, оған және Жақып әулетіне нығметтің толық берілуі"
+        ],
+        "info": "Мұнда таңдалу, түс жоруды үйрену және Жүсіп пен Жақып әулетіне нығметтің толық берілуі айтылады."
+      },
+      "ky": {
+        "q": "12:6-да Якуб Жусуптун түшүнөн кийин кайсы үч убаданы айтат?",
+        "options": [
+          "Тандалуу, түш жоруу, ага жана Якубдун үй-бүлөсүнө нээматтын толук берилиши",
+          "Тандалуу, түш жоруу, ага жана бардык мисирликтерге нээматтын толук берилиши",
+          "Тандалуу, кампаларды башкаруу, ага жана Якубдун үй-бүлөсүнө нээматтын толук берилиши",
+          "Падышалык, түш жоруу, ага жана Якубдун үй-бүлөсүнө нээматтын толук берилиши"
+        ],
+        "info": "Бул жерде тандалуу, түш жорууну үйрөнүү жана Жусуп менен Якубдун үй-бүлөсүнө нээматтын толук берилиши айтылат."
+      },
+      "az": {
+        "q": "12:6-da Yaqub Yusifin yuxusundan sonra hansı üç vədi sadalayır?",
+        "options": [
+          "Seçilmək, yuxu yozmaq, ona və Yaqub ailəsinə nemətin tamamlanması",
+          "Seçilmək, yuxu yozmaq, ona və bütün misirlilərə nemətin tamamlanması",
+          "Seçilmək, anbarları idarə etmək, ona və Yaqub ailəsinə nemətin tamamlanması",
+          "Padşahlıq, yuxu yozmaq, ona və Yaqub ailəsinə nemətin tamamlanması"
+        ],
+        "info": "Burada seçilmək, yozumu öyrənmək və Yusiflə Yaqub ailəsinə nemətin tamamlanması qeyd olunur."
+      },
+      "tr": {
+        "q": "12:6'da Ya‘kūb, Yûsuf'un rüyasından sonra hangi üç vaadi sıralar?",
+        "options": [
+          "Seçilme, rüya yorumu, nimetin ona ve Ya‘kūb ailesine tamamlanması",
+          "Seçilme, rüya yorumu, nimetin ona ve bütün Mısırlılara tamamlanması",
+          "Seçilme, depoları yönetme, nimetin ona ve Ya‘kūb ailesine tamamlanması",
+          "Hükümdarlık, rüya yorumu, nimetin ona ve Ya‘kūb ailesine tamamlanması"
+        ],
+        "info": "Burada seçilme, yorumun öğretilmesi ve nimetin Yûsuf ile Ya‘kūb ailesine tamamlanması anılır."
+      }
+    }
+  },
+  {
+    "id": "l3n_brother_alternative",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 12:9, 12:10",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "sourceVerses": [
+      "12:9",
+      "12:10"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какое предложение одного брата отличается от убийства или изгнания Юсуфа в 12:9–10?",
+        "options": [
+          "Оставить в колодце, чтобы подобрал караван",
+          "Отправить к царю, чтобы тот назначил службу",
+          "Оставить у пастухов, чтобы те дали работу",
+          "Вернуть отцу, чтобы тот сам решил"
+        ],
+        "info": "Один из братьев предлагает колодец и ожидает, что Юсуфа заберут проходящие путники."
+      },
+      "en": {
+        "q": "What alternative to killing or banishing Yusuf is proposed in 12:9–10?",
+        "options": [
+          "Leave him in the well for a caravan to find",
+          "Send him to the king for appointment",
+          "Leave him with shepherds for work",
+          "Return him to his father for a decision"
+        ],
+        "info": "One brother suggests the well, expecting passing travellers to take Yusuf."
+      },
+      "uz": {
+        "q": "12:9–10 da Yusufni o‘ldirish yoki haydash o‘rniga qanday taklif aytilgan?",
+        "options": [
+          "Karvon olib ketishi uchun quduqda qoldirish",
+          "Vazifa berishi uchun podshohga yuborish",
+          "Ish berishi uchun cho‘ponlarga topshirish",
+          "O‘zi hal qilishi uchun otasiga qaytarish"
+        ],
+        "info": "Birodarlaridan biri quduqni taklif qilib, Yusufni yo‘lovchilar olib ketishini kutadi."
+      },
+      "tg": {
+        "q": "Дар 12:9–10 ба ҷойи куштан ё дур кардани Юсуф чӣ пешниҳод мешавад?",
+        "options": [
+          "Дар чоҳ мондан, то корвон ӯро бигирад",
+          "Назди подшоҳ фиристодан барои вазифа",
+          "Ба чӯпонон супоридан барои кор",
+          "Назди падар баргардондан барои қарор"
+        ],
+        "info": "Яке аз бародарон чоҳро пешниҳод мекунад, то мусофирон Юсуфро бигиранд."
+      },
+      "kk": {
+        "q": "12:9–10-да Жүсіпті өлтіру не алыстатудың орнына не ұсынылады?",
+        "options": [
+          "Керуен тауып алсын деп құдықта қалдыру",
+          "Қызмет берсін деп патшаға жіберу",
+          "Жұмыс берсін деп қойшыларға беру",
+          "Өзі шешсін деп әкесіне қайтару"
+        ],
+        "info": "Бір бауыры құдықты ұсынып, Жүсіпті жолаушылар алып кетеді деп күтеді."
+      },
+      "ky": {
+        "q": "12:9–10-до Жусупту өлтүрүү же айдоонун ордуна эмне сунушталат?",
+        "options": [
+          "Кербен алып кетсин деп кудукта калтыруу",
+          "Кызмат берсин деп падышага жөнөтүү",
+          "Иш берсин деп койчуларга берүү",
+          "Өзү чечсин деп атасына кайтаруу"
+        ],
+        "info": "Бир агасы кудукту сунуштап, Жусупту жолоочулар алып кетерин күтөт."
+      },
+      "az": {
+        "q": "12:9–10-da Yusifi öldürmək və ya uzaqlaşdırmaq əvəzinə nə təklif olunur?",
+        "options": [
+          "Karvan tapsın deyə quyuda qoymaq",
+          "Vəzifə versin deyə padşaha göndərmək",
+          "İş versinlər deyə çobanlara vermək",
+          "Qərar versin deyə atasına qaytarmaq"
+        ],
+        "info": "Bir qardaş quyu təklif edərək yolçuların Yusifi götürəcəyini gözləyir."
+      },
+      "tr": {
+        "q": "12:9–10'da Yûsuf'u öldürmek veya uzaklaştırmak yerine ne önerilir?",
+        "options": [
+          "Bir kervan bulsun diye kuyuya bırakmak",
+          "Görev versin diye krala göndermek",
+          "İş versinler diye çobanlara bırakmak",
+          "Karar versin diye babasına döndürmek"
+        ],
+        "info": "Bir kardeş kuyuyu önerir ve yolcuların Yûsuf'u almasını bekler."
+      }
+    }
+  },
+  {
+    "id": "l3n_blood_patience",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 12:18",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "sourceVerses": [
+      "12:18"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как связаны рубаха и ответ отца в 12:18?",
+        "options": [
+          "Подложная кровь; прекрасное терпение и помощь Аллаха",
+          "Подложная кровь; жалоба о скорби только Аллаху и знание того, чего сыновья не знают",
+          "Разрыв рубахи сзади; прекрасное терпение и помощь Аллаха",
+          "Подложная кровь; приказ искать Юсуфа и не отчаиваться в милости Аллаха"
+        ],
+        "info": "Отец не принимает рассказ с подложной кровью и обращается к терпению и помощи Аллаха."
+      },
+      "en": {
+        "q": "How are the shirt and the father's response linked in 12:18?",
+        "options": [
+          "False blood; beautiful patience and Allah's help",
+          "False blood; grief complained of only to Allah and knowledge the sons lack",
+          "A tear at the back of the shirt; beautiful patience and Allah's help",
+          "False blood; an order to seek Yusuf and not despair of Allah's mercy"
+        ],
+        "info": "The father rejects the account supported by false blood, turning to patience and Allah's help."
+      },
+      "uz": {
+        "q": "12:18 da ko‘ylak va otaning javobi qanday bog‘langan?",
+        "options": [
+          "Soxta qon; go‘zal sabr va Allohning yordami",
+          "Soxta qon; dardini faqat Allohga aytish va o‘g‘illar bilmagan bilim",
+          "Ko‘ylakning orqadan yirtilishi; go‘zal sabr va Allohning yordami",
+          "Soxta qon; Yusufni izlash va Allohning rahmatidan umid uzmaslik buyrug‘i"
+        ],
+        "info": "Ota soxta qonli hikoyani qabul qilmay, sabr va Allohning yordamiga murojaat qiladi."
+      },
+      "tg": {
+        "q": "Дар 12:18 курта ва ҷавоби падар чӣ гуна пайванданд?",
+        "options": [
+          "Хуни сохта; сабри зебо ва ёрии Аллоҳ",
+          "Хуни сохта; шикояти андӯҳ танҳо ба Аллоҳ ва донише, ки писарон надоранд",
+          "Даридани пушти курта; сабри зебо ва ёрии Аллоҳ",
+          "Хуни сохта; фармони ҷустуҷӯи Юсуф ва ноумед нашудан аз раҳмати Аллоҳ"
+        ],
+        "info": "Падар нақли бо хуни сохтаро намепазирад ва ба сабру ёрии Аллоҳ рӯ меорад."
+      },
+      "kk": {
+        "q": "12:18-де көйлек пен әкенің жауабы қалай байланысқан?",
+        "options": [
+          "Жалған қан; көркем сабыр және Алланың көмегі",
+          "Жалған қан; қайғысын тек Аллаға шағу және ұлдары білмейтін білім",
+          "Көйлектің артынан жыртылуы; көркем сабыр және Алланың көмегі",
+          "Жалған қан; Жүсіпті іздеу және Алланың мейірімінен үміт үзбеу бұйрығы"
+        ],
+        "info": "Әкесі жалған қанмен дәлелденген әңгімені қабылдамай, сабыр мен Алланың көмегіне жүгінеді."
+      },
+      "ky": {
+        "q": "12:18-де көйнөк менен атанын жообу кандай байланышкан?",
+        "options": [
+          "Жалган кан; көркөм сабыр жана Аллахтын жардамы",
+          "Жалган кан; кайгысын Аллахка гана айтуу жана уулдары билбеген билим",
+          "Көйнөктүн артынан жыртылышы; көркөм сабыр жана Аллахтын жардамы",
+          "Жалган кан; Жусупту издөө жана Аллахтын ырайымынан үмүт үзбөө буйругу"
+        ],
+        "info": "Атасы жалган кан менен айтылган сөздү кабыл албай, сабырга жана Аллахтын жардамына таянат."
+      },
+      "az": {
+        "q": "12:18-də köynək və atanın cavabı necə əlaqələnir?",
+        "options": [
+          "Yalançı qan; gözəl səbir və Allahın köməyi",
+          "Yalançı qan; kədərini yalnız Allaha bildirmək və oğulların bilmədiyini bilmək",
+          "Köynəyin arxadan cırılması; gözəl səbir və Allahın köməyi",
+          "Yalançı qan; Yusifi axtarmaq və Allahın rəhmətindən ümid kəsməmək əmri"
+        ],
+        "info": "Ata yalançı qanla əsaslandırılan sözləri qəbul etməyib səbrə və Allahın köməyinə yönəlir."
+      },
+      "tr": {
+        "q": "12:18'de gömlek ile babanın cevabı nasıl ilişkilidir?",
+        "options": [
+          "Sahte kan; güzel sabır ve Allah'ın yardımı",
+          "Sahte kan; kederi yalnız Allah'a arz etme ve oğulların bilmediğini bilme",
+          "Gömleğin arkadan yırtılması; güzel sabır ve Allah'ın yardımı",
+          "Sahte kan; Yûsuf'u arama ve Allah'ın rahmetinden ümit kesmeme emri"
+        ],
+        "info": "Baba sahte kanla desteklenen anlatımı kabul etmez; sabra ve Allah'ın yardımına yönelir."
+      }
+    }
+  },
+  {
+    "id": "l3n_caravan_discovery",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 12:19",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "sourceVerses": [
+      "12:19"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Кто обнаружил Юсуфа и как затем с ним поступили в 12:19?",
+        "options": [
+          "Водонос опустил ведро; его скрыли как товар",
+          "Пастух услышал голос; его отвели к отцу",
+          "Стражник осмотрел колодец; его доставили царю",
+          "Купец увидел рубаху; его отпустили домой"
+        ],
+        "info": "Караван послал водоноса; после находки мальчика скрыли как торговый товар."
+      },
+      "en": {
+        "q": "Who found Yusuf, and what then happened in 12:19?",
+        "options": [
+          "A water-drawer lowered a bucket; he was hidden as merchandise",
+          "A shepherd heard a voice; he was taken to his father",
+          "A guard inspected the well; he was brought to the king",
+          "A merchant saw the shirt; he was sent home"
+        ],
+        "info": "The caravan sent a water-drawer; after the discovery, the boy was concealed as merchandise."
+      },
+      "uz": {
+        "q": "12:19 da Yusufni kim topdi va keyin nima bo‘ldi?",
+        "options": [
+          "Suvchi chelak tushirdi; uni mol sifatida yashirishdi",
+          "Cho‘pon ovoz eshitdi; uni otasiga olib borishdi",
+          "Soqchi quduqni ko‘rdi; uni podshohga keltirishdi",
+          "Savdogar ko‘ylakni ko‘rdi; uni uyiga jo‘natishdi"
+        ],
+        "info": "Karvon suvchi yubordi; topilgan bola keyin savdo moli sifatida yashirildi."
+      },
+      "tg": {
+        "q": "Дар 12:19 Юсуфро кӣ ёфт ва сипас чӣ шуд?",
+        "options": [
+          "Обкаш сатил андохт; ӯро ҳамчун мол пинҳон карданд",
+          "Чӯпон овоз шунид; ӯро назди падар бурданд",
+          "Посбон чоҳро дид; ӯро назди подшоҳ бурданд",
+          "Тоҷир куртаро дид; ӯро ба хона фиристоданд"
+        ],
+        "info": "Корвон обкаш фиристод; баъд писарро ҳамчун моли тиҷоратӣ пинҳон карданд."
+      },
+      "kk": {
+        "q": "12:19-да Жүсіпті кім тапты және кейін не болды?",
+        "options": [
+          "Сушы шелек түсірді; оны тауар ретінде жасырды",
+          "Қойшы дауыс естіді; оны әкесіне апарды",
+          "Күзетші құдықты қарады; оны патшаға жеткізді",
+          "Саудагер көйлекті көрді; оны үйіне жіберді"
+        ],
+        "info": "Керуен сушы жіберді; табылған баланы кейін сауда тауары ретінде жасырды."
+      },
+      "ky": {
+        "q": "12:19-до Жусупту ким тапкан жана андан кийин эмне болгон?",
+        "options": [
+          "Суу ташуучу чака түшүрдү; аны товар катары жашырышты",
+          "Койчу үн укту; аны атасына алып барышты",
+          "Кароолчу кудукту карады; аны падышага жеткиришти",
+          "Соодагер көйнөктү көрдү; аны үйүнө жиберишти"
+        ],
+        "info": "Кербен суу ташуучуну жиберген; бала табылгандан кийин товар катары жашырылган."
+      },
+      "az": {
+        "q": "12:19-da Yusifi kim tapdı və sonra nə oldu?",
+        "options": [
+          "Suçu vedrə endirdi; onu mal kimi gizlətdilər",
+          "Çoban səs eşitdi; onu atasına apardılar",
+          "Keşikçi quyunu yoxladı; onu padşaha gətirdilər",
+          "Tacir köynəyi gördü; onu evə göndərdilər"
+        ],
+        "info": "Karvan suçu göndərdi; tapıldıqdan sonra oğlanı ticarət malı kimi gizlətdilər."
+      },
+      "tr": {
+        "q": "12:19'da Yûsuf'u kim buldu, sonra ne oldu?",
+        "options": [
+          "Sucu kovayı indirdi; onu mal olarak gizlediler",
+          "Çoban ses duydu; onu babasına götürdüler",
+          "Nöbetçi kuyuyu inceledi; onu krala getirdiler",
+          "Tüccar gömleği gördü; onu eve gönderdiler"
+        ],
+        "info": "Kervan bir sucu gönderdi; çocuk bulununca ticaret malı olarak gizlendi."
+      }
+    }
+  },
+  {
+    "id": "l3n_sale_valuation",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 12:20",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "sourceVerses": [
+      "12:20"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как в 12:20 соотнесены цена Юсуфа и отношение продающих?",
+        "options": [
+          "Немного дирхемов; им не дорожили",
+          "Немного динаров; им не дорожили",
+          "Немного дирхемов; с ним не хотели расставаться",
+          "Высокая цена в дирхемах; им не дорожили"
+        ],
+        "info": "В аяте малая цена связана с тем, что продающие не придавали Юсуфу ценности."
+      },
+      "en": {
+        "q": "How are Yusuf's price and the sellers' attitude linked in 12:20?",
+        "options": [
+          "A few dirhams; they valued him little",
+          "A few dinars; they valued him little",
+          "A few dirhams; they were reluctant to part with him",
+          "A high price in dirhams; they valued him little"
+        ],
+        "info": "The low price is linked to the sellers placing little value on Yusuf."
+      },
+      "uz": {
+        "q": "12:20 da Yusufning narxi va sotuvchilarning munosabati qanday bog‘langan?",
+        "options": [
+          "Oz dirham; uni qadrlamadilar",
+          "Oz dinor; uni qadrlamadilar",
+          "Oz dirham; undan ayrilishni istamadilar",
+          "Dirhamda yuqori narx; uni qadrlamadilar"
+        ],
+        "info": "Past narx sotuvchilarning Yusufni qadrlamagani bilan bog‘langan."
+      },
+      "tg": {
+        "q": "Дар 12:20 нархи Юсуф ва муносибати фурӯшандагон чӣ гунаанд?",
+        "options": [
+          "Чанд дирҳам; ӯро қадр намекарданд",
+          "Чанд динор; ӯро қадр намекарданд",
+          "Чанд дирҳам; аз ӯ ҷудо шудан намехостанд",
+          "Нархи баланд бо дирҳам; ӯро қадр намекарданд"
+        ],
+        "info": "Нархи кам бо он пайванд аст, ки фурӯшандагон Юсуфро қадр намекарданд."
+      },
+      "kk": {
+        "q": "12:20-да Жүсіптің бағасы мен сатушылардың көзқарасы қалай байланысқан?",
+        "options": [
+          "Аз дирхам; оны бағаламады",
+          "Аз динар; оны бағаламады",
+          "Аз дирхам; онымен айырылғысы келмеді",
+          "Дирхаммен жоғары баға; оны бағаламады"
+        ],
+        "info": "Төмен баға сатушылардың Жүсіпті бағаламауымен байланысты."
+      },
+      "ky": {
+        "q": "12:20-до Жусуптун баасы менен сатуучулардын мамилеси кандай?",
+        "options": [
+          "Аз дирхам; аны баалашкан эмес",
+          "Аз динар; аны баалашкан эмес",
+          "Аз дирхам; андан ажырагысы келген эмес",
+          "Дирхам менен жогору баа; аны баалашкан эмес"
+        ],
+        "info": "Арзан баа сатуучулардын Жусупту баалабаганы менен байланышкан."
+      },
+      "az": {
+        "q": "12:20-də Yusifin qiyməti və satanların münasibəti necədir?",
+        "options": [
+          "Az dirhəm; ona dəyər vermirdilər",
+          "Az dinar; ona dəyər vermirdilər",
+          "Az dirhəm; ondan ayrılmaq istəmirdilər",
+          "Dirhəmlə yüksək qiymət; ona dəyər vermirdilər"
+        ],
+        "info": "Aşağı qiymət satanların Yusifə az dəyər verməsi ilə əlaqəlidir."
+      },
+      "tr": {
+        "q": "12:20'de Yûsuf'un bedeli ve satanların tutumu nasıl ilişkilidir?",
+        "options": [
+          "Az dirhem; ona değer vermiyorlardı",
+          "Az dinar; ona değer vermiyorlardı",
+          "Az dirhem; ondan ayrılmak istemiyorlardı",
+          "Dirhemle yüksek bedel; ona değer vermiyorlardı"
+        ],
+        "info": "Düşük bedel, satanların Yûsuf'a az değer vermesiyle ilişkilendirilir."
+      }
+    }
+  },
+  {
+    "id": "l3n_shirt_test",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 12:26, 12:27",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "sourceVerses": [
+      "12:26",
+      "12:27"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как свидетель связывает сторону разрыва рубахи с правдивостью сторон (12:26–27)?",
+        "options": [
+          "Спереди — права она; сзади — прав Юсуф",
+          "Спереди — прав Юсуф; сзади — права она",
+          "С любой стороны — прав Юсуф",
+          "С любой стороны — права она"
+        ],
+        "info": "Свидетель предлагает два условных вывода: передний разрыв в её пользу, задний — в пользу Юсуфа."
+      },
+      "en": {
+        "q": "How does the witness link the shirt's tear to truthfulness (12:26–27)?",
+        "options": [
+          "Front: she is truthful; back: Yusuf is truthful",
+          "Front: Yusuf is truthful; back: she is truthful",
+          "Either side: Yusuf is truthful",
+          "Either side: she is truthful"
+        ],
+        "info": "The witness gives two conditional conclusions: a front tear supports her, a back tear supports Yusuf."
+      },
+      "uz": {
+        "q": "Guvoh ko‘ylak yirtilgan tomonini rostgo‘ylikka qanday bog‘laydi (12:26–27)?",
+        "options": [
+          "Oldi — ayol rost; orqasi — Yusuf rost",
+          "Oldi — Yusuf rost; orqasi — ayol rost",
+          "Har ikki tomon — Yusuf rost",
+          "Har ikki tomon — ayol rost"
+        ],
+        "info": "Guvoh ikki shartli xulosa beradi: old yirtiq ayol foydasiga, orqa yirtiq Yusuf foydasiga."
+      },
+      "tg": {
+        "q": "Шоҳид тарафи даридани куртаро ба ростӣ чӣ гуна мепайвандад (12:26–27)?",
+        "options": [
+          "Пеш — зан рост мегӯяд; пас — Юсуф",
+          "Пеш — Юсуф рост мегӯяд; пас — зан",
+          "Ҳар ду тараф — Юсуф рост мегӯяд",
+          "Ҳар ду тараф — зан рост мегӯяд"
+        ],
+        "info": "Шоҳид ду хулосаи шартӣ медиҳад: даридани пеш ба нафъи зан, пас ба нафъи Юсуф."
+      },
+      "kk": {
+        "q": "Куәгер көйлектің жыртылған жағын шындықпен қалай байланыстырады (12:26–27)?",
+        "options": [
+          "Алды — әйел шын айтады; арты — Жүсіп",
+          "Алды — Жүсіп шын айтады; арты — әйел",
+          "Қай жағы болса да — Жүсіп шын айтады",
+          "Қай жағы болса да — әйел шын айтады"
+        ],
+        "info": "Куәгер екі шартты қорытынды ұсынады: алдыңғы жыртық әйелді, артқысы Жүсіпті растайды."
+      },
+      "ky": {
+        "q": "Күбө көйнөктүн жыртылган тарабын чындыкка кантип байланыштырат (12:26–27)?",
+        "options": [
+          "Алды — аял чын айтат; арты — Жусуп",
+          "Алды — Жусуп чын айтат; арты — аял",
+          "Кайсы тарабы болсо да — Жусуп чын айтат",
+          "Кайсы тарабы болсо да — аял чын айтат"
+        ],
+        "info": "Күбө эки шарттуу жыйынтык берет: алдынан жыртык аялды, артынан жыртык Жусупту ырастайт."
+      },
+      "az": {
+        "q": "Şahid köynəyin cırıldığı tərəfi doğruluqla necə əlaqələndirir (12:26–27)?",
+        "options": [
+          "Öndən — qadın doğrudur; arxadan — Yusif",
+          "Öndən — Yusif doğrudur; arxadan — qadın",
+          "Hər iki tərəfdən — Yusif doğrudur",
+          "Hər iki tərəfdən — qadın doğrudur"
+        ],
+        "info": "Şahid iki şərtli nəticə verir: ön cırıq qadını, arxa cırıq Yusifi dəstəkləyir."
+      },
+      "tr": {
+        "q": "Şahit gömleğin yırtıldığı tarafı doğrulukla nasıl ilişkilendirir (12:26–27)?",
+        "options": [
+          "Önden: kadın doğru; arkadan: Yûsuf doğru",
+          "Önden: Yûsuf doğru; arkadan: kadın doğru",
+          "Her iki tarafta da Yûsuf doğru",
+          "Her iki tarafta da kadın doğru"
+        ],
+        "info": "Şahit iki koşullu sonuç sunar: ön yırtık kadını, arka yırtık Yûsuf'u destekler."
+      }
+    }
+  },
+  {
+    "id": "l3n_prison_and_help",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 12:33",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "sourceVerses": [
+      "12:33"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие две мысли соединяет мольба Юсуфа в 12:33?",
+        "options": [
+          "Предпочтение темницы и нужда в защите от козней",
+          "Просьба умереть покорным Аллаху и быть причисленным к праведникам",
+          "Просьба отвести козни и утверждение, что сам он никогда им не поддастся",
+          "Предпочтение темницы и просьба умереть в покорности Аллаху"
+        ],
+        "info": "Юсуф предпочитает темницу греховному призыву и просит Господа отвести козни."
+      },
+      "en": {
+        "q": "Which two thoughts are joined in Yusuf's prayer in 12:33?",
+        "options": [
+          "Preferring prison and needing protection from their plot",
+          "Asking to die submitting to Allah and to be joined with the righteous",
+          "Asking that the plot be averted and asserting he could never yield to it himself",
+          "Preferring prison and asking to die submitting to Allah"
+        ],
+        "info": "Yusuf prefers prison to their sinful invitation and asks his Lord to avert their plot."
+      },
+      "uz": {
+        "q": "12:33 da Yusufning duosi qaysi ikki fikrni birlashtiradi?",
+        "options": [
+          "Zindonni afzal ko‘rish va hiyladan himoyaga muhtojlik",
+          "Allohga bo‘ysungan holda vafot etish va solihlarga qo‘shilishni so‘rash",
+          "Hiylani daf etishni so‘rash va o‘zi unga hech qachon berilmasligini aytish",
+          "Zindonni afzal ko‘rish va Allohga bo‘ysungan holda vafot etishni so‘rash"
+        ],
+        "info": "Yusuf gunohga chaqiruvdan zindonni afzal ko‘rib, Rabbidan hiylani daf etishni so‘raydi."
+      },
+      "tg": {
+        "q": "Дуои Юсуф дар 12:33 кадом ду фикрро мепайвандад?",
+        "options": [
+          "Афзал донистани зиндон ва ниёз ба ҳифз аз ҳила",
+          "Дархости марг дар итоати Аллоҳ ва пайвастан ба солеҳон",
+          "Дархости дур кардани ҳила ва иддао, ки худаш ҳеҷ гоҳ таслим намешавад",
+          "Афзал донистани зиндон ва дархости марг дар итоати Аллоҳ"
+        ],
+        "info": "Юсуф зиндонро аз даъвати гуноҳ беҳтар медонад ва аз Парвардигор ҳифз аз ҳиларо мехоҳад."
+      },
+      "kk": {
+        "q": "12:33-те Жүсіптің дұғасы қандай екі ойды біріктіреді?",
+        "options": [
+          "Зынданды артық көру және айладан қорғануға мұқтаждық",
+          "Аллаға бойсұнған күйде қайтуды және ізгілерге қосылуды сұрау",
+          "Айладан қорғауды сұрап, өзі оған ешқашан берілмейтінін айту",
+          "Зынданды артық көру және Аллаға бойсұнған күйде қайтуды сұрау"
+        ],
+        "info": "Жүсіп күнәға шақырудан зынданды артық көріп, Раббысынан айланы қайтаруды сұрайды."
+      },
+      "ky": {
+        "q": "12:33-дө Жусуптун дубасы кайсы эки ойду бириктирет?",
+        "options": [
+          "Зынданды артык көрүү жана айладан коргоого муктаждык",
+          "Аллахка баш ийген абалда каза болууну жана салихтерге кошулууну суроо",
+          "Айладан коргоону сурап, өзү ага эч качан берилбесин айтуу",
+          "Зынданды артык көрүү жана Аллахка баш ийген абалда каза болууну суроо"
+        ],
+        "info": "Жусуп күнөөгө чакыруудан зынданды артык көрүп, Раббисинен айланы кайтарууну сурайт."
+      },
+      "az": {
+        "q": "12:33-də Yusifin duası hansı iki fikri birləşdirir?",
+        "options": [
+          "Zindanı üstün tutmaq və hiylədən qorunmağa ehtiyac",
+          "Allaha təslim halda ölməyi və salehlərə qoşulmağı istəmək",
+          "Hiylənin dəfini istəmək və özünün ona heç vaxt uymayacağını bildirmək",
+          "Zindanı üstün tutmaq və Allaha təslim halda ölməyi istəmək"
+        ],
+        "info": "Yusif günaha dəvətdən zindanı üstün tutur və Rəbbindən hiyləni dəf etməyi istəyir."
+      },
+      "tr": {
+        "q": "12:33'te Yûsuf'un duası hangi iki düşünceyi birleştirir?",
+        "options": [
+          "Zindanı yeğlemek ve tuzaktan korunmaya muhtaç olmak",
+          "Allah'a teslim olarak ölmeyi ve salihlere katılmayı istemek",
+          "Tuzağın uzaklaşmasını istemek ve kendisinin asla ona kapılmayacağını söylemek",
+          "Zindanı yeğlemek ve Allah'a teslim olarak ölmeyi istemek"
+        ],
+        "info": "Yûsuf günaha davet yerine zindanı yeğler; Rabbinden tuzağı uzaklaştırmasını ister."
+      }
+    }
+  },
+  {
+    "id": "l3n_prison_dreams",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 12:36",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "sourceVerses": [
+      "12:36"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какая пара снов принадлежит двум узникам в 12:36?",
+        "options": [
+          "Выжимать виноград; нести хлеб, который клюют птицы",
+          "Выжимать виноград; собирать семь сухих колосьев",
+          "Нести хлеб; видеть одиннадцать звёзд",
+          "Пасти коров; нести хлеб, который клюют птицы"
+        ],
+        "info": "Один юноша рассказывает о выжимании вина, другой — о хлебе на голове и птицах."
+      },
+      "en": {
+        "q": "Which pair of dreams belongs to the two prisoners in 12:36?",
+        "options": [
+          "Pressing grapes; carrying bread eaten by birds",
+          "Pressing grapes; gathering seven dry ears of grain",
+          "Carrying bread; seeing eleven stars",
+          "Herding cows; carrying bread eaten by birds"
+        ],
+        "info": "One young man describes pressing wine; the other describes bread on his head and birds."
+      },
+      "uz": {
+        "q": "12:36 da ikki mahbusning tushlari qaysi juftlikda?",
+        "options": [
+          "Uzum siqish; qushlar cho‘qigan nonni ko‘tarish",
+          "Uzum siqish; yetti quruq boshoq yig‘ish",
+          "Non ko‘tarish; o‘n bir yulduzni ko‘rish",
+          "Sigir boqish; qushlar cho‘qigan nonni ko‘tarish"
+        ],
+        "info": "Bir yigit sharob siqishni, boshqasi boshidagi non va qushlarni aytadi."
+      },
+      "tg": {
+        "q": "Дар 12:36 кадом ҷуфти хоб ба ду зиндонӣ тааллуқ дорад?",
+        "options": [
+          "Ангур фишурдан; нони паррандагон хӯрдаро бардоштан",
+          "Ангур фишурдан; ҳафт хӯшаи хушк ҷамъ кардан",
+          "Нон бардоштан; ёздаҳ ситора дидан",
+          "Гов чарондан; нони паррандагон хӯрдаро бардоштан"
+        ],
+        "info": "Як ҷавон фишурдани шаробро мегӯяд, дигаре нон дар сар ва паррандагонро."
+      },
+      "kk": {
+        "q": "12:36-дағы екі тұтқынның түстері қай жұпта берілген?",
+        "options": [
+          "Жүзім сығу; құстар шоқыған нанды көтеру",
+          "Жүзім сығу; жеті қураған масақ жинау",
+          "Нан көтеру; он бір жұлдыз көру",
+          "Сиыр бағу; құстар шоқыған нанды көтеру"
+        ],
+        "info": "Бір жігіт шарап сығуды, екіншісі басындағы нан мен құстарды айтады."
+      },
+      "ky": {
+        "q": "12:36-дагы эки туткундун түштөрү кайсы жупта берилген?",
+        "options": [
+          "Жүзүм сыгуу; куштар чокуган нанды көтөрүү",
+          "Жүзүм сыгуу; жети кургак башак жыйноо",
+          "Нан көтөрүү; он бир жылдыз көрүү",
+          "Уй кайтаруу; куштар чокуган нанды көтөрүү"
+        ],
+        "info": "Бир жигит шарап сыгууну, экинчиси башындагы нан менен куштарды айтат."
+      },
+      "az": {
+        "q": "12:36-da iki məhbusun yuxuları hansı cütdədir?",
+        "options": [
+          "Üzüm sıxmaq; quşların yediyi çörəyi daşımaq",
+          "Üzüm sıxmaq; yeddi quru sünbül yığmaq",
+          "Çörək daşımaq; on bir ulduz görmək",
+          "İnək otarmaq; quşların yediyi çörəyi daşımaq"
+        ],
+        "info": "Bir gənc şərab sıxmaqdan, digəri başındakı çörəkdən və quşlardan danışır."
+      },
+      "tr": {
+        "q": "12:36'da iki mahkûmun rüyaları hangi ikilidir?",
+        "options": [
+          "Üzüm sıkmak; kuşların yediği ekmeği taşımak",
+          "Üzüm sıkmak; yedi kuru başak toplamak",
+          "Ekmek taşımak; on bir yıldız görmek",
+          "İnek gütmek; kuşların yediği ekmeği taşımak"
+        ],
+        "info": "Bir genç şarap sıkmayı, diğeri başındaki ekmeği ve kuşları anlatır."
+      }
+    }
+  },
+  {
+    "id": "l3n_knowledge_source",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 12:37",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "sourceVerses": [
+      "12:37"
+    ],
+    "locales": {
+      "ru": {
+        "q": "С чем Юсуф связывает своё знание в 12:37?",
+        "options": [
+          "С обучением Господом и отказом от неверия в Аллаха и Последнюю жизнь",
+          "С обучением Господом и оставлением веры своих праведных предков",
+          "С обучением отцом и принятием веры тех, кто отвергает Последнюю жизнь",
+          "С обучением узниками и возвратом к вере своего прежнего народа"
+        ],
+        "info": "Юсуф относит знание к дару Господа и говорит об оставлении вероучения отвергающих Аллаха и Последнюю жизнь."
+      },
+      "en": {
+        "q": "What does Yusuf connect his knowledge with in 12:37?",
+        "options": [
+          "His Lord's teaching and rejecting disbelief in Allah and the Hereafter",
+          "His Lord's teaching and leaving his righteous ancestors' faith",
+          "His father's teaching and accepting the creed denying the Hereafter",
+          "The prisoners' teaching and returning to his former people's creed"
+        ],
+        "info": "Yusuf attributes his knowledge to his Lord and rejects the creed of those denying Allah and the Hereafter."
+      },
+      "uz": {
+        "q": "12:37 da Yusuf bilimini nimaga bog‘laydi?",
+        "options": [
+          "Rabbi o‘rgatganiga va Alloh hamda oxiratga kufrni tark etganiga",
+          "Rabbi o‘rgatganiga va solih ajdodlar dinini tark etganiga",
+          "Otasi o‘rgatganiga va oxiratni inkor etuvchilar dinini olganiga",
+          "Mahbuslar o‘rgatganiga va avvalgi qavm diniga qaytganiga"
+        ],
+        "info": "Yusuf bilimni Rabbiga nisbat beradi va Alloh hamda oxiratni inkor etuvchilar dinini tark etganini aytadi."
+      },
+      "tg": {
+        "q": "Юсуф дониши худро дар 12:37 ба чӣ мепайвандад?",
+        "options": [
+          "Ба таълими Парвардигор ва тарки инкори Аллоҳу охират",
+          "Ба таълими Парвардигор ва тарки дини ниёгони солеҳ",
+          "Ба таълими падар ва қабули дини инкоркунандагони охират",
+          "Ба таълими зиндониён ва бозгашт ба дини қавми пешина"
+        ],
+        "info": "Юсуф донишро аз Парвардигор медонад ва аз дини инкоркунандагони Аллоҳу охират дур мешавад."
+      },
+      "kk": {
+        "q": "12:37-де Жүсіп білімін немен байланыстырады?",
+        "options": [
+          "Раббысының үйретуімен және Алла мен ақыретті терістеуден бас тартумен",
+          "Раббысының үйретуімен және ізгі ата-бабаларының дінін тастаумен",
+          "Әкесінің үйретуімен және ақыретті терістейтіндердің сенімін қабылдаумен",
+          "Тұтқындардың үйретуімен және бұрынғы қауымының сеніміне оралумен"
+        ],
+        "info": "Жүсіп білімін Раббысына теліп, Алла мен ақыретті терістейтіндердің сенімін тастағанын айтады."
+      },
+      "ky": {
+        "q": "12:37-де Жусуп билимин эмнеге байланыштырат?",
+        "options": [
+          "Раббисинин үйрөтүүсүнө жана Аллах менен акыретти тануудан баш тартууга",
+          "Раббисинин үйрөтүүсүнө жана салих ата-бабаларынын динин таштоого",
+          "Атасынын үйрөтүүсүнө жана акыретти тануучулардын динин кабыл алууга",
+          "Туткундардын үйрөтүүсүнө жана мурунку коомунун ишенимине кайтууга"
+        ],
+        "info": "Жусуп билимди Раббисине таандык кылып, Аллах менен акыретти тануучулардын ишенимин таштаганын айтат."
+      },
+      "az": {
+        "q": "12:37-də Yusif biliyini nə ilə əlaqələndirir?",
+        "options": [
+          "Rəbbinin öyrətməsi və Allahla axirəti inkarı tərk etməsi ilə",
+          "Rəbbinin öyrətməsi və saleh əcdadlarının dinini tərk etməsi ilə",
+          "Atasının öyrətməsi və axirəti inkar edənlərin dinini qəbul etməsi ilə",
+          "Məhbusların öyrətməsi və əvvəlki qövmünün dininə qayıtması ilə"
+        ],
+        "info": "Yusif biliyini Rəbbindən bilir, Allahı və axirəti inkar edənlərin dinindən ayrıldığını deyir."
+      },
+      "tr": {
+        "q": "12:37'de Yûsuf bilgisini neyle ilişkilendirir?",
+        "options": [
+          "Rabbinin öğretmesi ve Allah ile âhireti inkârı terk etmesiyle",
+          "Rabbinin öğretmesi ve salih atalarının dinini bırakmasıyla",
+          "Babasının öğretmesi ve âhireti inkâr edenlerin inancını benimsemesiyle",
+          "Mahkûmların öğretmesi ve eski kavminin inancına dönmesiyle"
+        ],
+        "info": "Yûsuf bilgisini Rabbine bağlar; Allah'ı ve âhireti inkâr edenlerin inancını bıraktığını söyler."
+      }
+    }
+  },
+  {
+    "id": "l3n_king_dream_pair",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 12:43",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "sourceVerses": [
+      "12:43"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какая пара образов точно передаёт сон царя в 12:43?",
+        "options": [
+          "Семь тощих коров едят семь тучных; семь зелёных и семь сухих колосьев",
+          "Семь тучных коров едят семь тощих; семь зелёных и семь сухих колосьев",
+          "Семь тощих коров едят семь тучных; одиннадцать зелёных колосьев",
+          "Двенадцать коров пасутся вместе; семь сухих колосьев"
+        ],
+        "info": "Нужно различить направление поедания коров и две группы колосьев по семь."
+      },
+      "en": {
+        "q": "Which pair of images matches the king's dream in 12:43?",
+        "options": [
+          "Seven lean cows eat seven fat cows; seven green and seven dry ears",
+          "Seven fat cows eat seven lean cows; seven green and seven dry ears",
+          "Seven lean cows eat seven fat cows; eleven green ears",
+          "Twelve cows graze together; seven dry ears"
+        ],
+        "info": "The dream distinguishes which cows eat the others and two groups of seven ears."
+      },
+      "uz": {
+        "q": "12:43 dagi podshoh tushiga qaysi tasvirlar mos?",
+        "options": [
+          "Yetti oriq sigir yetti semizini yeydi; yetti yashil va yetti quruq boshoq",
+          "Yetti semiz sigir yetti orig‘ini yeydi; yetti yashil va yetti quruq boshoq",
+          "Yetti oriq sigir yetti semizini yeydi; o‘n bir yashil boshoq",
+          "O‘n ikki sigir birga o‘tlaydi; yetti quruq boshoq"
+        ],
+        "info": "Sigirlarning qaysi biri boshqasini yegani va yettitadan ikki boshoq guruhi ajratiladi."
+      },
+      "tg": {
+        "q": "Кадом тасвирҳо ба хоби подшоҳ дар 12:43 мувофиқанд?",
+        "options": [
+          "Ҳафт гови лоғар ҳафт фарбеҳро мехӯрад; ҳафт хӯшаи сабзу ҳафт хушк",
+          "Ҳафт гови фарбеҳ ҳафт лоғарро мехӯрад; ҳафт хӯшаи сабзу ҳафт хушк",
+          "Ҳафт гови лоғар ҳафт фарбеҳро мехӯрад; ёздаҳ хӯшаи сабз",
+          "Дувоздаҳ гов якҷо мечарад; ҳафт хӯшаи хушк"
+        ],
+        "info": "Бояд самти хӯрдани говҳо ва ду гурӯҳи ҳафттоии хӯшаҳоро фарқ кард."
+      },
+      "kk": {
+        "q": "12:43-тегі патшаның түсіне қай суреттер дәл келеді?",
+        "options": [
+          "Жеті арық сиыр жеті семізін жейді; жеті жасыл және жеті қураған масақ",
+          "Жеті семіз сиыр жеті арығын жейді; жеті жасыл және жеті қураған масақ",
+          "Жеті арық сиыр жеті семізін жейді; он бір жасыл масақ",
+          "Он екі сиыр бірге жайылады; жеті қураған масақ"
+        ],
+        "info": "Қай сиырлардың басқаларын жегенін және жетіден екі масақ тобын ажырату керек."
+      },
+      "ky": {
+        "q": "12:43-төгү падышанын түшүнө кайсы сүрөттөр дал келет?",
+        "options": [
+          "Жети арык уй жети семизин жейт; жети жашыл жана жети кургак башак",
+          "Жети семиз уй жети арыгын жейт; жети жашыл жана жети кургак башак",
+          "Жети арык уй жети семизин жейт; он бир жашыл башак",
+          "Он эки уй чогуу оттойт; жети кургак башак"
+        ],
+        "info": "Кайсы уйлар башкаларын жегенин жана жетиден эки башак тобун айырмалоо керек."
+      },
+      "az": {
+        "q": "12:43-də padşahın yuxusuna hansı təsvir uyğundur?",
+        "options": [
+          "Yeddi arıq inək yeddi kökü yeyir; yeddi yaşıl və yeddi quru sünbül",
+          "Yeddi kök inək yeddi arığı yeyir; yeddi yaşıl və yeddi quru sünbül",
+          "Yeddi arıq inək yeddi kökü yeyir; on bir yaşıl sünbül",
+          "On iki inək birlikdə otlayır; yeddi quru sünbül"
+        ],
+        "info": "İnəklərin hansının digərini yediyi və yeddilik iki sünbül qrupu fərqləndirilir."
+      },
+      "tr": {
+        "q": "12:43'te kralın rüyasına hangi tasvir uyar?",
+        "options": [
+          "Yedi zayıf inek yedi semizi yer; yedi yeşil ve yedi kuru başak",
+          "Yedi semiz inek yedi zayıfı yer; yedi yeşil ve yedi kuru başak",
+          "Yedi zayıf inek yedi semizi yer; on bir yeşil başak",
+          "On iki inek birlikte otlar; yedi kuru başak"
+        ],
+        "info": "Hangi ineklerin diğerlerini yediği ve yedişerli iki başak grubu ayırt edilmelidir."
+      }
+    }
+  },
+  {
+    "id": "l3n_year_after_hardship",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 12:48, 12:49",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "sourceVerses": [
+      "12:48",
+      "12:49"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Что Юсуф предсказывает после семи тяжёлых лет в 12:48–49?",
+        "options": [
+          "Год дождя, когда люди будут выжимать плоды",
+          "Ещё семь лет без урожая",
+          "Год прекращения посева и торговли",
+          "Год, когда останутся только сухие колосья"
+        ],
+        "info": "После тяжёлого периода назван год дождя и выжимания плодов, то есть возвращения достатка."
+      },
+      "en": {
+        "q": "What does Yusuf foretell after seven hard years in 12:48–49?",
+        "options": [
+          "A rainy year when people will press produce",
+          "Seven more years without harvest",
+          "A year when sowing and trade cease",
+          "A year with only dry ears of grain"
+        ],
+        "info": "The difficult period is followed by rain and pressing produce, indicating renewed abundance."
+      },
+      "uz": {
+        "q": "12:48–49 da Yusuf yetti og‘ir yildan keyin nimani aytadi?",
+        "options": [
+          "Yomg‘irli yil va mevalarni siqish",
+          "Yana yetti hosilsiz yil",
+          "Ekin va savdo to‘xtaydigan yil",
+          "Faqat quruq boshoqlar qoladigan yil"
+        ],
+        "info": "Og‘ir davrdan keyin yomg‘ir va meva siqish yili kelib, mo‘lchilik qaytadi."
+      },
+      "tg": {
+        "q": "Юсуф баъд аз ҳафт соли душвор дар 12:48–49 чиро пешгӯӣ мекунад?",
+        "options": [
+          "Соли борон ва фишурдани меваҳо",
+          "Боз ҳафт соли бе ҳосил",
+          "Соли қатъи кишту тиҷорат",
+          "Соле танҳо бо хӯшаҳои хушк"
+        ],
+        "info": "Пас аз давраи душвор борон ва фишурдани меваҳо меояд, ки фаровониро нишон медиҳад."
+      },
+      "kk": {
+        "q": "12:48–49-да Жүсіп жеті ауыр жылдан кейін нені болжайды?",
+        "options": [
+          "Жаңбыр жауып, адамдар жеміс сығатын жылды",
+          "Тағы жеті өнімсіз жылды",
+          "Егін мен сауда тоқтайтын жылды",
+          "Тек қураған масақ қалатын жылды"
+        ],
+        "info": "Ауыр кезеңнен кейін жаңбыр мен жеміс сығу жылы аталып, молшылықтың қайтуы көрсетіледі."
+      },
+      "ky": {
+        "q": "12:48–49-да Жусуп жети оор жылдан кийин эмнени айтат?",
+        "options": [
+          "Жамгыр жаап, адамдар мөмө сыга турган жылды",
+          "Дагы жети түшүмсүз жылды",
+          "Эгин жана соода токтой турган жылды",
+          "Кургак башактар гана кала турган жылды"
+        ],
+        "info": "Оор мезгилден кийин жамгыр жана мөмө сыгуу жылы келип, молчулук кайтары айтылат."
+      },
+      "az": {
+        "q": "12:48–49-da Yusif yeddi ağır ildən sonra nə xəbər verir?",
+        "options": [
+          "Yağışlı və insanların meyvə sıxacağı ili",
+          "Daha yeddi məhsulsuz ili",
+          "Əkin və ticarətin dayanacağı ili",
+          "Yalnız quru sünbüllərin qalacağı ili"
+        ],
+        "info": "Çətin dövrdən sonra yağış və meyvə sıxımı ili gəlir; bu, bolluğun qayıtmasını göstərir."
+      },
+      "tr": {
+        "q": "12:48–49'da Yûsuf yedi zor yıldan sonra neyi haber verir?",
+        "options": [
+          "Yağmurlu ve insanların ürün sıkacağı bir yılı",
+          "Yedi hasatsız yılı daha",
+          "Ekim ve ticaretin duracağı yılı",
+          "Yalnız kuru başakların kalacağı yılı"
+        ],
+        "info": "Zorlu dönemden sonra yağmur ve ürün sıkımı yılı gelir; bu, bolluğun dönüşünü gösterir."
+      }
+    }
+  },
+  {
+    "id": "l3n_women_testimony",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 12:51",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "sourceVerses": [
+      "12:51"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие признания женщин и жены вельможи соединены в 12:51?",
+        "options": [
+          "Женщины не знают дурного за Юсуфом; жена признаёт свою попытку соблазнения",
+          "Женщины обвиняют Юсуфа; жена подтверждает обвинение",
+          "Женщины молчат; жена обвиняет служанок",
+          "Женщины признают вину царя; жена просит нового суда"
+        ],
+        "info": "Женщины отрицают известное им дурное поведение Юсуфа, а жена признаёт, что сама добивалась его."
+      },
+      "en": {
+        "q": "Which statements are combined in 12:51?",
+        "options": [
+          "The women know no evil of Yusuf; the wife admits pursuing him",
+          "The women accuse Yusuf; the wife confirms it",
+          "The women stay silent; the wife blames servants",
+          "The women blame the king; the wife requests another trial"
+        ],
+        "info": "The women deny knowing any evil of Yusuf; the wife admits she sought to seduce him."
+      },
+      "uz": {
+        "q": "12:51 da ayollar va amaldorning xotini qanday iqror qiladi?",
+        "options": [
+          "Ayollar Yusufdan yomonlik bilmaydi; xotin o‘zi uni yo‘ldan urmoqchi bo‘lganini aytadi",
+          "Ayollar Yusufni ayblaydi; xotin buni tasdiqlaydi",
+          "Ayollar jim; xotin xizmatkorlarni ayblaydi",
+          "Ayollar podshohni ayblaydi; xotin yangi sud so‘raydi"
+        ],
+        "info": "Ayollar Yusufda yomonlik ko‘rmaganini, xotin esa o‘zi unga intilganini tan oladi."
+      },
+      "tg": {
+        "q": "Дар 12:51 занон ва ҳамсари бузург чӣ эътироф мекунанд?",
+        "options": [
+          "Занон аз Юсуф бадӣ намедонанд; ҳамсар кӯшиши фиреби худро иқрор мекунад",
+          "Занон Юсуфро гунаҳкор мекунанд; ҳамсар тасдиқ мекунад",
+          "Занон хомӯшанд; ҳамсар хизматгоронро айбдор мекунад",
+          "Занон подшоҳро гунаҳкор мекунанд; ҳамсар мурофиаи нав мехоҳад"
+        ],
+        "info": "Занон бадие аз Юсуф намедонанд ва ҳамсар иқрор мешавад, ки худаш ӯро хоста буд."
+      },
+      "kk": {
+        "q": "12:51-де әйелдер мен уәзірдің әйелі нені мойындайды?",
+        "options": [
+          "Әйелдер Жүсіптен жамандық білмейді; әйелі өзі азғырғанын мойындайды",
+          "Әйелдер Жүсіпті айыптайды; әйелі растайды",
+          "Әйелдер үндемейді; әйелі қызметшілерді айыптайды",
+          "Әйелдер патшаны айыптайды; әйелі жаңа сот сұрайды"
+        ],
+        "info": "Әйелдер Жүсіптің жаман ісін білмейтінін, әйелі өзі азғыруға тырысқанын айтады."
+      },
+      "ky": {
+        "q": "12:51-де аялдар жана төрөнүн аялы эмнени моюнга алышат?",
+        "options": [
+          "Аялдар Жусуптан жамандык билишпейт; аялы өзү азгырганын мойнуна алат",
+          "Аялдар Жусупту айыптайт; аялы ырастайт",
+          "Аялдар унчукпайт; аялы кызматчыларды айыптайт",
+          "Аялдар падышаны айыптайт; аялы жаңы сот сурайт"
+        ],
+        "info": "Аялдар Жусуптун жаман ишин билишпейт, аялы болсо өзү азгырууга аракет кылганын айтат."
+      },
+      "az": {
+        "q": "12:51-də qadınlar və əyanın arvadı nəyi etiraf edirlər?",
+        "options": [
+          "Qadınlar Yusifdən pislik bilmirlər; arvad onu yoldan çıxarmağa çalışdığını deyir",
+          "Qadınlar Yusifi günahlandırır; arvad təsdiqləyir",
+          "Qadınlar susur; arvad xidmətçiləri günahlandırır",
+          "Qadınlar padşahı günahlandırır; arvad yeni məhkəmə istəyir"
+        ],
+        "info": "Qadınlar Yusifdən pislik bilmədiklərini deyir, arvad isə təşəbbüsün özündən gəldiyini etiraf edir."
+      },
+      "tr": {
+        "q": "12:51'de kadınlar ve ileri gelenin karısı neyi kabul eder?",
+        "options": [
+          "Kadınlar Yûsuf'tan kötülük bilmez; karısı onu baştan çıkarmaya çalıştığını söyler",
+          "Kadınlar Yûsuf'u suçlar; karısı doğrular",
+          "Kadınlar susar; karısı hizmetçileri suçlar",
+          "Kadınlar kralı suçlar; karısı yeni yargılama ister"
+        ],
+        "info": "Kadınlar Yûsuf'tan kötülük bilmediklerini söyler; karısı girişimin kendisinden geldiğini kabul eder."
+      }
+    }
+  },
+  {
+    "id": "l3n_recognition_direction",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 12:58",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "sourceVerses": [
+      "12:58"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Кто кого узнал при встрече, описанной в 12:58?",
+        "options": [
+          "Юсуф узнал братьев, они его — нет",
+          "Братья узнали Юсуфа, он их — нет",
+          "Обе стороны сразу узнали друг друга",
+          "Ни одна сторона никого не узнала"
+        ],
+        "info": "Аят подчёркивает неравенство узнавания: Юсуф знает, кто перед ним, братья ещё не знают его."
+      },
+      "en": {
+        "q": "Who recognised whom at the meeting in 12:58?",
+        "options": [
+          "Yusuf recognised his brothers; they did not recognise him",
+          "The brothers recognised Yusuf; he did not recognise them",
+          "Both sides immediately recognised each other",
+          "Neither side recognised anyone"
+        ],
+        "info": "The verse stresses unequal recognition: Yusuf knows them, while his brothers do not yet know him."
+      },
+      "uz": {
+        "q": "12:58 dagi uchrashuvda kim kimni tanidi?",
+        "options": [
+          "Yusuf akalarini tanidi, ular uni tanimadi",
+          "Akalari Yusufni tanidi, u ularni tanimadi",
+          "Ikkala tomon darhol bir-birini tanidi",
+          "Hech qaysi tomon boshqasini tanimadi"
+        ],
+        "info": "Oyat tanishdagi farqni ko‘rsatadi: Yusuf ularni biladi, akalari esa hali uni bilmaydi."
+      },
+      "tg": {
+        "q": "Дар дидори 12:58 кӣ киро шинохт?",
+        "options": [
+          "Юсуф бародаронро шинохт, онҳо ӯро не",
+          "Бародарон Юсуфро шинохтанд, ӯ онҳоро не",
+          "Ҳар ду тараф фавран якдигарро шинохт",
+          "Ҳеҷ тараф дигареро нашинохт"
+        ],
+        "info": "Оят фарқро таъкид мекунад: Юсуф онҳоро мешиносад, бародарон ҳанӯз ӯро намешиносанд."
+      },
+      "kk": {
+        "q": "12:58-дегі кездесуде кім кімді таныды?",
+        "options": [
+          "Жүсіп бауырларын таныды, олар оны танымады",
+          "Бауырлары Жүсіпті таныды, ол оларды танымады",
+          "Екі жақ бірін-бірі бірден таныды",
+          "Екі жақ та бірін-бірі танымады"
+        ],
+        "info": "Аят танудағы айырманы көрсетеді: Жүсіп оларды біледі, бауырлары оны әлі білмейді."
+      },
+      "ky": {
+        "q": "12:58-деги жолугушууда ким кимди тааныды?",
+        "options": [
+          "Жусуп агаларын тааныды, алар аны тааныбады",
+          "Агалары Жусупту тааныды, ал аларды тааныбады",
+          "Эки тарап дароо бири-бирин тааныды",
+          "Эки тарап тең бири-бирин тааныбады"
+        ],
+        "info": "Аят айырманы белгилейт: Жусуп аларды билет, агалары болсо аны али тааныбайт."
+      },
+      "az": {
+        "q": "12:58-dəki görüşdə kim kimi tanıdı?",
+        "options": [
+          "Yusif qardaşlarını tanıdı, onlar onu tanımadı",
+          "Qardaşlar Yusifi tanıdı, o onları tanımadı",
+          "Hər iki tərəf dərhal bir-birini tanıdı",
+          "Heç bir tərəf digərini tanımadı"
+        ],
+        "info": "Ayə tanımadakı fərqi vurğulayır: Yusif onları bilir, qardaşları isə hələ onu tanımır."
+      },
+      "tr": {
+        "q": "12:58'deki buluşmada kim kimi tanıdı?",
+        "options": [
+          "Yûsuf kardeşlerini tanıdı, onlar onu tanımadı",
+          "Kardeşleri Yûsuf'u tanıdı, o onları tanımadı",
+          "İki taraf hemen birbirini tanıdı",
+          "İki taraf da birbirini tanımadı"
+        ],
+        "info": "Ayet tanımadaki farkı vurgular: Yûsuf onları bilir, kardeşleri ise onu henüz tanımaz."
+      }
+    }
+  },
+  {
+    "id": "l3n_returned_goods",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 12:62",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "sourceVerses": [
+      "12:62"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Для чего Юсуф велит вернуть товар братьев в их вьюки (12:62)?",
+        "options": [
+          "Чтобы дома они узнали его и, возможно, вернулись",
+          "Чтобы стража нашла его и задержала их",
+          "Чтобы отец узнал в нём потерянную рубаху",
+          "Чтобы братья продали его царю в пути"
+        ],
+        "info": "Возврат их товара должен обнаружиться дома и побудить братьев прийти снова."
+      },
+      "en": {
+        "q": "Why does Yusuf order the brothers' goods put back in their packs (12:62)?",
+        "options": [
+          "So they recognise them at home and may return",
+          "So guards find them and detain the brothers",
+          "So their father recognises the lost shirt",
+          "So the brothers sell them to the king on the way"
+        ],
+        "info": "Their returned goods are to be discovered at home, encouraging another visit."
+      },
+      "uz": {
+        "q": "Yusuf nega akalarining molini yuklariga qaytarishni buyuradi (12:62)?",
+        "options": [
+          "Uyda tanib, balki yana qaytishlari uchun",
+          "Soqchilar topib, ularni ushlashi uchun",
+          "Ota yo‘qolgan ko‘ylakni tanishi uchun",
+          "Yo‘lda podshohga sotishlari uchun"
+        ],
+        "info": "Qaytarilgan mol uyda topilib, akalarni yana kelishga undashi kerak."
+      },
+      "tg": {
+        "q": "Юсуф чаро моли бародаронро ба борҳояшон баргардонидан мефармояд (12:62)?",
+        "options": [
+          "То дар хона шиносанд ва шояд баргарданд",
+          "То посбонон ёфта, онҳоро боздоранд",
+          "То падар куртаи гумшударо шиносад",
+          "То дар роҳ онро ба подшоҳ фурӯшанд"
+        ],
+        "info": "Моли баргардонда бояд дар хона ёфт шуда, бародаронро ба бозгашт водор кунад."
+      },
+      "kk": {
+        "q": "Жүсіп неге бауырларының тауарын жүктеріне қайтаруды бұйырады (12:62)?",
+        "options": [
+          "Үйде танып, бәлкім қайта келсін деп",
+          "Күзетшілер тауып, ұстасын деп",
+          "Әкесі жоғалған көйлекті танысын деп",
+          "Жолда патшаға сатсын деп"
+        ],
+        "info": "Қайтарылған тауар үйде табылып, бауырларын қайта келуге ынталандыруы керек."
+      },
+      "ky": {
+        "q": "Жусуп агаларынын товарын жүктөрүнө кайтарууну эмне үчүн буйруйт (12:62)?",
+        "options": [
+          "Үйдө таанып, балким кайра келишсин деп",
+          "Кароолчулар таап, аларды кармашсын деп",
+          "Атасы жоголгон көйнөктү таанысын деп",
+          "Жолдо падышага сатышсын деп"
+        ],
+        "info": "Кайтарылган товар үйдө табылып, агаларды кайра келүүгө түрткү бериши керек."
+      },
+      "az": {
+        "q": "Yusif qardaşların malını yüklərinə niyə qaytartdırır (12:62)?",
+        "options": [
+          "Evdə tanıyıb bəlkə geri qayıtsınlar deyə",
+          "Keşikçilər tapıb onları saxlasın deyə",
+          "Ataları itmiş köynəyi tanısın deyə",
+          "Yolda padşaha satsınlar deyə"
+        ],
+        "info": "Qaytarılan mal evdə aşkar edilməli və qardaşları yenidən gəlməyə sövq etməlidir."
+      },
+      "tr": {
+        "q": "Yûsuf kardeşlerinin mallarını yüklerine neden geri koydurur (12:62)?",
+        "options": [
+          "Evde tanıyıp belki geri dönsünler diye",
+          "Nöbetçiler bulup onları tutsun diye",
+          "Babaları kayıp gömleği tanısın diye",
+          "Yolda krala satsınlar diye"
+        ],
+        "info": "İade edilen malların evde bulunması, kardeşleri yeniden gelmeye yöneltecektir."
+      }
+    }
+  },
+  {
+    "id": "l3n_cup_reward",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 12:72",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "sourceVerses": [
+      "12:72"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Что обещано за возвращение царской чаши и как подкреплено обещание (12:72)?",
+        "options": [
+          "Верблюжий вьюк зерна; говорящий ручается",
+          "Два верблюжьих вьюка; царь даёт письменный договор",
+          "Серебряная чаша; братья ручаются",
+          "Годовой урожай; старший брат ручается"
+        ],
+        "info": "Объявлено вознаграждение в размере верблюжьего вьюка, и говорящий выступает поручителем."
+      },
+      "en": {
+        "q": "What reward is offered for the king's cup, and how is it backed (12:72)?",
+        "options": [
+          "A camel-load of grain; the speaker guarantees it",
+          "Two camel-loads; the king gives a written contract",
+          "A silver cup; the brothers guarantee it",
+          "A year's harvest; the eldest brother guarantees it"
+        ],
+        "info": "A camel-load is offered, with the speaker personally acting as guarantor."
+      },
+      "uz": {
+        "q": "Podshoh qadahi uchun nima va’da qilinib, qanday kafolatlanadi (12:72)?",
+        "options": [
+          "Bir tuya yuki don; so‘zlovchi kafil bo‘ladi",
+          "Ikki tuya yuki; podshoh yozma shartnoma beradi",
+          "Kumush qadah; akalar kafil bo‘ladi",
+          "Bir yillik hosil; katta aka kafil bo‘ladi"
+        ],
+        "info": "Bir tuya yuki miqdorida mukofot va’da qilinib, so‘zlovchi kafil bo‘ladi."
+      },
+      "tg": {
+        "q": "Барои ҷоми подшоҳ чӣ ваъда ва чӣ кафолат дода мешавад (12:72)?",
+        "options": [
+          "Бори як шутур ғалла; гӯянда кафил аст",
+          "Бори ду шутур; подшоҳ шартномаи хаттӣ медиҳад",
+          "Ҷоми нуқра; бародарон кафиланд",
+          "Ҳосили як сол; бародари калонӣ кафил аст"
+        ],
+        "info": "Мукофоти бори як шутур эълон мешавад ва гӯянда кафил мегардад."
+      },
+      "kk": {
+        "q": "Патшаның тостағанын қайтаруға не уәде етіліп, қалай кепілденеді (12:72)?",
+        "options": [
+          "Бір түйе жүк астық; айтушы кепіл болады",
+          "Екі түйе жүк; патша жазбаша шарт береді",
+          "Күміс тостаған; бауырлары кепіл болады",
+          "Бір жылдық өнім; үлкен ағасы кепіл болады"
+        ],
+        "info": "Бір түйе жүк көлемінде сый ұсынылып, айтушы кепілгер болады."
+      },
+      "ky": {
+        "q": "Падышанын чөйчөгүн кайтарууга эмне убада кылынып, ким кепил болот (12:72)?",
+        "options": [
+          "Бир төө жүк дан; сүйлөгөн адам кепил",
+          "Эки төө жүк; падыша жазма келишим берет",
+          "Күмүш чөйчөк; агалары кепил",
+          "Бир жылдык түшүм; улуу агасы кепил"
+        ],
+        "info": "Бир төө жүк өлчөмүндө сыйлык айтылып, сүйлөгөн адам кепил болот."
+      },
+      "az": {
+        "q": "Padşahın qabını qaytarana nə vəd edilir və kim zəmanət verir (12:72)?",
+        "options": [
+          "Bir dəvə yükü taxıl; danışan şəxs zamin olur",
+          "İki dəvə yükü; padşah yazılı müqavilə verir",
+          "Gümüş qab; qardaşlar zamin olur",
+          "Bir illik məhsul; böyük qardaş zamin olur"
+        ],
+        "info": "Bir dəvə yükü mükafat elan edilir və danışan şəxs zamin olur."
+      },
+      "tr": {
+        "q": "Kralın kabını getirene ne vaat edilir, kim güvence verir (12:72)?",
+        "options": [
+          "Bir deve yükü tahıl; konuşan kefil olur",
+          "İki deve yükü; kral yazılı sözleşme verir",
+          "Gümüş kap; kardeşler kefil olur",
+          "Bir yıllık ürün; büyük kardeş kefil olur"
+        ],
+        "info": "Bir deve yükü ödül duyurulur ve konuşan kişi kefil olur."
+      }
+    }
+  },
+  {
+    "id": "l3n_eldest_stays",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 12:80",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "sourceVerses": [
+      "12:80"
+    ],
+    "locales": {
+      "ru": {
+        "q": "До какого условия старший брат решает не покидать землю в 12:80?",
+        "options": [
+          "Пока отец не позволит или Аллах не вынесет решение",
+          "Пока царь не умрёт или не сменится правитель",
+          "Пока не найдут рубаху или не вернут товар",
+          "Пока все братья не останутся рядом"
+        ],
+        "info": "Старший вспоминает обязательство перед отцом и ждёт его разрешения либо решения Аллаха."
+      },
+      "en": {
+        "q": "Until what condition does the eldest brother decide to stay in 12:80?",
+        "options": [
+          "Until his father permits or Allah decides for him",
+          "Until the king dies or the ruler changes",
+          "Until the shirt is found or the goods returned",
+          "Until all the brothers remain beside him"
+        ],
+        "info": "Recalling his pledge to his father, the eldest awaits his permission or Allah's judgement."
+      },
+      "uz": {
+        "q": "12:80 da katta aka qaysi shartgacha bu yerdan ketmaslikka qaror qiladi?",
+        "options": [
+          "Ota ruxsat berguncha yoki Alloh hukm qilguncha",
+          "Podshoh o‘lguncha yoki hukmdor almashguncha",
+          "Ko‘ylak topilguncha yoki mol qaytguncha",
+          "Barcha akalar yonida qolguncha"
+        ],
+        "info": "Katta aka otaga ahdini eslab, uning ruxsatini yoki Allohning hukmini kutadi."
+      },
+      "tg": {
+        "q": "Дар 12:80 бародари калонӣ то кадом шарт монданро қарор медиҳад?",
+        "options": [
+          "То падар иҷозат диҳад ё Аллоҳ ҳукм кунад",
+          "То подшоҳ бимирад ё ҳоким иваз шавад",
+          "То курта ёфт шавад ё мол баргардад",
+          "То ҳамаи бародарон назди ӯ бимонанд"
+        ],
+        "info": "Ӯ аҳди назди падарро ёд карда, иҷозати ӯ ё ҳукми Аллоҳро интизор мешавад."
+      },
+      "kk": {
+        "q": "12:80-де үлкен ағасы қай шартқа дейін кетпеуге шешім қабылдайды?",
+        "options": [
+          "Әкесі рұқсат бергенше немесе Алла үкім еткенше",
+          "Патша өлгенше немесе билеуші ауысқанша",
+          "Көйлек табылғанша немесе тауар қайтқанша",
+          "Барлық бауырлары қасында қалғанша"
+        ],
+        "info": "Үлкені әкесіне берген уәдесін еске алып, оның рұқсатын не Алланың үкімін күтеді."
+      },
+      "ky": {
+        "q": "12:80-де улуу агасы кайсы шартка чейин кетпөөнү чечет?",
+        "options": [
+          "Атасы уруксат бергенче же Аллах өкүм кылганча",
+          "Падыша өлгөнчө же башкаруучу алмашканча",
+          "Көйнөк табылганча же товар кайтарылганча",
+          "Бардык агалары жанында калганча"
+        ],
+        "info": "Улуусу атасына берген убадасын эстеп, анын уруксатын же Аллахтын өкүмүн күтөт."
+      },
+      "az": {
+        "q": "12:80-də böyük qardaş hansı şərtə qədər getməməyə qərar verir?",
+        "options": [
+          "Atası icazə verənədək və ya Allah hökm edənədək",
+          "Padşah ölənədək və ya hökmdar dəyişənədək",
+          "Köynək tapılanadək və ya mal qaytarılanadək",
+          "Bütün qardaşları yanında qalanadək"
+        ],
+        "info": "Böyük qardaş atasına verdiyi əhdi xatırlayıb onun icazəsini və ya Allahın hökmünü gözləyir."
+      },
+      "tr": {
+        "q": "12:80'de büyük kardeş hangi koşula kadar kalmaya karar verir?",
+        "options": [
+          "Babası izin verene veya Allah hükmedene kadar",
+          "Kral ölene veya yönetici değişene kadar",
+          "Gömlek bulunana veya mal geri gelene kadar",
+          "Bütün kardeşleri yanında kalana kadar"
+        ],
+        "info": "Büyük kardeş babasına verdiği sözü hatırlayıp onun iznini ya da Allah'ın hükmünü bekler."
+      }
+    }
+  },
+  {
+    "id": "l3n_yaqub_complaint",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 12:86",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "sourceVerses": [
+      "12:86"
+    ],
+    "locales": {
+      "ru": {
+        "q": "К кому Якуб обращает жалобу и что добавляет о знании в 12:86?",
+        "options": [
+          "Только к Аллаху; знает от Него то, чего сыновья не знают",
+          "К царю; знает все его намерения",
+          "К братьям; не знает ничего сверх их рассказа",
+          "К караванщикам; знает лишь место колодца"
+        ],
+        "info": "Якуб соединяет обращение к Аллаху со знанием от Него, которого нет у собеседников."
+      },
+      "en": {
+        "q": "To whom does Yaqub complain, and what does he add about knowledge in 12:86?",
+        "options": [
+          "To Allah alone; he knows from Him what his sons do not",
+          "To the king; he knows all his intentions",
+          "To the brothers; he knows nothing beyond their story",
+          "To travellers; he knows only the well's location"
+        ],
+        "info": "Yaqub joins his appeal to Allah with knowledge from Him unavailable to his listeners."
+      },
+      "uz": {
+        "q": "12:86 da Ya’qub kimga shikoyat qiladi va bilim haqida nima qo‘shadi?",
+        "options": [
+          "Faqat Allohga; Undan o‘g‘illari bilmaganini biladi",
+          "Podshohga; uning barcha niyatlarini biladi",
+          "Akalarga; ularning hikoyasidan ortiq bilmaydi",
+          "Karvondagilarga; faqat quduq joyini biladi"
+        ],
+        "info": "Ya’qub Allohga murojaatini tinglovchilar bilmagan ilohiy bilim bilan bog‘laydi."
+      },
+      "tg": {
+        "q": "Дар 12:86 Яъқуб ба кӣ шикоят мекунад ва дар бораи дониш чӣ мегӯяд?",
+        "options": [
+          "Танҳо ба Аллоҳ; аз Ӯ чизеро медонад, ки писарон намедонанд",
+          "Ба подшоҳ; ҳамаи ниятҳояшро медонад",
+          "Ба бародарон; ғайр аз нақлашон чизе намедонад",
+          "Ба корвониён; танҳо ҷои чоҳро медонад"
+        ],
+        "info": "Яъқуб муроҷиат ба Аллоҳро бо донише аз Ӯ мепайвандад, ки шунавандагон надоранд."
+      },
+      "kk": {
+        "q": "12:86-да Жақып кімге шағымданып, білім туралы не қосады?",
+        "options": [
+          "Тек Аллаға; Одан ұлдары білмейтінді біледі",
+          "Патшаға; оның барлық ниетін біледі",
+          "Бауырларына; олардың әңгімесінен өзге білмейді",
+          "Керуеншілерге; тек құдық орнын біледі"
+        ],
+        "info": "Жақып Аллаға жүгінуді тыңдаушыларында жоқ, Одан келген біліммен байланыстырады."
+      },
+      "ky": {
+        "q": "12:86-да Якуб кимге арызданат жана билим тууралуу эмне кошот?",
+        "options": [
+          "Аллахка гана; Андан уулдары билбегенди билет",
+          "Падышага; анын бардык ниетин билет",
+          "Агаларына; алардын сөзүнөн башка билбейт",
+          "Кербенчилерге; кудуктун ордун гана билет"
+        ],
+        "info": "Якуб Аллахка кайрылууну угуучуларында жок, Андан келген билим менен байланыштырат."
+      },
+      "az": {
+        "q": "12:86-da Yaqub kimə şikayət edir və bilik haqqında nə əlavə edir?",
+        "options": [
+          "Yalnız Allaha; Ondan oğullarının bilmədiyini bilir",
+          "Padşaha; onun bütün niyyətlərini bilir",
+          "Qardaşlara; onların sözündən artıq bilmir",
+          "Karvançılara; yalnız quyunun yerini bilir"
+        ],
+        "info": "Yaqub Allaha müraciəti dinləyənlərin bilmədiyi, Ondan gələn biliklə əlaqələndirir."
+      },
+      "tr": {
+        "q": "12:86'da Ya‘kūb kime yakınır ve bilgi hakkında ne ekler?",
+        "options": [
+          "Yalnız Allah'a; O'ndan oğullarının bilmediğini bilir",
+          "Krala; onun bütün niyetlerini bilir",
+          "Kardeşlere; onların anlattığından fazlasını bilmez",
+          "Kervancılara; yalnız kuyunun yerini bilir"
+        ],
+        "info": "Ya‘kūb, Allah'a yönelişini dinleyenlerin sahip olmadığı, O'ndan gelen bilgiyle birleştirir."
+      }
+    }
+  },
+  {
+    "id": "l3n_no_reproach",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 12:92",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "sourceVerses": [
+      "12:92"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как Юсуф отвечает братьям после их признания в 12:92?",
+        "options": [
+          "Снимает упрёк сегодня и желает им прощения Аллаха",
+          "Снимает упрёк после возвращения всей платы",
+          "Требует наказания, затем обещает просить прощения",
+          "Прощает лишь после решения царя"
+        ],
+        "info": "Его ответ соединяет отказ упрекать братьев с пожеланием им прощения Аллаха."
+      },
+      "en": {
+        "q": "How does Yusuf answer his brothers after their admission in 12:92?",
+        "options": [
+          "No reproach today, and a wish for Allah's forgiveness",
+          "No reproach after all payment is returned",
+          "Punishment first, then a promise to seek forgiveness",
+          "Forgiveness only after the king's decision"
+        ],
+        "info": "His response combines refraining from reproach with wishing Allah's forgiveness for them."
+      },
+      "uz": {
+        "q": "12:92 da Yusuf akalarining iqroridan keyin qanday javob beradi?",
+        "options": [
+          "Bugun malomat yo‘qligi va Allohning kechirishini tilash",
+          "Barcha haq qaytgach malomat yo‘qligi",
+          "Avval jazo, keyin mag‘firat so‘rash va’dasi",
+          "Faqat podshoh hukmidan keyin kechirish"
+        ],
+        "info": "Javob akalarni malomat qilmaslikni Allohning mag‘firatini tilash bilan birlashtiradi."
+      },
+      "tg": {
+        "q": "Юсуф баъд аз иқрори бародарон дар 12:92 чӣ ҷавоб медиҳад?",
+        "options": [
+          "Имрӯз сарзаниш нест ва омурзиши Аллоҳро мехоҳад",
+          "Пас аз баргардондани тамоми пул сарзаниш нест",
+          "Аввал ҷазо, баъд ваъдаи талаби омурзиш",
+          "Танҳо баъд аз ҳукми подшоҳ мебахшад"
+        ],
+        "info": "Ҷавоб тарки сарзаниши бародаронро бо орзуи омурзиши Аллоҳ мепайвандад."
+      },
+      "kk": {
+        "q": "12:92-де Жүсіп бауырлары мойындағаннан кейін қалай жауап береді?",
+        "options": [
+          "Бүгін сөгіс жоқ және Алланың кешірімін тілейді",
+          "Барлық ақы қайтқаннан кейін сөгіс жоқ",
+          "Алдымен жаза, кейін кешірім сұрауға уәде",
+          "Тек патша үкімінен кейін кешіреді"
+        ],
+        "info": "Оның жауабы сөкпеуді бауырларына Алланың кешірімін тілеумен біріктіреді."
+      },
+      "ky": {
+        "q": "12:92-де Жусуп агалары моюнга алгандан кийин кандай жооп берет?",
+        "options": [
+          "Бүгүн айыптоо жок жана Аллахтын кечиримин тилейт",
+          "Бардык акы кайтарылгандан кийин айыптоо жок",
+          "Адегенде жаза, андан кийин кечирим суроо убадасы",
+          "Падышанын чечиминен кийин гана кечирет"
+        ],
+        "info": "Жообу агаларын айыптабоону аларга Аллахтын кечиримин тилөө менен бириктирет."
+      },
+      "az": {
+        "q": "12:92-də Yusif qardaşlarının etirafından sonra necə cavab verir?",
+        "options": [
+          "Bu gün qınaq yoxdur və Allahın bağışlamasını diləyir",
+          "Bütün haqq qaytarılandan sonra qınaq yoxdur",
+          "Əvvəl cəza, sonra bağışlanma istəmək vədi",
+          "Yalnız padşahın qərarından sonra bağışlama"
+        ],
+        "info": "Cavab qardaşları qınamamağı onlara Allahın bağışlamasını diləməklə birləşdirir."
+      },
+      "tr": {
+        "q": "12:92'de Yûsuf kardeşlerinin itirafından sonra nasıl cevap verir?",
+        "options": [
+          "Bugün kınama yok; Allah'ın bağışlamasını diler",
+          "Bütün bedel iade edilince kınama yok",
+          "Önce ceza, sonra bağışlanma dileme sözü",
+          "Yalnız kralın kararından sonra bağışlama"
+        ],
+        "info": "Cevap, kardeşleri kınamamakla onlar için Allah'ın bağışlamasını dilemeyi birleştirir."
+      }
+    }
+  },
+  {
+    "id": "l3n_dream_fulfilment",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 12:100",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/12",
+    "sourceVerses": [
+      "12:100"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какое событие Юсуф называет исполнением прежнего сна в 12:100?",
+        "options": [
+          "Возведение родителей на трон и поклон семьи",
+          "Возвращение платы братьям в их вьюках",
+          "Выход из темницы по вызову царя",
+          "Назначение хранителем запасов"
+        ],
+        "info": "Слова об исполнении сна следуют за встречей семьи, возведением родителей на трон и поклоном."
+      },
+      "en": {
+        "q": "Which event does Yusuf call the fulfilment of his earlier dream in 12:100?",
+        "options": [
+          "Raising his parents to the throne and the family's bowing",
+          "Returning the brothers' payment in their packs",
+          "Leaving prison at the king's summons",
+          "Being appointed over the storehouses"
+        ],
+        "info": "His words about fulfilment follow the family reunion, his parents' elevation and the bowing."
+      },
+      "uz": {
+        "q": "12:100 da Yusuf qaysi voqeani oldingi tushining ro‘yobi deydi?",
+        "options": [
+          "Ota-onani taxtga chiqarish va oilaning ta’zimi",
+          "Akalarning haqini yuklariga qaytarish",
+          "Podshoh chaqirig‘i bilan zindondan chiqish",
+          "Omborlar ustidan tayinlanish"
+        ],
+        "info": "Tush ro‘yobi haqidagi so‘zlar oila uchrashuvi, ota-onani taxtga chiqarish va ta’zimdan keyin keladi."
+      },
+      "tg": {
+        "q": "Юсуф дар 12:100 кадом воқеаро таъбири хоби пешина меномад?",
+        "options": [
+          "Ба тахт бардоштани волидон ва саҷдаи оила",
+          "Баргардондани пули бародарон ба борҳояшон",
+          "Аз зиндон баромадан бо даъвати подшоҳ",
+          "Таъйин шудан ба хазинаҳо"
+        ],
+        "info": "Сухан дар бораи иҷрои хоб баъд аз дидори оила, ба тахт бардоштани волидон ва саҷда меояд."
+      },
+      "kk": {
+        "q": "12:100-де Жүсіп қай оқиғаны бұрынғы түсінің орындалуы дейді?",
+        "options": [
+          "Ата-анасын таққа көтеру және отбасының тағзымы",
+          "Бауырларының ақысын жүктеріне қайтару",
+          "Патша шақырған соң зынданнан шығу",
+          "Қоймаларға басшы болып тағайындалу"
+        ],
+        "info": "Түстің орындалуы туралы сөз отбасымен кездесуден, ата-анасын таққа көтеруден және тағзымнан кейін айтылады."
+      },
+      "ky": {
+        "q": "12:100-де Жусуп кайсы окуяны мурунку түшүнүн аткарылышы дейт?",
+        "options": [
+          "Ата-энесин такка чыгаруу жана үй-бүлөнүн таазими",
+          "Агаларынын акысын жүктөрүнө кайтаруу",
+          "Падыша чакырганда зындандан чыгуу",
+          "Кампаларга башчы болуп дайындалуу"
+        ],
+        "info": "Түштүн аткарылышы тууралуу сөз үй-бүлө менен жолугушуудан, ата-энесин такка чыгаруудан жана таазимден кийин айтылат."
+      },
+      "az": {
+        "q": "12:100-də Yusif hansı hadisəni əvvəlki yuxusunun gerçəkləşməsi sayır?",
+        "options": [
+          "Valideynlərini taxta qaldırması və ailənin səcdəsi",
+          "Qardaşlarının haqqını yüklərinə qaytarması",
+          "Padşah çağırışı ilə zindandan çıxması",
+          "Anbarlara başçı təyin edilməsi"
+        ],
+        "info": "Yuxunun gerçəkləşməsi sözləri ailə görüşündən, valideynlərin taxta qaldırılmasından və səcdədən sonra gəlir."
+      },
+      "tr": {
+        "q": "12:100'de Yûsuf hangi olayı önceki rüyasının gerçekleşmesi sayar?",
+        "options": [
+          "Anne babasını tahta çıkarması ve ailenin eğilmesi",
+          "Kardeşlerinin bedelini yüklerine koyması",
+          "Kralın çağrısıyla zindandan çıkması",
+          "Depoların başına atanması"
+        ],
+        "info": "Rüyanın gerçekleşmesi sözü aile buluşması, anne babanın tahta çıkarılması ve eğilmeden sonra gelir."
+      }
+    }
+  },
+  {
+    "id": "l3n_ibrahim_certainty",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 6:75",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "sourceVerses": [
+      "6:75"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Что показано Ибрахиму и с какой целью в 6:75?",
+        "options": [
+          "Царство небес и земли — ради твёрдой убеждённости",
+          "Царство небес и земли — ради исчисления времени",
+          "Смена дня и ночи — ради объяснения сна отцу",
+          "Порядок звёзд и луны — ради выбора времени переселения"
+        ],
+        "info": "Показанное царство небес и земли связано в аяте с обретением убеждённости."
+      },
+      "en": {
+        "q": "What is shown to Ibrahim, and for what purpose, in 6:75?",
+        "options": [
+          "The dominion of heavens and earth, for certainty",
+          "The dominion of heavens and earth, for reckoning time",
+          "The alternation of day and night, to explain a dream to his father",
+          "The order of stars and moon, to choose the time of migration"
+        ],
+        "info": "The verse links seeing the dominion of heavens and earth with attaining certainty."
+      },
+      "uz": {
+        "q": "6:75 da Ibrohimga nima va nima maqsadda ko‘rsatilgan?",
+        "options": [
+          "Osmonlar va yer saltanati — qat’iy ishonch uchun",
+          "Osmonlar va yer saltanati — vaqtni hisoblash uchun",
+          "Kunu tun almashuvi — otaga tushni tushuntirish uchun",
+          "Yulduz va oy tartibi — ko‘chish vaqtini tanlash uchun"
+        ],
+        "info": "Oyat osmonlar va yer saltanatini ko‘rishni qat’iy ishonch bilan bog‘laydi."
+      },
+      "tg": {
+        "q": "Дар 6:75 ба Иброҳим чӣ ва бо кадом мақсад нишон дода мешавад?",
+        "options": [
+          "Малакути осмонҳо ва замин — барои яқин",
+          "Малакути осмонҳо ва замин — барои ҳисоби вақт",
+          "Гардиши шабу рӯз — барои шарҳи хоб ба падар",
+          "Тартиби ситораҳо ва моҳ — барои интихоби вақти ҳиҷрат"
+        ],
+        "info": "Оят дидани малакути осмонҳо ва заминро бо яқин пайванд медиҳад."
+      },
+      "kk": {
+        "q": "6:75-те Ибраһимге не және қандай мақсатпен көрсетілген?",
+        "options": [
+          "Көктер мен жердің патшалығы — нық сенім үшін",
+          "Көктер мен жердің патшалығы — уақыт есептеу үшін",
+          "Күн мен түннің ауысуы — әкесіне түсін түсіндіру үшін",
+          "Жұлдыз бен айдың реті — көшу уақытын таңдау үшін"
+        ],
+        "info": "Аят көктер мен жердің патшалығын көруді нық сенімге жетумен байланыстырады."
+      },
+      "ky": {
+        "q": "6:75-те Ибрахимге эмне жана кандай максатта көрсөтүлөт?",
+        "options": [
+          "Асман менен жердин падышалыгы — бекем ишеним үчүн",
+          "Асман менен жердин падышалыгы — убакытты эсептөө үчүн",
+          "Күн менен түндүн алмашуусу — атасына түшүн түшүндүрүү үчүн",
+          "Жылдыз менен айдын ирети — көчүү убактысын тандоо үчүн"
+        ],
+        "info": "Аят асман менен жердин падышалыгын көрүүнү бекем ишенимге жетүү менен байланыштырат."
+      },
+      "az": {
+        "q": "6:75-də İbrahimə nə və hansı məqsədlə göstərilir?",
+        "options": [
+          "Göylərin və yerin hökmranlığı — yəqinlik üçün",
+          "Göylərin və yerin hökmranlığı — vaxt hesabı üçün",
+          "Gecə-gündüzün dəyişməsi — atasına yuxunu izah etmək üçün",
+          "Ulduzlarla ayın sırası — köç vaxtını seçmək üçün"
+        ],
+        "info": "Ayə göylərin və yerin hökmranlığını görməyi yəqinliklə əlaqələndirir."
+      },
+      "tr": {
+        "q": "6:75'te İbrâhim'e ne, hangi amaçla gösterilir?",
+        "options": [
+          "Göklerin ve yerin hükümranlığı, kesin inanç için",
+          "Göklerin ve yerin hükümranlığı, zamanı hesaplamak için",
+          "Gece ile gündüzün değişmesi, babasına rüyayı açıklamak için",
+          "Yıldızların ve ayın düzeni, göç zamanını seçmek için"
+        ],
+        "info": "Ayet, göklerin ve yerin hükümranlığını görmeyi kesin inançla ilişkilendirir."
+      }
+    }
+  },
+  {
+    "id": "l3n_celestial_order",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 6:76, 6:77, 6:78",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "sourceVerses": [
+      "6:76",
+      "6:77",
+      "6:78"
+    ],
+    "locales": {
+      "ru": {
+        "q": "В каком порядке Ибрахим наблюдает небесные тела в 6:76–78?",
+        "options": [
+          "Звезда, затем луна, затем солнце",
+          "Луна, затем звезда, затем солнце",
+          "Солнце, затем луна, затем звезда",
+          "Звезда, затем солнце, затем луна"
+        ],
+        "info": "Рассуждение последовательно проходит от звезды к луне и солнцу, отмечая их исчезновение."
+      },
+      "en": {
+        "q": "In what order does Ibrahim observe celestial bodies in 6:76–78?",
+        "options": [
+          "Star, then moon, then sun",
+          "Moon, then star, then sun",
+          "Sun, then moon, then star",
+          "Star, then sun, then moon"
+        ],
+        "info": "The account moves from the star to the moon and sun, noting that each disappears."
+      },
+      "uz": {
+        "q": "6:76–78 da Ibrohim osmon jismlarini qaysi tartibda kuzatadi?",
+        "options": [
+          "Yulduz, keyin oy, keyin quyosh",
+          "Oy, keyin yulduz, keyin quyosh",
+          "Quyosh, keyin oy, keyin yulduz",
+          "Yulduz, keyin quyosh, keyin oy"
+        ],
+        "info": "Bayon yulduzdan oy va quyoshga o‘tib, ularning botishini qayd etadi."
+      },
+      "tg": {
+        "q": "Иброҳим дар 6:76–78 ҷирмҳои осмониро бо чӣ тартиб мебинад?",
+        "options": [
+          "Ситора, баъд моҳ, баъд офтоб",
+          "Моҳ, баъд ситора, баъд офтоб",
+          "Офтоб, баъд моҳ, баъд ситора",
+          "Ситора, баъд офтоб, баъд моҳ"
+        ],
+        "info": "Ривоят аз ситора ба моҳу офтоб мегузарад ва ғуруби онҳоро зикр мекунад."
+      },
+      "kk": {
+        "q": "6:76–78-де Ибраһим аспан денелерін қандай ретпен бақылайды?",
+        "options": [
+          "Жұлдыз, кейін ай, кейін күн",
+          "Ай, кейін жұлдыз, кейін күн",
+          "Күн, кейін ай, кейін жұлдыз",
+          "Жұлдыз, кейін күн, кейін ай"
+        ],
+        "info": "Баяндау жұлдыздан ай мен күнге өтіп, әрқайсысының батуын атайды."
+      },
+      "ky": {
+        "q": "6:76–78-де Ибрахим асман телолорун кайсы иретте көрөт?",
+        "options": [
+          "Жылдыз, андан кийин ай, анан күн",
+          "Ай, андан кийин жылдыз, анан күн",
+          "Күн, андан кийин ай, анан жылдыз",
+          "Жылдыз, андан кийин күн, анан ай"
+        ],
+        "info": "Баяндоо жылдыздан айга жана күнгө өтүп, ар биринин батышын белгилейт."
+      },
+      "az": {
+        "q": "6:76–78-də İbrahim səma cisimlərini hansı sıra ilə müşahidə edir?",
+        "options": [
+          "Ulduz, sonra ay, sonra günəş",
+          "Ay, sonra ulduz, sonra günəş",
+          "Günəş, sonra ay, sonra ulduz",
+          "Ulduz, sonra günəş, sonra ay"
+        ],
+        "info": "Hadisə ulduzdan aya və günəşə keçir, hər birinin batması qeyd olunur."
+      },
+      "tr": {
+        "q": "6:76–78'de İbrâhim gök cisimlerini hangi sırayla gözlemler?",
+        "options": [
+          "Yıldız, sonra ay, sonra güneş",
+          "Ay, sonra yıldız, sonra güneş",
+          "Güneş, sonra ay, sonra yıldız",
+          "Yıldız, sonra güneş, sonra ay"
+        ],
+        "info": "Anlatım yıldızdan aya ve güneşe geçer, her birinin battığına dikkat çeker."
+      }
+    }
+  },
+  {
+    "id": "l3n_fear_condition",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 6:80",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "sourceVerses": [
+      "6:80"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какую оговорку Ибрахим соединяет с отсутствием страха перед сотоварищами в 6:80?",
+        "options": [
+          "Если только Господь не пожелает чего-либо; Его знание объемлет всё",
+          "Если только Господь не пожелает; упомянуто лишь знание прошлого",
+          "Без какой-либо оговорки; упомянуто всеобъемлющее знание Господа",
+          "Если народ принесёт доказательство; упомянут совет отца"
+        ],
+        "info": "Отказ бояться идолов не отменяет воли Господа и Его всеобъемлющего знания."
+      },
+      "en": {
+        "q": "What qualification accompanies Ibrahim's lack of fear in 6:80?",
+        "options": [
+          "Unless his Lord wills something; His knowledge encompasses all",
+          "Unless his Lord wills; only knowledge of the past is mentioned",
+          "Without any qualification; the Lord's all-encompassing knowledge is mentioned",
+          "If the people bring evidence; his father's advice is mentioned"
+        ],
+        "info": "Not fearing idols does not negate the Lord's will or His all-encompassing knowledge."
+      },
+      "uz": {
+        "q": "6:80 da Ibrohim qo‘rqmaslikka qanday shart qo‘shadi?",
+        "options": [
+          "Faqat Rabbi biror narsani xohlasa; Uning ilmi hamma narsani qamraydi",
+          "Faqat Rabbi xohlasa; faqat o‘tmish ilmi aytiladi",
+          "Hech qanday shartsiz; Rabbining barcha narsani qamragan ilmi aytiladi",
+          "Qavm dalil keltirsa; otaning maslahati aytiladi"
+        ],
+        "info": "Butlardan qo‘rqmaslik Rabbining irodasi va barcha narsani qamragan ilmini inkor etmaydi."
+      },
+      "tg": {
+        "q": "Иброҳим дар 6:80 ба натарсидан чӣ шарт илова мекунад?",
+        "options": [
+          "Магар Парвардигор чизе бихоҳад; илми Ӯ ҳама чизро фаро мегирад",
+          "Магар Парвардигор бихоҳад; танҳо илми гузашта зикр мешавад",
+          "Бе ҳеҷ шарт; илми фарогири Парвардигор зикр мешавад",
+          "Агар қавм далел оварад; маслиҳати падар зикр мешавад"
+        ],
+        "info": "Натарсидан аз бутҳо иродаи Парвардигор ва илми фарогири Ӯро инкор намекунад."
+      },
+      "kk": {
+        "q": "6:80-де Ибраһим қорықпауына қандай шарт қосады?",
+        "options": [
+          "Раббысы бір нәрсе қаламаса; Оның білімі бәрін қамтиды",
+          "Раббысы қаламаса; тек өткенді білу аталған",
+          "Ешбір шартсыз; Раббының бәрін қамтитын білімі аталған",
+          "Қауымы дәлел әкелсе; әкесінің кеңесі аталған"
+        ],
+        "info": "Пұттардан қорықпау Раббының еркін және бәрін қамтитын білімін жоққа шығармайды."
+      },
+      "ky": {
+        "q": "6:80-де Ибрахим коркпогонуна кандай шарт кошот?",
+        "options": [
+          "Раббиси бир нерсе каалабаса; Анын билими баарын камтыйт",
+          "Раббиси каалабаса; өткөндү билүү гана айтылган",
+          "Эч шартсыз; Раббинин баарын камтыган билими айтылган",
+          "Коому далил алып келсе; атасынын кеңеши айтылган"
+        ],
+        "info": "Буттардан коркпоо Раббинин каалоосун жана баарын камтыган билимин жокко чыгарбайт."
+      },
+      "az": {
+        "q": "6:80-də İbrahim qorxmamağına hansı şərti əlavə edir?",
+        "options": [
+          "Rəbbi bir şey istəməsə; Onun elmi hər şeyi əhatə edir",
+          "Rəbbi istəməsə; yalnız keçmişi bilmək qeyd olunur",
+          "Heç bir şərt olmadan; Rəbbin hər şeyi əhatə edən elmi qeyd olunur",
+          "Qövmü dəlil gətirsə; atasının məsləhəti qeyd olunur"
+        ],
+        "info": "Bütlərdən qorxmamaq Rəbbin iradəsini və hər şeyi əhatə edən elmini inkar etmir."
+      },
+      "tr": {
+        "q": "6:80'de İbrâhim korkmamasına hangi kaydı ekler?",
+        "options": [
+          "Rabbi bir şey dilemedikçe; O'nun ilmi her şeyi kuşatır",
+          "Rabbi dilemedikçe; yalnız geçmişin bilgisi anılır",
+          "Hiçbir kayıt olmadan; Rabbin her şeyi kuşatan ilmi anılır",
+          "Kavmi delil getirirse; babasının öğüdü anılır"
+        ],
+        "info": "Putlardan korkmamak, Rabbin iradesini ve her şeyi kuşatan ilmini yok saymaz."
+      }
+    }
+  },
+  {
+    "id": "l3n_creator_orientation",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 6:79",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "sourceVerses": [
+      "6:79"
+    ],
+    "locales": {
+      "ru": {
+        "q": "К кому Ибрахим обращает свой лик и какую принадлежность отрицает в 6:79?",
+        "options": [
+          "К Творцу небес и земли; не относится к многобожникам",
+          "К Творцу небес и земли; не относится к обладателям Писания",
+          "К восходящему солнцу; не относится к многобожникам",
+          "К Творцу небес и земли; отрицает принадлежность к своему народу"
+        ],
+        "info": "Заявлено обращение к Создателю небес и земли с отказом от приобщения сотоварищей."
+      },
+      "en": {
+        "q": "To whom does Ibrahim turn, and what affiliation does he reject in 6:79?",
+        "options": [
+          "The Creator of heavens and earth; he is not among polytheists",
+          "The Creator of heavens and earth; he is not among the People of Scripture",
+          "The rising sun; he is not among polytheists",
+          "The Creator of heavens and earth; he denies belonging to his people"
+        ],
+        "info": "He declares devotion to the Creator of heavens and earth while rejecting partners with Allah."
+      },
+      "uz": {
+        "q": "6:79 da Ibrohim yuzini kimga burib, qaysi mansublikni rad etadi?",
+        "options": [
+          "Osmonlar va yer Yaratuvchisiga; mushriklardan emas",
+          "Osmonlar va yer Yaratuvchisiga; Kitob ahlidan emas",
+          "Chiqayotgan quyoshga; mushriklardan emas",
+          "Osmonlar va yer Yaratuvchisiga; qavmiga mansubligini rad etadi"
+        ],
+        "info": "U osmonlar va yer Yaratuvchisiga yuzlanib, Allohga sherik qo‘shishni rad etadi."
+      },
+      "tg": {
+        "q": "Иброҳим дар 6:79 рӯй ба кӣ меорад ва кадом мансубиятро рад мекунад?",
+        "options": [
+          "Ба Офаридгори осмонҳо ва замин; аз мушрикон нест",
+          "Ба Офаридгори осмонҳо ва замин; аз аҳли Китоб нест",
+          "Ба офтоби тулӯъкунанда; аз мушрикон нест",
+          "Ба Офаридгори осмонҳо ва замин; мансубияти худро ба қавм рад мекунад"
+        ],
+        "info": "Ӯ рӯй овардан ба Офаридгорро бо рад кардани шарик барои Аллоҳ баён мекунад."
+      },
+      "kk": {
+        "q": "6:79-да Ибраһим жүзін кімге бұрып, қай топтан емес екенін айтады?",
+        "options": [
+          "Көктер мен жердің Жаратушысына; мүшріктерден емес",
+          "Көктер мен жердің Жаратушысына; Кітап иелерінен емес",
+          "Шығып келе жатқан күнге; мүшріктерден емес",
+          "Көктер мен жердің Жаратушысына; өз қауымына жататынын жоққа шығарады"
+        ],
+        "info": "Ол көктер мен жердің Жаратушысына бет бұрып, Аллаға серік қосудан бас тартады."
+      },
+      "ky": {
+        "q": "6:79-да Ибрахим жүзүн кимге буруп, кайсы топтон эмес экенин айтат?",
+        "options": [
+          "Асман менен жердин Жаратуучусуна; мушриктерден эмес",
+          "Асман менен жердин Жаратуучусуна; Китеп ээлеринен эмес",
+          "Чыгып келе жаткан күнгө; мушриктерден эмес",
+          "Асман менен жердин Жаратуучусуна; өз коомуна таандык экенин танат"
+        ],
+        "info": "Ал асман менен жердин Жаратуучусуна бурулуп, Аллахка шерик кошууну четке кагат."
+      },
+      "az": {
+        "q": "6:79-da İbrahim üzünü kimə tutur və hansı mənsubiyyəti rədd edir?",
+        "options": [
+          "Göylərin və yerin Yaradanına; müşriklərdən deyil",
+          "Göylərin və yerin Yaradanına; Kitab əhlindən deyil",
+          "Doğan günəşə; müşriklərdən deyil",
+          "Göylərin və yerin Yaradanına; öz qövmünə mənsubiyyəti rədd edir"
+        ],
+        "info": "O, göylərin və yerin Yaradanına yönəlib Allaha şərik qoşmağı rədd edir."
+      },
+      "tr": {
+        "q": "6:79'da İbrâhim kime yönelir ve hangi aidiyeti reddeder?",
+        "options": [
+          "Göklerin ve yerin Yaratanına; müşriklerden değildir",
+          "Göklerin ve yerin Yaratanına; Kitap ehlinden değildir",
+          "Doğan güneşe; müşriklerden değildir",
+          "Göklerin ve yerin Yaratanına; kendi kavmine aidiyetini reddeder"
+        ],
+        "info": "Göklerin ve yerin Yaratanına yöneldiğini bildirir, Allah'a ortak koşmayı reddeder."
+      }
+    }
+  },
+  {
+    "id": "l3n_fear_comparison",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 6:81",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/6",
+    "sourceVerses": [
+      "6:81"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие два вида страха сопоставляет Ибрахим в 6:81?",
+        "options": [
+          "Его страх перед их сотоварищами и их отсутствие страха при недоказанном многобожии",
+          "Его страх перед их сотоварищами и их страх приобщить их без доказательства",
+          "Его отсутствие страха перед Аллахом и их страх перед Ним",
+          "Их страх перед сотоварищами и его требование бояться их сильнее"
+        ],
+        "info": "Ибрахим обращает вопрос к тем, кто требует бояться идолов, но не боится приобщать их без доказательства."
+      },
+      "en": {
+        "q": "Which two attitudes to fear does Ibrahim compare in 6:81?",
+        "options": [
+          "His fear of their partners and their lack of fear in associating them without proof",
+          "His fear of their partners and their fear of associating them without proof",
+          "His lack of fear of Allah and their fear of Him",
+          "Their fear of partners and his demand to fear them more"
+        ],
+        "info": "He challenges those demanding fear of idols while not fearing association without evidence."
+      },
+      "uz": {
+        "q": "6:81 da Ibrohim qo‘rquvning qaysi ikki holatini solishtiradi?",
+        "options": [
+          "Uning ularning sheriklaridan qo‘rqishi va ularning dalilsiz shirkdan qo‘rqmasligi",
+          "Uning ularning sheriklaridan qo‘rqishi va ularning dalilsiz shirkdan qo‘rqishi",
+          "Uning Allohdan qo‘rqmasligi va ularning Undan qo‘rqishi",
+          "Ularning sheriklardan qo‘rqishi va uning yanada qo‘rqish talabi"
+        ],
+        "info": "U butlardan qo‘rqishni talab qilib, dalilsiz shirkdan qo‘rqmaydiganlarga savol beradi."
+      },
+      "tg": {
+        "q": "Иброҳим дар 6:81 кадом ду ҳолати тарсро муқоиса мекунад?",
+        "options": [
+          "Тарси ӯ аз шарикони онҳо ва натарсидани онҳо аз ширки бе далел",
+          "Тарси ӯ аз шарикони онҳо ва тарси онҳо аз ширки бе далел",
+          "Натарсидани ӯ аз Аллоҳ ва тарси онҳо аз Ӯ",
+          "Тарси онҳо аз шарикон ва талаби ӯ ба тарси бештар"
+        ],
+        "info": "Ӯ аз касоне мепурсад, ки тарс аз бутҳоро мехоҳанд, вале аз ширки бе далел наметарсанд."
+      },
+      "kk": {
+        "q": "6:81-де Ибраһим қорқыныштың қандай екі жағдайын салыстырады?",
+        "options": [
+          "Оның олардың серіктерінен қорқуы және олардың дәлелсіз серік қосудан қорықпауы",
+          "Оның олардың серіктерінен қорқуы және олардың дәлелсіз серік қосудан қорқуы",
+          "Оның Алладан қорықпауы және олардың Одан қорқуы",
+          "Олардың серіктерден қорқуы және оның көбірек қорқуды талап етуі"
+        ],
+        "info": "Ол пұттардан қорқуды талап етіп, дәлелсіз серік қосудан қорықпайтындарға сұрақ қояды."
+      },
+      "ky": {
+        "q": "6:81-де Ибрахим коркуунун кайсы эки абалын салыштырат?",
+        "options": [
+          "Анын алардын шериктеринен коркуусу жана алардын далилсиз ширк кылуудан коркпоосу",
+          "Анын алардын шериктеринен коркуусу жана алардын далилсиз ширк кылуудан коркуусу",
+          "Анын Аллахтан коркпоосу жана алардын Андан коркуусу",
+          "Алардын шериктерден коркуусу жана анын көбүрөөк коркуу талабы"
+        ],
+        "info": "Ал буттардан коркууну талап кылып, далилсиз шерик кошуудан коркпогондорго суроо берет."
+      },
+      "az": {
+        "q": "6:81-də İbrahim qorxunun hansı iki halını müqayisə edir?",
+        "options": [
+          "Onun onların şəriklərindən qorxması və onların dəlilsiz şərik qoşmaqdan qorxmaması",
+          "Onun onların şəriklərindən qorxması və onların dəlilsiz şərik qoşmaqdan qorxması",
+          "Onun Allahdan qorxmaması və onların Ondan qorxması",
+          "Onların şəriklərdən qorxması və onun daha çox qorxmaq tələbi"
+        ],
+        "info": "O, bütlərdən qorxmağı tələb edib dəlilsiz şərik qoşmaqdan qorxmayanlara sual verir."
+      },
+      "tr": {
+        "q": "6:81'de İbrâhim hangi iki korku tutumunu karşılaştırır?",
+        "options": [
+          "Onun onların ortaklarından korkması ve onların delilsiz ortak koşmaktan korkmaması",
+          "Onun onların ortaklarından korkması ve onların delilsiz ortak koşmaktan korkması",
+          "Onun Allah'tan korkmaması ve onların O'ndan korkması",
+          "Onların ortaklardan korkması ve onun daha çok korkmalarını istemesi"
+        ],
+        "info": "Putlardan korkmayı isteyen fakat delilsiz ortak koşmaktan korkmayanlara soru yöneltir."
+      }
+    }
+  },
+  {
+    "id": "l3n_father_faculties",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 19:42",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/19",
+    "sourceVerses": [
+      "19:42"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какие три неспособности предмета поклонения перечисляет Ибрахим отцу в 19:42?",
+        "options": [
+          "Не слышит, не видит, не помогает",
+          "Не слышит, не видит, не произносит речей",
+          "Не слышит, не ест, не помогает",
+          "Не видит, не ест, не отвечает"
+        ],
+        "info": "Довод касается отсутствия слуха, зрения и способности принести пользу поклоняющемуся."
+      },
+      "en": {
+        "q": "Which three inabilities does Ibrahim mention to his father in 19:42?",
+        "options": [
+          "It cannot hear, see or help",
+          "It cannot hear, see or speak",
+          "It cannot hear, eat or help",
+          "It cannot see, eat or answer"
+        ],
+        "info": "The argument concerns lack of hearing, sight and ability to benefit the worshipper."
+      },
+      "uz": {
+        "q": "19:42 da Ibrohim otasiga sig‘inilayotgan narsaning qaysi uch ojizligini aytadi?",
+        "options": [
+          "Eshitmaydi, ko‘rmaydi, yordam bermaydi",
+          "Eshitmaydi, ko‘rmaydi, gapirmaydi",
+          "Eshitmaydi, yemaydi, yordam bermaydi",
+          "Ko‘rmaydi, yemaydi, javob bermaydi"
+        ],
+        "info": "Dalil eshitish, ko‘rish va sig‘inuvchiga foyda berish qobiliyati yo‘qligiga tegishli."
+      },
+      "tg": {
+        "q": "Иброҳим дар 19:42 ба падар кадом се нотавониро мегӯяд?",
+        "options": [
+          "Намешунавад, намебинад, ёрӣ намедиҳад",
+          "Намешунавад, намебинад, сухан намегӯяд",
+          "Намешунавад, намехӯрад, ёрӣ намедиҳад",
+          "Намебинад, намехӯрад, ҷавоб намедиҳад"
+        ],
+        "info": "Далел ба набудани шунавоӣ, биноӣ ва тавони фоида расондан ба парастанда дахл дорад."
+      },
+      "kk": {
+        "q": "19:42-де Ибраһим әкесіне табынатын нәрсенің қандай үш дәрменсіздігін айтады?",
+        "options": [
+          "Естімейді, көрмейді, көмектеспейді",
+          "Естімейді, көрмейді, сөйлемейді",
+          "Естімейді, жемейді, көмектеспейді",
+          "Көрмейді, жемейді, жауап бермейді"
+        ],
+        "info": "Дәлел есту, көру және табынушыға пайда келтіру қабілеттерінің жоқтығына қатысты."
+      },
+      "ky": {
+        "q": "19:42-де Ибрахим атасына сыйынган нерсенин кайсы үч алсыздыгын айтат?",
+        "options": [
+          "Укпайт, көрбөйт, жардам бербейт",
+          "Укпайт, көрбөйт, сүйлөбөйт",
+          "Укпайт, жебейт, жардам бербейт",
+          "Көрбөйт, жебейт, жооп бербейт"
+        ],
+        "info": "Далил угуу, көрүү жана сыйынган адамга пайда берүү жөндөмүнүн жоктугуна тиешелүү."
+      },
+      "az": {
+        "q": "19:42-də İbrahim atasına ibadət edilənin hansı üç acizliyini deyir?",
+        "options": [
+          "Eşitmir, görmür, kömək etmir",
+          "Eşitmir, görmür, danışmır",
+          "Eşitmir, yemir, kömək etmir",
+          "Görmür, yemir, cavab vermir"
+        ],
+        "info": "Dəlil eşitmə, görmə və ibadət edənə fayda vermə qabiliyyətinin olmamasıdır."
+      },
+      "tr": {
+        "q": "19:42'de İbrâhim babasına tapılanın hangi üç yetersizliğini söyler?",
+        "options": [
+          "İşitmez, görmez, yardım etmez",
+          "İşitmez, görmez, konuşmaz",
+          "İşitmez, yemez, yardım etmez",
+          "Görmez, yemez, cevap vermez"
+        ],
+        "info": "Delil, işitme, görme ve tapınana yarar sağlama gücünün bulunmamasıdır."
+      }
+    }
+  },
+  {
+    "id": "l3n_knowledge_following",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 19:43",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/19",
+    "sourceVerses": [
+      "19:43"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Чем Ибрахим обосновывает просьбу отцу последовать за ним в 19:43?",
+        "options": [
+          "К нему пришло особое знание, и он укажет прямой путь",
+          "Отец получил то же знание, и сын просит отца указать путь",
+          "К нему пришло знание, и он просит следовать привычке предков",
+          "Знание пришло только отцу, но сын ссылается на молодость"
+        ],
+        "info": "Просьба основана на пришедшем знании и обещании вести верным путём, а не на богатстве или власти."
+      },
+      "en": {
+        "q": "How does Ibrahim support his request that his father follow him in 19:43?",
+        "options": [
+          "Knowledge has come to him, and he will guide to a straight path",
+          "His father received the same knowledge, and he asks his father to guide him",
+          "Knowledge came to him, and he asks for adherence to ancestral custom",
+          "Knowledge came only to the father, but the son appeals to youth"
+        ],
+        "info": "The request rests on received knowledge and guidance, rather than wealth or authority."
+      },
+      "uz": {
+        "q": "19:43 da Ibrohim otasidan ergashishni qanday asoslaydi?",
+        "options": [
+          "Unga bilim kelgan va u to‘g‘ri yo‘lni ko‘rsatadi",
+          "Otasi ham shu bilimni olgan va o‘g‘il otadan yo‘l ko‘rsatishni so‘raydi",
+          "Unga bilim kelgan va u ajdodlar odatiga ergashishni so‘raydi",
+          "Bilim faqat otaga kelgan, o‘g‘il esa yoshligini dalil qiladi"
+        ],
+        "info": "Da’vat boylik yoki hokimiyatga emas, kelgan bilim va to‘g‘ri yo‘lga asoslanadi."
+      },
+      "tg": {
+        "q": "Иброҳим дар 19:43 пайравии падарро чӣ гуна асоснок мекунад?",
+        "options": [
+          "Ба ӯ дониш омадааст ва роҳи рост нишон медиҳад",
+          "Падар ҳамон донишро гирифтааст ва писар роҳнамоӣ мехоҳад",
+          "Ба ӯ дониш омадааст ва ӯ пайравии одати ниёгонро мехоҳад",
+          "Дониш танҳо ба падар омадааст, вале писар ба ҷавонӣ такя мекунад"
+        ],
+        "info": "Даъват ба дониш ва ҳидоят асос меёбад, на ба сарват ё ҳокимият."
+      },
+      "kk": {
+        "q": "19:43-те Ибраһим әкесінен еруді сұрауын немен негіздейді?",
+        "options": [
+          "Оған білім келген және ол тура жолға бастайды",
+          "Әкесі сол білімді алған, ұлы одан жол көрсетуді сұрайды",
+          "Оған білім келген және ол ата-баба әдетіне еруді сұрайды",
+          "Білім тек әкесіне келген, ұлы жастығын алға тартады"
+        ],
+        "info": "Шақыру байлық не билікке емес, келген білім мен тура жолға негізделеді."
+      },
+      "ky": {
+        "q": "19:43-тө Ибрахим атасынан ээрчүүнү суроосун эмне менен негиздейт?",
+        "options": [
+          "Ага билим келген жана ал түз жолго баштайт",
+          "Атасы ошол билимди алган жана уулу андан жол көрсөтүүнү сурайт",
+          "Ага билим келген жана ал ата-баба адатын ээрчүүнү сурайт",
+          "Билим атасына гана келген, уулу жаштыгын жүйө кылат"
+        ],
+        "info": "Чакырык байлыкка же бийликке эмес, келген билимге жана түз жолго негизделет."
+      },
+      "az": {
+        "q": "19:43-də İbrahim atasından ona tabe olmağı nə ilə əsaslandırır?",
+        "options": [
+          "Ona elm gəlib və doğru yola yönəldəcək",
+          "Atası eyni elmi alıb və oğul atasından yol göstərməsini istəyir",
+          "Ona elm gəlib və o ata-baba adətinə uymağı istəyir",
+          "Elm yalnız ataya gəlib, oğul isə gəncliyinə əsaslanır"
+        ],
+        "info": "Dəvət sərvət və hakimiyyətə deyil, gələn elmə və doğru yola əsaslanır."
+      },
+      "tr": {
+        "q": "19:43'te İbrâhim babasının kendisine uymasını neyle gerekçelendirir?",
+        "options": [
+          "Kendisine bilgi gelmiştir ve doğru yola iletecektir",
+          "Babası aynı bilgiyi almıştır; oğul babasından yol göstermesini ister",
+          "Kendisine bilgi gelmiştir; ata geleneğine uyulmasını ister",
+          "Bilgi yalnız babaya gelmiştir; oğul gençliğine dayanır"
+        ],
+        "info": "Çağrı servet ya da yetkiye değil, gelen bilgiye ve doğru yola dayandırılır."
+      }
+    }
+  },
+  {
+    "id": "l3n_father_threat_reply",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 19:46, 19:47",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/19",
+    "sourceVerses": [
+      "19:46",
+      "19:47"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какая угроза отца и какой ответ Ибрахима следуют друг за другом в 19:46–47?",
+        "options": [
+          "Побить камнями; мир и обещание просить прощения",
+          "Заключить в темницу; мир и обещание просить прощения",
+          "Побить камнями; обещание вернуться после торговли",
+          "Отобрать имущество; обещание переселиться вместе"
+        ],
+        "info": "Отец угрожает камнями и требует уйти; Ибрахим отвечает миром и намерением просить прощения для него."
+      },
+      "en": {
+        "q": "Which threat and reply follow one another in 19:46–47?",
+        "options": [
+          "Stoning; peace and a promise to seek forgiveness",
+          "Imprisonment; peace and a promise to seek forgiveness",
+          "Stoning; a promise to return after trading",
+          "Confiscation; a promise to migrate together"
+        ],
+        "info": "The father threatens stoning and demands separation; Ibrahim responds with peace and intended prayer for forgiveness."
+      },
+      "uz": {
+        "q": "19:46–47 da otaning qaysi tahdidi va Ibrohimning qaysi javobi ketma-ket keladi?",
+        "options": [
+          "Toshbo‘ron; salom va mag‘firat so‘rash va’dasi",
+          "Zindon; salom va mag‘firat so‘rash va’dasi",
+          "Toshbo‘ron; savdodan so‘ng qaytish va’dasi",
+          "Molni tortib olish; birga ko‘chish va’dasi"
+        ],
+        "info": "Ota toshbo‘ron bilan tahdid qilib ketishni talab qiladi; Ibrohim salom va mag‘firat so‘rash niyati bilan javob beradi."
+      },
+      "tg": {
+        "q": "Дар 19:46–47 кадом таҳдиди падар ва ҷавоби Иброҳим пайи ҳам меоянд?",
+        "options": [
+          "Сангсор; салом ва ваъдаи талаби омурзиш",
+          "Зиндон; салом ва ваъдаи талаби омурзиш",
+          "Сангсор; ваъдаи бозгашт баъди тиҷорат",
+          "Гирифтани мол; ваъдаи якҷо кӯчидан"
+        ],
+        "info": "Падар ба сангсор таҳдид карда рафтан мехоҳад; Иброҳим бо салом ва нияти талаби омурзиш ҷавоб медиҳад."
+      },
+      "kk": {
+        "q": "19:46–47-де әкенің қай қорқытуы мен Ибраһимнің жауабы қатар келеді?",
+        "options": [
+          "Таспен ұру; бейбіт тілек және кешірім сұрау уәдесі",
+          "Зынданға қамау; бейбіт тілек және кешірім сұрау уәдесі",
+          "Таспен ұру; саудадан кейін қайту уәдесі",
+          "Мүлкін алу; бірге көшу уәдесі"
+        ],
+        "info": "Әкесі таспен ұруды айтып, кетуін талап етеді; Ибраһим бейбіт тілек пен кешірім сұрау ниетін білдіреді."
+      },
+      "ky": {
+        "q": "19:46–47-де атасынын кайсы коркутуусу жана Ибрахимдин жообу катар келет?",
+        "options": [
+          "Таш бараң; тынчтык жана кечирим суроо убадасы",
+          "Зынданга камоо; тынчтык жана кечирим суроо убадасы",
+          "Таш бараң; соодадан кийин кайтуу убадасы",
+          "Мүлкүн алуу; чогуу көчүү убадасы"
+        ],
+        "info": "Атасы таш бараң менен коркутуп, кетишин талап кылат; Ибрахим тынчтык жана кечирим суроо ниети менен жооп берет."
+      },
+      "az": {
+        "q": "19:46–47-də atanın hansı hədəsi və İbrahimin cavabı ardıcıldır?",
+        "options": [
+          "Daşlamaq; salam və bağışlanma istəmək vədi",
+          "Zindana salmaq; salam və bağışlanma istəmək vədi",
+          "Daşlamaq; ticarətdən sonra qayıtmaq vədi",
+          "Malı almaq; birlikdə köçmək vədi"
+        ],
+        "info": "Ata daşlamaqla hədələyib getməyi tələb edir; İbrahim salam və bağışlanma istəmək niyyəti ilə cavab verir."
+      },
+      "tr": {
+        "q": "19:46–47'de babanın hangi tehdidi ve İbrâhim'in cevabı art arda gelir?",
+        "options": [
+          "Taşlama; selâm ve bağışlanma dileme sözü",
+          "Hapis; selâm ve bağışlanma dileme sözü",
+          "Taşlama; ticaretten sonra dönme sözü",
+          "Mala el koyma; birlikte göçme sözü"
+        ],
+        "info": "Baba taşlamayla tehdit edip ayrılmasını ister; İbrâhim selâm ve bağışlanma dileme niyetiyle cevap verir."
+      }
+    }
+  },
+  {
+    "id": "l3n_withdrawal_prayer",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 19:48",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/19",
+    "sourceVerses": [
+      "19:48"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какая надежда сопровождает намерение Ибрахима взывать к Господу после ухода в 19:48?",
+        "options": [
+          "Не оказаться несчастным в мольбе к Нему",
+          "Чтобы город стал безопасным, а он и его сыновья избегали идолов",
+          "Чтобы ему была дарована мудрость и он был причислен к праведникам",
+          "Чтобы он и его потомки выстаивали молитву и мольба была принята"
+        ],
+        "info": "Уход от народа и его объектов поклонения сопровождается обращением к Господу с надеждой на благой исход мольбы."
+      },
+      "en": {
+        "q": "What hope accompanies Ibrahim's intention to call on his Lord after withdrawing in 19:48?",
+        "options": [
+          "Not to be disappointed in calling on Him",
+          "For the city to be secure and himself and his sons to avoid idols",
+          "To receive wisdom and be joined with the righteous",
+          "For himself and his descendants to establish prayer and for his supplication to be accepted"
+        ],
+        "info": "Withdrawal is accompanied by prayer to the Lord and hope for a good outcome in calling on Him."
+      },
+      "uz": {
+        "q": "19:48 da ketgach Rabbiga duo qilish niyatiga qaysi umid qo‘shiladi?",
+        "options": [
+          "Unga duoda baxtsiz bo‘lmaslik",
+          "Shahar tinch bo‘lishi va o‘zi hamda o‘g‘illari butlardan saqlanishi",
+          "Unga hikmat berilishi va solihlarga qo‘shilishi",
+          "O‘zi va avlodi namozni ado etishi va duosi qabul bo‘lishi"
+        ],
+        "info": "Qavm va sig‘inuvlaridan uzoqlashish Rabbiga duo va uning yaxshi natijasiga umid bilan birga keladi."
+      },
+      "tg": {
+        "q": "Дар 19:48 нияти дуо баъд аз дур шудан бо кадом умед аст?",
+        "options": [
+          "Дар дуо ба Ӯ бадбахт нашудан",
+          "То шаҳр амн шавад ва ӯву писаронаш аз бутҳо дур бошанд",
+          "То ба ӯ ҳикмат дода шавад ва ба солеҳон пайвандад",
+          "То ӯву насли ӯ намоз барпо кунанд ва дуояш пазируфта шавад"
+        ],
+        "info": "Дур шудан аз қавму маъбудҳояшон бо дуо ба Парвардигор ва умеди натиҷаи нек меояд."
+      },
+      "kk": {
+        "q": "19:48-де кеткен соң Раббысына жалбарыну ниеті қандай үмітпен келеді?",
+        "options": [
+          "Оған дұға етуде бақытсыз болмау",
+          "Қала қауіпсіз болып, өзі мен ұлдары пұттардан сақтануы",
+          "Оған даналық беріліп, ізгілер қатарына қосылуы",
+          "Өзі мен ұрпағы намаз оқып, дұғасының қабыл болуы"
+        ],
+        "info": "Қауымы мен табынатындарынан алыстау Раббысына дұға және оның жақсы нәтижесіне үмітпен қатар келеді."
+      },
+      "ky": {
+        "q": "19:48-де кеткенден кийин Раббисине дуба кылуу ниети кандай үмүт менен айтылат?",
+        "options": [
+          "Ага дуба кылууда бактысыз болбоо",
+          "Шаар коопсуз болуп, өзү менен уулдары буттардан сактануусу",
+          "Ага даанышмандык берилип, салихтерге кошулуусу",
+          "Өзү менен урпагы намазды аткарып, дубасынын кабыл болушу"
+        ],
+        "info": "Коомунан жана алар сыйынгандардан кетүү Раббисине дуба жана жакшы натыйжага үмүт менен айтылат."
+      },
+      "az": {
+        "q": "19:48-də uzaqlaşdıqdan sonra Rəbbinə dua niyyəti hansı ümidlədir?",
+        "options": [
+          "Ona duada bədbəxt olmamaq",
+          "Şəhərin təhlükəsiz olması, özünün və oğullarının bütlərdən uzaq qalması",
+          "Ona hikmət verilməsi və salehlərə qoşulması",
+          "Özünün və nəslinin namaz qılması, duasının qəbul olması"
+        ],
+        "info": "Qövmündən və ibadət etdiklərindən uzaqlaşmaq Rəbbinə dua və yaxşı nəticəyə ümidlə yanaşıdır."
+      },
+      "tr": {
+        "q": "19:48'de ayrılıştan sonra Rabbine dua niyetine hangi ümit eşlik eder?",
+        "options": [
+          "O'na duada bedbaht olmamak",
+          "Şehrin güvenli olması, kendisiyle oğullarının putlardan uzak tutulması",
+          "Kendisine hikmet verilmesi ve salihlere katılması",
+          "Kendisinin ve soyunun namaz kılması, duasının kabul edilmesi"
+        ],
+        "info": "Kavminden ve taptıklarından ayrılmasına Rabbine dua ve hayırlı sonuç ümidi eşlik eder."
+      }
+    }
+  },
+  {
+    "id": "l3n_ancestry_argument",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 21:52, 21:53, 21:54",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/21",
+    "sourceVerses": [
+      "21:52",
+      "21:53",
+      "21:54"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как соотносятся довод народа и ответ Ибрахима в 21:52–54?",
+        "options": [
+          "Они ссылаются на отцов; он отвергает заблуждение обоих поколений",
+          "Они ссылаются на отцов; он осуждает лишь нынешнее поколение",
+          "Они ссылаются на отцов; он признаёт правоту предков",
+          "Они ссылаются на отцов; он откладывает ответ до их возвращения"
+        ],
+        "info": "Ссылка на практику предков не убеждает Ибрахима: он относит заблуждение и к отцам, и к собеседникам."
+      },
+      "en": {
+        "q": "How do the people's argument and Ibrahim's reply relate in 21:52–54?",
+        "options": [
+          "They appeal to their fathers; he rejects both generations' error",
+          "They appeal to their fathers; he condemns only the present generation",
+          "They appeal to their fathers; he accepts the ancestors' correctness",
+          "They appeal to their fathers; he postpones his reply until their return"
+        ],
+        "info": "An appeal to ancestral practice does not persuade Ibrahim; he identifies error in both generations."
+      },
+      "uz": {
+        "q": "21:52–54 da qavmning dalili va Ibrohimning javobi qanday?",
+        "options": [
+          "Ular ota-bobolarni dalil qiladi; u ikki avlod adashganini aytadi",
+          "Ular ota-bobolarni dalil qiladi; u faqat hozirgi avlodni qoralaydi",
+          "Ular ota-bobolarni dalil qiladi; u ajdodlarni haq deb biladi",
+          "Ular ota-bobolarni dalil qiladi; u javobni ular qaytguncha kechiktiradi"
+        ],
+        "info": "Ajdodlar odati Ibrohimni ishontirmaydi; u har ikki avlodning adashganini ko‘rsatadi."
+      },
+      "tg": {
+        "q": "Дар 21:52–54 далели қавм ва ҷавоби Иброҳим чӣ гунаанд?",
+        "options": [
+          "Онҳо ба падарон истинод мекунанд; ӯ гумроҳии ҳар ду наслро мегӯяд",
+          "Онҳо ба падарон истинод мекунанд; ӯ танҳо насли ҳозираро сарзаниш мекунад",
+          "Онҳо ба падарон истинод мекунанд; ӯ ниёгонро ҳақ медонад",
+          "Онҳо ба падарон истинод мекунанд; ӯ ҷавобро то бозгашташон мемонад"
+        ],
+        "info": "Одати ниёгон Иброҳимро қонеъ намекунад; ӯ ҳар ду наслро дар гумроҳӣ медонад."
+      },
+      "kk": {
+        "q": "21:52–54-те қауымның дәлелі мен Ибраһимнің жауабы қандай?",
+        "options": [
+          "Олар аталарын алға тартады; ол екі ұрпақтың адасуын айтады",
+          "Олар аталарын алға тартады; ол тек қазіргі ұрпақты айыптайды",
+          "Олар аталарын алға тартады; ол аталарының дұрыстығын мойындайды",
+          "Олар аталарын алға тартады; ол жауабын олар қайтқанша қалдырады"
+        ],
+        "info": "Ата-баба әдеті Ибраһимді сендірмейді; ол екі ұрпақтың да адасқанын көрсетеді."
+      },
+      "ky": {
+        "q": "21:52–54-тө коомдун жүйөсү менен Ибрахимдин жообу кандай?",
+        "options": [
+          "Алар аталарын жүйө кылат; ал эки муундун адашуусун айтат",
+          "Алар аталарын жүйө кылат; ал азыркы муунду гана айыптайт",
+          "Алар аталарын жүйө кылат; ал ата-бабаларын туура дейт",
+          "Алар аталарын жүйө кылат; ал жоопту алар кайтканга чейин калтырат"
+        ],
+        "info": "Ата-бабалардын адаты Ибрахимди ынандырбайт; ал эки муундун тең адашуусун көрсөтөт."
+      },
+      "az": {
+        "q": "21:52–54-də qövmün dəlili və İbrahimin cavabı necədir?",
+        "options": [
+          "Onlar atalarına əsaslanır; o hər iki nəslin azdığını deyir",
+          "Onlar atalarına əsaslanır; o yalnız indiki nəsli qınayır",
+          "Onlar atalarına əsaslanır; o əcdadların haqlı olduğunu qəbul edir",
+          "Onlar atalarına əsaslanır; o cavabı onların qayıdışına saxlayır"
+        ],
+        "info": "Ata-baba adəti İbrahimi inandırmır; o hər iki nəslin azdığını bildirir."
+      },
+      "tr": {
+        "q": "21:52–54'te kavmin gerekçesi ve İbrâhim'in cevabı nasıldır?",
+        "options": [
+          "Onlar atalarına dayanır; o iki kuşağın da yanılgısını belirtir",
+          "Onlar atalarına dayanır; o yalnız mevcut kuşağı kınar",
+          "Onlar atalarına dayanır; o ataların haklılığını kabul eder",
+          "Onlar atalarına dayanır; o cevabı onların dönüşüne erteler"
+        ],
+        "info": "Ataların uygulaması İbrâhim'i ikna etmez; iki kuşağın da yanılgısını belirtir."
+      }
+    }
+  },
+  {
+    "id": "l3n_largest_spared",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 21:58",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/21",
+    "sourceVerses": [
+      "21:58"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какой идол оставлен целым и с какой названной целью в 21:58?",
+        "options": [
+          "Самый большой, чтобы к нему обратились",
+          "Самый большой, чтобы перенести его к отцу",
+          "Самый маленький, чтобы к нему обратились",
+          "Самый большой, чтобы поставить его вместо всех остальных"
+        ],
+        "info": "Аят выделяет самого большого идола среди разбитых и связывает это с обращением людей к нему."
+      },
+      "en": {
+        "q": "Which idol is left intact, and for what stated purpose, in 21:58?",
+        "options": [
+          "The largest, so they might turn to it",
+          "The largest, to take it to his father",
+          "The smallest, so they might turn to it",
+          "The largest, to install it in place of all the others"
+        ],
+        "info": "The verse singles out the largest idol among the shattered ones so people might turn to it."
+      },
+      "uz": {
+        "q": "21:58 da qaysi but va qanday maqsadda butun qoldirilgan?",
+        "options": [
+          "Eng kattasi, unga murojaat qilishlari uchun",
+          "Eng kattasi, otasiga olib borish uchun",
+          "Eng kichigi, unga murojaat qilishlari uchun",
+          "Eng kattasi, qolganlar o‘rniga qo‘yish uchun"
+        ],
+        "info": "Oyat sindirilganlar orasida eng katta butni ajratib, odamlar unga murojaat qilishini aytadi."
+      },
+      "tg": {
+        "q": "Дар 21:58 кадом бут ва бо кадом мақсад солим мондааст?",
+        "options": [
+          "Бузургтаринаш, то ба он муроҷиат кунанд",
+          "Бузургтаринаш, то назди падар барад",
+          "Хурдтаринаш, то ба он муроҷиат кунанд",
+          "Бузургтаринаш, то ба ҷойи дигарон гузорад"
+        ],
+        "info": "Оят бути бузургтаринро аз шикастаҳо ҷудо мекунад, то мардум ба он рӯ оваранд."
+      },
+      "kk": {
+        "q": "21:58-де қай пұт және қандай мақсатпен бүтін қалған?",
+        "options": [
+          "Ең үлкені, соған жүгінсін деп",
+          "Ең үлкені, әкесіне апарсын деп",
+          "Ең кішісі, соған жүгінсін деп",
+          "Ең үлкені, қалғандарының орнына қойсын деп"
+        ],
+        "info": "Аят сынған пұттар арасынан ең үлкенін бөліп, адамдар соған жүгінсін деген мақсатты атайды."
+      },
+      "ky": {
+        "q": "21:58-де кайсы бут жана эмне үчүн бүтүн калтырылган?",
+        "options": [
+          "Эң чоңу, ага кайрылышсын деп",
+          "Эң чоңу, атасына алып барсын деп",
+          "Эң кичинеси, ага кайрылышсын деп",
+          "Эң чоңу, калгандарынын ордуна койсун деп"
+        ],
+        "info": "Аят сынгандардын ичинен эң чоң бутту бөлүп, адамдар ага кайрылышын айтат."
+      },
+      "az": {
+        "q": "21:58-də hansı büt və nə məqsədlə salamat saxlanılır?",
+        "options": [
+          "Ən böyüyü, ona müraciət etsinlər deyə",
+          "Ən böyüyü, atasına aparsın deyə",
+          "Ən kiçiyi, ona müraciət etsinlər deyə",
+          "Ən böyüyü, hamısının yerinə qoyulsun deyə"
+        ],
+        "info": "Ayə sındırılmış bütlər içində ən böyüyünü ayırır ki, insanlar ona yönəlsinlər."
+      },
+      "tr": {
+        "q": "21:58'de hangi put, hangi amaçla sağlam bırakılır?",
+        "options": [
+          "En büyüğü, ona başvursunlar diye",
+          "En büyüğü, babasına götürmek için",
+          "En küçüğü, ona başvursunlar diye",
+          "En büyüğü, diğerlerinin yerine konulsun diye"
+        ],
+        "info": "Ayet kırılanlar arasında en büyük putu ayırır; insanların ona dönmesi amaçlanır."
+      }
+    }
+  },
+  {
+    "id": "l3n_idol_dialogue_order",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 21:63, 21:64, 21:65",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/21",
+    "sourceVerses": [
+      "21:63",
+      "21:64",
+      "21:65"
+    ],
+    "locales": {
+      "ru": {
+        "q": "В каком порядке разворачивается разговор после предложения спросить идолов (21:63–65)?",
+        "options": [
+          "Люди упрекают себя, затем признают, что идолы не говорят",
+          "Люди признают, что идолы не говорят, затем впервые упрекают себя",
+          "Люди упрекают себя, затем утверждают, что идолы умеют говорить",
+          "Люди признают, что идолы говорят, затем требуют спросить самого большого"
+        ],
+        "info": "Сначала они обращаются к себе с упрёком, затем отвечают, что идолы говорить не могут."
+      },
+      "en": {
+        "q": "What follows the challenge to question the idols in 21:63–65?",
+        "options": [
+          "The people reproach themselves, then admit the idols cannot speak",
+          "They admit the idols cannot speak, then reproach themselves for the first time",
+          "They reproach themselves, then assert that the idols can speak",
+          "They affirm that idols speak, then demand questioning the largest"
+        ],
+        "info": "First they turn on themselves with reproach; then they answer that the idols cannot speak."
+      },
+      "uz": {
+        "q": "21:63–65 da butlardan so‘rash taklifidan keyin nima bo‘ladi?",
+        "options": [
+          "Odamlar o‘zini malomat qiladi, keyin butlar gapirmasligini aytadi",
+          "Avval butlar gapirmasligini aytib, keyin ilk bor o‘zini malomat qiladi",
+          "O‘zini malomat qilib, keyin butlar gapira olishini aytadi",
+          "Butlar gapirishini tasdiqlab, eng kattasidan so‘rashni talab qiladi"
+        ],
+        "info": "Avval ular o‘zini malomat qiladi, so‘ng butlar gapira olmasligini aytadi."
+      },
+      "tg": {
+        "q": "Пас аз пешниҳоди пурсидани бутҳо дар 21:63–65 чӣ мешавад?",
+        "options": [
+          "Мардум худро сарзаниш мекунанд, сипас мегӯянд бутҳо сухан намегӯянд",
+          "Аввал мегӯянд бутҳо сухан намегӯянд, баъд бори аввал худро сарзаниш мекунанд",
+          "Худро сарзаниш карда, сипас мегӯянд бутҳо сухан мегӯянд",
+          "Сухани бутҳоро тасдиқ карда, пурсидани бузургтаринашро талаб мекунанд"
+        ],
+        "info": "Аввал онҳо худро сарзаниш мекунанд ва баъд нотавонии бутҳо ба суханро мегӯянд."
+      },
+      "kk": {
+        "q": "21:63–65-те пұттардан сұрау ұсынысынан кейін не болады?",
+        "options": [
+          "Адамдар өзін сөгіп, кейін пұттардың сөйлемейтінін айтады",
+          "Алдымен пұттардың сөйлемейтінін айтып, кейін алғаш рет өзін сөгеді",
+          "Өзін сөгіп, кейін пұттардың сөйлей алатынын айтады",
+          "Пұттардың сөйлейтінін растап, ең үлкенінен сұрауды талап етеді"
+        ],
+        "info": "Алдымен олар өздерін сөгеді, содан кейін пұттар сөйлей алмайтынын айтады."
+      },
+      "ky": {
+        "q": "21:63–65-те буттардан суроо сунушунан кийин эмне болот?",
+        "options": [
+          "Адамдар өздөрүн жемелеп, анан буттар сүйлөбөй турганын айтат",
+          "Адегенде буттар сүйлөбөй турганын айтып, анан биринчи жолу өздөрүн жемелейт",
+          "Өздөрүн жемелеп, анан буттар сүйлөй аларын айтат",
+          "Буттар сүйлөрүн ырастап, эң чоңунан суроону талап кылат"
+        ],
+        "info": "Адегенде алар өздөрүн жемелешет, андан кийин буттар сүйлөй албасын айтышат."
+      },
+      "az": {
+        "q": "21:63–65-də bütlərdən soruşmaq təklifindən sonra nə olur?",
+        "options": [
+          "İnsanlar özlərini qınayır, sonra bütlərin danışmadığını deyirlər",
+          "Əvvəl bütlərin danışmadığını deyir, sonra ilk dəfə özlərini qınayırlar",
+          "Özlərini qınayıb sonra bütlərin danışa bildiyini deyirlər",
+          "Bütlərin danışdığını təsdiqləyib ən böyüyündən soruşmağı tələb edirlər"
+        ],
+        "info": "Əvvəl özlərini qınayır, sonra bütlərin danışa bilmədiyini bildirirlər."
+      },
+      "tr": {
+        "q": "21:63–65'te putlara sorma teklifinden sonra ne olur?",
+        "options": [
+          "İnsanlar kendilerini kınar, sonra putların konuşmadığını söyler",
+          "Önce putların konuşmadığını söyler, sonra ilk kez kendilerini kınarlar",
+          "Kendilerini kınar, sonra putların konuşabildiğini söylerler",
+          "Putların konuştuğunu doğrular, en büyüğüne sorulmasını isterler"
+        ],
+        "info": "Önce kendilerini kınarlar, ardından putların konuşamayacağını söylerler."
+      }
+    }
+  },
+  {
+    "id": "l3n_stars_departure",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 37:88, 37:89, 37:90",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/37",
+    "sourceVerses": [
+      "37:88",
+      "37:89",
+      "37:90"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какова последовательность в 37:88–90 перед уходом людей от Ибрахима?",
+        "options": [
+          "Взгляд на звёзды, слова о болезни, их уход",
+          "Слова о болезни, их уход, взгляд на звёзды",
+          "Их уход, слова о болезни, взгляд на звёзды",
+          "Взгляд на звёзды, их уход, слова о болезни"
+        ],
+        "info": "В отрывке сначала назван взгляд на звёзды, затем сообщение о болезни и уход людей."
+      },
+      "en": {
+        "q": "What sequence occurs in 37:88–90 before people leave Ibrahim?",
+        "options": [
+          "Looking at the stars, saying he is ill, their departure",
+          "Saying he is ill, their departure, looking at the stars",
+          "Their departure, saying he is ill, looking at the stars",
+          "Looking at the stars, their departure, saying he is ill"
+        ],
+        "info": "The passage mentions looking at the stars first, then illness, then the people's departure."
+      },
+      "uz": {
+        "q": "37:88–90 da odamlar Ibrohimdan ketishidan oldin qanday tartib bor?",
+        "options": [
+          "Yulduzlarga qarash, kasallikni aytish, ularning ketishi",
+          "Kasallikni aytish, ularning ketishi, yulduzlarga qarash",
+          "Ularning ketishi, kasallikni aytish, yulduzlarga qarash",
+          "Yulduzlarga qarash, ularning ketishi, kasallikni aytish"
+        ],
+        "info": "Avval yulduzlarga qarash, keyin kasallik haqidagi so‘z va odamlarning ketishi aytilgan."
+      },
+      "tg": {
+        "q": "Дар 37:88–90 пеш аз рафтани мардум чӣ пайдарҳамӣ аст?",
+        "options": [
+          "Нигоҳ ба ситораҳо, гуфтани беморӣ, рафтани онҳо",
+          "Гуфтани беморӣ, рафтани онҳо, нигоҳ ба ситораҳо",
+          "Рафтани онҳо, гуфтани беморӣ, нигоҳ ба ситораҳо",
+          "Нигоҳ ба ситораҳо, рафтани онҳо, гуфтани беморӣ"
+        ],
+        "info": "Аввал нигоҳ ба ситораҳо, баъд сухан аз беморӣ ва рафтани мардум омадааст."
+      },
+      "kk": {
+        "q": "37:88–90-да адамдар кетер алдындағы рет қандай?",
+        "options": [
+          "Жұлдыздарға қарау, ауруын айту, олардың кетуі",
+          "Ауруын айту, олардың кетуі, жұлдыздарға қарау",
+          "Олардың кетуі, ауруын айту, жұлдыздарға қарау",
+          "Жұлдыздарға қарау, олардың кетуі, ауруын айту"
+        ],
+        "info": "Алдымен жұлдыздарға қарау, кейін ауру туралы сөз, соңында адамдардың кетуі айтылады."
+      },
+      "ky": {
+        "q": "37:88–90-до адамдар кетер алдындагы ирет кандай?",
+        "options": [
+          "Жылдыздарды кароо, оорулуу экенин айтуу, алардын кетиши",
+          "Оорулуу экенин айтуу, алардын кетиши, жылдыздарды кароо",
+          "Алардын кетиши, оорулуу экенин айтуу, жылдыздарды кароо",
+          "Жылдыздарды кароо, алардын кетиши, оорулуу экенин айтуу"
+        ],
+        "info": "Адегенде жылдыздарды кароо, анан оорулуу экенин айтуу жана адамдардын кетиши келет."
+      },
+      "az": {
+        "q": "37:88–90-da insanların getməsindən əvvəlki ardıcıllıq necədir?",
+        "options": [
+          "Ulduzlara baxmaq, xəstə olduğunu demək, onların getməsi",
+          "Xəstə olduğunu demək, onların getməsi, ulduzlara baxmaq",
+          "Onların getməsi, xəstə olduğunu demək, ulduzlara baxmaq",
+          "Ulduzlara baxmaq, onların getməsi, xəstə olduğunu demək"
+        ],
+        "info": "Əvvəl ulduzlara baxış, sonra xəstəlik sözləri, ardından insanların getməsi qeyd olunur."
+      },
+      "tr": {
+        "q": "37:88–90'da insanların ayrılmasından önceki sıra nasıldır?",
+        "options": [
+          "Yıldızlara bakış, hasta olduğunu söyleme, onların ayrılması",
+          "Hasta olduğunu söyleme, onların ayrılması, yıldızlara bakış",
+          "Onların ayrılması, hasta olduğunu söyleme, yıldızlara bakış",
+          "Yıldızlara bakış, onların ayrılması, hasta olduğunu söyleme"
+        ],
+        "info": "Önce yıldızlara bakış, sonra hastalık sözü, ardından insanların ayrılması anlatılır."
+      }
+    }
+  },
+  {
+    "id": "l3n_son_response",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 37:102",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/37",
+    "sourceVerses": [
+      "37:102"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какая формулировка передаёт ответ сына Ибрахима в 37:102?",
+        "options": [
+          "Исполни повеление; если Аллах пожелает, я буду терпеливым",
+          "Исполни повеление; если Аллах пожелает, я буду благодарным",
+          "Исполни повеление; обещает терпение без упоминания воли Аллаха",
+          "Отложи повеление; если Аллах пожелает, я позднее соглашусь"
+        ],
+        "info": "Сын соглашается с исполнением повеления и связывает своё терпение с волей Аллаха; его имя этот аят не называет."
+      },
+      "en": {
+        "q": "Which wording conveys Ibrahim's son's response in 37:102?",
+        "options": [
+          "Do what is commanded; Allah willing, I will be patient",
+          "Do what is commanded; Allah willing, I will be grateful",
+          "Do what is commanded; he promises patience without mentioning Allah's will",
+          "Delay the command; Allah willing, I will agree later"
+        ],
+        "info": "The son accepts fulfilment and connects his patience with Allah's will; this verse does not name him."
+      },
+      "uz": {
+        "q": "37:102 da Ibrohim o‘g‘lining javobini qaysi jumla beradi?",
+        "options": [
+          "Buyurilganni qil; Alloh xohlasa, sabrli bo‘laman",
+          "Buyurilganni qil; Alloh xohlasa, shukrli bo‘laman",
+          "Buyurilganni qil; Allohning irodasini aytmay sabr va’da qiladi",
+          "Buyruqni kechiktir; Alloh xohlasa, keyin rozi bo‘laman"
+        ],
+        "info": "O‘g‘il buyruq bajarilishiga rozi bo‘lib, sabrini Allohning irodasiga bog‘laydi; oyatda ismi aytilmagan."
+      },
+      "tg": {
+        "q": "Кадом ибора ҷавоби писари Иброҳимро дар 37:102 мерасонад?",
+        "options": [
+          "Фармонро иҷро кун; агар Аллоҳ бихоҳад, сабр мекунам",
+          "Фармонро иҷро кун; агар Аллоҳ бихоҳад, шукргузор мешавам",
+          "Фармонро иҷро кун; сабрро бе зикри иродаи Аллоҳ ваъда медиҳад",
+          "Фармонро ба таъхир андоз; агар Аллоҳ бихоҳад, баъд розӣ мешавам"
+        ],
+        "info": "Писар ба иҷро розӣ шуда, сабрашро ба иродаи Аллоҳ мепайвандад; оят номашро намегӯяд."
+      },
+      "kk": {
+        "q": "37:102-де Ибраһим ұлының жауабын қай сөз жеткізеді?",
+        "options": [
+          "Бұйырылғанды орында; Алла қаласа, сабырлы боламын",
+          "Бұйырылғанды орында; Алла қаласа, шүкір етуші боламын",
+          "Бұйырылғанды орында; Алланың еркін атамай сабыр уәде етеді",
+          "Бұйрықты кейінге қалдыр; Алла қаласа, кейін келісемін"
+        ],
+        "info": "Ұлы орындауға келісіп, сабырын Алланың еркіне байланыстырады; бұл аят оның атын атамайды."
+      },
+      "ky": {
+        "q": "37:102-де Ибрахимдин уулунун жообун кайсы сөз берет?",
+        "options": [
+          "Буйрулганды аткар; Аллах кааласа, сабырдуу болом",
+          "Буйрулганды аткар; Аллах кааласа, шүгүр кылуучу болом",
+          "Буйрулганды аткар; Аллахтын каалоосун атабай сабыр убада кылат",
+          "Буйрукту кечиктир; Аллах кааласа, кийин макул болом"
+        ],
+        "info": "Уулу аткарууга макул болуп, сабырын Аллахтын каалоосуна байланыштырат; аят анын атын атабайт."
+      },
+      "az": {
+        "q": "37:102-də İbrahimin oğlunun cavabını hansı sözlər verir?",
+        "options": [
+          "Əmr ediləni et; Allah istəsə, səbirli olacağam",
+          "Əmr ediləni et; Allah istəsə, şükür edən olacağam",
+          "Əmr ediləni et; Allahın iradəsini anmadan səbir vəd edir",
+          "Əmri gecikdir; Allah istəsə, sonra razılaşacağam"
+        ],
+        "info": "Oğul icraya razılaşıb səbrini Allahın iradəsinə bağlayır; bu ayədə onun adı çəkilmir."
+      },
+      "tr": {
+        "q": "37:102'de İbrâhim'in oğlunun cevabını hangi sözler karşılar?",
+        "options": [
+          "Emredileni yap; Allah dilerse sabırlı olacağım",
+          "Emredileni yap; Allah dilerse şükreden olacağım",
+          "Emredileni yap; Allah'ın dilemesini anmadan sabır sözü verir",
+          "Emri ertele; Allah dilerse sonra kabul edeceğim"
+        ],
+        "info": "Oğul emrin yerine gelmesini kabul eder, sabrını Allah'ın dilemesine bağlar; ayet adını vermez."
+      }
+    }
+  },
+  {
+    "id": "l3n_ark_passengers",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 11:40",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
+    "sourceVerses": [
+      "11:40"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какое исключение уточняет перечень пассажиров ковчега в 11:40?",
+        "options": [
+          "Семья, кроме ранее осуждённых; отдельно — немногочисленные верующие",
+          "Вся семья без исключения; отдельно — немногочисленные верующие",
+          "Семья, кроме ранее осуждённых; верующие уже составляют большинство народа",
+          "Только семья с указанным исключением; другие верующие в перечень не входят"
+        ],
+        "info": "Перечень включает пары живых существ, семью с оговорённым исключением и верующих; последних было немного."
+      },
+      "en": {
+        "q": "What exception qualifies the ark's passengers in 11:40?",
+        "options": [
+          "Family except those already decreed against; separately, the few believers",
+          "All family without exception; separately, the few believers",
+          "Family except those already decreed against; believers now form most of the people",
+          "Only family with the stated exception; other believers are not listed"
+        ],
+        "info": "The list includes pairs of creatures, family with an exception, and the few who believed."
+      },
+      "uz": {
+        "q": "11:40 da kemaga olinadiganlar ro‘yxati qanday istisno bilan keladi?",
+        "options": [
+          "Oldindan hukm aytilganlardan tashqari oila; alohida — oz sonli mo‘minlar",
+          "Butun oila istisnosiz; alohida — oz sonli mo‘minlar",
+          "Oldindan hukm aytilganlardan tashqari oila; mo‘minlar qavmning ko‘pchiligi",
+          "Faqat oila aytilgan istisno bilan; boshqa mo‘minlar ro‘yxatga kirmaydi"
+        ],
+        "info": "Ro‘yxatda jonivorlar juftlari, istisnoli oila va oz sonli mo‘minlar bor."
+      },
+      "tg": {
+        "q": "Дар 11:40 рӯйхати саворони киштӣ кадом истисноро дорад?",
+        "options": [
+          "Оила ғайр аз пештар ҳукмшудагон; алоҳида — мӯъминони камшумор",
+          "Тамоми оила бе истисно; алоҳида — мӯъминони камшумор",
+          "Оила ғайр аз пештар ҳукмшудагон; мӯъминон аксари қавманд",
+          "Танҳо оила бо истиснои гуфташуда; дигар мӯъминон дар рӯйхат нестанд"
+        ],
+        "info": "Рӯйхат ҷуфтҳои ҷонварон, оила бо истисно ва мӯъминони камшуморро дар бар мегирад."
+      },
+      "kk": {
+        "q": "11:40-та кемеге мінетіндер тізімі қандай ерекшелікпен берілген?",
+        "options": [
+          "Бұрын үкім айтылғандардан өзге отбасы; бөлек — аз санды мүміндер",
+          "Бүкіл отбасы еш ерекшеліксіз; бөлек — аз санды мүміндер",
+          "Бұрын үкім айтылғандардан өзге отбасы; мүміндер халықтың көпшілігі",
+          "Тек аталған ерекшелігі бар отбасы; басқа мүміндер тізімге кірмейді"
+        ],
+        "info": "Тізімге жаратылыстардың жұптары, ерекшелігі бар отбасы және аз санды иман келтіргендер кіреді."
+      },
+      "ky": {
+        "q": "11:40-та кемеге түшүүчүлөр тизмесинде кандай өзгөчөлүк бар?",
+        "options": [
+          "Мурун өкүм айтылгандардан башка үй-бүлө; өзүнчө — аз сандагы момундар",
+          "Бүт үй-бүлө өзгөчөлүксүз; өзүнчө — аз сандагы момундар",
+          "Мурун өкүм айтылгандардан башка үй-бүлө; момундар элдин көпчүлүгү",
+          "Аталган өзгөчөлүк менен үй-бүлө гана; башка момундар тизмеге кирбейт"
+        ],
+        "info": "Тизмеге жандыктардын жуптары, өзгөчөлүк менен үй-бүлө жана аз сандагы момундар кирет."
+      },
+      "az": {
+        "q": "11:40-da gəmiyə minənlər siyahısında hansı istisna var?",
+        "options": [
+          "Əvvəl hökm verilənlərdən başqa ailə; ayrıca — az sayda möminlər",
+          "Bütün ailə istisnasız; ayrıca — az sayda möminlər",
+          "Əvvəl hökm verilənlərdən başqa ailə; möminlər artıq xalqın çoxluğudur",
+          "Yalnız deyilən istisna ilə ailə; digər möminlər siyahıya daxil deyil"
+        ],
+        "info": "Siyahıya canlı cütləri, istisnalı ailə və az sayda iman edənlər daxildir."
+      },
+      "tr": {
+        "q": "11:40'ta gemiye binecekler listesinde hangi istisna vardır?",
+        "options": [
+          "Haklarında önceden hüküm verilenler dışında aile; ayrıca az sayıdaki müminler",
+          "İstisnasız bütün aile; ayrıca az sayıdaki müminler",
+          "Haklarında önceden hüküm verilenler dışında aile; müminler artık halkın çoğunluğudur",
+          "Yalnız belirtilen istisnayla aile; diğer müminler listede değildir"
+        ],
+        "info": "Liste canlı çiftlerini, istisnalı aileyi ve az sayıdaki iman edeni içerir."
+      }
+    }
+  },
+  {
+    "id": "l3n_son_mountain",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 11:42, 11:43",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
+    "sourceVerses": [
+      "11:42",
+      "11:43"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как соотносятся надежда сына Нуха и ответ отца в 11:42–43?",
+        "options": [
+          "Сын надеется на гору; отец говорит об отсутствии защиты, кроме милости Аллаха",
+          "Сын надеется на гору; отец просит прощения за просьбу без знания",
+          "Сын просит взять его в ковчег; отец говорит о защите лишь по милости Аллаха",
+          "Сын надеется на гору; отец обращается к обещанию о спасении семьи"
+        ],
+        "info": "Сын выбирает гору вместо ковчега; Нух отвергает такую защиту от веления Аллаха, затем их разделяет волна."
+      },
+      "en": {
+        "q": "How do Nuh's son's hope and his father's response compare in 11:42–43?",
+        "options": [
+          "The son trusts a mountain; the father says only Allah's mercy offers protection",
+          "The son trusts a mountain; the father asks forgiveness for asking without knowledge",
+          "The son asks to board; the father says protection is only by Allah's mercy",
+          "The son trusts a mountain; the father appeals to the promise concerning his family"
+        ],
+        "info": "The son chooses a mountain over the ark; Nuh rejects that protection from Allah's command, and a wave separates them."
+      },
+      "uz": {
+        "q": "11:42–43 da Nuh o‘g‘lining umidi va otaning javobi qanday?",
+        "options": [
+          "O‘g‘il tog‘ga umid qiladi; ota Allohning rahmatidan boshqa himoya yo‘qligini aytadi",
+          "O‘g‘il tog‘ga umid qiladi; ota bilimsiz so‘rovi uchun mag‘firat so‘raydi",
+          "O‘g‘il kemaga olishni so‘raydi; ota himoya faqat Allohning rahmati bilan deydi",
+          "O‘g‘il tog‘ga umid qiladi; ota oilani qutqarish haqidagi va’daga murojaat qiladi"
+        ],
+        "info": "O‘g‘il kema o‘rniga tog‘ni tanlaydi; Nuh bunday himoyani rad etadi, keyin ularni to‘lqin ajratadi."
+      },
+      "tg": {
+        "q": "Дар 11:42–43 умеди писари Нӯҳ ва ҷавоби падар чӣ гунаанд?",
+        "options": [
+          "Писар ба кӯҳ умед дорад; падар танҳо раҳмати Аллоҳро паноҳ медонад",
+          "Писар ба кӯҳ умед дорад; падар барои дархости бедониш омурзиш мехоҳад",
+          "Писар савор шудан мехоҳад; падар паноҳро танҳо бо раҳмати Аллоҳ медонад",
+          "Писар ба кӯҳ умед дорад; падар ба ваъдаи наҷоти оила рӯ меорад"
+        ],
+        "info": "Писар кӯҳро ба ҷойи киштӣ интихоб мекунад; Нӯҳ ин паноҳро рад мекунад ва мавҷ онҳоро ҷудо мекунад."
+      },
+      "kk": {
+        "q": "11:42–43-те Нұх ұлының үміті мен әкесінің жауабы қандай?",
+        "options": [
+          "Ұлы тауға сенеді; әкесі Алланың мейірімінен басқа қорған жоқ дейді",
+          "Ұлы тауға сенеді; әкесі білімсіз өтініші үшін кешірім сұрайды",
+          "Ұлы кемеге алуды сұрайды; әкесі қорған тек Алланың мейірімімен дейді",
+          "Ұлы тауға сенеді; әкесі отбасының құтқарылуы туралы уәдеге жүгінеді"
+        ],
+        "info": "Ұлы кеме орнына тауды таңдайды; Нұх мұндай қорғанды жоққа шығарады, кейін толқын оларды бөледі."
+      },
+      "ky": {
+        "q": "11:42–43-тө Нухтун уулунун үмүтү жана атасынын жообу кандай?",
+        "options": [
+          "Уулу тоого ишенет; атасы Аллахтын ырайымынан башка коргоо жок дейт",
+          "Уулу тоого ишенет; атасы билимсиз өтүнүчү үчүн кечирим сурайт",
+          "Уулу кемеге алууну сурайт; атасы коргоо Аллахтын ырайымы менен гана дейт",
+          "Уулу тоого ишенет; атасы үй-бүлөнүн куткарылышы тууралуу убадага кайрылат"
+        ],
+        "info": "Уулу кеменин ордуна тоону тандайт; Нух мындай коргоону четке кагат, кийин толкун аларды бөлөт."
+      },
+      "az": {
+        "q": "11:42–43-də Nuhun oğlunun ümidi və atasının cavabı necədir?",
+        "options": [
+          "Oğul dağa güvənir; ata Allahın rəhmətindən başqa qoruyucu olmadığını deyir",
+          "Oğul dağa güvənir; ata bilmədən etdiyi istəyə görə bağışlanma diləyir",
+          "Oğul gəmiyə alınmağı istəyir; ata qorunmanın yalnız Allahın rəhməti ilə olduğunu deyir",
+          "Oğul dağa güvənir; ata ailənin xilası barədə vədə müraciət edir"
+        ],
+        "info": "Oğul gəmi əvəzinə dağı seçir; Nuh belə qorunmanı rədd edir, sonra dalğa onları ayırır."
+      },
+      "tr": {
+        "q": "11:42–43'te Nûh'un oğlunun ümidi ve babasının cevabı nasıldır?",
+        "options": [
+          "Oğul dağa güvenir; baba Allah'ın merhameti dışında koruyucu olmadığını söyler",
+          "Oğul dağa güvenir; baba bilgisizce isteği için bağışlanma diler",
+          "Oğul gemiye alınmayı ister; baba korumanın yalnız Allah'ın merhametiyle olduğunu söyler",
+          "Oğul dağa güvenir; baba ailesinin kurtuluşu hakkındaki vaade başvurur"
+        ],
+        "info": "Oğul gemi yerine dağı seçer; Nûh böyle bir korunmayı reddeder, sonra dalga aralarını ayırır."
+      }
+    }
+  },
+  {
+    "id": "l3n_flood_commands",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 11:44",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
+    "sourceVerses": [
+      "11:44"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Какая последовательность повелений и места остановки соответствует 11:44?",
+        "options": [
+          "Земля поглощает воду, небо прекращает; ковчег на аль-Джуди",
+          "Земля поглощает воду, небо прекращает; ковчег на ат-Туре",
+          "Небо поглощает воду, земля прекращает; ковчег на аль-Джуди",
+          "Земля извергает воду, небо усиливает дождь; ковчег на Арафате"
+        ],
+        "info": "Аят различает повеление земле и небу, затем называет аль-Джуди местом остановки ковчега."
+      },
+      "en": {
+        "q": "Which commands and resting place match 11:44?",
+        "options": [
+          "Earth swallows water, sky stops; the ark rests on al-Judi",
+          "Earth swallows water, sky stops; the ark rests on al-Tur",
+          "Sky swallows water, earth stops; the ark rests on al-Judi",
+          "Earth releases water, sky increases rain; the ark rests on Arafat"
+        ],
+        "info": "The verse distinguishes commands to earth and sky, then names al-Judi as the ark's resting place."
+      },
+      "uz": {
+        "q": "11:44 ga qaysi buyruqlar va to‘xtash joyi mos?",
+        "options": [
+          "Yer suvni yutadi, osmon to‘xtaydi; kema Judiyda",
+          "Yer suvni yutadi, osmon to‘xtaydi; kema Turda",
+          "Osmon suvni yutadi, yer to‘xtaydi; kema Judiyda",
+          "Yer suv chiqaradi, osmon yomg‘irni kuchaytiradi; kema Arafotda"
+        ],
+        "info": "Oyat yer va osmon buyruqlarini ajratib, kemaning to‘xtash joyini Judiy deb ataydi."
+      },
+      "tg": {
+        "q": "Кадом фармонҳо ва ҷои таваққуф ба 11:44 мувофиқанд?",
+        "options": [
+          "Замин обро фурӯ мебарад, осмон бозмеистад; киштӣ дар Ҷудӣ",
+          "Замин обро фурӯ мебарад, осмон бозмеистад; киштӣ дар Тур",
+          "Осмон обро фурӯ мебарад, замин бозмеистад; киштӣ дар Ҷудӣ",
+          "Замин об мебарорад, осмон борон меафзояд; киштӣ дар Арафот"
+        ],
+        "info": "Оят фармонҳои замину осмонро ҷудо карда, Ҷудиро ҷои таваққуф меномад."
+      },
+      "kk": {
+        "q": "11:44-ке қай бұйрықтар мен тоқтау орны сәйкес?",
+        "options": [
+          "Жер суды жұтады, аспан тоқтайды; кеме әл-Жудиде",
+          "Жер суды жұтады, аспан тоқтайды; кеме әт-Турда",
+          "Аспан суды жұтады, жер тоқтайды; кеме әл-Жудиде",
+          "Жер су шығарады, аспан жаңбырды күшейтеді; кеме Арафатта"
+        ],
+        "info": "Аят жер мен аспанға бұйрықтарды ажыратып, кеменің тоқтау орнын әл-Жуди деп атайды."
+      },
+      "ky": {
+        "q": "11:44-кө кайсы буйруктар жана токтогон жер туура келет?",
+        "options": [
+          "Жер сууну жутат, асман токтойт; кеме ал-Жудиде",
+          "Жер сууну жутат, асман токтойт; кеме ат-Турда",
+          "Асман сууну жутат, жер токтойт; кеме ал-Жудиде",
+          "Жер суу чыгарат, асман жамгырды күчөтөт; кеме Арафатта"
+        ],
+        "info": "Аят жер менен асманга буйруктарды бөлүп, кеменин токтогон жерин ал-Жуди деп атайт."
+      },
+      "az": {
+        "q": "11:44-ə hansı əmrlər və dayanma yeri uyğundur?",
+        "options": [
+          "Yer suyu udur, göy dayanır; gəmi Cudidə",
+          "Yer suyu udur, göy dayanır; gəmi Turda",
+          "Göy suyu udur, yer dayanır; gəmi Cudidə",
+          "Yer su buraxır, göy yağışı artırır; gəmi Ərəfatda"
+        ],
+        "info": "Ayə yer və göyə əmrləri ayırır, sonra gəminin dayandığı yeri Cudi adlandırır."
+      },
+      "tr": {
+        "q": "11:44'e hangi emirler ve durak yeri uyar?",
+        "options": [
+          "Yer suyu yutar, gök durur; gemi Cûdî'de",
+          "Yer suyu yutar, gök durur; gemi Tûr'da",
+          "Gök suyu yutar, yer durur; gemi Cûdî'de",
+          "Yer su çıkarır, gök yağmuru artırır; gemi Arafat'ta"
+        ],
+        "info": "Ayet yer ve göğe verilen emirleri ayırır, ardından geminin durağını Cûdî olarak belirtir."
+      }
+    }
+  },
+  {
+    "id": "l3n_family_promise",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 11:45, 11:46",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
+    "sourceVerses": [
+      "11:45",
+      "11:46"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как уточняется обращение Нуха о сыне в 11:45–46?",
+        "options": [
+          "Ссылка на семью и обещание получает ответ о неправедном деле сына и запрете просить без знания",
+          "Ссылка на семью и обещание получает ответ об отсутствии защиты от веления, кроме милости",
+          "Ссылка на семью и обещание получает повеление сойти с миром и благословениями",
+          "Ссылка на семью и обещание получает повеление взять в ковчег семью с исключением и верующих"
+        ],
+        "info": "Нух ссылается на семью и истинность обещания; ответ ограничивает его просьбу знанием и указывает на неправедность."
+      },
+      "en": {
+        "q": "How is Nuh's appeal about his son qualified in 11:45–46?",
+        "options": [
+          "His appeal to family and promise meets a response about unrighteous conduct and asking without knowledge",
+          "His appeal to family and promise receives a reply that only mercy protects from the command",
+          "His appeal to family and promise receives the command to disembark in peace and blessings",
+          "His appeal to family and promise receives the command to board family with an exception and believers"
+        ],
+        "info": "Nuh appeals to family and the true promise; the reply points to unrighteousness and limits requests to knowledge."
+      },
+      "uz": {
+        "q": "11:45–46 da Nuhning o‘g‘li haqidagi murojaati qanday aniqlashtiriladi?",
+        "options": [
+          "Oila va va’daga javobda o‘g‘ilning nosolih amali va bilimsiz so‘ramaslik aytiladi",
+          "Oila va va’daga javobda buyruqdan faqat rahmat himoya qilishi aytiladi",
+          "Oila va va’daga javobda tinchlik va baraka bilan tushish buyuriladi",
+          "Oila va va’daga javobda oilani istisno bilan va mo‘minlarni kemaga olish buyuriladi"
+        ],
+        "info": "Nuh oila va va’da haqligini aytadi; javob nosolihlikni ko‘rsatib, bilimdan tashqari so‘rashni cheklaydi."
+      },
+      "tg": {
+        "q": "Дар 11:45–46 муроҷиати Нӯҳ дар бораи писар чӣ гуна равшан мешавад?",
+        "options": [
+          "Ба оила ва ваъда ҷавоби амали носолеҳ ва манъи пурсиши бедониш меояд",
+          "Ба оила ва ваъда ҷавоби паноҳ набудан аз фармон ғайр аз раҳмат меояд",
+          "Ба оила ва ваъда фармони фуруд бо сулҳу баракат меояд",
+          "Ба оила ва ваъда фармони савор кардани оила бо истисно ва мӯъминон меояд"
+        ],
+        "info": "Нӯҳ оила ва ҳақ будани ваъдаро меорад; ҷавоб носолеҳиро нишон дода, дархости бедонишро маҳдуд мекунад."
+      },
+      "kk": {
+        "q": "11:45–46-да Нұхтың ұлы туралы өтініші қалай нақтыланады?",
+        "options": [
+          "Отбасы мен уәдеге жауапта ұлдың теріс ісі және білімсіз сұрамау айтылады",
+          "Отбасы мен уәдеге жауапта бұйрықтан тек мейірім қорғайтыны айтылады",
+          "Отбасы мен уәдеге жауап ретінде бейбіттік пен берекемен түсу бұйырылады",
+          "Отбасы мен уәдеге жауап ретінде отбасын ерекшелікпен және мүміндерді кемеге алу бұйырылады"
+        ],
+        "info": "Нұх отбасы мен уәденің ақиқаттығына сүйенеді; жауап теріс істі атап, білімсіз сұрауды шектейді."
+      },
+      "ky": {
+        "q": "11:45–46-да Нухтун уулу тууралуу өтүнүчү кантип такталат?",
+        "options": [
+          "Үй-бүлө жана убадага жоопто уулдун туура эмес иши жана билимсиз сурабоо айтылат",
+          "Үй-бүлө жана убадага жоопто буйруктан ырайым гана коргой турганы айтылат",
+          "Үй-бүлө жана убадага жооп катары тынчтык жана береке менен түшүү буйрулат",
+          "Үй-бүлө жана убадага жооп катары үй-бүлөнү өзгөчөлүк менен жана момундарды кемеге алуу буйрулат"
+        ],
+        "info": "Нух үй-бүлөгө жана убаданын акыйкаттыгына таянат; жооп туура эмес ишти атап, билимсиз суроону чектейт."
+      },
+      "az": {
+        "q": "11:45–46-da Nuhun oğlu barədə müraciəti necə dəqiqləşir?",
+        "options": [
+          "Ailə və vədə cavabda oğlun saleh olmayan əməli və bilmədən istəməmək deyilir",
+          "Ailə və vədə cavabda əmrdən yalnız rəhmətin qoruduğu deyilir",
+          "Ailə və vədə cavab olaraq salamatlıq və bərəkətlə enmək əmr edilir",
+          "Ailə və vədə cavab olaraq ailəni istisna ilə və möminləri gəmiyə almaq əmr edilir"
+        ],
+        "info": "Nuh ailəyə və vədin doğruluğuna əsaslanır; cavab qeyri-saleh əməli bildirir və biliksiz istəyi məhdudlaşdırır."
+      },
+      "tr": {
+        "q": "11:45–46'da Nûh'un oğlu hakkındaki yakarışı nasıl açıklığa kavuşturulur?",
+        "options": [
+          "Aile ve vaade karşılık uygunsuz amel ve bilgisizce istememe uyarısı gelir",
+          "Aile ve vaade karşılık emirden yalnız merhametin koruduğu belirtilir",
+          "Aile ve vaade karşılık esenlik ve bereketle inmesi emredilir",
+          "Aile ve vaade karşılık istisnalı aileyi ve müminleri gemiye alması emredilir"
+        ],
+        "info": "Nûh aileye ve vaadin doğruluğuna dayanır; cevap uygunsuzluğu belirtir, bilgisizce isteği sınırlar."
+      }
+    }
+  },
+  {
+    "id": "l3n_nuh_refuge",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 11:47",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
+    "sourceVerses": [
+      "11:47"
+    ],
+    "locales": {
+      "ru": {
+        "q": "От чего Нух просит защиты и какой исход связывает с отсутствием прощения в 11:47?",
+        "options": [
+          "От просьбы без знания; без прощения и милости он понесёт убыток",
+          "От любой просьбы за родственников; без прощения и милости он понесёт убыток",
+          "От просьбы о новых знамениях; без прощения и милости он понесёт убыток",
+          "От просьбы без знания; без прощения он не сможет снова строить ковчег"
+        ],
+        "info": "Мольба соединяет отказ от просьб без знания с нуждой в прощении и милости Господа."
+      },
+      "en": {
+        "q": "From what does Nuh seek refuge, and what outcome does he fear in 11:47?",
+        "options": [
+          "Asking without knowledge; without forgiveness and mercy he will lose",
+          "Making any request for relatives; without forgiveness and mercy he will lose",
+          "Requesting new signs; without forgiveness and mercy he will lose",
+          "Asking without knowledge; without forgiveness he cannot build another ark"
+        ],
+        "info": "The prayer joins avoidance of requests without knowledge with the need for the Lord's forgiveness and mercy."
+      },
+      "uz": {
+        "q": "11:47 da Nuh nimadan panoh so‘raydi va mag‘firatsiz qanday oqibatni aytadi?",
+        "options": [
+          "Bilimsiz so‘rashdan; mag‘firat va rahmatsiz ziyonkor bo‘ladi",
+          "Qarindoshlar uchun har qanday so‘rovdan; mag‘firat va rahmatsiz ziyonkor bo‘ladi",
+          "Yangi alomatlar so‘rashdan; mag‘firat va rahmatsiz ziyonkor bo‘ladi",
+          "Bilimsiz so‘rashdan; mag‘firatsiz yana kema qurolmaydi"
+        ],
+        "info": "Duo bilimsiz so‘rashdan saqlanishni Rabbining mag‘firati va rahmatiga muhtojlik bilan birlashtiradi."
+      },
+      "tg": {
+        "q": "Нӯҳ дар 11:47 аз чӣ паноҳ мехоҳад ва чӣ оқибатро мегӯяд?",
+        "options": [
+          "Аз пурсиши бедониш; бе омурзишу раҳмат зиёнкор мешавад",
+          "Аз ҳар дархост барои хешовандон; бе омурзишу раҳмат зиёнкор мешавад",
+          "Аз дархости нишонаҳои нав; бе омурзишу раҳмат зиёнкор мешавад",
+          "Аз пурсиши бедониш; бе омурзиш киштии дигар сохта наметавонад"
+        ],
+        "info": "Дуо дурӣ аз дархости бедонишро бо ниёз ба омурзишу раҳмати Парвардигор мепайвандад."
+      },
+      "kk": {
+        "q": "11:47-де Нұх неден қорған сұрап, кешірімсіз қандай нәтиже айтады?",
+        "options": [
+          "Білімсіз сұраудан; кешірім мен мейірімсіз зиян шегеді",
+          "Туыстар үшін кез келген өтініштен; кешірім мен мейірімсіз зиян шегеді",
+          "Жаңа белгілер сұраудан; кешірім мен мейірімсіз зиян шегеді",
+          "Білімсіз сұраудан; кешірімсіз тағы кеме сала алмайды"
+        ],
+        "info": "Дұға білімсіз өтініштен сақтануды Раббының кешірімі мен мейіріміне мұқтаждықпен біріктіреді."
+      },
+      "ky": {
+        "q": "11:47-де Нух эмнеден коргоо сурап, кечиримсиз кандай натыйжаны айтат?",
+        "options": [
+          "Билимсиз суроодон; кечирим менен ырайымсыз зыян тартат",
+          "Туугандар үчүн ар кандай өтүнүчтөн; кечирим менен ырайымсыз зыян тартат",
+          "Жаңы белгилерди суроодон; кечирим менен ырайымсыз зыян тартат",
+          "Билимсиз суроодон; кечиримсиз дагы кеме кура албайт"
+        ],
+        "info": "Дуба билимсиз өтүнүчтөн сактанууну Раббинин кечиримине жана ырайымына муктаждык менен бириктирет."
+      },
+      "az": {
+        "q": "11:47-də Nuh nədən sığınır və bağışlanmasız hansı nəticəni deyir?",
+        "options": [
+          "Bilmədən istəməkdən; bağışlanma və rəhmətsiz ziyana uğrayar",
+          "Qohumlar üçün hər cür istəkdən; bağışlanma və rəhmətsiz ziyana uğrayar",
+          "Yeni dəlillər istəməkdən; bağışlanma və rəhmətsiz ziyana uğrayar",
+          "Bilmədən istəməkdən; bağışlanmasız başqa gəmi tikə bilməz"
+        ],
+        "info": "Dua biliksiz istəkdən çəkinməyi Rəbbin bağışlamasına və rəhmətinə ehtiyacla birləşdirir."
+      },
+      "tr": {
+        "q": "11:47'de Nûh neden sığınır ve bağışlanma olmazsa hangi sonucu belirtir?",
+        "options": [
+          "Bilgisizce istemekten; bağışlanma ve rahmet olmadan kayba uğrar",
+          "Akrabalar için her türlü istekten; bağışlanma ve rahmet olmadan kayba uğrar",
+          "Yeni işaretler istemekten; bağışlanma ve rahmet olmadan kayba uğrar",
+          "Bilgisizce istemekten; bağışlanma olmadan başka gemi yapamaz"
+        ],
+        "info": "Dua bilgisizce istekten sakınmayı Rabbin bağışlama ve rahmetine duyulan ihtiyaçla birleştirir."
+      }
+    }
+  },
+  {
+    "id": "l3n_landing_communities",
+    "cat": "prophets",
+    "difficulty": 3,
+    "reference": "Quran 11:48",
+    "url": "https://quranenc.com/en/browse/russian_rwwad/11",
+    "sourceVerses": [
+      "11:48"
+    ],
+    "locales": {
+      "ru": {
+        "q": "Как различаются обращения к Нуху и упомянутым далее общинам в 11:48?",
+        "options": [
+          "Нуху — мир и благословения; некоторым общинам после благ предстоит наказание",
+          "Нуху — мир и благословения; всем будущим общинам гарантирована безопасность",
+          "Нуху — мир; общинам обещано наказание до всякого пользования благами",
+          "Нуху — благословения; речь о последующих общинах вообще не идёт"
+        ],
+        "info": "Аят соединяет мирное высаживание Нуха с предупреждением о временных благах и последующем наказании других общин."
+      },
+      "en": {
+        "q": "How are Nuh and the later communities addressed differently in 11:48?",
+        "options": [
+          "Nuh receives peace and blessings; some communities face punishment after enjoyment",
+          "Nuh receives peace and blessings; every future community is guaranteed safety",
+          "Nuh receives peace; communities face punishment before any enjoyment",
+          "Nuh receives blessings; later communities are not mentioned at all"
+        ],
+        "info": "The verse joins Nuh's peaceful landing with a warning about temporary enjoyment and later punishment for other communities."
+      },
+      "uz": {
+        "q": "11:48 da Nuhga va keyingi ummatlarga murojaat qanday farqlanadi?",
+        "options": [
+          "Nuhga tinchlik va baraka; ayrim ummatlarga ne’matdan keyin azob",
+          "Nuhga tinchlik va baraka; barcha keyingi ummatlarga xavfsizlik kafolatlangan",
+          "Nuhga tinchlik; ummatlarga har qanday ne’matdan oldin azob",
+          "Nuhga baraka; keyingi ummatlar umuman tilga olinmaydi"
+        ],
+        "info": "Oyat Nuhning tinch tushishini boshqa ummatlar uchun vaqtincha ne’mat va keyingi azob ogohlantirishi bilan birlashtiradi."
+      },
+      "tg": {
+        "q": "Дар 11:48 муроҷиат ба Нӯҳ ва умматҳои баъдӣ чӣ фарқ дорад?",
+        "options": [
+          "Ба Нӯҳ сулҳу баракат; ба баъзе умматҳо баъди неъмат азоб",
+          "Ба Нӯҳ сулҳу баракат; ба ҳамаи умматҳои оянда амният кафолат мешавад",
+          "Ба Нӯҳ сулҳ; ба умматҳо пеш аз ҳар неъмат азоб",
+          "Ба Нӯҳ баракат; умматҳои баъдӣ умуман зикр намешаванд"
+        ],
+        "info": "Оят фуруд омадани осоиштаи Нӯҳро бо огоҳии неъматҳои муваққатӣ ва азоби баъдии дигарон мепайвандад."
+      },
+      "kk": {
+        "q": "11:48-де Нұх пен кейінгі қауымдарға үндеу қалай ерекшеленеді?",
+        "options": [
+          "Нұхқа бейбіттік пен береке; кей қауымдарға игіліктен кейін азап",
+          "Нұхқа бейбіттік пен береке; барлық болашақ қауымға қауіпсіздік кепілденген",
+          "Нұхқа бейбіттік; қауымдарға кез келген игіліктен бұрын азап",
+          "Нұхқа береке; кейінгі қауымдар мүлде аталмайды"
+        ],
+        "info": "Аят Нұхтың бейбіт түсуін өзге қауымдардың уақытша игілігі мен кейінгі азабы туралы ескертумен біріктіреді."
+      },
+      "ky": {
+        "q": "11:48-де Нухка жана кийинки коомдорго кайрылуу кандай айырмаланат?",
+        "options": [
+          "Нухка тынчтык жана береке; кээ бир коомдорго жыргалдан кийин азап",
+          "Нухка тынчтык жана береке; бардык кийинки коомго коопсуздук кепилденет",
+          "Нухка тынчтык; коомдорго ар кандай жыргалдан мурун азап",
+          "Нухка береке; кийинки коомдор такыр айтылбайт"
+        ],
+        "info": "Аят Нухтун тынч түшүшүн башка коомдордун убактылуу жыргалы жана кийинки азабы тууралуу эскертүү менен бириктирет."
+      },
+      "az": {
+        "q": "11:48-də Nuha və sonrakı ümmətlərə müraciət necə fərqlənir?",
+        "options": [
+          "Nuha salamatlıq və bərəkət; bəzi ümmətlərə nemətlərdən sonra əzab",
+          "Nuha salamatlıq və bərəkət; bütün gələcək ümmətlərə təhlükəsizlik zəmanəti",
+          "Nuha salamatlıq; ümmətlərə hər nemətdən əvvəl əzab",
+          "Nuha bərəkət; sonrakı ümmətlər heç qeyd olunmur"
+        ],
+        "info": "Ayə Nuhun salamat enməsini başqa ümmətlərin müvəqqəti nemətləri və sonrakı əzabı barədə xəbərdarlıqla birləşdirir."
+      },
+      "tr": {
+        "q": "11:48'de Nûh ile sonraki topluluklara hitap nasıl farklılaşır?",
+        "options": [
+          "Nûh'a esenlik ve bereket; bazı topluluklara nimetlerden sonra azap",
+          "Nûh'a esenlik ve bereket; gelecekteki tüm topluluklara güvenlik garantisi",
+          "Nûh'a esenlik; topluluklara her nimetten önce azap",
+          "Nûh'a bereket; sonraki topluluklar hiç anılmaz"
+        ],
+        "info": "Ayet Nûh'un esenlikle inişini, başka toplulukların geçici nimetleri ve sonraki azabına dair uyarıyla birleştirir."
+      }
+    }
+  }
+]

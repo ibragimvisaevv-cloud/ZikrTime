@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qs_today">Bugun</string>
+    <string name="qs_paused">Hisoblash o‘chirilgan</string>
+    <string name="qs_enable_progress">Shaxsiy natijalarni yoqish</string>
+    <string name="qs_goal_complete">Bugungi maqsadga erishildi</string>
+    <string name="qs_today_start">O‘z sur’atingizda o‘qing. Vaqt shu yerda ko‘rinadi.</string>
+    <string name="qs_goal_remaining">Maqsadgacha %1$d daq qoldi</string>
+    <string name="qs_change_goal">Maqsadni o‘zgartirish</string>
+    <string name="qs_empty_title">O‘qish tarixingiz shu yerdan boshlanadi</string>
+    <string name="qs_empty_body">O‘qigandan so‘ng vaqt va hisoblangan oyatlar bu yerda avtomatik ko‘rinadi.</string>
+    <string name="qs_period">Tanlangan davr</string>
+    <string name="qs_reading_time">O‘qish vaqti</string>
+    <string name="qs_observed_ayahs">Hisoblangan turli oyatlar</string>
+    <string name="qs_active_days">O‘qilgan kunlar</string>
+    <string name="qs_unique_hint">Bir oyatni qayta o‘qish bu hisobni oshirmaydi.</string>
+    <string name="qs_all_time">Umumiy natija</string>
+    <string name="qs_complete_surahs">Barcha oyatlari hisoblangan suralar</string>
+    <string name="qs_less_minute">Bir daqiqadan kam</string>
+    <string name="qs_duration_minutes">%1$d daq</string>
+    <string name="qs_duration_hours">%1$d soat %2$d daq</string>
+    <string name="qs_week_minutes">Kunlik o‘qish daqiqalari</string>
+    <string name="qs_goal_title">Kunlik o‘qish maqsadi</string>
+    <string name="qs_goal_hint">O‘zingizga qulay vaqtni tanlang. Maqsadni istalgan payt o‘zgartirish mumkin.</string>
+    <string name="qs_goal_minutes">Kuniga daqiqa</string>
+    <string name="qs_goal_save">Maqsadni saqlash</string>
+</resources>

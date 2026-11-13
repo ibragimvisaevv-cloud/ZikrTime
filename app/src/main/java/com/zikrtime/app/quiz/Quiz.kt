@@ -17,6 +17,7 @@ data class Question(
     val info: String,
     val contentVersion: Int = 1,
     val source: SourceInfo = SourceInfo(),
+    val difficulty: Int = 1,
 ) {
     val correctOption: String get() = options[answerIndex]
 
@@ -29,6 +30,9 @@ data class Question(
 
 class QuizBank(val categories: List<Pair<String, String>>, val questions: List<Question>) {
     fun categoryName(id: String): String = categories.firstOrNull { it.first == id }?.second ?: id
+    fun questionsFor(category: String?, level: Int): List<Question> = questions.filter {
+        it.difficulty == level && (category == null || it.category == category)
+    }
 }
 
 /**
@@ -58,6 +62,8 @@ object QuestionBank {
         val questions = (0 until qs.length()).map { i ->
             val o = qs.getJSONObject(i)
             val opts = o.getJSONArray("options")
+            val difficulty = if (o.has("difficulty")) o.getInt("difficulty") else 1
+            require(KnowledgeLevel.fromId(difficulty) != null) { "Invalid difficulty for ${o.getString("id")}" }
             Question(
                 id = o.getString("id"),
                 category = o.getString("cat"),
@@ -68,14 +74,16 @@ object QuestionBank {
                 info = o.optString("info"),
                 contentVersion = o.optInt("contentVersion",1),
                 source = SourceInfo.fromJson(o.optJSONObject("source"), o.optInt("contentVersion",1)),
+                difficulty = difficulty,
             )
         }
         return QuizBank(cats, questions)
     }
 
     /** Порядок вопросов для раунда: сначала те, что давно не встречались. */
-    fun roundOrder(bank: QuizBank, category: String?, recent: List<String>, random: Random = Random.Default): List<Question> {
-        val pool = bank.questions.filter { category == null || it.category == category }.ifEmpty { bank.questions }
+    fun roundOrder(bank: QuizBank, category: String?, recent: List<String>, random: Random = Random.Default,
+        level: Int = KnowledgeLevel.BEGINNER.id): List<Question> {
+        val pool = bank.questionsFor(category, level)
         val recentSet = recent.toSet()
         val fresh = pool.filter { it.id !in recentSet }.shuffled(random)
         val seen = pool.filter { it.id in recentSet }.shuffled(random)

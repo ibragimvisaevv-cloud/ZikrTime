@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about_current_audio_licenses">Amiri shrifti — SIL Open Font License 1.1. Ahmad Xalafning Athan ilovasi uchun yozgan uchta azoni CC BY 4.0 litsenziyasi asosida ishlatiladi. Asl yozuvlar va litsenziyaga havolalar tovush tanlash bo‘limida, taqvim manbasi esa namoz vaqtlari bo‘limida berilgan.</string>
+    <string name="adhan_khalaf_one">Ahmad Xalaf · Azon I</string>
+    <string name="adhan_khalaf_two">Ahmad Xalaf · Azon II</string>
+    <string name="adhan_khalaf_fajr">Ahmad Xalaf · Bomdod azoni</string>
+    <string name="adhan_recording_processing">Ahmad Xalafning Athan uchun yozgan azoni boshidagi sukut qisqartirildi, past chastotali shovqin kamaytirildi va ovoz balandligi tenglashtirildi. CC BY 4.0.</string>
+</resources>

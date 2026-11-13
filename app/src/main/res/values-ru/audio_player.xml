@@ -1,0 +1,8 @@
+<resources>
+    <string name="audio_player_reciter">Мишари Рашид Аль-Афаси</string>
+    <string name="audio_player_album">Коран · чтение Хафс</string>
+    <string name="audio_player_failure">Не удалось воспроизвести запись. Проверьте интернет или скачайте суру заново, затем повторите.</string>
+    <string name="audio_player_connect_failure">Не удалось запустить плеер. Откройте этот экран заново и попробуйте послушать.</string>
+    <string name="audio_player_catalog_failure">Не удалось открыть каталог аудио. Попробуйте открыть этот экран заново.</string>
+    <string name="audio_player_alarm_active">Сначала выключите или отложите будильник, затем включите чтение Корана.</string>
+</resources>

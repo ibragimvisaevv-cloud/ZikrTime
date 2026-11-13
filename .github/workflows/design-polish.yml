@@ -1,0 +1,103 @@
+name: Android 0.8.23 design and usability
+on:
+  push:
+    branches: [codex/quran-reader-0814]
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: design-polish-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  check:
+    if: ${{ contains(github.event.head_commit.message, '[design-release]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Verify immutable Quran inputs
+        run: |
+          git diff --exit-code 2ed8494d6ae8766891c94835522f1b4340b06827 -- app/src/main/assets/quran app/src/main/java/com/zikrtime/app/data/QuranContent.kt
+      - name: Reuse unchanged server and Mini App checks
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p ci-out/miniapp
+          git diff --exit-code 8f27ea26ece51932a5dfba45fad3e7a580578134 HEAD -- 'shop-bot/*.py'
+          git diff --exit-code ebb6dc535795f079a1b3d30309a3376772d78b1a HEAD -- shop-bot/miniapp/ tools/ci/miniapp_design_check.cjs
+          gh api "repos/$GITHUB_REPOSITORY/actions/jobs/128403313374" > ci-out/reused-backend-check.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/13574804431" > ci-out/reused-miniapp-artifact.json
+          gh run download 42374725250 -n ZikrTime-MiniApp-check -D ci-out/miniapp
+          python3 tools/ci/design_verified_web.py
+      - name: Restore original signing key
+        env:
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          test -n "$RELEASE_KEY_PASSWORD"
+          openssl enc -d -aes-256-cbc -pbkdf2 -iter 300000 -in keystore/release.jks.enc -out keystore/release.jks -pass env:RELEASE_KEY_PASSWORD
+      - name: Build and check Android candidate
+        env:
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          chmod +x gradlew
+          ./gradlew testDebugUnitTest lintDebug assembleDebug assembleRelease --console=plain
+      - name: Verify release signature and version
+        run: |
+          mkdir -p ci-out/screens
+          SIGNER=$(find "$ANDROID_HOME/build-tools" -name apksigner | sort -V | tail -1)
+          "$SIGNER" verify --verbose --print-certs app/build/outputs/apk/release/app-release.apk > ci-out/release-signature.txt
+          grep -q 'certificate SHA-256 digest: 7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf' ci-out/release-signature.txt
+          python3 tools/ci/design_delivery.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: design-verified-inputs
+          compression-level: 0
+          path: |
+            app/build/outputs/apk/debug/app-debug.apk
+            app/build/outputs/apk/release/app-release.apk
+            ci-out/release-delivery.json
+            ci-out/release-signature.txt
+            app/build/test-results/
+      - run: python3 -m pip install 'Pillow>=11,<13'
+      - name: Enable emulator acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-design.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: App navigation, reminders and Kaaba view on Android 15
+        timeout-minutes: 25
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot -camera-back none -camera-front none
+          script: bash tools/ci/design_smoke.sh
+      - name: Preserve build and screen evidence
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/ci/design_evidence.py
+      - name: Prepare signed APK
+        run: cp app/build/outputs/apk/release/app-release.apk ZikrTime-0.8.23.apk
+      - uses: actions/upload-artifact@v7.0.2
+        with:
+          path: ZikrTime-0.8.23.apk
+          archive: false
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ZikrTime-0.8.23-check
+          path: |
+            app/build/reports/
+            app/build/test-results/
+            ci-out/

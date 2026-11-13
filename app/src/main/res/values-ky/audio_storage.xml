@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="audio_download_channel">Куран жүктөөлөрү</string>
+    <string name="audio_download_channel_description">Интернетсиз угуу үчүн тандалган сүрөлөрдүн жүктөлүү жүрүшү. Үнсүз билдирмелер.</string>
+    <string name="audio_download_waiting_network">Интернет байланышы күтүлүүдө</string>
+    <string name="audio_download_waiting_wifi">Чектөөсүз тармак күтүлүүдө</string>
+    <string name="audio_download_running">Сүрө интернетсиз угуу үчүн сакталууда</string>
+    <string name="audio_download_preparing">Жүктөө даярдалууда</string>
+</resources>

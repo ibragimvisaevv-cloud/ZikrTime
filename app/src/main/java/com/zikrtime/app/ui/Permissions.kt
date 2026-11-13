@@ -10,6 +10,8 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
@@ -66,6 +68,8 @@ fun EssentialPermissions(showGranted: Boolean = true) {
     val overlay = remember(resume) { Perms.overlay(context) }
     val battery = remember(resume) { Perms.battery(context) }
     Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
+        Text(uiCopy(UiCopy0823.PermissionHint), style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant)
         if (showGranted || !notif) {
             PermissionRow(stringResource(R.string.perm_notifications_title), stringResource(R.string.perm_notifications_text), notif) {
                 if (Build.VERSION.SDK_INT >= 33) notifPermission.launch(Manifest.permission.POST_NOTIFICATIONS)

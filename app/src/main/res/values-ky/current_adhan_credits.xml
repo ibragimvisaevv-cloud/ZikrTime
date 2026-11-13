@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about_current_audio_licenses">Amiri ариби — SIL Open Font License 1.1. Ахмед Халаф Athan колдонмосу үчүн жазган үч азан CC BY 4.0 лицензиясы менен колдонулат. Үн тандоо бөлүмүнөн түпнуска жазууларга жана лицензияга өтө аласыз. Жадыбалдын булагы намаз убакыттары бөлүмүндө көрсөтүлөт.</string>
+    <string name="adhan_khalaf_one">Ахмед Халаф · Азан I</string>
+    <string name="adhan_khalaf_two">Ахмед Халаф · Азан II</string>
+    <string name="adhan_khalaf_fajr">Ахмед Халаф · Багымдат азаны</string>
+    <string name="adhan_recording_processing">Ахмед Халаф Athan үчүн жазган азандын башындагы тыныгуу кыскартылды, төмөн жыштыктагы шуулдоо азайтылып, үн деңгээли теңделди. CC BY 4.0.</string>
+</resources>

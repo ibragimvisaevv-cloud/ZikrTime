@@ -46,7 +46,7 @@ fun NaturalSkyHero(now: ZonedDateTime, prayer: Prayer, at: ZonedDateTime, times:
                     Text(hijriDate(now.toLocalDate()), style = MaterialTheme.typography.labelSmall, color = Sand)
                 }
                 val city: @Composable () -> Unit = {
-                    Surface(onClick = { nav.open(Screen.CITY) }, color = Color(0xA6083028), contentColor = Porcelain,
+                    Surface(onClick = { nav.open(Screen.CITY) }, color = Color(0xA6242C25), contentColor = Porcelain,
                         shape = RoundedCornerShape(24.dp), border = BorderStroke(1.dp, Sand.copy(alpha = .35f))) {
                         Row(Modifier.heightIn(min = 48.dp).padding(horizontal = 12.dp), verticalAlignment = Alignment.CenterVertically) {
                             Icon(painterResource(R.drawable.ic_mosque), null, tint = Sand, modifier = Modifier.size(18.dp))

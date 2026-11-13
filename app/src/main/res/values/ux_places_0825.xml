@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ux_places_map_hint">Move the map with one finger. Tap a marker to see the place.</string>
+    <string name="ux_places_preview_title">About this place</string>
+    <string name="ux_places_details_title">Access and reviews</string>
+    <string name="ux_places_route_short">Directions</string>
+    <string name="ux_places_address_missing">Address not listed. Directions lead to the map marker.</string>
+</resources>

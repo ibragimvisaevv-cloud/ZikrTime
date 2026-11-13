@@ -62,7 +62,7 @@ fun HorizonSection(title: String, subtitle: String? = null, image: Int, heroHeig
                 Image(painterResource(image), null, Modifier.fillMaxSize(), contentScale = ContentScale.Crop)
             }
             Box(Modifier.matchParentSize().background(Brush.verticalGradient(listOf(
-                Color(0x9E062B2A), Color(0x29072E2C), Color(0xDB071F1B)))))
+                Color(0xA1171B18), Color(0x18171B18), Color(0xD9171B18)))))
         }
         Column(Modifier.fillMaxSize().drawWithContent {
             // Only the landscape reaches behind system icons; scrolling labels stop below them.
@@ -84,8 +84,7 @@ fun HorizonSection(title: String, subtitle: String? = null, image: Int, heroHeig
             Column(Modifier.fillMaxWidth().testTag("section_panel").semantics { testTagsAsResourceId = true }
                 .clip(RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp)).background(scheme.background)
                 .padding(horizontal = 22.dp), verticalArrangement = Arrangement.spacedBy(20.dp)) {
-                Box(Modifier.align(Alignment.CenterHorizontally).padding(top = 12.dp).size(34.dp, 3.dp)
-                    .background(scheme.secondary.copy(alpha = .4f), RoundedCornerShape(4.dp)))
+                Spacer(Modifier.height(4.dp))
                 content()
                 Spacer(Modifier.height(100.dp))
                 Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars))
@@ -108,15 +107,16 @@ fun HorizonSection(title: String, subtitle: String? = null, image: Int, heroHeig
 fun HorizonDestination(title: String, icon: Int, modifier: Modifier = Modifier, subtitle: String? = null,
     prominent: Boolean = false, onClick: () -> Unit) {
     val scheme = MaterialTheme.colorScheme
-    val shape = RoundedCornerShape(topStart = 10.dp, topEnd = 30.dp, bottomEnd = 10.dp, bottomStart = 10.dp)
-    val fill = if (prominent) scheme.primaryContainer else scheme.surfaceContainerLow
-    Column(modifier.clip(shape).background(fill).border(1.dp, scheme.outlineVariant.copy(alpha = .55f), shape)
-        .clickable(onClick = onClick).heightIn(min = 138.dp).padding(18.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+    val shape = MaterialTheme.shapes.large
+    val interaction = remember { androidx.compose.foundation.interaction.MutableInteractionSource() }
+    val fill = if (prominent) scheme.secondaryContainer else scheme.surfaceContainerLow
+    Column(modifier.pressScale(interaction).clip(shape).background(fill).border(1.dp, scheme.outlineVariant.copy(alpha = .55f), shape)
+        .clickable(interactionSource = interaction, indication = ripple(), role = Role.Button, onClick = onClick).heightIn(min = 138.dp).padding(18.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Icon(painterResource(icon), null, tint = scheme.primary, modifier = Modifier.size(26.dp))
             Icon(Icons.AutoMirrored.Filled.ArrowForward, null, tint = scheme.secondary, modifier = Modifier.size(18.dp))
         }
-        Text(title, style = MaterialTheme.typography.titleLarge)
+        Text(title, style = MaterialTheme.typography.titleMedium)
         if (subtitle != null) Text(subtitle, style = MaterialTheme.typography.bodySmall, color = scheme.onSurfaceVariant)
     }
 }

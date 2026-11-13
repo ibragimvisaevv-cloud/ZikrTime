@@ -43,6 +43,8 @@ object Places {
         val sourceDetails: String = "",
         /** Explicit field only: never infer from created/updated/import time. */
         val confirmedAt: String = "",
+        val sourceUrl: String = "",
+        val wikidataUrl: String = "",
     )
 
     class Data(val places: List<Place>, val sellerBot: String, val donateUrl: String, val correctionsEnabled: Boolean = false)
@@ -119,12 +121,20 @@ object Places {
                 },
                 accessConditions = o.text("access_conditions", ""), entrance = o.text("entrance", ""),
                 sourceDetails = o.text("source_details", ""), confirmedAt = confirmedDate(o.text("confirmed_at", "")),
+                sourceUrl = sourceUrl(o.text("source_url")),
+                wikidataUrl = sourceUrl(o.text("wikidata_url")).takeIf { it.startsWith("https://www.wikidata.org/") }.orEmpty(),
             )
         }
         return Data(list.distinctBy { it.id }, root.text("seller_bot").removePrefix("@"), root.text("donate_url"), root.opt("corrections_enabled") == true)
     }
 
     private fun JSONObject.text(key: String, fallback: String = ""): String = (opt(key) as? String)?.trim() ?: fallback
+
+    /** Source URLs open only known public data pages, including when a cached feed is malformed. */
+    internal fun sourceUrl(value: String): String = value.takeIf {
+        Regex("https://www\\.openstreetmap\\.org/(node|way|relation)/[1-9][0-9]*").matches(it) ||
+            Regex("https://www\\.wikidata\\.org/wiki/Q[1-9][0-9]*").matches(it)
+    }.orEmpty()
 
     /** Strict tri-state: malformed strings/numbers must not become "нет". */
     internal fun nullableBoolean(value: Any?): Boolean? = value as? Boolean

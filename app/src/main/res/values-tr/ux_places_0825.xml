@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ux_places_map_hint">Haritayı tek parmağınızla kaydırın. Yeri görmek için işarete dokunun.</string>
+    <string name="ux_places_preview_title">Yer hakkında</string>
+    <string name="ux_places_details_title">Koşullar ve yorumlar</string>
+    <string name="ux_places_route_short">Yol tarifi</string>
+    <string name="ux_places_address_missing">Adres belirtilmemiş. Yol tarifi haritadaki işarete götürür.</string>
+</resources>

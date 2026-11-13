@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="quran_title">Quran</string>
+    <string name="quran_quiz">Quran quiz</string>
+    <string name="quran_sources">Sources</string>
+    <string name="quran_surahs">Surahs</string>
+    <string name="quran_bookmarks">Bookmarks</string>
+    <string name="quran_search">Surah name or number</string>
+    <string name="quran_continue">Continue reading</string>
+    <string name="quran_ayah_count">Verses: %1$d</string>
+    <string name="quran_ayah">Verse</string>
+    <string name="quran_go">Go</string>
+    <string name="quran_save">Bookmark</string>
+    <string name="quran_saved">Saved ✓</string>
+    <string name="quran_jump_error">Enter a verse number from 1 to %1$d.</string>
+    <string name="quran_no_bookmarks">Save a verse while reading to find it here.</string>
+    <string name="quran_no_results">No surah found. Try its number or another name.</string>
+    <string name="quran_load_error">The Quran text could not be verified. Please retry or install a fresh copy of the app.</string>
+    <string name="quran_retry">Retry</string>
+    <string name="quran_close">Close</string>
+    <string name="quran_translation_label">Russian translation of the meanings</string>
+    <string name="quran_notes">Translation notes</string>
+    <string name="quran_source_arabic">Arabic: Tanzil, Uthmani text, version 1.1. The downloaded text is preserved unchanged and checked before reading. Available offline.</string>
+    <string name="quran_source_translation">Russian translation of the meanings: Rowwad Translation Center, version 1.0.1, QuranEnc. A translation conveys the meanings and is separate from the Arabic text.</string>
+</resources>
