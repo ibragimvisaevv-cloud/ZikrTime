@@ -61,27 +61,29 @@ object Places {
         if (!force && System.currentTimeMillis() - last < REFRESH_MS) return
         loading = true
         val hasCopy = Store.getRaw(KEY) != null
-        val result = withContext(Dispatchers.IO) { runCatching { Net.getIfChanged(REMOTE, KEY_TAG, hasCopy) } }
+        val etag = if (hasCopy) Store.getRaw(KEY_TAG) else null
+        val result = withContext(Dispatchers.IO) { runCatching { Net.getIfChanged(REMOTE, etag) } }
         loading = false
         if (result.isSuccess && result.getOrNull() == null) {
             Store.putRaw(KEY_AT, System.currentTimeMillis().toString())
             return
         }
-        val text = result.getOrNull()
+        val text = result.getOrNull()?.text
         val parsed = text?.let { runCatching { parse(it) }.getOrNull() } ?: return
         Store.putRaw(KEY, text)
+        Store.putRaw(KEY_TAG, result.getOrNull()?.etag.orEmpty())
         Store.putRaw(KEY_AT, System.currentTimeMillis().toString())
         data = parsed
     }
 
     fun parse(json: String): Data {
         val root = JSONObject(json)
-        val arr = root.optJSONArray("places")
+        val arr = root.getJSONArray("places")
         val list = (0 until (arr?.length() ?: 0)).mapNotNull { i ->
             val o = arr!!.getJSONObject(i)
             val lat = o.optDouble("lat")
             val lon = o.optDouble("lon")
-            if (lat.isNaN() || lon.isNaN()) return@mapNotNull null
+            if (!lat.isFinite() || !lon.isFinite() || lat !in -90.0..90.0 || lon !in -180.0..180.0) return@mapNotNull null
             Place(
                 id = o.optString("id"), kind = o.optString("kind", "other"), name = o.optString("name"),
                 lat = lat, lon = lon, address = o.optString("address"), hours = o.optString("hours"),

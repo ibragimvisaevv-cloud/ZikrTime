@@ -35,6 +35,8 @@ struct ShopCatalog {
         let cover: String
         let categories: [String]
         let accent: UInt32?
+        var promoUntil: Double = 0
+        func promoted(at date: Date) -> Bool { promoUntil > date.timeIntervalSince1970 }
     }
 
     struct Product: Identifiable {
@@ -65,7 +67,8 @@ struct ShopCatalog {
     struct ParseError: Error {}
 
     static func parse(_ data: Data) throws -> ShopCatalog {
-        guard let root = try JSONSerialization.jsonObject(with: data) as? [String: Any] else { throw ParseError() }
+        guard let root = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+              root["sellers"] is [[String: Any]], root["products"] is [[String: Any]] else { throw ParseError() }
         func text(_ o: [String: Any], _ key: String) -> Text {
             if let dict = o[key] as? [String: String] { return Text(values: dict) }
             if let s = o[key] as? String { return Text(values: ["ru": s]) }
@@ -79,7 +82,7 @@ struct ShopCatalog {
             return nil
         }
         func int(_ o: [String: Any], _ key: String) -> Int? {
-            let v = (o[key] as? Int) ?? double(o, key).map { Int($0) }
+            let v = (o[key] as? Int) ?? double(o, key).flatMap { $0.isFinite && $0 >= 0 && $0 < Double(Int.max) ? Int($0) : nil }
             return v.flatMap { $0 >= 0 ? $0 : nil }
         }
         func handle(_ s: String) -> String { s.hasPrefix("@") ? String(s.dropFirst()) : s }
@@ -101,7 +104,8 @@ struct ShopCatalog {
                 instagram: handle(string(o, "instagram")), website: string(o, "website"),
                 lat: double(o, "lat"), lon: double(o, "lon"),
                 logo: string(o, "logo"), cover: string(o, "cover"),
-                categories: o["categories"] as? [String] ?? [], accent: accent
+                categories: o["categories"] as? [String] ?? [], accent: accent,
+                promoUntil: double(o, "promo_until") ?? 0
             )
         }
         let sellerIds = Set(sellers.map(\.id))
@@ -120,6 +124,29 @@ struct ShopCatalog {
             sellerBot: handle(string(root, "seller_bot")),
             categories: categories, sellers: sellers, products: products
         )
+    }
+
+    /// Stable daily rotation, with active promotions first, as on Android.
+    func rankedSellers(seed: String, at date: Date = Date()) -> [Seller] {
+        sellers.sorted {
+            if $0.promoted(at: date) != $1.promoted(at: date) { return $0.promoted(at: date) }
+            let a = Self.rank(seed + $0.id), b = Self.rank(seed + $1.id)
+            return a == b ? $0.id < $1.id : a < b
+        }
+    }
+    func rankedProducts(seed: String, at date: Date = Date()) -> [Product] {
+        let order = Dictionary(rankedSellers(seed: seed, at: date).enumerated().map { ($1.id, $0) }, uniquingKeysWith: { a, _ in a })
+        return products.sorted {
+            let a = seller($0.seller)?.promoted(at: date) == true
+            let b = seller($1.seller)?.promoted(at: date) == true
+            if a != b { return a }
+            if a && $0.seller != $1.seller { return (order[$0.seller] ?? 0) < (order[$1.seller] ?? 0) }
+            let x = Self.rank(seed + $0.id), y = Self.rank(seed + $1.id)
+            return x == y ? $0.id < $1.id : x < y
+        }
+    }
+    private static func rank(_ text: String) -> UInt64 {
+        text.utf8.reduce(UInt64(14695981039346656037)) { ($0 ^ UInt64($1)) &* 1099511628211 }
     }
 
     /// Адрес картинки: полный URL или путь внутри репозитория каталога.

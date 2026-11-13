@@ -143,10 +143,10 @@ fun QuizRound(
                             if (ok) {
                                 correct++
                                 streak++
-                                view.performHapticFeedback(android.view.HapticFeedbackConstants.CONFIRM)
+                                view.performHapticFeedback(if (android.os.Build.VERSION.SDK_INT >= 30) android.view.HapticFeedbackConstants.CONFIRM else android.view.HapticFeedbackConstants.VIRTUAL_KEY)
                             } else {
                                 streak = 0
-                                view.performHapticFeedback(android.view.HapticFeedbackConstants.REJECT)
+                                view.performHapticFeedback(if (android.os.Build.VERSION.SDK_INT >= 30) android.view.HapticFeedbackConstants.REJECT else android.view.HapticFeedbackConstants.LONG_PRESS)
                             }
                         }
                     },

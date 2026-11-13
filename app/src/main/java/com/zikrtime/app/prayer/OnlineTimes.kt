@@ -32,6 +32,8 @@ object OnlineTimes {
     var version by mutableIntStateOf(0)
         private set
 
+    private var requestSerial = 0L
+
     private const val PREFIX = "otimes_"
     private val order = listOf(Prayer.FAJR, Prayer.SUNRISE, Prayer.DHUHR, Prayer.ASR, Prayer.MAGHRIB, Prayer.ISHA)
     private val memory = HashMap<String, Map<LocalDate, Day>>()
@@ -58,6 +60,8 @@ object OnlineTimes {
      * Возвращает true, если данные есть (загружены сейчас или раньше).
      */
     suspend fun refresh(force: Boolean = false): Boolean {
+        val serial = ++requestSerial
+        val source = signature()
         if (!Store.onlineTimes) return false
         // Московская Соборная мечеть: официальное расписание берём с dumrf.ru, а не с aladhan.com.
         if (Store.method.aladhanId == null) return DumrfLive.refresh(force).also { version++ }
@@ -76,6 +80,9 @@ object OnlineTimes {
             val encoded = withContext(Dispatchers.IO) {
                 runCatching { download(city, month, method, school) }.getOrNull()
             }
+            // A city/method change can start another request while this one is suspended.
+            // Do not save the old city's next month under the new city's key or delete its cache.
+            if (serial != requestSerial || !Store.onlineTimes || signature() != source) return false
             if (encoded == null) {
                 ok = ok && Store.getRaw(key) != null
                 continue

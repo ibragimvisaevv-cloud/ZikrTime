@@ -5,6 +5,11 @@ on:
     branches: [main]
     paths-ignore: ["ios/**", "**.md"]
   workflow_dispatch:
+    inputs:
+      publish:
+        description: Publish signed APK to GitHub Releases
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -35,7 +40,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           if [ -z "$RELEASE_KEY_PASSWORD" ]; then
-            echo "::warning::Нет секрета RELEASE_KEY_PASSWORD — сборка подписана отладочным ключом и не будет опубликована"
+            echo "::warning::Нет секрета RELEASE_KEY_PASSWORD — release-сборка останется неподписанной и не будет опубликована"
             exit 0
           fi
           mkdir -p keystore ci-out
@@ -62,7 +67,7 @@ jobs:
           chmod +x gradlew
           set -o pipefail
           mkdir -p ci-out
-          ./gradlew testDebugUnitTest assembleDebug assembleRelease --stacktrace 2>&1 | tee ci-out/gradle.log
+          ./gradlew testDebugUnitTest lintDebug assembleDebug assembleRelease bundleRelease --stacktrace 2>&1 | tee ci-out/gradle.log
 
       - name: Ошибки сборки — в ветку ci-build-log
         if: failure()
@@ -90,7 +95,8 @@ jobs:
           name: build-out
           path: |
             app/build/outputs/apk/debug/app-debug.apk
-            app/build/outputs/apk/release/app-release.apk
+            app/build/outputs/apk/release/*.apk
+            app/build/outputs/bundle/release/*.aab
             ci-out/
 
   emulator:
@@ -148,7 +154,7 @@ jobs:
     if: >-
       !cancelled() && needs.build.result == 'success' &&
       (needs.emulator.result == 'success' || needs.emulator.result == 'skipped') &&
-      (contains(github.event.head_commit.message, '[release]') || github.event_name == 'workflow_dispatch')
+      (contains(github.event.head_commit.message, '[release]') || inputs.publish)
     needs: [build, emulator]
     runs-on: ubuntu-latest
     steps:

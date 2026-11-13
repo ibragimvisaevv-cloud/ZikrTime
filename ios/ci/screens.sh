@@ -1,10 +1,38 @@
 #!/usr/bin/env bash
 # Запускает приложение в симуляторе iPhone, открывает экраны и снимает скриншоты.
-set -u
+set -euo pipefail
 OUT=ci-out/screens
 mkdir -p "$OUT"
+trap 'find ~/Library/Logs/DiagnosticReports -name "ZikrTime*" -newer "$APP" -exec cp {} ci-out/ \; 2>/dev/null || true' EXIT
 APP=ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app
 BUNDLE=com.zikrtime.ios
+
+# Simulator services can stall on hosted Macs. Bound each wait and retain build artifacts.
+timed() {
+  python3 -c 'import subprocess,sys; sys.exit(subprocess.run(sys.argv[2:], timeout=int(sys.argv[1])).returncode)' "$@"
+}
+
+CHECK_ENV="${RUNNER_TEMP:-${TMPDIR:-/tmp}}/zikrtime-screen-check"
+python3 -m venv "$CHECK_ENV"
+"$CHECK_ENV/bin/python" -m pip install --quiet 'Pillow>=11,<13'
+
+RU_SCREENS="onboarding onboarding_welcome onboarding_city home knowledge quiz quiz_cards shop shop_seller shop_product qibla more tasbih alarm prayer_settings language about focus places ramadan zakat"
+EN_SCREENS="$RU_SCREENS"
+EXTRA_LANGUAGES="uz tg kk"
+DARK_SCREENS="home more knowledge quiz_cards shop shop_seller prayer_settings alarm"
+if [ "${IOS_SCREEN_SUITE:-full}" = release ]; then
+  RU_SCREENS="home knowledge alarm shop_seller places ramadan zakat"
+  EN_SCREENS="home places ramadan zakat"
+  EXTRA_LANGUAGES=""
+  DARK_SCREENS="home places ramadan zakat"
+fi
+
+if [ "${IOS_SCREEN_SUITE:-full}" = zakat-map ]; then
+  RU_SCREENS="zakat places"
+  EN_SCREENS="zakat places"
+  EXTRA_LANGUAGES=""
+  DARK_SCREENS="zakat places"
+fi
 
 # Выбираем iPhone на самой новой версии iOS (обычный, не Pro/Max — ближе к массовому телефону)
 UDID=$(xcrun simctl list devices available -j | python3 -c '
@@ -28,37 +56,78 @@ print(best[1])
 print(best[2] + " / " + best[3], file=sys.stderr)
 ')
 echo "Симулятор: $UDID"
-xcrun simctl boot "$UDID" 2>/dev/null || true
-xcrun simctl bootstatus "$UDID" -b
+timed 30 xcrun simctl boot "$UDID" 2>/dev/null || true
+timed 600 xcrun simctl bootstatus "$UDID" -b
 xcrun simctl status_bar "$UDID" override --time "9:41" --batteryState charged --batteryLevel 100 --cellularBars 4 --wifiBars 3 2>/dev/null || true
-xcrun simctl install "$UDID" "$APP"
+timed 180 xcrun simctl install "$UDID" "$APP" > ci-out/install.log 2>&1 || { cat ci-out/install.log >&2; exit 1; }
+
+capture() {
+  local screen="$1" lang="$2" file="$3" launch pid
+  timed 20 xcrun simctl terminate "$UDID" "$BUNDLE" 2>/dev/null || true
+  local map_marker=""
+  if [ "$screen" = places ]; then
+    map_marker="$(timed 30 xcrun simctl get_app_container "$UDID" "$BUNDLE" data)/Documents/qa-map-loaded.txt"
+    rm -f "$map_marker"
+  fi
+  echo "Launching $lang/$screen"
+  launch=$(timed 90 xcrun simctl launch "$UDID" "$BUNDLE" -qa_screen "$screen" -qa_lang "$lang" -qa_demo 1)
+  pid=${launch##*: }
+  if [ "$screen" = places ]; then
+    for map_attempt in {1..45}; do
+      if ! kill -0 "$pid" 2>/dev/null; then
+        echo "App exited while loading map: $lang/$screen" >&2
+        return 1
+      fi
+      if [ -s "$map_marker" ]; then break; fi
+      sleep 2
+    done
+    if [ ! -s "$map_marker" ]; then
+      echo "Map tiles did not finish loading within 90 seconds: $lang/$screen" | tee "ci-out/map-$file.log"
+      timed 120 xcrun simctl io "$UDID" screenshot "$OUT/$file-timeout.png" > "ci-out/capture-$file-timeout.log" 2>&1 || true
+      return 1
+    fi
+    cp "$map_marker" "ci-out/map-$file.log"
+  fi
+  for attempt in {1..12}; do
+    sleep 3
+    # Simulator app processes run on the host. A screenshot alone can hide a crash.
+    if ! kill -0 "$pid" 2>/dev/null; then
+      echo "App exited on $lang/$screen: $launch" >&2
+      return 1
+    fi
+    # The hosted Intel simulator may spend over 30 seconds encoding a full-size PNG.
+    # Keep the command's diagnostics and never reuse an older frame after a failure.
+    python3 -c 'import pathlib,sys; pathlib.Path(sys.argv[1]).unlink(missing_ok=True)' "$OUT/$file.png"
+    if ! timed 120 xcrun simctl io "$UDID" screenshot "$OUT/$file.png" > "ci-out/capture-$file.log" 2>&1; then
+      cat "ci-out/capture-$file.log" >&2
+      echo "Screenshot command failed on $lang/$screen (attempt $attempt)" >&2
+      continue
+    fi
+    if "$CHECK_ENV/bin/python" tools/ci/check_screen.py "$OUT/$file.png"; then
+      echo "$lang $screen"
+      return 0
+    fi
+  done
+  echo "Blank screen: $lang/$screen" >&2
+  return 1
+}
 
 for lang in ru en; do
-  for s in onboarding onboarding_welcome onboarding_city home knowledge quiz quiz_cards shop shop_seller shop_product qibla more tasbih alarm prayer_settings language about focus; do
-    xcrun simctl terminate "$UDID" "$BUNDLE" 2>/dev/null || true
-    xcrun simctl launch "$UDID" "$BUNDLE" -qa_screen "$s" -qa_lang "$lang" -qa_demo 1 > /dev/null
-    sleep 4
-    xcrun simctl io "$UDID" screenshot "$OUT/${lang}_${s}.png" > /dev/null 2>&1
-    echo "$lang $s"
+  screens="$RU_SCREENS"
+  if [ "$lang" = en ]; then screens="$EN_SCREENS"; fi
+  for s in $screens; do
+    capture "$s" "$lang" "${lang}_${s}"
   done
 done
-for lang in uz tg kk; do
+for lang in $EXTRA_LANGUAGES; do
   for s in home knowledge quiz alarm; do
-    xcrun simctl terminate "$UDID" "$BUNDLE" 2>/dev/null || true
-    xcrun simctl launch "$UDID" "$BUNDLE" -qa_screen "$s" -qa_lang "$lang" -qa_demo 1 > /dev/null
-    sleep 4
-    xcrun simctl io "$UDID" screenshot "$OUT/${lang}_${s}.png" > /dev/null 2>&1
+    capture "$s" "$lang" "${lang}_${s}"
   done
 done
 # Тёмная тема
 xcrun simctl ui "$UDID" appearance dark
-for s in home more knowledge quiz_cards shop shop_seller prayer_settings alarm; do
-  xcrun simctl terminate "$UDID" "$BUNDLE" 2>/dev/null || true
-  xcrun simctl launch "$UDID" "$BUNDLE" -qa_screen "$s" -qa_lang ru -qa_demo 1 > /dev/null
-  sleep 4
-  xcrun simctl io "$UDID" screenshot "$OUT/dark_ru_${s}.png" > /dev/null 2>&1
+for s in $DARK_SCREENS; do
+  capture "$s" ru "dark_ru_${s}"
 done
 xcrun simctl ui "$UDID" appearance light
-# Журнал падений приложения, если были
-find ~/Library/Logs/DiagnosticReports -name "ZikrTime*" -newer "$APP" -exec cp {} ci-out/ \; 2>/dev/null || true
 echo done > ci-out/screens-done.txt

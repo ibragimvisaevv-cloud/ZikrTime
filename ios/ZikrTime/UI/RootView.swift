@@ -5,7 +5,7 @@ enum AppTab: Hashable {
 }
 
 enum Route: Hashable {
-    case language, city, prayerSettings, alarm, tasbih, about, focus
+    case language, city, prayerSettings, alarm, tasbih, about, focus, places, ramadan, zakat
     case quiz(category: String?)
     case seller(String), product(String)
 }
@@ -88,6 +88,9 @@ extension View {
             case .tasbih: TasbihView()
             case .about: AboutView()
             case .focus: FocusInfoView()
+            case .places: PlacesView()
+            case .ramadan: RamadanView()
+            case .zakat: ZakatView()
             case .quiz(let category): QuizView(category: category)
             case .seller(let id): SellerView(id: id)
             case .product(let id): ProductView(id: id)

@@ -3,6 +3,15 @@ name: iOS
 on:
   # iOS собирается на Mac — минуты GitHub тратятся в 10 раз быстрее. Только вручную.
   workflow_dispatch:
+    inputs:
+      testflight:
+        description: Upload signed build to TestFlight
+        type: boolean
+        default: false
+      publish:
+        description: Publish unsigned IPA as a GitHub prerelease
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -34,7 +43,7 @@ jobs:
 
   build:
     needs: logic
-    runs-on: macos-26
+    runs-on: macos-26-intel
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
@@ -50,13 +59,15 @@ jobs:
 
       - name: Проект (XcodeGen)
         run: |
-          brew install xcodegen
-          cd ios && xcodegen generate
+          command -v xcodegen >/dev/null || brew install xcodegen
+          command -v pod >/dev/null || brew install cocoapods
+          python3 tools/ios/configure.py
+          cd ios && xcodegen generate && pod install --deployment
 
       - name: Сборка для симулятора
         run: |
           set +e
-          xcodebuild -project ios/ZikrTime.xcodeproj -scheme ZikrTime -configuration Debug \
+          xcodebuild -workspace ios/ZikrTime.xcworkspace -scheme ZikrTime -configuration Debug \
             -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
             -derivedDataPath ios/build CODE_SIGNING_ALLOWED=NO build > ci-out/build.log 2>&1
           status=$?
@@ -72,7 +83,7 @@ jobs:
         if: contains(github.event.head_commit.message, '[release-ios]') || github.event_name == 'workflow_dispatch'
         run: |
           set +e
-          xcodebuild -project ios/ZikrTime.xcodeproj -scheme ZikrTime -configuration Release \
+          xcodebuild -workspace ios/ZikrTime.xcworkspace -scheme ZikrTime -configuration Release \
             -sdk iphoneos -destination 'generic/platform=iOS' -derivedDataPath ios/build-device \
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" build > ci-out/build-device.log 2>&1
           status=$?
@@ -83,10 +94,10 @@ jobs:
           (cd ipa && zip -qry ../ZikrTime-unsigned.ipa Payload)
           ls -la ZikrTime-unsigned.ipa
 
-      # TestFlight: по [testflight] в сообщении коммита или ручному запуску, когда есть ключи App Store Connect.
+      # TestFlight загружается только при явно включённом параметре testflight.
       # Секреты: ASC_KEY_ID, ASC_ISSUER_ID, ASC_KEY_P8 (содержимое файла AuthKey_….p8), APPLE_TEAM_ID.
       - name: Загрузка в TestFlight
-        if: contains(github.event.head_commit.message, '[testflight]') || github.event_name == 'workflow_dispatch'
+        if: inputs.testflight
         env:
           ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
           ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
@@ -102,7 +113,7 @@ jobs:
           AUTH="-allowProvisioningUpdates -authenticationKeyPath $KEY -authenticationKeyID $ASC_KEY_ID -authenticationKeyIssuerID $ASC_ISSUER_ID"
           set +e
           # Номер сборки должен расти с каждой загрузкой — берём номер запуска
-          xcodebuild -project ios/ZikrTime.xcodeproj -scheme ZikrTime -configuration Release \
+          xcodebuild -workspace ios/ZikrTime.xcworkspace -scheme ZikrTime -configuration Release \
             -destination 'generic/platform=iOS' -archivePath "$RUNNER_TEMP/ZikrTime.xcarchive" \
             DEVELOPMENT_TEAM="$TEAM" CODE_SIGN_STYLE=Automatic CURRENT_PROJECT_VERSION=${{ github.run_number }} \
             $AUTH archive > ci-out/testflight-archive.log 2>&1
@@ -144,7 +155,7 @@ jobs:
           git push -qf "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" ci-artifacts-ios
 
       - name: Опубликовать IPA
-        if: contains(github.event.head_commit.message, '[release-ios]') || github.event_name == 'workflow_dispatch'
+        if: inputs.publish
         env:
           GH_TOKEN: ${{ github.token }}
         run: |

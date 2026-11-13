@@ -48,19 +48,25 @@ object Reviews {
         val last = Store.getRaw(KEY_AT)?.toLongOrNull() ?: 0L
         if (!force && System.currentTimeMillis() - last < REFRESH_MS) return
         val hasCopy = Store.getRaw(KEY) != null
-        val result = withContext(Dispatchers.IO) { runCatching { Net.getIfChanged(REMOTE, KEY_TAG, hasCopy) } }
+        val etag = if (hasCopy) Store.getRaw(KEY_TAG) else null
+        val result = withContext(Dispatchers.IO) { runCatching { Net.getIfChanged(REMOTE, etag) } }
         if (result.isFailure) return
-        Store.putRaw(KEY_AT, System.currentTimeMillis().toString())
-        val text = result.getOrNull() ?: return
+        if (result.getOrNull() == null) {
+            Store.putRaw(KEY_AT, System.currentTimeMillis().toString())
+            return
+        }
+        val text = result.getOrNull()?.text ?: return
         val parsed = runCatching { parse(text) }.getOrNull() ?: return
         Store.putRaw(KEY, text)
+        Store.putRaw(KEY_TAG, result.getOrNull()?.etag.orEmpty())
+        Store.putRaw(KEY_AT, System.currentTimeMillis().toString())
         data = parsed
     }
 
     fun parse(json: String): Data {
         val root = JSONObject(json)
         val map = HashMap<String, Summary>()
-        root.optJSONObject("reviews")?.let { r ->
+        root.getJSONObject("reviews").let { r ->
             r.keys().forEach { target ->
                 val o = r.getJSONObject(target)
                 val arr = o.optJSONArray("items")
@@ -97,12 +103,13 @@ object Reviews {
             refresh(force = true)
             form = data?.upload
         }
-        if (form == null) return SendResult.ERROR
+        if (form == null || form.expires * 1000 <= System.currentTimeMillis()) return SendResult.ERROR
         val body = JSONObject()
             .put("target", target).put("rating", rating.coerceIn(1, 5))
             .put("text", text.trim().take(600)).put("name", name.trim().take(40))
             .put("device", device()).put("ts", System.currentTimeMillis() / 1000)
             .toString().toByteArray(Charsets.UTF_8)
+        if (body.size > form.max) return SendResult.ERROR
         val result = withContext(Dispatchers.IO) { runCatching { post(form, body) } }
         val code = result.getOrNull()
         return when {

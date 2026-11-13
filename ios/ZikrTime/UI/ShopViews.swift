@@ -27,12 +27,12 @@ struct ShopView: View {
         let c = shop.catalog
         let lang = L10n.code
         let q = query.trimmingCharacters(in: .whitespaces)
-        let products = c.products.filter { p in
+        let products = c.rankedProducts(seed: shop.orderSeed).filter { p in
             (category == nil || p.category == category) &&
                 (q.isEmpty || p.title.get(lang).localizedCaseInsensitiveContains(q) ||
                     (c.seller(p.seller)?.name.localizedCaseInsensitiveContains(q) ?? false))
         }
-        let sellers = c.sellers.filter { category == nil || $0.categories.contains(category!) }
+        let sellers = c.rankedSellers(seed: shop.orderSeed).filter { category == nil || $0.categories.contains(category!) }
 
         Page {
             VStack(alignment: .leading, spacing: 2) {
@@ -214,7 +214,10 @@ private struct SellerCard: View {
         VStack(alignment: .leading, spacing: 0) {
             ZStack(alignment: .topLeading) {
                 SellerCover(seller: seller, catalog: catalog).frame(height: 110)
-                if seller.partner { CategoryChip(text: L("shop_partner")).padding(10) }
+                VStack(alignment: .leading, spacing: 5) {
+                    if seller.partner { CategoryChip(text: L("shop_partner")) }
+                    if seller.promoted(at: Date()) { CategoryChip(text: L("shop_ad")) }
+                }.padding(10)
             }
             HStack(spacing: 12) {
                 SellerLogo(seller: seller, size: 44)
@@ -303,7 +306,7 @@ private struct ProductCard: View {
                 ProductImage(product: product, catalog: catalog)
                     .aspectRatio(1, contentMode: .fit)
                 if let old = product.oldPrice, let price = product.price, old > price {
-                    Text("−\(100 - price * 100 / old)%")
+                    Text("−\(100 - Int(Double(price) * 100 / Double(old)))%")
                         .font(.caption2.weight(.bold))
                         .foregroundStyle(.white)
                         .padding(.horizontal, 8)
@@ -320,6 +323,9 @@ private struct ProductCard: View {
                     .multilineTextAlignment(.leading)
                 PriceLine(product: product)
                 Text(catalog.seller(product.seller)?.name ?? "").font(.caption).foregroundStyle(Brand.secondaryText).lineLimit(1)
+                if catalog.seller(product.seller)?.promoted(at: Date()) == true {
+                    Text(L("shop_ad")).font(.caption2).foregroundStyle(Brand.secondaryText)
+                }
             }
             .padding(12)
         }
@@ -360,6 +366,7 @@ struct SellerView: View {
                     Card { Text(s.description.get(L10n.code)).font(.body) }
                 }
                 ContactButtons(seller: s)
+                ReviewsView(target: "seller:" + s.id)
                 if !s.address.isEmpty {
                     Button { openMap(s) } label: {
                         Card {
@@ -495,8 +502,8 @@ func openURL(_ string: String) {
 private func openMap(_ s: ShopCatalog.Seller) {
     let name = s.name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
     if let lat = s.lat, let lon = s.lon {
-        openURL("https://maps.apple.com/?ll=\(lat),\(lon)&q=\(name)")
+        openURL("https://yandex.ru/maps/?rtext=~\(lat),\(lon)&rtt=pd")
     } else {
-        openURL("https://maps.apple.com/?q=" + (s.address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""))
+        openURL("https://yandex.ru/maps/?text=" + (s.address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""))
     }
 }

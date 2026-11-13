@@ -261,7 +261,7 @@ STRINGS = {
     "about_title": "Hakkında",
     "about_version": "Sürüm %1$s",
     "about_privacy_title": "Gizlilik",
-    "about_privacy_text": "Tüm verileriniz — ayarlar, işaretler ve istatistikler — yalnızca bu telefonda saklanır. İnternet yalnızca namaz vakitlerini (aladhan.com, dumrf.ru) ve mağaza kataloğunu yüklemek için kullanılır.",
+    "about_privacy_text": "Ayarlar, namaz işaretleri ve istatistikler telefonunuzda saklanır. Namaz vakitleri, haritalar, yerler, mağaza ve metal fiyatları interneti kullanır. Yorum gönderdiğinizde metin, puan, isteğe bağlı ad ve rastgele kurulum kimliği denetim için gönderilir. Ayrıntılar gizlilik politikasındadır.",
     "about_times_title": "Namaz vakitleri",
     "about_times_text": "Vakitler aladhan.com'dan alınır veya telefonda aynı astronomik formüllerle hesaplanır. Caminin takvimi birkaç dakika farklı olabilir — ayarlardaki düzeltmeleri kullanın.",
     "about_quiz_title": "Sorular",

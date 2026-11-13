@@ -12,8 +12,8 @@ android {
         applicationId = "com.zikrtime.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 14
-        versionName = "0.8.2"
+        versionCode = 15
+        versionName = "0.8.3"
         // Ключ Яндекс Карт (MapKit): из gradle.properties или переменной окружения YANDEX_MAPKIT_KEY
         val mapkitKey = (project.findProperty("yandexMapkitKey") as String?) ?: System.getenv("YANDEX_MAPKIT_KEY") ?: ""
         buildConfigField("String", "MAPKIT_KEY", "\"$mapkitKey\"")
@@ -48,9 +48,14 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            // Без ключа выпуска (сборка на своём компьютере) подписываем отладочным ключом.
-            signingConfig = signingConfigs.findByName("zikr") ?: signingConfigs.getByName("debug")
+            // Без ключа выпуска получаем честно неподписанный APK/AAB. Для проверки есть debug.
+            signingConfig = signingConfigs.findByName("zikr")
         }
+    }
+
+    // Язык выбирается в приложении: все переводы должны быть доступны и без сети после установки AAB.
+    bundle {
+        language { enableSplit = false }
     }
 
     compileOptions {

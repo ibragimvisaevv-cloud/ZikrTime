@@ -245,7 +245,7 @@
     <string name="about_title">Ilova haqida</string>
     <string name="about_version">Versiya %1$s</string>
     <string name="about_privacy_title">Maxfiylik</string>
-    <string name="about_privacy_text">Barcha maʼlumotlaringiz — sozlamalar, belgilar va statistika — faqat shu telefonda saqlanadi. Internet faqat namoz vaqtlarini (aladhan.com, dumrf.ru) va doʻkon katalogini yuklash uchun kerak.</string>
+    <string name="about_privacy_text">Sozlamalar, namoz belgilari va statistika telefonda saqlanadi. Namoz vaqtlari, xaritalar, joylar, doʻkon va metall narxlari uchun internet kerak. Sharh yuborilganda matn, baho, ixtiyoriy ism va tasodifiy oʻrnatish identifikatori tekshirish uchun yuboriladi. Tafsilotlar maxfiylik siyosatida.</string>
     <string name="about_times_title">Namoz vaqtlari</string>
     <string name="about_times_text">Vaqtlar aladhan.com dan olinadi yoki telefonda xuddi shu astronomik formulalar bilan hisoblanadi. Masjid jadvali bir necha daqiqaga farq qilishi mumkin — sozlamalardagi tuzatishlardan foydalaning.</string>
     <string name="about_quiz_title">Savollar</string>

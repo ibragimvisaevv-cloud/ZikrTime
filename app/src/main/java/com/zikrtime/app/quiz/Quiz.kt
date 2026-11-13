@@ -78,4 +78,4 @@ object QuestionBank {
     }
 }
 
-fun String.hasArabic(): Boolean = any { it in '؀'..'ۿ' || it in 'ݐ'..'ݿ' || it in 'ﭐ'..'﻿' }
+fun String.hasArabic(): Boolean = any { it in '؀'..'ۿ' || it in 'ݐ'..'ݿ' || it in 'ﭐ'..'\uFEFF' }

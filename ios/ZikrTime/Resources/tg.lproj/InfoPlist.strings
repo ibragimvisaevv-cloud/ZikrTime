@@ -1,4 +1,4 @@
 /* Сгенерировано tools/ios/build_strings.py */
 "CFBundleDisplayName" = "Зикр-тайм";
 "NSAlarmKitUsageDescription" = "Зикр-тайм шуморо дар вақти интихобшуда бо азон барои намози бомдод бедор мекунад.";
-"NSLocationWhenInUseUsageDescription" = "Ҷойгиршавӣ танҳо барои ҳисоб кардани вақти намоз ва самти қибла лозим аст.";
+"NSLocationWhenInUseUsageDescription" = "Ҷойгиршавӣ барои ҳисоб кардани вақти намоз, муайян кардани самти қибла ва ёфтани ҷойҳои наздики намоз кӯмак мекунад.";

@@ -27,6 +27,15 @@ struct MoreView: View {
             .buttonStyle(.plain)
 
             Card(padding: 12) {
+                NavigationLink(value: Route.places) {
+                    SettingRow(title: L("places_title"), subtitle: L("places_entry_hint"), icon: "mappin.and.ellipse")
+                }
+                NavigationLink(value: Route.ramadan) {
+                    SettingRow(title: L("ramadan_title"), subtitle: L("ramadan_subtitle"), icon: "moon.stars")
+                }
+                NavigationLink(value: Route.zakat) {
+                    SettingRow(title: L("zakat_title"), subtitle: L("zakat_subtitle"), icon: "number.circle")
+                }
                 NavigationLink(value: Route.tasbih) {
                     SettingRow(title: L("tasbih_title"), subtitle: L("tasbih_subtitle"), icon: "circle.dotted")
                 }
@@ -458,9 +467,12 @@ struct AboutView: View {
             .frame(maxWidth: .infinity)
             .padding(.vertical, 8)
 
+            #if DEBUG
             Card(background: Brand.goldSoft) {
                 Text(L("ios_install_note")).font(.subheadline)
             }
+            #endif
+            Link(L("about_privacy_title"), destination: URL(string: "https://storage.yandexcloud.net/zikrtime-shop/privacy.html")!)
             InfoBlock(title: L("about_privacy_title"), text: L("about_privacy_text"))
             InfoBlock(title: L("about_times_title"), text: L("about_times_text"))
             InfoBlock(title: L("about_quiz_title"), text: L("about_quiz_text"))

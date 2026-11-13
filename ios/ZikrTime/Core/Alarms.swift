@@ -10,6 +10,7 @@ import AlarmKit
 @MainActor
 enum PrayerNotifications {
     static let prefix = "prayer_"
+    private static let updates = SerialUpdate()
     private static var center: UNUserNotificationCenter { UNUserNotificationCenter.current() }
 
     @discardableResult
@@ -26,6 +27,10 @@ enum PrayerNotifications {
     /// до 24 о намазах, до 9 пятничных и до 30 — запасной будильник на старых iOS).
     static func reschedule() async {
         if QA.active { return }
+        await updates.submit { await replaceSchedule() }.value
+    }
+
+    private static func replaceSchedule() async {
         let pending = await center.pendingNotificationRequests()
         center.removePendingNotificationRequests(withIdentifiers: pending.map(\.identifier).filter { $0.hasPrefix(prefix) })
         let store = Store.shared
@@ -60,6 +65,7 @@ enum PrayerNotifications {
 @MainActor
 enum FajrAlarm {
     private static let fallbackPrefix = "fajr_"
+    private static let updates = SerialUpdate()
     private static var center: UNUserNotificationCenter { UNUserNotificationCenter.current() }
 
     /// Есть ли системные будильники (iOS 26 и новее).
@@ -71,16 +77,9 @@ enum FajrAlarm {
     /// Ближайшие сигналы: время будильника и время фаджра (с учётом выбранных дней недели).
     static func upcoming(days: Int, from now: Date = Date()) -> [(trigger: Date, fajr: Date)] {
         let store = Store.shared
-        var result: [(trigger: Date, fajr: Date)] = []
-        let today = LocalDay(now)
-        for offset in 0...(days + 1) {
-            let day = today.adding(days: offset)
-            guard store.alarmDays.contains(day.weekday), let fajr = PrayerSchedule.times(for: day)[.fajr] else { continue }
-            let trigger = fajr.addingTimeInterval(-Double(store.alarmOffset) * 60)
-            if trigger > now.addingTimeInterval(30) { result.append((trigger: trigger, fajr: fajr)) }
-            if result.count >= days { break }
+        return FajrPlan.upcoming(count: days, from: now, weekdays: store.alarmDays, offsetMinutes: store.alarmOffset) { day in
+            PrayerSchedule.times(for: day)[.fajr]
         }
-        return result
     }
 
     static func next() -> (trigger: Date, fajr: Date)? {
@@ -90,6 +89,10 @@ enum FajrAlarm {
     /// Переставляет будильники после любых изменений (время намаза, город, настройки).
     static func reschedule() async {
         if QA.active { return }
+        await updates.submit { await replaceSchedule() }.value
+    }
+
+    private static func replaceSchedule() async {
         await cancelAll()
         guard Store.shared.alarmEnabled else { return }
         #if canImport(AlarmKit)
