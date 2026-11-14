@@ -73,3 +73,7 @@ internal object QuranAudioQa {
             output.write(json.toString().toByteArray(Charsets.UTF_8))
             target.finishWrite(output)
         } catch (_: Exception) {
+            output?.let { target.failWrite(it) }
+        }
+    }
+}
