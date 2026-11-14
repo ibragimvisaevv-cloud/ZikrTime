@@ -1,0 +1,118 @@
+name: Verify and release Android compatibility build 52
+on:
+  push:
+    branches: [codex/compat-release-0828-52]
+permissions:
+  contents: read
+concurrency:
+  group: compatibility-build-52
+  cancel-in-progress: true
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build signed release with extracted native libraries
+        env:
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          test -n "$RELEASE_KEY_PASSWORD"
+          trap 'rm -f keystore/release.jks' EXIT
+          openssl enc -d -aes-256-cbc -pbkdf2 -iter 300000 -in keystore/release.jks.enc -out keystore/release.jks -pass env:RELEASE_KEY_PASSWORD
+          bash gradlew :app:assembleRelease --console=plain
+          cp app/build/outputs/apk/release/app-release.apk ZikrTime-0.8.28-52.apk
+      - name: Verify the actual installable file against build 51
+        run: |
+          set -euo pipefail
+          curl -fLsS --retry 3 https://github.com/ibragimvisaevv-cloud/ZikrTime/releases/download/test-0.8.28-51/ZikrTime-0.8.28-51.apk -o previous.apk
+          echo 'd532cb3676a28ac0510678c961067e89efbe0d9fe1fba1530de487b11a663e99  previous.apk' | sha256sum -c -
+          apk=ZikrTime-0.8.28-52.apk
+          sdk_tools=$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -1)
+          "$sdk_tools/apksigner" verify --verbose --print-certs "$apk" | tee signer.txt
+          grep -F 'certificate SHA-256 digest: 7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf' signer.txt
+          "$sdk_tools/aapt" dump badging "$apk" > package.txt
+          grep -F "package: name='com.zikrtime.app' versionCode='52' versionName='0.8.28'" package.txt
+          grep -F "sdkVersion:'26'" package.txt
+          grep -F "targetSdkVersion:'35'" package.txt
+          "$sdk_tools/aapt" dump xmltree "$apk" AndroidManifest.xml | grep -E 'extractNativeLibs.*0xffffffff'
+          "$sdk_tools/zipalign" -c -P 16 4 "$apk"
+          python3 tools/ci/check_extracted_native_apk.py previous.apk "$apk"
+          sha256sum "$apk" | tee SHA256SUMS.txt
+      - name: Prepare accelerated Android 15
+        run: |
+          if jps | grep -q GradleDaemon; then bash gradlew --stop; fi
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Install clean release and update from 51
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_2
+          ram-size: 2048M
+          disable-animations: true
+          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
+          script: |
+            adb shell getprop ro.product.cpu.abilist
+            adb shell getconf PAGE_SIZE
+            adb install ZikrTime-0.8.28-52.apk
+            adb shell dumpsys package com.zikrtime.app | grep 'versionCode=52'
+            adb shell monkey -p com.zikrtime.app -c android.intent.category.LAUNCHER 1
+            sleep 4
+            adb shell pidof com.zikrtime.app
+            adb uninstall com.zikrtime.app
+            adb install previous.apk
+            adb shell dumpsys package com.zikrtime.app | grep 'versionCode=51'
+            adb shell dumpsys package com.zikrtime.app | grep -E 'firstInstallTime=|userId=|appId=' | sort > before.txt
+            adb install -r ZikrTime-0.8.28-52.apk
+            adb shell dumpsys package com.zikrtime.app | grep 'versionCode=52'
+            adb shell dumpsys package com.zikrtime.app | grep -E 'firstInstallTime=|userId=|appId=' | sort > after.txt
+            diff -u before.txt after.txt
+            adb shell monkey -p com.zikrtime.app -c android.intent.category.LAUNCHER 1
+            sleep 4
+            adb shell pidof com.zikrtime.app
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ZikrTime-signed-apk-52
+          path: |
+            ZikrTime-0.8.28-52.apk
+            SHA256SUMS.txt
+          compression-level: 0
+          if-no-files-found: error
+
+  publish:
+    needs: android
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: ZikrTime-signed-apk-52
+      - name: Publish tested APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          sha256sum -c SHA256SUMS.txt
+          tag=test-0.8.28-52
+          apk=ZikrTime-0.8.28-52.apk
+          if gh release view "$tag" --repo "$REPO" >/dev/null 2>&1; then
+            gh release download "$tag" --repo "$REPO" --pattern "$apk" --dir existing
+            cmp "$apk" "existing/$apk"
+          else
+            gh release create "$tag" "$apk" SHA256SUMS.txt --repo "$REPO" --target "$GITHUB_SHA" --prerelease \
+              --title 'ZikrTime 0.8.28 (52) — Android' --notes 'В этой сборке нативные библиотеки извлекаются при установке. Проверены чистая установка и обновление с 51.'
+          fi
