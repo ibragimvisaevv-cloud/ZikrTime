@@ -1,0 +1,63 @@
+name: Verify signed Android update from 50 to 51
+on:
+  push:
+    branches: [ci/release-upgrade-50-51]
+    paths: ['.github/workflows/verify-release-upgrade.yml']
+permissions:
+  contents: read
+  actions: read
+jobs:
+  upgrade:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Download the APK issued as build 50
+        uses: actions/download-artifact@v4
+        with:
+          run-id: 43612416883
+          github-token: ${{ github.token }}
+          name: ZikrTime-listening-offers-apk
+          path: previous
+      - name: Download the exact public APK and compare both release signatures
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mv previous/ZikrTime-0.8.28-50.apk build50.apk
+          curl -fLsS --retry 3 https://github.com/ibragimvisaevv-cloud/ZikrTime/releases/download/test-0.8.28-51/ZikrTime-0.8.28-51.apk -o build51.apk
+          echo 'cff818197e18495ce382d73731780d041cb90e837213279985c7fd11dc4aeec1  build50.apk' | sha256sum -c -
+          echo 'd532cb3676a28ac0510678c961067e89efbe0d9fe1fba1530de487b11a663e99  build51.apk' | sha256sum -c -
+          sdk_tools=$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -1)
+          for code in 50 51; do
+            "$sdk_tools/apksigner" verify -v --print-certs "build$code.apk" | tee "signature$code.txt"
+            grep -F 'certificate SHA-256 digest: 7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf' "signature$code.txt"
+            "$sdk_tools/aapt" dump badging "build$code.apk" | grep -E '^(package:|native-code:|sdkVersion:|targetSdkVersion:)'
+            "$sdk_tools/zipalign" -c -P 16 4 "build$code.apk" && echo "build$code passes 16KB zip alignment" || echo "build$code not 16KB ZIP-aligned"
+          done
+      - name: Prepare hardware acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Install build 50 and update using the public build 51
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_2
+          ram-size: 2048M
+          disable-animations: true
+          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
+          script: |
+            adb shell getprop ro.product.cpu.abilist
+            adb install build50.apk
+            adb shell dumpsys package com.zikrtime.app | grep 'versionCode=50'
+            adb shell dumpsys package com.zikrtime.app | grep -E 'firstInstallTime=|userId=|appId=' | sort > before.txt
+            adb install -r build51.apk
+            adb shell dumpsys package com.zikrtime.app | grep 'versionCode=51'
+            adb shell dumpsys package com.zikrtime.app | grep -E 'firstInstallTime=|userId=|appId=' | sort > after.txt
+            diff -u before.txt after.txt
+            adb shell monkey -p com.zikrtime.app -c android.intent.category.LAUNCHER 1
+            sleep 4
+            adb shell pidof com.zikrtime.app
