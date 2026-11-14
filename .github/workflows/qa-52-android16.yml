@@ -59,7 +59,9 @@ jobs:
             test -z "$(adb shell pm path com.zikrtime.app)"
             adb install ZikrTime-0.8.28-52.apk
             adb shell dumpsys package com.zikrtime.app | grep -F 'versionCode=52'
-            adb shell am start -W -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -p com.zikrtime.app | tee launch.txt
+            adb shell dumpsys package com.zikrtime.app | grep -E 'MainActivity|User [0-9]+:|enabled=' | head -25
+            adb shell cmd package resolve-activity --brief --user 0 -a android.intent.action.MAIN -c android.intent.category.LAUNCHER com.zikrtime.app
+            adb shell am start -W --user 0 -n com.zikrtime.app/.MainActivity | tee launch.txt
             grep -F 'Status: ok' launch.txt
             sleep 5
             adb shell pidof com.zikrtime.app
