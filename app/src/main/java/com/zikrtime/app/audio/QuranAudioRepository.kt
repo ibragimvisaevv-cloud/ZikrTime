@@ -165,6 +165,13 @@ object QuranAudioRepository {
     /** The same downloaded surah bytes serve clips; no second recording or extra offline copy. */
     fun ayahTiming(surahId: Int, ayah: Int): QuranAyahTiming? = timingCatalog()?.timing(surahId, ayah)
 
+    internal fun clipTiming(reference: QuranAudioAyah, includeBasmala: Boolean): QuranAyahTiming? {
+        val catalog = timingCatalog() ?: return null
+        val ayah = catalog.timing(reference.surahId, reference.ayah) ?: return null
+        val start = if (includeBasmala && reference.ayah == 1) catalog.basmalaStart(reference.surahId) else null
+        return if (start != null) ayah.copy(startMs = start) else ayah
+    }
+
     fun timingAtOrAfter(surahId: Int, positionMs: Long): QuranAyahTiming? =
         timingCatalog()?.timingAtOrAfter(surahId, positionMs)
 

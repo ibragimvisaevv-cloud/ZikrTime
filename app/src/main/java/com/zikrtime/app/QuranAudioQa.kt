@@ -6,6 +6,7 @@ import android.util.AtomicFile
 import com.zikrtime.app.audio.QuranAudioPlayer
 import com.zikrtime.app.audio.QuranAudioRepository
 import com.zikrtime.app.audio.QuranPlaybackService
+import com.zikrtime.app.ui.QuranWordProbe
 import org.json.JSONObject
 import java.io.File
 
@@ -36,6 +37,11 @@ internal object QuranAudioQa {
         val json = JSONObject().apply {
             put("probeId", intent.getStringExtra("qa_audio_probe_id").orEmpty())
             put("capturedAt", System.currentTimeMillis())
+            if (intent.hasExtra("qa_point_word")) {
+                val point = QuranWordProbe.point(intent.getIntExtra("qa_point_surah", 0),
+                    intent.getIntExtra("qa_point_ayah", 0), intent.getIntExtra("qa_point_word", 0))
+                put("point", point?.let { org.json.JSONArray().put(it.x.toDouble()).put(it.y.toDouble()) } ?: JSONObject.NULL)
+            }
             put("player", JSONObject().apply {
                 put("connected", player.connected)
                 put("surahId", player.surahId ?: JSONObject.NULL)

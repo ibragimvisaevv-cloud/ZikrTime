@@ -31,6 +31,26 @@ class QuranAyahPlaybackPolicyTest {
         assertEquals(1231466L, catalog.timing(37, 151)?.endMs) // Publisher's adjacent repeated row is preserved.
     }
 
+    @Test fun printedBasmalaHasItsOwnReviewedStartOnlyWhereTheSourcePrefixesAyahOne() {
+        val catalog = QuranAyahTimingCatalog.parse(source(), counts())
+        val verses = QuranContent.parseArabic(File("src/main/assets/quran/sources/quran-uthmani.txt").readBytes())
+        fun firstFour(surah: Int) = verses.getValue(surah to 1).split(' ').take(4).map {
+            word -> word.filter { it.isLetter() }
+        }
+        val basmala = firstFour(1)
+        for (surah in 1..114) {
+            val start = catalog.basmalaStart(surah)
+            if (surah == 1 || surah == 9) {
+                assertNull(start)
+            } else {
+                assertEquals(basmala, firstFour(surah))
+                assertTrue(requireNotNull(start) < catalog.timing(surah, 1)!!.startMs)
+            }
+        }
+        assertEquals(7265L, catalog.basmalaStart(5))
+        assertEquals(14390L, catalog.timing(5, 1)?.startMs)
+    }
+
     @Test fun fullSurahPositionUsesHalfOpenVerifiedRangesAndSkipsUnnumberedPassages() {
         val counts = counts()
         val catalog = QuranAyahTimingCatalog.parse(source(), counts)

@@ -52,15 +52,18 @@ internal object QuranPlaybackMemory {
         val options = QuranAyahPlaybackPolicy.options(prefs.getInt("repeats", 1), prefs.getFloat("speed", 1f),
             prefs.getBoolean("continue", false)) ?: QuranAyahOptions()
         val iteration = prefs.getInt("iteration", 1).coerceIn(1, options.repeatCount.takeIf { it > 0 } ?: Int.MAX_VALUE)
-        return saved.copy(ayah = ayah, ayahOptions = options, repeatIteration = iteration)
+        return saved.copy(ayah = ayah, ayahOptions = options, repeatIteration = iteration,
+            includeBasmala = ayah == 1 && prefs.getBoolean(QuranAyahSession.INCLUDE_BASMALA, false))
     }
 
     fun save(context: Context, player: Player) {
         val mediaId = player.currentMediaItem?.mediaId ?: return
         val verse = QuranAyahPlaybackPolicy.reference(mediaId)
+        val includeBasmala = verse?.ayah == 1 &&
+            player.currentMediaItem?.mediaMetadata?.extras?.getBoolean(QuranAyahSession.INCLUDE_BASMALA) == true
         val surah = verse?.surahId ?: mediaId.toIntOrNull()?.takeIf { it in 1..114 } ?: return
         val duration = player.duration.takeIf { it != C.TIME_UNSET && it > 0L }
-            ?: verse?.let { QuranAudioRepository.ayahTiming(it.surahId, it.ayah)?.durationMs }
+            ?: verse?.let { QuranAudioRepository.clipTiming(it, includeBasmala)?.durationMs }
             ?: read(context)?.takeIf { it.surahId == surah && it.ayah == verse?.ayah }?.durationMs ?: 0L
         val position = if (player.playbackState == Player.STATE_ENDED) 0L else QuranPlaybackPolicy.clamp(player.currentPosition, duration)
         val options = if (verse != null && QuranAyahSession.reference == verse) QuranAyahSession.options else QuranAyahOptions()
@@ -68,6 +71,7 @@ internal object QuranPlaybackMemory {
             QuranAyahSession.iteration else 1
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit()
             .putInt("surah", surah).putInt("ayah", verse?.ayah ?: 0)
+            .putBoolean(QuranAyahSession.INCLUDE_BASMALA, includeBasmala)
             .putLong("position", position).putLong("duration", duration)
             .putInt("repeats", options.repeatCount).putFloat("speed", options.speed)
             .putBoolean("continue", options.continueAfter).putInt("iteration", iteration).apply()
@@ -76,7 +80,8 @@ internal object QuranPlaybackMemory {
     fun state(context: Context, player: Player): QuranPlaybackState {
         val verse = player.currentMediaItem?.mediaId?.let(QuranAyahPlaybackPolicy::reference)
         val surah = verse?.surahId ?: player.currentMediaItem?.mediaId?.toIntOrNull()?.takeIf { it in 1..114 }
-        val timing = verse?.let { QuranAudioRepository.ayahTiming(it.surahId, it.ayah) }
+        val includeBasmala = player.currentMediaItem?.mediaMetadata?.extras?.getBoolean(QuranAyahSession.INCLUDE_BASMALA) == true
+        val timing = verse?.let { QuranAudioRepository.clipTiming(it, includeBasmala) }
         val options = if (verse != null && QuranAyahSession.reference == verse) QuranAyahSession.options else QuranAyahOptions()
         val duration = player.duration.takeIf { it != C.TIME_UNSET && it > 0L }
             ?: timing?.durationMs
@@ -85,11 +90,14 @@ internal object QuranPlaybackMemory {
         val upcoming = if (verse == null && surah != null && player.playbackState == Player.STATE_READY)
             QuranAudioRepository.timingAtOrAfter(surah, position) else null
         val current = upcoming?.takeIf { position >= it.startMs }
-        val activeAyah = verse?.ayah ?: current?.reference?.ayah
         // Media3 exposes time relative to the clipping window for individual ayahs.
         val clipStart = timing?.startMs ?: 0L
         val absolutePosition = position + clipStart
-        val cursor = if (surah != null && player.isPlaying)
+        val numberedStart = if (includeBasmala && verse != null)
+            QuranAudioRepository.ayahTiming(verse.surahId, verse.ayah)?.startMs else null
+        val activeAyah = if (numberedStart != null && absolutePosition < numberedStart) null
+            else verse?.ayah ?: current?.reference?.ayah
+        val cursor = if (surah != null && player.playbackState == Player.STATE_READY)
             QuranWordTimings.cursor(context, surah, absolutePosition) else null
         val word = cursor?.next
         val gap = cursor?.previousInGap?.takeIf { it.ayah == activeAyah }

@@ -8,6 +8,7 @@ data class QuranPlaybackPosition(
     val ayah: Int? = null,
     val ayahOptions: QuranAyahOptions = QuranAyahOptions(),
     val repeatIteration: Int = 1,
+    val includeBasmala: Boolean = false,
 )
 
 object QuranPlaybackPolicy {

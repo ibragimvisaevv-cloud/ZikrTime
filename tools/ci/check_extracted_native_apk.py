@@ -1,5 +1,7 @@
 """Compare shipped ARMs, preserved package resources and native ELF alignment."""
 import hashlib
+import json
+from pathlib import Path
 import struct
 import sys
 import zipfile
@@ -28,7 +30,53 @@ with zipfile.ZipFile(sys.argv[1]) as previous, zipfile.ZipFile(sys.argv[2]) as c
         if name.startswith("lib/arm64-v8a/"):
             print(f"{name}: ELF LOAD {inspect_elf(data)}, compressed, SHA256 {hashlib.sha256(data).hexdigest()}")
     assets = {n for n in previous.namelist() if n.startswith("assets/")}
-    assert assets and assets == {n for n in current.namelist() if n.startswith("assets/")}
+    added = set()
+    if len(sys.argv) == 4:
+        report = json.loads(Path(sys.argv[3]).read_text())
+        reference = json.loads(Path("tools/quran/source-evidence/0828/word-timing-report-51.json").read_text())
+        by_surah = {row["surah"]: row for row in report["surahs"]}
+        assert report["format"] == "ZQS1" and len(report["surahs"]) == 114 and set(by_surah) == set(range(1, 115))
+        total_starts = total_intervals = 0
+        ayah_bounds = json.loads(current.read("assets/quran_audio/alafasy_ayah_timings.json"))["surahs"]
+        for original in reference["surahs"]:
+            surah = original["surah"]
+            row = by_surah[surah]
+            assert row["source_sha256"] == original["source_sha256"], f"Changed timing source for {surah}"
+            bounds = {a: (lo, hi) for a, lo, hi in ayah_bounds[surah - 1]["ayahs"] if a > 0}
+            extra_words = set()
+            for folder, count_key, hash_key, magic, fmt in (
+                ("word_starts", "count", "asset_sha256", b"ZQS1", ">HHI"),
+                ("word_intervals", "interval_count", "interval_asset_sha256", b"ZQW1", ">HHII"),
+            ):
+                count = row[count_key]
+                if count == 0:
+                    assert row[hash_key] is None
+                    continue
+                name = f"assets/quran_audio/{folder}/{surah}.bin"
+                data = current.read(name)
+                assert count > 0 and len(data) == 12 + count * struct.calcsize(fmt)
+                assert struct.unpack_from(">4sII", data) == (magic, surah, count)
+                assert hashlib.sha256(data).hexdigest() == row[hash_key], name
+                added.add(name)
+                records = list(struct.iter_unpack(fmt, data[12:]))
+                if folder == "word_starts":
+                    extra_words = {(a, w) for a, w, start in records}
+                    assert len(extra_words) == count and records == sorted(records)
+                    assert all(bounds[a][0] <= start < bounds[a][1] for a, w, start in records)
+                    total_starts += count
+                else:
+                    assert all((a, w) in extra_words and bounds[a][0] <= start < end <= bounds[a][1]
+                               for a, w, start, end in records)
+                    base = current.read(f"assets/quran_audio/words/{surah}.bin")
+                    intervals = sorted((start, end) for _, _, start, end in
+                                       list(struct.iter_unpack(">HHII", base[12:])) + records)
+                    assert all(lo >= prev_end for (_, prev_end), (lo, _) in zip(intervals, intervals[1:]))
+                    total_intervals += count
+        assert total_starts and total_starts == report["total_starts"]
+        assert total_intervals and total_intervals == report["total_intervals"]
+        print(f"Verified {total_starts} new word starts and {total_intervals} extra display intervals.")
+    assert assets and not assets.intersection(added)
+    assert assets | added == {n for n in current.namelist() if n.startswith("assets/")}
     # ART profiles index the DEX generated for this precise version. Their checksum
     # changes with BuildConfig.VERSION_CODE, while the shipped product data must match.
     generated_profiles = {"assets/dexopt/baseline.prof", "assets/dexopt/baseline.profm"}

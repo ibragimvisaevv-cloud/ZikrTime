@@ -42,14 +42,14 @@ import kotlinx.coroutines.flow.map
 
 internal data class QuranReaderPlayback(
     val surahId: Int?, val playingAyah: Int?, val playingWord: Int?, val phraseWord: Int?, val phraseGapNeighbor: Int?,
-    val positionAyah: Int?, val clipAyah: Int?,
+    val positionAyah: Int?, val positionWord: Int?, val gapNeighbor: Int?, val clipAyah: Int?,
     val continueAfter: Boolean, val repeatCount: Int, val speed: Float, val playing: Boolean, val connected: Boolean,
     val ended: Boolean, val buffering: Boolean, val playWhenReady: Boolean, val error: String?,
 )
 
 private fun QuranPlaybackState.readerPlayback() = QuranReaderPlayback(
     surahId, playingAyah, playingWord, playingPhraseWord, playingPhraseGapNeighbor,
-    positionAyah, ayah, continueAfter, repeatCount, speed,
+    positionAyah, positionWord ?: phraseGapFrom, phraseGapTo, ayah, continueAfter, repeatCount, speed,
     connected && isPlaying, connected, ended, isBuffering, playWhenReady, error,
 )
 

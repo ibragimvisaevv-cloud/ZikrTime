@@ -34,7 +34,8 @@ object QuranAudioPlayer {
     private var connections = 0
     private var generation = 0
     private data class Request(val surahId: Int, val ayah: Int? = null,
-        val options: QuranAyahOptions = QuranAyahOptions(), val autoplay: Boolean = true) {
+        val options: QuranAyahOptions = QuranAyahOptions(), val autoplay: Boolean = true,
+        val startToken: Int? = null) {
         val mediaId: String get() = ayah?.let { QuranAudioAyah(surahId, it).mediaId } ?: surahId.toString()
     }
     private var requested: Request? = null
@@ -81,7 +82,9 @@ object QuranAudioPlayer {
             }.orEmpty(), error = null, ayah = saved?.ayah, repeatCount = saved?.ayahOptions?.repeatCount ?: 1,
             repeatIteration = saved?.repeatIteration ?: 1, speed = saved?.ayahOptions?.speed ?: 1f,
             continueAfter = saved?.ayahOptions?.continueAfter ?: false, ended = false,
-            clipStartMs = saved?.ayah?.let { QuranAudioRepository.ayahTiming(saved.surahId, it)?.startMs },
+            clipStartMs = saved?.ayah?.let {
+                QuranAudioRepository.clipTiming(QuranAudioAyah(saved.surahId, it), saved.includeBasmala)?.startMs
+            },
             clipEndMs = saved?.ayah?.let { QuranAudioRepository.ayahTiming(saved.surahId, it)?.endMs },
         )
         val token = SessionToken(context, ComponentName(context, QuranPlaybackService::class.java))
@@ -139,6 +142,32 @@ object QuranAudioPlayer {
         playRequest(Request(surahId, ayah, options))
     }
 
+    /** Explicit Play after choosing a word. A missing timing starts at the verified ayah boundary. */
+    fun playAyahFromWord(surahId: Int, ayah: Int, word: Int?, repeatCount: Int = 1,
+        speed: Float = 1f, continueAfter: Boolean = false) {
+        val options = QuranAyahPlaybackPolicy.options(repeatCount, speed, continueAfter) ?: return
+        playRequest(Request(surahId, ayah, options, startToken = word ?: QuranAyahSession.AYAH_START))
+    }
+
+    /** Move the existing recording without changing play/pause, full-surah mode, or exercise settings. */
+    fun seekToWord(surahId: Int, ayah: Int, word: Int?): Boolean {
+        val current = controller ?: return false
+        val mediaId = current.currentMediaItem?.mediaId ?: return false
+        val currentSurah = QuranAyahPlaybackPolicy.reference(mediaId)?.surahId ?: mediaId.toIntOrNull()
+        if (currentSurah != surahId || QuranAudioRepository.ayahTiming(surahId, ayah) == null) return false
+        sendWord(current, surahId, ayah, word ?: QuranAyahSession.AYAH_START, null)
+        return true
+    }
+
+    private fun sendWord(controller: MediaController, surah: Int, ayah: Int, word: Int, options: QuranAyahOptions?) {
+        val args = options?.let { QuranAyahSession.bundle(it) } ?: Bundle()
+        args.putBoolean(QuranAyahSession.START_AYAH, options != null)
+        args.putInt(QuranAyahSession.SURAH, surah)
+        args.putInt(QuranAyahSession.AYAH, ayah)
+        args.putInt(QuranAyahSession.WORD, word)
+        controller.sendCustomCommand(SessionCommand(QuranAyahSession.COMMAND_WORD, Bundle.EMPTY), args)
+    }
+
     private fun playRequest(request: Request) {
         val context = app ?: return
         if (QuranAudioRepository.track(request.surahId) == null) return
@@ -159,6 +188,10 @@ object QuranAudioPlayer {
             return
         }
         requested = null
+        if (request.startToken != null && request.ayah != null) {
+            sendWord(connected, request.surahId, request.ayah, request.startToken, request.options)
+            return
+        }
         if (connected.currentMediaItem?.mediaId == request.mediaId && connected.playbackState != Player.STATE_ENDED) {
             if (request.ayah != null) configureAyah(request.options.repeatCount, request.options.speed, request.options.continueAfter)
             if (request.autoplay) {
@@ -170,7 +203,8 @@ object QuranAudioPlayer {
             val position = if (connected.currentMediaItem?.mediaId == request.mediaId) 0L else saved?.positionMs ?: 0L
             // The service discards arbitrary URLs/clips and rebuilds this checked ID from its catalogue.
             val item = MediaItem.Builder().setMediaId(request.mediaId).setMediaMetadata(MediaMetadata.Builder()
-                .setExtras(QuranAyahSession.bundle(request.options)).build()).build()
+                .setExtras(QuranAyahSession.bundle(request.options, includeBasmala = saved?.includeBasmala == true))
+                .build()).build()
             connected.pause()
             connected.setMediaItem(item, position)
             if (request.autoplay) {

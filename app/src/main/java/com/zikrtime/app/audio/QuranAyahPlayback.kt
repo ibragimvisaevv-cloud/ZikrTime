@@ -47,8 +47,11 @@ internal object QuranAyahPlaybackPolicy {
 }
 
 /** Complete official timing rows for exactly the same MP3Quran recording as the surah catalogue. */
-internal class QuranAyahTimingCatalog private constructor(private val verses: Map<QuranAudioAyah, QuranAyahTiming>) {
+internal class QuranAyahTimingCatalog private constructor(private val verses: Map<QuranAudioAyah, QuranAyahTiming>,
+                                                         private val basmalaStarts: Map<Int, Long>) {
     fun timing(surahId: Int, ayah: Int): QuranAyahTiming? = verses[QuranAudioAyah(surahId, ayah)]
+
+    fun basmalaStart(surahId: Int): Long? = basmalaStarts[surahId]
 
     private val bySurah = verses.values.groupBy { it.reference.surahId }
 
@@ -73,6 +76,7 @@ internal class QuranAyahTimingCatalog private constructor(private val verses: Ma
             require(surahs.length() == 114) { "Incomplete timing catalogue" }
             val seen = mutableSetOf<Int>()
             val verses = linkedMapOf<QuranAudioAyah, QuranAyahTiming>()
+            val basmalaStarts = mutableMapOf<Int, Long>()
             for (i in 0 until surahs.length()) {
                 val surah = surahs.getJSONObject(i)
                 val id = surah.getInt("surah")
@@ -89,6 +93,9 @@ internal class QuranAyahTimingCatalog private constructor(private val verses: Ma
                     require(start >= 0L && end > start && start >= previousEnd) { "Invalid or overlapping timing" }
                     previousEnd = end
                     // Basmala (0) and istiadhah (-1) are not falsely labelled as Quran ayahs.
+                    if (ayah == 0) {
+                        require(expectedAyah == 1 && basmalaStarts.put(id, start) == null)
+                    }
                     if (ayah in -1..0) continue
                     require(ayah == expectedAyah && ayah <= counts.getValue(id)) { "Missing or mismatched ayah timing" }
                     expectedAyah++
@@ -98,7 +105,7 @@ internal class QuranAyahTimingCatalog private constructor(private val verses: Ma
                 require(expectedAyah == counts.getValue(id) + 1) { "Missing ayah timing" }
             }
             require(verses.size == 6236)
-            return QuranAyahTimingCatalog(verses)
+            return QuranAyahTimingCatalog(verses, basmalaStarts)
         }
     }
 }

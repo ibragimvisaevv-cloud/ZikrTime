@@ -6,6 +6,13 @@ import androidx.media3.common.MediaItem
 /** Main-thread service state. UI reads it but can change it only through a validated session command. */
 internal object QuranAyahSession {
     const val COMMAND_CONFIGURE = "com.zikrtime.app.audio.CONFIGURE_AYAH"
+    const val COMMAND_WORD = "com.zikrtime.app.audio.SELECT_WORD"
+    const val SURAH = "surah"
+    const val AYAH = "ayah"
+    const val WORD = "word"
+    const val START_AYAH = "start_ayah"
+    const val AYAH_START = 0
+    const val INCLUDE_BASMALA = "include_basmala"
     private const val REPEATS = "ayah_repeats"
     private const val SPEED = "ayah_speed"
     private const val CONTINUE = "ayah_continue"
@@ -33,11 +40,12 @@ internal object QuranAyahSession {
 
     fun resetIteration() { iteration = 1 }
 
-    fun bundle(options: QuranAyahOptions, iteration: Int = 1): Bundle = Bundle().apply {
+    fun bundle(options: QuranAyahOptions, iteration: Int = 1, includeBasmala: Boolean = false): Bundle = Bundle().apply {
         putInt(REPEATS, options.repeatCount)
         putFloat(SPEED, options.speed)
         putBoolean(CONTINUE, options.continueAfter)
         putInt(ITERATION, iteration)
+        putBoolean(INCLUDE_BASMALA, includeBasmala)
     }
 
     fun fromBundle(bundle: Bundle?): QuranAyahOptions? = bundle?.let {

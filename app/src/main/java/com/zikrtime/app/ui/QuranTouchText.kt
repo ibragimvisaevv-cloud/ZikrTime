@@ -25,6 +25,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.font.FontWeight
 import com.zikrtime.app.R
+import com.zikrtime.app.audio.quranWordRange
+import com.zikrtime.app.audio.isQuranSpokenToken
 import com.zikrtime.app.data.QuranTextRange
 import com.zikrtime.app.data.QuranVisibleText
 
@@ -79,14 +81,44 @@ internal class QuranTextGeometry {
     }
 
     fun firstAyah(): Int? = visibleText(false).minOfOrNull { it.ayah }
+
+    fun wordCenter(ayah: Int, word: Int): Offset? {
+        val view = viewport?.takeIf { it.isAttached } ?: return null
+        val entry = entries.values.firstOrNull { block -> block.ranges.any { it.ayah == ayah } } ?: return null
+        val coordinates = entry.coordinates?.takeIf { it.isAttached } ?: return null
+        val layout = entry.layout ?: return null
+        val verse = entry.ranges.first { it.ayah == ayah }
+        val text = layout.layoutInput.text.text
+        val token = quranWordRange(text.substring(verse.start, verse.arabicEnd), word) ?: return null
+        val letters = token.map { verse.start + it }.filter { text[it].isLetter() }
+        val center = letters.getOrNull(letters.size / 2) ?: verse.start + token.first
+        val offsets = (listOf(center) + letters).distinct()
+        for (offset in offsets) {
+            val box = layout.getBoundingBox(offset)
+            if (box.width > 1f && view.boundsInRoot().contains(coordinates.localToRoot(box.center)))
+                return coordinates.localToWindow(box.center)
+        }
+        return null
+    }
 }
+
+/** Read by the debug-only Android fixture to tap an actual laid-out glyph. */
+internal object QuranWordProbe {
+    var surah = 0
+    var geometry: QuranTextGeometry? = null
+    fun point(surah: Int, ayah: Int, word: Int): Offset? =
+        if (this.surah == surah) geometry?.wordCenter(ayah, word) else null
+}
+
+private val tokenPattern = Regex("\\S+")
+private data class QuranTextHit(val ayah: Int, val word: Int?)
 
 @Composable
 internal fun QuranTouchText(text: String, ranges: List<QuranTextRange>,
     geometry: QuranTextGeometry, style: TextStyle, tag: String, modifier: Modifier = Modifier,
-    choose: (Int, Boolean) -> Unit, savedAyahs: Set<Int> = emptySet(), pendingAyah: Int? = null,
-    playingAyah: Int? = null,
-    playingRanges: List<IntRange> = emptyList(), ayahWithoutWords: Int? = null) {
+    choose: (Int, Int?, Boolean) -> Unit, savedAyahs: Set<Int> = emptySet(), focusedAyah: Int? = null,
+    playingAyah: Int? = null, focusRanges: List<IntRange> = emptyList(), ayahWithoutWords: Int? = null,
+    unmappedTap: IntRange? = null) {
     val key = ranges.first().ayah
     val entry = remember(geometry, ranges) { QuranTextGeometry.Entry(ranges) }
     DisposableEffect(geometry, entry) {
@@ -98,22 +130,27 @@ internal fun QuranTouchText(text: String, ranges: List<QuranTextRange>,
     val colors = quranPaperColors()
     val soundingRange = ranges.firstOrNull { it.ayah == playingAyah }
     val soundingLabel = soundingRange?.let { stringResource(R.string.ql_reading_now, it.ayah.toString()) }
-    val words = if (soundingRange != null) playingRanges else emptyList()
-    val annotated = remember(text, ranges, colors, savedAyahs, pendingAyah, soundingRange, words, ayahWithoutWords) {
+    val focus = ranges.firstOrNull { it.ayah == focusedAyah }
+    val words = if (focus != null) focusRanges else emptyList()
+    val annotated = remember(text, ranges, colors, savedAyahs, focus, words, ayahWithoutWords, unmappedTap) {
         AnnotatedString.Builder(text).apply {
+            focus?.let { addStyle(SpanStyle(background = colors.selection), it.start, it.end) }
             ranges.forEach { range ->
                 if (range.arabicEnd < range.end) {
                     addStyle(SpanStyle(color = colors.accent), range.arabicEnd, range.end)
                     if (range.ayah == ayahWithoutWords) {
                         addStyle(SpanStyle(fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline),
                             range.arabicEnd, range.end)
-                    } else if (range.ayah in savedAyahs || range.ayah == pendingAyah) {
+                    } else if (range.ayah in savedAyahs || range.ayah == focusedAyah) {
                         addStyle(SpanStyle(textDecoration = TextDecoration.Underline), range.arabicEnd, range.end)
                     }
                 }
             }
-            // Marks have their own indicator. The only filled source glyphs are the current spoken pair.
-            soundingRange?.let { verse ->
+            // Layer the more prominent two-word cursor over the single softly marked ayah.
+            focus?.let { verse ->
+                if (unmappedTap != null && unmappedTap.last < verse.arabicEnd - verse.start)
+                    addStyle(SpanStyle(color = colors.accent, textDecoration = TextDecoration.Underline),
+                        verse.start + unmappedTap.first, verse.start + unmappedTap.last + 1)
                 words.forEach { word ->
                     if (word.first >= 0 && word.last < verse.arabicEnd - verse.start)
                         addStyle(SpanStyle(color = colors.paper, background = colors.accent),
@@ -124,16 +161,35 @@ internal fun QuranTouchText(text: String, ranges: List<QuranTextRange>,
     }
     val accessibility = ranges.map { range ->
         CustomAccessibilityAction(stringResource(R.string.qt_ayah_actions, range.ayah)) {
-            onChoose(range.ayah, true); true
+            onChoose(range.ayah, null, true); true
         }
     }
-    fun hit(position: Offset): Int? {
+    val tokensByAyah = remember(text, ranges) {
+        ranges.associate { verse ->
+            verse.ayah to tokenPattern.findAll(text.substring(verse.start, verse.arabicEnd))
+                .map { if (isQuranSpokenToken(it.value)) it.range else IntRange.EMPTY }.toList()
+        }
+    }
+    fun hit(position: Offset): QuranTextHit? {
         val layout = entry.layout ?: return null
         val line = layout.getLineForVerticalPosition(position.y)
         if (position.y < layout.getLineTop(line) || position.y > layout.getLineBottom(line) ||
             position.x < layout.getLineLeft(line) || position.x > layout.getLineRight(line)) return null
-        val offset = layout.getOffsetForPosition(position)
-        return ranges.firstOrNull { offset >= it.start && offset < it.end }?.ayah
+        // getOffsetForPosition returns the nearest caret, including the far edge of an RTL
+        // glyph. Prefer the character whose laid-out box actually contains the finger.
+        val caret = layout.getOffsetForPosition(position)
+        val lineStart = layout.getLineStart(line)
+        val lineEnd = layout.getLineEnd(line)
+        if (lineEnd <= lineStart) return null
+        val offset = listOf(caret, caret - 1).firstOrNull {
+            it in lineStart until lineEnd && layout.getBoundingBox(it).contains(position)
+        } ?: caret.coerceIn(lineStart, lineEnd - 1)
+        val verse = ranges.lastOrNull { it.start <= offset } ?: return null
+        val local = offset - verse.start
+        val word = if (offset < verse.arabicEnd)
+            tokensByAyah.getValue(verse.ayah).indexOfFirst { local in it }.takeIf { it >= 0 }?.plus(1)
+            else null
+        return QuranTextHit(verse.ayah, word)
     }
     Text(annotated, style = style,
         textAlign = if (style.textAlign == TextAlign.Unspecified) TextAlign.Right else style.textAlign, color = colors.ink,
@@ -144,10 +200,10 @@ internal fun QuranTouchText(text: String, ranges: List<QuranTextRange>,
                 if (soundingLabel != null) stateDescription = soundingLabel
             }
             .pointerInput(entry) {
-                detectTapGestures(onTap = { hit(it)?.let { ayah -> onChoose(ayah, false) } },
-                    onLongPress = { hit(it)?.let { ayah ->
+                detectTapGestures(onTap = { hit(it)?.let { target -> onChoose(target.ayah, target.word, false) } },
+                    onLongPress = { hit(it)?.let { target ->
                         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                        onChoose(ayah, true)
+                        onChoose(target.ayah, target.word, true)
                     } })
             })
 }

@@ -35,8 +35,11 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.zikrtime.app.R
+import com.zikrtime.app.BuildConfig
 import com.zikrtime.app.audio.QuranAudioPlayer
+import com.zikrtime.app.audio.QuranPlaybackService
 import com.zikrtime.app.audio.QuranWordTimings
+import com.zikrtime.app.audio.quranWordRange
 import com.zikrtime.app.data.*
 import com.zikrtime.app.i18n.Lang
 import com.zikrtime.app.ui.theme.ArabicStyle
@@ -67,9 +70,15 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
     val list = if (wholeSurah) wholeList else verseList
     var visibleAyah by rememberSaveable { mutableIntStateOf(startAyah) }
     var selectedAyah by rememberSaveable(surahId) { mutableIntStateOf(0) }
+    var selectedWord by rememberSaveable(surahId) { mutableStateOf<Int?>(null) }
     // A sheet owns an immutable target. Scrolling, layout and rotation cannot retarget a note/copy.
     var actionAyah by rememberSaveable { mutableIntStateOf(startAyah) }
     val geometry = remember(wholeSurah, blocks) { QuranTextGeometry() }
+    if (BuildConfig.DEBUG) DisposableEffect(surahId, geometry) {
+        QuranWordProbe.surah = surahId
+        QuranWordProbe.geometry = geometry
+        onDispose { if (QuranWordProbe.geometry === geometry) QuranWordProbe.geometry = null }
+    }
     val tracker = remember(verses) { QuranReadTracker(verses) }
     val focus = LocalFocusManager.current
     val scope = rememberCoroutineScope()
@@ -113,20 +122,51 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
     var lastWordOffset by remember(surahId, playingAyah) { mutableIntStateOf(0) }
     var followAudio by rememberSaveable(surahId) { mutableStateOf(true) }
     var showPlayer by rememberSaveable(surahId) { mutableStateOf(false) }
+    var startRequested by remember(surahId) { mutableStateOf(false) }
+    var tapWhileConnecting by remember(surahId) { mutableStateOf(false) }
     var repeats by rememberSaveable(surahId) { mutableIntStateOf(1) }
     var speed by rememberSaveable(surahId) { mutableFloatStateOf(1f) }
     var continueAfter by rememberSaveable(surahId) { mutableStateOf(true) }
     val activeHere = playback.connected && playback.surahId == surahId
     val activeAyah = if (activeHere) playback.positionAyah ?: playback.clipAyah else null
     var lastPlaybackAyah by rememberSaveable(surahId) { mutableIntStateOf(0) }
-    LaunchedEffect(activeHere, activeAyah) {
-        if (activeHere && activeAyah != null) lastPlaybackAyah = activeAyah
+    var lastSpokenWord by rememberSaveable(surahId) { mutableStateOf<Int?>(null) }
+    LaunchedEffect(activeHere, activeAyah, playback.playing, playback.phraseWord) {
+        if (activeHere && activeAyah != null) {
+            if (lastPlaybackAyah != activeAyah || playback.phraseWord != null) lastSpokenWord = playback.phraseWord
+            lastPlaybackAyah = activeAyah
+        }
     }
     val target = if (followAudio && activeHere) activeAyah ?: lastPlaybackAyah.takeIf { it > 0 } ?: visibleAyah
         else selectedAyah.takeIf { it > 0 } ?: visibleAyah
     val currentAyah = if (showPlayer || activeHere) target else selectedAyah.takeIf { it > 0 } ?: visibleAyah
     val playerVisible = showPlayer || (activeHere && !playback.ended && activeAyah != null)
-    val pendingAyah = selectedAyah.takeIf { !followAudio && it > 0 }
+    val liveHere = activeHere && !playback.ended && (playback.playing || playback.buffering && playback.playWhenReady)
+    LaunchedEffect(liveHere, playback.error, startRequested) {
+        if (liveHere) followAudio = true
+        if (liveHere || playback.error != null) startRequested = false
+    }
+    val pendingAyah = selectedAyah.takeIf { !followAudio && !liveHere && it > 0 }
+    val pausedAyah = activeAyah.takeIf { activeHere && !playback.playWhenReady && !playback.ended }
+    val focusedAyah = if (liveHere) playingAyah ?: activeAyah else pendingAyah ?: pausedAyah
+    val focusedWord = if (pendingAyah != null) selectedWord
+        else playback.positionWord ?: lastSpokenWord.takeIf { focusedAyah == lastPlaybackAyah }
+    val quietPhrase = remember(surahId, liveHere, pendingAyah, focusedAyah, focusedWord, playback.gapNeighbor) {
+        val verse = focusedAyah?.let { verses.getOrNull(it - 1) }
+        when {
+            liveHere || verse == null || focusedWord == null -> null
+            pendingAyah != null -> QuranWordTimings.selectedPhrase(context, surahId, verse.number, verse.arabic, focusedWord)
+            else -> QuranWordTimings.phrase(context, surahId, verse.number, verse.arabic, focusedWord, playback.gapNeighbor)
+        }
+    }
+    // A user's choice can be shown precisely even where the recording has no verified start.
+    val unmappedTap = remember(surahId, pendingAyah, selectedWord) {
+        val word = selectedWord
+        val verse = pendingAyah?.let { verses.getOrNull(it - 1) }
+        if (verse != null && word != null && !QuranWordTimings.hasWord(context, surahId, verse.number, word))
+            quranWordRange(verse.arabic, word) else null
+    }
+    val focusRanges = (if (liveHere) phrase else quietPhrase)?.ranges.orEmpty()
     val activeTarget = activeHere && target == activeAyah
     val actualRepeats = if (activeTarget && playback.clipAyah != null) playback.repeatCount else repeats
     val actualSpeed = if (activeTarget) playback.speed else speed
@@ -175,33 +215,76 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
         actionAyah = number
         openSheet(destination)
     }
-    val choose: (Int, Boolean) -> Unit = { number, longPress ->
+    fun applyWordTap(number: Int, word: Int?) {
+        // Read at gesture time so a second quick tap cannot use the previous frame's position.
+        val now = QuranAudioPlayer.state.value
+        if (followAudio && now.connected && now.surahId == surahId) {
+            speed = now.speed
+            if (now.ayah != null) {
+                repeats = now.repeatCount
+                continueAfter = now.continueAfter
+            }
+        }
+        val moving = now.connected && !now.ended && now.error == null &&
+            (now.isPlaying || now.isBuffering && now.playWhenReady)
+        followAudio = moving
+        if (moving) {
+            if (!QuranAudioPlayer.seekToWord(surahId, number, word)) {
+                startRequested = true
+                QuranAudioPlayer.playAyahFromWord(surahId, number, word, now.repeatCount, now.speed,
+                    if (now.ayah == null) true else now.continueAfter)
+            }
+        } else if (startRequested) {
+            // Replace an explicit Play request that is still waiting for the controller.
+            QuranAudioPlayer.playAyahFromWord(surahId, number, word, actualRepeats, actualSpeed, actualContinue)
+        }
+    }
+    LaunchedEffect(playback.connected, tapWhileConnecting) {
+        if (tapWhileConnecting && playback.connected) {
+            tapWhileConnecting = false
+            if (selectedAyah > 0) applyWordTap(selectedAyah, selectedWord)
+        }
+    }
+    val choose: (Int, Int?, Boolean) -> Unit = { number, word, longPress ->
         if (longPress) openAyahSheet(number, "actions")
         else {
             session.tick(false)
             tracker.pause()
             selectedAyah = number
+            selectedWord = word
             audioOpened = true
             showPlayer = true
-            followAudio = false
+            tapWhileConnecting = !startRequested && !QuranAudioPlayer.state.value.connected && QuranPlaybackService.hasActiveSession
+            applyWordTap(number, word)
         }
     }
     val playOrPause: () -> Unit = {
-        if (activeTarget && playback.playWhenReady && !playback.ended && playback.error == null) {
+        tapWhileConnecting = false
+        if (startRequested || activeTarget && playback.playWhenReady && !playback.ended && playback.error == null) {
+            startRequested = false
             QuranAudioPlayer.pause()
         } else {
+            startRequested = true
             selectedAyah = target
-            followAudio = true
+            followAudio = pendingAyah == null
             showPlayer = true
-            if (activeTarget && playback.clipAyah == null && actualRepeats == 1 && actualContinue &&
-                !playback.ended && playback.error == null) QuranAudioPlayer.togglePlayPause()
+            if (pendingAyah != null) {
+                if (activeHere && playback.clipAyah == null && !playback.ended && actualRepeats == 1 && actualContinue &&
+                    QuranAudioPlayer.seekToWord(surahId, target, selectedWord)) QuranAudioPlayer.togglePlayPause()
+                else QuranAudioPlayer.playAyahFromWord(surahId, target, selectedWord, actualRepeats, actualSpeed, actualContinue)
+            } else if (activeTarget && !playback.ended && playback.error == null &&
+                (playback.clipAyah != null || actualRepeats == 1 && actualContinue)) QuranAudioPlayer.togglePlayPause()
             else QuranAudioPlayer.playAyah(surahId, target, actualRepeats, actualSpeed, actualContinue)
         }
     }
     val closePlayer: () -> Unit = {
-        if (activeHere || (!playback.connected && audioOpened && followAudio && showPlayer)) QuranAudioPlayer.stop()
+        if (activeHere || startRequested) QuranAudioPlayer.stop()
+        startRequested = false
+        tapWhileConnecting = false
         showPlayer = false
         selectedAyah = 0
+        selectedWord = null
+        lastSpokenWord = null
         lastPlaybackAyah = 0
         followAudio = true
     }
@@ -254,6 +337,7 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
             focus.clearFocus()
             tracker.pause()
             selectedAyah = number
+            selectedWord = null
             followAudio = false
             if (wholeSurah) {
                 blockAnchor = number
@@ -301,8 +385,12 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
                                 style = MaterialTheme.typography.labelMedium, color = colors.accent)
                         }
                     }
-                    else if (!compact) Text(stringResource(R.string.qp_selected_ayah, surahId, currentAyah),
-                        style = MaterialTheme.typography.labelMedium, color = colors.muted)
+                    else if (!liveHere && focusedAyah != null) Box(Modifier.testTag("quran_selected_ayah_${surahId}_$focusedAyah")) {
+                        Text(stringResource(R.string.qp_selected_ayah, surahId, focusedAyah),
+                            modifier = if (quietPhrase != null) Modifier.testTag("quran_selected_pair_${surahId}_${focusedAyah}_${quietPhrase.firstWord}_${quietPhrase.lastWord}") else Modifier,
+                            style = MaterialTheme.typography.labelMedium, color = colors.muted)
+                    } else if (!compact) Text(stringResource(R.string.qp_selected_ayah, surahId, currentAyah),
+                            style = MaterialTheme.typography.labelMedium, color = colors.muted)
                 }
                 QuranQuickBookmark(QuranProgress.Location(surahId, currentAyah) in bookmarks, quickBookmark)
                 if (!fullscreen) IconButton(onClick = { fullscreen = true }, modifier = Modifier.testTag("quran_fullscreen")) {
@@ -363,7 +451,7 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
                                     }
                                     QuranTouchText(block.text, block.ranges, geometry,
                                         ArabicStyle.copy(fontSize = (30 * scale).sp, textDirection = TextDirection.Rtl, textAlign = TextAlign.Justify),
-                                        "quran_whole_" + block.firstAyah, Modifier.fillMaxWidth(), choose, savedAyahs, pendingAyah, playingAyah, phrase?.ranges.orEmpty(), ayahWithoutWords)
+                                        "quran_whole_" + block.firstAyah, Modifier.fillMaxWidth(), choose, savedAyahs, focusedAyah, playingAyah, focusRanges, ayahWithoutWords, unmappedTap)
                                 }
                             }
                         }
@@ -402,10 +490,10 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
                                 val ranges = remember(ayah) { listOf(QuranTextRange(ayah.number, 0, ayah.arabic.length, ayah.arabic.length)) }
                                 QuranTouchText(ayah.arabic, ranges, geometry,
                                     ArabicStyle.copy(fontSize = (30 * scale).sp, textDirection = TextDirection.Rtl),
-                                    "quran_arabic_" + ayah.number, Modifier.fillMaxWidth(), choose, savedAyahs, pendingAyah, playingAyah, phrase?.ranges.orEmpty(), ayahWithoutWords)
+                                    "quran_arabic_" + ayah.number, Modifier.fillMaxWidth(), choose, savedAyahs, focusedAyah, playingAyah, focusRanges, ayahWithoutWords, unmappedTap)
                                 Text(stringResource(R.string.quran_translation_label), style = MaterialTheme.typography.labelSmall, color = colors.accent)
                                 Text(ayah.translation, modifier = Modifier.testTag("quran_translation_" + ayah.number)
-                                    .combinedClickable(onClick = { choose(ayah.number, false) }, onLongClick = { choose(ayah.number, true) }),
+                                    .combinedClickable(onClick = { choose(ayah.number, null, false) }, onLongClick = { choose(ayah.number, null, true) }),
                                     color = colors.ink,
                                     style = MaterialTheme.typography.bodyLarge.copy(fontSize = (18 * scale).sp, lineHeight = (30 * scale).sp))
                                 if (ayah.footnotes.isNotBlank()) {
@@ -421,8 +509,8 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
                 }
             }
             if (snackbar.currentSnackbarData != null) SnackbarHost(snackbar)
-            if (playerVisible) QuranInlinePlayer(surahId, target, activeTarget && playback.playWhenReady && !playback.ended,
-                activeTarget && playback.buffering, playback.error, playOrPause,
+            if (playerVisible) QuranInlinePlayer(surahId, target, startRequested || activeTarget && playback.playWhenReady && !playback.ended,
+                startRequested || activeTarget && playback.buffering, playback.error, playOrPause,
                 options = { openSheet("audioOptions") }, close = closePlayer)
         }
     }
