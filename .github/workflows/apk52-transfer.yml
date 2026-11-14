@@ -23,7 +23,9 @@ jobs:
             sleep 15
           done
           (cd "$scratch" && sha256sum -c SHA256SUMS.txt)
-          git switch --orphan ci/transfer-apk-52
+          git -c advice.detachedHead=false worktree add --detach "$scratch/transfer-tree" HEAD
+          cd "$scratch/transfer-tree"
+          git switch --discard-changes --orphan ci/transfer-apk-52
           mkdir -p chunks
           split -b 540000 -d -a 3 "$scratch/$apk" chunks/part-
           cp "$scratch/SHA256SUMS.txt" .
