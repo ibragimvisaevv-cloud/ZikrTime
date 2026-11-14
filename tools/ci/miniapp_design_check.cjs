@@ -44,6 +44,7 @@ async function companyJourney(page, owner, actions) {
   assert.doesNotMatch(await page.locator("#app").innerText(), /ожидает оплаты|200\s*₽/i);
   if (!owner) {
     assert.equal(await page.locator("#vis").count(), 0);
+    await offerJourney(page, actions);
     return;
   }
   await page.getByRole("button", { name: "← Назад", exact: true }).click();
@@ -63,6 +64,41 @@ async function companyJourney(page, owner, actions) {
   await page.locator(".product").filter({ hasText: "Автопрокат продавца" }).getByText(/Опубликована ·/).waitFor();
   assert.deepEqual(actions.filter(a => a.action === "mod_seller").map(a => [a.sid, a.do]),
     [["owner-company", "partner"], ["owner-company", "hide"], ["owner-company", "ok"], ["seller-company", "ok"]]);
+}
+
+async function offerJourney(page, actions) {
+  await page.getByRole("button", { name: /Акции магазина/ }).click();
+  await page.getByRole("button", { name: "Добавить акцию" }).click();
+  const title = 'Подарок <всем>';
+  await page.getByLabel("Название акции").fill(title);
+  await page.getByLabel("Условия").fill("При заказе двух флаконов");
+  const until = page.getByLabel("Последний день акции");
+  await until.fill("2000-01-01");
+  await page.getByRole("button", { name: "Сохранить акцию" }).click();
+  assert.equal(actions.filter(a => a.action === "offer_save").length, 0);
+  const lastDay = await until.getAttribute("min");
+  await until.fill(lastDay);
+  await page.getByRole("button", { name: "Сохранить акцию" }).click();
+  await page.getByText(title, { exact: true }).waitFor();
+  const create = actions.find(a => a.action === "offer_save");
+  assert.ok(create.request_id);
+  assert.deepEqual(create.fields, { title, conditions: "При заказе двух флаконов", valid_until: lastDay });
+  const edit = page.getByRole("button", { name: "Изменить акцию «" + title + "»" });
+  await edit.click();
+  await page.getByLabel("Условия").fill("При заказе трёх флаконов");
+  await page.getByRole("button", { name: "Сохранить акцию" }).click();
+  await page.getByText("При заказе трёх флаконов", { exact: true }).waitFor();
+  assert.equal(actions.filter(a => a.action === "offer_save")[1].offer_id, "offer-fixture");
+  await edit.click();
+  page.once("dialog", dialog => dialog.dismiss());
+  await page.getByRole("button", { name: "Завершить акцию" }).click();
+  assert.equal(actions.filter(a => a.action === "offer_delete").length, 0);
+  page.once("dialog", dialog => dialog.accept());
+  await page.getByRole("button", { name: "Завершить акцию" }).click();
+  await page.getByRole("heading", { name: "Акции магазина" }).waitFor();
+  assert.equal(await edit.count(), 0);
+  assert.equal(actions.filter(a => a.action === "offer_delete")[0].offer_id, "offer-fixture");
+  assert.equal(actions.filter(a => a.action === "product_save").length, 0);
 }
 
 async function scenario(browser, base, owner, theme, companies) {
@@ -100,6 +136,18 @@ async function scenario(browser, base, owner, theme, companies) {
         companies.push(seller);
         syncCompanies();
         result = { seller, me: data };
+        break;
+      }
+      case "offer_save":
+      case "offer_delete": {
+        const seller = data.sellers.find(s => s.id === body.sid);
+        assert.ok(seller);
+        if (body.action === "offer_save") {
+          seller.offers = [{ id: body.offer_id || "offer-fixture", ...body.fields }];
+        } else {
+          seller.offers = seller.offers.filter(o => o.id !== body.offer_id);
+        }
+        result = { seller };
         break;
       }
       case "mod_seller": {

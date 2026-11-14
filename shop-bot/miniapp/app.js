@@ -118,6 +118,8 @@
     else if (scr.type === "seller") renderSellerForm(scr);
     else if (scr.type === "products") renderSeller(scr);
     else if (scr.type === "product") renderProductForm(scr);
+    else if (scr.type === "offers") renderOffers(scr);
+    else if (scr.type === "offer") renderOfferForm(scr);
     else if (scr.type === "promo") renderPromo(scr);
     else if (scr.type === "request") renderRequest(scr);
     else if (scr.type === "ticket") renderTicket(scr);
@@ -382,6 +384,7 @@
     html += `<div class="row"><button class="btn ghost" id="editBtn">Изменить данные</button>
       ${s.status === "approved" ? `<button class="btn gold" id="promo">Продвинуть</button>` : ""}</div>`;
     if (s.orders && s.orders.length) html += `<div class="card"><h2>Операции</h2>${s.orders.map(orderLine).join("")}</div>`;
+    html += `<div class="card action-list"><button id="shopOffers"><span><strong>Акции магазина</strong><small>Подарки, комплекты и другие предложения</small></span><b aria-hidden="true">→</b></button></div>`;
     if (s.status === "pending") html += `<p class="sub" style="margin-top:10px">Компания на проверке. Товары можно добавлять уже сейчас — они появятся вместе с компанией.</p>`;
     html += `<h2>Товары (${s.products.length}/${me.limits.products})</h2><div class="card">`;
     html += s.products.length ? s.products.map((p) => `<div class="product" data-pid="${esc(p.id)}">
@@ -399,6 +402,7 @@
     document.getElementById("editBtn").onclick = open;
     const promo = document.getElementById("promo");
     if (promo) promo.onclick = () => go({ type: "promo", sid: s.id });
+    document.getElementById("shopOffers").onclick = () => go({ type: "offers", sid: s.id });
     app.querySelectorAll(".product[data-pid]").forEach((el) => el.onclick = () => go({ type: "product", sid: s.id, pid: el.dataset.pid }));
     document.getElementById("addProduct").onclick = () => {
       if (s.products.length >= me.limits.products) return toast(`Не больше ${me.limits.products} товаров`);
@@ -479,7 +483,7 @@
           ${f.images.length < me.limits.photos ? `<div class="pic" id="addPic">＋</div>` : ""}</div>
         <label>Название *</label><input id="title" maxlength="80" value="${esc(f.title)}">
         <div class="row"><div style="flex:1"><label>Цена, ₽</label><input id="price" inputmode="numeric" value="${esc(f.price == null ? "" : f.price)}"></div>
-          <div style="flex:1"><label>Старая цена</label><input id="old_price" inputmode="numeric" value="${esc(f.old_price == null ? "" : f.old_price)}"></div></div>
+          <div style="flex:1"><label>Цена до скидки, ₽</label><input id="old_price" inputmode="numeric" value="${esc(f.old_price == null ? "" : f.old_price)}"></div></div>
         <label>За что цена (шт, кг, сутки…)</label><input id="unit" maxlength="20" value="${esc(f.unit)}">
         <label>Описание</label><textarea id="description" maxlength="600">${esc(f.description)}</textarea>
       </div>
@@ -501,6 +505,66 @@
   }
 
   // ---------------------------------------------------------------- продвижение
+  const offerToday = () => new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Moscow" }).format(new Date());
+  const offerDate = value => value.split("-").reverse().join(".");
+
+  function renderOffers(scr) {
+    const s = sellerById(scr.sid);
+    if (!s) { stack.length = 0; return render(); }
+    const offers = s.offers || [];
+    const today = offerToday();
+    app.innerHTML = `<h1>Акции магазина</h1><p class="sub">${esc(s.name)}</p>
+      <button class="btn primary" id="newOffer">Добавить акцию</button>
+      ${offers.map(o => `<article class="card"><strong>${esc(o.title)}</strong><p>${esc(o.conditions)}</p>
+        <p class="muted">${o.valid_until < today ? "Завершилась" : "До"} ${esc(offerDate(o.valid_until))}</p>
+        <button class="btn ghost" data-offer="${esc(o.id)}" aria-label="Изменить акцию «${esc(o.title)}»">Изменить</button></article>`).join("")}`;
+    document.getElementById("newOffer").onclick = () => go({ type: "offer", sid: s.id });
+    app.querySelectorAll("[data-offer]").forEach(b => b.onclick = () => go({ type: "offer", sid: s.id, offerId: b.dataset.offer }));
+  }
+
+  function renderOfferForm(scr) {
+    const s = sellerById(scr.sid);
+    const offer = s && (s.offers || []).find(o => o.id === scr.offerId);
+    if (!s || (scr.offerId && !offer)) return back();
+    app.innerHTML = `<h1>${offer ? "Изменить акцию" : "Новая акция"}</h1><p class="sub">${esc(s.name)}</p>
+      <form id="offerForm"><div class="card">
+        <label for="offerTitle">Название акции</label><input id="offerTitle" required minlength="2" maxlength="80" value="${esc(offer && offer.title)}" placeholder="Подарок к заказу">
+        <label for="offerConditions">Условия</label><textarea id="offerConditions" required minlength="2" maxlength="600" placeholder="Например, при заказе от 2 000 ₽">${esc(offer && offer.conditions)}</textarea>
+        <label for="offerUntil">Последний день акции</label><input id="offerUntil" type="date" required min="${offerToday()}" value="${esc(offer && offer.valid_until)}">
+      </div><button class="btn primary" type="submit" id="saveOffer">Сохранить акцию</button></form>
+      ${offer ? `<button class="btn danger" id="removeOffer">${offer.valid_until < offerToday() ? "Удалить акцию" : "Завершить акцию"}</button>` : ""}`;
+    const form = document.getElementById("offerForm");
+    const title = document.getElementById("offerTitle");
+    const conditions = document.getElementById("offerConditions");
+    const until = document.getElementById("offerUntil");
+    const updateOffers = (result, message) => {
+      const seller = sellerById(s.id);
+      if (seller && result.seller) seller.offers = result.seller.offers;
+      haptic("success"); toast(message);
+      if (current() === scr) back();
+    };
+    form.onsubmit = event => {
+      event.preventDefault();
+      title.value = title.value.trim();
+      conditions.value = conditions.value.trim();
+      if (!form.reportValidity()) return;
+      const button = document.getElementById("saveOffer");
+      if (button.disabled) return;
+      run(button, async () => {
+        const request = { sid: s.id, fields: { title: title.value, conditions: conditions.value, valid_until: until.value } };
+        if (offer) request.offer_id = offer.id;
+        else request.request_id = scr.requestId || (scr.requestId = nonce());
+        updateOffers(await api("offer_save", request), "Акция сохранена");
+      });
+    };
+    if (offer) {
+      const button = document.getElementById("removeOffer");
+      button.onclick = () => confirmAsk(`Убрать акцию «${offer.title}» из магазина?`, () => run(button, async () => {
+        updateOffers(await api("offer_delete", { sid: s.id, offer_id: offer.id }), "Акция удалена");
+      }));
+    }
+  }
+
   function renderPromo(scr) {
     const s = sellerById(scr.sid);
     const rates = Object.entries(me.prices).map(([days, price]) => `<p>${esc(days)} дн. · ${money(price)}</p>`).join("");

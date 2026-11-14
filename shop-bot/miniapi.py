@@ -16,6 +16,7 @@ import re
 import secrets
 import sys
 import time
+from datetime import date
 from urllib.parse import parse_qsl
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -76,6 +77,7 @@ def seller_out(bot, s):
         "logo": s.get("logo", ""), "cover": s.get("cover", ""), "status": s["status"], "partner": bool(s.get("partner")),
         "promo_until": int(s["promo_until"]) if bot.promo_active(s) else 0,
         "orders": acquiring.history(bot, s["id"]),
+        "offers": index.seller_offers(s),
         "promo_request": {k: last[k] for k in ("id", "days", "price", "status")} if last and last["status"] in ("new", "claimed") else None,
         "products": [
             {"id": p["id"], "title": p["title"], "price": p.get("price"), "old_price": p.get("old_price"),
@@ -273,6 +275,54 @@ def act_product_delete(bot, uid, req):
     return {"seller": seller_out(bot, s)}
 
 
+def act_offer_save(bot, uid, req):
+    s = own_seller(bot, uid, req.get("sid"))
+    offers = s.setdefault("offers", {})
+    offer_id = req.get("offer_id")
+    if offer_id:
+        current = offers.get(str(offer_id))
+        if not current or current.get("removed"):
+            raise ApiError("Акция не найдена", 404)
+    else:
+        nonce = community.request_nonce(req)
+        current = next((offer for offer in offers.values() if offer.get("request_id") == nonce), None)
+        if current:
+            return {"seller": seller_out(bot, s)}
+        offer_id = new_id("o")
+        current = {"id": offer_id, "request_id": nonce}
+
+    fields = req.get("fields")
+    if not isinstance(fields, dict):
+        raise ApiError("Заполните данные акции")
+    title = community.bounded_text(fields.get("title"), 80, 2)
+    conditions = community.bounded_text(fields.get("conditions"), 600, 2)
+    until = fields.get("valid_until")
+    try:
+        last_day = date.fromisoformat(until)
+    except (TypeError, ValueError):
+        raise ApiError("Укажите дату окончания акции")
+    if last_day.isoformat() != until or last_day < index.offer_today():
+        raise ApiError("Выберите сегодняшнюю или будущую дату окончания")
+    current.update(title=title, conditions=conditions, valid_until=until)
+    offers[offer_id] = current
+    bot.after_seller_edit(uid, s, "акция магазина: " + title)
+    return {"seller": seller_out(bot, s)}
+
+
+def act_offer_delete(bot, uid, req):
+    s = own_seller(bot, uid, req.get("sid"))
+    offers = s.get("offers", {})
+    offer_id = str(req.get("offer_id") or "")
+    current = offers.get(offer_id)
+    if not current:
+        raise ApiError("Акция не найдена", 404)
+    if not current.get("removed"):
+        # Keep the original nonce so a delayed create retry cannot reopen a finished offer.
+        offers[offer_id] = {"removed": True, "request_id": current["request_id"]}
+        bot.changed(s)
+    return {"seller": seller_out(bot, s)}
+
+
 def act_photo(bot, uid, req):
     """Фото с телефона (уже уменьшенное в мини-приложении): base64 JPEG/PNG → публичная картинка."""
     s = own_seller(bot, uid, req.get("sid")) if req.get("sid") else None
@@ -351,6 +401,7 @@ def act_settings(bot, uid, req):
 ACTIONS = {
     "seller_save": act_seller_save, "seller_delete": act_seller_delete, "seller_visibility": act_seller_visibility,
     "product_save": act_product_save, "product_delete": act_product_delete, "photo": act_photo,
+    "offer_save": act_offer_save, "offer_delete": act_offer_delete,
     "promo_claim": act_promo_claim,
     "mod_seller": act_mod_seller, "mod_promo": act_mod_promo, "mod_review": act_mod_review, "settings": act_settings,
 }
