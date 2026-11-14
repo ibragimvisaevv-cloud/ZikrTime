@@ -30,17 +30,22 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.zikrtime.app.R
 import com.zikrtime.app.audio.*
+import com.zikrtime.app.data.QuranAyah
 import com.zikrtime.app.data.QuranBook
 import com.zikrtime.app.data.QuranRepository
 import com.zikrtime.app.data.QuranSurah
 import com.zikrtime.app.i18n.Lang
+import com.zikrtime.app.ui.theme.ArabicStyle
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 import java.util.Locale
@@ -104,6 +109,14 @@ private fun QuranAudioContent(initialSurah: Int) {
     val allSurahs = book?.surahs.orEmpty()
     val selected = allSurahs.firstOrNull { it.id == selectedId }
         ?: allSurahs.firstOrNull { it.id == (initialSurah.takeIf { n -> n in 1..114 } ?: 1) }
+    val playingVerse = playback.playingAyah?.let { number ->
+        playback.surahId?.let { book?.verses(it)?.getOrNull(number - 1) }
+    }
+    val showPlayingVerse: @Composable () -> Unit = {
+        if (playingVerse != null) QuranPlayingVerse(playingVerse) {
+            nav.openQuran(playingVerse.surah, playingVerse.number)
+        }
+    }
     val filtered = remember(allSurahs, query, downloadsOnly, storage.downloads.keys) {
         val search = query.trim()
         allSurahs.filter { surah ->
@@ -147,22 +160,26 @@ private fun QuranAudioContent(initialSurah: Int) {
                                 Text(stringResource(if (playback.error != null) R.string.qaudio_retry else if (playback.playWhenReady && !playback.ended)
                                     R.string.qaudio_pause else if (playback.ended) R.string.ql_listen_ayah else R.string.qaudio_resume))
                             }
-                            OutlinedButton(onClick = { nav.openQuran(playback.surahId!!, playback.ayah!!) },
+                            if (playingVerse != null) showPlayingVerse()
+                            else OutlinedButton(onClick = { nav.openQuran(playback.surahId!!, playback.ayah!!) },
                                 modifier = Modifier.fillMaxWidth().testTag("audio_current_ayah_open")) {
                                 Text(stringResource(R.string.ql_open_reader))
                             }
                         }
                     }
                 }
+                if (playingVerse != null && playback.ayah == null && playingVerse.surah != selected?.id)
+                    item("playing_elsewhere") { showPlayingVerse() }
                 item("player") {
                     Column(Modifier.fillMaxWidth().padding(top = 8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         QuranOrnament(Modifier.width(92.dp).height(14.dp))
                         Text(stringResource(R.string.qaudio_reciter), style = MaterialTheme.typography.titleLarge,
                             modifier = Modifier.semantics { heading() })
                         if (selected != null && storage.ready) {
-                            QuranAudioPlayerCard(selected, ru, playback, storage, onDelete = { deleteId = selected.id })
+                            QuranAudioPlayerCard(selected, ru, playback, storage, onDelete = { deleteId = selected.id },
+                                playingVerse = { if (playback.ayah == null && playback.surahId == selected.id) showPlayingVerse() })
                             OutlinedCard(onClick = {
-                                nav.openQuran(selected.id, playback.ayah?.takeIf { playback.surahId == selected.id } ?: 1)
+                                nav.openQuran(selected.id, playback.positionAyah?.takeIf { playback.surahId == selected.id } ?: 1)
                             },
                                 modifier = Modifier.fillMaxWidth().testTag("audio_open_verses")) {
                                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -270,7 +287,7 @@ private fun QuranAudioContent(initialSurah: Int) {
 
 @Composable
 private fun QuranAudioPlayerCard(surah: QuranSurah, ru: Boolean, playback: QuranPlaybackState,
-    storage: QuranAudioStorageState, onDelete: () -> Unit) {
+    storage: QuranAudioStorageState, onDelete: () -> Unit, playingVerse: @Composable () -> Unit) {
     val colors = quranPaperColors()
     val active = playback.surahId == surah.id && playback.ayah == null
     val playing = active && playback.isPlaying
@@ -330,6 +347,7 @@ private fun QuranAudioPlayerCard(surah: QuranSurah, ru: Boolean, playback: Quran
                     else -> R.string.qaudio_listen
                 }))
             }
+            playingVerse()
             if (active) FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedButton(onClick = { QuranAudioPlayer.skipBy(-15_000L) }, enabled = playback.connected && duration > 0,
                     modifier = Modifier.testTag("audio_seek_back")) { Text(stringResource(R.string.qaudio_back_15)) }
@@ -341,6 +359,27 @@ private fun QuranAudioPlayerCard(surah: QuranSurah, ru: Boolean, playback: Quran
             if (active) QuranSpeedControls(playback.speed, "audio") { QuranAudioPlayer.setSpeed(it) }
             HorizontalDivider(color = colors.rule)
             QuranAudioDownloadActions(surah.id, storage, onDelete, tagSuffix = "player")
+        }
+    }
+}
+
+/** The checked Arabic text links straight to the same verse in the reading view. */
+@Composable
+internal fun QuranPlayingVerse(verse: QuranAyah, onOpen: () -> Unit) {
+    val colors = quranPaperColors()
+    Card(onClick = onOpen,
+        modifier = Modifier.fillMaxWidth().testTag("audio_playing_ayah_${verse.number}"),
+        colors = CardDefaults.cardColors(containerColor = colors.selection),
+        border = BorderStroke(1.dp, colors.accent.copy(alpha = .65f))) {
+        Column(Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            Text(stringResource(R.string.ql_reading_now, stringResource(R.string.qp_selected_ayah, verse.surah, verse.number)),
+                style = MaterialTheme.typography.labelLarge, color = colors.ink)
+            Text(verse.arabic, Modifier.fillMaxWidth(),
+                style = ArabicStyle.copy(fontSize = 25.sp, lineHeight = 43.sp,
+                    textDirection = TextDirection.Rtl, textAlign = TextAlign.Right),
+                color = colors.ink, maxLines = 3, overflow = TextOverflow.Ellipsis)
+            Text(stringResource(R.string.ql_open_reader), style = MaterialTheme.typography.labelMedium, color = colors.ink)
         }
     }
 }

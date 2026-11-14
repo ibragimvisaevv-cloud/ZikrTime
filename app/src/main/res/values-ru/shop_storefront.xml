@@ -24,4 +24,6 @@
     <string name="store_apply_filters">Применить</string>
     <string name="store_search_prompt">Введите запрос или выберите фильтры.</string>
     <string name="store_more_companies">Показать ещё компании</string>
+    <string name="store_offers">Акции магазина</string>
+    <string name="store_more_offers">Показать ещё акции</string>
 </resources>

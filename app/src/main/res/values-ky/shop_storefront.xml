@@ -24,4 +24,6 @@
     <string name="store_apply_filters">Колдонуу</string>
     <string name="store_search_prompt">Издөө сөзүн жазыңыз же чыпкаларды тандаңыз.</string>
     <string name="store_more_companies">Дагы компанияларды көрсөтүү</string>
+    <string name="store_offers">Дүкөндүн арзандатуулары</string>
+    <string name="store_more_offers">Дагы арзандатууларды көрсөтүү</string>
 </resources>

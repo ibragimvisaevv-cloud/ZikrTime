@@ -24,4 +24,6 @@
     <string name="store_apply_filters">Apply</string>
     <string name="store_search_prompt">Enter a search term or choose filters.</string>
     <string name="store_more_companies">Show more companies</string>
+    <string name="store_offers">Store offers</string>
+    <string name="store_more_offers">Show more offers</string>
 </resources>

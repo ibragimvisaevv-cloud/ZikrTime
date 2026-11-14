@@ -71,7 +71,16 @@ object Shop {
         val unit: Text,
         val currency: String,
         val images: List<String>,
-    )
+    ) {
+        /** A price reduction set by the seller, independent of paid listing promotion. */
+        val discountPercent: Int?
+            get() {
+                val before = oldPrice ?: return null
+                val now = price ?: return null
+                if (now < 0 || now >= before) return null
+                return ((before - now) * 100.0 / before).toInt()
+            }
+    }
 
     class Catalog(
         val demo: Boolean,

@@ -163,7 +163,12 @@ object QuranAudioRepository {
     fun track(surahId: Int): QuranAudioTrack? = tracks.getOrNull(surahId - 1)?.takeIf { it.surahId == surahId }
 
     /** The same downloaded surah bytes serve clips; no second recording or extra offline copy. */
-    fun ayahTiming(surahId: Int, ayah: Int): QuranAyahTiming? {
+    fun ayahTiming(surahId: Int, ayah: Int): QuranAyahTiming? = timingCatalog()?.timing(surahId, ayah)
+
+    fun timingAtOrAfter(surahId: Int, positionMs: Long): QuranAyahTiming? =
+        timingCatalog()?.timingAtOrAfter(surahId, positionMs)
+
+    private fun timingCatalog(): QuranAyahTimingCatalog? {
         if (!ayahTimingsAttempted) {
             val context = app ?: return null
             ayahTimingsAttempted = true
@@ -180,7 +185,7 @@ object QuranAudioRepository {
                 QuranAyahTimingCatalog.parse(timings.toString(Charsets.UTF_8), counts)
             }.getOrNull()
         }
-        return ayahTimings?.timing(surahId, ayah)
+        return ayahTimings
     }
 
     /** Saved downloads are read-only to the player; only the download manager writes them. */

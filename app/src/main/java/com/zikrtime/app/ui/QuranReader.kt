@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -56,16 +57,17 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
     val ru = Lang.content(context) == "ru"
     val surah = remember(book, surahId) { book.surahs.first { it.id == surahId } }
     val verses = remember(book, surahId) { book.verses(surahId) }
-    var blockAnchor by rememberSaveable { mutableIntStateOf(firstAyah) }
+    val startAyah = firstAyah.coerceIn(1, surah.ayahCount)
+    var blockAnchor by rememberSaveable { mutableIntStateOf(startAyah) }
     val blocks = remember(verses, blockAnchor) { QuranReading.blocks(verses, blockAnchor) }
     var wholeSurah by rememberSaveable { mutableStateOf(progress.wholeSurah) }
-    val verseList = rememberLazyListState((firstAyah - 1).coerceIn(verses.indices))
-    val wholeList = rememberLazyListState(QuranReading.blockIndex(blocks, firstAyah))
+    val verseList = rememberLazyListState(startAyah - 1)
+    val wholeList = rememberLazyListState(QuranReading.blockIndex(blocks, startAyah))
     val list = if (wholeSurah) wholeList else verseList
-    var visibleAyah by rememberSaveable { mutableIntStateOf(firstAyah) }
+    var visibleAyah by rememberSaveable { mutableIntStateOf(startAyah) }
     var selectedAyah by rememberSaveable { mutableIntStateOf(0) }
     // A sheet owns an immutable target. Scrolling, layout and rotation cannot retarget a note/copy.
-    var actionAyah by rememberSaveable { mutableIntStateOf(firstAyah) }
+    var actionAyah by rememberSaveable { mutableIntStateOf(startAyah) }
     val currentAyah = selectedAyah.takeIf { it > 0 } ?: visibleAyah
     val geometry = remember(wholeSurah, blocks) { QuranTextGeometry() }
     val tracker = remember(verses) { QuranReadTracker(verses) }
@@ -93,11 +95,25 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
     var sheet by rememberSaveable { mutableStateOf("") }
     var audioOpened by rememberSaveable { mutableStateOf(false) }
     val playback = QuranReaderAudioConnection(audioOpened)
+    val playingAyah = playback.playingAyah.takeIf { playback.surahId == surahId }
+    // Only move when a new ayah begins and its first line is outside the page.
+    // Preserve manual scrolling within long verses and editing inside any open sheet.
+    LaunchedEffect(playingAyah, wholeSurah, sheet) {
+        val number = playingAyah ?: return@LaunchedEffect
+        if (sheet.isNotEmpty() || number !in 1..surah.ayahCount) return@LaunchedEffect
+        var distance = geometry.scrollToAyahStart(number)
+        if (distance == null) {
+            list.scrollToItem(if (wholeSurah) QuranReading.blockIndex(blocks, number) else number - 1)
+            withFrameNanos { }
+            distance = geometry.scrollToAyahStart(number)
+        }
+        if (distance != null && distance != 0f) list.scrollBy(distance)
+    }
     var followedAudioAyah by rememberSaveable { mutableIntStateOf(0) }
     // Follow only an exercise already shown in this panel. Browsing another verse or editing
     // a note keeps its immutable target even when background audio advances.
-    LaunchedEffect(sheet, actionAyah, playback.surahId, playback.ayah, playback.continueAfter) {
-        val sounding = playback.ayah
+    LaunchedEffect(sheet, actionAyah, playback.surahId, playback.clipAyah, playback.continueAfter) {
+        val sounding = playback.clipAyah
         if (sheet != "actions" || playback.surahId != surahId || sounding == null) {
             followedAudioAyah = 0
         } else if (sounding == actionAyah) {
@@ -112,7 +128,8 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
     var keepAwake by rememberSaveable { mutableStateOf(progress.keepAwake) }
     val originalOrientation = rememberSaveable { activity?.requestedOrientation ?: ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED }
     var orientation by rememberSaveable { mutableIntStateOf(-100) }
-    val session = rememberQuranSession(progress, sheet.isEmpty()) { elapsed ->
+    val followingPlayback = playback.playing && playback.surahId == surahId
+    val session = rememberQuranSession(progress, sheet.isEmpty() && !followingPlayback) { elapsed ->
         geometry.firstAyah()?.let { visibleAyah = it }
         if (elapsed > 0 && !list.isScrollInProgress && Store.personalProgressEnabled) {
             val observed = tracker.observe(elapsed, geometry.visibleText())
@@ -226,7 +243,11 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
                 Column(Modifier.weight(1f)) {
                     Text(if (ru) surah.nameRu else surah.nameLatin, style = MaterialTheme.typography.titleMedium,
                         maxLines = 1, overflow = TextOverflow.Ellipsis, color = colors.ink)
-                    if (!compact) Text(stringResource(R.string.qp_selected_ayah, surahId, currentAyah),
+                    if (playingAyah != null) Text(
+                        stringResource(R.string.ql_reading_now, "$surahId:$playingAyah"),
+                        modifier = Modifier.testTag("quran_playing_ayah_$playingAyah"),
+                        style = MaterialTheme.typography.labelMedium, color = colors.accent)
+                    else if (!compact) Text(stringResource(R.string.qp_selected_ayah, surahId, currentAyah),
                         style = MaterialTheme.typography.labelMedium, color = colors.muted)
                 }
                 QuranQuickBookmark(QuranProgress.Location(surahId, currentAyah) in bookmarks, quickBookmark)
@@ -293,7 +314,7 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
                                     }
                                     QuranTouchText(block.text, block.ranges, selectedAyah, geometry,
                                         ArabicStyle.copy(fontSize = (30 * scale).sp, textDirection = TextDirection.Rtl, textAlign = TextAlign.Justify),
-                                        "quran_whole_" + block.firstAyah, Modifier.fillMaxWidth(), choose, savedAyahs)
+                                        "quran_whole_" + block.firstAyah, Modifier.fillMaxWidth(), choose, savedAyahs, playingAyah)
                                 }
                             }
                         }
@@ -331,7 +352,7 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
                                 val ranges = remember(ayah) { listOf(QuranTextRange(ayah.number, 0, ayah.arabic.length, ayah.arabic.length)) }
                                 QuranTouchText(ayah.arabic, ranges, selectedAyah, geometry,
                                     ArabicStyle.copy(fontSize = (30 * scale).sp, textDirection = TextDirection.Rtl),
-                                    "quran_arabic_" + ayah.number, Modifier.fillMaxWidth(), choose, savedAyahs)
+                                    "quran_arabic_" + ayah.number, Modifier.fillMaxWidth(), choose, savedAyahs, playingAyah)
                                 Text(stringResource(R.string.quran_translation_label), style = MaterialTheme.typography.labelSmall, color = colors.accent)
                                 Text(ayah.translation, modifier = Modifier.testTag("quran_translation_" + ayah.number)
                                     .combinedClickable(onClick = { choose(ayah.number, false) }, onLongClick = { choose(ayah.number, true) }),
@@ -387,7 +408,7 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
         "jump" -> QuranJumpSheet(surah.ayahCount, currentAyah, { sheet = "" }, jumpTo)
         "saved" -> QuranSavedSheet(surahId, if (ru) surah.nameRu else surah.nameLatin, savedMarks,
             close = { sheet = "" }, jump = jumpTo, edit = { openAyahSheet(it, "note") })
-        "actions" -> QuranAyahActionsSheet(surah, actionAyah, playback,
+        "actions" -> QuranAyahActionsSheet(surah, actionAyah, verses.getOrNull(actionAyah - 1),
             QuranProgress.Location(surahId, actionAyah) in bookmarks,
             close = { sheet = "" }, selectAyah = { openAyahSheet(it, "actions") },
             note = { sheet = "note" }, bookmark = { bookmark(actionAyah) }, copy = { sheet = "copy" },

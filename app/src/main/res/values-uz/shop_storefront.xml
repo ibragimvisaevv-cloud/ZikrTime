@@ -24,4 +24,6 @@
     <string name="store_apply_filters">Qo‘llash</string>
     <string name="store_search_prompt">Qidiruv so‘zini kiriting yoki filtrlarni tanlang.</string>
     <string name="store_more_companies">Yana kompaniyalarni ko‘rsatish</string>
+    <string name="store_offers">Doʻkon chegirmalari</string>
+    <string name="store_more_offers">Yana chegirmalarni koʻrsatish</string>
 </resources>

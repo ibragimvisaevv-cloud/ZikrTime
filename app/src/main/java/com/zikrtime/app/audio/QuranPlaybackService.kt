@@ -62,8 +62,9 @@ class QuranPlaybackService : MediaSessionService() {
         }.getOrElse { stopSelf(); return }
         if (runCatching {
             exo.apply {
-                setAudioAttributes(AudioAttributes.Builder().setUsage(C.USAGE_MEDIA)
-                    .setContentType(C.AUDIO_CONTENT_TYPE_SPEECH).build(), true)
+                // Android and Media3 treat SPEECH as a request to pause for notifications.
+                // Neutral media attributes let them duck and restore the recitation instead.
+                setAudioAttributes(AudioAttributes.DEFAULT, true)
                 setHandleAudioBecomingNoisy(true)
                 setWakeMode(C.WAKE_MODE_LOCAL)
                 repeatMode = Player.REPEAT_MODE_OFF
@@ -111,7 +112,7 @@ class QuranPlaybackService : MediaSessionService() {
             }
 
             override fun onPlaybackSuppressionReasonChanged(playbackSuppressionReason: Int) {
-                // Speech pauses rather than ducks. A later focus gain must not unexpectedly resume it.
+                // An exclusive interruption (e.g. a call) still requires a manual resume.
                 if (playbackSuppressionReason == Player.PLAYBACK_SUPPRESSION_REASON_TRANSIENT_AUDIO_FOCUS_LOSS) {
                     exo.pause()
                     QuranPlaybackMemory.save(this@QuranPlaybackService, exo)
@@ -232,6 +233,7 @@ class QuranPlaybackService : MediaSessionService() {
 
     companion object {
         private var active = WeakReference<QuranPlaybackService>(null)
+        internal val hasActiveSession: Boolean get() = active.get()?.session != null
 
         /** Does not create or start a service; called before our alarm/adhan starts. */
         @Suppress("UNUSED_PARAMETER")

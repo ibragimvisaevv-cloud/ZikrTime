@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.CustomAccessibilityAction
 import androidx.compose.ui.semantics.customActions
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLayoutResult
@@ -56,13 +57,26 @@ internal class QuranTextGeometry {
         }
     }
 
+    /** Scroll distance to bring the first line of a sounding ayah into this text viewport. */
+    fun scrollToAyahStart(ayah: Int): Float? {
+        val bounds = viewport?.takeIf { it.isAttached }?.boundsInRoot() ?: return null
+        val entry = entries.values.firstOrNull { block -> block.ranges.any { it.ayah == ayah } } ?: return null
+        val coordinates = entry.coordinates?.takeIf { it.isAttached } ?: return null
+        val layout = entry.layout ?: return null
+        val line = layout.getLineForOffset(entry.ranges.first { it.ayah == ayah }.start)
+        val origin = coordinates.localToRoot(Offset.Zero).y
+        val top = origin + layout.getLineTop(line)
+        val bottom = origin + layout.getLineBottom(line)
+        return if (top >= bounds.top - 1 && bottom <= bounds.bottom + 1) 0f else top - bounds.top
+    }
+
     fun firstAyah(): Int? = visibleText(false).minOfOrNull { it.ayah }
 }
 
 @Composable
 internal fun QuranTouchText(text: String, ranges: List<QuranTextRange>, selected: Int,
     geometry: QuranTextGeometry, style: TextStyle, tag: String, modifier: Modifier = Modifier,
-    choose: (Int, Boolean) -> Unit, savedAyahs: Set<Int> = emptySet()) {
+    choose: (Int, Boolean) -> Unit, savedAyahs: Set<Int> = emptySet(), playingAyah: Int? = null) {
     val key = ranges.first().ayah
     val entry = remember(geometry, ranges) { QuranTextGeometry.Entry(ranges) }
     DisposableEffect(geometry, entry) {
@@ -72,7 +86,9 @@ internal fun QuranTouchText(text: String, ranges: List<QuranTextRange>, selected
     val onChoose by rememberUpdatedState(choose)
     val haptic = LocalHapticFeedback.current
     val colors = quranPaperColors()
-    val annotated = remember(text, ranges, selected, colors, savedAyahs) {
+    val soundingRange = ranges.firstOrNull { it.ayah == playingAyah }
+    val soundingLabel = soundingRange?.let { stringResource(R.string.ql_reading_now, it.ayah.toString()) }
+    val annotated = remember(text, ranges, selected, colors, savedAyahs, soundingRange) {
         AnnotatedString.Builder(text).apply {
             ranges.forEach { range ->
                 if (range.ayah in savedAyahs) {
@@ -85,6 +101,9 @@ internal fun QuranTouchText(text: String, ranges: List<QuranTextRange>, selected
             }
             ranges.firstOrNull { it.ayah == selected }?.let {
                 addStyle(SpanStyle(background = colors.selection), it.start, it.end)
+            }
+            soundingRange?.let {
+                addStyle(SpanStyle(color = colors.paper, background = colors.accent), it.start, it.end)
             }
         }.toAnnotatedString()
     }
@@ -105,7 +124,10 @@ internal fun QuranTouchText(text: String, ranges: List<QuranTextRange>, selected
         textAlign = if (style.textAlign == TextAlign.Unspecified) TextAlign.Right else style.textAlign, color = colors.ink,
         onTextLayout = { entry.layout = it },
         modifier = modifier.testTag(tag).onGloballyPositioned { entry.coordinates = it }
-            .semantics { customActions = accessibility }
+            .semantics {
+                customActions = accessibility
+                if (soundingLabel != null) stateDescription = soundingLabel
+            }
             .pointerInput(entry) {
                 detectTapGestures(onTap = { hit(it)?.let { ayah -> onChoose(ayah, false) } },
                     onLongPress = { hit(it)?.let { ayah ->

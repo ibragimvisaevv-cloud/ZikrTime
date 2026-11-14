@@ -24,4 +24,6 @@
     <string name="store_apply_filters">Tətbiq et</string>
     <string name="store_search_prompt">Axtarış sözü daxil edin və ya filtrləri seçin.</string>
     <string name="store_more_companies">Daha çox şirkət göstər</string>
+    <string name="store_offers">Mağazanın endirimləri</string>
+    <string name="store_more_offers">Daha çox endirim göstər</string>
 </resources>

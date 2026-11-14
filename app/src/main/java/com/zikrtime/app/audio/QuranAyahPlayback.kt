@@ -50,6 +50,17 @@ internal object QuranAyahPlaybackPolicy {
 internal class QuranAyahTimingCatalog private constructor(private val verses: Map<QuranAudioAyah, QuranAyahTiming>) {
     fun timing(surahId: Int, ayah: Int): QuranAyahTiming? = verses[QuranAudioAyah(surahId, ayah)]
 
+    private val bySurah = verses.values.groupBy { it.reference.surahId }
+
+    /** First verse whose end is strictly after this position. It may start after an unnumbered interval. */
+    fun timingAtOrAfter(surahId: Int, positionMs: Long): QuranAyahTiming? {
+        if (positionMs < 0) return null
+        val rows = bySurah[surahId] ?: return null
+        val result = rows.binarySearchBy(positionMs) { it.endMs }
+        val index = if (result < 0) -result - 1 else result + 1
+        return rows.getOrNull(index)
+    }
+
     companion object {
         const val SHA256 = "ee480450fff61cf1bd3ab1125adfafd56312288a45804a172d700f1bf53dd40b"
 

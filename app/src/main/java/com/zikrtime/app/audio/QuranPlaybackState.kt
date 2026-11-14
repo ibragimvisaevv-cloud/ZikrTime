@@ -28,7 +28,11 @@ data class QuranPlaybackState(
     val continueAfter: Boolean = false,
     val clipStartMs: Long? = null,
     val clipEndMs: Long? = null,
-)
+    val positionAyah: Int? = null,
+    val nextAyahBoundaryMs: Long? = null,
+) {
+    val playingAyah: Int? get() = positionAyah.takeIf { connected && isPlaying }
+}
 
 internal object QuranPlaybackMemory {
     private const val PREFS = "quran_audio_playback_v1"
@@ -70,11 +74,15 @@ internal object QuranPlaybackMemory {
         val duration = player.duration.takeIf { it != C.TIME_UNSET && it > 0L }
             ?: timing?.durationMs
             ?: read(context)?.takeIf { it.surahId == surah && it.ayah == verse?.ayah }?.durationMs ?: 0L
+        val position = QuranPlaybackPolicy.clamp(player.currentPosition, duration)
+        val upcoming = if (verse == null && surah != null && player.playbackState == Player.STATE_READY)
+            QuranAudioRepository.timingAtOrAfter(surah, position) else null
+        val current = upcoming?.takeIf { position >= it.startMs }
         val failure = player.playerError
         return QuranPlaybackState(
             connected = true, surahId = surah, title = player.mediaMetadata.title?.toString().orEmpty(),
             isPlaying = player.isPlaying, isBuffering = player.playbackState == Player.STATE_BUFFERING,
-            positionMs = QuranPlaybackPolicy.clamp(player.currentPosition, duration), durationMs = duration,
+            positionMs = position, durationMs = duration,
             error = failure?.let { Lang.wrap(context).getString(R.string.audio_player_failure) },
             errorCode = failure?.errorCode, ended = player.playbackState == Player.STATE_ENDED,
             playWhenReady = player.playWhenReady, playbackState = player.playbackState,
@@ -82,6 +90,8 @@ internal object QuranPlaybackMemory {
             repeatIteration = if (verse != null && QuranAyahSession.reference == verse) QuranAyahSession.iteration else 1,
             speed = player.playbackParameters.speed, continueAfter = options.continueAfter,
             clipStartMs = timing?.startMs, clipEndMs = timing?.endMs,
+            positionAyah = verse?.ayah ?: current?.reference?.ayah,
+            nextAyahBoundaryMs = current?.endMs ?: upcoming?.startMs,
         )
     }
 }

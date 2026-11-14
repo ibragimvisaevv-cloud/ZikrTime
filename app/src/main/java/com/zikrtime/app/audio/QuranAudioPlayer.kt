@@ -42,7 +42,7 @@ object QuranAudioPlayer {
     private val updatePosition = object : Runnable {
         override fun run() {
             update()
-            if (connections > 0 && controller?.isPlaying == true) handler.postDelayed(this, 1_000L)
+            schedulePosition()
         }
     }
     private val listener = object : Player.Listener {
@@ -272,7 +272,13 @@ object QuranAudioPlayer {
 
     private fun schedulePosition() {
         handler.removeCallbacks(updatePosition)
-        if (connections > 0 && controller?.isPlaying == true) handler.postDelayed(updatePosition, 1_000L)
+        val state = mutableState.value
+        if (connections == 0 || !state.isPlaying) return
+        // Keep the normal once-per-second timer, but wake exactly at verified verse boundaries.
+        val delayMs = state.nextAyahBoundaryMs?.let { boundary ->
+            kotlin.math.ceil((boundary - state.positionMs) / state.speed.toDouble()).toLong().coerceIn(1L, 1_000L)
+        } ?: 1_000L
+        handler.postDelayed(updatePosition, delayMs)
     }
 
     private fun fail(message: Int) {

@@ -24,4 +24,6 @@
     <string name="store_apply_filters">Татбиқ кардан</string>
     <string name="store_search_prompt">Калимаеро ворид кунед ё филтрҳоро интихоб кунед.</string>
     <string name="store_more_companies">Нишон додани ширкатҳои бештар</string>
+    <string name="store_offers">Тахфифҳои мағоза</string>
+    <string name="store_more_offers">Нишон додани тахфифҳои бештар</string>
 </resources>

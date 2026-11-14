@@ -10,6 +10,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.key
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -230,6 +232,29 @@ private fun ProductList(products: List<Shop.Product>, catalog: Shop.Catalog, lan
 }
 
 @Composable
+private fun StoreOffers(offers: List<Shop.Product>, catalog: Shop.Catalog, lang: String, onClick: (Shop.Product) -> Unit) {
+    val scheme = MaterialTheme.colorScheme
+    val shape = RoundedCornerShape(20.dp)
+    var limit by rememberSaveable(offers.first().seller) { mutableStateOf(2) }
+    Column(Modifier.fillMaxWidth().testTag("shop_seller_offers").clip(shape)
+        .background(scheme.surfaceContainerLow).border(1.dp, Gold.copy(alpha = .65f), shape)
+        .padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Text(stringResource(R.string.store_offers), modifier = Modifier.semantics { heading() }
+            .padding(horizontal = 4.dp, vertical = 2.dp), color = scheme.onSurface,
+            style = MaterialTheme.typography.titleMedium)
+        offers.take(limit).forEach { product ->
+            key(product.id) { ProductCard(product, catalog, lang, storeOffer = true) { onClick(product) } }
+        }
+        if (offers.size > limit) {
+            TextButton(onClick = { limit += 12 }, modifier = Modifier.align(Alignment.CenterHorizontally)
+                .testTag("shop_more_offers")) {
+                Text(stringResource(R.string.store_more_offers))
+            }
+        }
+    }
+}
+
+@Composable
 private fun ProductImage(product: Shop.Product, catalog: Shop.Catalog, modifier: Modifier, iconSize: androidx.compose.ui.unit.Dp = 48.dp, fit: Boolean = false) {
     val seller = catalog.seller(product.seller)
     val accent = accentOf(seller)
@@ -259,17 +284,19 @@ private fun ProductImage(product: Shop.Product, catalog: Shop.Catalog, modifier:
 }
 
 @Composable
-internal fun ProductCard(product: Shop.Product, catalog: Shop.Catalog, lang: String, onClick: () -> Unit) {
+internal fun ProductCard(product: Shop.Product, catalog: Shop.Catalog, lang: String, storeOffer: Boolean = false, onClick: () -> Unit) {
     val scheme = MaterialTheme.colorScheme
     val seller = catalog.seller(product.seller)
-    Row(Modifier.fillMaxWidth().testTag("shop_product_${product.id}").clip(RoundedCornerShape(16.dp))
-        .background(scheme.surfaceContainerLow).clickable(role = Role.Button, onClick = onClick).padding(10.dp),
+    val tag = if (storeOffer) "shop_offer_${product.id}" else "shop_product_${product.id}"
+    Row(Modifier.fillMaxWidth().testTag(tag).clip(RoundedCornerShape(16.dp))
+        .background(if (storeOffer) scheme.surfaceContainerHigh else scheme.surfaceContainerLow)
+        .clickable(role = Role.Button, onClick = onClick).padding(10.dp),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         ProductImage(product, catalog, Modifier.size(64.dp).clip(RoundedCornerShape(12.dp)), iconSize = 28.dp)
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
             Text(product.title.get(lang), style = MaterialTheme.typography.titleSmall, color = scheme.onSurface,
                 maxLines = 2, overflow = TextOverflow.Ellipsis)
-            if (seller != null) Text(seller.name, style = MaterialTheme.typography.bodySmall, color = scheme.onSurfaceVariant,
+            if (seller != null && !storeOffer) Text(seller.name, style = MaterialTheme.typography.bodySmall, color = scheme.onSurfaceVariant,
                 maxLines = 1, overflow = TextOverflow.Ellipsis)
             PriceLine(product, lang)
             if (seller?.promoted == true) AdLabel(Modifier.testTag("shop_ad_${product.id}"))
@@ -281,6 +308,7 @@ internal fun ProductCard(product: Shop.Product, catalog: Shop.Catalog, lang: Str
 private fun PriceLine(product: Shop.Product, lang: String, big: Boolean = false) {
     val price = product.price
     val old = product.oldPrice
+    val discount = product.discountPercent
     val scheme = MaterialTheme.colorScheme
     val priceLabel = if (price != null) Shop.price(price, product.currency) else stringResource(R.string.shop_price_on_request)
     val amount = buildAnnotatedString {
@@ -289,12 +317,13 @@ private fun PriceLine(product: Shop.Product, lang: String, big: Boolean = false)
         if (unit.isNotBlank()) {
             withStyle(SpanStyle(color = scheme.onSurfaceVariant, fontWeight = FontWeight.Normal)) { append(" / $unit") }
         }
-        if (old != null && price != null && old > price) {
+        if (old != null && discount != null) {
             append("   ")
             withStyle(SpanStyle(color = scheme.onSurfaceVariant, fontWeight = FontWeight.Normal,
                 textDecoration = TextDecoration.LineThrough)) { append(Shop.price(old, product.currency)) }
-            val discount = ((old - price).toDouble() / old * 100).toInt()
-            if (discount >= 1) append("  −$discount%")
+            if (discount >= 1) {
+                withStyle(SpanStyle(color = scheme.secondary, fontWeight = FontWeight.Bold)) { append("  −$discount%") }
+            }
         }
     }
     Text(amount, style = if (big) MaterialTheme.typography.headlineSmall else MaterialTheme.typography.labelLarge,
@@ -343,6 +372,14 @@ fun SellerScreen(sellerId: String? = null) {
                 if (seller.promoted) AdLabel(Modifier.testTag("shop_ad_${seller.id}"))
             }
         }
+        val (offers, products) = remember(catalog, seller.id) {
+            catalog.products.filter { it.seller == seller.id }.partition { it.discountPercent != null }
+        }
+        val openProduct: (Shop.Product) -> Unit = { product ->
+            nav.shopProduct = product.id
+            nav.open(Screen.SHOP_PRODUCT)
+        }
+        if (offers.isNotEmpty()) StoreOffers(offers, catalog, lang, openProduct)
         if (!seller.description.isEmpty) {
             ZCard { Text(seller.description.get(lang), style = MaterialTheme.typography.bodyLarge) }
         }
@@ -359,13 +396,9 @@ fun SellerScreen(sellerId: String? = null) {
                 }
             }
         }
-        val products = catalog.products.filter { it.seller == seller.id }
         if (products.isNotEmpty()) {
             SectionLabel(stringResource(R.string.shop_seller_products))
-            ProductList(products, catalog, lang) { p ->
-                nav.shopProduct = p.id
-                nav.open(Screen.SHOP_PRODUCT)
-            }
+            ProductList(products, catalog, lang, openProduct)
         }
         ReviewsBlock("seller:${seller.id}")
     }

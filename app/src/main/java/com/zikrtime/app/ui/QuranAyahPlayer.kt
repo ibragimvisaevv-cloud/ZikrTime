@@ -32,20 +32,34 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.zikrtime.app.R
 import com.zikrtime.app.audio.QuranAudioPlayer
 import com.zikrtime.app.audio.QuranAudioRepository
+import com.zikrtime.app.audio.QuranPlaybackService
 import com.zikrtime.app.audio.QuranPlaybackState
+import com.zikrtime.app.data.QuranAyah
 import com.zikrtime.app.data.QuranSurah
 import com.zikrtime.app.i18n.Lang
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 
-/** Reading stays lightweight until the user first opens the listening controls. */
+internal data class QuranReaderPlayback(
+    val surahId: Int?, val playingAyah: Int?, val clipAyah: Int?, val continueAfter: Boolean,
+    val playing: Boolean,
+)
+
+private fun QuranPlaybackState.readerPlayback() = QuranReaderPlayback(
+    surahId, playingAyah, ayah, continueAfter, connected && isPlaying,
+)
+
+/** Observe an existing service when opening the reader. Silent reading creates no playback service. */
 @Composable
-internal fun QuranReaderAudioConnection(enabled: Boolean): QuranPlaybackState {
+internal fun QuranReaderAudioConnection(enabled: Boolean): QuranReaderPlayback {
     val context = LocalContext.current
     val owner = LocalLifecycleOwner.current
-    val playback by QuranAudioPlayer.state.collectAsStateWithLifecycle()
+    val changes = remember { QuranAudioPlayer.state.map { it.readerPlayback() }.distinctUntilChanged() }
+    val playback by changes.collectAsStateWithLifecycle(initialValue = QuranAudioPlayer.state.value.readerPlayback())
     DisposableEffect(owner, enabled) {
         var attached = false
         fun attach() {
-            if (enabled && !attached) {
+            if (!attached && (enabled || QuranPlaybackService.hasActiveSession)) {
                 attached = true
                 QuranAudioRepository.init(context)
                 QuranAudioPlayer.connect(context)
@@ -68,12 +82,13 @@ internal fun QuranReaderAudioConnection(enabled: Boolean): QuranPlaybackState {
 /** One selected verse, with audio first and personal actions underneath. Selection alone is silent. */
 @Composable
 internal fun QuranAyahActionsSheet(
-    surah: QuranSurah, ayah: Int, playback: QuranPlaybackState, saved: Boolean,
+    surah: QuranSurah, ayah: Int, verse: QuranAyah?, saved: Boolean,
     close: () -> Unit, selectAyah: (Int) -> Unit, note: () -> Unit,
     bookmark: () -> Unit, copy: () -> Unit, fullSurah: () -> Unit,
 ) {
     val context = LocalContext.current
     val colors = quranPaperColors()
+    val playback by QuranAudioPlayer.state.collectAsStateWithLifecycle()
     val name = if (Lang.content(context) == "ru") surah.nameRu else surah.nameLatin
     val active = playback.surahId == surah.id && playback.ayah == ayah
     var repeats by rememberSaveable(surah.id) { mutableIntStateOf(if (active) playback.repeatCount else 1) }
@@ -146,6 +161,7 @@ internal fun QuranAyahActionsSheet(
                 else -> R.string.qaudio_ready
             }), color = colors.accent, style = MaterialTheme.typography.labelLarge,
                 modifier = Modifier.testTag("ayah_playback_status"))
+            if (active && playback.playingAyah == ayah && verse != null) QuranPlayingVerse(verse, onOpen = close)
             if (active && (playback.isPlaying || playback.positionMs > 0 || playback.ended)) {
                 Text(if (playback.repeatCount == 0) stringResource(R.string.ql_repeat_progress_forever, playback.repeatIteration)
                     else stringResource(R.string.ql_repeat_progress, playback.repeatIteration, playback.repeatCount),

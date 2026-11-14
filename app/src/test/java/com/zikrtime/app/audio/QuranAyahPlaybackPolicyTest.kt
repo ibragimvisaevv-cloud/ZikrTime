@@ -31,6 +31,28 @@ class QuranAyahPlaybackPolicyTest {
         assertEquals(1231466L, catalog.timing(37, 151)?.endMs) // Publisher's adjacent repeated row is preserved.
     }
 
+    @Test fun fullSurahPositionUsesHalfOpenVerifiedRangesAndSkipsUnnumberedPassages() {
+        val counts = counts()
+        val catalog = QuranAyahTimingCatalog.parse(source(), counts)
+        for ((id, count) in counts) {
+            var previousEnd = 0L
+            for (ayah in 1..count) {
+                val row = catalog.timing(id, ayah)!!
+                assertEquals(row, catalog.timingAtOrAfter(id, row.startMs))
+                assertEquals(row, catalog.timingAtOrAfter(id, row.endMs - 1))
+                if (previousEnd < row.startMs) {
+                    val upcoming = catalog.timingAtOrAfter(id, previousEnd)!!
+                    assertEquals(row, upcoming)
+                    assertTrue(previousEnd < upcoming.startMs)
+                }
+                previousEnd = row.endMs
+            }
+            assertNull(catalog.timingAtOrAfter(id, previousEnd))
+        }
+        assertNull(catalog.timingAtOrAfter(0, 100))
+        assertNull(catalog.timingAtOrAfter(1, -1))
+    }
+
     @Test fun missingOverlappingOrDifferentRecordingTimingsAreRejected() {
         fun rejected(change: (JSONObject) -> Unit) {
             val json = JSONObject(source()).also(change)
