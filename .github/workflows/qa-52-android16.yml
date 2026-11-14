@@ -1,0 +1,77 @@
+name: Check released APK 52 on Android 16
+on:
+  push:
+    branches: [qa/52-android16-install]
+    paths: [.github/workflows/qa-52-android16.yml]
+permissions:
+  contents: read
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Prepare SDK and hardware acceleration
+        run: |
+          set -euo pipefail
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "system-images;android-36;google_apis;x86_64" "platform-tools" "emulator" >/dev/null
+
+      - name: Fetch published APK and checksum
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          tag=test-0.8.28-52
+          for i in $(seq 1 39); do
+            if gh release view "$tag" --repo "$REPO" --json assets --jq '.assets[].name' | grep -Fxq SHA256SUMS.txt; then
+              gh release download "$tag" --repo "$REPO" --pattern '*.apk' --pattern SHA256SUMS.txt
+              sha256sum -c SHA256SUMS.txt
+              break
+            fi
+            sleep 30
+          done
+          test -s ZikrTime-0.8.28-52.apk
+          btools=$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -1)
+          "$btools/apksigner" verify --print-certs ZikrTime-0.8.28-52.apk > signer.txt
+          grep -Fi 'certificate SHA-256 digest: 7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf' signer.txt
+          sha256sum ZikrTime-0.8.28-52.apk
+
+      - name: Verify clean install and foreground activity
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 36
+          target: google_apis
+          arch: x86_64
+          profile: pixel_2
+          cores: 2
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
+          script: |
+            test "$(adb shell getprop ro.build.version.sdk | tr -d '\r')" = 36
+            adb shell getprop ro.build.fingerprint
+            adb shell getprop ro.product.cpu.abilist | tee abi.txt
+            grep -q 'arm64-v8a' abi.txt
+            adb shell getconf PAGE_SIZE
+            test -z "$(adb shell pm path com.zikrtime.app)"
+            adb install ZikrTime-0.8.28-52.apk
+            adb shell dumpsys package com.zikrtime.app | grep -F 'versionCode=52'
+            adb shell am start -W -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -p com.zikrtime.app | tee launch.txt
+            grep -F 'Status: ok' launch.txt
+            sleep 5
+            adb shell pidof com.zikrtime.app
+            adb shell dumpsys activity activities | grep -E '(topResumedActivity|mResumedActivity).*com\.zikrtime\.app/'
+            adb exec-out screencap -p > android16-launch.png
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: android16-clean-install-52
+          path: |
+            signer.txt
+            SHA256SUMS.txt
+            abi.txt
+            launch.txt
+            android16-launch.png
