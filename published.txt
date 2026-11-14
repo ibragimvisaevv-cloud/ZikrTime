@@ -1,0 +1,7 @@
+catalog.json http: 200
+places.json http: 200
+privacy.html http: 200
+seller.html http: 200
+zikrtime-shop/data/db.json http: 404
+zikrtime-shop-data/data/db.json http: 403
+api without Telegram signature http: 401

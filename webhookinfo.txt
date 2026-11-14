@@ -1,0 +1,8 @@
+{
+  "url": "https://shop-5ze2z61dt-ibragimvisaevv-cloud.vercel.app/api/webhook",
+  "pending_update_count": 0,
+  "last_error_date": null,
+  "last_error_message": null,
+  "max_connections": 1
+}
+function without secret http: 403

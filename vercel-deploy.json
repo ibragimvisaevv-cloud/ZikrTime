@@ -1,0 +1,10 @@
+{
+  "bot": "ZeekrTime_Bot",
+  "webhook": "https://shop-5ze2z61dt-ibragimvisaevv-cloud.vercel.app/api/webhook",
+  "deployment": "https://shop-5ze2z61dt-ibragimvisaevv-cloud.vercel.app",
+  "feature": "feedback_v1",
+  "owner_configured": true,
+  "private_database": true,
+  "unauthenticated_status": 403,
+  "previous_deployment": "dpl_8PxT6uGF974k8Pa1LZ36v4cx2qHC"
+}
