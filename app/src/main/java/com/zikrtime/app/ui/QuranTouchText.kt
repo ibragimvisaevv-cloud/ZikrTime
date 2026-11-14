@@ -23,6 +23,7 @@ import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.font.FontWeight
 import com.zikrtime.app.R
 import com.zikrtime.app.data.QuranTextRange
 import com.zikrtime.app.data.QuranVisibleText
@@ -57,28 +58,35 @@ internal class QuranTextGeometry {
         }
     }
 
-    /** A source-relative offset locates the word's line in both layout modes. */
-    fun scrollToAyahStart(ayah: Int, offset: Int = 0): Float? {
+    /** Keep both lines in view if they fit. Oversized pairs follow the recited word. */
+    fun scrollToPassage(ayah: Int, first: Int, last: Int, spokenOffset: Int): Float? {
         val bounds = viewport?.takeIf { it.isAttached }?.boundsInRoot() ?: return null
         val entry = entries.values.firstOrNull { block -> block.ranges.any { it.ayah == ayah } } ?: return null
         val coordinates = entry.coordinates?.takeIf { it.isAttached } ?: return null
         val layout = entry.layout ?: return null
         val range = entry.ranges.first { it.ayah == ayah }
-        val line = layout.getLineForOffset((range.start + offset).coerceIn(range.start, range.arabicEnd))
+        fun lineAt(offset: Int) = layout.getLineForOffset((range.start + offset).coerceIn(range.start, range.arabicEnd))
         val origin = coordinates.localToRoot(Offset.Zero).y
-        val top = origin + layout.getLineTop(line)
-        val bottom = origin + layout.getLineBottom(line)
-        return if (top >= bounds.top - 1 && bottom <= bounds.bottom + 1) 0f else top - bounds.top
+        var top = origin + layout.getLineTop(lineAt(first))
+        var bottom = origin + layout.getLineBottom(lineAt(last))
+        if (bottom - top > bounds.height) {
+            val line = lineAt(spokenOffset)
+            top = origin + layout.getLineTop(line)
+            bottom = origin + layout.getLineBottom(line)
+        }
+        if (top < bounds.top - 1f || bottom - top > bounds.height) return top - bounds.top
+        return if (bottom > bounds.bottom + 1f) bottom - bounds.bottom else 0f
     }
 
     fun firstAyah(): Int? = visibleText(false).minOfOrNull { it.ayah }
 }
 
 @Composable
-internal fun QuranTouchText(text: String, ranges: List<QuranTextRange>, selected: Int,
+internal fun QuranTouchText(text: String, ranges: List<QuranTextRange>,
     geometry: QuranTextGeometry, style: TextStyle, tag: String, modifier: Modifier = Modifier,
-    choose: (Int, Boolean) -> Unit, savedAyahs: Set<Int> = emptySet(), playingAyah: Int? = null,
-    playingWordRange: IntRange? = null) {
+    choose: (Int, Boolean) -> Unit, savedAyahs: Set<Int> = emptySet(), pendingAyah: Int? = null,
+    playingAyah: Int? = null,
+    playingRanges: List<IntRange> = emptyList(), ayahWithoutWords: Int? = null) {
     val key = ranges.first().ayah
     val entry = remember(geometry, ranges) { QuranTextGeometry.Entry(ranges) }
     DisposableEffect(geometry, entry) {
@@ -90,27 +98,26 @@ internal fun QuranTouchText(text: String, ranges: List<QuranTextRange>, selected
     val colors = quranPaperColors()
     val soundingRange = ranges.firstOrNull { it.ayah == playingAyah }
     val soundingLabel = soundingRange?.let { stringResource(R.string.ql_reading_now, it.ayah.toString()) }
-    val word = if (soundingRange != null) playingWordRange else null
-    val annotated = remember(text, ranges, selected, colors, savedAyahs, soundingRange, word) {
+    val words = if (soundingRange != null) playingRanges else emptyList()
+    val annotated = remember(text, ranges, colors, savedAyahs, pendingAyah, soundingRange, words, ayahWithoutWords) {
         AnnotatedString.Builder(text).apply {
             ranges.forEach { range ->
-                if (range.ayah in savedAyahs) {
-                    addStyle(SpanStyle(background = colors.selection.copy(alpha = .38f)), range.start, range.end)
-                    // Only the existing UI verse marker is decorated; source glyphs/offsets stay exact.
-                    if (range.arabicEnd < range.end) addStyle(SpanStyle(textDecoration = TextDecoration.Underline),
-                        range.arabicEnd, range.end)
+                if (range.arabicEnd < range.end) {
+                    addStyle(SpanStyle(color = colors.accent), range.arabicEnd, range.end)
+                    if (range.ayah == ayahWithoutWords) {
+                        addStyle(SpanStyle(fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline),
+                            range.arabicEnd, range.end)
+                    } else if (range.ayah in savedAyahs || range.ayah == pendingAyah) {
+                        addStyle(SpanStyle(textDecoration = TextDecoration.Underline), range.arabicEnd, range.end)
+                    }
                 }
-                if (range.arabicEnd < range.end) addStyle(SpanStyle(color = colors.accent), range.arabicEnd, range.end)
             }
-            ranges.firstOrNull { it.ayah == selected }?.let {
-                addStyle(SpanStyle(background = colors.selection), it.start, it.end)
-            }
-            soundingRange?.let {
-                if (word != null && word.first >= 0 && word.last < it.arabicEnd - it.start) {
-                    addStyle(SpanStyle(color = colors.paper, background = colors.accent),
-                        it.start + word.first, it.start + word.last + 1)
-                } else {
-                    addStyle(SpanStyle(color = colors.accent), it.start, it.arabicEnd)
+            // Marks have their own indicator. The only filled source glyphs are the current spoken pair.
+            soundingRange?.let { verse ->
+                words.forEach { word ->
+                    if (word.first >= 0 && word.last < verse.arabicEnd - verse.start)
+                        addStyle(SpanStyle(color = colors.paper, background = colors.accent),
+                            verse.start + word.first, verse.start + word.last + 1)
                 }
             }
         }.toAnnotatedString()

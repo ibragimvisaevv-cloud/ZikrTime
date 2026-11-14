@@ -32,9 +32,13 @@ data class QuranPlaybackState(
     val nextAyahBoundaryMs: Long? = null,
     val positionWord: Int? = null,
     val nextWordBoundaryMs: Long? = null,
+    val phraseGapFrom: Int? = null,
+    val phraseGapTo: Int? = null,
 ) {
     val playingAyah: Int? get() = positionAyah.takeIf { connected && isPlaying }
     val playingWord: Int? get() = positionWord.takeIf { connected && isPlaying }
+    val playingPhraseWord: Int? get() = (positionWord ?: phraseGapFrom).takeIf { connected && isPlaying }
+    val playingPhraseGapNeighbor: Int? get() = phraseGapTo.takeIf { connected && isPlaying }
 }
 
 internal object QuranPlaybackMemory {
@@ -85,8 +89,10 @@ internal object QuranPlaybackMemory {
         // Media3 exposes time relative to the clipping window for individual ayahs.
         val clipStart = timing?.startMs ?: 0L
         val absolutePosition = position + clipStart
-        val word = if (surah != null && player.isPlaying)
-            QuranWordTimings.next(context, surah, absolutePosition) else null
+        val cursor = if (surah != null && player.isPlaying)
+            QuranWordTimings.cursor(context, surah, absolutePosition) else null
+        val word = cursor?.next
+        val gap = cursor?.previousInGap?.takeIf { it.ayah == activeAyah }
         val failure = player.playerError
         return QuranPlaybackState(
             connected = true, surahId = surah, title = player.mediaMetadata.title?.toString().orEmpty(),
@@ -101,6 +107,8 @@ internal object QuranPlaybackMemory {
             clipStartMs = timing?.startMs, clipEndMs = timing?.endMs,
             positionAyah = activeAyah,
             positionWord = word?.takeIf { it.ayah == activeAyah && it.startMs <= absolutePosition }?.word,
+            phraseGapFrom = gap?.word,
+            phraseGapTo = if (gap != null) word?.word else null,
             nextWordBoundaryMs = word?.let { (if (absolutePosition < it.startMs) it.startMs else it.endMs) - clipStart },
             nextAyahBoundaryMs = current?.endMs ?: upcoming?.startMs,
         )

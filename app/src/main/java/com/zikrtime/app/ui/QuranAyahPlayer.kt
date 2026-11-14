@@ -41,13 +41,15 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
 internal data class QuranReaderPlayback(
-    val surahId: Int?, val playingAyah: Int?, val playingWord: Int?, val positionAyah: Int?, val clipAyah: Int?,
+    val surahId: Int?, val playingAyah: Int?, val playingWord: Int?, val phraseWord: Int?, val phraseGapNeighbor: Int?,
+    val positionAyah: Int?, val clipAyah: Int?,
     val continueAfter: Boolean, val repeatCount: Int, val speed: Float, val playing: Boolean, val connected: Boolean,
     val ended: Boolean, val buffering: Boolean, val playWhenReady: Boolean, val error: String?,
 )
 
 private fun QuranPlaybackState.readerPlayback() = QuranReaderPlayback(
-    surahId, playingAyah, playingWord, positionAyah, ayah, continueAfter, repeatCount, speed,
+    surahId, playingAyah, playingWord, playingPhraseWord, playingPhraseGapNeighbor,
+    positionAyah, ayah, continueAfter, repeatCount, speed,
     connected && isPlaying, connected, ended, isBuffering, playWhenReady, error,
 )
 

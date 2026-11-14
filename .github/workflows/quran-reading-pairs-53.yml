@@ -1,0 +1,163 @@
+name: Verify Quran reading pairs and publish build 53
+on:
+  push:
+    branches: [codex/quran-reading-pairs-0828]
+permissions:
+  contents: read
+concurrency:
+  group: quran-reading-pairs-53
+  cancel-in-progress: true
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build signed release with extracted native libraries
+        env:
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          test -n "$RELEASE_KEY_PASSWORD"
+          trap 'rm -f keystore/release.jks' EXIT
+          openssl enc -d -aes-256-cbc -pbkdf2 -iter 300000 -in keystore/release.jks.enc -out keystore/release.jks -pass env:RELEASE_KEY_PASSWORD
+          bash gradlew :app:testDebugUnitTest :app:assembleDebug :app:assembleRelease --console=plain
+          cp app/build/outputs/apk/release/app-release.apk ZikrTime-0.8.28-53.apk
+      - name: Verify the actual installable file against build 52
+        run: |
+          set -euo pipefail
+          curl -fLsS --retry 3 https://github.com/ibragimvisaevv-cloud/ZikrTime/releases/download/test-0.8.28-52/ZikrTime-0.8.28-52.apk -o previous.apk
+          echo '5b99452903a69304875b852f98346e500143bcc116c1f0c488561393a35829c6  previous.apk' | sha256sum -c -
+          apk=ZikrTime-0.8.28-53.apk
+          sdk_tools=$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -1)
+          "$sdk_tools/apksigner" verify --verbose --print-certs "$apk" | tee signer.txt
+          grep -F 'certificate SHA-256 digest: 7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf' signer.txt
+          "$sdk_tools/aapt" dump badging "$apk" > package.txt
+          grep -F "package: name='com.zikrtime.app' versionCode='53' versionName='0.8.28'" package.txt
+          grep -F "sdkVersion:'26'" package.txt
+          grep -F "targetSdkVersion:'35'" package.txt
+          "$sdk_tools/aapt" dump xmltree "$apk" AndroidManifest.xml | grep -E 'extractNativeLibs.*0xffffffff'
+          "$sdk_tools/zipalign" -c -P 16 4 "$apk"
+          python3 tools/ci/check_extracted_native_apk.py previous.apk "$apk"
+          sha256sum "$apk" | tee SHA256SUMS.txt
+      - name: Check screenshot dependencies
+        run: python3 -c "from PIL import Image" || python3 -m pip install Pillow
+      - name: Prepare accelerated Android 15
+        run: |
+          if jps | grep -q GradleDaemon; then bash gradlew --stop; fi
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Install signed release, update from 52 and exercise reader on Android 15
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_2
+          ram-size: 2048M
+          disable-animations: true
+          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
+          script: |
+            adb shell getprop ro.product.cpu.abilist
+            adb shell getconf PAGE_SIZE
+            adb install ZikrTime-0.8.28-53.apk
+            adb shell dumpsys package com.zikrtime.app | grep 'versionCode=53'
+            adb shell monkey -p com.zikrtime.app -c android.intent.category.LAUNCHER 1
+            sleep 4
+            adb shell pidof com.zikrtime.app
+            adb uninstall com.zikrtime.app
+            adb install previous.apk
+            adb shell dumpsys package com.zikrtime.app | grep 'versionCode=52'
+            adb shell dumpsys package com.zikrtime.app | grep -E 'firstInstallTime=|userId=|appId=' | sort > before.txt
+            adb install -r ZikrTime-0.8.28-53.apk
+            adb shell dumpsys package com.zikrtime.app | grep 'versionCode=53'
+            adb shell dumpsys package com.zikrtime.app | grep -E 'firstInstallTime=|userId=|appId=' | sort > after.txt
+            diff -u before.txt after.txt
+            adb shell monkey -p com.zikrtime.app -c android.intent.category.LAUNCHER 1
+            sleep 4
+            adb shell pidof com.zikrtime.app
+            adb uninstall com.zikrtime.app
+            python3 tools/ci/quran_reading_pairs_ui.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ZikrTime-Quran-pair-evidence-53
+          path: |
+            ci-out/reading-pairs/
+            ci-out/last-ui.xml
+            SHA256SUMS.txt
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ZikrTime-signed-apk-53
+          path: |
+            ZikrTime-0.8.28-53.apk
+            SHA256SUMS.txt
+          compression-level: 0
+          if-no-files-found: error
+
+  publish:
+    needs: android
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: ZikrTime-signed-apk-53
+      - name: Publish tested APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          sha256sum -c SHA256SUMS.txt
+          tag=test-0.8.28-53
+          apk=ZikrTime-0.8.28-53.apk
+          if gh release view "$tag" --repo "$REPO" >/dev/null 2>&1; then
+            gh release download "$tag" --repo "$REPO" --pattern "$apk" --dir existing
+            cmp "$apk" "existing/$apk"
+          else
+            gh release create "$tag" "$apk" SHA256SUMS.txt --repo "$REPO" --target "$GITHUB_SHA" --prerelease \
+              --title 'ZikrTime 0.8.28 (53) — Android' --notes 'Подсветка при чтении Корана движется по парам слов. Проверены установка подписанного APK и обновление со сборки 52.'
+          fi
+
+  delivery:
+    needs: publish
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare exact release bytes for delivery
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          scratch=$(mktemp -d)
+          apk=ZikrTime-0.8.28-53.apk
+          gh release download test-0.8.28-53 --repo "$GITHUB_REPOSITORY" --pattern "$apk" --pattern SHA256SUMS.txt --dir "$scratch"
+          (cd "$scratch" && sha256sum -c SHA256SUMS.txt)
+          git -c advice.detachedHead=false worktree add --detach "$scratch/transfer-tree" HEAD
+          cd "$scratch/transfer-tree"
+          git switch --discard-changes --orphan ci/transfer-apk-53
+          mkdir -p chunks
+          split -b 540000 -d -a 3 "$scratch/$apk" chunks/part-
+          cp "$scratch/SHA256SUMS.txt" .
+          git add chunks SHA256SUMS.txt
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Deliver verified signed bytes for ZikrTime build 53'
+          if git ls-remote --exit-code --heads origin ci/transfer-apk-53 > /dev/null; then
+            git fetch --depth=1 origin refs/heads/ci/transfer-apk-53
+            git diff --exit-code HEAD FETCH_HEAD --
+          else
+            git push origin HEAD:refs/heads/ci/transfer-apk-53
+          fi

@@ -9,10 +9,18 @@ import com.zikrtime.app.audio.QuranPlaybackService
 import org.json.JSONObject
 import java.io.File
 
-/** Read-only diagnostics on an isolated debug install; never starts media or a download. */
+/** Diagnostics on a disposable debug install. A test may seek an already-playing clip. */
 internal object QuranAudioQa {
     fun captureIfRequested(context: Context, intent: Intent) {
         if (!BuildConfig.DEBUG || !intent.getBooleanExtra("qa_audio_probe", false)) return
+        if (intent.hasExtra("qa_seek_clip_ms")) {
+            val active = QuranAudioPlayer.snapshot()
+            val position = intent.getLongExtra("qa_seek_clip_ms", -1L)
+            if (active.isPlaying && active.ayah == intent.getIntExtra("qa_seek_ayah", -1) &&
+                active.surahId == intent.getIntExtra("qa_seek_surah", -1) && position in 0L until active.durationMs) {
+                QuranAudioPlayer.seekTo(position)
+            }
+        }
         val player = QuranPlaybackService.snapshot() ?: QuranAudioPlayer.snapshot()
         val storage = QuranAudioRepository.state.value
         val downloads = JSONObject()
@@ -38,6 +46,7 @@ internal object QuranAudioQa {
                 put("positionMs", player.positionMs)
                 put("durationMs", player.durationMs)
                 put("ayah", player.ayah ?: JSONObject.NULL)
+                put("word", player.playingWord ?: JSONObject.NULL)
                 put("repeatCount", player.repeatCount)
                 put("repeatIteration", player.repeatIteration)
                 put("speed", player.speed)
@@ -64,7 +73,3 @@ internal object QuranAudioQa {
             output.write(json.toString().toByteArray(Charsets.UTF_8))
             target.finishWrite(output)
         } catch (_: Exception) {
-            output?.let { target.failWrite(it) }
-        }
-    }
-}
