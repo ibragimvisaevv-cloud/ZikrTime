@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qr_audio_options">Dinleme ayarları</string>
+    <string name="qr_word_timing_credit">MP3Quran kelime zamanlarını otomatik olarak belirler.</string>
+</resources>

@@ -39,6 +39,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -61,6 +62,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import java.time.Duration
+import java.time.LocalDate
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
+import java.util.Locale
+import kotlinx.coroutines.delay
 import com.zikrtime.app.R
 import com.zikrtime.app.data.Shop
 import com.zikrtime.app.i18n.Lang
@@ -232,23 +240,59 @@ private fun ProductList(products: List<Shop.Product>, catalog: Shop.Catalog, lan
 }
 
 @Composable
-private fun StoreOffers(offers: List<Shop.Product>, catalog: Shop.Catalog, lang: String, onClick: (Shop.Product) -> Unit) {
+private fun StoreSection(
+    sellerId: String,
+    count: Int,
+    title: String,
+    more: String,
+    tag: String,
+    rows: @Composable (Int) -> Unit,
+) {
     val scheme = MaterialTheme.colorScheme
     val shape = RoundedCornerShape(20.dp)
-    var limit by rememberSaveable(offers.first().seller) { mutableStateOf(2) }
-    Column(Modifier.fillMaxWidth().testTag("shop_seller_offers").clip(shape)
+    var limit by rememberSaveable(sellerId) { mutableStateOf(2) }
+    Column(Modifier.fillMaxWidth().testTag("shop_seller_$tag").clip(shape)
         .background(scheme.surfaceContainerLow).border(1.dp, Gold.copy(alpha = .65f), shape)
         .padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-        Text(stringResource(R.string.store_offers), modifier = Modifier.semantics { heading() }
-            .padding(horizontal = 4.dp, vertical = 2.dp), color = scheme.onSurface,
-            style = MaterialTheme.typography.titleMedium)
-        offers.take(limit).forEach { product ->
-            key(product.id) { ProductCard(product, catalog, lang, storeOffer = true) { onClick(product) } }
-        }
-        if (offers.size > limit) {
+        Text(title, modifier = Modifier.semantics { heading() }.padding(horizontal = 4.dp, vertical = 2.dp),
+            color = scheme.onSurface, style = MaterialTheme.typography.titleMedium)
+        rows(limit)
+        if (count > limit) {
             TextButton(onClick = { limit += 12 }, modifier = Modifier.align(Alignment.CenterHorizontally)
-                .testTag("shop_more_offers")) {
-                Text(stringResource(R.string.store_more_offers))
+                .testTag("shop_more_$tag")) { Text(more) }
+        }
+    }
+}
+
+@Composable
+private fun SellerOffers(seller: Shop.Seller, lang: String) {
+    if (seller.offers.isEmpty()) return
+    val today by produceState(LocalDate.now(Shop.offerZone)) {
+        while (true) {
+            val now = ZonedDateTime.now(Shop.offerZone)
+            value = now.toLocalDate()
+            val midnight = value.plusDays(1).atStartOfDay(Shop.offerZone)
+            delay(Duration.between(now, midnight).toMillis().coerceAtLeast(1L))
+        }
+    }
+    val active = remember(seller, today) { seller.activeOffers(today) }
+    if (active.isEmpty()) return
+    val scheme = MaterialTheme.colorScheme
+    val formatter = remember(lang) {
+        DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(Locale.forLanguageTag(lang))
+    }
+    StoreSection(seller.id, active.size, stringResource(R.string.store_offers),
+        stringResource(R.string.store_more_offers), "offers") { limit ->
+        active.take(limit).forEach { offer ->
+            key(offer.id) {
+                Column(Modifier.fillMaxWidth().testTag("shop_offer_${offer.id}")
+                    .background(scheme.surfaceContainerHigh, RoundedCornerShape(16.dp)).padding(12.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(offer.title, style = MaterialTheme.typography.titleSmall, color = scheme.onSurface)
+                    Text(offer.conditions, style = MaterialTheme.typography.bodyMedium, color = scheme.onSurface)
+                    Text(stringResource(R.string.store_offer_until, offer.validUntil.format(formatter)),
+                        style = MaterialTheme.typography.bodySmall, color = scheme.onSurfaceVariant)
+                }
             }
         }
     }
@@ -284,19 +328,19 @@ private fun ProductImage(product: Shop.Product, catalog: Shop.Catalog, modifier:
 }
 
 @Composable
-internal fun ProductCard(product: Shop.Product, catalog: Shop.Catalog, lang: String, storeOffer: Boolean = false, onClick: () -> Unit) {
+internal fun ProductCard(product: Shop.Product, catalog: Shop.Catalog, lang: String, storeDiscount: Boolean = false, onClick: () -> Unit) {
     val scheme = MaterialTheme.colorScheme
     val seller = catalog.seller(product.seller)
-    val tag = if (storeOffer) "shop_offer_${product.id}" else "shop_product_${product.id}"
+    val tag = if (storeDiscount) "shop_discount_${product.id}" else "shop_product_${product.id}"
     Row(Modifier.fillMaxWidth().testTag(tag).clip(RoundedCornerShape(16.dp))
-        .background(if (storeOffer) scheme.surfaceContainerHigh else scheme.surfaceContainerLow)
+        .background(if (storeDiscount) scheme.surfaceContainerHigh else scheme.surfaceContainerLow)
         .clickable(role = Role.Button, onClick = onClick).padding(10.dp),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         ProductImage(product, catalog, Modifier.size(64.dp).clip(RoundedCornerShape(12.dp)), iconSize = 28.dp)
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
             Text(product.title.get(lang), style = MaterialTheme.typography.titleSmall, color = scheme.onSurface,
                 maxLines = 2, overflow = TextOverflow.Ellipsis)
-            if (seller != null && !storeOffer) Text(seller.name, style = MaterialTheme.typography.bodySmall, color = scheme.onSurfaceVariant,
+            if (seller != null && !storeDiscount) Text(seller.name, style = MaterialTheme.typography.bodySmall, color = scheme.onSurfaceVariant,
                 maxLines = 1, overflow = TextOverflow.Ellipsis)
             PriceLine(product, lang)
             if (seller?.promoted == true) AdLabel(Modifier.testTag("shop_ad_${product.id}"))
@@ -372,14 +416,22 @@ fun SellerScreen(sellerId: String? = null) {
                 if (seller.promoted) AdLabel(Modifier.testTag("shop_ad_${seller.id}"))
             }
         }
-        val (offers, products) = remember(catalog, seller.id) {
+        val (discounts, products) = remember(catalog, seller.id) {
             catalog.products.filter { it.seller == seller.id }.partition { it.discountPercent != null }
         }
         val openProduct: (Shop.Product) -> Unit = { product ->
             nav.shopProduct = product.id
             nav.open(Screen.SHOP_PRODUCT)
         }
-        if (offers.isNotEmpty()) StoreOffers(offers, catalog, lang, openProduct)
+        SellerOffers(seller, lang)
+        if (discounts.isNotEmpty()) {
+            StoreSection(seller.id, discounts.size, stringResource(R.string.store_discounts),
+                stringResource(R.string.store_more_discounts), "discounts") { limit ->
+                discounts.take(limit).forEach { product ->
+                    key(product.id) { ProductCard(product, catalog, lang, storeDiscount = true) { openProduct(product) } }
+                }
+            }
+        }
         if (!seller.description.isEmpty) {
             ZCard { Text(seller.description.get(lang), style = MaterialTheme.typography.bodyLarge) }
         }

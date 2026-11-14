@@ -1,0 +1,184 @@
+name: Quran reader playback and store promotions
+on:
+  push:
+    branches: [codex/reading-store-promos-0828]
+    paths:
+      - 'app/**'
+      - 'gradle/**'
+      - '*.kts'
+      - 'gradle.properties'
+      - 'gradlew*'
+      - 'keystore/release.jks.enc'
+      - 'tools/ci/listening_offers_ui.py'
+      - 'tools/ci/reading_store_promos_ui.py'
+      - 'tools/quran/import_word_timings_51.py'
+      - 'shop-bot/**'
+      - 'tools/ci/focus-fixture/**'
+      - 'tools/ci/build_focus_fixture.sh'
+      - '.github/workflows/reading-store-promos.yml'
+permissions:
+  contents: read
+concurrency:
+  group: reading-store-promos-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify isolated seller bot and Mini App
+        run: |
+          python3 shop-bot/test_bot.py
+          python3 shop-bot/test_miniapi.py
+          node --check shop-bot/miniapp/app.js
+      - name: Verify packaged word timing coverage or build missing offline assets
+        run: |
+          set -euo pipefail
+          timings=app/src/main/assets/quran_audio/words
+          for surah in $(seq 1 114); do
+            if ! test -s "$timings/$surah.bin"; then
+              python3 tools/quran/import_word_timings_51.py
+              break
+            fi
+          done
+          report=tools/quran/source-evidence/0828/word-timing-report-51.json
+          if ! test -f "$report"; then report=build/reports/quran-word-timings.json; fi
+          mkdir -p ci-out/reading-store-promos
+          jq -r '.surahs[] | "\(.asset_sha256)  app/src/main/assets/quran_audio/words/\(.surah).bin"' "$report" > ci-out/reading-store-promos/expected-words.sha256
+          test "$(wc -l < ci-out/reading-store-promos/expected-words.sha256)" -eq 114
+          sha256sum --quiet --check ci-out/reading-store-promos/expected-words.sha256
+          for surah in $(seq 1 114); do
+            test -s "$timings/$surah.bin"
+            sha256sum "$timings/$surah.bin"
+          done > ci-out/reading-store-promos/word-timings.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ZikrTime-offline-word-timings-51
+          path: |
+            app/src/main/assets/quran_audio/words/*.bin
+            build/reports/quran-word-timings.json
+            tools/quran/source-evidence/0828/word-timing-report-51.json
+            ci-out/reading-store-promos/word-timings.sha256
+          if-no-files-found: error
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Restore unchanged APKs for a UI-check retry
+        id: apk
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            app/build/outputs/apk/debug/app-debug.apk
+            app/build/outputs/apk/release/app-release.apk
+          key: reading-store-promos-apk-v1-${{ hashFiles('app/src/**', 'app/*.kts', 'app/*.pro', 'gradle/**', '*.kts', 'gradle.properties', 'gradlew*', 'keystore/release.jks.enc') }}
+      - name: Build APKs with the existing signing key
+        if: steps.apk.outputs.cache-hit != 'true'
+        env:
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          test -n "$RELEASE_KEY_PASSWORD"
+          trap 'rm -f keystore/release.jks' EXIT
+          openssl enc -d -aes-256-cbc -pbkdf2 -iter 300000 -in keystore/release.jks.enc -out keystore/release.jks -pass env:RELEASE_KEY_PASSWORD
+          bash gradlew :app:testDebugUnitTest :app:assembleDebug :app:assembleRelease --console=plain
+      - name: Verify the installable release
+        run: |
+          set -euo pipefail
+          mkdir -p ci-out/reading-store-promos
+          cp app/build/outputs/apk/release/app-release.apk ZikrTime-0.8.28-51.apk
+          sdk_tools=$(find "$ANDROID_HOME/build-tools" -maxdepth 1 -mindepth 1 -type d | sort -V | tail -1)
+          "$sdk_tools/apksigner" verify --print-certs ZikrTime-0.8.28-51.apk > ci-out/reading-store-promos/signature.txt
+          grep -F 'certificate SHA-256 digest: 7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf' ci-out/reading-store-promos/signature.txt
+          "$sdk_tools/aapt" dump badging ZikrTime-0.8.28-51.apk > ci-out/reading-store-promos/badging.txt
+          grep -F "package: name='com.zikrtime.app' versionCode='51' versionName='0.8.28'" ci-out/reading-store-promos/badging.txt
+          sha256sum ZikrTime-0.8.28-51.apk > ci-out/reading-store-promos/apk.sha256
+      - name: Cache the checked APKs
+        if: steps.apk.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            app/build/outputs/apk/debug/app-debug.apk
+            app/build/outputs/apk/release/app-release.apk
+          key: ${{ steps.apk.outputs.cache-primary-key }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ZikrTime-reading-store-promos-apk
+          path: ZikrTime-0.8.28-51.apk
+          compression-level: 0
+          if-no-files-found: error
+      - name: Check image verification dependency
+        run: python3 -c "from PIL import Image" || python3 -m pip install Pillow
+      - name: Build separate notification focus fixture
+        run: |
+          keytool -genkeypair -keystore "$RUNNER_TEMP/focus-key.p12" -storepass android -keypass android -alias test -keyalg RSA -keysize 2048 -dname CN=CI -validity 2
+          bash tools/ci/build_focus_fixture.sh "$RUNNER_TEMP/focus-key.p12" focus-test.apk
+      - name: Prepare accelerated Android 15
+        id: emulator
+        run: |
+          if jps | grep -q GradleDaemon; then bash gradlew --stop; fi
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-catalog.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --list > "$RUNNER_TEMP/catalog-system-images.txt"
+          if grep -q 'system-images;android-35;default;x86_64' "$RUNNER_TEMP/catalog-system-images.txt"; then
+            echo 'target=default' >> "$GITHUB_OUTPUT"
+          else
+            echo 'target=google_apis' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Verify inline reader playback and separate seller promotions
+        timeout-minutes: 20
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: ${{ steps.emulator.outputs.target }}
+          arch: x86_64
+          profile: pixel_2
+          ram-size: 2048M
+          heap-size: 256M
+          disable-animations: true
+          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -feature -Vulkan -no-boot-anim -noaudio -camera-back none -camera-front none
+          script: python3 tools/ci/reading_store_promos_ui.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ZikrTime-reading-store-promos-screens
+          path: |
+            ci-out/reading-store-promos/
+            ci-out/last-ui.xml
+          compression-level: 0
+
+  prerelease:
+    name: Publish verified test APK
+    needs: android
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: write
+    steps:
+      - name: Download the verified APK
+        uses: actions/download-artifact@v4
+        with:
+          name: ZikrTime-reading-store-promos-apk
+          path: apk
+      - name: Verify and publish test 51
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          TAG: test-0.8.28-51
+        run: |
+          set -euo pipefail
+          apk=ZikrTime-0.8.28-51.apk
+          cd apk
+          sha256sum "$apk" > SHA256SUMS.txt
+          if gh release view "$TAG" --repo "$REPO" >/dev/null 2>&1; then
+            # A rerun can confirm the previous release, but cannot replace an installable binary.
+            gh release download "$TAG" --repo "$REPO" --dir existing --pattern "$apk"
+            cmp -- "$apk" "existing/$apk"
+          else
+            gh release create "$TAG" "$apk" SHA256SUMS.txt --repo "$REPO" --target "$GITHUB_SHA" --prerelease \
+              --title 'ZikrTime 0.8.28 (51) — сборка для проверки' \
+              --notes 'Плеер на экране чтения Корана и отдельные акции магазинов. Подписанный APK для Android.'
+          fi

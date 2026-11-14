@@ -24,6 +24,9 @@
     <string name="store_apply_filters">Tətbiq et</string>
     <string name="store_search_prompt">Axtarış sözü daxil edin və ya filtrləri seçin.</string>
     <string name="store_more_companies">Daha çox şirkət göstər</string>
-    <string name="store_offers">Mağazanın endirimləri</string>
-    <string name="store_more_offers">Daha çox endirim göstər</string>
+    <string name="store_offers">Mağazanın kampaniyaları</string>
+    <string name="store_more_offers">Daha çox kampaniya göstər</string>
+    <string name="store_discounts">Endirimlər</string>
+    <string name="store_more_discounts">Daha çox endirim göstər</string>
+    <string name="store_offer_until">%1$s tarixinədək</string>
 </resources>

@@ -24,6 +24,9 @@
     <string name="store_apply_filters">Қолдану</string>
     <string name="store_search_prompt">Іздеу сөзін енгізіңіз немесе сүзгілерді таңдаңыз.</string>
     <string name="store_more_companies">Тағы компания көрсету</string>
-    <string name="store_offers">Дүкен жеңілдіктері</string>
-    <string name="store_more_offers">Тағы жеңілдіктерді көрсету</string>
+    <string name="store_offers">Дүкен акциялары</string>
+    <string name="store_more_offers">Тағы акция көрсету</string>
+    <string name="store_discounts">Жеңілдіктер</string>
+    <string name="store_more_discounts">Тағы жеңілдік көрсету</string>
+    <string name="store_offer_until">%1$s дейін</string>
 </resources>

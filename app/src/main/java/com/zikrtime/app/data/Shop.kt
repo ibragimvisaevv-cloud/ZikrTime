@@ -11,6 +11,9 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeParseException
 
 /**
  * Магазин: продавцы и их товары.
@@ -36,6 +39,10 @@ object Shop {
 
     class Category(val id: String, val name: Text, val icon: String)
 
+    val offerZone: ZoneId = ZoneId.of("Europe/Moscow")
+
+    data class Offer(val id: String, val title: String, val conditions: String, val validUntil: LocalDate)
+
     class Seller(
         val id: String,
         val name: String,
@@ -56,7 +63,10 @@ object Shop {
         val accent: Long?,
         /** До какого момента (секунды) компания продвигается; 0 — не продвигается. */
         val promoUntil: Long = 0,
+        val offers: List<Offer> = emptyList(),
     ) {
+        fun activeOffers(on: LocalDate): List<Offer> = offers.filter { !it.validUntil.isBefore(on) }
+
         val promoted: Boolean get() = promoUntil * 1000 > System.currentTimeMillis()
     }
 
@@ -180,6 +190,23 @@ object Shop {
         else -> CONTENT_BASE + path
     }
 
+    private fun parseOffers(rows: JSONArray?): List<Offer> {
+        if (rows == null) return emptyList()
+        return (0 until rows.length()).mapNotNull { index ->
+            val row = rows.optJSONObject(index) ?: return@mapNotNull null
+            val id = (row.opt("id") as? String)?.trim().orEmpty()
+            val title = (row.opt("title") as? String)?.trim().orEmpty()
+            val conditions = (row.opt("conditions") as? String)?.trim().orEmpty()
+            if (id.isEmpty() || title.isEmpty() || conditions.isEmpty()) return@mapNotNull null
+            val end = try {
+                LocalDate.parse(row.optString("valid_until"))
+            } catch (_: DateTimeParseException) {
+                return@mapNotNull null
+            }
+            Offer(id, title, conditions, end)
+        }.distinctBy { it.id }
+    }
+
     fun parse(json: String): Catalog {
         val root = JSONObject(json)
         fun text(o: JSONObject, key: String): Text {
@@ -214,6 +241,7 @@ object Shop {
                 categories = strings(it.optJSONArray("categories")),
                 accent = it.optString("accent").removePrefix("#").takeIf { s -> s.length == 6 }?.toLongOrNull(16),
                 promoUntil = it.optLong("promo_until"),
+                offers = parseOffers(it.optJSONArray("offers")),
             )
         }
         val sellerIds = sellers.mapTo(HashSet()) { it.id }

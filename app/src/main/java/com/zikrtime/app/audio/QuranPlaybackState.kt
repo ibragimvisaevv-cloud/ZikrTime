@@ -30,8 +30,11 @@ data class QuranPlaybackState(
     val clipEndMs: Long? = null,
     val positionAyah: Int? = null,
     val nextAyahBoundaryMs: Long? = null,
+    val positionWord: Int? = null,
+    val nextWordBoundaryMs: Long? = null,
 ) {
     val playingAyah: Int? get() = positionAyah.takeIf { connected && isPlaying }
+    val playingWord: Int? get() = positionWord.takeIf { connected && isPlaying }
 }
 
 internal object QuranPlaybackMemory {
@@ -78,6 +81,12 @@ internal object QuranPlaybackMemory {
         val upcoming = if (verse == null && surah != null && player.playbackState == Player.STATE_READY)
             QuranAudioRepository.timingAtOrAfter(surah, position) else null
         val current = upcoming?.takeIf { position >= it.startMs }
+        val activeAyah = verse?.ayah ?: current?.reference?.ayah
+        // Media3 exposes time relative to the clipping window for individual ayahs.
+        val clipStart = timing?.startMs ?: 0L
+        val absolutePosition = position + clipStart
+        val word = if (surah != null && player.isPlaying)
+            QuranWordTimings.next(context, surah, absolutePosition) else null
         val failure = player.playerError
         return QuranPlaybackState(
             connected = true, surahId = surah, title = player.mediaMetadata.title?.toString().orEmpty(),
@@ -90,7 +99,9 @@ internal object QuranPlaybackMemory {
             repeatIteration = if (verse != null && QuranAyahSession.reference == verse) QuranAyahSession.iteration else 1,
             speed = player.playbackParameters.speed, continueAfter = options.continueAfter,
             clipStartMs = timing?.startMs, clipEndMs = timing?.endMs,
-            positionAyah = verse?.ayah ?: current?.reference?.ayah,
+            positionAyah = activeAyah,
+            positionWord = word?.takeIf { it.ayah == activeAyah && it.startMs <= absolutePosition }?.word,
+            nextWordBoundaryMs = word?.let { (if (absolutePosition < it.startMs) it.startMs else it.endMs) - clipStart },
             nextAyahBoundaryMs = current?.endMs ?: upcoming?.startMs,
         )
     }

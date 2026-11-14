@@ -57,13 +57,14 @@ internal class QuranTextGeometry {
         }
     }
 
-    /** Scroll distance to bring the first line of a sounding ayah into this text viewport. */
-    fun scrollToAyahStart(ayah: Int): Float? {
+    /** A source-relative offset locates the word's line in both layout modes. */
+    fun scrollToAyahStart(ayah: Int, offset: Int = 0): Float? {
         val bounds = viewport?.takeIf { it.isAttached }?.boundsInRoot() ?: return null
         val entry = entries.values.firstOrNull { block -> block.ranges.any { it.ayah == ayah } } ?: return null
         val coordinates = entry.coordinates?.takeIf { it.isAttached } ?: return null
         val layout = entry.layout ?: return null
-        val line = layout.getLineForOffset(entry.ranges.first { it.ayah == ayah }.start)
+        val range = entry.ranges.first { it.ayah == ayah }
+        val line = layout.getLineForOffset((range.start + offset).coerceIn(range.start, range.arabicEnd))
         val origin = coordinates.localToRoot(Offset.Zero).y
         val top = origin + layout.getLineTop(line)
         val bottom = origin + layout.getLineBottom(line)
@@ -76,7 +77,8 @@ internal class QuranTextGeometry {
 @Composable
 internal fun QuranTouchText(text: String, ranges: List<QuranTextRange>, selected: Int,
     geometry: QuranTextGeometry, style: TextStyle, tag: String, modifier: Modifier = Modifier,
-    choose: (Int, Boolean) -> Unit, savedAyahs: Set<Int> = emptySet(), playingAyah: Int? = null) {
+    choose: (Int, Boolean) -> Unit, savedAyahs: Set<Int> = emptySet(), playingAyah: Int? = null,
+    playingWordRange: IntRange? = null) {
     val key = ranges.first().ayah
     val entry = remember(geometry, ranges) { QuranTextGeometry.Entry(ranges) }
     DisposableEffect(geometry, entry) {
@@ -88,7 +90,8 @@ internal fun QuranTouchText(text: String, ranges: List<QuranTextRange>, selected
     val colors = quranPaperColors()
     val soundingRange = ranges.firstOrNull { it.ayah == playingAyah }
     val soundingLabel = soundingRange?.let { stringResource(R.string.ql_reading_now, it.ayah.toString()) }
-    val annotated = remember(text, ranges, selected, colors, savedAyahs, soundingRange) {
+    val word = if (soundingRange != null) playingWordRange else null
+    val annotated = remember(text, ranges, selected, colors, savedAyahs, soundingRange, word) {
         AnnotatedString.Builder(text).apply {
             ranges.forEach { range ->
                 if (range.ayah in savedAyahs) {
@@ -103,7 +106,12 @@ internal fun QuranTouchText(text: String, ranges: List<QuranTextRange>, selected
                 addStyle(SpanStyle(background = colors.selection), it.start, it.end)
             }
             soundingRange?.let {
-                addStyle(SpanStyle(color = colors.paper, background = colors.accent), it.start, it.end)
+                if (word != null && word.first >= 0 && word.last < it.arabicEnd - it.start) {
+                    addStyle(SpanStyle(color = colors.paper, background = colors.accent),
+                        it.start + word.first, it.start + word.last + 1)
+                } else {
+                    addStyle(SpanStyle(color = colors.accent), it.start, it.arabicEnd)
+                }
             }
         }.toAnnotatedString()
     }

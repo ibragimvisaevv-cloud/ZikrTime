@@ -274,8 +274,9 @@ object QuranAudioPlayer {
         handler.removeCallbacks(updatePosition)
         val state = mutableState.value
         if (connections == 0 || !state.isPlaying) return
-        // Keep the normal once-per-second timer, but wake exactly at verified verse boundaries.
-        val delayMs = state.nextAyahBoundaryMs?.let { boundary ->
+        // Use the next audio boundary, including the silence between successive words.
+        val nextBoundary = listOfNotNull(state.nextAyahBoundaryMs, state.nextWordBoundaryMs).minOrNull()
+        val delayMs = nextBoundary?.let { boundary ->
             kotlin.math.ceil((boundary - state.positionMs) / state.speed.toDouble()).toLong().coerceIn(1L, 1_000L)
         } ?: 1_000L
         handler.postDelayed(updatePosition, delayMs)

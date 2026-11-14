@@ -26,4 +26,7 @@
     <string name="store_more_companies">Show more companies</string>
     <string name="store_offers">Store offers</string>
     <string name="store_more_offers">Show more offers</string>
+    <string name="store_discounts">Discounts</string>
+    <string name="store_more_discounts">Show more discounts</string>
+    <string name="store_offer_until">Valid through %1$s</string>
 </resources>

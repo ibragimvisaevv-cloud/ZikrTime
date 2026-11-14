@@ -24,6 +24,9 @@
     <string name="store_apply_filters">Применить</string>
     <string name="store_search_prompt">Введите запрос или выберите фильтры.</string>
     <string name="store_more_companies">Показать ещё компании</string>
-    <string name="store_offers">Акции магазина</string>
+    <string name="store_offers">Акции</string>
     <string name="store_more_offers">Показать ещё акции</string>
+    <string name="store_discounts">Скидки</string>
+    <string name="store_more_discounts">Показать ещё скидки</string>
+    <string name="store_offer_until">Действует по %1$s включительно</string>
 </resources>

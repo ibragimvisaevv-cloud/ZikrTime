@@ -4,6 +4,7 @@
 package com.zikrtime.app.ui
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
@@ -11,17 +12,19 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.unit.dp
@@ -34,19 +37,18 @@ import com.zikrtime.app.audio.QuranAudioPlayer
 import com.zikrtime.app.audio.QuranAudioRepository
 import com.zikrtime.app.audio.QuranPlaybackService
 import com.zikrtime.app.audio.QuranPlaybackState
-import com.zikrtime.app.data.QuranAyah
-import com.zikrtime.app.data.QuranSurah
-import com.zikrtime.app.i18n.Lang
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
 internal data class QuranReaderPlayback(
-    val surahId: Int?, val playingAyah: Int?, val clipAyah: Int?, val continueAfter: Boolean,
-    val playing: Boolean,
+    val surahId: Int?, val playingAyah: Int?, val playingWord: Int?, val positionAyah: Int?, val clipAyah: Int?,
+    val continueAfter: Boolean, val repeatCount: Int, val speed: Float, val playing: Boolean, val connected: Boolean,
+    val ended: Boolean, val buffering: Boolean, val playWhenReady: Boolean, val error: String?,
 )
 
 private fun QuranPlaybackState.readerPlayback() = QuranReaderPlayback(
-    surahId, playingAyah, ayah, continueAfter, connected && isPlaying,
+    surahId, playingAyah, playingWord, positionAyah, ayah, continueAfter, repeatCount, speed,
+    connected && isPlaying, connected, ended, isBuffering, playWhenReady, error,
 )
 
 /** Observe an existing service when opening the reader. Silent reading creates no playback service. */
@@ -79,140 +81,74 @@ internal fun QuranReaderAudioConnection(enabled: Boolean): QuranReaderPlayback {
     return playback
 }
 
-/** One selected verse, with audio first and personal actions underneath. Selection alone is silent. */
 @Composable
-internal fun QuranAyahActionsSheet(
-    surah: QuranSurah, ayah: Int, verse: QuranAyah?, saved: Boolean,
-    close: () -> Unit, selectAyah: (Int) -> Unit, note: () -> Unit,
-    bookmark: () -> Unit, copy: () -> Unit, fullSurah: () -> Unit,
-) {
-    val context = LocalContext.current
+internal fun QuranInlinePlayer(surah: Int, ayah: Int, playing: Boolean, buffering: Boolean, error: String?,
+    toggle: () -> Unit, options: () -> Unit, close: () -> Unit) {
     val colors = quranPaperColors()
-    val playback by QuranAudioPlayer.state.collectAsStateWithLifecycle()
-    val name = if (Lang.content(context) == "ru") surah.nameRu else surah.nameLatin
-    val active = playback.surahId == surah.id && playback.ayah == ayah
-    var repeats by rememberSaveable(surah.id) { mutableIntStateOf(if (active) playback.repeatCount else 1) }
-    var speed by rememberSaveable(surah.id) { mutableFloatStateOf(if (active) playback.speed else 1f) }
-    var continueAfter by rememberSaveable(surah.id) { mutableStateOf(active && playback.continueAfter) }
-    LaunchedEffect(active, playback.repeatCount, playback.speed, playback.continueAfter) {
-        if (active) {
-            repeats = playback.repeatCount
-            speed = playback.speed
-            continueAfter = playback.continueAfter
-        }
-    }
-    fun configure() {
-        if (active) QuranAudioPlayer.configureAyah(repeats, speed, continueAfter && repeats != 0)
-    }
-    val changeVerse: (Int) -> Unit = { target ->
-        if (target in 1..surah.ayahCount) {
-            if (active && playback.playWhenReady && !playback.ended)
-                QuranAudioPlayer.playAyah(surah.id, target, repeats, speed, continueAfter && repeats != 0)
-            selectAyah(target)
-        }
-    }
-    // Bound only the scrolling content: constraining the ModalBottomSheet modifier also
-    // constrains its anchor container and can place the sheet at the top of the screen.
-    val maxContentHeight = ((LocalConfiguration.current.screenHeightDp * .88f).dp - 56.dp).coerceAtLeast(120.dp)
-    ModalBottomSheet(onDismissRequest = close,
-        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-        containerColor = colors.canvas, shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp)) {
-        Column(Modifier.fillMaxWidth().heightIn(max = maxContentHeight)
-            .semantics { testTagsAsResourceId = true }.testTag("quran_ayah_sheet")
-            .verticalScroll(rememberScrollState()).padding(horizontal = 20.dp).padding(bottom = 24.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                Column(Modifier.weight(1f)) {
-                    Text(stringResource(R.string.audio_ayah_title, name, ayah), color = colors.ink,
-                        style = MaterialTheme.typography.titleLarge,
-                        modifier = Modifier.testTag("ayah_selection_reference").semantics { heading() })
-                    Text(stringResource(R.string.qaudio_reciter), color = colors.muted,
-                        style = MaterialTheme.typography.bodySmall)
+    Surface(Modifier.fillMaxWidth().testTag("quran_inline_player"), shape = RoundedCornerShape(18.dp),
+        color = colors.paper, border = BorderStroke(1.dp, colors.rule)) {
+        Column {
+            Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically) {
+                val playLabel = stringResource(if (error != null) R.string.qaudio_retry
+                    else if (playing) R.string.qaudio_pause else R.string.qaudio_listen)
+                FilledIconButton(onClick = toggle, modifier = Modifier.size(48.dp).testTag("quran_inline_play_pause")) {
+                    if (playing && error == null) {
+                        val ink = LocalContentColor.current
+                        Canvas(Modifier.size(20.dp).semantics { contentDescription = playLabel }) {
+                            val bar = Size(size.width * .22f, size.height * .76f)
+                            drawRect(ink, Offset(size.width * .17f, size.height * .12f), bar)
+                            drawRect(ink, Offset(size.width * .61f, size.height * .12f), bar)
+                        }
+                    } else Icon(Icons.Filled.PlayArrow, playLabel)
                 }
+                Text(stringResource(R.string.qp_selected_ayah, surah, ayah),
+                    Modifier.weight(1f).padding(horizontal = 8.dp), color = colors.ink,
+                    style = MaterialTheme.typography.titleSmall, maxLines = 2)
+                IconButton(onClick = options, modifier = Modifier.testTag("quran_inline_options")) {
+                    Icon(Icons.Filled.MoreVert, stringResource(R.string.qr_audio_options))
+                }
+                IconButton(onClick = close, modifier = Modifier.testTag("quran_inline_close")) {
+                    Icon(Icons.Filled.Close, stringResource(R.string.qaudio_close))
+                }
+            }
+            if (buffering) LinearProgressIndicator(Modifier.fillMaxWidth())
+            if (error != null) Text(error, Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
+        }
+    }
+}
+
+@Composable
+internal fun QuranInlineOptions(repeats: Int, speed: Float, continueAfter: Boolean,
+    configure: (Int, Float, Boolean) -> Unit, close: () -> Unit) {
+    val colors = quranPaperColors()
+    ModalBottomSheet(onDismissRequest = close, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+        containerColor = colors.canvas, shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp)) {
+        Column(Modifier.fillMaxWidth().semantics { testTagsAsResourceId = true }.testTag("quran_ayah_sheet")
+            .verticalScroll(rememberScrollState()).padding(horizontal = 20.dp).padding(bottom = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(stringResource(R.string.qr_audio_options), Modifier.weight(1f), style = MaterialTheme.typography.titleLarge)
                 IconButton(onClick = close, modifier = Modifier.testTag("ayah_close")) {
                     Icon(Icons.Default.Close, stringResource(R.string.qaudio_close))
                 }
             }
-            if (!active && playback.playWhenReady) Text(stringResource(R.string.ql_reading_now, playback.title),
-                color = colors.muted, style = MaterialTheme.typography.bodySmall)
-            if (active && playback.isBuffering) LinearProgressIndicator(Modifier.fillMaxWidth())
-            if ((active || !playback.connected) && playback.error != null) Text(playback.error!!,
-                color = MaterialTheme.colorScheme.error, modifier = Modifier.testTag("ayah_player_error"))
-            Button(onClick = {
-                when {
-                    active && playback.playWhenReady && !playback.ended && playback.error == null -> QuranAudioPlayer.pause()
-                    active && !playback.ended && playback.error == null -> QuranAudioPlayer.togglePlayPause()
-                    else -> QuranAudioPlayer.playAyah(surah.id, ayah, repeats, speed, continueAfter && repeats != 0)
-                }
-            }, modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp).testTag("ayah_play_pause")) {
-                Text(stringResource(when {
-                    (active || !playback.connected) && playback.error != null -> R.string.qaudio_retry
-                    active && playback.playWhenReady && !playback.ended -> R.string.qaudio_pause
-                    active && playback.positionMs > 0 && !playback.ended -> R.string.qaudio_resume
-                    else -> R.string.ql_listen_ayah
-                }))
-            }
-            Text(stringResource(when {
-                active && playback.ended -> R.string.ql_verse_finished
-                active && playback.isBuffering -> R.string.qaudio_buffering
-                active && playback.isPlaying -> R.string.qaudio_playing
-                active && playback.positionMs > 0 -> R.string.qaudio_paused
-                !playback.connected -> R.string.qaudio_connecting
-                else -> R.string.qaudio_ready
-            }), color = colors.accent, style = MaterialTheme.typography.labelLarge,
-                modifier = Modifier.testTag("ayah_playback_status"))
-            if (active && playback.playingAyah == ayah && verse != null) QuranPlayingVerse(verse, onOpen = close)
-            if (active && (playback.isPlaying || playback.positionMs > 0 || playback.ended)) {
-                Text(if (playback.repeatCount == 0) stringResource(R.string.ql_repeat_progress_forever, playback.repeatIteration)
-                    else stringResource(R.string.ql_repeat_progress, playback.repeatIteration, playback.repeatCount),
-                    style = MaterialTheme.typography.bodyMedium, modifier = Modifier.testTag("ayah_repeat_progress"))
-            }
             Text(stringResource(R.string.ql_repeat), style = MaterialTheme.typography.titleSmall)
             FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 listOf(1, 3, 5, 10, 0).forEach { count ->
-                    FilterChip(selected = repeats == count, onClick = {
-                        repeats = count
-                        if (count == 0) continueAfter = false
-                        configure()
-                    }, label = { Text(when (count) {
-                        0 -> stringResource(R.string.ql_repeat_forever)
-                        1 -> stringResource(R.string.ql_repeat_once)
-                        else -> stringResource(R.string.ql_repeat_count, count)
-                    }) }, modifier = Modifier.testTag("ayah_repeat_$count"))
+                    FilterChip(selected = repeats == count, onClick = { configure(count, speed, count != 0 && continueAfter) },
+                        label = { Text(if (count == 0) "∞" else "${count}×") }, modifier = Modifier.testTag("ayah_repeat_$count"))
                 }
             }
-            QuranSpeedControls(speed, "ayah") { speed = it; configure() }
-            Surface(color = colors.paper, shape = RoundedCornerShape(16.dp), border = BorderStroke(1.dp, colors.rule)) {
-                Column(Modifier.fillMaxWidth().toggleable(continueAfter, enabled = repeats != 0, role = Role.Checkbox,
-                    onValueChange = { continueAfter = it; configure() }).testTag("ayah_continue").padding(12.dp)) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Checkbox(checked = continueAfter, onCheckedChange = null, enabled = repeats != 0)
-                        Text(stringResource(R.string.ql_continue), Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
-                    }
-                    Text(stringResource(if (repeats == 0) R.string.ql_continue_infinite else R.string.ql_continue_detail),
-                        style = MaterialTheme.typography.bodySmall, color = colors.muted)
-                }
+            QuranSpeedControls(speed, "ayah") { configure(repeats, it, continueAfter) }
+            Row(Modifier.fillMaxWidth().toggleable(continueAfter, enabled = repeats != 0, role = Role.Checkbox,
+                onValueChange = { configure(repeats, speed, it) }).testTag("ayah_continue").padding(vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(checked = continueAfter, onCheckedChange = null, enabled = repeats != 0)
+                Text(stringResource(R.string.ql_continue), Modifier.padding(start = 8.dp))
             }
-            Text(stringResource(R.string.ql_verse_counter, ayah, surah.ayahCount), color = colors.muted,
-                style = MaterialTheme.typography.labelMedium)
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                OutlinedButton(onClick = { changeVerse(ayah - 1) }, enabled = ayah > 1,
-                    modifier = Modifier.testTag("ayah_previous")) { Text(stringResource(R.string.ql_previous_verse)) }
-                OutlinedButton(onClick = { changeVerse(ayah + 1) }, enabled = ayah < surah.ayahCount,
-                    modifier = Modifier.testTag("ayah_next")) { Text(stringResource(R.string.ql_next_verse)) }
-                if (playback.ayah != null) TextButton(onClick = { QuranAudioPlayer.stop() }, modifier = Modifier.testTag("ayah_stop")) {
-                    Text(stringResource(R.string.qaudio_stop))
-                }
-            }
-            OutlinedButton(onClick = fullSurah, modifier = Modifier.fillMaxWidth().testTag("ayah_full_surah")) {
-                Text(stringResource(R.string.ql_whole_surah))
-            }
-            HorizontalDivider(color = colors.rule)
-            Text(stringResource(R.string.ql_saved_actions), style = MaterialTheme.typography.titleSmall)
-            ReaderAction(if (saved) R.string.qt_remove_bookmark else R.string.quran_save, "quran_action_bookmark", bookmark)
-            ReaderAction(R.string.qt_note, "quran_note_open", note)
-            ReaderAction(R.string.qt_copy, "quran_copy_ayah", copy)
-            Text(stringResource(R.string.audio_ayah_source), style = MaterialTheme.typography.bodySmall, color = colors.muted)
+            Text(stringResource(R.string.qr_word_timing_credit), style = MaterialTheme.typography.bodySmall, color = colors.muted)
         }
     }
 }

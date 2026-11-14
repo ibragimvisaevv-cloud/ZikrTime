@@ -107,7 +107,9 @@ def verify_duck():
         first = player()
         time.sleep(1.3)
         later = player()
-        check(first["isPlaying"] and later["isPlaying"] and later["positionMs"] > first["positionMs"] + 600,
+        first_position = (first.get("clipStartMs") or 0) + first["positionMs"]
+        later_position = (later.get("clipStartMs") or 0) + later["positionMs"]
+        check(first["isPlaying"] and later["isPlaying"] and later_position > first_position + 600,
               "Recitation advances during the notification while Android attenuates its audio track")
         check(bool(ducked_players(uid, "during")), "Android keeps the Quran track ducked while notification focus is held")
         REPORT["notification_ducked_players"] = ids
@@ -184,22 +186,30 @@ def verify_store():
         if eligible:
             break
     else:
-        raise AssertionError("No active offers in the live catalog to verify for the store screenshot")
+        # Stores can legitimately remove every price reduction between releases.
+        catalog = test_catalog()
+        catalog["products"][0]["old_price"] = catalog["products"][0]["price"] + 500
+        seller = catalog["sellers"][0]
+        eligible = {catalog["products"][0]["id"]: catalog["products"][0]}
+        put_catalog(catalog)
+        start_shop()
+        REPORT["discount_catalog_source"] = "Isolated QA catalog (no published price reductions)"
     tap_control(("shop_partner_" if seller.get("partner") or seller["id"] in (RENTAL, PERFUME) else "shop_seller_") + seller["id"])
-    tree = wait_tag("shop_seller_offers")
-    check(text_visible(tree, "Акции магазина"), "Current shop's active offers are visible on opening its page")
-    visible = [tag.removeprefix("shop_offer_") for n in tree.iter("node")
-               if (tag := n.get("resource-id", "").split("/")[-1]).startswith("shop_offer_")]
+    locate_control("shop_seller_discounts")
+    tree = ui()
+    check(text_visible(tree, "Скидки"), "Current shop's reduced-price products appear under Discounts")
+    visible = [tag.removeprefix("shop_discount_") for n in tree.iter("node")
+               if (tag := n.get("resource-id", "").split("/")[-1]).startswith("shop_discount_")]
     check(bool(visible) and all(pid in eligible for pid in visible), "Every visible offer belongs to this seller at a reduced price")
     time.sleep(2)
-    shot("ZikrTime-store-offers-50")
+    shot("ZikrTime-store-discounts-51" if "discount_catalog_source" not in REPORT else "ZikrTime-test-store-discounts-51")
     offer = eligible[visible[0]]
-    REPORT["public_store"] = {"name": seller["name"], "offer": offer["id"], "price": offer["price"],
+    REPORT["discount_store"] = {"name": seller["name"], "offer": offer["id"], "price": offer["price"],
                               "old_price": offer["old_price"]}
-    tap_control("shop_offer_" + offer["id"])
+    tap_control("shop_discount_" + offer["id"])
     title = offer["title"].get("ru") if isinstance(offer["title"], dict) else offer["title"]
     tree = ui()
-    check(text_visible(tree, title) and find_control(tree, "shop_seller_offers") is None, "Tapping a store offer opens its product")
+    check(text_visible(tree, title) and find_control(tree, "shop_seller_discounts") is None, "Tapping a store offer opens its product")
     shell("svc", "wifi", "disable")
     shell("svc", "data", "disable")
     fixture = test_catalog()
@@ -207,32 +217,45 @@ def verify_store():
     fixture["sellers"][0]["promo_until"] = int(time.time()) + 86400
     fixture["products"][0]["old_price"] = fixture["products"][0]["price"]
     fixture["products"][1]["old_price"] = fixture["products"][1]["price"] - 1
+    fixture["sellers"][0]["offers"] = [
+        {"id": "rental", "title": "Третий день в подарок", "conditions": "Арендуйте на два дня", "valid_until": "2099-11-14"},
+        {"id": "past", "title": "Прошлая акция", "conditions": "Недоступна", "valid_until": "2020-01-01"}
+    ]
     put_catalog(fixture)
     start_shop()
     tap_control("shop_seller_qa1")
-    tree = ui()
-    check(text_visible(tree, "Atlas Perfume") and find_control(tree, "shop_seller_offers") is None
-          and not text_visible(tree, "Акции магазина"), "Paid placement, equal and reversed prices do not create a store offer")
+    tree = wait_tag("shop_seller_offers")
+    check(text_visible(tree, "Акции") and text_visible(tree, "Третий день в подарок")
+          and text_visible(tree, "Арендуйте на два дня") and find_control(tree, "shop_offer_rental") is not None,
+          "A standalone offer displays the seller's title and conditions")
+    check(text_visible(tree, "Действует по") and text_visible(tree, "2099"),
+          "Store offer shows its inclusive end date")
+    check(find_control(tree, "shop_offer_past") is None and not text_visible(tree, "Прошлая акция"),
+          "Expired offers remain hidden in a cached catalog")
+    check(find_control(tree, "shop_seller_discounts") is None and not text_visible(tree, "Скидки"),
+          "Seller offers, paid placement and equal or reversed prices do not create discounts")
+    shot("ZikrTime-store-offers-51")
 
 
-try:
-    shell("wm", "size", "720x1600")
-    shell("wm", "density", "320")
-    shell("cmd", "uimode", "night", "yes")
-    shell("input", "keyevent", "KEYCODE_WAKEUP")
-    shell("wm", "dismiss-keyguard")
-    adb("install", "-r", "app/build/outputs/apk/debug/app-debug.apk")
-    adb("install", "-r", "focus-test.apk")
-    start_shop()
-    put_pref("appearance", "string", "dark")
-    verify_listening()
-    verify_store()
-    REPORT["verified"] = True
-except Exception:
-    failure = traceback.format_exc()
-    print(failure, flush=True)
-    (MEDIA / "failure.txt").write_text(failure)
-    shot("failure")
-    raise
-finally:
-    (MEDIA / "verification.json").write_text(json.dumps(REPORT, ensure_ascii=False, indent=2))
+if __name__ == "__main__":
+    try:
+        shell("wm", "size", "720x1600")
+        shell("wm", "density", "320")
+        shell("cmd", "uimode", "night", "yes")
+        shell("input", "keyevent", "KEYCODE_WAKEUP")
+        shell("wm", "dismiss-keyguard")
+        adb("install", "-r", "app/build/outputs/apk/debug/app-debug.apk")
+        adb("install", "-r", "focus-test.apk")
+        start_shop()
+        put_pref("appearance", "string", "dark")
+        verify_listening()
+        verify_store()
+        REPORT["verified"] = True
+    except Exception:
+        failure = traceback.format_exc()
+        print(failure, flush=True)
+        (MEDIA / "failure.txt").write_text(failure)
+        shot("failure")
+        raise
+    finally:
+        (MEDIA / "verification.json").write_text(json.dumps(REPORT, ensure_ascii=False, indent=2))

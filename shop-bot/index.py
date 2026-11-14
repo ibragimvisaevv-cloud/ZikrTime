@@ -20,6 +20,7 @@
 """
 import acquiring
 import community
+from datetime import datetime, timedelta, timezone
 from feedback import FeedbackMixin
 from places_sources import publish_source_fields, remember_removed
 
@@ -52,6 +53,20 @@ DB_KEY = "data/db.json"
 MAX_SELLERS_PER_USER = 3
 MAX_PRODUCTS = 60
 MAX_PHOTOS = 5
+
+
+def offer_today():
+    return datetime.fromtimestamp(time.time(), timezone(timedelta(hours=3))).date()
+
+
+def seller_offers(seller, active_on=None):
+    offers = []
+    for offer in seller.get("offers", {}).values():
+        if offer.get("removed") or (active_on is not None and offer["valid_until"] < active_on):
+            continue
+        offers.append({key: offer[key] for key in ("id", "title", "conditions", "valid_until")})
+    return offers
+
 
 CATEGORIES = [
     {"id": "perfume", "icon": "perfume", "accent": "#8A5A2B", "names": {
@@ -933,6 +948,7 @@ class Bot(FeedbackMixin, PlacesMixin, ReviewsMixin, PromoMixin):
     # ---------- каталог для приложения ----------
     def build_catalog(self):
         sellers, products = [], []
+        today = offer_today().isoformat()
         for s in sorted(self.db["sellers"].values(), key=lambda x: (not x.get("partner"), x["created"])):
             if s["status"] != "approved" or acquiring.unpaid(s):
                 continue
@@ -944,6 +960,7 @@ class Bot(FeedbackMixin, PlacesMixin, ReviewsMixin, PromoMixin):
                 "whatsapp": s.get("whatsapp", ""), "instagram": s.get("instagram", ""), "website": "",
                 "logo": s.get("logo", ""), "cover": s.get("cover", ""),
                 "categories": [cat["id"]], "accent": cat["accent"],
+                "offers": seller_offers(s, active_on=today),
             }
             if s.get("lat") is not None and s.get("lon") is not None:
                 item["lat"], item["lon"] = s["lat"], s["lon"]

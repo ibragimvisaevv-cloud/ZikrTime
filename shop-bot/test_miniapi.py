@@ -6,6 +6,7 @@ import json
 import os
 import sys
 import time
+from datetime import timedelta
 from unittest.mock import patch
 from urllib.parse import urlencode
 
@@ -119,6 +120,24 @@ pid = r["seller"]["products"][0]["id"]
 code, r = call(5, "product_save", sid=sid, pid=pid, fields={"title": "Финики Аджва", "price": "1100", "old_price": "1300"})
 check(r["seller"]["products"][0]["old_price"] == 1300, "товар изменён")
 
+# Акция принадлежит компании и действует независимо от цены товара.
+today = index.offer_today()
+offer = {"title": "Подарок при заказе", "conditions": "Доставка в подарок от 3000 ₽.", "valid_until": today.isoformat()}
+request_id = "seller-offer-test-01"
+code, r = call(5, "offer_save", sid=sid, request_id=request_id, fields=offer)
+check(code == 200 and len(r["seller"]["offers"]) == 1 and sid not in public_companies(),
+      "акция черновой компании доступна продавцу")
+oid = r["seller"]["offers"][0]["id"]
+check(call(5, "offer_save", sid=sid, request_id=request_id, fields=offer)[1]["seller"]["offers"] == [dict(offer, id=oid)],
+      "повтор сохранения не создаёт вторую акцию")
+check(call(6, "offer_save", sid=sid, offer_id=oid, fields=offer)[0] == 404
+      and call(6, "offer_delete", sid=sid, offer_id=oid)[0] == 404, "чужая акция недоступна")
+for invalid in ("", "2026-02-31", (today - timedelta(days=1)).isoformat()):
+    check(call(5, "offer_save", sid=sid, offer_id=oid, fields=dict(offer, valid_until=invalid))[0] == 400,
+          "проверка срока акции")
+check(call(5, "offer_save", sid=sid, offer_id=oid, fields=dict(offer, conditions=""))[0] == 400,
+      "условия акции обязательны")
+
 # Модерация владельцем из кабинета
 code, r = call(5, "mod_seller", sid=sid, do="ok")
 check(code == 403, "продавец не модерирует")
@@ -133,6 +152,19 @@ code, r = call(1, "mod_seller", sid=sid, do="ok")
 check(code == 200 and db()["sellers"][sid]["status"] == "approved" and sid in public_companies(),
       "после одобрения компания сразу попадает в каталог")
 check(not r["moderation"]["pending"], "одобренная заявка исчезает из очереди")
+check(public_companies()[sid]["offers"] == [dict(offer, id=oid)], "последний день входит в публичный срок")
+with patch.object(index, "offer_today", return_value=today + timedelta(days=1)):
+    bot = index.Bot(pub, index.OutboxTelegram(), TOKEN, data=priv)
+    check(not next(s for s in bot.build_catalog()["sellers"] if s["id"] == sid)["offers"],
+          "истёкшая акция скрывается при публикации")
+changed_offer = dict(offer, conditions="Доставка бесплатно от 2000 ₽.")
+call(5, "offer_save", sid=sid, offer_id=oid, fields=changed_offer)
+check(public_companies()[sid]["offers"] == [dict(changed_offer, id=oid)], "изменения сразу видны в магазине")
+for _ in range(2):
+    check(call(5, "offer_delete", sid=sid, offer_id=oid)[0] == 200, "повторное завершение безопасно")
+call(5, "offer_save", sid=sid, request_id=request_id, fields=offer)
+check(not public_companies()[sid]["offers"] and db()["sellers"][sid]["products"][pid]["old_price"] == 1300,
+      "поздний повтор не возвращает завершённую акцию; скидка на товар сохранена")
 code, r = call(5, "promo_request", sid=sid, days=7)
 check(code == 400, "старое приложение не может создать ручную оплату")
 
