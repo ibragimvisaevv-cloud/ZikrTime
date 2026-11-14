@@ -34,11 +34,52 @@ def tap_arabic_text(tag, long_press=False):
         suite.shell("input", "tap", x, y)
 
 
-def cursor():
-    tree = suite.ui()
-    ayahs = suite.active_numbers(tree, "quran_playing_ayah_")
-    words = suite.active_numbers(tree, "quran_playing_word_")
-    return (ayahs[0], words[0]) if len(ayahs) == len(words) == 1 else None
+def word_motion():
+    first_seen = {}
+
+    def observe():
+        tree = suite.ui()
+        ayahs = suite.active_numbers(tree, "quran_playing_ayah_")
+        words = suite.active_numbers(tree, "quran_playing_word_")
+        if len(ayahs) == len(words) == 1:
+            ayah, word = ayahs[0], words[0]
+            previous = first_seen.setdefault(ayah, word)
+            if previous != word:
+                return [(ayah, previous), (ayah, word)]
+        return None
+
+    return suite.wait_until(observe, bool, "No two distinct highlighted words in the same ayah", 50)
+
+
+def verify_word_highlight():
+    # Solid gold on a small rectangle inside the Arabic text is the active
+    # word background. A marker or unhighlighted verse has no such region.
+    def capture():
+        tree = suite.ui()
+        words = suite.active_numbers(tree, "quran_playing_word_")
+        ayahs = suite.active_numbers(tree, "quran_playing_ayah_")
+        if len(words) != 1 or len(ayahs) != 1:
+            return None
+        blocks = [n for n in suite.active_numbers(tree, "quran_whole_") if n <= ayahs[0]]
+        if not blocks:
+            return None
+        node = suite.find_control(tree, f"quran_whole_{max(blocks)}")
+        bounds = tuple(map(int, re.findall(r"-?\d+", node.get("bounds"))))
+        shot = subprocess.check_output(["adb", "exec-out", "screencap", "-p"], timeout=25)
+        with Image.open(io.BytesIO(shot)) as image:
+            area = image.crop(bounds).convert("RGB")
+            # Word backgrounds contain long continuous runs of the gold fill.
+            # Individual outlines/numbers in the same color do not.
+            gold = bytes(1 if abs(r - 216) <= 3 and abs(g - 184) <= 3 and abs(b - 118) <= 3 else 0
+                         for r, g, b in area.getdata())
+            filled_rows = sum(b"\x01" * 18 in gold[start:start + area.width]
+                              for start in range(0, len(gold), area.width)) if area.width else 0
+        if filled_rows >= 5:
+            (suite.MEDIA / "ZikrTime-reader-playing-51.png").write_bytes(shot)
+            return {"ayah": ayahs[0], "word": words[0], "gold_band_rows": filled_rows}
+        return None
+
+    suite.REPORT["visible_word_highlight"] = suite.wait_until(capture, bool, "No visible gold word background", 40)
 
 
 def verify_reader():
@@ -62,11 +103,8 @@ def verify_reader():
     first = suite.wait_until(suite.player, lambda p: p["isPlaying"] and p["surahId"] == 98 and
                              p["ayah"] == 1 and p["continueAfter"],
                              "Reader did not start at the selected 98:1", 75)
-    cursor_a = suite.wait_until(cursor, bool, "Reader did not display a timed word", 35)
-    cursor_b = suite.wait_until(cursor, lambda c: c is not None and c != cursor_a,
-                                "Reader word highlighting did not move", 35)
-    suite.REPORT["reader_word_positions"] = [cursor_a, cursor_b]
-    suite.verify_highlight_pixels("ZikrTime-reader-playing-51", whole=True)
+    suite.REPORT["reader_word_positions"] = word_motion()
+    verify_word_highlight()
     later = suite.wait_until(suite.player, lambda p: p["isPlaying"] and p["surahId"] == 98 and
                              isinstance(p["ayah"], int) and p["ayah"] > first["ayah"],
                              "Reader did not continue with the next ayah", 45)
