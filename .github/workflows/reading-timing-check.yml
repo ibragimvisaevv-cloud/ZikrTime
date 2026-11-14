@@ -1,0 +1,32 @@
+name: Check recitation timing sources
+on:
+  push:
+    branches: [codex/reading-store-promos-0828]
+    paths: ['.github/workflows/reading-timing-check.yml']
+permissions:
+  contents: read
+jobs:
+  sources:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Read Alafasy timing and audio metadata
+        shell: python
+        run: |
+          import json, urllib.request, concurrent.futures
+          base = "https://api-staging.mp3quran.net/v4"
+          urls = [base + "/recitations/mishary-alafasy/r1/surahs/1/word-timings?include=text,audio", base + "/recitations/mishary-alafasy/r1/surahs/1/word-timings?include=text", base + "/timing-releases", base + "/recitations/mishary-alafasy/r1/surahs/1", "https://storage.yandexcloud.net/zikrtime-shop/miniapp/config.js"]
+          def read(url):
+              try:
+                  with urllib.request.urlopen(url, timeout=25) as response:
+                      body = response.read(1800000).decode()
+                  if url.endswith(".js"):
+                      import re
+                      return url, re.findall(r'https://functions\.yandexcloud\.net/[a-z0-9]+', body)[:1]
+                  data = json.loads(body)
+                  return url, json.dumps(data, ensure_ascii=False)[:3500]
+              except Exception as exc:
+                  return url, str(exc)
+          with concurrent.futures.ThreadPoolExecutor(max_workers=5) as pool:
+              for url, sample in pool.map(read, urls):
+                  print(url, sample)
