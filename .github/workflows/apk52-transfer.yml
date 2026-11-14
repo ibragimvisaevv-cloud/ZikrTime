@@ -1,0 +1,32 @@
+name: Export signed release for chat attachment
+on:
+  push:
+    branches: [ci/apk52-user-download]
+    paths: ['.github/workflows/apk52-transfer.yml']
+permissions:
+  contents: write
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare exact release bytes for delivery
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          scratch=$(mktemp -d)
+          apk=ZikrTime-0.8.28-52.apk
+          for attempt in $(seq 1 90); do
+            if gh release download test-0.8.28-52 --repo "$GITHUB_REPOSITORY" --pattern "$apk" --pattern SHA256SUMS.txt --dir "$scratch" --clobber >/dev/null 2>&1; then break; fi
+            sleep 15
+          done
+          (cd "$scratch" && sha256sum -c SHA256SUMS.txt)
+          git switch --orphan ci/transfer-apk-52
+          mkdir -p chunks
+          split -b 540000 -d -a 3 "$scratch/$apk" chunks/part-
+          cp "$scratch/SHA256SUMS.txt" .
+          git add chunks SHA256SUMS.txt
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Deliver verified signed bytes for ZikrTime build 52'
+          git push origin HEAD:refs/heads/ci/transfer-apk-52
