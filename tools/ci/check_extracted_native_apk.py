@@ -29,6 +29,10 @@ with zipfile.ZipFile(sys.argv[1]) as previous, zipfile.ZipFile(sys.argv[2]) as c
             print(f"{name}: ELF LOAD {inspect_elf(data)}, compressed, SHA256 {hashlib.sha256(data).hexdigest()}")
     assets = {n for n in previous.namelist() if n.startswith("assets/")}
     assert assets and assets == {n for n in current.namelist() if n.startswith("assets/")}
-    for name in assets:
+    # ART profiles index the DEX generated for this precise version. Their checksum
+    # changes with BuildConfig.VERSION_CODE, while the shipped product data must match.
+    generated_profiles = {"assets/dexopt/baseline.prof", "assets/dexopt/baseline.profm"}
+    product_assets = assets - generated_profiles
+    for name in product_assets:
         assert previous.read(name) == current.read(name), name + " changed"
-    print(f"Verified {len(libs)} native libraries and {len(assets)} unchanged assets.")
+    print(f"Verified {len(libs)} native libraries and {len(product_assets)} unchanged product assets.")
