@@ -168,14 +168,12 @@ internal object QuranWordTimings {
         return phraseIndex(ayah, arabic).phrase(word, gapNeighbor)
     }
 
-    /** Pending selection can use an audited onset even when the end cannot support a moving highlight. */
+    /** A silent selection is drawn from the text and bundled word map before the audio service is opened. */
     @Synchronized
     fun selectedPhrase(context: Context, surah: Int, ayah: Int, arabic: String, word: Int): QuranReadingPhrase? {
         load(context, surah)
-        val timing = QuranAudioRepository.ayahTiming(surah, ayah) ?: return null
-        val selection = resolveSeek(originalIntervals, timing, word, additionalStarts).word ?: return null
         val extra = additionalStarts.keys.filter { it.first == ayah }.mapTo(mutableSetOf()) { it.second }
-        return phraseIndex(ayah, arabic).phrase(selection, additionalWords = extra)
+        return phraseIndex(ayah, arabic).phrase(word, additionalWords = extra)
     }
 
     private fun phraseIndex(ayah: Int, arabic: String): QuranPhraseIndex {
