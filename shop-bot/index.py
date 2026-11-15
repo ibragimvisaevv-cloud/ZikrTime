@@ -727,9 +727,13 @@ class PromoMixin:
     """Тарифы продвижения и обработка старых заявок на ручную сверку."""
     DEFAULT_PRICES = {"7": 100, "30": 300}
 
+    @classmethod
+    def prices_from(cls, db):
+        prices = db.get("promo_prices") or cls.DEFAULT_PRICES
+        return {str(days): int(price) for days, price in prices.items()}
+
     def promo_prices(self):
-        p = self.db.get("promo_prices") or self.DEFAULT_PRICES
-        return {str(k): int(v) for k, v in p.items()}
+        return self.prices_from(self.db)
 
     def promo_active(self, s):
         return (s.get("promo_until") or 0) > time.time()

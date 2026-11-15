@@ -7,6 +7,8 @@ import os
 import sys
 import time
 from datetime import timedelta
+from pathlib import Path
+from tempfile import TemporaryDirectory
 from unittest.mock import patch
 from urllib.parse import urlencode
 
@@ -215,6 +217,45 @@ code, r = call(5, "settings", prices={"7": 1, "30": 2})
 check(code == 403, "настройки — только владелец")
 code, r = call(1, "settings", prices={"7": 150, "30": 450}, pay_url="https://pay.cloudtips.ru/p/x")
 check(r["prices"] == {"7": 150, "30": 450}, "владелец меняет тарифы")
+
+
+# The public landing exposes the same tariffs as checkout, with no account access or writes.
+def portal_request(op):
+    response = miniapi.handler({"httpMethod": "POST", "body": json.dumps({"portal": True, "op": op})}, None)
+    return response["statusCode"], json.loads(response["body"])
+
+
+with TemporaryDirectory() as directory, patch.object(miniapi, "PORTAL_FILES", Path(directory)), \
+        patch.object(index, "make_storage", side_effect=lambda token, bucket: priv if bucket == index.DATA_BUCKET else pub), \
+        patch.dict(os.environ, {"SELLER_PORTAL_URL": "https://service.example.invalid",
+                                "SELLER_OFFER_URL": "https://terms.example.invalid/",
+                                "PUBLIC_SELLER_NAME": "", "PUBLIC_SELLER_INN": "", "PUBLIC_SUPPORT_EMAIL": ""}, clear=True):
+    before = (dict(priv.files), dict(pub.files))
+    code, public = portal_request("public")
+    check(code == 200 and set(public) == {"prices", "listing_fee_enabled", "listing_price", "offer", "operator", "ready", "test"},
+          "анонимный ответ содержит только публичные поля")
+    check(public["prices"] == r["prices"] and public["listing_price"] == 0 and not public["listing_fee_enabled"],
+          "публичная страница показывает текущие тарифы владельца")
+    check(public["offer"] == os.environ["SELLER_OFFER_URL"] and public["operator"] is None and not public["ready"],
+          "согласованная внешняя ссылка видна до подключения оплаты")
+    check(portal_request("list")[0] == 401, "публичная страница не открывает личный кабинет")
+    os.environ.update(LISTING_FEE_ENABLED="true", SELLER_OFFER_URL="http://bad.example.invalid")
+    public = portal_request("public")[1]
+    check(public["listing_fee_enabled"] and public["listing_price"] == 200 and public["offer"] == "",
+          "платное размещение следует серверному флагу, небезопасный URL не публикуется")
+    get_offer = {"httpMethod": "GET", "queryStringParameters": {"page": "offer"}}
+    unpublished = miniapi.handler(get_offer, None)
+    check("пока не опубликована" in unpublished["body"] and "{{" not in unpublished["body"], "нет оферты без реквизитов")
+    os.environ.update(PUBLIC_SELLER_NAME="Исполнитель <пример>", PUBLIC_SELLER_INN="0"*12,
+                      PUBLIC_SUPPORT_EMAIL="help@example.invalid")
+    (Path(directory) / "offer.html").write_text("{{OPERATOR_NAME}} {{OPERATOR_INN}} {{SUPPORT_EMAIL}}", encoding="utf-8")
+    public = portal_request("public")[1]
+    published = miniapi.handler(get_offer, None)
+    check(public["offer"] == "https://service.example.invalid?page=offer" and set(public["operator"]) == {"name", "inn", "email"},
+          "локальная оферта появляется с подтверждёнными публичными реквизитами")
+    check("&lt;пример&gt;" in published["body"] and "help@example.invalid" in published["body"] and "{{" not in published["body"],
+          "страница подставляет реквизиты и экранирует разметку")
+    check(before == (priv.files, pub.files), "публичные запросы не изменяют хранилища")
 
 # Удаление
 code, r = call(5, "product_delete", sid=sid, pid=pid)

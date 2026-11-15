@@ -2,7 +2,8 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="light dark"><title>Кабинет продавца · Зикр-тайм</title>
+<meta name="color-scheme" content="light dark"><title>Размещение компании и тарифы · Зикр-тайм</title>
+<meta name="description" content="Размещение компании в каталоге Зикр-тайм, тарифы продвижения на 7 и 30 дней, условия и контакты поддержки.">
 <style>
 :root{color-scheme:light;--paper:#f4f1e9;--card:#fffcf5;--ink:#203a32;--muted:#65736b;--line:#dcded4;--green:#245b48;--gold:#977341;--soft:#e9efe5}
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,sans-serif}main{width:min(100% - 36px,880px);margin:auto;padding:28px 0 64px}header{padding:8px 0 26px;border-bottom:1px solid var(--line);margin-bottom:24px}
@@ -16,8 +17,32 @@ label{display:block;margin:16px 0 8px;font-size:14px;font-weight:600}input{font:
 @media(prefers-color-scheme:dark){:root{color-scheme:dark;--paper:#121b19;--card:#1c2823;--ink:#f0eee3;--muted:#afbab1;--line:#35443b;--green:#9cc6ab;--gold:#d1b783;--soft:#26392f}button,.action{color:#14251c}.secondary,.text-button{color:var(--ink)}#message{background:#e5e9dd;color:#17251e}}
 @media(max-width:480px){main{width:calc(100% - 28px);padding-top:18px}section{padding:19px}.card-head{display:block}.pill{display:inline-block;margin-top:10px}.offers{grid-template-columns:1fr}.row{align-items:flex-start}.order .row{gap:8px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}button:active,.action:active{transform:none}}
+[hidden]{display:none!important}nav{display:flex;flex-wrap:wrap;align-items:center;gap:0 20px;margin-top:14px}nav a{display:inline-flex;align-items:center;min-height:44px;font-size:14px}section[id],#login{scroll-margin-top:20px}
+#public-info .offers{margin:18px 0 10px}#public-info .offer{gap:6px}#public-info .price{min-height:36px}#terms p,#contacts p{margin-top:10px}
+.public-links{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:18px}.public-links a:not(.action){display:inline-flex;align-items:center;min-height:44px}
+.contact-links{display:flex;flex-wrap:wrap;gap:0 24px}.contact-links a{display:inline-flex;align-items:center;min-height:42px;overflow-wrap:anywhere}
 </style></head><body>
-<main><header><div class="brand"><span class="emblem" aria-hidden="true"></span>Зикр-тайм · Для бизнеса</div><h1>Кабинет продавца</h1><p>Управляйте размещением компании и выбирайте срок продвижения.</p></header>
+<main><header><div class="brand"><span class="emblem" aria-hidden="true"></span>Зикр-тайм · Для бизнеса</div><h1 id="page-title">Размещение компании в Зикр-тайм</h1><p id="page-description">Покажите покупателям свою компанию, товары и контакты в каталоге приложения.</p>
+<nav id="public-nav" aria-label="Разделы страницы"><a href="#tariffs">Тарифы</a><a href="#terms">Условия</a><a href="#contacts">Контакты</a><a href="#login">Войти в кабинет</a></nav></header>
+<div id="public-info">
+<section id="tariffs" aria-labelledby="tariffs-title"><h2 id="tariffs-title">Тарифы</h2>
+<div class="offers">
+<div class="offer"><strong>Карточка компании</strong><span id="listing-price" class="price">—</span><small>Компания, товары и контакты в каталоге после проверки.</small></div>
+<div class="offer"><strong>Продвижение на 7 дней</strong><span id="price-7" class="price">—</span><small>Выше в каталоге на неделю.</small></div>
+<div class="offer"><strong>Продвижение на 30 дней</strong><span id="price-30" class="price">—</span><small>Выше в каталоге на 30 дней.</small></div>
+</div><p id="public-status" class="muted" role="status">Загружаем действующие тарифы…</p><noscript><p>Для просмотра текущих цен включите JavaScript или обратитесь в поддержку.</p></noscript>
+<div class="public-links"><a class="action" href="https://t.me/ZeekrTime_Bot?start=add" target="_blank" rel="noopener noreferrer">Добавить компанию</a></div></section>
+<section id="terms" aria-labelledby="terms-title"><h2 id="terms-title">Условия размещения</h2>
+<p>Откройте кабинет в Telegram, заполните карточку компании и отправьте на проверку. После одобрения покупатели смогут найти её в приложении.</p>
+<p>Продвижение доступно для опубликованных карточек. Вы выбираете срок и оплачиваете его один раз. После подтверждения оплаты компания поднимается в каталоге с пометкой «Реклама».</p>
+<p>По вопросам оказания услуги, платежа или возврата напишите в поддержку. Если счёт уже создан, укажите номер заказа из истории в кабинете.</p>
+<p><a id="public-offer" href="?page=offer" target="_blank" rel="noopener noreferrer">Информация об услуге</a></p>
+</section>
+<section id="contacts" aria-labelledby="contacts-title"><h2 id="contacts-title">Контакты</h2><p>Поддержка Зикр-тайм по вопросам размещения и оплаты</p>
+<p id="seller-identity" hidden></p><p id="seller-tax" hidden></p>
+<div class="contact-links"><a id="support-email" hidden></a><a href="https://t.me/ZeekrTime_Bot" target="_blank" rel="noopener noreferrer">Кабинет в Telegram</a></div>
+<a href="https://storage.yandexcloud.net/zikrtime-shop/privacy.html" target="_blank" rel="noopener noreferrer">Политика конфиденциальности</a></section>
+</div>
 <div id="view" aria-busy="true"><p class="loading">Открываем кабинет…</p></div><p id="message" role="status" aria-live="polite"></p></main>
 <script>
 "use strict";
@@ -46,6 +71,40 @@ function button(parent,label,fn,className="") {
   };return element;
 }
 function money(value){return new Intl.NumberFormat("ru-RU",{style:"currency",currency:"RUB",maximumFractionDigits:0}).format(value);}
+function publicView(visible){
+  document.getElementById("public-info").hidden=!visible;
+  document.getElementById("public-nav").hidden=!visible;
+  document.getElementById("page-title").textContent=visible?"Размещение компании в Зикр-тайм":"Кабинет продавца";
+  document.getElementById("page-description").textContent=visible?"Покажите покупателям свою компанию, товары и контакты в каталоге приложения.":"Управляйте размещением компании и выбирайте срок продвижения.";
+}
+async function loadTariffs(){
+  const status=document.getElementById("public-status");
+  try{
+    const response=await fetch(location.pathname,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({portal:true,op:"public"})});
+    if(!response.ok)throw Error();
+    const data=await response.json();
+    const prices=[data.listing_price,data.prices?.["7"],data.prices?.["30"]];
+    if(typeof data.listing_fee_enabled!=="boolean"||!prices.every(p=>Number.isFinite(p)&&p>=0))throw Error();
+    document.getElementById("listing-price").textContent=data.listing_fee_enabled?money(prices[0])+" разово":"Бесплатно";
+    document.getElementById("price-7").textContent=money(prices[1]);
+    document.getElementById("price-30").textContent=money(prices[2]);
+    status.textContent=!data.ready||data.test?"Приём онлайн-оплаты готовится к запуску.":"Оплатить продвижение можно в кабинете продавца.";
+    const offer=document.getElementById("public-offer");
+    if(typeof data.offer==="string" && (data.offer.startsWith("https://")||data.offer==="?page=offer")){
+      offer.href=data.offer;offer.textContent="Публичная оферта";
+    }
+    if(data.operator){
+      const {name,inn,email}=data.operator;
+      const identity=document.getElementById("seller-identity"),tax=document.getElementById("seller-tax"),contact=document.getElementById("support-email");
+      if(typeof name==="string"&&name.trim()){identity.textContent="Исполнитель — "+name;identity.hidden=false;}
+      if(typeof inn==="string"&&/^\d{12}$/.test(inn)){tax.textContent="ИНН "+inn;tax.hidden=false;}
+      if(typeof email==="string"&&/^[^\s@?#]+@[^\s@?#]+\.[^\s@?#]+$/.test(email)){contact.href="mailto:"+email;contact.textContent=email;contact.hidden=false;}
+    }
+  }catch(_){
+    status.replaceChildren("Не удалось загрузить действующие тарифы. ");
+    button(status,"Попробовать снова",loadTariffs,"text-button");
+  }
+}
 async function request(op,fields={}) {
   const response=await fetch(location.pathname,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({...fields,portal:true,op,session})});
   const data=await response.json();
@@ -55,7 +114,8 @@ async function request(op,fields={}) {
 }
 function login() {
   view.replaceChildren();view.setAttribute("aria-busy","false");
-  const card=add(view,"section",undefined,"login");add(card,"h2","Войдите по одноразовому коду");
+  publicView(true);loadTariffs();
+  const card=add(view,"section",undefined,"login");card.id="login";add(card,"h2","Войдите по одноразовому коду");
   add(card,"p","В кабинете Telegram откройте «Аккаунт» и нажмите «Код входа на сайт». Код действует 5 минут.","intro");
   const label=add(card,"label","Код входа"),input=add(label,"input");input.autocomplete="one-time-code";input.spellcheck=false;input.autocapitalize="none";input.placeholder="Вставьте полученный код";input.required=true;
   const enter=button(card,"Войти в кабинет",async()=>{
@@ -94,6 +154,7 @@ async function show() {
   view.setAttribute("aria-busy","true");let data;
   try{data=await request("list");}finally{view.setAttribute("aria-busy","false");}
   view.replaceChildren();
+  publicView(false);
   const listingFeeEnabled=data.listing_fee_enabled===true;
   const toolbar=add(view,"div",undefined,"toolbar");add(toolbar,"span","Мои компании","badge");const actions=add(toolbar,"div");
   button(actions,"Обновить",show,"text-button");button(actions,"Выйти",async()=>{await request("logout");saveSession("");login();},"text-button");

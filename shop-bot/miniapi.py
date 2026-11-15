@@ -10,6 +10,7 @@ API мини-приложения (кабинет продавца в Telegram).
 import base64
 import hashlib
 import hmac
+import html
 import json
 import os
 import re
@@ -17,6 +18,7 @@ import secrets
 import sys
 import time
 from datetime import date
+from pathlib import Path
 from urllib.parse import parse_qsl
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -440,16 +442,79 @@ def run(req, storage_factory, token):
     raise ApiError("Сервер занят, попробуйте ещё раз", 503)
 
 
+HTML_HEADERS = {
+    "Content-Type": "text/html; charset=utf-8",
+    "Cache-Control": "no-store",
+    "Referrer-Policy": "no-referrer",
+    "X-Frame-Options": "DENY",
+    "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'",
+}
+PORTAL_FILES = Path(__file__).resolve().parent
+
+
+def public_operator_dict():
+    try:
+        configured = json.loads((PORTAL_FILES / "public_operator.json").read_text(encoding="utf-8"))
+    except (FileNotFoundError, ValueError):
+        configured = {}
+    if not isinstance(configured, dict):
+        configured = {}
+    fields = {k: os.getenv(env, configured.get(k)) for k, env in (
+        ("name", "PUBLIC_SELLER_NAME"), ("inn", "PUBLIC_SELLER_INN"), ("email", "PUBLIC_SUPPORT_EMAIL"))}
+    if not all(isinstance(value, str) for value in fields.values()):
+        return None
+    fields = {k: value.strip() for k, value in fields.items()}
+    if not fields["name"] or len(fields["name"]) > 160 or not fields["name"].isprintable():
+        return None
+    if not re.fullmatch(r"[0-9]{12}", fields["inn"]):
+        return None
+    if len(fields["email"]) > 254 or not re.fullmatch(
+            r"[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+", fields["email"]):
+        return None
+    return fields
+
+
+def public_portal_info(factory, provider):
+    # An anonymous page must never initialise a Bot, migrate the database, or run queued operations.
+    raw = factory(index.DATA_BUCKET).get(index.DB_KEY)
+    if raw is None:
+        raise ApiError("Не удалось загрузить тарифы.", 503)
+    prices = index.PromoMixin.prices_from(json.loads(raw))
+    operator = public_operator_dict()
+    local_offer = provider.portal + "?page=offer" if acquiring.secure_url(provider.portal) else ""
+    external = provider.offer if acquiring.secure_url(provider.offer) else ""
+    offer = external if external and external != local_offer else local_offer if operator else ""
+    paid_listing = acquiring.listing_fee_enabled()
+    return {"prices": {days: prices[days] for days in ("7", "30")}, "listing_fee_enabled": paid_listing,
+            "listing_price": acquiring.LISTING_AMOUNT // 100 if paid_listing else 0,
+            "offer": offer, "operator": operator, "ready": bool(provider.ready and offer),
+            "test": bool(provider.test)}
+
+
+def public_offer_html():
+    operator = public_operator_dict()
+    if not operator:
+        return ('<!doctype html><html lang="ru"><meta charset="utf-8">'
+                '<meta name="viewport" content="width=device-width,initial-scale=1"><title>Условия продвижения ZikrTime</title>'
+                '<main><h1>Условия продвижения ZikrTime</h1><p>Публичная оферта пока не опубликована. '
+                'Условия и реквизиты исполнителя появятся после подтверждения владельцем.</p>'
+                '<p><a href="?">Вернуться на сайт ZikrTime</a></p></main></html>')
+    template = (PORTAL_FILES / "offer.html").read_text(encoding="utf-8")
+    values = {"OPERATOR_NAME": operator["name"], "OPERATOR_INN": operator["inn"], "SUPPORT_EMAIL": operator["email"]}
+    return re.sub(r"\{\{(OPERATOR_NAME|OPERATOR_INN|SUPPORT_EMAIL)\}\}",
+                  lambda m: html.escape(values[m.group(1)], quote=True), template)
+
+
 def handler(event, context):
     """Точка входа облачной функции Yandex Cloud (HTTP)."""
     if (event.get("httpMethod") or "POST").upper() == "OPTIONS":
         return {"statusCode": 204, "headers": CORS, "body": ""}
     method = (event.get("httpMethod") or "POST").upper()
+    query = event.get("queryStringParameters") or {}
     if method == "GET":
-        with open(os.path.join(os.path.dirname(__file__), "seller.html"), encoding="utf-8") as page:
-            return {"statusCode": 200, "headers": {"Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store",
-                    "Referrer-Policy": "no-referrer", "X-Frame-Options": "DENY",
-                    "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"}, "body": page.read()}
+        body = (public_offer_html() if query.get("page") == "offer"
+                else (PORTAL_FILES / "seller.html").read_text(encoding="utf-8"))
+        return {"statusCode": 200, "headers": HTML_HEADERS, "body": body}
     if method != "POST":
         return {"statusCode": 405, "body": ""}
     body = event.get("body") or "{}"
@@ -458,7 +523,6 @@ def handler(event, context):
     try:
         if len(body) > 3_600_000:
             raise ApiError("Запрос слишком большой", 413)
-        query = event.get("queryStringParameters") or {}
         if query.get("event") == "robokassa":
             pairs = parse_qsl(body, keep_blank_values=True)
             req = dict(pairs)
@@ -475,7 +539,10 @@ def handler(event, context):
         if callback or req.get("portal") is True:
             try:
                 provider = robokassa.Robokassa() if query.get("event") == "robokassa" else acquiring.Bank() if callback else acquiring.payment_provider()
-                result = acquiring.dispatch(factory, provider, req, callback=callback)
+                if not callback and req.get("op") == "public":
+                    result = public_portal_info(factory, provider)
+                else:
+                    result = acquiring.dispatch(factory, provider, req, callback=callback)
                 if isinstance(result, str):
                     return {"statusCode": 200, "headers": {"Content-Type": "text/plain"}, "body": result}
                 return {"statusCode": 200, "headers": {"Content-Type": "application/json", "Cache-Control": "no-store"},

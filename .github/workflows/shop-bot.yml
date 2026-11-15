@@ -65,7 +65,115 @@ jobs:
           name: MiniApp-0.8.23-ui
           path: ci-out/miniapp/
 
+  seller-public:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[seller-public-only]')
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Prepare Chromium for anonymous production checks
+        run: |
+          npm install --prefix "$RUNNER_TEMP/seller-qa" playwright
+          "$RUNNER_TEMP/seller-qa/node_modules/.bin/playwright" install --with-deps chromium
+
+      - name: Publish only the existing seller function with the live configuration
+        env:
+          YC_SA_KEY: ${{ secrets.YC_SA_KEY }}
+          RAW_FOLDER: ${{ secrets.YC_FOLDER_ID }}
+        run: |
+          set -euo pipefail
+          umask 077
+          keyfile="$RUNNER_TEMP/seller-key.json"
+          trap 'rm -f "$keyfile"' EXIT
+          python3 -c 'import json,os,sys; json.dump(json.loads(os.environ["YC_SA_KEY"].lstrip("\ufeff"), strict=False), sys.stdout)' > "$keyfile"
+          unset YC_SA_KEY
+          curl -fsSL --retry 2 https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash -s -- -i "$RUNNER_TEMP/yc" -n
+          yc="$RUNNER_TEMP/yc/bin/yc"
+          "$yc" config profile create seller-public
+          "$yc" config set service-account-key "$keyfile"
+          IAM_TOKEN=$("$yc" iam create-token)
+          export IAM_TOKEN
+          python3 shop-bot/deploy_seller_public.py
+
+      - name: Anonymous public tariffs, contact and offer on the production URL
+        env:
+          NODE_PATH: ${{ runner.temp }}/seller-qa/node_modules
+        run: |
+          node <<'JS'
+          const assert = require('node:assert/strict');
+          const { chromium } = require('playwright');
+          const url = 'https://functions.yandexcloud.net/d4e19urtqg3suhvp2jg2';
+
+          async function main() {
+            const browser = await chromium.launch();
+            try {
+              const page = await browser.newPage();
+              const response = await page.goto(url, { waitUntil: 'domcontentloaded' });
+              assert.equal(response.status(), 200);
+              assert.equal(page.url().replace(/\/$/, ''), url);
+              const publicReply = await page.request.post(url, { data: { portal: true, op: 'public' } });
+              assert.equal(publicReply.status(), 200);
+              const info = await publicReply.json();
+              for (const selector of ['#page-title', '#tariffs', '#terms', '#contacts', '#contacts a[href^="https://t.me/"]']) {
+                await page.locator(selector).first().waitFor({ state: 'visible' });
+              }
+              for (const days of ['7', '30']) {
+                const price = info.prices[days];
+                assert(Number.isSafeInteger(price) && price >= 0, 'Invalid public promotion tariff');
+                await page.waitForFunction(({ days, price }) => {
+                  const text = document.getElementById('price-' + days)?.innerText || '';
+                  return text.includes('₽') && Number(text.replace(/\D/g, '')) === price;
+                }, { days, price });
+                console.log('Public price for %s days: %s RUB', days, price);
+              }
+              await page.waitForFunction(({ enabled, price }) => {
+                const text = document.getElementById('listing-price')?.innerText || '';
+                return enabled ? text.includes('₽') && Number(text.replace(/\D/g, '')) === price : /бесплатно/i.test(text);
+              }, { enabled: info.listing_fee_enabled, price: info.listing_price });
+              if (info.operator) {
+                const link = page.locator('#support-email');
+                await link.waitFor({ state: 'visible' });
+                assert((await link.getAttribute('href') || '').toLowerCase() === 'mailto:' + info.operator.email.toLowerCase(),
+                  'Public email link does not match the configured contact');
+              }
+              const offerLink = page.locator('#public-offer');
+              await offerLink.waitFor({ state: 'visible' });
+              const target = new URL(await offerLink.getAttribute('href'), url);
+              assert(target.protocol === 'https:' && !target.username && !target.password);
+              if (info.offer) assert(target.href === new URL(info.offer, url).href, 'Offer link differs from public configuration');
+              const offerUrl = url + '?page=offer';
+              if (!info.offer) assert(target.href === new URL(offerUrl).href, 'Local offer information link is missing');
+              const offer = await page.goto(offerUrl);
+              assert.equal(offer.status(), 200);
+              if (info.operator) {
+                await page.getByRole('heading', { level: 1, name: 'Публичная оферта на продвижение компании в ZikrTime' }).waitFor();
+                await page.getByRole('heading', { name: 'Отказ от услуги и возврат' }).waitFor();
+                await page.getByRole('heading', { name: 'Контакты исполнителя' }).waitFor();
+                const text = await page.locator('body').innerText();
+                assert(/\b\d{12}\b/.test(text), 'Missing public operator tax registration');
+              } else {
+                await page.getByRole('heading', { level: 1, name: 'Условия продвижения ZikrTime' }).waitFor();
+                await page.getByText('Публичная оферта пока не опубликована', { exact: false }).first().waitFor();
+              }
+              for (const body of [{ portal: true, op: 'list' }, { action: 'me', initData: '' }]) {
+                const denied = await page.request.post(url, { data: body });
+                assert.equal(denied.status(), 401);
+              }
+              console.log('Same production URL returned public pricing, contacts and terms before login; anonymous seller and Telegram API returned 401.');
+            } finally {
+              await browser.close();
+            }
+          }
+          main().catch(error => { console.error(error.message); process.exitCode = 1; });
+          JS
+
   deploy:
+    if: github.event_name != 'push' || github.ref != 'refs/heads/main' || !contains(github.event.head_commit.message, '[seller-public-only]')
     needs: test
     runs-on: ubuntu-latest
     steps:

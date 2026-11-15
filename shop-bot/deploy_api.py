@@ -62,6 +62,19 @@ def changed_payment_settings(previous, current):
                   if (key in previous, previous.get(key)) != (key in current, current.get(key)))
 
 
+def deployment_content():
+    buf = io.BytesIO()
+    base = os.path.dirname(__file__)
+    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
+        for f in ("index.py", "miniapi.py", "acquiring.py", "robokassa.py", "seller.html", "offer.html",
+                  "place_corrections.py", "places_sources.py", "feedback.py", "community.py"):
+            z.write(os.path.join(base, f), f)
+        operator = os.path.join(base, "public_operator.json")
+        if os.path.isfile(operator):
+            z.write(operator, "public_operator.json")
+    return base64.b64encode(buf.getvalue()).decode("ascii")
+
+
 def main():
     folder, name = os.environ["FOLDER"], os.environ["API_FUNCTION"]
     preserve = os.getenv("PRESERVE_PAYMENT_CONFIG", "false").lower() == "true"
@@ -91,11 +104,6 @@ def main():
             if e.code != 409:  # уже открыта
                 print("доступ: не удалось открыть публичный вызов", file=sys.stderr)
 
-    buf = io.BytesIO()
-    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
-        for f in ("index.py", "miniapi.py", "acquiring.py", "robokassa.py", "seller.html",
-                  "place_corrections.py", "places_sources.py", "feedback.py", "community.py"):
-            z.write(os.path.join(os.path.dirname(__file__), f), f)
     env = deployment_environment(fid, previous_environment, preserve)
     wait(call("POST", f"{API}/versions", {
         "functionId": fid,
@@ -105,7 +113,7 @@ def main():
         "executionTimeout": "60s",
         "serviceAccountId": os.environ["SA_ID"],
         "environment": env,
-        "content": base64.b64encode(buf.getvalue()).decode(),
+        "content": deployment_content(),
     }))
     if preserve:
         query = urllib.request.quote("$latest", safe="")

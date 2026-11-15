@@ -2,13 +2,25 @@
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const http = require("node:http");
+const { execFileSync } = require("node:child_process");
 const path = require("node:path");
 const { chromium } = require("playwright");
 
 const repo = path.resolve(__dirname, "../..");
 const output = path.resolve(process.env.MINIAPP_QA_OUT || path.join(repo, "ci-out/miniapp"));
 fs.mkdirSync(output, { recursive: true });
+// Use the real function's root HTML and security headers in the browser. The
+// account and payment responses below are local fixtures.
+const sellerRoot = JSON.parse(execFileSync("python3", ["-c",
+  "import json, miniapi; print(json.dumps(miniapi.handler({'httpMethod': 'GET'}, None)))"],
+  { cwd: path.join(repo, "shop-bot"), encoding: "utf8" }));
+assert.equal(sellerRoot.statusCode, 200);
 const server = http.createServer((request, response) => {
+  if (request.method === "GET" && new URL(request.url, "http://localhost").pathname === "/") {
+    response.writeHead(sellerRoot.statusCode, sellerRoot.headers);
+    response.end(sellerRoot.body);
+    return;
+  }
   const name = new URL(request.url, "http://localhost").pathname.replace(/^\//, "") || "index.html";
   if (name === "config.js") {
     response.writeHead(200, { "Content-Type": "application/javascript" });
@@ -99,6 +111,95 @@ async function offerJourney(page, actions) {
   assert.equal(await edit.count(), 0);
   assert.equal(actions.filter(a => a.action === "offer_delete")[0].offer_id, "offer-fixture");
   assert.equal(actions.filter(a => a.action === "product_save").length, 0);
+}
+
+async function publicPortal(browser, base) {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  const page = await context.newPage();
+  const errors = [];
+  page.on("pageerror", error => errors.push(error.message));
+  const ops = [];
+  const session = "synthetic-portal-session";
+  const prices = { "7": 137, "30": 421 };
+  const offer = "https://example.org/fixture-offer";
+  let available = false;
+  let paidListing = false;
+  await page.route(base, async route => {
+    if (route.request().method() !== "POST") return route.continue();
+    const body = route.request().postDataJSON();
+    assert.equal(body.portal, true);
+    ops.push(body.op);
+    let result;
+    switch (body.op) {
+      case "public":
+        assert.deepEqual(Object.keys(body).sort(), ["op", "portal"]);
+        if (!available) return route.fulfill({ status: 503, json: { error: "fixture offline" } });
+        result = { prices, listing_fee_enabled: paidListing, listing_price: paidListing ? 200 : 0,
+          ready: paidListing, test: false, offer: paidListing ? offer : "",
+          operator: paidListing ? { name: "Тестовый продавец", inn: "000000000000", email: "test@example.org" } : null };
+        break;
+      case "login":
+        assert.equal(body.code, "fixture-code");
+        result = { session };
+        break;
+      case "list":
+        assert.equal(body.session, session);
+        result = { shops: [{ name: "Тестовая компания", sid: "fixture-shop", status: "approved", orders: [] }],
+          ready: false, prices, listing_fee_enabled: false };
+        break;
+      case "logout":
+        assert.equal(body.session, session);
+        result = { ok: true };
+        break;
+      default: throw new Error("Unexpected seller portal action " + body.op);
+    }
+    return route.fulfill({ json: result });
+  });
+  try {
+    const response = await page.goto(base);
+    assert.equal(response.status(), 200);
+    const info = page.locator("#public-info");
+    await info.getByRole("link", { name: "Добавить компанию" }).waitFor();
+    for (const id of ["tariffs", "terms", "contacts"]) {
+      await info.locator("#" + id).getByRole("heading").first().waitFor();
+      assert.equal(await page.locator('#public-nav a[href="#' + id + '"]').count(), 1);
+    }
+    const addCompany = info.getByRole("link", { name: "Добавить компанию" });
+    assert.match(await addCompany.getAttribute("href"), /^https:\/\/t\.me\/[\w]+\?start=add$/);
+    assert.deepEqual(ops, ["public"]);
+    await page.locator("#public-status").getByRole("button").waitFor();
+    available = true;
+    await page.locator("#public-status").getByRole("button").click();
+    await page.locator("#listing-price").filter({ hasText: /^Бесплатно$/ }).waitFor();
+    assert.match(await page.locator("#price-7").innerText(), /137\s*₽/);
+    assert.match(await page.locator("#price-30").innerText(), /421\s*₽/);
+    assert.equal(await page.locator("#support-email").isVisible(), false);
+    assert.equal(await page.locator("#public-offer").getAttribute("href"), "?page=offer");
+    assert.equal(await page.locator("#public-offer").innerText(), "Информация об услуге");
+    assert.equal(await page.getByRole("button", { name: "Оплатить", exact: true }).count(), 0);
+    await page.setViewportSize({ width: 320, height: 740 });
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+    await page.getByLabel("Код входа", { exact: true }).fill("fixture-code");
+    await page.getByRole("button", { name: "Войти в кабинет" }).click();
+    await page.getByRole("heading", { name: "Тестовая компания" }).waitFor();
+    assert.equal(await info.isVisible(), false);
+    await page.reload();
+    await page.getByRole("heading", { name: "Тестовая компания" }).waitFor();
+    paidListing = true;
+    await page.getByRole("button", { name: "Выйти" }).click();
+    await page.locator("#price-7").filter({ hasText: /137\s*₽/ }).waitFor();
+    await page.locator("#listing-price").filter({ hasText: /200\s*₽/ }).waitFor();
+    await page.locator("#public-offer").waitFor();
+    assert.equal(await page.locator("#public-offer").getAttribute("href"), offer);
+    assert.match(await page.locator("#seller-identity").innerText(), /Тестовый продавец/);
+    assert.match(await page.locator("#seller-tax").innerText(), /000000000000/);
+    assert.equal(await page.locator("#support-email").getAttribute("href"), "mailto:test@example.org");
+    assert.equal(await page.getByRole("heading", { name: "Тестовая компания" }).count(), 0);
+    assert.deepEqual(ops, ["public", "public", "login", "list", "list", "logout", "public"]);
+    assert.deepEqual(errors, []);
+  } finally {
+    await context.close();
+  }
 }
 
 async function scenario(browser, base, owner, theme, companies) {
@@ -230,10 +331,12 @@ async function scenario(browser, base, owner, theme, companies) {
   try {
     const base = `http://127.0.0.1:${server.address().port}/`;
     const companies = [];
-    await scenario(browser, base, false, "dark", companies);
-    await scenario(browser, base, false, "light", companies);
-    await scenario(browser, base, true, "dark", companies);
-    fs.writeFileSync(path.join(output, "miniapp-result.json"), JSON.stringify({ passed: true, fixtures: "synthetic", scenarios: ["private photo and issue", "place submission", "free owner listing", "seller review", "partner and publication controls", "owner statistics", "light and dark", "320px layout"] }, null, 2));
+    await publicPortal(browser, base);
+    const miniapp = new URL("index.html", base).href;
+    await scenario(browser, miniapp, false, "dark", companies);
+    await scenario(browser, miniapp, false, "light", companies);
+    await scenario(browser, miniapp, true, "dark", companies);
+    fs.writeFileSync(path.join(output, "miniapp-result.json"), JSON.stringify({ passed: true, fixtures: "synthetic", scenarios: ["public portal and changing tariffs", "one-time-code login, reload and logout", "private photo and issue", "place submission", "free owner listing", "seller review", "partner and publication controls", "owner statistics", "light and dark", "320px layout"] }, null, 2));
   } finally {
     await browser.close();
     server.close();
