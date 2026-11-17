@@ -3,6 +3,7 @@ import io
 import json
 import re
 import time
+import subprocess
 import traceback
 import uuid
 import xml.etree.ElementTree as ET
@@ -197,6 +198,12 @@ def main():
         verify(False)
         suite.REPORT["verified"] = True
     except Exception:
+        for filename, command in [
+            ("android-crash.txt", ["logcat", "-d", "-b", "crash"]),
+            ("android-activities.txt", ["logcat", "-d", "-s", "ActivityTaskManager", "ActivityManager", "AndroidRuntime"]),
+        ]:
+            with (suite.MEDIA / filename).open("wb") as output:
+                subprocess.run(["adb", *command], stdout=output, timeout=15)
         (suite.MEDIA / "failure.txt").write_text(traceback.format_exc())
         suite.shot("failure")
         raise
