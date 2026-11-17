@@ -6,6 +6,7 @@ import json
 import re
 import os
 import sys
+import time
 import urllib.request
 from pathlib import Path
 
@@ -32,6 +33,56 @@ def versioned_bundle(files):
             raise ValueError(f"Asset reference missing from miniapp/index.html: {name}")
         assets[versioned] = data
     return document.encode("utf-8"), assets
+
+
+def publish_miniapp_only():
+    """Roll out the local UI against exactly the config and Telegram SDK already in production."""
+    token = os.environ["IAM_TOKEN"]
+    base = index.MINIAPP_URL.rsplit("/", 1)[0] + "/"
+    entry = index.MINIAPP_URL + "?release=" + str(time.time_ns())
+    with urllib.request.urlopen(entry, timeout=30) as previous:
+        live = previous.read().decode("utf-8")
+        etag = previous.headers["ETag"]
+    if not etag:
+        raise RuntimeError("Cannot identify the current Mini App entry point")
+    folder = Path(__file__).parent / "miniapp"
+    files = {name: (folder / name).read_bytes() for name in ("index.html", "app.js", "style.css")}
+    kept = set()
+    for name in ("config", "telegram-web-app"):
+        matches = re.findall(r"""\bsrc=["'](""" + name + r"""\.([0-9a-f]{64})\.js)["']""", live)
+        if name == "telegram-web-app" and not matches and TELEGRAM_SDK in live:
+            continue
+        if len(matches) != 1:
+            raise RuntimeError("Cannot identify the live " + name + " asset")
+        path, digest = matches[0]
+        with urllib.request.urlopen(base + path, timeout=30) as response:
+            data = response.read()
+        if hashlib.sha256(data).hexdigest() != digest:
+            raise RuntimeError("Unexpected content for " + path)
+        files[name + ".js"] = data
+        kept.add(path)
+    document, assets = versioned_bundle(files)
+
+    def publish(path, content, cache, if_match=None):
+        headers = {"Authorization": "Bearer " + token, "Content-Type": TYPES[path.rsplit(".", 1)[1]],
+                   "Cache-Control": cache}
+        if if_match:
+            headers["If-Match"] = if_match
+        request = urllib.request.Request(base + path, data=content, headers=headers, method="PUT")
+        with urllib.request.urlopen(request, timeout=30):
+            pass
+
+    for name, data in assets.items():
+        if name not in kept:
+            publish(name, data, "public, max-age=31536000, immutable")
+            with urllib.request.urlopen(base + name, timeout=30) as response:
+                if response.read() != data:
+                    raise RuntimeError("Published asset did not match this release: " + name)
+    publish("index.html", document, "no-cache", if_match=etag)
+    with urllib.request.urlopen(index.MINIAPP_URL + "?release=" + str(time.time_ns()), timeout=30) as response:
+        if response.read() != document:
+            raise RuntimeError("Published Mini App entry point did not match this release")
+    print("Verified published Mini App entry point and assets: " + ", ".join(sorted(assets)))
 
 
 def main():
@@ -88,4 +139,9 @@ def upload_site(st):
 
 
 if __name__ == "__main__":
-    main()
+    if sys.argv[1:] == ["--miniapp-only"]:
+        publish_miniapp_only()
+    elif not sys.argv[1:]:
+        main()
+    else:
+        raise SystemExit("Usage: upload_miniapp.py [--miniapp-only]")

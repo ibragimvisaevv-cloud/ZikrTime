@@ -66,7 +66,7 @@ jobs:
           path: ci-out/miniapp/
 
   seller-public:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[seller-public-only]')
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && (contains(github.event.head_commit.message, '[seller-public-only]') || contains(github.event.head_commit.message, '[audience-only]'))
     needs: test
     runs-on: ubuntu-latest
     permissions:
@@ -81,10 +81,11 @@ jobs:
           npm install --prefix "$RUNNER_TEMP/seller-qa" playwright
           "$RUNNER_TEMP/seller-qa/node_modules/.bin/playwright" install --with-deps chromium
 
-      - name: Publish only the existing seller function with the live configuration
+      - name: Publish the existing seller API and requested Mini App with the live configuration
         env:
           YC_SA_KEY: ${{ secrets.YC_SA_KEY }}
           RAW_FOLDER: ${{ secrets.YC_FOLDER_ID }}
+          PUBLISH_MINIAPP: ${{ contains(github.event.head_commit.message, '[audience-only]') }}
         run: |
           set -euo pipefail
           umask 077
@@ -99,6 +100,7 @@ jobs:
           IAM_TOKEN=$("$yc" iam create-token)
           export IAM_TOKEN
           python3 shop-bot/deploy_seller_public.py
+          if [ "$PUBLISH_MINIAPP" = "true" ]; then python3 shop-bot/upload_miniapp.py --miniapp-only; fi
 
       - name: Anonymous public tariffs, contact and offer on the production URL
         env:
@@ -160,7 +162,7 @@ jobs:
                 await page.getByRole('heading', { level: 1, name: 'Условия продвижения ZikrTime' }).waitFor();
                 await page.getByText('Публичная оферта пока не опубликована', { exact: false }).first().waitFor();
               }
-              for (const body of [{ portal: true, op: 'list' }, { action: 'me', initData: '' }]) {
+              for (const body of [{ portal: true, op: 'list' }, { action: 'me', initData: '' }, { action: 'users', scope: 'started', initData: '' }]) {
                 const denied = await page.request.post(url, { data: body });
                 assert.equal(denied.status(), 401);
               }
@@ -173,7 +175,7 @@ jobs:
           JS
 
   deploy:
-    if: github.event_name != 'push' || github.ref != 'refs/heads/main' || !contains(github.event.head_commit.message, '[seller-public-only]')
+    if: github.event_name != 'push' || github.ref != 'refs/heads/main' || !(contains(github.event.head_commit.message, '[seller-public-only]') || contains(github.event.head_commit.message, '[audience-only]'))
     needs: test
     runs-on: ubuntu-latest
     steps:

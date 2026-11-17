@@ -276,10 +276,22 @@ async function scenario(browser, base, owner, theme, companies) {
         result = { place, me: data };
         break;
       }
-      case "users":
+      case "users": {
         assert.equal(owner, true);
-        result = { stats: { total: 128, active7: 47, active30: 89, miniapp: 62, started: 100 }, users: [{ id: 100001, last_seen: 1794000000 }, { id: 100002, last_seen: null }], offset: 0 };
+        assert.ok(["started", "all"].includes(body.scope));
+        const first = Date.UTC(2026, 10, 6, 21, 5) / 1000;
+        const starters = Array.from({ length: 31 }, (_, i) => ({
+          id: 100001 + i, started: true, started_at: first - i * 86400, last_seen: first + 86400
+        }));
+        const directory = [{ id: 900001, started: false, started_at: null, last_seen: null }, ...starters];
+        const rows = body.scope === "started" ? starters : directory;
+        result = {
+          stats: { total: 32, active7: 17, active30: 29, miniapp: 12, started: 31,
+            started_today: 1, started7: 7, started30: 30 },
+          users: rows.slice(body.offset, body.offset + 30), filtered_total: rows.length, offset: body.offset
+        };
         break;
+      }
       default: throw new Error("Unhandled fixture action " + body.action);
     }
     await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(result) });
@@ -293,8 +305,24 @@ async function scenario(browser, base, owner, theme, companies) {
   if (owner) {
     await page.locator('[data-tab="manage"]').click();
     await page.getByRole("button", { name: "Пользователи", exact: true }).click();
-    await page.getByText("128", { exact: true }).waitFor();
-    await page.screenshot({ path: path.join(output, `miniapp-admin-stats-${theme}.png`), fullPage: true });
+    const counts = page.locator(".stat-grid .card");
+    for (const [label, value] of [["Всего запустили бота", "31"], ["Сегодня", "1"], ["За 7 дней", "7"], ["За 30 дней", "30"]]) {
+      await counts.filter({ hasText: label }).getByText(value, { exact: true }).waitFor();
+    }
+    assert.equal(await page.getByRole("button", { name: "Запустили бота", exact: true }).getAttribute("aria-pressed"), "true");
+    await page.locator(".product").filter({ hasText: "Telegram ID 100001" }).getByText("Первый запуск · 07.11.2026").waitFor();
+    assert.equal(await page.getByText("Telegram ID 900001").count(), 0);
+    await page.getByRole("button", { name: "Далее" }).click();
+    await page.getByText("Telegram ID 100031", { exact: true }).waitFor();
+    assert.equal(await page.getByRole("button", { name: "Далее" }).isDisabled(), true);
+    await page.getByRole("button", { name: "Все пользователи", exact: true }).click();
+    await counts.filter({ hasText: "Всего пользователей" }).getByText("32", { exact: true }).waitFor();
+    await page.locator(".product").filter({ hasText: "Telegram ID 900001" }).getByText("Первый запуск не зафиксирован").waitFor();
+    await page.getByRole("button", { name: "Запустили бота", exact: true }).click();
+    await page.getByText("Telegram ID 100001", { exact: true }).waitFor();
+    assert.deepEqual(actions.filter(a => a.action === "users").map(a => [a.scope, a.offset]),
+      [["started", 0], ["started", 30], ["all", 0], ["started", 0]]);
+    await page.screenshot({ path: path.join(output, `miniapp-admin-stats-${theme}.png`) });
   } else if (theme === "dark") {
     await page.getByRole("button", { name: "Сообщить об ошибке Описание и скриншот" }).click();
     await page.getByLabel("Что произошло и как это повторить").fill("После выбора города не обновляется подпись источника.");

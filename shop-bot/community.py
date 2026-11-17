@@ -5,6 +5,7 @@ import math
 import re
 import secrets
 import time
+from datetime import datetime, timedelta, timezone
 
 from feedback import KINDS, STATUSES
 
@@ -260,16 +261,31 @@ def page_offset(req):
 
 def users(bot, uid, req):
     owner_only(bot, uid)
-    now = int(time.time())
-    rows = sorted(bot.db["users"].items(), key=lambda item: item[1].get("last_seen", 0), reverse=True)
+    scope = req.get("scope", "all")
+    if scope not in ("all", "started"):
+        raise CommunityError("Неизвестная группа пользователей")
     offset = page_offset(req)
-    counts = {"total": len(rows), "started": sum(bool(u.get("started_at")) for _, u in rows),
-              "miniapp": sum(bool(u.get("miniapp_at")) for _, u in rows),
-              "active7": sum(u.get("last_seen", 0) >= now - 7 * 86400 for _, u in rows),
-              "active30": sum(u.get("last_seen", 0) >= now - 30 * 86400 for _, u in rows)}
+    now = int(time.time())
+    moscow = timezone(timedelta(hours=3))
+    midnight = datetime.fromtimestamp(now, moscow).replace(hour=0, minute=0, second=0, microsecond=0)
+    users_by_id = bot.db["users"]
+    everyone = users_by_id.values()
+    starters = [(key, user) for key, user in users_by_id.items() if user.get("started_at")]
+    counts = {"total": len(users_by_id), "started": len(starters),
+              "miniapp": sum(bool(u.get("miniapp_at")) for u in everyone),
+              "active7": sum(u.get("last_seen", 0) >= now - 7 * 86400 for u in everyone),
+              "active30": sum(u.get("last_seen", 0) >= now - 30 * 86400 for u in everyone)}
+    for name, days in (("started_today", 1), ("started7", 7), ("started30", 30)):
+        since = (midnight - timedelta(days=days - 1)).timestamp()
+        counts[name] = sum(since <= user["started_at"] <= now for _, user in starters)
+    if scope == "started":
+        rows = sorted(starters, key=lambda item: (-item[1]["started_at"], int(item[0])))
+    else:
+        rows = sorted(users_by_id.items(), key=lambda item: item[1].get("last_seen", 0), reverse=True)
     return {"stats": counts, "users": [{"id": int(key), "last_seen": u.get("last_seen"),
-             "first_seen": u.get("first_seen"), "started": bool(u.get("started_at"))} for key, u in rows[offset:offset + 30]],
-            "offset": offset}
+             "first_seen": u.get("first_seen"), "started": bool(u.get("started_at")),
+             "started_at": u.get("started_at")} for key, u in rows[offset:offset + 30]],
+            "offset": offset, "filtered_total": len(rows)}
 
 
 ACTIONS = {"private_photo_upload": photo_upload, "private_photo": photo_read, "tickets": inbox,

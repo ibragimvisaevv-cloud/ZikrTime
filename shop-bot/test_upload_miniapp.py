@@ -110,6 +110,41 @@ class UploadMiniappTest(unittest.TestCase):
                 upload_miniapp.main()
             storage.assert_not_called()
 
+    def test_miniapp_only_keeps_live_dependencies_and_checks_published_release(self):
+        config, sdk = b"/* existing config */", b"/* existing SDK */"
+        old, assets = upload_miniapp.versioned_bundle({
+            "index.html": self.page, "app.js": b"old code", "style.css": b"old css",
+            "config.js": config, "telegram-web-app.js": sdk,
+        })
+        live = dict(assets, **{"index.html": old})
+        writes = []
+        base = upload_miniapp.index.MINIAPP_URL.rsplit("/", 1)[0] + "/"
+
+        def request(arg, timeout):
+            url = arg if isinstance(arg, str) else arg.full_url
+            self.assertTrue(url.startswith(base))
+            path = url[len(base):].split("?")[0]
+            if not isinstance(arg, str):
+                self.assertEqual(arg.get_method(), "PUT")
+                self.assertEqual(arg.get_header("Authorization"), "Bearer example")
+                if path == "index.html":
+                    self.assertEqual(arg.get_header("If-match"), '"original"')
+                writes.append(path)
+                live[path] = arg.data
+            response = io.BytesIO(live[path])
+            response.headers = {"ETag": '"original"'}
+            return response
+
+        with patch.dict(os.environ, {"IAM_TOKEN": "example"}):
+            self.sdk.side_effect = request
+            upload_miniapp.publish_miniapp_only()
+        self.assertEqual([p.split(".")[0] for p in writes], ["app", "style", "index"])
+        self.assertNotEqual(live["index.html"], old)
+        for path in assets:
+            self.assertEqual(live[path], assets[path])
+            if path.startswith(("config.", "telegram-web-app.")):
+                self.assertIn(path.encode(), live["index.html"])
+
 
 if __name__ == "__main__":
     unittest.main()

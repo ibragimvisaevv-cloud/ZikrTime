@@ -5,6 +5,7 @@ import hmac
 import json
 import time
 import unittest
+from datetime import datetime, timezone
 from unittest.mock import patch
 from urllib.parse import urlencode
 
@@ -137,6 +138,55 @@ class CommunityTests(unittest.TestCase):
         self.assertEqual({u["id"] for u in stats["users"]}, {2, 3})
         self.assertNotIn("inbox_counts", self.call(2, "me")[1])
         self.assertEqual(self.call(1, "users", offset=-1)[0], 400)
+
+    def test_first_start_periods_use_moscow_calendar_and_exclude_unknown_starts(self):
+        # 17 November UTC, just after midnight on 18 November in Moscow.
+        midnight = int(datetime(2026, 11, 17, 21, tzinfo=timezone.utc).timestamp())
+        now = midnight + 1
+        seven = midnight - 6 * 86400
+        thirty = midnight - 29 * 86400
+        start_times = [now, midnight, midnight - 1, seven, seven - 1, thirty, thirty - 1]
+        data = self.database()
+        data["users"] = {str(i): {"started_at": timestamp} for i, timestamp in enumerate(start_times, 10)}
+        data["users"].update({"50": {"first_seen": now, "miniapp_at": now}, "51": {"state": None}})
+        self.private.files[index.DB_KEY] = json.dumps(data).encode()
+        with patch("time.time", return_value=now):
+            code, result = self.call(1, "users", scope="started")
+            self.assertEqual(code, 200, result)
+            self.assertEqual(result["filtered_total"], 7)
+            stats = result["stats"]
+            self.assertEqual([stats[k] for k in ("total", "started", "started_today", "started7", "started30")],
+                             [9, 7, 2, 4, 6])
+            self.assertEqual([u["started_at"] for u in result["users"]], start_times)
+            self.assertEqual(self.call(1, "users")[1]["filtered_total"], 9)
+            self.assertEqual(self.call(1, "users", scope="unknown")[0], 400)
+            for uid in (9, 50):
+                self.assertEqual(self.call(uid, "users", scope="started")[0], 403)
+
+    def test_filtered_pagination_is_stable_with_tied_timestamps(self):
+        data = self.database()
+        data["users"] = {str(i): {"started_at": 100} for i in range(50, 18, -1)}
+        data["users"]["70"] = {"last_seen": 200}
+        self.private.files[index.DB_KEY] = json.dumps(data).encode()
+        first = self.call(1, "users", scope="started")[1]
+        second = self.call(1, "users", scope="started", offset=30)[1]
+        self.assertEqual([first["filtered_total"], second["filtered_total"], second["offset"]], [32, 32, 30])
+        self.assertEqual([u["id"] for u in first["users"] + second["users"]], list(range(19, 51)))
+        self.assertEqual(self.call(1, "users", scope="started", offset=60)[1]["users"], [])
+
+    def test_repeated_start_preserves_first_recorded_time(self):
+        telegram = Telegram()
+        first = int(time.time()) - 40 * 86400
+        for update_id, timestamp, text in ((10, first, "/start"), (11, first + 40 * 86400, "/start menu")):
+            with patch("time.time", return_value=timestamp):
+                bot = index.Bot(self.public, telegram, TOKEN, data=self.private)
+                bot.handle({"update_id": update_id, "message": {"from": {"id": 2}, "chat": {"id": 2, "type": "private"}, "text": text}})
+                bot.save()
+        stats = self.call(1, "users", scope="started")[1]
+        self.assertEqual(stats["stats"]["started"], 1)
+        self.assertEqual(stats["stats"]["started30"], 0)
+        self.assertEqual(stats["users"][0]["started_at"], first)
+        self.assertGreater(stats["users"][0]["last_seen"], first)
 
     def test_future_or_duplicated_auth_fields_rejected(self):
         self.assertIsNone(miniapi.check_init_data(signed(2, age=-600), TOKEN))

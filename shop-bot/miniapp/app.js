@@ -13,6 +13,9 @@
   const kindText = { bug: "Ошибка приложения", idea: "Предложение", text: "Неточность в тексте" };
   let ownerView = "moderation";
   let ownerData = null;
+  let ownerRequest = 0;
+  let userScope = "started";
+  const moscowDate = new Intl.DateTimeFormat("ru-RU", { timeZone: "Europe/Moscow" });
 
   // ---------------------------------------------------------------- помощники
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -189,7 +192,7 @@
     app.innerHTML = html;
     app.querySelectorAll("[data-tab]").forEach((b) => b.onclick = () => {
       tab = b.dataset.tab; tap();
-      if (tab === "manage" && ownerView === "moderation") loadOwner("moderation");
+      if (tab === "manage" && (ownerView === "moderation" || ownerView === "users")) loadOwner(ownerView);
       else render();
     });
     app.querySelectorAll(".seller[data-sid]").forEach((el) => el.onclick = () => go({ type: "products", sid: el.dataset.sid }));
@@ -220,8 +223,10 @@
     return html;
   }
 
-  async function loadOwner(view, offset = 0) {
+  async function loadOwner(view, offset = 0, scope = "started") {
+    const request = ++ownerRequest;
     ownerView = view;
+    if (view === "users") userScope = scope;
     ownerData = null;
     render();
     if (view === "settings") return;
@@ -230,32 +235,62 @@
       try {
         const latest = await api("me", {}, false);
         // A moderation action may already have returned a more recent snapshot.
-        if (tab === "manage" && ownerView === view && me === previous) { me = latest; render(); }
+        if (tab === "manage" && request === ownerRequest && me === previous) { me = latest; render(); }
       } catch (error) {
-        if (tab === "manage" && ownerView === view) toast(error.message);
+        if (tab === "manage" && request === ownerRequest) toast(error.message);
       }
       return;
     }
     const action = view === "places" ? "my_places" : view;
     try {
-      const result = await api(action, { inbox: true, offset });
-      if (ownerView === view) { ownerData = result; render(); }
+      const query = view === "users" ? { scope, offset } : { inbox: true, offset };
+      const result = await api(action, query);
+      if (request === ownerRequest) { ownerData = result; render(); }
     } catch (error) {
-      if (ownerView === view) { ownerData = { error: error.message }; render(); }
+      if (request === ownerRequest) { ownerData = { error: error.message, offset }; render(); }
     }
   }
 
+  function audienceHtml(data) {
+    const stats = data.stats;
+    const started = userScope === "started";
+    const cards = started ? [
+      [stats.started, "Всего запустили бота"], [stats.started_today, "Сегодня"],
+      [stats.started7, "За 7 дней"], [stats.started30, "За 30 дней"]
+    ] : [
+      [stats.total, "Всего пользователей"], [stats.miniapp, "Открывали кабинет"],
+      [stats.active7, "Активны за 7 дней"], [stats.active30, "Активны за 30 дней"]
+    ];
+    const title = started ? "Первые запуски" : "Аудитория бота и кабинета";
+    const note = started ? "Учитывается первый сохранённый /start каждого аккаунта. Дни считаются по Москве."
+      : "Включены также пользователи кабинета и аккаунты без сохранённой даты запуска.";
+    let html = `<h2>${title}</h2><div class="stat-grid">${cards.map(([value, label]) =>
+      `<div class="card"><b>${value == null ? "—" : esc(value)}</b><span>${label}</span></div>`).join("")}</div><p class="sub">${note}</p>`;
+    // Older APIs can return an unfiltered first page for this request.
+    if (started && data.filtered_total == null) return html + '<p class="card empty">Список первых запусков временно недоступен.</p>';
+    if (!data.users.length) return html + `<p class="card empty">${started ? "Запусков пока не зафиксировано." : "Пользователей пока нет."}</p>`;
+    const rows = data.users.map(u => {
+      const first = u.started_at ? "Первый запуск · " + moscowDate.format(u.started_at * 1000)
+        : (u.started ? "Дата первого запуска неизвестна" : "Первый запуск не зафиксирован");
+      const last = u.last_seen ? "Последняя активность · " + moscowDate.format(u.last_seen * 1000) : "Дата активности неизвестна";
+      return `<div class="product"><div class="t"><strong>Telegram ID ${esc(u.id)}</strong><div class="muted">${first}</div><div class="muted">${last}</div></div></div>`;
+    });
+    return html + `<div class="card"><h2>${started ? "Кто запустил бота" : "Список пользователей"}</h2>${rows.join("")}</div>`;
+  }
+
   function ownerPanel() {
-    if (!ownerData) return `<div class="card empty" role="status">Загружаем…</div>`;
-    if (ownerData.error) return `<div class="card empty">${esc(ownerData.error)}<button class="btn ghost" data-owner-view="${ownerView}">Повторить</button></div>`;
+    const scopeButtons = ownerView === "users" ? `<div class="section-tabs" role="group" aria-label="Аудитория">${[
+      ["started", "Запустили бота"], ["all", "Все пользователи"]
+    ].map(([id, label]) => `<button data-user-scope="${id}" aria-pressed="${id === userScope}" class="${id === userScope ? "on" : ""}">${label}</button>`).join("")}</div>` : "";
+    if (!ownerData) return scopeButtons + `<div class="card empty" role="status">Загружаем…</div>`;
+    if (ownerData.error) return scopeButtons + `<div class="card empty">${esc(ownerData.error)}<button class="btn ghost" data-page="${ownerData.offset}">Повторить</button></div>`;
     let html = "";
     let total = ownerData.total || 0;
     if (ownerView === "tickets") html = ticketRows(ownerData.tickets) || `<div class="card empty">Обращений пока нет</div>`;
     if (ownerView === "places") html = `<p class="sub">Проверьте название, точку и действующее назначение места перед публикацией.</p>` + (placeRows(ownerData.places, true) || `<div class="card empty">Все места проверены</div>`);
     if (ownerView === "users") {
-      const stats = ownerData.stats;
-      total = stats.total;
-      html = `<div class="stat-grid">${[[stats.total, "Всего в боте"], [stats.active7, "Активны за 7 дней"], [stats.active30, "Активны за 30 дней"], [stats.miniapp, "Открывали кабинет"]].map(([value, label]) => `<div class="card"><b>${value}</b><span>${label}</span></div>`).join("")}</div><p class="sub">Активность учитывается с обновления кабинета. Старые пользователи включены в общее количество.</p><div class="card"><h2>Пользователи</h2>${ownerData.users.map(u => `<div class="product"><div class="t"><strong>ID ${esc(u.id)}</strong><div class="muted">${u.last_seen ? "Был в боте «" + date(u.last_seen) + "»" : "Дата посещения ещё не определена"}</div></div></div>`).join("")}</div>`;
+      total = ownerData.filtered_total ?? (userScope === "all" ? ownerData.stats.total : 0);
+      html = scopeButtons + audienceHtml(ownerData);
     }
     const offset = ownerData.offset || 0;
     if (total > 30) html += `<div class="row"><button class="btn ghost" data-page="${Math.max(0, offset - 30)}" ${offset === 0 ? "disabled" : ""}>Назад</button><button class="btn ghost" data-page="${offset + 30}" ${offset + 30 >= total ? "disabled" : ""}>Далее</button></div>`;
@@ -273,7 +308,8 @@
       go({ type: "ticket", ticket: response.ticket });
     }));
     app.querySelectorAll("[data-owner-view]").forEach(b => b.onclick = () => loadOwner(b.dataset.ownerView));
-    app.querySelectorAll("[data-page]").forEach(b => b.onclick = () => loadOwner(ownerView, Number(b.dataset.page)));
+    app.querySelectorAll("[data-user-scope]").forEach(b => b.onclick = () => loadOwner("users", 0, b.dataset.userScope));
+    app.querySelectorAll("[data-page]").forEach(b => b.onclick = () => loadOwner(ownerView, Number(b.dataset.page), userScope));
     app.querySelectorAll("[data-photo]").forEach(b => b.onclick = () => run(b, async () => {
       const response = await api("private_photo", { photo_id: b.dataset.photo });
       const img = document.createElement("img");
