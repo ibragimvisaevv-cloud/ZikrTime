@@ -2,7 +2,7 @@ package com.zikrtime.app.data
 
 import java.util.BitSet
 
-/** Original UTF-16 offsets, never a normalized or transliterated copy of the Quran. */
+/** UTF-16 offsets into the text actually laid out on this reading surface. */
 data class QuranVisibleText(val ayah: Int, val start: Int, val end: Int)
 
 /** A local estimate of reading, not a claim that a person understood or recited a verse.
@@ -10,15 +10,16 @@ data class QuranVisibleText(val ayah: Int, val start: Int, val end: Int)
  * need complete coverage; jumps never fill the intervening verses. Visible verses
  * share one time budget, so a screenful is not counted several times in one second.
  */
-class QuranReadTracker(verses: List<QuranAyah>) {
+class QuranReadTracker(verses: List<QuranAyah>, displayedText: (QuranAyah) -> String = { it.arabic }) {
     private class Seen(val length: Int, val required: Long) {
         val covered = BitSet(length)
         var millis = 0L
         var completed = false
     }
     private val seen = verses.associate { ayah ->
-        val words = ayah.arabic.split(Regex("\\s+")).count { it.isNotBlank() }
-        ayah.number to Seen(ayah.arabic.length, (words * 300L).coerceIn(1500L, 15000L))
+        val text = displayedText(ayah)
+        val words = text.split(Regex("\\s+")).count { it.isNotBlank() }
+        ayah.number to Seen(text.length, (words * 300L).coerceIn(1500L, 15000L))
     }
     private var previous = emptyList<QuranVisibleText>()
 

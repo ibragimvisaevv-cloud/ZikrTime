@@ -44,6 +44,8 @@ internal object QuranAudioQa {
             }
             put("player", JSONObject().apply {
                 put("connected", player.connected)
+                put("reciterId", player.reciterId)
+                put("sourceUrl", QuranPlaybackService.currentRecordingUrl() ?: JSONObject.NULL)
                 put("surahId", player.surahId ?: JSONObject.NULL)
                 put("isPlaying", player.isPlaying)
                 put("isBuffering", player.isBuffering)

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quran_transcription_title">Qur’onning ruscha transkripsiyasi</string>
+    <string name="quran_transcription_detail">Kirill harflarida o‘qing va tilovatni kuzating</string>
+    <string name="quran_transcription_copy">Transkripsiyani nusxalash</string>
+    <string name="quran_transcription_source">Ruscha transkripsiya · Qamar</string>
+</resources>

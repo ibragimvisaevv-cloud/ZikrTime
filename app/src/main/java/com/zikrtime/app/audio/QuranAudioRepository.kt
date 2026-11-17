@@ -41,23 +41,45 @@ object QuranAudioRepository {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     private val mutableState = MutableStateFlow(QuranAudioStorageState())
     val state: StateFlow<QuranAudioStorageState> = mutableState.asStateFlow()
-    var tracks: List<QuranAudioTrack> = emptyList()
-        private set
-    var sourceUrl: String = "https://www.mp3quran.net/eng/afs"
-        private set
-    var permissionSourceUrl: String = "https://www.mp3quran.net/eng/contact-us"
-        private set
-    var reciterName: String = "Mishary Rashid Alafasy"
-        private set
+    private val mutableReciter = MutableStateFlow(QuranReciter.ALAFASY)
+    val selectedReciter: StateFlow<QuranReciter> = mutableReciter.asStateFlow()
+    private val catalogs = mutableMapOf<QuranReciter, QuranAudioCatalog>()
+    private val allTracks = mutableMapOf<String, QuranAudioTrack>()
+    private val currentCatalog get() = catalogs[selectedReciter.value]
+    val tracks: List<QuranAudioTrack> get() = currentCatalog?.tracks.orEmpty()
+    val sourceUrl get() = currentCatalog?.source ?: "https://www.mp3quran.net/eng/afs"
+    val permissionSourceUrl get() = currentCatalog?.permissionSource ?: "https://www.mp3quran.net/eng/contact-us"
+
+    private fun savedVoice(context: Context) = QuranReciter.fromId(context
+        .getSharedPreferences("quran_audio", Context.MODE_PRIVATE).getString("reciter", null)) ?: QuranReciter.ALAFASY
+
+    fun restoreSelection(context: Context) {
+        if (app == null) mutableReciter.value = savedVoice(context)
+    }
+
+    internal fun voice(context: Context) = if (app != null) selectedReciter.value else savedVoice(context)
+
+    internal fun selectVoice(voice: QuranReciter): Boolean {
+        val context = app ?: return false
+        if (voice !in catalogs) { setError(QuranAudioStorageError.CATALOG); return false }
+        if (voice == selectedReciter.value) return true
+        ayahTimings = null
+        ayahTimingsAttempted = false
+        mutableReciter.value = voice
+        context.getSharedPreferences("quran_audio", Context.MODE_PRIVATE).edit().putString("reciter", voice.id).apply()
+        mutableState.value = state.value.copy(error = null)
+        publish()
+        return true
+    }
 
     private var app: Context? = null
     private var database: StandaloneDatabaseProvider? = null
     private var temporary: SimpleCache? = null
     private var offline: SimpleCache? = null
     private var manager: DownloadManager? = null
-    private val records = mutableMapOf<Int, Download>()
-    private val preparing = mutableSetOf<Int>()
-    private val failures = mutableMapOf<Int, QuranAudioStorageError>()
+    private val records = mutableMapOf<String, Download>()
+    private val preparing = mutableSetOf<String>()
+    private val failures = mutableMapOf<String, QuranAudioStorageError>()
     private val publishLater = Runnable { publish() }
     private var ayahTimings: QuranAyahTimingCatalog? = null
     private var ayahTimingsAttempted = false
@@ -67,19 +89,22 @@ object QuranAudioRepository {
         check(Looper.myLooper() == Looper.getMainLooper())
         if (app != null) return
         val application = context.applicationContext
-        val catalog = runCatching {
-            application.assets.open("quran_audio/alafasy.json").bufferedReader(Charsets.UTF_8).use {
-                QuranAudioCatalog.parse(it.readText())
-            }
-        }.getOrElse {
-            mutableState.value = mutableState.value.copy(error = QuranAudioStorageError.CATALOG)
+        for (voice in QuranReciter.entries) {
+            val catalog = runCatching {
+                application.assets.open(voice.catalogPath).bufferedReader(Charsets.UTF_8).use {
+                    QuranAudioCatalog.parse(it.readText(), voice)
+                }
+            }.getOrNull() ?: continue
+            catalogs[voice] = catalog
+            catalog.tracks.forEach { allTracks[it.cacheKey] = it }
+        }
+        val saved = savedVoice(application)
+        if (saved !in catalogs) {
+            setError(QuranAudioStorageError.CATALOG)
             return
         }
+        mutableReciter.value = saved
         try {
-            tracks = catalog.tracks
-            sourceUrl = catalog.source
-            permissionSourceUrl = catalog.permissionSource
-            reciterName = catalog.reciter
             val provider = StandaloneDatabaseProvider(application)
             database = provider
             temporary = SimpleCache(File(application.cacheDir, "quran-audio-stream-v1"),
@@ -90,9 +115,9 @@ object QuranAudioRepository {
             val preferences = application.getSharedPreferences("quran_audio", Context.MODE_PRIVATE)
             val wifiOnly = preferences.getBoolean("wifi_only", true)
             mutableState.value = mutableState.value.copy(wifiOnly = wifiOnly, error = null)
-            tracks.forEach { track ->
-                runCatching { QuranAudioStorageError.valueOf(preferences.getString("error_${track.surahId}", "")!!) }
-                    .getOrNull()?.let { failures[track.surahId] = it }
+            allTracks.values.forEach { track ->
+                runCatching { QuranAudioStorageError.valueOf(preferences.getString(failureKey(track.cacheKey), "")!!) }
+                    .getOrNull()?.let { failures[track.cacheKey] = it }
                 temporary!!.addListener(track.cacheKey, cacheListener)
             }
             val downloadManager = DownloadManager(application, provider, offline!!, httpFactory(),
@@ -123,10 +148,10 @@ object QuranAudioRepository {
                     if (download.state == Download.STATE_FAILED) {
                         val error = classifyFailure(finalException)
                         failures[id] = error
-                        preferences.edit().putString("error_$id", error.name).apply()
+                        preferences.edit().putString(failureKey(id), error.name).apply()
                     } else if (download.state == Download.STATE_COMPLETED) {
                         failures.remove(id)
-                        preferences.edit().remove("error_$id").apply()
+                        preferences.edit().remove(failureKey(id)).apply()
                     }
                     publish()
                 }
@@ -136,7 +161,7 @@ object QuranAudioRepository {
                     records.remove(id)
                     failures.remove(id)
                     preparing.remove(id)
-                    preferences.edit().remove("error_$id").apply()
+                    preferences.edit().remove(failureKey(id)).apply()
                     publish()
                 }
 
@@ -187,9 +212,9 @@ object QuranAudioRepository {
                     val entry = surahs.getJSONObject(i)
                     entry.getInt("id") to entry.getInt("ayahCount")
                 }
-                val timings = context.assets.open("quran_audio/alafasy_ayah_timings.json").use { it.readBytes() }
-                require(QuranContent.sha256(timings) == QuranAyahTimingCatalog.SHA256)
-                QuranAyahTimingCatalog.parse(timings.toString(Charsets.UTF_8), counts)
+                val timings = context.assets.open(selectedReciter.value.timingPath).use { it.readBytes() }
+                require(QuranContent.sha256(timings) == selectedReciter.value.timingHash)
+                QuranAyahTimingCatalog.parse(timings.toString(Charsets.UTF_8), counts, selectedReciter.value)
             }.getOrNull()
         }
         return ayahTimings
@@ -221,40 +246,40 @@ object QuranAudioRepository {
         if (existing?.status == QuranAudioDownloadStatus.COMPLETED ||
             existing?.status in setOf(QuranAudioDownloadStatus.DOWNLOADING, QuranAudioDownloadStatus.QUEUED,
                 QuranAudioDownloadStatus.WAITING_FOR_WIFI, QuranAudioDownloadStatus.WAITING_FOR_NETWORK,
-                QuranAudioDownloadStatus.REMOVING) || !preparing.add(surahId)) return@onMain
+                QuranAudioDownloadStatus.REMOVING) || !preparing.add(item.cacheKey)) return@onMain
         dismissError()
         scope.launch {
             val needed = (item.sizeBytes - (existing?.bytesDownloaded ?: 0)).coerceAtLeast(0)
-            val queuedIds = (state.value.downloads.values.filter { QuranAudioPolicy.isPending(it.status) }
-                .map { it.surahId }.toSet() + preparing) - surahId
-            val queued = queuedIds.sumOf { id ->
-                ((track(id)?.sizeBytes ?: 0) - (state.value.downloads[id]?.bytesDownloaded ?: 0)).coerceAtLeast(0)
+            val queuedIds = (records.filterValues { it.state in setOf(Download.STATE_QUEUED,
+                Download.STATE_DOWNLOADING, Download.STATE_STOPPED, Download.STATE_RESTARTING) }.keys + preparing) - item.cacheKey
+            val queued = queuedIds.sumOf { key ->
+                ((allTracks[key]?.sizeBytes ?: 0) - (records[key]?.bytesDownloaded ?: 0)).coerceAtLeast(0)
             }
             val enough = withContext(Dispatchers.IO) {
                 QuranAudioPolicy.enoughSpace(context.noBackupFilesDir.usableSpace, needed, queued)
             }
-            if (!preparing.contains(surahId)) return@launch
+            if (!preparing.contains(item.cacheKey)) return@launch
             if (!enough) {
-                preparing.remove(surahId)
+                preparing.remove(item.cacheKey)
                 setError(QuranAudioStorageError.NOT_ENOUGH_SPACE)
                 return@launch
             }
             // A completed index entry with missing/wrong-length bytes must not make a retry reuse corrupt data.
-            if (existing?.status == QuranAudioDownloadStatus.FAILED && records[surahId]?.state == Download.STATE_COMPLETED) {
+            if (existing?.status == QuranAudioDownloadStatus.FAILED && records[item.cacheKey]?.state == Download.STATE_COMPLETED) {
                 val reset = withContext(Dispatchers.IO) { runCatching { offline?.removeResource(item.cacheKey) } }
                 if (reset.isFailure) {
-                    preparing.remove(surahId)
+                    preparing.remove(item.cacheKey)
                     setError(QuranAudioStorageError.STORAGE)
                     return@launch
                 }
-                if (!preparing.contains(surahId)) return@launch
+                if (!preparing.contains(item.cacheKey)) return@launch
             }
             val request = DownloadRequest.Builder(item.cacheKey, android.net.Uri.parse(item.url))
                 .setMimeType(MimeTypes.AUDIO_MPEG).setCustomCacheKey(item.cacheKey).build()
             try {
                 DownloadService.sendAddDownload(context, QuranDownloadService::class.java, request, true)
             } catch (_: Exception) {
-                preparing.remove(surahId)
+                preparing.remove(item.cacheKey)
                 setError(QuranAudioStorageError.START_FAILED)
             }
         }
@@ -266,7 +291,7 @@ object QuranAudioRepository {
     fun remove(surahId: Int) = onMain {
         val context = app ?: return@onMain
         val item = track(surahId) ?: return@onMain
-        preparing.remove(surahId)
+        preparing.remove(item.cacheKey)
         try {
             DownloadService.sendRemoveDownload(context, QuranDownloadService::class.java, item.cacheKey, true)
         } catch (_: Exception) { setError(QuranAudioStorageError.START_FAILED) }
@@ -310,14 +335,18 @@ object QuranAudioRepository {
         .setAllowCrossProtocolRedirects(false)
         .setContentTypePredicate { type -> type?.substringBefore(';')?.trim()?.equals("audio/mpeg", ignoreCase = true) == true }
 
-    private fun idOf(download: Download): Int? = download.request.id.removePrefix("alafasy-v1-").toIntOrNull()
-        ?.takeIf { id -> track(id)?.let { download.request.id == it.cacheKey && download.request.uri.toString() == it.url } == true }
+    private fun idOf(download: Download): String? = download.request.id.takeIf { key ->
+        allTracks[key]?.url == download.request.uri.toString()
+    }
+
+    // Preserve the error preference used by existing Alafasy downloads.
+    private fun failureKey(key: String): String = "error_" + key.removePrefix("alafasy-v1-")
 
     private fun publish() {
         val downloads = manager ?: return
         val saved = offline ?: return
         val mapped = records.mapNotNull { (id, download) ->
-            val item = track(id) ?: return@mapNotNull null
+            val item = allTracks[id]?.takeIf { it.reciter == selectedReciter.value } ?: return@mapNotNull null
             val actualLength = download.contentLength.takeIf { it > 0 }
                 ?: ContentMetadata.getContentLength(saved.getContentMetadata(item.cacheKey)).takeIf { it > 0 }
                 ?: 0L
@@ -337,7 +366,7 @@ object QuranAudioRepository {
             }
             val error = if (status == QuranAudioDownloadStatus.FAILED)
                 (failures[id] ?: if (download.state == Download.STATE_COMPLETED) QuranAudioStorageError.STORAGE else QuranAudioStorageError.NETWORK) else null
-            id to QuranAudioDownload(id, status, cached.coerceAtLeast(0), length, error)
+            item.surahId to QuranAudioDownload(item.surahId, status, cached.coerceAtLeast(0), length, error)
         }.toMap()
         mutableState.value = mutableState.value.copy(ready = downloads.isInitialized,
             downloads = mapped, temporaryBytes = temporary?.cacheSpace ?: 0, downloadedBytes = saved.cacheSpace)

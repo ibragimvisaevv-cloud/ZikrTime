@@ -3,7 +3,7 @@
     <string name="qaudio_title">Слушать Коран</string>
     <string name="qaudio_reciter">Мишари Рашид Аль-Афаси</string>
     <string name="qaudio_entry">Слушать</string>
-    <string name="qaudio_entry_detail">Аль-Афаси · 114 сур · скачивание для прослушивания без интернета</string>
+    <string name="qaudio_entry_detail">114 сур · скачивание для прослушивания без интернета</string>
     <string name="qaudio_intro">Слушайте через интернет или скачивайте отдельные суры. Записи не входят в установочный файл приложения.</string>
     <string name="qaudio_listen">Слушать</string>
     <string name="qaudio_pause">Пауза</string>
@@ -59,7 +59,7 @@
     <string name="qaudio_confirm_delete">Удалить</string>
     <string name="qaudio_close">Закрыть</string>
     <string name="qaudio_source">Записи: MP3Quran</string>
-    <string name="qaudio_source_detail">Аль-Афаси · Хафс от Асима · полные суры</string>
+    <string name="qaudio_source_detail">Хафс от Асима · полные суры</string>
     <string name="qaudio_load_error">Не удалось загрузить каталог аудио. Попробуйте ещё раз.</string>
     <string name="qaudio_error_space">Недостаточно свободной памяти. Удалите загрузку или освободите место и попробуйте снова.</string>
     <string name="qaudio_error_network">Не удалось скачать запись. Проверьте подключение и попробуйте снова.</string>

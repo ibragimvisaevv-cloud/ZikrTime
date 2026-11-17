@@ -3,7 +3,7 @@
     <string name="qaudio_title">Құран тыңдау</string>
     <string name="qaudio_reciter">Мишари Рашид Әл-Афаси</string>
     <string name="qaudio_entry">Тыңдау</string>
-    <string name="qaudio_entry_detail">Әл-Афаси · 114 сүре · интернетсіз тыңдау үшін жүктеу</string>
+    <string name="qaudio_entry_detail">114 сүре · интернетсіз тыңдау үшін жүктеу</string>
     <string name="qaudio_intro">Интернет арқылы тыңдаңыз немесе қажетті сүрелерді жүктеп алыңыз. Жазбалар қолданбаның орнату файлына кірмейді.</string>
     <string name="qaudio_listen">Тыңдау</string>
     <string name="qaudio_pause">Кідірту</string>
@@ -58,7 +58,7 @@
     <string name="qaudio_confirm_delete">Жою</string>
     <string name="qaudio_close">Жабу</string>
     <string name="qaudio_source">Жазбалар: MP3Quran</string>
-    <string name="qaudio_source_detail">Әл-Афаси · Асымнан Хафс риуаяты · толық сүрелер</string>
+    <string name="qaudio_source_detail">Асымнан Хафс риуаяты · толық сүрелер</string>
     <string name="qaudio_load_error">Аудио каталогын жүктеу мүмкін болмады. Қайта көріңіз.</string>
     <string name="qaudio_error_space">Бос жад жеткіліксіз. Жүктемені жойыңыз немесе орын босатып, қайта көріңіз.</string>
     <string name="qaudio_error_network">Жазбаны жүктеу мүмкін болмады. Қосылымды тексеріп, қайта көріңіз.</string>

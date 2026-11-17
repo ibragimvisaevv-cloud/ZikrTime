@@ -44,13 +44,13 @@ internal data class QuranReaderPlayback(
     val surahId: Int?, val playingAyah: Int?, val playingWord: Int?, val phraseWord: Int?, val phraseGapNeighbor: Int?,
     val positionAyah: Int?, val positionWord: Int?, val gapNeighbor: Int?, val clipAyah: Int?,
     val continueAfter: Boolean, val repeatCount: Int, val speed: Float, val playing: Boolean, val connected: Boolean,
-    val ended: Boolean, val buffering: Boolean, val playWhenReady: Boolean, val error: String?,
+    val ended: Boolean, val buffering: Boolean, val playWhenReady: Boolean, val error: String?, val reciterId: String,
 )
 
 private fun QuranPlaybackState.readerPlayback() = QuranReaderPlayback(
     surahId, playingAyah, playingWord, playingPhraseWord, playingPhraseGapNeighbor,
     positionAyah, positionWord ?: phraseGapFrom, phraseGapTo, ayah, continueAfter, repeatCount, speed,
-    connected && isPlaying, connected, ended, isBuffering, playWhenReady, error,
+    connected && isPlaying, connected, ended, isBuffering, playWhenReady, error, reciterId,
 )
 
 /** Observe an existing service when opening the reader. Silent reading creates no playback service. */
@@ -136,6 +136,7 @@ internal fun QuranInlineOptions(repeats: Int, speed: Float, continueAfter: Boole
                     Icon(Icons.Default.Close, stringResource(R.string.qaudio_close))
                 }
             }
+            QuranReciterPicker(QuranAudioPlayer)
             Text(stringResource(R.string.ql_repeat), style = MaterialTheme.typography.titleSmall)
             FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 listOf(1, 3, 5, 10, 0).forEach { count ->

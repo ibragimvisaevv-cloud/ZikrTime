@@ -13,10 +13,10 @@ import listening_offers_ui as suite
 from quran_reading_pairs_ui import line_metrics, png, seek
 
 
-def geometry(ayah, word):
+def geometry(ayah, word, surah=5):
     token = uuid.uuid4().hex
     suite.shell("am", "start", "-W", "-n", suite.PKG + "/.MainActivity", "--ez", "qa_audio_probe", "true",
-                "--es", "qa_audio_probe_id", token, "--ei", "qa_point_surah", 5,
+                "--es", "qa_audio_probe_id", token, "--ei", "qa_point_surah", surah,
                 "--ei", "qa_point_ayah", ayah, "--ei", "qa_point_word", word)
 
     def read():

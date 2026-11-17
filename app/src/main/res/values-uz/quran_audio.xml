@@ -3,7 +3,7 @@
     <string name="qaudio_title">Qur’on tinglash</string>
     <string name="qaudio_reciter">Mishoriy Roshid Al-Afosiy</string>
     <string name="qaudio_entry">Tinglash</string>
-    <string name="qaudio_entry_detail">Al-Afosiy · 114 sura · internetsiz tinglash uchun yuklab olish</string>
+    <string name="qaudio_entry_detail">114 sura · internetsiz tinglash uchun yuklab olish</string>
     <string name="qaudio_intro">Internet orqali tinglang yoki kerakli suralarni yuklab oling. Yozuvlar ilovaning o‘rnatish fayliga kiritilmagan.</string>
     <string name="qaudio_listen">Tinglash</string>
     <string name="qaudio_pause">Pauza</string>
@@ -58,7 +58,7 @@
     <string name="qaudio_confirm_delete">O‘chirish</string>
     <string name="qaudio_close">Yopish</string>
     <string name="qaudio_source">Yozuvlar: MP3Quran</string>
-    <string name="qaudio_source_detail">Al-Afosiy · Osimdan Hafs rivoyati · to‘liq suralar</string>
+    <string name="qaudio_source_detail">Osimdan Hafs rivoyati · to‘liq suralar</string>
     <string name="qaudio_load_error">Audio katalogini yuklab bo‘lmadi. Qayta urinib ko‘ring.</string>
     <string name="qaudio_error_space">Bo‘sh xotira yetarli emas. Bir yuklamani o‘chiring yoki joy bo‘shatib, qayta urinib ko‘ring.</string>
     <string name="qaudio_error_network">Yozuvni yuklab bo‘lmadi. Ulanishni tekshirib, qayta urinib ko‘ring.</string>

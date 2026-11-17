@@ -3,7 +3,7 @@
     <string name="qaudio_title">Listen to the Quran</string>
     <string name="qaudio_reciter">Mishary Rashid Alafasy</string>
     <string name="qaudio_entry">Listen</string>
-    <string name="qaudio_entry_detail">Alafasy · 114 surahs · downloads for offline listening</string>
+    <string name="qaudio_entry_detail">114 surahs · downloads for offline listening</string>
     <string name="qaudio_intro">Listen online or download individual surahs. Recordings are not included in the app installation.</string>
     <string name="qaudio_listen">Listen</string>
     <string name="qaudio_pause">Pause</string>
@@ -59,7 +59,7 @@
     <string name="qaudio_confirm_delete">Delete</string>
     <string name="qaudio_close">Close</string>
     <string name="qaudio_source">Recordings: MP3Quran</string>
-    <string name="qaudio_source_detail">Alafasy · Hafs ‘an ‘Asim · complete surahs</string>
+    <string name="qaudio_source_detail">Hafs ‘an ‘Asim · complete surahs</string>
     <string name="qaudio_load_error">Could not load the audio catalogue. Try again.</string>
     <string name="qaudio_error_space">Not enough free storage. Delete a download or free some space, then try again.</string>
     <string name="qaudio_error_network">Could not download the recording. Check your connection and try again.</string>

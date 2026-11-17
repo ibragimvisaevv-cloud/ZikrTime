@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quran_transcription_title">Қуръон бо транскрипсияи русӣ</string>
+    <string name="quran_transcription_detail">Бо ҳарфҳои кириллӣ хонед ва қироатро пайгирӣ кунед</string>
+    <string name="quran_transcription_copy">Нусхабардории транскрипсия</string>
+    <string name="quran_transcription_source">Транскрипсияи русӣ · Qamar</string>
+</resources>

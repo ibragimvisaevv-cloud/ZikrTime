@@ -3,7 +3,7 @@
     <string name="qaudio_title">Quranı dinlə</string>
     <string name="qaudio_reciter">Mişari Rəşid əl-Əfasi</string>
     <string name="qaudio_entry">Dinlə</string>
-    <string name="qaudio_entry_detail">Əl-Əfasi · 114 surə · internetsiz dinləmək üçün yükləmə</string>
+    <string name="qaudio_entry_detail">114 surə · internetsiz dinləmək üçün yükləmə</string>
     <string name="qaudio_intro">İnternetlə dinləyin və ya ayrı-ayrı surələri yükləyin. Səs yazıları tətbiqin quraşdırma faylına daxil deyil.</string>
     <string name="qaudio_listen">Dinlə</string>
     <string name="qaudio_pause">Fasilə</string>
@@ -58,7 +58,7 @@
     <string name="qaudio_confirm_delete">Sil</string>
     <string name="qaudio_close">Bağla</string>
     <string name="qaudio_source">Səs yazıları: MP3Quran</string>
-    <string name="qaudio_source_detail">Əl-Əfasi · Asimdən Həfs rəvayəti · tam surələr</string>
+    <string name="qaudio_source_detail">Asimdən Həfs rəvayəti · tam surələr</string>
     <string name="qaudio_load_error">Səs kataloqunu yükləmək mümkün olmadı. Yenidən yoxlayın.</string>
     <string name="qaudio_error_space">Boş yaddaş kifayət deyil. Bir yükləməni silin və ya yer boşaldıb yenidən yoxlayın.</string>
     <string name="qaudio_error_network">Səs yazısını yükləmək mümkün olmadı. Bağlantını yoxlayıb yenidən cəhd edin.</string>

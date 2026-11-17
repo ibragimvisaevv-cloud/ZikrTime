@@ -1,0 +1,4 @@
+<resources>
+    <string name="qaudio_select_voice">Каары</string>
+    <string name="qaudio_reciter_choice">Каары · %1$s</string>
+</resources>

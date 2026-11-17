@@ -4,7 +4,19 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
+// Keep synchronized recitations as reproducible source packs; Android reads the unpacked chapter assets.
+val recitationAssetsDir = layout.buildDirectory.dir("generated/recitation-assets")
+val unpackRecitationAssets = tasks.register<Sync>("unpackRecitationAssets") {
+    val packs = fileTree("recitation-packs") { include("*.zip") }
+    from(packs.elements.map { files -> files.sortedBy { it.asFile.name }.map { zipTree(it.asFile) } })
+    into(recitationAssetsDir)
+    duplicatesStrategy = DuplicatesStrategy.FAIL
+}
+
+tasks.matching { it.name == "preBuild" }.configureEach { dependsOn(unpackRecitationAssets) }
+
 android {
+    sourceSets.getByName("main").assets.srcDir(recitationAssetsDir)
     namespace = "com.zikrtime.app"
     compileSdk = 35
 
@@ -12,7 +24,7 @@ android {
         applicationId = "com.zikrtime.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 54
+        versionCode = 55
         versionName = "0.8.28"
         // Ключ Яндекс Карт (MapKit): из gradle.properties или переменной окружения YANDEX_MAPKIT_KEY
         val mapkitKey = (project.findProperty("yandexMapkitKey") as String?) ?: System.getenv("YANDEX_MAPKIT_KEY") ?: ""

@@ -48,12 +48,11 @@ internal object QuranAyahPlaybackPolicy {
 
 /** Complete official timing rows for exactly the same MP3Quran recording as the surah catalogue. */
 internal class QuranAyahTimingCatalog private constructor(private val verses: Map<QuranAudioAyah, QuranAyahTiming>,
-                                                         private val basmalaStarts: Map<Int, Long>) {
+                                                         private val basmalaStarts: Map<Int, Long>,
+                                                         private val bySurah: Map<Int, List<QuranAyahTiming>>) {
     fun timing(surahId: Int, ayah: Int): QuranAyahTiming? = verses[QuranAudioAyah(surahId, ayah)]
 
     fun basmalaStart(surahId: Int): Long? = basmalaStarts[surahId]
-
-    private val bySurah = verses.values.groupBy { it.reference.surahId }
 
     /** First verse whose end is strictly after this position. It may start after an unnumbered interval. */
     fun timingAtOrAfter(surahId: Int, positionMs: Long): QuranAyahTiming? {
@@ -67,21 +66,23 @@ internal class QuranAyahTimingCatalog private constructor(private val verses: Ma
     companion object {
         const val SHA256 = "ee480450fff61cf1bd3ab1125adfafd56312288a45804a172d700f1bf53dd40b"
 
-        fun parse(text: String, counts: Map<Int, Int>): QuranAyahTimingCatalog {
+        fun parse(text: String, counts: Map<Int, Int>, voice: QuranReciter = QuranReciter.ALAFASY): QuranAyahTimingCatalog {
             require(counts.keys == (1..114).toSet() && counts.values.sum() == 6236) { "Invalid verse counts" }
             val root = JSONObject(text)
-            require(root.getInt("schema_version") == 1 && root.getString("reciter") == "mishary-alafasy" &&
+            require(root.getInt("schema_version") == 1 && root.getString("reciter") == voice.id &&
                 root.getString("recitation") == "r1") { "Timing recording does not match audio" }
             val surahs = root.getJSONArray("surahs")
             require(surahs.length() == 114) { "Incomplete timing catalogue" }
             val seen = mutableSetOf<Int>()
             val verses = linkedMapOf<QuranAudioAyah, QuranAyahTiming>()
             val basmalaStarts = mutableMapOf<Int, Long>()
+            val chronology = mutableMapOf<Int, List<QuranAyahTiming>>()
             for (i in 0 until surahs.length()) {
                 val surah = surahs.getJSONObject(i)
                 val id = surah.getInt("surah")
                 require(id in counts && seen.add(id) && surah.getBoolean("complete")) { "Incomplete surah timing" }
                 val rows = surah.getJSONArray("ayahs")
+                val occurrences = mutableListOf<QuranAyahTiming>()
                 var previousEnd = 0L
                 var expectedAyah = 1
                 for (j in 0 until rows.length()) {
@@ -97,15 +98,18 @@ internal class QuranAyahTimingCatalog private constructor(private val verses: Ma
                         require(expectedAyah == 1 && basmalaStarts.put(id, start) == null)
                     }
                     if (ayah in -1..0) continue
-                    require(ayah == expectedAyah && ayah <= counts.getValue(id)) { "Missing or mismatched ayah timing" }
-                    expectedAyah++
+                    require(ayah in 1..expectedAyah && ayah <= counts.getValue(id)) { "Missing or mismatched ayah timing" }
+                    if (ayah == expectedAyah) expectedAyah++
                     val ref = QuranAudioAyah(id, ayah)
-                    require(verses.put(ref, QuranAyahTiming(ref, start, end)) == null)
+                    val occurrence = QuranAyahTiming(ref, start, end)
+                    verses.getOrPut(ref) { occurrence }
+                    occurrences.add(occurrence)
                 }
+                chronology[id] = occurrences
                 require(expectedAyah == counts.getValue(id) + 1) { "Missing ayah timing" }
             }
             require(verses.size == 6236)
-            return QuranAyahTimingCatalog(verses, basmalaStarts)
+            return QuranAyahTimingCatalog(verses, basmalaStarts, chronology)
         }
     }
 }

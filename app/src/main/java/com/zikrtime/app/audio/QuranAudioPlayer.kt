@@ -74,7 +74,7 @@ object QuranAudioPlayer {
         }
         val saved = QuranPlaybackMemory.read(context)
         mutableState.value = mutableState.value.copy(
-            connected = false, surahId = saved?.surahId, positionMs = saved?.positionMs ?: 0L,
+            connected = false, reciterId = QuranAudioRepository.selectedReciter.value.id, surahId = saved?.surahId, positionMs = saved?.positionMs ?: 0L,
             durationMs = saved?.durationMs ?: 0L, isPlaying = false, playWhenReady = false,
             title = saved?.let {
                 val title = QuranAudioTitles.title(context, it.surahId)
@@ -161,6 +161,7 @@ object QuranAudioPlayer {
 
     private fun sendWord(controller: MediaController, surah: Int, ayah: Int, word: Int, options: QuranAyahOptions?) {
         val args = options?.let { QuranAyahSession.bundle(it) } ?: Bundle()
+        args.putString(QuranAyahSession.RECITER, QuranAudioRepository.selectedReciter.value.id)
         args.putBoolean(QuranAyahSession.START_AYAH, options != null)
         args.putInt(QuranAyahSession.SURAH, surah)
         args.putInt(QuranAyahSession.AYAH, ayah)
@@ -192,7 +193,9 @@ object QuranAudioPlayer {
             sendWord(connected, request.surahId, request.ayah, request.startToken, request.options)
             return
         }
-        if (connected.currentMediaItem?.mediaId == request.mediaId && connected.playbackState != Player.STATE_ENDED) {
+        if (connected.currentMediaItem?.mediaId == request.mediaId &&
+            connected.currentMediaItem?.mediaMetadata?.extras?.getString(QuranAyahSession.RECITER) == QuranAudioRepository.selectedReciter.value.id &&
+            connected.playbackState != Player.STATE_ENDED) {
             if (request.ayah != null) configureAyah(request.options.repeatCount, request.options.speed, request.options.continueAfter)
             if (request.autoplay) {
                 if (connected.playbackState == Player.STATE_IDLE) connected.prepare()
@@ -203,7 +206,9 @@ object QuranAudioPlayer {
             val position = if (connected.currentMediaItem?.mediaId == request.mediaId) 0L else saved?.positionMs ?: 0L
             // The service discards arbitrary URLs/clips and rebuilds this checked ID from its catalogue.
             val item = MediaItem.Builder().setMediaId(request.mediaId).setMediaMetadata(MediaMetadata.Builder()
-                .setExtras(QuranAyahSession.bundle(request.options, includeBasmala = saved?.includeBasmala == true))
+                .setExtras(QuranAyahSession.bundle(request.options, includeBasmala = saved?.includeBasmala == true).apply {
+                    putString(QuranAyahSession.RECITER, QuranAudioRepository.selectedReciter.value.id)
+                })
                 .build()).build()
             connected.pause()
             connected.setMediaItem(item, position)
@@ -233,12 +238,21 @@ object QuranAudioPlayer {
         val current = controller ?: return
         val id = current.currentMediaItem?.mediaId ?: return
         if (QuranAyahPlaybackPolicy.reference(id) == null) return
-        val args = QuranAyahSession.bundle(options).apply { putString("media_id", id) }
+        val args = QuranAyahSession.bundle(options).apply { putString("media_id", id); putString(QuranAyahSession.RECITER, QuranAudioRepository.selectedReciter.value.id) }
         val result = current.sendCustomCommand(SessionCommand(QuranAyahSession.COMMAND_CONFIGURE, Bundle.EMPTY), args)
         result.addListener({
             if (controller === current && current.currentMediaItem?.mediaId == id &&
                 runCatching { result.get().resultCode == SessionResult.RESULT_SUCCESS }.getOrDefault(false)) update()
         }, ContextCompat.getMainExecutor(context))
+    }
+
+    fun selectReciter(voice: QuranReciter) {
+        if (voice == QuranAudioRepository.selectedReciter.value) return
+        if (QuranPlaybackService.selectReciter(voice)) {
+            mutableState.value = QuranPlaybackService.snapshot()
+                ?: QuranPlaybackState(connected = controller != null, reciterId = voice.id)
+            schedulePosition()
+        }
     }
 
     fun setSpeed(speed: Float) {

@@ -2,7 +2,7 @@
 <resources>
     <string name="ql_read_title">Читать Коран</string>
     <string name="ql_read_detail">Суры, перевод и сохранённые аяты</string>
-    <string name="ql_listen_detail">Аль-Афаси · целые суры и скачивание</string>
+    <string name="ql_listen_detail">Выбор чтеца · целые суры и скачивание</string>
     <string name="ql_listen_ayah">Слушать этот аят</string>
     <string name="ql_listen_ayah_short">Слушать аят</string>
     <string name="ql_ayah_hint">Нажмите на аят, чтобы слушать, повторять или сохранить.</string>

@@ -30,6 +30,31 @@ with zipfile.ZipFile(sys.argv[1]) as previous, zipfile.ZipFile(sys.argv[2]) as c
         if name.startswith("lib/arm64-v8a/"):
             print(f"{name}: ELF LOAD {inspect_elf(data)}, compressed, SHA256 {hashlib.sha256(data).hexdigest()}")
     assets = {n for n in previous.namelist() if n.startswith("assets/")}
+    if sys.argv[3:] == ["--source-assets"]:
+        # Compare the packaged assets to this release's inputs. The Cyrillic text
+        # and additional recitations intentionally extend the previous APK.
+        root = Path("app/src/main/assets")
+        for file in root.rglob("*"):
+            if file.is_file():
+                name = "assets/" + file.relative_to(root).as_posix()
+                assert current.read(name) == file.read_bytes(), name
+        packed_names = set()
+        packs = sorted(Path("app/recitation-packs").glob("*.zip"))
+        assert packs, "Recitation packs are missing"
+        for pack in packs:
+            with zipfile.ZipFile(pack) as source:
+                for entry in source.infolist():
+                    if entry.is_dir():
+                        continue
+                    name = "assets/" + entry.filename
+                    assert name not in packed_names, "Duplicate recitation asset: " + name
+                    assert current.read(name) == source.read(entry), name
+                    packed_names.add(name)
+        for name in assets:
+            if name.startswith("assets/quran/sources/"):
+                assert current.read(name) == previous.read(name), "Underlying Quran source changed: " + name
+        print(f"Verified {len(libs)} native libraries, {len(packed_names)} packed recitation assets, source assets, and previous Quran text.")
+        sys.exit(0)
     added = set()
     if len(sys.argv) == 4:
         report = json.loads(Path(sys.argv[3]).read_text())

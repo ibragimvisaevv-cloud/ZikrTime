@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quran_transcription_title">Rusça okunuşuyla Kur’an</string>
+    <string name="quran_transcription_detail">Kiril harfleriyle okuyup tilaveti takip edin</string>
+    <string name="quran_transcription_copy">Okunuşu kopyala</string>
+    <string name="quran_transcription_source">Rusça okunuş · Qamar</string>
+</resources>

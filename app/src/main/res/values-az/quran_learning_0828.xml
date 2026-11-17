@@ -2,7 +2,7 @@
 <resources>
     <string name="ql_read_title">Quran oxu</string>
     <string name="ql_read_detail">Surələr, tərcümə və saxlanmış ayələr</string>
-    <string name="ql_listen_detail">Əl-Əfasi · tam surələr və yükləmələr</string>
+    <string name="ql_listen_detail">Qari seçimi · tam surələr və yükləmələr</string>
     <string name="ql_listen_ayah">Bu ayəni dinlə</string>
     <string name="ql_listen_ayah_short">Ayəni dinlə</string>
     <string name="ql_ayah_hint">Dinləmək, təkrarlamaq və ya saxlamaq üçün ayəyə toxunun.</string>

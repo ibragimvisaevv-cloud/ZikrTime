@@ -7,6 +7,7 @@ import androidx.media3.common.MediaItem
 internal object QuranAyahSession {
     const val COMMAND_CONFIGURE = "com.zikrtime.app.audio.CONFIGURE_AYAH"
     const val COMMAND_WORD = "com.zikrtime.app.audio.SELECT_WORD"
+    const val RECITER = "reciter_id"
     const val SURAH = "surah"
     const val AYAH = "ayah"
     const val WORD = "word"

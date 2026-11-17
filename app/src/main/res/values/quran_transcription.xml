@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quran_transcription_title">Quran in Russian transcription</string>
+    <string name="quran_transcription_detail">Read in Cyrillic and follow the recitation</string>
+    <string name="quran_transcription_copy">Copy transcription</string>
+    <string name="quran_transcription_source">Russian transcription · Qamar</string>
+</resources>

@@ -2,7 +2,7 @@
 <resources>
     <string name="ql_read_title">Read Quran</string>
     <string name="ql_read_detail">Surahs, translation and saved verses</string>
-    <string name="ql_listen_detail">Alafasy · full surahs and downloads</string>
+    <string name="ql_listen_detail">Choose a reciter · full surahs and downloads</string>
     <string name="ql_listen_ayah">Listen to this verse</string>
     <string name="ql_listen_ayah_short">Listen to verse</string>
     <string name="ql_ayah_hint">Tap a verse to listen, repeat or save it.</string>

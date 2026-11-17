@@ -60,6 +60,9 @@ private fun QuranScreenContent(initialSurah: Int, initialAyah: Int) {
     var failed by remember { mutableStateOf(false) }
     var attempt by remember { mutableIntStateOf(0) }
     var surahId by rememberSaveable { mutableIntStateOf(initialSurah) }
+    var transcriptionIndex by rememberSaveable { mutableStateOf(false) }
+    var transcriptionQuery by rememberSaveable { mutableStateOf("") }
+    val transcriptionList = rememberLazyListState()
     var startAyah by rememberSaveable { mutableIntStateOf(initialAyah) }
     var sources by rememberSaveable { mutableStateOf(false) }
     var indexQuery by rememberSaveable { mutableStateOf("") }
@@ -80,28 +83,41 @@ private fun QuranScreenContent(initialSurah: Int, initialAyah: Int) {
         catch (_: Exception) { failed = true }
     }
     BackHandler(surahId != 0) { surahId = 0 }
-    BackHandler(surahId == 0 && indexTab == 3 && topicId.isNotEmpty()) { closeTopic() }
+    BackHandler(surahId == 0 && transcriptionIndex) { transcriptionIndex = false }
+    BackHandler(surahId == 0 && !transcriptionIndex && indexTab == 3 && topicId.isNotEmpty()) { closeTopic() }
     val content = book
     if (content != null && surahId != 0) {
-        key(surahId) {
-            QuranReader(content, surahId, startAyah, scale, { scale = it }, progress, { surahId = 0 },
+        key(surahId, transcriptionIndex) {
+            if (transcriptionIndex) {
+                TranscriptionReader(content, surahId, startAyah, scale, { scale = it }, progress) { surahId = 0 }
+            } else QuranReader(content, surahId, startAyah, scale, { scale = it }, progress, { surahId = 0 },
                 backLabel = if (indexTab == 3 && topicId.isNotEmpty()) R.string.qti_back_to_topic else R.string.quran_surahs)
         }
     } else Surface(color = quranPaperColors().canvas, modifier = Modifier.fillMaxSize()) {
         Column(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing)) {
             Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = {
-                    if (indexTab == 3 && topicId.isNotEmpty()) closeTopic() else nav.back()
+                    when {
+                        transcriptionIndex -> transcriptionIndex = false
+                        indexTab == 3 && topicId.isNotEmpty() -> closeTopic()
+                        else -> nav.back()
+                    }
                 }) {
                     Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.action_back))
                 }
-                Text(stringResource(R.string.quran_title), style = MaterialTheme.typography.titleLarge,
+                Text(stringResource(if (transcriptionIndex) R.string.quran_transcription_title else R.string.quran_title), style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.weight(1f), color = quranPaperColors().ink)
                 IconButton(onClick = { sources = true }, modifier = Modifier.testTag("quran_sources")) {
                     Icon(Icons.Filled.Info, stringResource(R.string.quran_sources), tint = quranPaperColors().muted)
                 }
             }
             when {
+                content != null && transcriptionIndex -> QuranTranscriptionIndex(content, progress, transcriptionQuery,
+                    { transcriptionQuery = it }, transcriptionList) {
+                    startAyah = it.ayah
+                    surahId = it.surah
+                    progress.save(it)
+                }
                 content != null -> QuranIndex(content, progress, {
                     startAyah = it.ayah
                     surahId = it.surah
@@ -114,7 +130,7 @@ private fun QuranScreenContent(initialSurah: Int, initialAyah: Int) {
                         focus.clearFocus()
                         topicId = it
                         scope.launch { topicDetailList.scrollToItem(0) }
-                    }, closeTopic)
+                    }, closeTopic, { transcriptionIndex = true })
                 failed -> Column(Modifier.weight(1f).padding(24.dp), verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(stringResource(R.string.quran_load_error), textAlign = TextAlign.Center)
@@ -134,7 +150,7 @@ private fun QuranScreenContent(initialSurah: Int, initialAyah: Int) {
 private fun QuranIndex(book: QuranBook, progress: QuranProgress, open: (QuranProgress.Location) -> Unit,
     modifier: Modifier, query: String, onQuery: (String) -> Unit, tab: Int, onTab: (Int) -> Unit,
     listState: LazyListState, topicQuery: String, onTopicQuery: (String) -> Unit,
-    topicId: String, onTopic: (String) -> Unit, closeTopic: () -> Unit) {
+    topicId: String, onTopic: (String) -> Unit, closeTopic: () -> Unit, openTranscription: () -> Unit) {
     val context = LocalContext.current
     val ru = Lang.content(context) == "ru"
     val nav = LocalNav.current
@@ -177,6 +193,8 @@ private fun QuranIndex(book: QuranBook, progress: QuranProgress, open: (QuranPro
             Column(Modifier.fillMaxWidth().padding(bottom = 12.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 QuranEntryCard(stringResource(R.string.ql_read_title), stringResource(R.string.ql_read_detail),
                     "quran_read_entry") { open(last ?: QuranProgress.Location(1, 1)) }
+                QuranEntryCard(stringResource(R.string.quran_transcription_title), stringResource(R.string.quran_transcription_detail),
+                    "quran_transcription_entry", openTranscription)
                 QuranEntryCard(stringResource(R.string.qaudio_title), stringResource(R.string.ql_listen_detail),
                     "quran_audio_entry") { nav.openQuranAudio(0) }
             }
@@ -264,6 +282,61 @@ private fun QuranIndex(book: QuranBook, progress: QuranProgress, open: (QuranPro
 }
 
 @Composable
+private fun QuranTranscriptionIndex(book: QuranBook, progress: QuranProgress, query: String, onQuery: (String) -> Unit,
+    list: LazyListState, open: (QuranProgress.Location) -> Unit) {
+    val last = remember(book) { progress.last(book) }
+    val surahs = remember(book, query) {
+        val term = query.trim()
+        book.surahs.filter { term.isEmpty() || it.id.toString() == term || it.nameRu.contains(term, true) }
+    }
+    LazyColumn(Modifier.fillMaxSize().testTag("quran_transcription_index"), state = list,
+        contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 32.dp)) {
+        item {
+            OutlinedTextField(query, onQuery, singleLine = true, leadingIcon = { Icon(Icons.Filled.Search, null) },
+                label = { Text(stringResource(R.string.quran_search)) },
+                modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp).testTag("quran_transcription_search"))
+        }
+        if (last != null && query.isBlank()) item {
+            QuranContinueCard(book, last, true, R.string.quran_continue, "quran_transcription_continue", open)
+        }
+        if (surahs.isEmpty()) item { QuranIndexEmpty(stringResource(R.string.quran_no_results)) }
+        items(surahs, key = { it.id }) { surah ->
+            QuranSurahRow(surah, true, 0, 0, cyrillicOnly = true) { open(QuranProgress.Location(surah.id, 1)) }
+        }
+    }
+}
+
+@Composable
+private fun TranscriptionReader(book: QuranBook, surahId: Int, startAyah: Int, scale: Float,
+    onScale: (Float) -> Unit, progress: QuranProgress, back: () -> Unit) {
+    val context = LocalContext.current
+    var verses by remember(surahId) { mutableStateOf<List<QuranTranscriptionAyah>?>(null) }
+    var attempt by remember { mutableIntStateOf(0) }
+    var failed by remember { mutableStateOf(false) }
+    LaunchedEffect(surahId, attempt) {
+        failed = false
+        try {
+            val data = QuranTranscription.load(context, surahId)
+            require(data.size == book.verses(surahId).size)
+            verses = data
+        } catch (e: CancellationException) { throw e }
+        catch (_: Exception) { failed = true }
+    }
+    val text = verses
+    when {
+        text != null -> QuranReader(book, surahId, startAyah, scale, onScale, progress, back,
+            backLabel = R.string.quran_transcription_title, transcription = text)
+        failed -> Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(stringResource(R.string.quran_load_error))
+            TextButton(onClick = { attempt++ }) { Text(stringResource(R.string.quran_retry)) }
+            TextButton(onClick = back) { Text(stringResource(R.string.action_back)) }
+        }
+        else -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
+    }
+}
+
+@Composable
 private fun QuranContinueCard(book: QuranBook, location: QuranProgress.Location, ru: Boolean,
     label: Int, tag: String, open: (QuranProgress.Location) -> Unit, note: String = "") {
     val colors = quranPaperColors()
@@ -286,7 +359,7 @@ private fun QuranContinueCard(book: QuranBook, location: QuranProgress.Location,
 }
 
 @Composable
-private fun QuranSurahRow(surah: QuranSurah, ru: Boolean, bookmarkCount: Int, noteCount: Int, open: () -> Unit) {
+private fun QuranSurahRow(surah: QuranSurah, ru: Boolean, bookmarkCount: Int, noteCount: Int, cyrillicOnly: Boolean = false, open: () -> Unit) {
     val colors = quranPaperColors()
     val largeText = LocalConfiguration.current.fontScale > 1.25f
     BoxWithConstraints(Modifier.fillMaxWidth()) {
@@ -300,11 +373,11 @@ private fun QuranSurahRow(surah: QuranSurah, ru: Boolean, bookmarkCount: Int, no
                 Text(stringResource(R.string.quran_ayah_count, surah.ayahCount),
                     style = MaterialTheme.typography.bodySmall, color = colors.muted)
                 if (bookmarkCount > 0 || noteCount > 0) QuranIndexSavedBadges(bookmarkCount, noteCount)
-                if (compact) Text(surah.nameArabic,
+                if (!cyrillicOnly && compact) Text(surah.nameArabic,
                     style = ArabicStyle.copy(fontSize = 23.sp, textDirection = TextDirection.Rtl),
                     color = colors.accent, modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Right)
             }
-            if (!compact) Text(surah.nameArabic,
+            if (!cyrillicOnly && !compact) Text(surah.nameArabic,
                 style = ArabicStyle.copy(fontSize = 25.sp, textDirection = TextDirection.Rtl),
                 color = colors.accent, modifier = Modifier.widthIn(max = 126.dp), textAlign = TextAlign.Right)
         }
@@ -366,6 +439,9 @@ internal fun QuranSources(close: () -> Unit) {
         TextButton(onClick = { runCatching { uri.openUri("https://tanzil.net/docs/Quran_Text") } }) { Text("Tanzil") }
         Text(stringResource(R.string.quran_source_translation), style = MaterialTheme.typography.bodyLarge)
         TextButton(onClick = { runCatching { uri.openUri("https://quranenc.com/en/browse/russian_rwwad/1") } }) { Text("QuranEnc") }
+        TextButton(onClick = { runCatching {
+            uri.openUri("https://github.com/maqsats/qamar-kmp-libraries/tree/541c33799c6f54b723518515451bea68b009dd95/quran-transliteration")
+        } }) { Text(stringResource(R.string.quran_transcription_source)) }
         TextButton(onClick = close, modifier = Modifier.testTag("quran_sources_close")) { Text(stringResource(R.string.quran_close)) }
     }
 }

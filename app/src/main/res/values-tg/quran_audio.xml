@@ -3,7 +3,7 @@
     <string name="qaudio_title">Гӯш кардани Қуръон</string>
     <string name="qaudio_reciter">Мишорӣ Рошид Ал-Афосӣ</string>
     <string name="qaudio_entry">Гӯш кардан</string>
-    <string name="qaudio_entry_detail">Ал-Афосӣ · 114 сура · боргирӣ барои гӯш кардан бе интернет</string>
+    <string name="qaudio_entry_detail">114 сура · боргирӣ барои гӯш кардан бе интернет</string>
     <string name="qaudio_intro">Тавассути интернет гӯш кунед ё сураҳои дилхоҳро боргирӣ кунед. Сабтҳо ба файли насби барнома дохил нестанд.</string>
     <string name="qaudio_listen">Гӯш кардан</string>
     <string name="qaudio_pause">Таваққуф</string>
@@ -58,7 +58,7 @@
     <string name="qaudio_confirm_delete">Нест кардан</string>
     <string name="qaudio_close">Пӯшидан</string>
     <string name="qaudio_source">Сабтҳо: MP3Quran</string>
-    <string name="qaudio_source_detail">Ал-Афосӣ · Ҳафс аз Осим · сураҳои пурра</string>
+    <string name="qaudio_source_detail">Ҳафс аз Осим · сураҳои пурра</string>
     <string name="qaudio_load_error">Феҳристи аудио бор нашуд. Бори дигар кӯшиш кунед.</string>
     <string name="qaudio_error_space">Хотираи холӣ намерасад. Боргириеро нест кунед ё ҷой холӣ карда, бори дигар кӯшиш кунед.</string>
     <string name="qaudio_error_network">Сабт боргирӣ нашуд. Пайвастшавиро санҷида, бори дигар кӯшиш кунед.</string>

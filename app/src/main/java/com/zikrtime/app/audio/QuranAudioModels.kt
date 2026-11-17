@@ -3,8 +3,27 @@ package com.zikrtime.app.audio
 import java.net.URI
 import org.json.JSONObject
 
-data class QuranAudioTrack(val surahId: Int, val url: String, val sizeBytes: Long) {
-    val cacheKey: String get() = "alafasy-v1-$surahId"
+enum class QuranReciter(val id: String, val russian: String, val english: String, internal val timingHash: String) {
+    ALAFASY("mishary-alafasy", "Мишари Рашид Аль-Афаси", "Mishary Rashid Alafasy", QuranAyahTimingCatalog.SHA256),
+    DOSARI("yasser-dosari", "Ясир Ад-Досари", "Yasser Al-Dosari", "48a77f1967e2d30553e1ebf349972fbf1e4df35fe89d7d87b6777e141b36e977"),
+    HUSARY("mahmoud-husary", "Махмуд Халиль Аль-Хусари", "Mahmoud Khalil Al-Husary", "f63f0bbe7987ab7ce5678386b8857f5d959c7d968ae5df26da3518d9c476fa47"),
+    MINSHAWI("muhammad-minshawi", "Мухаммад Сиддик Аль-Миншави", "Muhammad Siddiq Al-Minshawi", "6a757d7fd880815fe67b6c1b82938668ea8dc6a71fbe6df221f3f660c902d0db");
+
+    fun nameIn(russianLanguage: Boolean): String = if (russianLanguage) russian else english
+    internal val assetDirectory get() = if (this == ALAFASY) "quran_audio" else "quran_audio/$id"
+    internal val catalogPath get() = if (this == ALAFASY) "$assetDirectory/alafasy.json" else "$assetDirectory/catalog.json"
+    internal val timingPath get() = if (this == ALAFASY) "$assetDirectory/alafasy_ayah_timings.json" else "$assetDirectory/ayah_timings.json"
+    internal fun cacheKey(surah: Int) = if (this == ALAFASY) "alafasy-v1-$surah" else "$id-r1-$surah"
+    internal fun url(surah: Int) = "https://cdn.mp3quran.net/audio/$id/r1/" + surah.toString().padStart(3, '0') + ".mp3"
+
+    companion object {
+        fun fromId(id: String?): QuranReciter? = entries.firstOrNull { it.id == id }
+    }
+}
+
+data class QuranAudioTrack(val surahId: Int, val url: String, val sizeBytes: Long,
+                          val reciter: QuranReciter = QuranReciter.ALAFASY) {
+    val cacheKey: String get() = reciter.cacheKey(surahId)
 }
 
 enum class QuranAudioDownloadStatus {
@@ -31,7 +50,7 @@ data class QuranAudioStorageState(
     val error: QuranAudioStorageError? = null,
 )
 
-/** Only the bundled, reviewed Alafasy/Hafs catalogue can supply media URLs. */
+/** Only the bundled, reviewed catalogue for this recording can supply media URLs. */
 internal data class QuranAudioCatalog(
     val reciter: String,
     val source: String,
@@ -39,10 +58,9 @@ internal data class QuranAudioCatalog(
     val tracks: List<QuranAudioTrack>,
 ) {
     companion object {
-        const val PREFIX = "https://cdn.mp3quran.net/audio/mishary-alafasy/r1/"
-
-        fun parse(text: String): QuranAudioCatalog {
+        fun parse(text: String, voice: QuranReciter = QuranReciter.ALAFASY): QuranAudioCatalog {
             val root = JSONObject(text)
+            if (voice != QuranReciter.ALAFASY) require(root.getString("reciter_id") == voice.id)
             val entries = root.getJSONArray("tracks")
             require(entries.length() == 114) { "Incomplete audio catalogue" }
             val tracks = (0 until entries.length()).map { index ->
@@ -52,10 +70,10 @@ internal data class QuranAudioCatalog(
                 val size = item.getLong("size_bytes")
                 require(id in 1..114 && size > 0) { "Invalid audio entry" }
                 val uri = URI(url)
-                val expected = PREFIX + id.toString().padStart(3, '0') + ".mp3"
+                val expected = voice.url(id)
                 require(url == expected && uri.scheme == "https" && uri.userInfo == null &&
                     uri.port == -1 && uri.query == null && uri.fragment == null) { "Untrusted audio URL" }
-                QuranAudioTrack(id, url, size)
+                QuranAudioTrack(id, url, size, voice)
             }
             require(tracks.map { it.surahId }.toSet() == (1..114).toSet()) { "Duplicate or missing surah" }
             return QuranAudioCatalog(root.getString("reciter"), root.getString("source"),

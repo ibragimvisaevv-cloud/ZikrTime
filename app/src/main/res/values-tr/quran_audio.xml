@@ -3,7 +3,7 @@
     <string name="qaudio_title">Kur’an dinle</string>
     <string name="qaudio_reciter">Mişari Raşid el-Afasi</string>
     <string name="qaudio_entry">Dinle</string>
-    <string name="qaudio_entry_detail">El-Afasi · 114 sure · çevrimdışı dinlemek için indirme</string>
+    <string name="qaudio_entry_detail">114 sure · çevrimdışı dinlemek için indirme</string>
     <string name="qaudio_intro">İnternetten dinleyin veya istediğiniz sureleri indirin. Kayıtlar uygulamanın kurulum dosyasında yer almaz.</string>
     <string name="qaudio_listen">Dinle</string>
     <string name="qaudio_pause">Duraklat</string>
@@ -58,7 +58,7 @@
     <string name="qaudio_confirm_delete">Sil</string>
     <string name="qaudio_close">Kapat</string>
     <string name="qaudio_source">Kayıtlar: MP3Quran</string>
-    <string name="qaudio_source_detail">El-Afasi · Âsım kıraatinin Hafs rivayeti · tam sureler</string>
+    <string name="qaudio_source_detail">Âsım kıraatinin Hafs rivayeti · tam sureler</string>
     <string name="qaudio_load_error">Ses kataloğu yüklenemedi. Yeniden deneyin.</string>
     <string name="qaudio_error_space">Yeterli boş alan yok. Bir indirmeyi silin veya yer açıp yeniden deneyin.</string>
     <string name="qaudio_error_network">Kayıt indirilemedi. Bağlantınızı kontrol edip yeniden deneyin.</string>

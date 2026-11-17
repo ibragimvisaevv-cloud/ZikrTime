@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quran_transcription_title">Құранның орысша транскрипциясы</string>
+    <string name="quran_transcription_detail">Кирилл әріптерімен оқып, қаридің оқуын тыңдаңыз</string>
+    <string name="quran_transcription_copy">Транскрипцияны көшіру</string>
+    <string name="quran_transcription_source">Орысша транскрипция · Qamar</string>
+</resources>

@@ -155,7 +155,8 @@ class QuranPlaybackService : MediaSessionService() {
                     val options = QuranAyahSession.fromBundle(args)
                     val requestedId = args.getString("media_id")
                     val valid = trusted(controller) && customCommand.customAction == QuranAyahSession.COMMAND_CONFIGURE &&
-                        options != null && requestedId == session.player.currentMediaItem?.mediaId &&
+                        options != null && args.getString(QuranAyahSession.RECITER) == QuranAudioRepository.selectedReciter.value.id &&
+                        requestedId == session.player.currentMediaItem?.mediaId &&
                         requestedId?.let(QuranAyahPlaybackPolicy::reference) != null
                     if (!valid) return Futures.immediateFuture(SessionResult(SessionError.ERROR_BAD_VALUE))
                     QuranAyahSession.configure(options!!)
@@ -168,6 +169,8 @@ class QuranPlaybackService : MediaSessionService() {
                     mediaSession: MediaSession, controller: MediaSession.ControllerInfo, mediaItems: List<MediaItem>,
                 ): ListenableFuture<List<MediaItem>> = Futures.immediateFuture(
                     mediaItems.take(1).mapNotNull { item ->
+                        val reciter = item.mediaMetadata.extras?.getString(QuranAyahSession.RECITER)
+                        if (reciter != null && reciter != QuranAudioRepository.selectedReciter.value.id) return@mapNotNull null
                         val options = if (QuranAyahPlaybackPolicy.reference(item.mediaId) != null)
                             QuranAyahSession.fromBundle(item.mediaMetadata.extras) ?: QuranAyahOptions() else QuranAyahOptions()
                         mediaItem(item.mediaId, options, includeBasmala =
@@ -192,6 +195,8 @@ class QuranPlaybackService : MediaSessionService() {
      * prepare callback can apply an earlier tap after the user has moved to another word.
      */
     private fun selectWord(exo: ExoPlayer, args: Bundle): Int {
+        if (args.getString(QuranAyahSession.RECITER) != QuranAudioRepository.selectedReciter.value.id)
+            return SessionError.ERROR_INVALID_STATE
         val surah = args.getInt(QuranAyahSession.SURAH)
         val ayah = args.getInt(QuranAyahSession.AYAH)
         val timing = QuranAudioRepository.ayahTiming(surah, ayah) ?: return SessionError.ERROR_BAD_VALUE
@@ -249,13 +254,53 @@ class QuranPlaybackService : MediaSessionService() {
             .setCustomCacheKey(track.cacheKey)
             .setMediaMetadata(MediaMetadata.Builder()
                 .setTitle(if (verse == null) title else localized.getString(R.string.audio_ayah_title, title, verse.ayah))
-                .setArtist(localized.getString(R.string.audio_player_reciter))
+                .setArtist(track.reciter.displayName(this))
                 .setAlbumTitle(localized.getString(R.string.audio_player_album))
-                .setExtras(QuranAyahSession.bundle(options, iteration, includeBasmala && verse?.ayah == 1))
+                .setExtras(QuranAyahSession.bundle(options, iteration, includeBasmala && verse?.ayah == 1).apply {
+                    putString(QuranAyahSession.RECITER, track.reciter.id)
+                })
                 .setMediaType(MediaMetadata.MEDIA_TYPE_AUDIO_BOOK_CHAPTER).build())
         if (timing != null) builder.setClippingConfiguration(MediaItem.ClippingConfiguration.Builder()
             .setStartPositionMs(timing.startMs).setEndPositionMs(timing.endMs).build())
         return builder.build()
+    }
+
+    /** Capture the text address before changing recordings. Milliseconds belong to one voice only. */
+    private fun changeRecording(exo: ExoPlayer, voice: QuranReciter): Boolean {
+        val previous = QuranPlaybackMemory.state(this, exo)
+        val surah = previous.surahId
+        val wasPrepared = exo.playbackState != Player.STATE_IDLE
+        val resume = previous.playWhenReady && !previous.ended && !AlarmState.ringing
+        val absolute = previous.positionMs + (previous.clipStartMs ?: 0)
+        val previousAyah = surah?.let { QuranAudioRepository.timingAtOrAfter(it, absolute) }
+        val ayah = previous.ayah ?: previousAyah?.reference?.ayah
+        val includeBasmala = ayah == 1 && previousAyah != null && absolute < previousAyah.startMs &&
+            (previous.ayah == null || exo.currentMediaItem?.mediaMetadata?.extras?.getBoolean(QuranAyahSession.INCLUDE_BASMALA) == true)
+        val word = if (previous.positionAyah == ayah) previous.positionWord ?: previous.phraseGapFrom else null
+        QuranPlaybackMemory.save(this, exo)
+        if (!QuranAudioRepository.selectVoice(voice)) return false
+        if (surah == null) return true
+        val ref = ayah?.let { QuranAudioAyah(surah, it) }
+        val timing = ref?.let { QuranAudioRepository.ayahTiming(surah, it.ayah) }
+        val target = when {
+            previous.ended || previous.ayah == null && absolute == 0L -> 0L
+            includeBasmala && ref != null -> QuranAudioRepository.clipTiming(ref, true)?.startMs ?: 0L
+            timing != null -> QuranWordTimings.seekStart(this, timing, word)
+            else -> 0L
+        }
+        val options = QuranAyahOptions(previous.repeatCount, previous.speed, previous.continueAfter)
+        val mediaId = previous.ayah?.let { QuranAudioAyah(surah, it).mediaId } ?: surah.toString()
+        val item = mediaItem(mediaId, options, previous.repeatIteration, includeBasmala)
+        if (item == null) {
+            exo.pause()
+            exo.clearMediaItems()
+            return true
+        }
+        if (!resume) exo.pause()
+        exo.setMediaItem(item, (target - item.clippingConfiguration.startPositionMs).coerceAtLeast(0L))
+        if (wasPrepared || resume) exo.prepare()
+        if (resume) exo.play()
+        return true
     }
 
     private fun openPlayerIntent(surahId: Int?, ayah: Int? = null): PendingIntent = PendingIntent.getActivity(
@@ -292,6 +337,15 @@ class QuranPlaybackService : MediaSessionService() {
         private var active = WeakReference<QuranPlaybackService>(null)
         internal val hasActiveSession: Boolean get() = active.get()?.session != null
 
+        /** Selection and source replacement share ExoPlayer's application thread. */
+        internal fun selectReciter(voice: QuranReciter): Boolean {
+            check(Looper.myLooper() == Looper.getMainLooper())
+            val service = active.get()
+            val exo = service?.player
+            return if (service != null && exo != null) service.changeRecording(exo, voice)
+            else QuranAudioRepository.selectVoice(voice)
+        }
+
         /** Does not create or start a service; called before our alarm/adhan starts. */
         @Suppress("UNUSED_PARAMETER")
         fun pauseForInterruption(context: Context) {
@@ -301,6 +355,8 @@ class QuranPlaybackService : MediaSessionService() {
             }
             if (Looper.myLooper() == Looper.getMainLooper()) pause.run() else service.handler.post(pause)
         }
+
+        internal fun currentRecordingUrl(): String? = active.get()?.player?.currentMediaItem?.localConfiguration?.uri?.toString()
 
         /** Main-thread diagnostic used by debug QA; never creates playback or changes state. */
         fun snapshot(): QuranPlaybackState? {

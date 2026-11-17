@@ -34,6 +34,7 @@ data class QuranPlaybackState(
     val nextWordBoundaryMs: Long? = null,
     val phraseGapFrom: Int? = null,
     val phraseGapTo: Int? = null,
+    val reciterId: String = QuranReciter.ALAFASY.id,
 ) {
     val playingAyah: Int? get() = positionAyah.takeIf { connected && isPlaying }
     val playingWord: Int? get() = positionWord.takeIf { connected && isPlaying }
@@ -44,8 +45,11 @@ data class QuranPlaybackState(
 internal object QuranPlaybackMemory {
     private const val PREFS = "quran_audio_playback_v1"
 
+    private fun prefs(context: Context, voice: QuranReciter) = context.getSharedPreferences(
+        if (voice == QuranReciter.ALAFASY) PREFS else "${PREFS}_${voice.id}", Context.MODE_PRIVATE)
+
     fun read(context: Context): QuranPlaybackPosition? {
-        val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+        val prefs = prefs(context, QuranAudioRepository.selectedReciter.value)
         val saved = QuranPlaybackPolicy.restore(prefs.getInt("surah", 0), prefs.getLong("position", 0L), prefs.getLong("duration", 0L)) ?: return null
         val ayah = prefs.getInt("ayah", 0).takeIf { it > 0 }
         if (ayah != null && QuranAudioRepository.ayahTiming(saved.surahId, ayah) == null) return null
@@ -57,7 +61,10 @@ internal object QuranPlaybackMemory {
     }
 
     fun save(context: Context, player: Player) {
-        val mediaId = player.currentMediaItem?.mediaId ?: return
+        val item = player.currentMediaItem ?: return
+        val voice = item.mediaMetadata.extras?.getString(QuranAyahSession.RECITER)?.let(QuranReciter::fromId) ?: QuranReciter.ALAFASY
+        if (voice != QuranAudioRepository.selectedReciter.value) return
+        val mediaId = item.mediaId
         val verse = QuranAyahPlaybackPolicy.reference(mediaId)
         val includeBasmala = verse?.ayah == 1 &&
             player.currentMediaItem?.mediaMetadata?.extras?.getBoolean(QuranAyahSession.INCLUDE_BASMALA) == true
@@ -66,10 +73,10 @@ internal object QuranPlaybackMemory {
             ?: verse?.let { QuranAudioRepository.clipTiming(it, includeBasmala)?.durationMs }
             ?: read(context)?.takeIf { it.surahId == surah && it.ayah == verse?.ayah }?.durationMs ?: 0L
         val position = if (player.playbackState == Player.STATE_ENDED) 0L else QuranPlaybackPolicy.clamp(player.currentPosition, duration)
-        val options = if (verse != null && QuranAyahSession.reference == verse) QuranAyahSession.options else QuranAyahOptions()
+        val options = if (verse != null && QuranAyahSession.reference == verse) QuranAyahSession.options else QuranAyahOptions(speed = player.playbackParameters.speed)
         val iteration = if (verse != null && QuranAyahSession.reference == verse && player.playbackState != Player.STATE_ENDED)
             QuranAyahSession.iteration else 1
-        context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit()
+        prefs(context, voice).edit()
             .putInt("surah", surah).putInt("ayah", verse?.ayah ?: 0)
             .putBoolean(QuranAyahSession.INCLUDE_BASMALA, includeBasmala)
             .putLong("position", position).putLong("duration", duration)
@@ -78,7 +85,11 @@ internal object QuranPlaybackMemory {
     }
 
     fun state(context: Context, player: Player): QuranPlaybackState {
-        val verse = player.currentMediaItem?.mediaId?.let(QuranAyahPlaybackPolicy::reference)
+        val selected = QuranAudioRepository.selectedReciter.value
+        val item = player.currentMediaItem
+        val itemVoice = item?.mediaMetadata?.extras?.getString(QuranAyahSession.RECITER) ?: QuranReciter.ALAFASY.id
+        if (item != null && itemVoice != selected.id) return QuranPlaybackState(connected = true, reciterId = selected.id)
+        val verse = item?.mediaId?.let(QuranAyahPlaybackPolicy::reference)
         val surah = verse?.surahId ?: player.currentMediaItem?.mediaId?.toIntOrNull()?.takeIf { it in 1..114 }
         val includeBasmala = player.currentMediaItem?.mediaMetadata?.extras?.getBoolean(QuranAyahSession.INCLUDE_BASMALA) == true
         val timing = verse?.let { QuranAudioRepository.clipTiming(it, includeBasmala) }
@@ -103,7 +114,7 @@ internal object QuranPlaybackMemory {
         val gap = cursor?.previousInGap?.takeIf { it.ayah == activeAyah }
         val failure = player.playerError
         return QuranPlaybackState(
-            connected = true, surahId = surah, title = player.mediaMetadata.title?.toString().orEmpty(),
+            connected = true, reciterId = selected.id, surahId = surah, title = player.mediaMetadata.title?.toString().orEmpty(),
             isPlaying = player.isPlaying, isBuffering = player.playbackState == Player.STATE_BUFFERING,
             positionMs = position, durationMs = duration,
             error = failure?.let { Lang.wrap(context).getString(R.string.audio_player_failure) },
@@ -140,4 +151,9 @@ internal object QuranAudioTitles {
         val pair = titles[surah]
         if (pair == null) surah.toString() else if (Lang.content(context) == "ru") pair.first else pair.second
     }.getOrDefault(surah.toString())
+}
+
+internal fun QuranReciter.displayName(context: Context): String = when (this) {
+    QuranReciter.ALAFASY -> Lang.wrap(context).getString(R.string.audio_player_reciter)
+    else -> nameIn(Lang.content(context) in setOf("ru", "kk", "ky", "tg"))
 }

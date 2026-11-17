@@ -2,7 +2,7 @@
 <resources>
     <string name="ql_read_title">Qur’on o‘qish</string>
     <string name="ql_read_detail">Suralar, tarjima va saqlangan oyatlar</string>
-    <string name="ql_listen_detail">Al-Afasiy · to‘liq suralar va yuklash</string>
+    <string name="ql_listen_detail">Qorini tanlash · to‘liq suralar va yuklash</string>
     <string name="ql_listen_ayah">Bu oyatni tinglash</string>
     <string name="ql_listen_ayah_short">Oyatni tinglash</string>
     <string name="ql_ayah_hint">Tinglash, takrorlash yoki saqlash uchun oyatni bosing.</string>

@@ -8,11 +8,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
@@ -26,7 +28,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.style.TextOverflow
@@ -54,6 +55,40 @@ import java.util.Locale
 @Composable
 fun QuranAudioScreen(initialSurah: Int = 0) {
     QuranReadingTheme { QuranAudioContent(initialSurah) }
+}
+
+@Composable
+internal fun QuranReciterPicker(player: QuranAudioPlayer) {
+    val context = LocalContext.current
+    val current by QuranAudioRepository.selectedReciter.collectAsStateWithLifecycle()
+    var expanded by remember { mutableStateOf(false) }
+    LaunchedEffect(context) { QuranAudioRepository.restoreSelection(context) }
+    val name = current.displayName(context)
+    OutlinedButton(onClick = { expanded = true }, modifier = Modifier.fillMaxWidth().testTag("quran_reciter_select")) {
+        Text(stringResource(R.string.qaudio_reciter_choice, name), modifier = Modifier.weight(1f))
+        Icon(Icons.Default.ArrowDropDown, null)
+    }
+    if (expanded) AlertDialog(onDismissRequest = { expanded = false },
+        modifier = Modifier.semantics { testTagsAsResourceId = true },
+        title = { Text(stringResource(R.string.qaudio_select_voice)) },
+        text = {
+            Column(Modifier.verticalScroll(rememberScrollState())) {
+                QuranReciter.entries.forEach { voice ->
+                    val selectVoice = {
+                        expanded = false
+                        QuranAudioRepository.init(context)
+                        player.selectReciter(voice)
+                    }
+                    Row(Modifier.fillMaxWidth().selectable(voice == current, role = Role.RadioButton, onClick = selectVoice)
+                        .testTag("quran_reciter_${voice.id}").padding(vertical = 10.dp),
+                        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                        RadioButton(selected = voice == current, onClick = null)
+                        Text(voice.displayName(context), style = MaterialTheme.typography.bodyLarge)
+                    }
+                }
+            }
+        },
+        confirmButton = { TextButton(onClick = { expanded = false }) { Text(stringResource(R.string.qaudio_close)) } })
 }
 
 @Composable
@@ -173,8 +208,7 @@ private fun QuranAudioContent(initialSurah: Int) {
                 item("player") {
                     Column(Modifier.fillMaxWidth().padding(top = 8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         QuranOrnament(Modifier.width(92.dp).height(14.dp))
-                        Text(stringResource(R.string.qaudio_reciter), style = MaterialTheme.typography.titleLarge,
-                            modifier = Modifier.semantics { heading() })
+                        QuranReciterPicker(QuranAudioPlayer)
                         if (selected != null && storage.ready) {
                             QuranAudioPlayerCard(selected, ru, playback, storage, onDelete = { deleteId = selected.id },
                                 playingVerse = { if (playback.ayah == null && playback.surahId == selected.id) showPlayingVerse() })
@@ -233,7 +267,7 @@ private fun QuranAudioContent(initialSurah: Int) {
                 item("source") {
                     val uri = LocalUriHandler.current
                     Text(stringResource(R.string.qaudio_source_detail), style = MaterialTheme.typography.bodySmall, color = colors.muted)
-                    TextButton(onClick = { runCatching { uri.openUri("https://www.mp3quran.net/eng/afs") } },
+                    TextButton(onClick = { runCatching { uri.openUri(QuranAudioRepository.sourceUrl) } },
                         modifier = Modifier.testTag("audio_source")) { Text(stringResource(R.string.qaudio_source)) }
                 }
             }

@@ -53,6 +53,7 @@ internal object QuranWordTimings {
     // Bridge only a brief gap when its two actual endpoints belong to one display pair.
     private const val MAX_PAIR_GAP_MS = 300
     private var cachedSurah = 0
+    private var cachedVoice: QuranReciter? = null
     private var intervals = emptyList<QuranWordInterval>()
     private var originalIntervals = emptyList<QuranWordInterval>()
     private var exclusiveWindows = emptySet<QuranWordInterval>()
@@ -64,26 +65,29 @@ internal object QuranWordTimings {
     private var index: QuranPhraseIndex? = null
 
     private fun load(context: Context, surah: Int) {
-        if (cachedSurah == surah) return
-        originalIntervals = readIntervals(context, "words", surah)
+        val voice = QuranAudioRepository.voice(context)
+        if (cachedVoice == voice && cachedSurah == surah) return
+        val base = voice.assetDirectory
+        originalIntervals = readIntervals(context, "$base/words", surah)
         // The first safe display moment can be later than a word's actual attack due to
         // overlapping publisher intervals. The seek path must use its independently checked onset.
-        val extraIntervals = readIntervals(context, "word_intervals", surah)
+        val extraIntervals = readIntervals(context, "$base/word_intervals", surah)
         exclusiveWindows = extraIntervals.toSet()
         intervals = if (extraIntervals.isEmpty()) originalIntervals else
             (originalIntervals + extraIntervals).sortedBy { it.startMs }
         timedByAyah = intervals.groupBy { it.ayah }.mapValues { (_, rows) -> rows.mapTo(mutableSetOf()) { it.word } }
         additionalStarts = runCatching {
-            context.assets.open("quran_audio/word_starts/$surah.bin").buffered().use { stream ->
+            context.assets.open("$base/word_starts/$surah.bin").buffered().use { stream ->
                 readAdditionalStarts(DataInputStream(stream), surah)
             }
         }.getOrDefault(emptyMap())
+        cachedVoice = voice
         cachedSurah = surah
         index = null
     }
 
     private fun readIntervals(context: Context, directory: String, surah: Int): List<QuranWordInterval> = runCatching {
-        context.assets.open("quran_audio/$directory/$surah.bin").buffered().use { stream ->
+        context.assets.open("$directory/$surah.bin").buffered().use { stream ->
             val input = DataInputStream(stream)
             require(input.readInt() == 0x5A515731 && input.readInt() == surah)
             val count = input.readInt()

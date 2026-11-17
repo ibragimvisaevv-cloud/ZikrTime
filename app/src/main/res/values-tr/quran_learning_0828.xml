@@ -2,7 +2,7 @@
 <resources>
     <string name="ql_read_title">Kur’an oku</string>
     <string name="ql_read_detail">Sureler, meal ve kaydedilen ayetler</string>
-    <string name="ql_listen_detail">Alafasy · tam sureler ve indirmeler</string>
+    <string name="ql_listen_detail">Kâri seçimi · tam sureler ve indirmeler</string>
     <string name="ql_listen_ayah">Bu ayeti dinle</string>
     <string name="ql_listen_ayah_short">Ayeti dinle</string>
     <string name="ql_ayah_hint">Dinlemek, tekrarlamak veya kaydetmek için bir ayete dokunun.</string>

@@ -37,7 +37,9 @@ import androidx.core.view.WindowInsetsControllerCompat
 import com.zikrtime.app.R
 import com.zikrtime.app.BuildConfig
 import com.zikrtime.app.audio.QuranAudioPlayer
+import com.zikrtime.app.audio.QuranAudioRepository
 import com.zikrtime.app.audio.QuranPlaybackService
+import com.zikrtime.app.audio.QuranReadingPhrase
 import com.zikrtime.app.audio.QuranWordTimings
 import com.zikrtime.app.audio.quranWordRange
 import com.zikrtime.app.data.*
@@ -52,19 +54,19 @@ import java.time.LocalDate
 @Composable
 internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: Float,
     onScale: (Float) -> Unit, progress: QuranProgress, showIndex: () -> Unit,
-    backLabel: Int = R.string.quran_surahs) {
+    backLabel: Int = R.string.quran_surahs, transcription: List<QuranTranscriptionAyah>? = null) {
     val context = LocalContext.current
     val view = LocalView.current
     val activity = context.readerActivity()
     val configuration = LocalConfiguration.current
     val colors = quranPaperColors()
-    val ru = Lang.content(context) == "ru"
+    val ru = transcription != null || Lang.content(context) == "ru"
     val surah = remember(book, surahId) { book.surahs.first { it.id == surahId } }
     val verses = remember(book, surahId) { book.verses(surahId) }
     val startAyah = firstAyah.coerceIn(1, surah.ayahCount)
     var blockAnchor by rememberSaveable { mutableIntStateOf(startAyah) }
     val blocks = remember(verses, blockAnchor) { QuranReading.blocks(verses, blockAnchor) }
-    var wholeSurah by rememberSaveable { mutableStateOf(progress.wholeSurah) }
+    var wholeSurah by rememberSaveable { mutableStateOf(transcription == null && progress.wholeSurah) }
     val verseList = rememberLazyListState(startAyah - 1)
     val wholeList = rememberLazyListState(QuranReading.blockIndex(blocks, startAyah))
     val list = if (wholeSurah) wholeList else verseList
@@ -79,7 +81,9 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
         QuranWordProbe.geometry = geometry
         onDispose { if (QuranWordProbe.geometry === geometry) QuranWordProbe.geometry = null }
     }
-    val tracker = remember(verses) { QuranReadTracker(verses) }
+    val tracker = remember(verses, transcription) {
+        QuranReadTracker(verses) { ayah -> transcription?.get(ayah.number - 1)?.text ?: ayah.arabic }
+    }
     val focus = LocalFocusManager.current
     val scope = rememberCoroutineScope()
     val clipboard = LocalClipboardManager.current
@@ -104,22 +108,25 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
     var sheet by rememberSaveable { mutableStateOf("") }
     var audioOpened by rememberSaveable { mutableStateOf(false) }
     val playback = QuranReaderAudioConnection(audioOpened)
-    val playingAyah = playback.playingAyah.takeIf { playback.surahId == surahId }
-    val ayahWithoutWords = remember(surahId, playingAyah) {
+    val reciter by QuranAudioRepository.selectedReciter.collectAsState()
+    val activeHere = playback.connected && playback.surahId == surahId && playback.reciterId == reciter.id
+    val playingAyah = playback.playingAyah.takeIf { activeHere }
+    val ayahWithoutWords = remember(reciter.id, surahId, playingAyah) {
         playingAyah?.takeUnless { QuranWordTimings.hasWords(context, surahId, it) }
     }
-    val phrase = remember(surahId, playingAyah, playback.phraseWord, playback.phraseGapNeighbor) {
+    val phrase = remember(reciter.id, surahId, playingAyah, playback.phraseWord, playback.phraseGapNeighbor) {
         val word = playback.phraseWord
         val verse = playingAyah?.let { verses.getOrNull(it - 1) }
         if (verse != null && word != null)
             QuranWordTimings.phrase(context, surahId, verse.number, verse.arabic, word, playback.phraseGapNeighbor)
+                ?.inDisplayedText(transcription?.get(verse.number - 1), word, playback.phraseGapNeighbor)
         else null
     }
     val spokenOffset = phrase?.let {
         if (playback.playingWord == it.lastWord) it.ranges.last().first else it.ranges.first().first
     }
     // Keep the last line in view during a rest, without painting a word that is no longer sounding.
-    var lastWordOffset by remember(surahId, playingAyah) { mutableIntStateOf(0) }
+    var lastWordOffset by remember(reciter.id, surahId, playingAyah) { mutableIntStateOf(0) }
     var followAudio by rememberSaveable(surahId) { mutableStateOf(true) }
     var showPlayer by rememberSaveable(surahId) { mutableStateOf(false) }
     var startRequested by remember(surahId) { mutableStateOf(false) }
@@ -127,10 +134,9 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
     var repeats by rememberSaveable(surahId) { mutableIntStateOf(1) }
     var speed by rememberSaveable(surahId) { mutableFloatStateOf(1f) }
     var continueAfter by rememberSaveable(surahId) { mutableStateOf(true) }
-    val activeHere = playback.connected && playback.surahId == surahId
     val activeAyah = if (activeHere) playback.positionAyah ?: playback.clipAyah else null
-    var lastPlaybackAyah by rememberSaveable(surahId) { mutableIntStateOf(0) }
-    var lastSpokenWord by rememberSaveable(surahId) { mutableStateOf<Int?>(null) }
+    var lastPlaybackAyah by rememberSaveable(surahId, reciter.id) { mutableIntStateOf(0) }
+    var lastSpokenWord by rememberSaveable(surahId, reciter.id) { mutableStateOf<Int?>(null) }
     LaunchedEffect(activeHere, activeAyah, playback.playing, playback.phraseWord) {
         if (activeHere && activeAyah != null) {
             if (lastPlaybackAyah != activeAyah || playback.phraseWord != null) lastSpokenWord = playback.phraseWord
@@ -151,20 +157,24 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
     val focusedAyah = if (liveHere) playingAyah ?: activeAyah else pendingAyah ?: pausedAyah
     val focusedWord = if (pendingAyah != null) selectedWord
         else playback.positionWord ?: lastSpokenWord.takeIf { focusedAyah == lastPlaybackAyah }
-    val quietPhrase = remember(surahId, liveHere, pendingAyah, focusedAyah, focusedWord, playback.gapNeighbor) {
+    val quietPhrase = remember(reciter.id, surahId, liveHere, pendingAyah, focusedAyah, focusedWord, playback.gapNeighbor) {
         val verse = focusedAyah?.let { verses.getOrNull(it - 1) }
-        when {
-            liveHere || verse == null || focusedWord == null -> null
-            pendingAyah != null -> QuranWordTimings.selectedPhrase(context, surahId, verse.number, verse.arabic, focusedWord)
-            else -> QuranWordTimings.phrase(context, surahId, verse.number, verse.arabic, focusedWord, playback.gapNeighbor)
+        if (liveHere || verse == null || focusedWord == null) null
+        else {
+            val gap = playback.gapNeighbor.takeIf { pendingAyah == null }
+            val quiet = if (pendingAyah != null)
+                QuranWordTimings.selectedPhrase(context, surahId, verse.number, verse.arabic, focusedWord)
+            else QuranWordTimings.phrase(context, surahId, verse.number, verse.arabic, focusedWord, gap)
+            quiet?.inDisplayedText(transcription?.get(verse.number - 1), focusedWord, gap)
         }
     }
     // A user's choice can be shown precisely even where the recording has no verified start.
-    val unmappedTap = remember(surahId, pendingAyah, selectedWord) {
+    val unmappedTap = remember(reciter.id, surahId, pendingAyah, selectedWord) {
         val word = selectedWord
         val verse = pendingAyah?.let { verses.getOrNull(it - 1) }
         if (verse != null && word != null && !QuranWordTimings.hasWord(context, surahId, verse.number, word))
-            quranWordRange(verse.arabic, word) else null
+            if (transcription != null) transcription[verse.number - 1].wordRanges[word] else quranWordRange(verse.arabic, word)
+        else null
     }
     val focusRanges = (if (liveHere) phrase else quietPhrase)?.ranges.orEmpty()
     val activeTarget = activeHere && target == activeAyah
@@ -202,7 +212,7 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
     var keepAwake by rememberSaveable { mutableStateOf(progress.keepAwake) }
     val originalOrientation = rememberSaveable { activity?.requestedOrientation ?: ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED }
     var orientation by rememberSaveable { mutableIntStateOf(-100) }
-    val followingPlayback = playback.playing && playback.surahId == surahId
+    val followingPlayback = playback.playing && activeHere
     val session = rememberQuranSession(progress, sheet.isEmpty() && !followingPlayback) { elapsed ->
         geometry.firstAyah()?.let { visibleAyah = it }
         if (elapsed > 0 && !list.isScrollInProgress && Store.personalProgressEnabled) {
@@ -400,7 +410,7 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
                     Icon(Icons.Filled.MoreVert, stringResource(R.string.qf_tools))
                 }
             }
-            if (!fullscreen) {
+            if (!fullscreen && transcription == null) {
                 BoxWithConstraints(Modifier.fillMaxWidth()) {
                     // Keep labels readable at large font sizes instead of squeezing two columns.
                     val stackModes = maxWidth / LocalDensity.current.fontScale < 320.dp
@@ -431,7 +441,10 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
             }
             QuranPageFrame(Modifier.fillMaxWidth().weight(1f)) {
                 Column(Modifier.fillMaxSize().padding(horizontal = if (compact) 12.dp else 18.dp)) {
-                    if (!compact) QuranSurahHeading(surah, Modifier.fillMaxWidth())
+                    if (!compact && transcription == null) QuranSurahHeading(surah, Modifier.fillMaxWidth())
+                    if (!compact && transcription != null) Text(stringResource(R.string.quran_transcription_title),
+                        modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp), textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.titleMedium, color = colors.accent)
                     if (wholeSurah) {
                         // Source text and offsets stay exact. The frame has no fake Mushaf page numbers.
                         LazyColumn(
@@ -456,7 +469,8 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
                             }
                         }
                     } else LazyColumn(
-                        modifier = Modifier.fillMaxWidth().weight(1f).onGloballyPositioned { geometry.viewport = it },
+                        modifier = Modifier.fillMaxWidth().weight(1f).onGloballyPositioned { geometry.viewport = it }
+                            .then(if (transcription != null) Modifier.testTag("quran_transcription_list") else Modifier),
                         state = verseList, contentPadding = PaddingValues(top = 8.dp, bottom = 28.dp),
                     ) {
                         items(verses, key = { it.number }) { ayah ->
@@ -487,19 +501,31 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
                                     }
                                     if (mark.note.isNotEmpty()) QuranSavedNotePreview(mark) { openAyahSheet(mark.ayah, "note") }
                                 }
-                                val ranges = remember(ayah) { listOf(QuranTextRange(ayah.number, 0, ayah.arabic.length, ayah.arabic.length)) }
-                                QuranTouchText(ayah.arabic, ranges, geometry,
-                                    ArabicStyle.copy(fontSize = (30 * scale).sp, textDirection = TextDirection.Rtl),
-                                    "quran_arabic_" + ayah.number, Modifier.fillMaxWidth(), choose, savedAyahs, focusedAyah, playingAyah, focusRanges, ayahWithoutWords, unmappedTap)
-                                Text(stringResource(R.string.quran_translation_label), style = MaterialTheme.typography.labelSmall, color = colors.accent)
-                                Text(ayah.translation, modifier = Modifier.testTag("quran_translation_" + ayah.number)
-                                    .combinedClickable(onClick = { choose(ayah.number, null, false) }, onLongClick = { choose(ayah.number, null, true) }),
-                                    color = colors.ink,
-                                    style = MaterialTheme.typography.bodyLarge.copy(fontSize = (18 * scale).sp, lineHeight = (30 * scale).sp))
-                                if (ayah.footnotes.isNotBlank()) {
-                                    TextButton(onClick = { notes = !notes }) { Text(stringResource(R.string.quran_notes)) }
-                                    if (notes) SelectionContainer {
-                                        Text(ayah.footnotes, style = MaterialTheme.typography.bodyMedium, color = colors.muted)
+                                val phonetic = transcription?.get(ayah.number - 1)
+                                if (phonetic != null) {
+                                    val ranges = remember(phonetic) {
+                                        listOf(QuranTextRange(ayah.number, 0, phonetic.text.length, phonetic.text.length))
+                                    }
+                                    QuranTouchText(phonetic.text, ranges, geometry,
+                                        MaterialTheme.typography.bodyLarge.copy(fontSize = (22 * scale).sp,
+                                            lineHeight = (34 * scale).sp, textDirection = TextDirection.Ltr, textAlign = TextAlign.Left),
+                                        "quran_transcription_" + ayah.number, Modifier.fillMaxWidth(), choose, savedAyahs,
+                                        focusedAyah, playingAyah, focusRanges, ayahWithoutWords, unmappedTap, phonetic.wordRanges)
+                                } else {
+                                    val ranges = remember(ayah) { listOf(QuranTextRange(ayah.number, 0, ayah.arabic.length, ayah.arabic.length)) }
+                                    QuranTouchText(ayah.arabic, ranges, geometry,
+                                        ArabicStyle.copy(fontSize = (30 * scale).sp, textDirection = TextDirection.Rtl),
+                                        "quran_arabic_" + ayah.number, Modifier.fillMaxWidth(), choose, savedAyahs, focusedAyah, playingAyah, focusRanges, ayahWithoutWords, unmappedTap)
+                                    Text(stringResource(R.string.quran_translation_label), style = MaterialTheme.typography.labelSmall, color = colors.accent)
+                                    Text(ayah.translation, modifier = Modifier.testTag("quran_translation_" + ayah.number)
+                                        .combinedClickable(onClick = { choose(ayah.number, null, false) }, onLongClick = { choose(ayah.number, null, true) }),
+                                        color = colors.ink,
+                                        style = MaterialTheme.typography.bodyLarge.copy(fontSize = (18 * scale).sp, lineHeight = (30 * scale).sp))
+                                    if (ayah.footnotes.isNotBlank()) {
+                                        TextButton(onClick = { notes = !notes }) { Text(stringResource(R.string.quran_notes)) }
+                                        if (notes) SelectionContainer {
+                                            Text(ayah.footnotes, style = MaterialTheme.typography.bodyMedium, color = colors.muted)
+                                        }
                                     }
                                 }
                                 HorizontalDivider(Modifier.padding(top = 14.dp), color = colors.rule)
@@ -554,9 +580,13 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
                 sheet = ""
                 scope.launch { snackbar.showSnackbar(copiedLabel) }
             }
-            ReaderAction(R.string.qp_copy_arabic, "quran_copy_arabic") { copy(ayah.arabic) }
-            ReaderAction(R.string.qp_copy_translation, "quran_copy_translation") { copy(ayah.translation) }
-            ReaderAction(R.string.qp_copy_both, "quran_copy_both") { copy(ayah.arabic + "\n\n" + ayah.translation) }
+            if (transcription != null) ReaderAction(R.string.quran_transcription_copy, "quran_copy_transcription") {
+                copy(transcription[actionAyah - 1].text)
+            } else {
+                ReaderAction(R.string.qp_copy_arabic, "quran_copy_arabic") { copy(ayah.arabic) }
+                ReaderAction(R.string.qp_copy_translation, "quran_copy_translation") { copy(ayah.translation) }
+                ReaderAction(R.string.qp_copy_both, "quran_copy_both") { copy(ayah.arabic + "\n\n" + ayah.translation) }
+            }
         }
         "note" -> QuranNoteSheet(if (ru) surah.nameRu else surah.nameLatin,
             QuranProgress.Location(surahId, actionAyah), progress,
@@ -571,7 +601,8 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
             PersonalProgressSetting()
         }
         "size" -> HorizonSheet(stringResource(R.string.reader_text_size), { sheet = "" }) {
-            Text(book.verses(1).first().arabic, style = ArabicStyle.copy(fontSize = (30 * scale).sp))
+            if (transcription == null) Text(book.verses(1).first().arabic, style = ArabicStyle.copy(fontSize = (30 * scale).sp))
+            else Text(transcription.first().text, style = MaterialTheme.typography.bodyLarge.copy(fontSize = (22 * scale).sp))
             Slider(scale, onScale, valueRange = .85f..1.5f, steps = 12, modifier = Modifier.testTag("reader_scale"))
             Text((scale * 100).toInt().toString() + "%")
             PrimaryButton(stringResource(R.string.action_done), onClick = { sheet = "" })
@@ -585,6 +616,17 @@ internal fun QuranReader(book: QuranBook, surahId: Int, firstAyah: Int, scale: F
         confirmButton = { TextButton(onClick = { session.changeTimer(QuranReadingTimer()) }, modifier = Modifier.testTag("quran_timer_continue")) {
             Text(stringResource(R.string.qf_keep_reading)) } },
         dismissButton = { TextButton(onClick = { session.changeTimer(QuranReadingTimer()); showIndex() }) { Text(stringResource(R.string.action_done)) } })
+}
+
+/** Timings refer to Tanzil word IDs. The Cyrillic edition can spell or join them differently. */
+internal fun QuranReadingPhrase.inDisplayedText(verse: QuranTranscriptionAyah?, word: Int, gapNeighbor: Int?): QuranReadingPhrase? {
+    if (verse == null) return this
+    val current = verse.wordRanges[word] ?: return null
+    if (gapNeighbor != null && gapNeighbor !in verse.wordRanges) return null
+    val first = verse.wordRanges[firstWord]
+    val last = verse.wordRanges[lastWord]
+    return if (firstWord == lastWord || first == null || last == null) QuranReadingPhrase(word, word, listOf(current))
+        else QuranReadingPhrase(firstWord, lastWord, listOf(first, last))
 }
 
 private fun Modifier.semanticsDescription(description: String): Modifier = semantics { contentDescription = description }

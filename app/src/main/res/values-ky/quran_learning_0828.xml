@@ -2,7 +2,7 @@
 <resources>
     <string name="ql_read_title">Куран окуу</string>
     <string name="ql_read_detail">Сүрөлөр, котормо жана сакталган аяттар</string>
-    <string name="ql_listen_detail">Аль-Афаси · толук сүрөлөр жана жүктөө</string>
+    <string name="ql_listen_detail">Карыны тандоо · толук сүрөлөр жана жүктөө</string>
     <string name="ql_listen_ayah">Бул аятты угуу</string>
     <string name="ql_listen_ayah_short">Аятты угуу</string>
     <string name="ql_ayah_hint">Угуу, кайталоо же сактоо үчүн аятты басыңыз.</string>

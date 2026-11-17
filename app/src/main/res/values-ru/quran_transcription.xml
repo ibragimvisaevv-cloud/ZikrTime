@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quran_transcription_title">Коран по транскрипции</string>
+    <string name="quran_transcription_detail">Читайте русскими буквами и следите за чтением на слух</string>
+    <string name="quran_transcription_copy">Скопировать транскрипцию</string>
+    <string name="quran_transcription_source">Русская транскрипция · Qamar</string>
+</resources>

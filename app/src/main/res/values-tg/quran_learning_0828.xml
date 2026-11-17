@@ -2,7 +2,7 @@
 <resources>
     <string name="ql_read_title">Қуръон хондан</string>
     <string name="ql_read_detail">Сураҳо, тарҷума ва оятҳои захирашуда</string>
-    <string name="ql_listen_detail">Ал-Афосӣ · сураҳои пурра ва боргирӣ</string>
+    <string name="ql_listen_detail">Интихоби қорӣ · сураҳои пурра ва боргирӣ</string>
     <string name="ql_listen_ayah">Ин оятро гӯш кардан</string>
     <string name="ql_listen_ayah_short">Оятро гӯш кардан</string>
     <string name="ql_ayah_hint">Барои гӯш кардан, такрор ё захира кардан оятро пахш кунед.</string>

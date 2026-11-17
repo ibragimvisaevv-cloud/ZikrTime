@@ -25,14 +25,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.font.FontWeight
 import com.zikrtime.app.R
-import com.zikrtime.app.audio.quranWordRange
 import com.zikrtime.app.audio.isQuranSpokenToken
 import com.zikrtime.app.data.QuranTextRange
 import com.zikrtime.app.data.QuranVisibleText
 
 /** Layout coordinates are transient. Stored notes and progress only contain surah/ayah IDs. */
 internal class QuranTextGeometry {
-    class Entry(val ranges: List<QuranTextRange>) {
+    class Entry(val ranges: List<QuranTextRange>, val words: Map<Int, Map<Int, IntRange>>) {
         var layout: TextLayoutResult? = null
         var coordinates: LayoutCoordinates? = null
     }
@@ -89,7 +88,7 @@ internal class QuranTextGeometry {
         val layout = entry.layout ?: return null
         val verse = entry.ranges.first { it.ayah == ayah }
         val text = layout.layoutInput.text.text
-        val token = quranWordRange(text.substring(verse.start, verse.arabicEnd), word) ?: return null
+        val token = entry.words[ayah]?.get(word) ?: return null
         val letters = token.map { verse.start + it }.filter { text[it].isLetter() }
         val center = letters.getOrNull(letters.size / 2) ?: verse.start + token.first
         val offsets = (listOf(center) + letters).distinct()
@@ -118,9 +117,18 @@ internal fun QuranTouchText(text: String, ranges: List<QuranTextRange>,
     geometry: QuranTextGeometry, style: TextStyle, tag: String, modifier: Modifier = Modifier,
     choose: (Int, Int?, Boolean) -> Unit, savedAyahs: Set<Int> = emptySet(), focusedAyah: Int? = null,
     playingAyah: Int? = null, focusRanges: List<IntRange> = emptyList(), ayahWithoutWords: Int? = null,
-    unmappedTap: IntRange? = null) {
+    unmappedTap: IntRange? = null, transcriptionWords: Map<Int, IntRange>? = null) {
     val key = ranges.first().ayah
-    val entry = remember(geometry, ranges) { QuranTextGeometry.Entry(ranges) }
+    val entry = remember(geometry, text, ranges, transcriptionWords) {
+        val words = if (transcriptionWords != null) mapOf(ranges.single().ayah to transcriptionWords)
+        else ranges.associate { verse ->
+            val tokens = tokenPattern.findAll(text.substring(verse.start, verse.arabicEnd))
+            verse.ayah to tokens.mapIndexedNotNull { index, match ->
+                if (isQuranSpokenToken(match.value)) index + 1 to match.range else null
+            }.toMap()
+        }
+        QuranTextGeometry.Entry(ranges, words)
+    }
     DisposableEffect(geometry, entry) {
         geometry.entries[key] = entry
         onDispose { if (geometry.entries[key] === entry) geometry.entries.remove(key) }
@@ -164,12 +172,6 @@ internal fun QuranTouchText(text: String, ranges: List<QuranTextRange>,
             onChoose(range.ayah, null, true); true
         }
     }
-    val tokensByAyah = remember(text, ranges) {
-        ranges.associate { verse ->
-            verse.ayah to tokenPattern.findAll(text.substring(verse.start, verse.arabicEnd))
-                .map { if (isQuranSpokenToken(it.value)) it.range else IntRange.EMPTY }.toList()
-        }
-    }
     fun hit(position: Offset): QuranTextHit? {
         val layout = entry.layout ?: return null
         val line = layout.getLineForVerticalPosition(position.y)
@@ -187,7 +189,7 @@ internal fun QuranTouchText(text: String, ranges: List<QuranTextRange>,
         val verse = ranges.lastOrNull { it.start <= offset } ?: return null
         val local = offset - verse.start
         val word = if (offset < verse.arabicEnd)
-            tokensByAyah.getValue(verse.ayah).indexOfFirst { local in it }.takeIf { it >= 0 }?.plus(1)
+            entry.words[verse.ayah]?.entries?.firstOrNull { local in it.value }?.key
             else null
         return QuranTextHit(verse.ayah, word)
     }
