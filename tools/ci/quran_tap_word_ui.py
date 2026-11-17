@@ -112,6 +112,9 @@ def open_reader(whole):
     suite.route("quran")
     suite.tap_control("quran_read_entry")
     suite.wait_tag("quran_whole_1" if whole else "quran_arabic_1")
+    if not whole:
+        translation = suite.find_control(suite.wait_tag("quran_translation_1"), "quran_translation_1")
+        assert re.search(r"[А-Яа-яЁё]", translation.get("text", "")), "Missing Russian translation"
 
 
 def verify(whole):
@@ -124,6 +127,12 @@ def verify(whole):
     assert not suite.player()["playWhenReady"], "Selecting a word started playback"
     evidence(mode + "-silent-selection", whole, 1, selected=True)
     suite.tap_control("quran_inline_options")
+    if whole:
+        suite.tap_control("quran_reciter_select")
+        options = suite.wait_tag("quran_reciter_yasser-dosari")
+        for reciter in ("mishary-alafasy", "yasser-dosari", "mahmoud-husary", "muhammad-minshawi"):
+            assert suite.find_control(options, "quran_reciter_" + reciter) is not None, reciter
+        suite.tap_control("quran_reciter_mishary-alafasy")
     suite.tap_control("ayah_speed_50")
     suite.tap_control("ayah_close")
     suite.tap_control("quran_inline_play_pause")
@@ -192,6 +201,13 @@ def main():
         suite.shell("input", "keyevent", "KEYCODE_WAKEUP")
         suite.shell("wm", "dismiss-keyguard")
         suite.adb("install", "-r", "app/build/outputs/apk/debug/app-debug.apk")
+        suite.shell("pm", "clear", suite.PKG)
+        suite.route("quran")
+        index = suite.wait_tag("quran_audio_entry")
+        assert suite.find_control(index, "quran_read_entry") is not None
+        assert suite.find_control(index, "quran_transcription_entry") is None
+        assert not suite.text_visible(index, "транскрипц")
+        suite.shot("reader-index")
         suite.start_shop()
         suite.put_pref("appearance", "string", "dark")
         verify(True)

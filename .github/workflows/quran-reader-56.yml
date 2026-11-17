@@ -1,0 +1,152 @@
+name: Quran reader · Android 56
+on:
+  push:
+    branches: [codex/quran-reader-56]
+permissions:
+  contents: read
+concurrency:
+  group: quran-reader-56
+  cancel-in-progress: true
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check publisher timing conversions
+        run: |
+          python3 tools/quran/test_seek_starts_54.py
+          python3 tools/quran/test_recitation_packs_55.py
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Reuse tested APKs when only the emulator harness changes
+        id: apk-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            app/build/outputs/apk/debug/app-debug.apk
+            ZikrTime-0.8.28-56.apk
+          key: quran56-apk-v1-${{ hashFiles('app/src/**', 'app/recitation-packs/**', 'app/*.kts', 'app/*.pro', 'gradle/**', '*.kts', 'gradle.properties', 'gradlew*', 'keystore/release.jks.enc') }}
+      - name: Build signed release with extracted native libraries
+        if: steps.apk-cache.outputs.cache-hit != 'true'
+        env:
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          test -n "$RELEASE_KEY_PASSWORD"
+          trap 'rm -f keystore/release.jks' EXIT
+          openssl enc -d -aes-256-cbc -pbkdf2 -iter 300000 -in keystore/release.jks.enc -out keystore/release.jks -pass env:RELEASE_KEY_PASSWORD
+          bash gradlew :app:testDebugUnitTest :app:assembleDebug :app:assembleRelease --console=plain
+          cp app/build/outputs/apk/release/app-release.apk ZikrTime-0.8.28-56.apk
+      - name: Verify the actual installable file against build 55
+        run: |
+          set -euo pipefail
+          curl -fLsS --retry 3 https://github.com/ibragimvisaevv-cloud/ZikrTime/releases/download/test-0.8.28-55/ZikrTime-0.8.28-55.apk -o previous.apk
+          echo '59e676fd1ae1bdcb47121311b3561eb059ff7cdc67a8f2ad3e43c2d155f11fb5  previous.apk' | sha256sum -c -
+          apk=ZikrTime-0.8.28-56.apk
+          sdk_tools=$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -1)
+          "$sdk_tools/apksigner" verify --verbose --print-certs "$apk" | tee signer.txt
+          grep -F 'certificate SHA-256 digest: 7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf' signer.txt
+          "$sdk_tools/aapt" dump badging "$apk" > package.txt
+          grep -F "package: name='com.zikrtime.app' versionCode='56' versionName='0.8.28'" package.txt
+          grep -F "sdkVersion:'26'" package.txt
+          grep -F "targetSdkVersion:'35'" package.txt
+          "$sdk_tools/aapt" dump xmltree "$apk" AndroidManifest.xml | grep -E 'extractNativeLibs.*0xffffffff'
+          "$sdk_tools/zipalign" -c -P 16 4 "$apk"
+          python3 tools/ci/check_extracted_native_apk.py previous.apk "$apk" --removed-transcription
+          sha256sum "$apk" | tee SHA256SUMS.txt
+      - name: Cache checked inputs and unit-tested APKs
+        if: steps.apk-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            app/build/outputs/apk/debug/app-debug.apk
+            ZikrTime-0.8.28-56.apk
+          key: ${{ steps.apk-cache.outputs.cache-primary-key }}
+      - name: Check screenshot dependencies
+        run: python3 -c "from PIL import Image" || python3 -m pip install Pillow
+      - name: Prepare accelerated Android 15
+        run: |
+          if jps | grep -q GradleDaemon; then bash gradlew --stop; fi
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Install signed release, update from 55 and exercise reader on Android 15
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_2
+          ram-size: 2048M
+          disable-animations: true
+          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
+          script: |
+            adb shell getprop ro.product.cpu.abilist
+            adb shell getconf PAGE_SIZE
+            adb install ZikrTime-0.8.28-56.apk
+            adb shell dumpsys package com.zikrtime.app | grep 'versionCode=56'
+            adb shell monkey -p com.zikrtime.app -c android.intent.category.LAUNCHER 1
+            sleep 4
+            adb shell pidof com.zikrtime.app
+            adb uninstall com.zikrtime.app
+            adb install previous.apk
+            adb shell dumpsys package com.zikrtime.app | grep 'versionCode=55'
+            adb shell dumpsys package com.zikrtime.app | grep -E 'firstInstallTime=|userId=|appId=' | sort > before.txt
+            adb install -r ZikrTime-0.8.28-56.apk
+            adb shell dumpsys package com.zikrtime.app | grep 'versionCode=56'
+            adb shell dumpsys package com.zikrtime.app | grep -E 'firstInstallTime=|userId=|appId=' | sort > after.txt
+            diff -u before.txt after.txt
+            adb shell monkey -p com.zikrtime.app -c android.intent.category.LAUNCHER 1
+            sleep 4
+            adb shell pidof com.zikrtime.app
+            adb uninstall com.zikrtime.app
+            python3 tools/ci/quran_tap_word_ui.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ZikrTime-Quran-reader-evidence-56
+          path: |
+            ci-out/word-taps/
+            ci-out/last-ui.xml
+            SHA256SUMS.txt
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ZikrTime-signed-apk-56
+          path: |
+            ZikrTime-0.8.28-56.apk
+            SHA256SUMS.txt
+          compression-level: 0
+          if-no-files-found: error
+
+  publish:
+    needs: android
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: ZikrTime-signed-apk-56
+      - name: Publish tested APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          sha256sum -c SHA256SUMS.txt
+          tag=test-0.8.28-56
+          apk=ZikrTime-0.8.28-56.apk
+          if gh release view "$tag" --repo "$REPO" >/dev/null 2>&1; then
+            gh release download "$tag" --repo "$REPO" --pattern "$apk" --dir existing
+            cmp "$apk" "existing/$apk"
+          else
+            gh release create "$tag" "$apk" SHA256SUMS.txt --repo "$REPO" --target "$GITHUB_SHA" --prerelease \
+              --title 'ZikrTime 0.8.28 (56) — Android' --notes 'Убран режим русской транскрипции Корана. Доступны чтение на арабском, русский перевод и прослушивание с подсветкой слов.'
+          fi

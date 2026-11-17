@@ -30,6 +30,16 @@ with zipfile.ZipFile(sys.argv[1]) as previous, zipfile.ZipFile(sys.argv[2]) as c
         if name.startswith("lib/arm64-v8a/"):
             print(f"{name}: ELF LOAD {inspect_elf(data)}, compressed, SHA256 {hashlib.sha256(data).hexdigest()}")
     assets = {n for n in previous.namelist() if n.startswith("assets/")}
+    if sys.argv[3:] == ["--removed-transcription"]:
+        shipped = {n for n in current.namelist() if n.startswith("assets/")}
+        removed = {n for n in assets if n.startswith("assets/quran_transcription/")}
+        assert removed, "Previous APK did not contain the transcription"
+        assert shipped == assets - removed, "Unexpected additions or removals in the APK assets"
+        for name in shipped:
+            if not name.startswith("assets/dexopt/"):
+                assert current.read(name) == previous.read(name), "Changed product data: " + name
+        print(f"Verified {len(libs)} native libraries, removal of {len(removed)} transcription files and preserved remaining assets.")
+        sys.exit(0)
     if sys.argv[3:] == ["--source-assets"]:
         # Compare the packaged assets to this release's inputs. The Cyrillic text
         # and additional recitations intentionally extend the previous APK.

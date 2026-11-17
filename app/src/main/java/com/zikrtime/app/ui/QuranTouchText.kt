@@ -117,11 +117,10 @@ internal fun QuranTouchText(text: String, ranges: List<QuranTextRange>,
     geometry: QuranTextGeometry, style: TextStyle, tag: String, modifier: Modifier = Modifier,
     choose: (Int, Int?, Boolean) -> Unit, savedAyahs: Set<Int> = emptySet(), focusedAyah: Int? = null,
     playingAyah: Int? = null, focusRanges: List<IntRange> = emptyList(), ayahWithoutWords: Int? = null,
-    unmappedTap: IntRange? = null, transcriptionWords: Map<Int, IntRange>? = null) {
+    unmappedTap: IntRange? = null) {
     val key = ranges.first().ayah
-    val entry = remember(geometry, text, ranges, transcriptionWords) {
-        val words = if (transcriptionWords != null) mapOf(ranges.single().ayah to transcriptionWords)
-        else ranges.associate { verse ->
+    val entry = remember(geometry, text, ranges) {
+        val words = ranges.associate { verse ->
             val tokens = tokenPattern.findAll(text.substring(verse.start, verse.arabicEnd))
             verse.ayah to tokens.mapIndexedNotNull { index, match ->
                 if (isQuranSpokenToken(match.value)) index + 1 to match.range else null
