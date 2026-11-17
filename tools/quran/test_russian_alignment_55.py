@@ -16,7 +16,7 @@ class RussianAlignmentTest(unittest.TestCase):
                 surah, ayah, text = line.split('|', 2)
                 cls.arabic[int(surah), int(ayah)] = text
         cls.chapters = {}
-        for path in (ASSETS / 'quran_transcription/ru').glob('*.json.gz'):
+        for path in (ASSETS / 'quran_transcription/ru').glob('*.qtr'):
             with gzip.open(path, 'rt', encoding='utf-8') as data:
                 cls.chapters.update(json.load(data))
 

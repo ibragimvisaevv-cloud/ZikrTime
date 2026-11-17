@@ -19,7 +19,7 @@ internal object QuranTranscription {
 
     internal fun read(surah: Int, open: (String) -> InputStream): List<QuranTranscriptionAyah> {
         require(surah in 1..114)
-        val path = "quran_transcription/ru/${(surah - 1) % PACKS}.json.gz"
+        val path = "quran_transcription/ru/${(surah - 1) % PACKS}.qtr"
         val json = open(path).use { input -> GZIPInputStream(input).bufferedReader(Charsets.UTF_8).use { it.readText() } }
         val verses = JSONObject(json).getJSONArray(surah.toString())
         return List(verses.length()) { index ->

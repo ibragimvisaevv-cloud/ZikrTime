@@ -112,7 +112,8 @@ def generate(source, destination, check):
         buf = io.BytesIO()
         with gzip.GzipFile(fileobj=buf, mode='wb', mtime=0, compresslevel=9) as out:
             out.write(raw)
-        path = destination / f'{index}.json.gz'
+        # Android Gradle expands source files ending in .gz during asset merging.
+        path = destination / f'{index}.qtr'
         if check:
             # Check decompressed data so the zlib implementation is not part of the contract.
             if gzip.decompress(path.read_bytes()) != raw:
