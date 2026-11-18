@@ -1,0 +1,5 @@
+platform :ios, '17.0'
+use_frameworks!
+target 'ZikrTime' do
+  pod 'YandexMapsMobile', '4.45.0-lite'
+end

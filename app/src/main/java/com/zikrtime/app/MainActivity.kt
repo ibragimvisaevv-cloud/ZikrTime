@@ -1,5 +1,6 @@
 package com.zikrtime.app
 
+import androidx.compose.foundation.background
 import android.Manifest
 import android.content.Context
 import android.content.Intent
@@ -95,8 +96,9 @@ class MainActivity : ComponentActivity() {
         val showSplash = savedInstanceState == null && com.zikrtime.app.ui.LiveFlags.splash &&
             (intent?.hasExtra("qa_screen") != true || intent?.getBooleanExtra("qa_splash", false) == true)
         setContent {
-            ZikrTheme {
-                val tilt = com.zikrtime.app.ui.rememberTilt()
+            val natural = Store.onboarded && (nav.stack.lastOrNull() == Screen.TASBIH || (nav.stack.isEmpty() && nav.tab == Tab.PRAYER))
+            ZikrTheme(natural = natural) {
+                val tilt = com.zikrtime.app.ui.rememberTilt(enabled = !natural)
                 var splash by androidx.compose.runtime.saveable.rememberSaveable { androidx.compose.runtime.mutableStateOf(showSplash) }
                 LaunchedEffect(Unit) {
                     kotlinx.coroutines.delay(1_150)
@@ -105,7 +107,8 @@ class MainActivity : ComponentActivity() {
                 CompositionLocalProvider(com.zikrtime.app.ui.LocalTilt provides tilt) {
                     Box(Modifier.fillMaxSize()) {
                         // Переливающийся фон под всеми экранами
-                        com.zikrtime.app.ui.AuroraBackground()
+                        if (natural) Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background))
+                        else com.zikrtime.app.ui.AuroraBackground()
                         CompositionLocalProvider(LocalNav provides nav) {
                             if (BuildConfig.DEBUG && QaHooks.widgetPreview) com.zikrtime.app.ui.WidgetPreview() else AppRoot()
                         }

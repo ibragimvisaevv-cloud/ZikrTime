@@ -2,6 +2,7 @@ import SwiftUI
 
 @main
 struct ZikrTimeApp: App {
+    @UIApplicationDelegateAdaptor(MapAppDelegate.self) private var appDelegate
     @StateObject private var store = Store.shared
     @StateObject private var online = OnlineTimes.shared
     @StateObject private var shop = ShopStore.shared
@@ -64,7 +65,13 @@ enum Lifecycle {
 /// Только для автоматической проверки в CI: параметры запуска -qa_lang, -qa_demo, -qa_screen.
 @MainActor
 enum QA {
-    private static var screen: String? { UserDefaults.standard.string(forKey: "qa_screen") }
+    private static var screen: String? {
+        #if DEBUG
+        return UserDefaults.standard.string(forKey: "qa_screen")
+        #else
+        return nil
+        #endif
+    }
     static var active: Bool { screen != nil }
     /// Раунд викторины сразу с карточек подготовки (для скриншота).
     static var quizCards: Bool { screen == "quiz_cards" }
@@ -79,11 +86,17 @@ enum QA {
     }
 
     static func prepare() {
+        guard active else { return }
         let d = UserDefaults.standard
         if let lang = d.string(forKey: "qa_lang"), Store.shared.language != lang {
             Store.shared.language = lang
         }
         if d.bool(forKey: "qa_demo") { Store.shared.seedDemo() }
+        if screen == "zakat", d.bool(forKey: "qa_demo") {
+            // Show both entered amounts and empty prompts in screenshot checks.
+            d.set(["cash": "150000", "gold_g": "12.5", "gold_price": "8000", "silver_price": "100"],
+                  forKey: "zakat_inputs")
+        }
         if let s = screen, s.hasPrefix("onboarding") { Store.shared.onboarded = false }
     }
 
@@ -114,6 +127,9 @@ enum QA {
         case "city": router.open(.city, in: .more)
         case "about": router.open(.about, in: .more)
         case "focus": router.open(.focus, in: .more)
+        case "places": router.open(.places, in: .more)
+        case "ramadan": router.open(.ramadan, in: .more)
+        case "zakat": router.open(.zakat, in: .more)
         default: router.tab = .prayer
         }
     }

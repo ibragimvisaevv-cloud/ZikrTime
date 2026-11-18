@@ -109,6 +109,7 @@ fun Modifier.pressScale(interaction: MutableInteractionSource, pressedScale: Flo
 
 /** Бегущий блик, как по стеклу или золоту: проходит раз в несколько секунд. */
 fun Modifier.sheen(alpha: Float = 0.28f, periodMs: Int = 3_600): Modifier = composed {
+    if (LocalNatural.current) return@composed this
     val x by rememberInfiniteTransition(label = "sheen").animateFloat(
         initialValue = -1f,
         targetValue = 2.2f,
@@ -133,6 +134,7 @@ fun Modifier.sheen(alpha: Float = 0.28f, periodMs: Int = 3_600): Modifier = comp
 @Composable
 fun glassFill(): Brush {
     val dark = LocalDarkTheme.current
+    if (LocalNatural.current) return Brush.verticalGradient(if (dark) listOf(Color(0xF02B3B4D), Color(0xF01B2837)) else listOf(Color(0xF5F3F6F9), Color(0xE6D7E1EA)))
     return if (dark) {
         // Тёмное «дымчатое» стекло: фон под ним приглушён, светлый текст хорошо читается.
         Brush.verticalGradient(listOf(Color(0xFF16302A).copy(alpha = 0.86f), Color(0xFF0C1C18).copy(alpha = 0.80f)))

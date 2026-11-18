@@ -132,6 +132,7 @@ class GuardService : Service() {
 
     override fun onDestroy() {
         handler.removeCallbacksAndMessages(null)
+        hideOverlay(this)
         super.onDestroy()
     }
 

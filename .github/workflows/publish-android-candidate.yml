@@ -1,0 +1,53 @@
+name: Publish verified Android candidate
+
+on:
+  push:
+    branches: [codex/release-readiness-ios]
+    paths: [.github/workflows/publish-android-candidate.yml]
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: publish-android-0.8.3-rc.1
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: Android-release-check
+          run-id: 40401503425
+          github-token: ${{ github.token }}
+          path: verified
+      - name: Verify the tested APK
+        run: |
+          cp verified/outputs/apk/release/app-release.apk ZikrTime-0.8.3.apk
+          echo 'add999a9781fc34fe0a5f03342b078865b69f4b6e1c202606d83238dbb6c39fa  ZikrTime-0.8.3.apk' > SHA256SUMS.txt
+          sha256sum --check SHA256SUMS.txt
+          SIGNER=$(find "$ANDROID_HOME/build-tools" -name apksigner | sort -V | tail -1)
+          "$SIGNER" verify --print-certs ZikrTime-0.8.3.apk | tee signature.txt
+          grep -q 'certificate SHA-256 digest: 7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf' signature.txt
+      - name: Publish download link
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          cat > notes.txt <<'NOTES'
+          Подписанная Android 0.8.3 (versionCode 15), кандидат для проверки на телефоне.
+
+          APK взят без пересборки из проверенного коммита 271e0a0071bae1d9ce55ad201afc435622a5e7bb.
+          Пройдены 14 unit-тестов и 24 запуска экранов Android 15 на русском/английском.
+          Android Lint: 0 ошибок, 52 предупреждения. Подпись совпадает с GitHub-версией 0.8.2.
+          Перед магазином остаётся проверка будильника, обновления и разрешений на реальном телефоне.
+
+          Исходный прогон: https://github.com/ibragimvisaevv-cloud/ZikrTime/actions/runs/40401503425
+          NOTES
+          gh release create v0.8.3-rc.1 ZikrTime-0.8.3.apk SHA256SUMS.txt \
+            --target 271e0a0071bae1d9ce55ad201afc435622a5e7bb \
+            --title 'Зикр-тайм 0.8.3 — Android для проверки' \
+            --notes-file notes.txt --prerelease --latest=false

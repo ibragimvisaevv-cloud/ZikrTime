@@ -115,10 +115,19 @@ val Tabular = TextStyle(fontFeatureSettings = "tnum")
 val LocalDarkTheme = staticCompositionLocalOf { false }
 
 @Composable
-fun ZikrTheme(content: @Composable () -> Unit) {
+fun ZikrTheme(natural: Boolean = false, content: @Composable () -> Unit) {
     val dark = isSystemInDarkTheme()
-    androidx.compose.runtime.CompositionLocalProvider(LocalDarkTheme provides dark) {
-        val colors = if (dark) DarkColors else LightColors
+    androidx.compose.runtime.CompositionLocalProvider(LocalDarkTheme provides dark, com.zikrtime.app.ui.LocalNatural provides natural) {
+        val baseColors = if (dark) DarkColors else LightColors
+        val colors = if (!natural) baseColors else baseColors.copy(
+            background = if (dark) Color(0xFF101B29) else Color(0xFFE4EAF0),
+            surface = if (dark) Color(0xFF192635) else Color(0xFFF1F4F7),
+            surfaceContainer = if (dark) Color(0xFF213143) else Color(0xFFD9E3EB),
+            surfaceContainerHigh = if (dark) Color(0xFF293A4C) else Color(0xFFD3DEE8),
+            onSurfaceVariant = if (dark) Color(0xFFC3CEDA) else Color(0xFF47596A),
+            primary = if (dark) Color(0xFFA3CBB9) else Color(0xFF315E50),
+            primaryContainer = if (dark) Color(0xFF304D49) else Color(0xFFCCDED6),
+        )
         MaterialTheme(colorScheme = colors, typography = AppTypography, shapes = AppShapes) {
             // Цвет текста по умолчанию — светлый в тёмной теме, тёмный в светлой (раньше его давал Surface).
             androidx.compose.runtime.CompositionLocalProvider(

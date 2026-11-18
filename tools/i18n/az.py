@@ -261,7 +261,7 @@ STRINGS = {
     "about_title": "Tətbiq haqqında",
     "about_version": "Versiya %1$s",
     "about_privacy_title": "Məxfilik",
-    "about_privacy_text": "Bütün məlumatlarınız — ayarlar, qeydlər və statistika — yalnız bu telefonda saxlanılır. İnternet yalnız namaz vaxtlarını (aladhan.com, dumrf.ru) və mağaza kataloqunu yükləmək üçün lazımdır.",
+    "about_privacy_text": "Ayarlar, namaz qeydləri və statistika telefonda saxlanılır. Namaz vaxtları, xəritələr, məkanlar, mağaza və metal qiymətləri internetdən istifadə edir. Rəy göndərərkən mətn, qiymət, könüllü ad və təsadüfi quraşdırma identifikatoru yoxlanışa göndərilir. Təfərrüatlar məxfilik siyasətindədir.",
     "about_times_title": "Namaz vaxtları",
     "about_times_text": "Vaxtlar aladhan.com-dan götürülür və ya telefonda eyni astronomik düsturlarla hesablanır. Məscidin cədvəli bir neçə dəqiqə fərqlənə bilər — ayarlardakı düzəlişlərdən istifadə edin.",
     "about_quiz_title": "Suallar",

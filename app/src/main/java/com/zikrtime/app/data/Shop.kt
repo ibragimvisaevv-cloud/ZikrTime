@@ -101,20 +101,21 @@ object Shop {
         return result
     }
 
-    /** Свежий каталог из сети (не чаще раза в 6 часов, если не force). */
+    /** Свежий каталог из сети (не чаще раза в минуту, если не force). */
     suspend fun refresh(context: Context, force: Boolean = false) {
         load(context)
         val last = Store.getRaw(KEY_AT)?.toLongOrNull() ?: 0L
         if (!force && System.currentTimeMillis() - last < REFRESH_MS) return
         val hasCopy = Store.getRaw(KEY) != null
-        val result = withContext(Dispatchers.IO) { runCatching { Net.getIfChanged(REMOTE, KEY_TAG, hasCopy) } }
+        val etag = if (hasCopy) Store.getRaw(KEY_TAG) else null
+        val result = withContext(Dispatchers.IO) { runCatching { Net.getIfChanged(REMOTE, etag) } }
         if (result.isSuccess && result.getOrNull() == null) {
             // Каталог не изменился — ничего не скачивали
             offline = false
             Store.putRaw(KEY_AT, System.currentTimeMillis().toString())
             return
         }
-        val text = result.getOrNull()
+        val text = result.getOrNull()?.text
         val parsed = text?.let { runCatching { parse(it) }.getOrNull() }
         if (parsed == null) {
             // «Нет интернета» — только если не было связи (а не, например, ответ 404).
@@ -123,6 +124,7 @@ object Shop {
         }
         offline = false
         Store.putRaw(KEY, text)
+        Store.putRaw(KEY_TAG, result.getOrNull()?.etag.orEmpty())
         Store.putRaw(KEY_AT, System.currentTimeMillis().toString())
         catalog = parsed
     }
