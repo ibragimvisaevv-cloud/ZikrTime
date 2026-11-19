@@ -65,4 +65,4 @@ test -s "$app/tasbih_bead.wav"
 test -d "$archive/dSYMs/ZikrTime.app.dSYM"
 unzip -tq "$out"/*.ipa
 /usr/bin/ditto -c -k --keepParent "$archive" "$out/$file.xcarchive.zip"
-(cd "$out" && shasum -a 256 *.ipa *.zip > SHA256SUMS.txt)
+(cd "$out" && shasum -a 256 *.ipa *.zip | tee SHA256SUMS.txt)

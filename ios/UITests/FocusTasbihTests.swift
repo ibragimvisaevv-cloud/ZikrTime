@@ -29,7 +29,7 @@ final class FocusTasbihTests: XCTestCase {
         let app = launch("tasbih")
         let settings = app.buttons["tasbih_settings"]
         XCTAssertTrue(settings.waitForExistence(timeout: 10))
-        let beads = app.webViews.buttons.containing(NSPredicate(format: "label BEGINSWITH %@", "Коснитесь бусин")).firstMatch
+        let beads = app.webViews.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Коснитесь бусин")).firstMatch
         XCTAssertTrue(beads.waitForExistence(timeout: 12))
 
         func readCount() throws -> Int {
