@@ -50,14 +50,14 @@ app="$archive/Products/Applications/ZikrTime.app"
 test "$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$app/Info.plist")" = com.zikrtime.ios
 test "$(/usr/libexec/PlistBuddy -c 'Print CFBundleVersion' "$app/Info.plist")" = 56
 test "$(/usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' "$app/Info.plist")" = 0.8.28
-lipo -verify_arch arm64 "$app/ZikrTime"
+lipo "$app/ZikrTime" -verify_arch arm64
 widget="$app/PlugIns/PrayerWidget.appex"
 test "$(/usr/libexec/PlistBuddy -c 'Print NSExtension:NSExtensionPointIdentifier' "$widget/Info.plist")" = com.apple.widgetkit-extension
-lipo -verify_arch arm64 "$widget/PrayerWidget"
+lipo "$widget/PrayerWidget" -verify_arch arm64
 if [[ "$edition" = screen-time ]]; then
     focus="$app/PlugIns/FocusActivityMonitor.appex"
     test "$(/usr/libexec/PlistBuddy -c 'Print NSExtension:NSExtensionPointIdentifier' "$focus/Info.plist")" = com.apple.deviceactivity.monitor-extension
-    lipo -verify_arch arm64 "$focus/FocusActivityMonitor"
+    lipo "$focus/FocusActivityMonitor" -verify_arch arm64
 fi
 test -d "$app/QuranData"
 test -s "$app/prayer/regional.tsv"
