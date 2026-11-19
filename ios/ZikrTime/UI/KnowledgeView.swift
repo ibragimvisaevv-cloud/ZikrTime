@@ -15,6 +15,8 @@ func categorySymbol(_ id: String) -> String {
 struct KnowledgeView: View {
     @EnvironmentObject private var store: Store
     private let bank = QuizBank.load(lang: L10n.code)
+    @AppStorage("quiz.level") private var level = 0
+    @AppStorage("quiz.learningHistory") private var history = Data()
 
     var body: some View {
         let today = LocalDay.today()
@@ -24,6 +26,8 @@ struct KnowledgeView: View {
                 Text(L("knowledge_subtitle")).font(.subheadline).foregroundStyle(Brand.secondaryText)
             }
 
+            KnowledgeLevelPicker(level: $level)
+            if (1...3).contains(level) {
             Card(background: Brand.goldSoft) {
                 HStack(spacing: 14) {
                     IconBadge(systemName: "sparkles", tint: Brand.onGold, background: Brand.gold.opacity(0.5), size: 44)
@@ -54,13 +58,33 @@ struct KnowledgeView: View {
                                 .foregroundStyle(.primary)
                                 .lineLimit(2)
                                 .padding(.top, 10)
-                            Text(L("knowledge_topic_progress", store.categoryCorrect[cat.id] ?? 0, bank.questions.filter { $0.category == cat.id }.count))
+                            let questions = bank.pool(category: cat.id, level: level)
+                            let learning = QuizLearning(data: history)
+                            Text(L("knowledge_topic_progress", questions.filter { learning.entry($0).lastAnswer != nil }.count, questions.count))
                                 .font(.caption)
                                 .foregroundStyle(Brand.secondaryText)
                         }
                     }
                     .buttonStyle(.plain)
                 }
+            }
+            let pool = bank.pool(category: nil, level: level)
+            let learning = QuizLearning(data: history)
+            let practice = learning.review(pool, dueOnly: false)
+            if !practice.isEmpty {
+                SectionLabel(text: L("training_personal_plan"))
+                Card {
+                    NavigationLink(destination: QuizView(category: nil, mode: .practice)) {
+                        Label(L("training_start"), systemImage: "arrow.counterclockwise")
+                    }
+                    if !learning.review(pool, dueOnly: true).isEmpty {
+                        Divider()
+                        NavigationLink(destination: QuizView(category: nil, mode: .due)) {
+                            Label(L("training_personal_plan"), systemImage: "calendar")
+                        }
+                    }
+                }
+            }
             }
 
             SectionLabel(text: L("knowledge_progress"))
@@ -76,6 +100,24 @@ struct KnowledgeView: View {
         .toolbar(.hidden, for: .navigationBar)
     }
 }
+
+
+private struct KnowledgeLevelPicker: View {
+    @Binding var level: Int
+    private let keys = ["learning_level_beginner", "learning_level_intermediate", "learning_level_advanced"]
+    var body: some View {
+        Card {
+            Picker(L(level == 0 ? "learning_level_title" : "learning_level_label"), selection: $level) {
+                if level == 0 { Text(L("learning_level_not_selected")).tag(0) }
+                ForEach(keys.indices, id: \.self) { i in Text(L(keys[i])).tag(i+1) }
+            }
+            .pickerStyle(.menu)
+            .accessibilityIdentifier("knowledge_level")
+        }
+    }
+}
+
+enum QuizMode { case standard, practice, due }
 
 struct StatLine: View {
     let label: String
@@ -94,6 +136,7 @@ struct StatLine: View {
 /// Раунд викторины: нужно дать 3 правильных ответа. После каждого ответа — короткая справка.
 struct QuizView: View {
     let category: String?
+    var mode: QuizMode = .standard
     @EnvironmentObject private var store: Store
     @Environment(\.dismiss) private var dismiss
     @State private var bank = QuizBank.load(lang: L10n.code)
@@ -105,14 +148,20 @@ struct QuizView: View {
     @State private var finished = false
     @State private var stage: Stage = QA.quizCards ? .cards : .ask
     @State private var cardIndex = 0
+    @AppStorage("quiz.level") private var level = 0
+    @AppStorage("quiz.learningHistory") private var history = Data()
 
     private enum Stage { case ask, cards, quiz }
-    private let target = 3
+    private var target: Int { mode == .standard ? 3 : queue.count }
     private let prepCards = 5
 
     var body: some View {
         Page {
-            if stage == .ask {
+            if level == 0 {
+                KnowledgeLevelPicker(level: $level)
+            } else if queue.isEmpty {
+                Text(L("training_no_data"))
+            } else if stage == .ask {
                 PrepOffer(onRead: { withAnimation { stage = .cards } }, onSkip: { withAnimation { stage = .quiz } })
             } else if stage == .cards {
                 if !queue.isEmpty { StudyCards(cards: Array(queue.prefix(prepCards)), bank: bank, index: $cardIndex) {
@@ -124,7 +173,7 @@ struct QuizView: View {
                 QuizCard(
                     question: queue[index],
                     categoryName: bank.categoryName(queue[index].category),
-                    progress: correct,
+                    progress: mode == .standard ? correct : answered,
                     target: target,
                     selected: selected,
                     onSelect: answer,
@@ -135,8 +184,29 @@ struct QuizView: View {
         .navigationTitle(category.map { bank.categoryName($0) } ?? L("knowledge_title"))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            if queue.isEmpty { queue = bank.roundOrder(category: category, recent: store.recentQuestions) }
+            if queue.isEmpty { loadQuestions() }
         }
+        .onChange(of: level) { _, _ in loadQuestions() }
+        .onChange(of: cardIndex) { _, _ in recordExplanation() }
+        .onChange(of: stage == .cards) { _, visible in if visible { recordExplanation() } }
+    }
+
+    private func loadQuestions() {
+        guard (1...3).contains(level) else { queue = []; return }
+        let pool = bank.pool(category: category, level: level)
+        if mode == .standard {
+            queue = bank.roundOrder(category: category, recent: store.recentQuestions, level: level)
+        } else {
+            queue = QuizLearning(data: history).review(pool, dueOnly: mode == .due).map { $0.shuffled() }
+            stage = .quiz
+        }
+    }
+
+    private func recordExplanation() {
+        guard stage == .cards, queue.indices.contains(cardIndex) else { return }
+        var learning = QuizLearning(data: history)
+        learning.explain(queue[cardIndex])
+        if let encoded = learning.encode() { history = encoded }
     }
 
     private var result: some View {
@@ -150,7 +220,6 @@ struct QuizView: View {
                 .font(.title3)
                 .foregroundStyle(Brand.secondaryText)
             PrimaryButton(title: L("quiz_again")) {
-                queue = bank.roundOrder(category: category, recent: store.recentQuestions)
                 index = 0
                 selected = nil
                 correct = 0
@@ -158,6 +227,7 @@ struct QuizView: View {
                 finished = false
                 cardIndex = 0
                 stage = .ask
+                loadQuestions()
             }
             .padding(.top, 8)
             TonalButton(title: L("action_done")) { dismiss() }
@@ -172,19 +242,22 @@ struct QuizView: View {
         answered += 1
         let ok = option == q.answerIndex
         if ok { correct += 1 }
+        var learning = QuizLearning(data: history)
+        learning.answer(q, correct: ok)
+        if let encoded = learning.encode() { history = encoded }
         store.recordAnswer(id: q.id, category: q.category, correct: ok)
-        if correct >= target { store.recordRound() }
+        if mode == .standard && correct >= target { store.recordRound() }
     }
 
     private func next() {
-        if correct >= target {
+        if (mode == .standard ? correct : answered) >= target {
             finished = true
             return
         }
         selected = nil
         index += 1
         if index >= queue.count {
-            queue = bank.roundOrder(category: category, recent: store.recentQuestions)
+            loadQuestions()
             index = 0
         }
     }
@@ -333,6 +406,13 @@ private struct InfoCard: View {
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(Brand.primary)
             Text(question.info).font(.subheadline)
+            if let reference = question.reference, !reference.isEmpty {
+                if let url = question.sourceURL, url.scheme == "https" {
+                    Link(reference, destination: url).font(.caption)
+                } else {
+                    Text(reference).font(.caption)
+                }
+            }
         }
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)

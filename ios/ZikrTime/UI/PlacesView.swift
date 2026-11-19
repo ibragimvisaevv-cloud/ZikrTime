@@ -1,9 +1,11 @@
 import SwiftUI
 import YandexMapsMobile
+import UserNotifications
 
 final class MapAppDelegate: NSObject, UIApplicationDelegate {
     static private(set) var configured = false
     func application(_ application: UIApplication, didFinishLaunchingWithOptions options: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        UNUserNotificationCenter.current().delegate = ReadingDelivery.shared
         let key = Bundle.main.object(forInfoDictionaryKey: "YandexMapKitKey") as? String ?? ""
         if !key.isEmpty && !key.hasPrefix("$(") {
             YMKMapKit.setApiKey(key)
@@ -20,76 +22,122 @@ struct PlacesView: View {
     @StateObject private var location = LocationFinder()
     @State private var nearby: City?
     @State private var kind = "all"
+    @State private var query = ""
+    @State private var showMap = true
+    @State private var detent: PresentationDetent = .height(210)
     @State private var selected: PrayerPlace?
 
     private var origin: City { nearby ?? store.city }
     private var places: [PrayerPlace] {
-        (document.value?.places ?? []).filter {
-            $0.valid && (kind == "all" || (kind == "mosque" ? $0.kind == "mosque" : $0.kind != "mosque"))
-        }.sorted { $0.distanceKm(lat: origin.latitude, lon: origin.longitude) < $1.distanceKm(lat: origin.latitude, lon: origin.longitude) }
+        let term = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        return (document.value?.places ?? []).filter {
+            $0.valid && (kind == "all" || (kind == "mosque" ? $0.kind == "mosque" : ["room", "mall"].contains($0.kind))) &&
+            (term.isEmpty || ($0.name + " " + ($0.address ?? "")).localizedCaseInsensitiveContains(term))
+        }.map { ($0, $0.distanceKm(lat: origin.latitude, lon: origin.longitude)) }
+         .sorted { $0.1 < $1.1 }.map { $0.0 }
     }
 
     var body: some View {
-        Page {
-            Picker(L("places_title"), selection: $kind) {
-                Text(L("places_all")).tag("all")
-                Text(L("places_mosques")).tag("mosque")
-                Text(L("places_rooms")).tag("room")
-            }.pickerStyle(.segmented)
-            HStack(alignment: .top) {
-                Text(L(nearby == nil ? "places_near_city" : "places_near_you")).font(.caption).foregroundStyle(Brand.secondaryText)
-                Spacer()
-                Button { location.locate { nearby = $0 } } label: {
-                    Image(systemName: "location.fill").frame(minWidth: 44, minHeight: 44)
-                }.accessibilityLabel(L("places_where_am_i"))
+        let visible = places
+        VStack(spacing: 0) {
+            if MapAppDelegate.configured && showMap {
+                PrayerPlacesMap(places: Array(visible.prefix(300)), latitude: origin.latitude, longitude: origin.longitude) { selected = $0 }
+                    .frame(height: 190).clipShape(RoundedRectangle(cornerRadius: 20))
+                    .padding(.horizontal, 16)
             }
-            if location.status == .denied || location.status == .failed {
-                Text(L(location.status == .denied ? "city_locate_denied" : "city_locate_failed")).font(.caption).foregroundStyle(Brand.secondaryText)
-            }
-            if MapAppDelegate.configured {
-                PrayerPlacesMap(places: Array(places.prefix(300)), latitude: origin.latitude, longitude: origin.longitude) { selected = $0 }
-                    .frame(height: 300).clipShape(RoundedRectangle(cornerRadius: 24))
-            }
-            if document.loading && places.isEmpty { ProgressView(L("places_loading")) }
-            if document.failed { Text(L("shop_offline")).font(.footnote).foregroundStyle(Brand.secondaryText) }
-            if places.isEmpty && !document.loading { Text(L("places_empty")).font(.subheadline) }
-            LazyVStack(spacing: 12) {
-                ForEach(places) { place in
-                    Button { selected = place } label: {
-                        Card(padding: 16) {
-                            HStack(spacing: 12) {
-                                IconBadge(systemName: place.kind == "mosque" ? "building.columns" : "mappin.and.ellipse")
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text(place.name).font(.headline).foregroundStyle(.primary)
-                                    Text(distance(place)).font(.caption).foregroundStyle(Brand.primary)
-                                    if let address = place.address, !address.isEmpty {
-                                        Text(address).font(.caption).foregroundStyle(Brand.secondaryText)
+            Page {
+                TextField(L("places_search_label"), text: $query)
+                    .textFieldStyle(.roundedBorder).submitLabel(.search)
+                    .accessibilityIdentifier("places_search")
+                Picker(L("places_title"), selection: $kind) {
+                    Text(L("places_all")).tag("all")
+                    Text(L("places_mosques")).tag("mosque")
+                    Text(L("places_rooms")).tag("room")
+                }.pickerStyle(.segmented)
+                HStack(alignment: .top) {
+                    Text(L(nearby == nil ? "places_near_city" : "places_near_you")).font(.caption).foregroundStyle(Brand.secondaryText)
+                    Spacer()
+                    Button { location.locate { nearby = $0 } } label: {
+                        Image(systemName: "location.fill").frame(minWidth: 44, minHeight: 44)
+                    }.accessibilityLabel(L("places_where_am_i"))
+                }
+                if location.status == .denied || location.status == .failed {
+                    Text(L(location.status == .denied ? "city_locate_denied" : "city_locate_failed")).font(.caption).foregroundStyle(Brand.secondaryText)
+                }
+                HStack {
+                    if MapAppDelegate.configured {
+                        Button(L(showMap ? "place_hide_map" : "place_show_map")) { showMap.toggle() }
+                    }
+                    Spacer()
+                    Button(L("places_yandex_search")) { searchMap() }
+                }
+                if document.loading && visible.isEmpty { ProgressView(L("places_loading")) }
+                if document.failed { Text(L("shop_offline")).font(.footnote).foregroundStyle(Brand.secondaryText) }
+                if visible.isEmpty && !document.loading { Text(L(query.isEmpty ? "places_empty" : "places_search_empty")).font(.subheadline) }
+                LazyVStack(spacing: 12) {
+                    ForEach(visible.prefix(100)) { place in
+                        Button { selected = place } label: {
+                            Card(padding: 16) {
+                                HStack(spacing: 12) {
+                                    IconBadge(systemName: place.kind == "mosque" ? "building.columns" : "mappin.and.ellipse")
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text(place.name).font(.headline).foregroundStyle(.primary)
+                                        Text(distance(place)).font(.caption).foregroundStyle(Brand.primary)
+                                        if let address = place.address, !address.isEmpty {
+                                            Text(address).font(.caption).foregroundStyle(Brand.secondaryText)
+                                        }
                                     }
+                                    Spacer(minLength: 0)
+                                    Image(systemName: "chevron.right").foregroundStyle(Brand.secondaryText)
                                 }
-                                Spacer(minLength: 0)
-                                Image(systemName: "chevron.right").foregroundStyle(Brand.secondaryText)
                             }
-                        }
-                    }.buttonStyle(.plain)
+                        }.buttonStyle(.plain)
+                    }
                 }
-            }
-            Card {
-                Text(L("places_suggest_title")).font(.headline)
-                Text(L("places_suggest_text")).font(.subheadline).padding(.vertical, 8)
-                let bot = document.value?.seller_bot ?? ShopStore.shared.catalog.sellerBot
-                if !bot.isEmpty {
-                    Button(L("places_suggest")) { openURL("https://t.me/" + bot.replacingOccurrences(of: "@", with: "") + "?start=place") }
+                Card {
+                    Text(L("places_suggest_title")).font(.headline)
+                    Text(L("places_suggest_text")).font(.subheadline).padding(.vertical, 8)
+                    let bot = document.value?.seller_bot ?? ShopStore.shared.catalog.sellerBot
+                    if !bot.isEmpty {
+                        Button(L("places_suggest")) { openURL("https://t.me/" + bot.replacingOccurrences(of: "@", with: "") + "?start=place") }
+                    }
                 }
+                Text(L("places_osm_credit")).font(.caption).foregroundStyle(Brand.secondaryText)
             }
-            Text(L("places_osm_credit")).font(.caption).foregroundStyle(Brand.secondaryText)
         }
         .navigationTitle(L("places_title"))
         .navigationBarTitleDisplayMode(.inline)
         .task { await document.refresh() }
         .refreshable { await document.refresh(force: true) }
-        .sheet(item: $selected) { place in
-            NavigationStack { PlaceDetailView(place: place) }
+        .sheet(item: $selected, onDismiss: { detent = .height(210) }) { place in
+            Group {
+                if detent == .large {
+                    NavigationStack { PlaceDetailView(place: place) }
+                } else {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(place.name).font(.headline).lineLimit(2)
+                        Text([distance(place), place.address ?? ""].filter { !$0.isEmpty }.joined(separator: " · "))
+                            .font(.subheadline).foregroundStyle(Brand.secondaryText).lineLimit(2)
+                        HStack {
+                            Button(L("places_details")) { detent = .large }
+                            Spacer()
+                            Button(L("places_route")) { openURL("https://yandex.ru/maps/?rtext=~\(place.lat),\(place.lon)&rtt=pd") }
+                        }.buttonStyle(.bordered)
+                    }.frame(maxWidth: .infinity, alignment: .leading).padding(20)
+                }
+            }
+            .presentationDetents([.height(210), .large], selection: $detent)
+            .presentationDragIndicator(.visible)
         }
+    }
+
+    private func searchMap() {
+        let term = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        var components = URLComponents(string: "https://yandex.ru/maps/")
+        components?.queryItems = [URLQueryItem(name: "ll", value: "\(origin.longitude),\(origin.latitude)"),
+                                  URLQueryItem(name: "z", value: "13"),
+                                  URLQueryItem(name: "text", value: term.isEmpty ? L("place_kind_mosque") : term)]
+        if let url = components?.url { openURL(url.absoluteString) }
     }
 
     private func distance(_ place: PrayerPlace) -> String {

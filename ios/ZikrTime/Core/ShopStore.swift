@@ -6,15 +6,30 @@ import Combine
 final class ShopStore: ObservableObject {
     static let shared = ShopStore()
 
-    @Published private(set) var catalog: ShopCatalog
+    @Published private(set) var catalog: ShopCatalog {
+        didSet { cachedSearch = nil }
+    }
     @Published private(set) var offline = false
 
     private var refreshing = false
+    private var cachedSearch: (seed: String, lang: String, value: ShopSearch)?
     var orderSeed: String {
         let defaults = UserDefaults.standard
-        let id = defaults.string(forKey: "shop_seed") ?? UUID().uuidString
-        defaults.set(id, forKey: "shop_seed")
+        let id: String
+        if let existing = defaults.string(forKey: "shop_seed") { id = existing }
+        else {
+            id = UUID().uuidString
+            defaults.set(id, forKey: "shop_seed")
+        }
         return id + LocalDay.today().key
+    }
+
+    func search(language: String) -> ShopSearch {
+        let seed = orderSeed
+        if let cachedSearch, seed == cachedSearch.seed, cachedSearch.lang == language { return cachedSearch.value }
+        let value = ShopSearch(catalog: catalog, seed: seed, language: language)
+        cachedSearch = (seed, language, value)
+        return value
     }
 
     private let key = "shop_catalog"

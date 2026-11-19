@@ -51,9 +51,18 @@ final class OnlineTimes: ObservableObject {
         requestSerial += 1
         let serial = requestSerial
         let source = signature()
+        let regional = Store.shared.preferRegional ? RegionalPrayer.shared.source : nil
         guard Store.shared.onlineTimes else { loading = false; return false }
         loading = true
         defer { if serial == requestSerial { loading = false } }
+        if let regional {
+            let ok = await RegionalPrayer.shared.refresh(source: regional, force: force) {
+                serial == self.requestSerial && Store.shared.onlineTimes && Store.shared.preferRegional &&
+                    RegionalPrayer.shared.source?.city == regional.city
+            }
+            guard serial == requestSerial else { return false }
+            if ok { version += 1; return true }
+        }
         guard let method = Store.shared.method.aladhanId else {
             // Московская Соборная мечеть — своё расписание с dumrf.ru.
             let ok = await DumrfLive.refresh(force: force)
@@ -178,16 +187,41 @@ final class OnlineTimes: ObservableObject {
 @MainActor
 enum PrayerSchedule {
 
+    static var zone: TimeZone {
+        let id = Store.shared.city.id
+        if let zone = RegionalPrayer.shared.source?.zone ?? RegionalPrayerSource.cityZone(id) { return zone }
+        if let id, let name = CityCatalog.shared.cities.first(where: { $0.id == id })?.zone, let zone = TimeZone(identifier: name) { return zone }
+        return .current
+    }
+
+    static func sourceLabel(for day: LocalDay) -> String {
+        if RegionalPrayer.shared.day(day) != nil, let source = RegionalPrayer.shared.source {
+            return L("regional_published", source.publisher)
+        }
+        let store = Store.shared
+        if store.method == .moscowCathedral && DumrfLive.isMoscow() && DumrfLive.official(day) != nil && store.onlineTimes {
+            return L("home_source_dumrf")
+        }
+        if abs(store.city.latitude) > 45, !isOnline(day),
+           PrayerCalculator.calculation(day: day, latitude: store.city.latitude, longitude: store.city.longitude,
+                                       method: store.method, madhab: store.madhab, zone: zone).polar {
+            return L("regional_polar", L(store.method.nameKey))
+        }
+        return L(isOnline(day) ? "home_source_online" : "home_source_local", L(store.method.nameKey))
+    }
+
     static func times(for day: LocalDay) -> [Prayer: Date] {
         let s = Store.shared
         let base: [Prayer: Date]
-        if s.method == .moscowCathedral {
+        if let regional = RegionalPrayer.shared.day(day) {
+            base = fromOnline(day, regional)
+        } else if s.method == .moscowCathedral {
             base = moscow(day)
         } else if let online = OnlineTimes.shared.day(day) {
             base = fromOnline(day, online)
         } else {
             base = PrayerCalculator.calculate(day: day, latitude: s.city.latitude, longitude: s.city.longitude,
-                                              method: s.method, madhab: s.madhab)
+                                              method: s.method, madhab: s.madhab, zone: zone)
         }
         var result: [Prayer: Date] = [:]
         for (p, t) in base {
@@ -208,7 +242,7 @@ enum PrayerSchedule {
     private static func moscow(_ day: LocalDay) -> [Prayer: Date] {
         let s = Store.shared
         let calc = PrayerCalculator.calculate(day: day, latitude: s.city.latitude, longitude: s.city.longitude,
-                                              method: .moscowCathedral, madhab: s.madhab)
+                                              method: .moscowCathedral, madhab: s.madhab, zone: zone)
         guard s.onlineTimes else { return calc }
         let hanafi = s.madhab == .hanafi
         if let official = DumrfLive.official(day) {
@@ -230,34 +264,36 @@ enum PrayerSchedule {
 
     private static func fromOnline(_ day: LocalDay, _ online: OnlineTimes.Day) -> [Prayer: Date] {
         var result: [Prayer: Date] = [:]
-        var previous: Date?
         for p in Prayer.allCases {
             guard let hm = online.times[p] else { continue }
-            var t = day.at(hour: hm.hour, minute: hm.minute, in: online.zone)
-            // Летом на севере иша бывает после полуночи — это уже следующие сутки.
-            if let prev = previous, t <= prev { t = t.addingTimeInterval(86_400) }
-            previous = t
-            result[p] = t
+            var local = day
+            let minutes = hm.hour * 60 + hm.minute
+            if p == .fajr, let rise = online.times[.sunrise], minutes > rise.hour * 60 + rise.minute {
+                local = day.adding(days: -1)
+            } else if p == .isha, let sunset = online.times[.maghrib], minutes < sunset.hour * 60 + sunset.minute {
+                local = day.adding(days: 1)
+            }
+            result[p] = local.at(hour: hm.hour, minute: hm.minute, in: online.zone)
         }
         return result
     }
 
     /// Ближайший обязательный намаз строго после момента `after`.
     static func next(after now: Date = Date()) -> (prayer: Prayer, time: Date) {
-        let today = LocalDay(now)
-        for offset in 0...2 {
-            let t = times(for: today.adding(days: offset))
-            for p in Prayer.obligatory {
-                if let time = t[p], time > now { return (p, time) }
-            }
+        let today = LocalDay(now, in: zone)
+        var candidates: [(Prayer, Date)] = []
+        for offset in -1...2 {
+            let times = times(for: today.adding(days: offset))
+            for p in Prayer.obligatory { if let t = times[p], t > now { candidates.append((p,t)) } }
         }
+        if let nearest = candidates.min(by: { $0.1 < $1.1 }) { return nearest }
         let tomorrow = times(for: today.adding(days: 1))
         return (.fajr, tomorrow[.fajr] ?? now)
     }
 
     /// Начало предыдущего намаза (для полоски прогресса до следующего).
     static func previousStart(before now: Date = Date()) -> Date? {
-        let today = LocalDay(now)
+        let today = LocalDay(now, in: zone)
         var starts: [Date] = []
         if let isha = times(for: today.adding(days: -1))[.isha] { starts.append(isha) }
         let t = times(for: today)

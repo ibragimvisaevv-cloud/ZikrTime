@@ -23,6 +23,7 @@ struct CityCatalog: Decodable {
         let lat: Double
         let lon: Double
         let names: [String: String]
+        var zone: String? = nil
 
         func name(_ lang: String) -> String { names[lang] ?? names["en"] ?? id }
         func city(_ lang: String) -> City { City(id: id, name: name(lang), latitude: lat, longitude: lon) }
@@ -41,8 +42,23 @@ struct CityCatalog: Decodable {
               let catalog = try? parse(data) else {
             return CityCatalog(groups: [], cities: [])
         }
-        return catalog
+        guard let file = Bundle.main.url(forResource: "cities_ru_regions", withExtension: "tsv"),
+              let regions = try? String(contentsOf: file, encoding: .utf8) else { return catalog }
+        return catalog.addingRegions(regions)
     }()
+
+    func addingRegions(_ text: String) -> CityCatalog {
+        let languages = ["ru", "en", "az", "kk", "ky", "tg", "tr", "uz"]
+        var ids = Set(cities.map(\.id))
+        let extra: [Entry] = text.split(whereSeparator: \.isNewline).compactMap { row in
+            guard !row.hasPrefix("#") else { return nil }
+            let f = row.components(separatedBy: "\t")
+            guard f.count == 13, let lat = Double(f[2]), let lon = Double(f[3]), ids.insert(f[0]).inserted else { return nil }
+            return Entry(id: f[0], group: "russia", lat: lat, lon: lon,
+                         names: Dictionary(uniqueKeysWithValues: zip(languages, f.dropFirst(5)).filter { !$0.1.isEmpty }), zone: f[4])
+        }
+        return CityCatalog(groups: groups, cities: cities + extra)
+    }
 
     /// Название города на нужном языке (для городов из списка).
     func displayName(_ city: City, lang: String) -> String {
@@ -60,12 +76,16 @@ struct Question: Identifiable, Equatable {
     let options: [String]
     let answerIndex: Int
     let info: String
+    var difficulty: Int = 1
+    var contentVersion: Int = 1
+    var reference: String?
+    var sourceURL: URL?
 
     func shuffled() -> Question {
-        let correct = options[answerIndex]
-        let mixed = options.shuffled()
-        return Question(id: id, category: category, text: text, arabic: arabic, options: mixed,
-                        answerIndex: mixed.firstIndex(of: correct) ?? 0, info: info)
+        let order = options.indices.shuffled()
+        return Question(id: id, category: category, text: text, arabic: arabic, options: order.map { options[$0] },
+                        answerIndex: order.firstIndex(of: answerIndex)!, info: info, difficulty: difficulty,
+                        contentVersion: contentVersion, reference: reference, sourceURL: sourceURL)
     }
 }
 
@@ -87,6 +107,7 @@ struct QuizBank {
         }
 
         struct Item: Decodable {
+            struct Source: Decodable { let reference: String?; let url: URL? }
             let id: String
             let cat: String
             let q: String
@@ -94,6 +115,9 @@ struct QuizBank {
             let answer: Int
             let info: String
             let arabic: String?
+            let difficulty: Int?
+            let contentVersion: Int?
+            let source: Source?
         }
 
         let categories: [Cat]
@@ -105,7 +129,7 @@ struct QuizBank {
         return QuizBank(
             categories: file.categories.map { Category(id: $0.id, name: $0.name) },
             questions: file.questions.map {
-                Question(id: $0.id, category: $0.cat, text: $0.q, arabic: $0.arabic, options: $0.options, answerIndex: $0.answer, info: $0.info)
+                Question(id: $0.id, category: $0.cat, text: $0.q, arabic: $0.arabic, options: $0.options, answerIndex: $0.answer, info: $0.info, difficulty: $0.difficulty ?? 1, contentVersion: $0.contentVersion ?? 1, reference: $0.source?.reference, sourceURL: $0.source?.url)
             }
         )
     }
@@ -127,8 +151,11 @@ struct QuizBank {
     }
 
     /// Порядок вопросов для раунда: сначала те, что давно (или никогда) не попадались.
-    func roundOrder(category: String?, recent: [String]) -> [Question] {
-        let pool = questions.filter { category == nil || $0.category == category }
+    func pool(category: String?, level: Int?) -> [Question] {
+        questions.filter { (category == nil || $0.category == category) && (level == nil || $0.difficulty == level) }
+    }
+    func roundOrder(category: String?, recent: [String], level: Int? = nil) -> [Question] {
+        let pool = pool(category: category, level: level)
         let recentSet = Set(recent)
         let fresh = pool.filter { !recentSet.contains($0.id) }.shuffled()
         let seen = pool.filter { recentSet.contains($0.id) }.sorted {

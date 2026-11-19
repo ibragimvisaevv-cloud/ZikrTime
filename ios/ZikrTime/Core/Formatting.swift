@@ -17,17 +17,17 @@ enum Fmt {
     }
 
     /// «05:29» или «5:29 AM».
-    static func clock(_ date: Date) -> String {
-        formatter(uses24h ? "HH:mm" : "h:mm a").string(from: date)
+    @MainActor static func clock(_ date: Date) -> String {
+        formatter(uses24h ? "HH:mm" : "h:mm a", zone: PrayerSchedule.zone).string(from: date)
     }
 
     /// Только цифры («5:29») — для крупных часов, где AM/PM пишется отдельно.
-    static func clockDigits(_ date: Date) -> String {
-        formatter(uses24h ? "HH:mm" : "h:mm").string(from: date)
+    @MainActor static func clockDigits(_ date: Date) -> String {
+        formatter(uses24h ? "HH:mm" : "h:mm", zone: PrayerSchedule.zone).string(from: date)
     }
 
-    static func amPm(_ date: Date) -> String? {
-        uses24h ? nil : formatter("a").string(from: date)
+    @MainActor static func amPm(_ date: Date) -> String? {
+        uses24h ? nil : formatter("a", zone: PrayerSchedule.zone).string(from: date)
     }
 
     /// «Суббота, 24 октября»

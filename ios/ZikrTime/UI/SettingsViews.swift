@@ -30,6 +30,24 @@ struct MoreView: View {
                 NavigationLink(value: Route.places) {
                     SettingRow(title: L("places_title"), subtitle: L("places_entry_hint"), icon: "mappin.and.ellipse")
                 }
+                NavigationLink(value: Route.quran) {
+                    SettingRow(title: L("ql_read_title"), subtitle: nil, icon: "book")
+                }
+                NavigationLink(value: Route.quranAudio) {
+                    SettingRow(title: L("qaudio_title"), subtitle: nil, icon: "headphones")
+                }
+                NavigationLink(value: Route.azkar) {
+                    SettingRow(title: L("azkar_title"), subtitle: nil, icon: "sun.and.horizon")
+                }
+                NavigationLink(value: Route.guide) {
+                    SettingRow(title: L("guide_title"), subtitle: nil, icon: "questionmark.circle")
+                }
+                NavigationLink(value: Route.prayerJournal) {
+                    SettingRow(title: L("journal_title"), subtitle: nil, icon: "calendar")
+                }
+                NavigationLink(value: Route.readingReminders) {
+                    SettingRow(title: L("reading_title"), subtitle: nil, icon: "bell")
+                }
                 NavigationLink(value: Route.ramadan) {
                     SettingRow(title: L("ramadan_title"), subtitle: L("ramadan_subtitle"), icon: "moon.stars")
                 }
@@ -273,7 +291,13 @@ struct PrayerSettingsView: View {
 
     var body: some View {
         Page {
-            SectionLabel(text: L("prayer_method"))
+            Card {
+                ToggleRow(title: L("regional_prefer"), subtitle: L("regional_prefer_hint"), isOn: Binding(
+                    get: { store.preferRegional },
+                    set: { store.preferRegional = $0; Lifecycle.locationChanged() }
+                ))
+            }
+            SectionLabel(text: L("regional_fallback"))
             Card(padding: 8) {
                 ForEach(CalcMethod.allCases, id: \.self) { m in
                     Button {
@@ -310,7 +334,7 @@ struct PrayerSettingsView: View {
 
             SectionLabel(text: L("prayer_source"))
             Card {
-                ToggleRow(title: L("prayer_source_online"), subtitle: L("prayer_source_online_hint"), isOn: Binding(
+                ToggleRow(title: L("prayer_source_online"), subtitle: L("regional_network_hint"), isOn: Binding(
                     get: { store.onlineTimes },
                     set: {
                         store.onlineTimes = $0
@@ -401,6 +425,8 @@ struct PrayerSettingsView: View {
 
     private var sourceStatus: String {
         if online.loading { return L("prayer_source_loading") }
+        let today = LocalDay.today(in: PrayerSchedule.zone)
+        if RegionalPrayer.shared.day(today) != nil { return PrayerSchedule.sourceLabel(for: today) }
         if let at = online.updatedAt, PrayerSchedule.isOnline() {
             let f = DateFormatter()
             f.locale = L10n.locale
@@ -429,25 +455,7 @@ func openSettings() {
 // MARK: - Фокус (на iPhone — пока объяснение)
 
 struct FocusInfoView: View {
-    var body: some View {
-        Page {
-            Card(background: Brand.goldSoft) {
-                IconBadge(systemName: "hourglass", tint: Brand.onGold, background: Brand.gold.opacity(0.5), size: 44)
-                Text(L("focus_cta_title")).font(.title3.weight(.semibold)).padding(.top, 12)
-                Text(L("focus_ios_text")).font(.subheadline).padding(.top, 6)
-            }
-            NavigationLink(value: Route.quiz(category: nil)) {
-                Text(L("knowledge_start"))
-                    .font(.headline)
-                    .frame(maxWidth: .infinity, minHeight: 54)
-                    .foregroundStyle(.white)
-                    .background(Brand.emerald, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-            }
-            .buttonStyle(.plain)
-        }
-        .navigationTitle(L("focus_title"))
-        .navigationBarTitleDisplayMode(.inline)
-    }
+    var body: some View { FocusSessionView() }
 }
 
 // MARK: - О приложении

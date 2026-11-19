@@ -159,33 +159,39 @@ enum PrayerCalculator {
     private static let FAJR = 0, SUNRISE = 1, DHUHR = 2, ASR = 3, SUNSET = 4, MAGHRIB = 5, ISHA = 6
     private static let riseSetAngle = 0.833
 
-    static func calculate(day: LocalDay, latitude: Double, longitude: Double, method: CalcMethod, madhab: AsrMadhab) -> [Prayer: Date] {
-        let jDate = julian(day.year, day.month, day.day) - longitude / (15.0 * 24.0)
+    static func calculate(day: LocalDay, latitude: Double, longitude: Double, method: CalcMethod, madhab: AsrMadhab,
+                          zone: TimeZone? = nil) -> [Prayer: Date] {
+        calculation(day: day, latitude: latitude, longitude: longitude, method: method, madhab: madhab, zone: zone).times
+    }
 
-        var t: [Double] = [5, 6, 12, 13, 18, 18, 18]
-        for _ in 0..<2 {
-            t = compute(t.map { ($0.isNaN ? 0 : $0) / 24.0 }, jDate: jDate, lat: latitude, method: method, madhab: madhab)
+    static func calculation(day: LocalDay, latitude: Double, longitude: Double, method: CalcMethod, madhab: AsrMadhab,
+                            zone: TimeZone?) -> (times: [Prayer: Date], polar: Bool) {
+        let utcZone = TimeZone(secondsFromGMT: 0)!
+        let solarDay = zone.map { LocalDay(day.at(hour: 12, minute: 0, in: $0).addingTimeInterval((longitude * 240).rounded()), in: utcZone) } ?? day
+        let jd = julian(solarDay.year, solarDay.month, solarDay.day) - longitude / 360
+        func positions(_ lat: Double) -> [Double] {
+            var t: [Double] = [5, 6, 12, 13, 18, 18, 18]
+            for _ in 0..<2 {
+                t = compute(t.map { ($0.isNaN ? 0 : $0) / 24 }, jDate: jd, lat: lat, method: method, madhab: madhab)
+            }
+            var utc = t.map { $0 - longitude / 15 }
+            adjustHighLatitudes(&utc, method: method)
+            utc[MAGHRIB] = utc[SUNSET]
+            if let minutes = method.ishaMinutes { utc[ISHA] = utc[MAGHRIB] + Double(minutes) / 60 }
+            return zip([FAJR, SUNRISE, DHUHR, ASR, MAGHRIB, ISHA], method.offsets).map { field, adjustment in
+                (utc[field] * 60 + adjustment + 0.5).rounded(.down)
+            }
         }
-
-        var utc = t.map { $0 - longitude / 15.0 }
-        adjustHighLatitudes(&utc, method: method)
-        utc[MAGHRIB] = utc[SUNSET]
-        if let minutes = method.ishaMinutes { utc[ISHA] = utc[MAGHRIB] + Double(minutes) / 60.0 }
-
-        let midnight = day.start(in: TimeZone(identifier: "UTC")!)
-        func at(_ hours: Double) -> Date {
-            let minutes = (hours * 60.0 + 0.5).rounded(.down)
-            return midnight.addingTimeInterval(minutes * 60)
+        var lat = latitude
+        var minutes = positions(lat)
+        // Use the nearest latitude giving six ordered events in polar night or midnight sun.
+        while abs(lat) > 45 && (!minutes.allSatisfy(\.isFinite) || !zip(minutes, minutes.dropFirst()).allSatisfy({ $0.0 < $0.1 })) {
+            lat += lat < 0 ? 0.5 : -0.5
+            minutes = positions(lat)
         }
-        let o = method.offsets.map { $0 / 60.0 }
-        return [
-            .fajr: at(utc[FAJR] + o[0]),
-            .sunrise: at(utc[SUNRISE] + o[1]),
-            .dhuhr: at(utc[DHUHR] + o[2]),
-            .asr: at(utc[ASR] + o[3]),
-            .maghrib: at(utc[MAGHRIB] + o[4]),
-            .isha: at(utc[ISHA] + o[5]),
-        ]
+        let midnight = solarDay.start(in: utcZone)
+        let times = Dictionary(uniqueKeysWithValues: zip(Prayer.allCases, minutes.map { midnight.addingTimeInterval(60 * $0) }))
+        return (times, lat != latitude)
     }
 
     private static func compute(_ p: [Double], jDate: Double, lat: Double, method: CalcMethod, madhab: AsrMadhab) -> [Double] {

@@ -125,6 +125,22 @@ for lang in ["ru", "en", "uz", "tg", "kk", "ky", "az", "tr"] {
         check(bank.questions.count >= 80, "\(lang): мало вопросов")
         check(bank.categories.count == 6, "\(lang): темы")
         let order = bank.roundOrder(category: nil, recent: [])
+        for level in 1...3 {
+            let pool = bank.roundOrder(category: nil, recent: [], level: level)
+            check(pool.count == 150 && pool.allSatisfy { $0.difficulty == level }, "Quiz difficulty \(level): \(lang)")
+        }
+        if let q = order.first {
+            let now = Date(timeIntervalSince1970: 100)
+            var learning = QuizLearning(data: Data())
+            learning.answer(q, correct: false, now: now)
+            check(learning.review(order, dueOnly: false, now: now).map(\.id) == [q.id], "Practice includes previously missed material")
+            check(learning.review(order, dueOnly: true, now: now).isEmpty, "Review is scheduled for a later day")
+            let tomorrow = now.addingTimeInterval(86_400)
+            check(learning.review(order, dueOnly: true, now: tomorrow).map(\.id) == [q.id], "Scheduled review")
+            learning.answer(q, correct: true, now: tomorrow)
+            check(learning.entry(q).stage == 1, "Learning stage after review")
+            check(QuizLearning(data: learning.encode() ?? Data()).entry(q).stage == 1, "Learning history persists")
+        }
         check(order.count == bank.questions.count, "\(lang): порядок раунда")
         let correctKept = order.allSatisfy { item in
             item.options[item.answerIndex] == bank.questions.first(where: { $0.id == item.id })!.options[0]
@@ -142,13 +158,28 @@ if let data = try? Data(contentsOf: root.appendingPathComponent("app/src/main/as
 }
 if let data = try? Data(contentsOf: root.appendingPathComponent("app/src/main/assets/shop/catalog.json")),
    let shop = try? ShopCatalog.parse(data) {
-    check(!shop.sellers.isEmpty && !shop.products.isEmpty, "Магазин: пустой каталог")
+    check(!shop.categories.isEmpty, "Магазин: нет категорий")
     check(shop.products.allSatisfy { shop.seller($0.seller) != nil }, "Магазин: товар без продавца")
     check(shop.categories.allSatisfy { !$0.name.get("tg").isEmpty }, "Магазин: названия категорий")
 } else {
     check(false, "Не читается shop/catalog.json")
 }
 check(ShopCatalog.price(2500, currency: "RUB") == "2 500 ₽" && ShopCatalog.price(990, currency: "RUB") == "990 ₽", "Цена")
+let shopJSON = #"""
+{"categories":[{"id":"cars","names":{"ru":"Авто"}}],
+"sellers":[{"id":"s24a178b0","partner":true,"name":"Духи"},
+{"id":"sfb443720","partner":true,"name":"Прокат","city":"Орёл","categories":["cars"],"offers":[{"id":"1","title":"Акция","conditions":"В ноябре","valid_until":"2026-11-19"}]}],
+"products":[{"id":"p","seller":"sfb443720","category":"cars","title":"Седан","price":1000,"currency":"RUB"}]}
+"""#.data(using: .utf8)!
+let sampleShop = try! ShopCatalog.parse(shopJSON)
+let index = ShopSearch(catalog: sampleShop, seed: "test", language: "ru")
+check(index.partners.map(\.id) == ["sfb443720", "s24a178b0"], "Порядок партнёров")
+check(index.items("орел СЕДАН", filters: ShopFilters(minimum: "900", maximum: "1100")).map(\.id) == ["p"], "Город и цена товара")
+check(index.items("седан", filters: ShopFilters(minimum: "1001")).isEmpty, "Фильтрация по цене")
+check(index.items("", filters: ShopFilters()).isEmpty, "Пустой поиск")
+let offer = sampleShop.seller("sfb443720")!.offers[0]
+check(offer.active(at: offer.validUntil.addingTimeInterval(86_399)) &&
+      !offer.active(at: offer.validUntil.addingTimeInterval(86_400)), "Акция заканчивается в полночь по Москве")
 check("بِسْمِ".hasArabic && !"Muhammad ﷺ".hasArabic, "Определение арабского текста")
 
 // Ramadan boundaries, date correction and zakat edge cases.

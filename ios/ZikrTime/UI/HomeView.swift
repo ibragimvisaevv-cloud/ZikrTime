@@ -7,7 +7,7 @@ struct HomeView: View {
     @State private var now = Date()
 
     var body: some View {
-        let today = LocalDay(now)
+        let today = LocalDay(now, in: PrayerSchedule.zone)
         let times = PrayerSchedule.times(for: today)
         let next = PrayerSchedule.next(after: now)
         let current = currentPrayer(times)
@@ -51,14 +51,17 @@ struct HomeView: View {
                         toggle: { store.setPrayed(today, p, !prayed.contains(p)) }
                     )
                 }
-                Text(store.method == .moscowCathedral ? L("home_source_dumrf")
-                     : L(PrayerSchedule.isOnline(today) ? "home_source_online" : "home_source_local", L(store.method.nameKey)))
+                Text(PrayerSchedule.sourceLabel(for: today))
                     .font(.caption)
                     .foregroundStyle(Brand.secondaryText)
                     .padding(.horizontal, 8)
                     .padding(.top, 8)
             }
 
+            HStack(spacing: 12) {
+                quranLink(.quran, key: "ql_read_title", icon: "book", id: "home_read_quran")
+                quranLink(.quranAudio, key: "qaudio_title", icon: "headphones", id: "home_listen_quran")
+            }
             HStack(spacing: 12) {
                 ActionTile(icon: "location.north.circle", title: L("qibla_title"),
                            value: "\(Int(Qibla.bearing(lat: store.city.latitude, lon: store.city.longitude).rounded()))°") {
@@ -92,6 +95,17 @@ struct HomeView: View {
     }
 
     /// Текущий намаз: последний начавшийся (утренний заканчивается с восходом).
+    private func quranLink(_ route: Route, key: String, icon: String, id: String) -> some View {
+        NavigationLink(value: route) {
+            Card(padding: 14) {
+                IconBadge(systemName: icon, tint: Brand.gold, background: Brand.emeraldDeep, size: 38)
+                Text(L(key)).font(.subheadline.weight(.semibold)).padding(.top, 10)
+            }
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier(id)
+    }
+
     private func currentPrayer(_ times: [Prayer: Date]) -> Prayer? {
         guard let p = Prayer.obligatory.last(where: { (times[$0] ?? .distantFuture) <= now }) else { return nil }
         if p == .fajr, let sunrise = times[.sunrise], sunrise <= now { return nil }
@@ -106,7 +120,18 @@ private struct NextPrayerHero: View {
     let now: Date
 
     var body: some View {
-        GlassHero {
+        let times = PrayerSchedule.times(for: LocalDay(now))
+        let night = now < (times[.fajr] ?? now) || now >= (times[.isha] ?? .distantFuture)
+        ZStack(alignment: .bottomLeading) {
+            GeometryReader { frame in
+                if let url = Bundle.main.url(forResource: night ? "horizon_portrait_night" : "horizon_portrait_day", withExtension: "webp"),
+                   let image = UIImage(contentsOfFile: url.path) {
+                    Image(uiImage: image).resizable().scaledToFill()
+                        .frame(width: frame.size.width, height: frame.size.height).clipped()
+                        .accessibilityHidden(true)
+                }
+            }
+            LinearGradient(colors: [.black.opacity(0.05), .black.opacity(0.72)], startPoint: .top, endPoint: .bottom)
             VStack(alignment: .leading, spacing: 6) {
                 HStack(alignment: .center) {
                     VStack(alignment: .leading, spacing: 4) {
@@ -136,6 +161,9 @@ private struct NextPrayerHero: View {
             }
             .padding(24)
         }
+        .frame(minHeight: 235)
+        .background(Brand.emeraldDeep)
+        .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
     }
 
     private var countdown: some View {

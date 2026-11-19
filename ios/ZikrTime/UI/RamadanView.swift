@@ -7,7 +7,7 @@ struct RamadanView: View {
     var body: some View {
         TimelineView(.periodic(from: .now, by: 1)) { timeline in
             let now = timeline.date
-            let today = LocalDay(now)
+        let today = LocalDay(now, in: PrayerSchedule.zone)
             let period = Ramadan.currentOrNext(today: today, shift: store.ramadanShift)
             let times = PrayerSchedule.times(for: today)
             let fajr = times[.fajr] ?? now

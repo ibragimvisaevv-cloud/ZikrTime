@@ -20,143 +20,187 @@ private func accent(_ seller: ShopCatalog.Seller?) -> Color { seller?.accent.map
 
 struct ShopView: View {
     @EnvironmentObject private var shop: ShopStore
-    @State private var category: String?
-    @State private var query = ""
+    @State private var showTerms = false
+    @State private var refreshing = true
 
     var body: some View {
         let c = shop.catalog
-        let lang = L10n.code
-        let q = query.trimmingCharacters(in: .whitespaces)
-        let products = c.rankedProducts(seed: shop.orderSeed).filter { p in
-            (category == nil || p.category == category) &&
-                (q.isEmpty || p.title.get(lang).localizedCaseInsensitiveContains(q) ||
-                    (c.seller(p.seller)?.name.localizedCaseInsensitiveContains(q) ?? false))
-        }
-        let sellers = c.rankedSellers(seed: shop.orderSeed).filter { category == nil || $0.categories.contains(category!) }
-
+        let search = shop.search(language: L10n.code)
         Page {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(L("shop_title")).font(.largeTitle.weight(.bold))
-                Text(L("shop_subtitle")).font(.subheadline).foregroundStyle(Brand.secondaryText)
+            Text(L("shop_title")).font(.largeTitle.bold())
+            NavigationLink(value: Route.shopSearch) {
+                Label(L("shop_search"), systemImage: "magnifyingglass")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding().glass(cornerRadius: 18, shadow: 4)
             }
-            if c.demo {
-                Card(padding: 16, background: Brand.goldSoft) {
-                    Text(L("shop_demo_note")).font(.subheadline)
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("shop_open_search")
+
+            if c.demo { Text(L("shop_demo_note")).font(.caption) }
+            if shop.offline && !c.sellers.isEmpty { Text(L("shop_offline")).font(.caption) }
+            if !search.partners.isEmpty {
+                SectionLabel(text: L("shop_partners_title"))
+                SellerGrid(sellers: search.partners, catalog: c)
+            }
+            if !search.otherCompanies.isEmpty {
+                SectionLabel(text: L("store_companies"))
+                SellerGrid(sellers: search.otherCompanies, catalog: c)
+            }
+            if c.sellers.isEmpty {
+                if refreshing { ProgressView() }
+                else if shop.offline {
+                    Text(L("store_unavailable"))
+                    Button(L("store_retry")) { Task { await refresh(force: true) } }
+                } else { Text(L("store_empty_catalog")) }
+            }
+            if !c.sellerBot.isEmpty || !c.contactTelegram.isEmpty || c.sellerPortal != nil {
+                Button { showTerms = true } label: {
+                    Label(L("shop_add_company"), systemImage: "storefront")
+                        .frame(maxWidth: .infinity).padding().glass(cornerRadius: 18)
                 }
-            }
-            if shop.offline {
-                Text(L("shop_offline")).font(.caption).foregroundStyle(Brand.secondaryText)
-            }
-
-            HStack(spacing: 10) {
-                Image(systemName: "magnifyingglass").foregroundStyle(Brand.primary)
-                TextField(L("shop_search"), text: $query)
-                    .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled()
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 14)
-            .glass(cornerRadius: 20, shadow: 6)
-
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 10) {
-                    CategoryPill(title: L("shop_all"), symbol: "square.grid.2x2.fill", selected: category == nil) { category = nil }
-                    ForEach(c.categories) { cat in
-                        CategoryPill(title: cat.name.get(lang), symbol: shopSymbol(cat.icon), selected: category == cat.id) {
-                            category = category == cat.id ? nil : cat.id
-                        }
-                    }
-                }
-                .padding(.vertical, 8)
-                .padding(.horizontal, 2)
-            }
-
-            if !c.sellerBot.isEmpty && q.isEmpty {
-                Button { openURL("https://t.me/\(c.sellerBot)?start=add") } label: {
-                    Card(padding: 14) {
-                        HStack(spacing: 14) {
-                            IconBadge(systemName: "storefront")
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(L("shop_add_company")).font(.subheadline.weight(.semibold)).foregroundStyle(.primary)
-                                Text(L("shop_add_company_hint")).font(.caption).foregroundStyle(Brand.secondaryText)
-                            }
-                            Spacer()
-                            Image(systemName: "paperplane.fill").foregroundStyle(Brand.primary)
-                        }
-                    }
-                }
-                .buttonStyle(PressScaleStyle(scale: 0.98))
-            }
-
-            if !sellers.isEmpty && q.isEmpty {
-                SectionLabel(text: L("shop_sellers"))
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 12) {
-                        ForEach(sellers) { s in
-                            NavigationLink(value: Route.seller(s.id)) { SellerCard(seller: s, catalog: c) }
-                                .buttonStyle(PressScaleStyle())
-                        }
-                    }
-                    .padding(.vertical, 12)
-                    .padding(.horizontal, 2)
-                }
-            }
-
-            SectionLabel(text: L("shop_products"))
-            if products.isEmpty {
-                Text(L("shop_empty")).font(.subheadline).foregroundStyle(Brand.secondaryText)
-            }
-            ProductGrid(products: products, catalog: c)
-
-            GlassHero {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(L("shop_become_seller")).font(.title2.weight(.semibold)).foregroundStyle(Brand.cream)
-                    Text(L("shop_become_seller_text")).font(.subheadline).foregroundStyle(Brand.cream.opacity(0.85))
-                    if !c.sellerBot.isEmpty {
-                        GoldButton(title: L("shop_add_company")) { openURL("https://t.me/\(c.sellerBot)?start=add") }
-                            .padding(.top, 8)
-                    } else if !c.contactTelegram.isEmpty {
-                        GoldButton(title: L("shop_contact_telegram")) { openURL("https://t.me/" + c.contactTelegram) }
-                            .padding(.top, 8)
-                    }
-                }
-                .padding(22)
+                .buttonStyle(.plain)
             }
         }
         .toolbar(.hidden, for: .navigationBar)
-        .task { await shop.refresh() }
+        .task { await refresh(force: false) }
+        .sheet(isPresented: $showTerms) {
+            VStack(alignment: .leading, spacing: 18) {
+                Text(L("store_terms_title")).font(.title2.bold())
+                Text(L("store_listing_terms"))
+                Text(L("store_promotion_terms")).font(.subheadline)
+                if !c.sellerBot.isEmpty || !c.contactTelegram.isEmpty {
+                    GoldButton(title: L("store_apply")) {
+                        openURL("https://t.me/" + (c.sellerBot.isEmpty ? c.contactTelegram : "\(c.sellerBot)?start=add"))
+                    }
+                }
+                if let portal = c.sellerPortal { Button(L("store_seller_portal")) { openURL(portal) } }
+            }
+            .padding(24).presentationDragIndicator(.visible).presentationDetents([.medium, .large])
+        }
+    }
+
+    private func refresh(force: Bool) async {
+        refreshing = true
+        await shop.refresh(force: force)
+        refreshing = false
     }
 }
 
-private struct CategoryPill: View {
-    let title: String
-    let symbol: String
-    let selected: Bool
-    let action: () -> Void
+private struct SellerGrid: View {
+    let sellers: [ShopCatalog.Seller]
+    let catalog: ShopCatalog
 
     var body: some View {
-        Button(action: action) {
-            HStack(spacing: 8) {
-                Image(systemName: symbol).font(.footnote.weight(.semibold)).foregroundStyle(selected ? Brand.gold : Brand.primary)
-                Text(title).font(.subheadline.weight(.semibold)).foregroundStyle(selected ? .white : .primary).lineLimit(1)
+        LazyVGrid(columns: [GridItem(.flexible(minimum: 0)), GridItem(.flexible(minimum: 0))], alignment: .leading, spacing: 12) {
+            ForEach(sellers) { s in
+                NavigationLink(value: Route.seller(s.id)) { SellerCard(seller: s, catalog: catalog) }
+                    .buttonStyle(PressScaleStyle())
+                    .accessibilityIdentifier("shop_seller_" + s.id)
             }
-            .padding(.horizontal, 14)
-            .padding(.vertical, 10)
-            .background {
-                if selected {
-                    Capsule().fill(LinearGradient(colors: [Color(hex: 0x1A7D63), Brand.emeraldDeep], startPoint: .topLeading, endPoint: .bottomTrailing))
-                }
-            }
-            .modifier(PillGlass(enabled: !selected))
         }
-        .buttonStyle(PressScaleStyle())
     }
 }
 
-private struct PillGlass: ViewModifier {
-    let enabled: Bool
-    func body(content: Content) -> some View {
-        if enabled { content.glass(cornerRadius: 22, shadow: 4) } else { content.clipShape(Capsule()) }
+struct ShopSearchView: View {
+    @EnvironmentObject private var shop: ShopStore
+    @State private var query = ""
+    @State private var products = true
+    @State private var filters = ShopFilters()
+    @State private var editingFilters = false
+    @FocusState private var focused: Bool
+
+    var body: some View {
+        let index = shop.search(language: L10n.code)
+        let count = filters.count(products: products)
+        Page {
+            HStack {
+                Image(systemName: "magnifyingglass")
+                TextField(L(products ? "store_search_products" : "store_search_companies"), text: $query)
+                    .focused($focused).submitLabel(.search).onSubmit { focused = false }
+                    .textInputAutocapitalization(.never).autocorrectionDisabled()
+                if !query.isEmpty {
+                    Button { query = "" } label: { Image(systemName: "xmark.circle.fill") }
+                        .accessibilityLabel(L("store_clear"))
+                }
+            }.padding().glass(cornerRadius: 18)
+            Picker(L("store_search_title"), selection: $products) {
+                Text(L("shop_products")).tag(true)
+                Text(L("store_companies")).tag(false)
+            }.pickerStyle(.segmented)
+            if query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && count == 0 {
+                Text(L("store_search_prompt")).foregroundStyle(Brand.secondaryText)
+            } else if products {
+                let found = index.items(query, filters: filters)
+                if found.isEmpty { emptyState }
+                else { ProductGrid(products: found, catalog: shop.catalog) }
+            } else {
+                let found = index.companies(query, filters: filters)
+                if found.isEmpty { emptyState }
+                else { SellerGrid(sellers: found, catalog: shop.catalog) }
+            }
+        }
+        .navigationTitle(L("store_search_title")).navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(count == 0 ? L("store_filters") : "\(L("store_filters")) · \(count)") {
+                    focused = false
+                    editingFilters = true
+                }
+            }
+        }
+        .task { await shop.refresh() }
+        .sheet(isPresented: $editingFilters) {
+            ShopFilterForm(filters: filters, products: products, cities: index.cities,
+                           categories: shop.catalog.categories) { filters = $0; editingFilters = false }
+        }
+    }
+
+    private var emptyState: some View {
+        VStack(spacing: 10) {
+            Text(L("shop_empty"))
+            Button(L("action_reset")) { query = ""; filters = ShopFilters() }
+        }.frame(maxWidth: .infinity)
+    }
+}
+
+private struct ShopFilterForm: View {
+    @State private var draft: ShopFilters
+    let products: Bool
+    let cities: [String]
+    let categories: [ShopCatalog.Category]
+    let apply: (ShopFilters) -> Void
+
+    init(filters: ShopFilters, products: Bool, cities: [String], categories: [ShopCatalog.Category],
+         apply: @escaping (ShopFilters) -> Void) {
+        _draft = State(initialValue: filters)
+        self.products = products
+        self.cities = cities
+        self.categories = categories
+        self.apply = apply
+    }
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Picker(L("store_category"), selection: $draft.category) {
+                    Text(L("shop_all")).tag("")
+                    ForEach(categories) { c in Text(c.name.get(L10n.code)).tag(c.id) }
+                }
+                if !cities.isEmpty {
+                    Picker(L("settings_city"), selection: $draft.city) {
+                        Text(L("store_any_city")).tag("")
+                        ForEach(cities, id: \.self) { city in Text(city).tag(city) }
+                    }
+                }
+                if products {
+                    TextField(L("store_price_from"), text: $draft.minimum).keyboardType(.numberPad)
+                    TextField(L("store_price_to"), text: $draft.maximum).keyboardType(.numberPad)
+                    if !draft.validPriceRange { Text(L("store_price_range_error")).foregroundStyle(.red) }
+                }
+                Button(L("store_apply_filters")) { apply(draft) }.disabled(products && !draft.validPriceRange)
+                Button(L("action_reset")) { apply(ShopFilters()) }
+            }.navigationTitle(L("store_filters")).navigationBarTitleDisplayMode(.inline)
+        }.presentationDragIndicator(.visible)
     }
 }
 
@@ -212,26 +256,23 @@ private struct SellerCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            ZStack(alignment: .topLeading) {
-                SellerCover(seller: seller, catalog: catalog).frame(height: 110)
-                VStack(alignment: .leading, spacing: 5) {
-                    if seller.partner { CategoryChip(text: L("shop_partner")) }
-                    if seller.promoted(at: Date()) { CategoryChip(text: L("shop_ad")) }
-                }.padding(10)
-            }
-            HStack(spacing: 12) {
-                SellerLogo(seller: seller, size: 44)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(seller.name).font(.subheadline.weight(.semibold)).foregroundStyle(.primary).lineLimit(1)
-                    Text(seller.city.get(L10n.code)).font(.caption).foregroundStyle(Brand.secondaryText).lineLimit(1)
+            Rectangle().fill(Brand.emeraldDeep).frame(height: 64)
+                .overlay { SellerCover(seller: seller, catalog: catalog) }.clipped()
+                .overlay(alignment: .leading) { SellerLogo(seller: seller, size: 40).padding(.leading, 10) }
+                .overlay(alignment: .topTrailing) {
+                    if seller.promoted(at: Date()) { CategoryChip(text: L("shop_ad")).padding(4) }
                 }
-                Spacer(minLength: 0)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(seller.name).font(.subheadline.weight(.semibold)).foregroundStyle(.primary)
+                    .lineLimit(2, reservesSpace: true)
+                let caption = seller.categories.first.flatMap { catalog.category($0)?.name.get(L10n.code) }
+                Text(caption ?? seller.city.get(L10n.code)).font(.caption).foregroundStyle(Brand.secondaryText).lineLimit(1)
             }
-            .padding(14)
+            .frame(maxWidth: .infinity, alignment: .leading).padding(10)
         }
-        .frame(width: 250)
-        .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
-        .glass(cornerRadius: 26)
+        .multilineTextAlignment(.leading)
+        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .glass(cornerRadius: 16)
     }
 }
 
@@ -339,6 +380,8 @@ private struct ProductCard: View {
 struct SellerView: View {
     let id: String
     @EnvironmentObject private var shop: ShopStore
+    @State private var expandOffers = false
+    @State private var expandDiscounts = false
 
     var body: some View {
         let c = shop.catalog
@@ -365,6 +408,36 @@ struct SellerView: View {
                 if !s.description.isEmpty {
                     Card { Text(s.description.get(L10n.code)).font(.body) }
                 }
+                TimelineView(.periodic(from: .now, by: 60)) { clock in
+                    let offers = s.offers.filter { $0.active(at: clock.date) }
+                    if !offers.isEmpty {
+                        VStack(alignment: .leading, spacing: 10) {
+                            SectionLabel(text: L("store_offers"))
+                            ForEach(expandOffers ? offers : Array(offers.prefix(2))) { offer in
+                                Card {
+                                    VStack(alignment: .leading, spacing: 5) {
+                                        Text(offer.title).font(.headline)
+                                        Text(offer.conditions)
+                                        Text(L("store_offer_until", Self.dateLabel(offer.validUntil)))
+                                            .font(.caption).foregroundStyle(Brand.secondaryText)
+                                    }.frame(maxWidth: .infinity, alignment: .leading)
+                                }
+                            }
+                            if offers.count > 2 && !expandOffers {
+                                Button(L("store_more_offers")) { expandOffers = true }
+                            }
+                        }
+                    }
+                }
+                let allProducts = c.products.filter { $0.seller == s.id }
+                let discounts = allProducts.filter(\.discounted)
+                if !discounts.isEmpty {
+                    SectionLabel(text: L("store_discounts"))
+                    ProductGrid(products: expandDiscounts ? discounts : Array(discounts.prefix(2)), catalog: c)
+                    if discounts.count > 2 && !expandDiscounts {
+                        Button(L("store_more_discounts")) { expandDiscounts = true }
+                    }
+                }
                 ContactButtons(seller: s)
                 ReviewsView(target: "seller:" + s.id)
                 if !s.address.isEmpty {
@@ -381,7 +454,7 @@ struct SellerView: View {
                     }
                     .buttonStyle(PressScaleStyle(scale: 0.98))
                 }
-                let products = c.products.filter { $0.seller == s.id }
+                let products = allProducts.filter { !$0.discounted }
                 if !products.isEmpty {
                     SectionLabel(text: L("shop_seller_products"))
                     ProductGrid(products: products, catalog: c)
@@ -390,6 +463,14 @@ struct SellerView: View {
         }
         .navigationTitle(c.seller(id)?.name ?? "")
         .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private static func dateLabel(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: L10n.code)
+        formatter.timeZone = ShopCatalog.Offer.calendar.timeZone
+        formatter.dateStyle = .medium
+        return formatter.string(from: date)
     }
 }
 

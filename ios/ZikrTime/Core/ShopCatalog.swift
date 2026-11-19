@@ -17,6 +17,23 @@ struct ShopCatalog {
         let icon: String
     }
 
+    struct Offer: Identifiable {
+        let id: String
+        let title: String
+        let conditions: String
+        let validUntil: Date
+
+        static var calendar: Calendar {
+            var calendar = Calendar(identifier: .gregorian)
+            calendar.timeZone = TimeZone(identifier: "Europe/Moscow")!
+            return calendar
+        }
+
+        func active(at date: Date) -> Bool {
+            Self.calendar.startOfDay(for: date) <= validUntil
+        }
+    }
+
     struct Seller: Identifiable {
         let id: String
         let name: String
@@ -36,6 +53,7 @@ struct ShopCatalog {
         let categories: [String]
         let accent: UInt32?
         var promoUntil: Double = 0
+        var offers: [Offer] = []
         func promoted(at date: Date) -> Bool { promoUntil > date.timeIntervalSince1970 }
     }
 
@@ -50,12 +68,18 @@ struct ShopCatalog {
         let unit: Text
         let currency: String
         let images: [String]
+
+        var discounted: Bool {
+            guard let price, let oldPrice else { return false }
+            return oldPrice > price
+        }
     }
 
     let demo: Bool
     let contactTelegram: String
     /// Telegram-бот, через который продавцы добавляют свои компании.
     var sellerBot: String = ""
+    var sellerPortal: String?
     let categories: [Category]
     let sellers: [Seller]
     let products: [Product]
@@ -91,11 +115,28 @@ struct ShopCatalog {
             guard let id = o["id"] as? String else { return nil }
             return Category(id: id, name: text(o, "names"), icon: (o["icon"] as? String) ?? "store")
         }
+        let offerDate = DateFormatter()
+        offerDate.locale = Locale(identifier: "en_US_POSIX")
+        offerDate.calendar = Offer.calendar
+        offerDate.timeZone = Offer.calendar.timeZone
+        offerDate.dateFormat = "yyyy-MM-dd"
+        offerDate.isLenient = false
         let sellers = objects("sellers").compactMap { o -> Seller? in
             guard let id = o["id"] as? String, let name = o["name"] as? String else { return nil }
             var accent: UInt32?
             let hex = string(o, "accent").replacingOccurrences(of: "#", with: "")
             if hex.count == 6 { accent = UInt32(hex, radix: 16) }
+            var offerIDs = Set<String>()
+            let offers = (o["offers"] as? [[String: Any]] ?? []).compactMap { row -> Offer? in
+                let id = string(row, "id").trimmingCharacters(in: .whitespacesAndNewlines)
+                let title = string(row, "title").trimmingCharacters(in: .whitespacesAndNewlines)
+                let conditions = string(row, "conditions").trimmingCharacters(in: .whitespacesAndNewlines)
+                let day = string(row, "valid_until")
+                guard !id.isEmpty, !title.isEmpty, !conditions.isEmpty,
+                      let date = offerDate.date(from: day), offerDate.string(from: date) == day,
+                      offerIDs.insert(id).inserted else { return nil }
+                return Offer(id: id, title: title, conditions: conditions, validUntil: date)
+            }
             return Seller(
                 id: id, name: name, partner: (o["partner"] as? Bool) ?? false,
                 city: text(o, "city"), description: text(o, "description"),
@@ -105,7 +146,7 @@ struct ShopCatalog {
                 lat: double(o, "lat"), lon: double(o, "lon"),
                 logo: string(o, "logo"), cover: string(o, "cover"),
                 categories: o["categories"] as? [String] ?? [], accent: accent,
-                promoUntil: double(o, "promo_until") ?? 0
+                promoUntil: double(o, "promo_until") ?? 0, offers: offers
             )
         }
         let sellerIds = Set(sellers.map(\.id))
@@ -118,11 +159,19 @@ struct ShopCatalog {
                 currency: (o["currency"] as? String) ?? "RUB", images: o["images"] as? [String] ?? []
             )
         }
+        let demo = (root["demo"] as? Bool) ?? false
+        #if DEBUG
+        let visible = true
+        #else
+        let visible = !demo
+        #endif
+        let portal = contentBase + "seller.html"
         return ShopCatalog(
-            demo: (root["demo"] as? Bool) ?? false,
+            demo: demo && visible,
             contactTelegram: handle(string(root, "contact_telegram")),
             sellerBot: handle(string(root, "seller_bot")),
-            categories: categories, sellers: sellers, products: products
+            sellerPortal: string(root, "seller_portal") == portal ? portal : nil,
+            categories: categories, sellers: visible ? sellers : [], products: visible ? products : []
         )
     }
 

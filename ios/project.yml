@@ -6,11 +6,12 @@ options:
     iOS: "17.0"
   developmentLanguage: en
   createIntermediateGroups: true
+  preGenCommand: python3 ci/prepare-quran.py && python3 ci/prepare-content.py
 settings:
   base:
     SWIFT_VERSION: "5.0"
-    MARKETING_VERSION: "0.8.3"
-    CURRENT_PROJECT_VERSION: "15"
+    MARKETING_VERSION: "0.8.28"
+    CURRENT_PROJECT_VERSION: "56"
     DEVELOPMENT_TEAM: ""
 targets:
   ZikrTime:
@@ -19,8 +20,25 @@ targets:
       Release: Local-Release.xcconfig
     type: application
     platform: iOS
+    dependencies:
+      - target: PrayerWidget
+        embed: true
     sources:
       - path: ZikrTime
+      - path: WidgetShared
+      - path: Generated/QuranData
+        type: folder
+        buildPhase: resources
+      - path: ../app/src/main/assets/prayer
+        type: folder
+        buildPhase: resources
+      - path: ../app/src/main/assets/cities_ru_regions.tsv
+        buildPhase: resources
+      - path: ../app/src/main/assets/tasbih
+        type: folder
+        buildPhase: resources
+      - path: ../app/src/main/res/raw/tasbih_bead.wav
+        buildPhase: resources
       # Общие данные с Android-версией: вопросы, города, шрифт и азан
       - path: ../app/src/main/assets/quiz
         type: folder
@@ -49,6 +67,7 @@ targets:
         UILaunchScreen: {}
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
         UIAppFonts: [amiri.ttf]
+        UIBackgroundModes: [audio]
         UIRequiresFullScreen: true
         YandexMapKitKey: $(YANDEX_MAPKIT_KEY)
         NSAlarmKitUsageDescription: ZikrTime wakes you up for the Fajr prayer with the adhan at the time you choose.
@@ -62,5 +81,41 @@ targets:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         GENERATE_INFOPLIST_FILE: NO
         CODE_SIGN_STYLE: Automatic
+        CODE_SIGN_ENTITLEMENTS: ZikrTime/App/ZikrTime.entitlements
         ENABLE_PREVIEWS: NO
         OTHER_LDFLAGS: $(inherited) -ObjC
+    scheme:
+      testTargets: [ZikrTimeUITests]
+  PrayerWidget:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: PrayerWidget
+      - path: WidgetShared
+    info:
+      path: Generated/PrayerWidget-Info.plist
+      properties:
+        CFBundleDisplayName: ZikrTime
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.zikrtime.ios.PrayerWidget
+        CODE_SIGN_STYLE: Automatic
+        CODE_SIGN_ENTITLEMENTS: PrayerWidget/PrayerWidget.entitlements
+        APPLICATION_EXTENSION_API_ONLY: YES
+        SKIP_INSTALL: YES
+        TARGETED_DEVICE_FAMILY: "1"
+  ZikrTimeUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [UITests]
+    dependencies:
+      - target: ZikrTime
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.zikrtime.ios.uitests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: ZikrTime

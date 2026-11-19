@@ -13,7 +13,8 @@ struct OnboardingView: View {
         switch step {
         case 0: languageStep
         case 1: welcomeStep
-        default: cityStep
+        case 2: cityStep
+        default: AppGuideView { store.onboarded = true }
         }
     }
 
@@ -85,7 +86,7 @@ struct OnboardingView: View {
             Text(L("onboarding_city_text")).font(.subheadline).foregroundStyle(Brand.secondaryText)
             CityPicker { city in
                 store.city = city
-                store.onboarded = true
+                step = 3
                 Task {
                     if !QA.active { await PrayerNotifications.requestPermission() }
                     await OnlineTimes.shared.refresh(force: true)

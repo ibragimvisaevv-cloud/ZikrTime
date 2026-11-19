@@ -3,9 +3,9 @@ import Foundation
 enum FajrPlan {
     /// Search whole weeks so a single selected weekday is found even six days away.
     static func upcoming(count: Int, from now: Date, weekdays: Set<Int>, offsetMinutes: Int,
-                         fajr: (LocalDay) -> Date?) -> [(trigger: Date, fajr: Date)] {
+                         zone: TimeZone = .current, fajr: (LocalDay) -> Date?) -> [(trigger: Date, fajr: Date)] {
         guard count > 0, !weekdays.intersection(1...7).isEmpty else { return [] }
-        let today = LocalDay(now)
+        let today = LocalDay(now, in: zone)
         var result: [(trigger: Date, fajr: Date)] = []
         for offset in 0...(count * 7 + 1) {
             let day = today.adding(days: offset)

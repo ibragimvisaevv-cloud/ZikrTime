@@ -5,6 +5,10 @@ enum AppTab: Hashable {
 }
 
 enum Route: Hashable {
+    case quran, quranAudio, guide, shopSearch
+    case prayerJournal, readingReminders
+    case quranPassage(chapter: Int, ayah: Int)
+    case azkar(evening: Bool)
     case language, city, prayerSettings, alarm, tasbih, about, focus, places, ramadan, zakat
     case quiz(category: String?)
     case seller(String), product(String)
@@ -81,6 +85,14 @@ extension View {
     func destinations() -> some View {
         navigationDestination(for: Route.self) { route in
             switch route {
+            case .quran: QuranLibraryView(listening: false)
+            case .quranAudio: QuranLibraryView(listening: true)
+            case .quranPassage(let chapter, let ayah): QuranLibraryView(initialChapter: chapter, initialAyah: ayah)
+            case .azkar(let evening): DailyAzkarView(evening: evening)
+            case .guide: AppGuideView()
+            case .prayerJournal: PrayerJournalView()
+            case .readingReminders: ReadingRemindersView()
+            case .shopSearch: ShopSearchView()
             case .language: LanguageView()
             case .city: CityView()
             case .prayerSettings: PrayerSettingsView()

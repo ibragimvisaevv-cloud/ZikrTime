@@ -33,6 +33,7 @@ final class Store: ObservableObject {
     @Published var method: CalcMethod { didSet { d.set(method.rawValue, forKey: K.method) } }
     @Published var madhab: AsrMadhab { didSet { d.set(madhab.rawValue, forKey: K.madhab) } }
     @Published var onlineTimes: Bool { didSet { d.set(onlineTimes, forKey: K.online) } }
+    @Published var preferRegional: Bool { didSet { d.set(preferRegional, forKey: "regional_prayers_preferred") } }
     /// Ручные поправки в минутах для каждого времени (индекс = Prayer.rawValue).
     @Published var adjustments: [Int] { didSet { d.set(adjustments, forKey: K.adjustments) } }
 
@@ -55,6 +56,7 @@ final class Store: ObservableObject {
     // MARK: Отметки и статистика
     /// "2026-10-24" → совершённые намазы (Prayer.rawValue).
     @Published private(set) var prayed: [String: [Int]] { didSet { d.set(prayed, forKey: K.prayed) } }
+    @Published private(set) var journal: [String: [String: String]] { didSet { d.set(journal, forKey: "prayer_journal_v1") } }
     @Published private(set) var quizDays: [String] { didSet { d.set(quizDays, forKey: K.quizDays) } }
     @Published private(set) var totalCorrect: Int { didSet { d.set(totalCorrect, forKey: K.totalCorrect) } }
     @Published private(set) var totalAnswered: Int { didSet { d.set(totalAnswered, forKey: K.totalAnswered) } }
@@ -84,6 +86,7 @@ final class Store: ObservableObject {
         method = CalcMethod(rawValue: defaults.string(forKey: K.method) ?? "") ?? .russia
         madhab = AsrMadhab(rawValue: defaults.string(forKey: K.madhab) ?? "") ?? .standard
         onlineTimes = defaults.object(forKey: K.online) as? Bool ?? true
+        preferRegional = defaults.object(forKey: "regional_prayers_preferred") as? Bool ?? true
         let adj = defaults.array(forKey: K.adjustments) as? [Int] ?? []
         adjustments = adj.count == Prayer.allCases.count ? adj : Array(repeating: 0, count: Prayer.allCases.count)
         notify = defaults.object(forKey: K.notify) as? Bool ?? true
@@ -95,6 +98,7 @@ final class Store: ObservableObject {
         alarmOffset = defaults.object(forKey: K.alarmOffset) as? Int ?? 30
         alarmDays = Set(defaults.array(forKey: K.alarmDays) as? [Int] ?? Array(1...7))
         prayed = defaults.dictionary(forKey: K.prayed) as? [String: [Int]] ?? [:]
+        journal = defaults.dictionary(forKey: "prayer_journal_v1") as? [String: [String: String]] ?? [:]
         quizDays = defaults.stringArray(forKey: K.quizDays) ?? []
         totalCorrect = defaults.integer(forKey: K.totalCorrect)
         totalAnswered = defaults.integer(forKey: K.totalAnswered)
@@ -122,8 +126,27 @@ final class Store: ObservableObject {
     }
 
     func setPrayed(_ day: LocalDay, _ p: Prayer, _ done: Bool) {
+        let old = mark(day, p)
+        if done {
+            setPrayerMark(day, p, old == .missed || old == .madeUp ? .madeUp : .done)
+        } else {
+            setPrayerMark(day, p, old == .madeUp ? .missed : .unmarked)
+        }
+    }
+
+    func mark(_ day: LocalDay, _ p: Prayer) -> PrayerMark {
+        if let value = journal[day.key]?[String(p.rawValue)], let mark = PrayerMark(rawValue: value) { return mark }
+        return prayedOn(day).contains(p) ? .done : .unmarked
+    }
+
+    func setPrayerMark(_ day: LocalDay, _ p: Prayer, _ mark: PrayerMark) {
+        guard p.isPrayer else { return }
+        var entries = journal[day.key] ?? [:]
+        let key = String(p.rawValue)
+        if mark == .unmarked { entries.removeValue(forKey: key) } else { entries[key] = mark.rawValue }
+        journal[day.key] = entries.isEmpty ? nil : entries
         var set = prayedOn(day)
-        if done { set.insert(p) } else { set.remove(p) }
+        if mark == .done || mark == .madeUp { set.insert(p) } else { set.remove(p) }
         var all = prayed
         all[day.key] = set.map(\.rawValue).sorted()
         prayed = Self.trimmed(all)

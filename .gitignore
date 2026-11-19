@@ -14,5 +14,9 @@ ios/Pods/
 ios/*.xcworkspace/
 ios/*.xcodeproj/
 ios/Local*.xcconfig
+ios/Generated/
+ios/ZikrTime/Resources/*.lproj/Android.strings
+ios/ZikrTime/Resources/daily-azkar.json
+ios/ZikrTime/Resources/horizon_portrait_*.webp
 build-logic/
 .work/

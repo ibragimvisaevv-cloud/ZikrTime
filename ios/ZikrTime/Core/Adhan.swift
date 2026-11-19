@@ -53,7 +53,7 @@ final class AdhanPreview: NSObject, ObservableObject, AVAudioPlayerDelegate {
     }
 }
 
-/// Пятничные напоминания: утром — «Аль-Кахф» и салават, за час до зухра — джума, за час до магриба — время дуа.
+/// Пятничные напоминания за час до зухра и магриба. Время чтения Аль-Кахф задаётся отдельно.
 /// Тексты — смыслы аята и достоверных хадисов с точными ссылками (см. Android FridayReminders.kt).
 @MainActor
 enum FridayReminders {
@@ -65,17 +65,15 @@ enum FridayReminders {
     static func source(_ n: Int) -> String { L("friday_\(n)_source") }
 
     private enum Slot: CaseIterable {
-        case morning, jumuah, lastHour
+        case jumuah, lastHour
         var title: String {
             switch self {
-            case .morning: return L("friday_morning_title")
             case .jumuah: return L("friday_jumuah_title")
             case .lastHour: return L("friday_hour_title")
             }
         }
         var items: [Int] {
             switch self {
-            case .morning: return [1, 2]
             case .jumuah: return [6, 5]
             case .lastHour: return [3, 4]
             }
@@ -85,10 +83,6 @@ enum FridayReminders {
     private static func time(_ slot: Slot, on day: LocalDay) -> Date? {
         let t = PrayerSchedule.times(for: day)
         switch slot {
-        case .morning:
-            guard let sunrise = t[.sunrise] else { return nil }
-            let nine = day.at(hour: 9, minute: 0, in: .current)
-            return max(nine, sunrise.addingTimeInterval(30 * 60))
         case .jumuah: return t[.dhuhr]?.addingTimeInterval(-60 * 60)
         case .lastHour: return t[.maghrib]?.addingTimeInterval(-60 * 60)
         }

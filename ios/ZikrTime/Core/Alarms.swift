@@ -36,7 +36,7 @@ enum PrayerNotifications {
         let store = Store.shared
         guard store.notify, await isAllowed() else { return }
         let now = Date()
-        let today = LocalDay(now)
+        let today = LocalDay(now, in: PrayerSchedule.zone)
         let place = CityCatalog.shared.displayName(store.city, lang: L10n.code)
         var count = 0
         for offset in 0..<7 {
@@ -77,7 +77,7 @@ enum FajrAlarm {
     /// Ближайшие сигналы: время будильника и время фаджра (с учётом выбранных дней недели).
     static func upcoming(days: Int, from now: Date = Date()) -> [(trigger: Date, fajr: Date)] {
         let store = Store.shared
-        return FajrPlan.upcoming(count: days, from: now, weekdays: store.alarmDays, offsetMinutes: store.alarmOffset) { day in
+        return FajrPlan.upcoming(count: days, from: now, weekdays: store.alarmDays, offsetMinutes: store.alarmOffset, zone: PrayerSchedule.zone) { day in
             PrayerSchedule.times(for: day)[.fajr]
         }
     }

@@ -1,0 +1,35 @@
+include:
+  - project.yml
+targets:
+  ZikrTime:
+    sources:
+      - path: FocusActivityMonitor/FocusLimits.swift
+    settings:
+      base:
+        SWIFT_ACTIVE_COMPILATION_CONDITIONS: "$(inherited) ZIKR_SCREEN_TIME"
+        CODE_SIGN_ENTITLEMENTS: FocusSigning/ScreenTime.entitlements
+    dependencies:
+      - target: FocusActivityMonitor
+        embed: true
+  FocusActivityMonitor:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: FocusActivityMonitor
+        excludes: [Info.plist]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.zikrtime.ios.FocusActivityMonitor
+        CODE_SIGN_ENTITLEMENTS: FocusSigning/ScreenTime.entitlements
+        CODE_SIGN_STYLE: Automatic
+        SKIP_INSTALL: YES
+        APPLICATION_EXTENSION_API_ONLY: YES
+    info:
+      path: FocusActivityMonitor/Info.plist
+      properties:
+        CFBundleDisplayName: ZikrTime Focus
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.deviceactivity.monitor-extension
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).FocusActivityMonitor

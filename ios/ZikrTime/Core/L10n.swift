@@ -52,7 +52,10 @@ enum L10n {
         let missing = "\u{0}"
         let value = bundle.localizedString(forKey: key, value: missing, table: nil)
         if value != missing { return value }
-        return fallback.localizedString(forKey: key, value: key, table: nil)
+        let shared = bundle.localizedString(forKey: key, value: missing, table: "Android")
+        if shared != missing { return shared }
+        let english = fallback.localizedString(forKey: key, value: missing, table: nil)
+        return english == missing ? fallback.localizedString(forKey: key, value: key, table: "Android") : english
     }
 }
 

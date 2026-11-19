@@ -22,7 +22,13 @@ struct ZikrTimeApp: App {
                 .environmentObject(router)
                 .id(store.language) // смена языка — перестраиваем все экраны
                 .tint(Brand.primary)
-                .onAppear { QA.route(router) }
+                .onAppear {
+                    QA.route(router)
+                    ReadingDelivery.shared.attach(router)
+                    WidgetPrayerPublisher.refresh()
+                }
+                .onChange(of: store.language) { _, _ in WidgetPrayerPublisher.refresh() }
+                .onChange(of: store.onboarded) { _, _ in WidgetPrayerPublisher.refresh() }
         }
         .onChange(of: phase) { _, newPhase in
             if newPhase == .active {
@@ -43,6 +49,7 @@ enum Lifecycle {
 
     /// Переставить уведомления и будильник (после смены города, метода, поправок, настроек будильника).
     static func reschedule() async {
+        WidgetPrayerPublisher.refresh()
         if QA.active { return } // при автоматической проверке не показываем системные запросы разрешений
         await PrayerNotifications.reschedule()
         await FridayReminders.reschedule()
@@ -55,6 +62,7 @@ enum Lifecycle {
 
     /// Город, метод или мазхаб изменились — загружаем новое время из интернета и всё переставляем.
     static func locationChanged() {
+        WidgetPrayerPublisher.refresh()
         Task {
             await OnlineTimes.shared.refresh(force: true)
             await reschedule()
