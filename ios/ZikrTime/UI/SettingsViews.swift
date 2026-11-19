@@ -36,8 +36,11 @@ struct MoreView: View {
                 NavigationLink(value: Route.quranAudio) {
                     SettingRow(title: L("qaudio_title"), subtitle: nil, icon: "headphones")
                 }
-                NavigationLink(value: Route.azkar) {
-                    SettingRow(title: L("azkar_title"), subtitle: nil, icon: "sun.and.horizon")
+                NavigationLink(value: Route.azkar(evening: false)) {
+                    SettingRow(title: L("azkar_morning"), subtitle: nil, icon: "sunrise")
+                }
+                NavigationLink(value: Route.azkar(evening: true)) {
+                    SettingRow(title: L("azkar_evening"), subtitle: nil, icon: "sunset")
                 }
                 NavigationLink(value: Route.guide) {
                     SettingRow(title: L("guide_title"), subtitle: nil, icon: "questionmark.circle")
