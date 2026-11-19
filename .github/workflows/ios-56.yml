@@ -79,18 +79,68 @@ jobs:
             ci-out/iphone-screen-time/SHA256SUMS.txt
           compression-level: 0
           if-no-files-found: error
-      - name: Test normal reading flow on iPhone simulator
+      - name: Archive build logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iPhone-56-checks
+          path: ci-out/*.log
+          retention-days: 7
+
+  simulator:
+    runs-on: macos-26
+    timeout-minutes: 38
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare the iPhone project with Xcode 26.6
+        timeout-minutes: 8
         run: |
           set -euo pipefail
-          (cd ios && xcodegen generate --spec project.yml && pod install --deployment)
-          sim=$(xcrun simctl list devices available -j | python3 -c 'import json,sys; d=json.load(sys.stdin)["devices"]; print(next(x["udid"] for runtime in reversed(sorted(d)) if ".iOS-" in runtime for x in d[runtime] if x["name"].startswith("iPhone")))')
-          xcrun simctl boot "$sim" || xcrun simctl list devices booted | grep -F "$sim"
-          xcrun simctl bootstatus "$sim" -b
+          test "$(uname -m)" = arm64
+          sudo xcode-select --switch /Applications/Xcode_26.6.app
+          xcodebuild -version
+          mkdir -p ci-out
+          command -v xcodegen >/dev/null || brew install xcodegen
+          command -v pod >/dev/null || brew install cocoapods
+          python3 tools/ios/configure.py
+          cd ios
+          xcodegen generate --spec project.yml
+          pod install --deployment
+
+      - name: Boot iPhone 17 with iOS 26.5
+        timeout-minutes: 6
+        run: |
+          set -euo pipefail
+          xcrun simctl list devices available -j > ci-out/devices.json
+          sim=$(python3 -c 'import json; ds=json.load(open("ci-out/devices.json"))["devices"]["com.apple.CoreSimulator.SimRuntime.iOS-26-5"]; print(next(d["udid"] for d in ds if d["name"]=="iPhone 17"))')
+          echo "SIM_UDID=$sim" >> "$GITHUB_ENV"
+          xcrun simctl bootstatus "$sim" -b | tee ci-out/boot.log
+
+      - name: Build native app and test bundle
+        timeout-minutes: 10
+        run: |
+          set -euo pipefail
           xcodebuild -workspace ios/ZikrTime.xcworkspace -scheme ZikrTime -configuration Debug \
-            -destination "platform=iOS Simulator,id=$sim" -derivedDataPath ios/build \
-            -parallel-testing-enabled NO -resultBundlePath ci-out/Reader.xcresult \
-            test > ci-out/reader-test.log 2>&1 || { tail -120 ci-out/reader-test.log; exit 1; }
-          group=$(xcrun simctl get_app_container "$sim" com.zikrtime.ios group.com.zikrtime.ios)
+            -destination "platform=iOS Simulator,id=$SIM_UDID,arch=arm64" -destination-timeout 45 \
+            -derivedDataPath ios/build build-for-testing > ci-out/build.log 2>&1 || { tail -100 ci-out/build.log; exit 1; }
+          lipo ios/build/Build/Products/Debug-iphonesimulator/ZikrTime.app/ZikrTime -verify_arch arm64
+
+      - name: Test Quran reader, prayer focus and tasbih
+        timeout-minutes: 10
+        run: |
+          set -euo pipefail
+          xcodebuild -workspace ios/ZikrTime.xcworkspace -scheme ZikrTime -configuration Debug \
+            -destination "platform=iOS Simulator,id=$SIM_UDID,arch=arm64" -destination-timeout 45 \
+            -derivedDataPath ios/build -parallel-testing-enabled NO -test-timeouts-enabled YES \
+            -default-test-execution-time-allowance 120 -maximum-test-execution-time-allowance 180 \
+            -only-testing:ZikrTimeUITests/FocusTasbihTests -only-testing:ZikrTimeUITests/QuranReaderTests \
+            -resultBundlePath ci-out/Reader.xcresult test-without-building 2>&1 | tee ci-out/reader-test.log
+
+      - name: Verify the widget timetable
+        run: |
+          set -euo pipefail
+          group=$(xcrun simctl get_app_container "$SIM_UDID" com.zikrtime.ios group.com.zikrtime.ios)
           python3 - "$group/prayer-widget-v1.json" <<'PY'
           import json, sys
           from pathlib import Path
@@ -98,13 +148,26 @@ jobs:
           times = [event["time"] for event in data["times"]]
           assert data["city"] and data["heading"] and len(times) >= 300
           assert times == sorted(times)
+          print(f"{len(times)} ordered prayer events for {data['city']}")
           PY
-      - name: Build and simulator evidence
+
+      - name: Collect XCTest results
         if: always()
-        uses: actions/upload-artifact@v4
+        timeout-minutes: 2
+        run: |
+          if test -d ci-out/Reader.xcresult; then
+            xcrun xcresulttool get test-results summary --path ci-out/Reader.xcresult --format json > ci-out/summary.json || true
+            if test -s ci-out/summary.json; then
+              python3 -c 'import json; d=json.load(open("ci-out/summary.json")); print("Tests:",d.get("totalTestCount"),"Failures:",d.get("failedTests")); [print(f.get("testName"),f.get("failureText")) for f in d.get("testFailures",[])]'
+            fi
+          fi
+          if test -n "$SIM_UDID"; then
+            xcrun simctl io "$SIM_UDID" screenshot ci-out/simulator.png || true
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: iPhone-56-checks
-          path: |
-            ci-out/*.log
-            ci-out/Reader.xcresult
+          name: iPhone-56-simulator-checks
+          path: ci-out/
           retention-days: 7
