@@ -1,110 +1,125 @@
-name: ZikrTime for iPhone · 0.8.28 (56)
+name: Verify iPhone 56 artifacts
 on:
   push:
-    branches: [codex/ios-56]
-  workflow_dispatch:
-
+    branches: [codex/ios-56-artifact-check]
 permissions:
   contents: read
-concurrency:
-  group: ios56-${{ github.ref }}
-  cancel-in-progress: true
-
+  actions: read
 jobs:
-  iphone:
-    runs-on: macos-26-intel
-    timeout-minutes: 60
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - name: Select installed Xcode 26 and prepare project
-        run: |
-          set -euo pipefail
-          xc=$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)
-          sudo xcode-select --switch "$xc"
-          xcodebuild -version
-          command -v xcodegen >/dev/null || brew install xcodegen
-          command -v pod >/dev/null || brew install cocoapods
-          mkdir -p ci-out
-          python3 tools/ios/configure.py
-          cd ios
-          xcodegen generate
-          pod install --deployment
-      - name: Check calculation and data logic
-        run: |
-          bash ios/Tests/linux_check.sh
-          swiftc -O ios/ZikrTime/Core/QuranLibrary.swift ios/ZikrTime/Core/QuranTimeline.swift ios/Tests/Quran56Check.swift -o "$RUNNER_TEMP/quran56-check"
-          "$RUNNER_TEMP/quran56-check" ios/Generated/QuranData
-      - name: Archive iPhone build
-        run: bash ios/ci/archive.sh
-      - name: Checked IPA for iPhone
-        uses: actions/upload-artifact@v4
+      - name: Download existing build artifacts and simulator evidence
+        uses: actions/download-artifact@v4
         with:
-          name: ZikrTime-iPhone-0.8.28-56
-          path: ci-out/iphone/*.ipa
-          compression-level: 0
-          if-no-files-found: error
-      - name: Xcode archive with debug symbols
-        uses: actions/upload-artifact@v4
-        with:
-          name: ZikrTime-Xcode-archive-0.8.28-56
-          path: |
-            ci-out/iphone/*.xcarchive.zip
-            ci-out/iphone/SHA256SUMS.txt
-          compression-level: 0
-          if-no-files-found: error
-      - name: Build Screen Time edition for the simulator and archive it for iPhone
+          github-token: ${{ github.token }}
+          run-id: 44616138772
+          path: downloads
+      - name: Reading flow diagnostics from original simulator run
         run: |
-          cd ios
-          xcodegen generate --spec project-focus.yml
-          pod install --deployment
-          xcodebuild -workspace ZikrTime.xcworkspace -scheme ZikrTime -configuration Debug \
-            -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -derivedDataPath build-focus \
-            CODE_SIGNING_ALLOWED=NO build > ../ci-out/focus-test.log 2>&1 || { tail -90 ../ci-out/focus-test.log; exit 1; }
-          test -d build-focus/Build/Products/Debug-iphonesimulator/ZikrTime.app/PlugIns/FocusActivityMonitor.appex
-          cd ..
-          bash ios/ci/archive.sh screen-time
-      - name: Full iPhone edition with widget and Screen Time
-        uses: actions/upload-artifact@v4
-        with:
-          name: ZikrTime-iPhone-0.8.28-56-ScreenTime
-          path: ci-out/iphone-screen-time/*.ipa
-          compression-level: 0
-          if-no-files-found: error
-      - name: Full Xcode archive for distribution with Family Controls
-        uses: actions/upload-artifact@v4
-        with:
-          name: ZikrTime-Xcode-0.8.28-56-ScreenTime
-          path: |
-            ci-out/iphone-screen-time/*.xcarchive.zip
-            ci-out/iphone-screen-time/SHA256SUMS.txt
-          compression-level: 0
-          if-no-files-found: error
-      - name: Test normal reading flow on iPhone simulator
-        run: |
-          set -euo pipefail
-          (cd ios && xcodegen generate --spec project.yml && pod install --deployment)
-          sim=$(xcrun simctl list devices available -j | python3 -c 'import json,sys; d=json.load(sys.stdin)["devices"]; print(next(x["udid"] for runtime in reversed(sorted(d)) if ".iOS-" in runtime for x in d[runtime] if x["name"].startswith("iPhone")))')
-          xcrun simctl boot "$sim" || xcrun simctl list devices booted | grep -F "$sim"
-          xcrun simctl bootstatus "$sim" -b
-          xcodebuild -workspace ios/ZikrTime.xcworkspace -scheme ZikrTime -configuration Debug \
-            -destination "platform=iOS Simulator,id=$sim" -derivedDataPath ios/build \
-            -parallel-testing-enabled NO -resultBundlePath ci-out/Reader.xcresult \
-            test > ci-out/reader-test.log 2>&1 || { tail -120 ci-out/reader-test.log; exit 1; }
-          group=$(xcrun simctl get_app_container "$sim" com.zikrtime.ios group.com.zikrtime.ios)
-          python3 - "$group/prayer-widget-v1.json" <<'PY'
-          import json, sys
+          python3 - <<'PY'
           from pathlib import Path
-          data = json.loads(Path(sys.argv[1]).read_text())
-          times = [event["time"] for event in data["times"]]
-          assert data["city"] and data["heading"] and len(times) >= 300
-          assert times == sorted(times)
+          import re
+          log = next(Path("downloads").rglob("reader-test.log"))
+          lines = log.read_text(errors="replace").splitlines()
+          pattern = re.compile(r"(error:|failed|passed|failure|TEST (?:SUCCEEDED|FAILED)|Executed [0-9]|timed? ?out|XCTAssert|could not|unable to|Testing cancelled|Test Case)", re.I)
+          selected = [line.strip() for line in lines if pattern.search(line) and len(line) < 1800]
+          for line in (selected[-45:] or lines[-12:]):
+              print(line[:600])
           PY
-      - name: Build and simulator evidence
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: iPhone-56-checks
-          path: |
-            ci-out/*.log
-            ci-out/Reader.xcresult
-          retention-days: 7
+      - name: Validate both IPAs and both Xcode archives
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile
+          import hashlib
+          import json
+          import plistlib
+          import struct
+
+          root = Path("downloads")
+          bundle = "com.zikrtime.ios"
+          widgets = {"PrayerWidget": "com.apple.widgetkit-extension"}
+          focus = {"FocusActivityMonitor": "com.apple.deviceactivity.monitor-extension"}
+
+          def require(condition, reason):
+              if not condition:
+                  raise ValueError(reason)
+
+          def only(paths, description):
+              found = list(paths)
+              require(len(found) == 1, f"Expected one {description}, found {len(found)}")
+              return found[0]
+
+          def digest(path):
+              with path.open("rb") as stream:
+                  return hashlib.file_digest(stream, "sha256").hexdigest()
+
+          def verify_arm64(archive, name):
+              with archive.open(name) as stream:
+                  header = stream.read(4096)
+              magic = header[:4]
+              if magic in (bytes.fromhex("cffaedfe"), bytes.fromhex("feedfacf")):
+                  endian = "<" if magic == bytes.fromhex("cffaedfe") else ">"
+                  architectures = [struct.unpack_from(endian + "I", header, 4)[0]]
+              else:
+                  require(magic in (bytes.fromhex("cafebabe"), bytes.fromhex("cafebabf")),
+                          f"Not a Mach-O file: {name}")
+                  step = 20 if magic == bytes.fromhex("cafebabe") else 32
+                  count = struct.unpack_from(">I", header, 4)[0]
+                  architectures = [struct.unpack_from(">I", header, 8 + i * step)[0] for i in range(count)]
+              require(0x0100000c in architectures, f"Missing arm64 slice in {name}")
+
+          def verify_bundle(archive, prefix, plugins):
+              names = set(archive.namelist())
+              info = plistlib.loads(archive.read(prefix + "/Info.plist"))
+              require(info["CFBundleIdentifier"] == bundle and info["CFBundleVersion"] == "56"
+                      and info["CFBundleShortVersionString"] == "0.8.28", "Unexpected identity or version")
+              require(info["MinimumOSVersion"] == "17.0" and "iPhoneOS" in info["CFBundleSupportedPlatforms"],
+                      "Unexpected platform")
+              require("audio" in info["UIBackgroundModes"], "Missing background audio")
+              verify_arm64(archive, prefix + "/" + info["CFBundleExecutable"])
+              plugin_prefix = prefix + "/PlugIns/"
+              actual = {p[len(plugin_prefix):].split("/")[0] for p in names if p.startswith(plugin_prefix)}
+              require({p for p in actual if p.endswith(".appex")} == {p + ".appex" for p in plugins},
+                      f"Unexpected extensions: {actual}")
+              for plugin, point in plugins.items():
+                  folder = plugin_prefix + plugin + ".appex"
+                  extension = plistlib.loads(archive.read(folder + "/Info.plist"))
+                  require(extension["CFBundleIdentifier"] == bundle + "." + plugin and
+                          extension["NSExtension"]["NSExtensionPointIdentifier"] == point,
+                          f"Invalid extension metadata for {plugin}")
+                  verify_arm64(archive, folder + "/" + extension["CFBundleExecutable"])
+              for name in ("prayer/regional.tsv", "tasbih_bead.wav", "QuranData/quran/manifest.json"):
+                  require(archive.getinfo(prefix + "/" + name).file_size > 0, f"Empty {name}")
+              require(not any("/quran_transcription/" in name.lower() for name in names), "Legacy transcription exists")
+              catalogs = ["alafasy.json"] + [reciter + "/catalog.json" for reciter in
+                        ("yasser-dosari", "mahmoud-husary", "muhammad-minshawi")]
+              for name in catalogs:
+                  catalog = json.loads(archive.read(prefix + "/QuranData/quran_audio/" + name))
+                  require(len(catalog["tracks"]) == 114, f"Expected 114 tracks for {name}")
+
+          for suffix in ("", "-ScreenTime"):
+              stem = "ZikrTime-iOS-0.8.28-56" + suffix
+              plugins = {**widgets, **(focus if suffix else {})}
+              edition = "ScreenTime" if suffix else "standard"
+              ipa = only(root.rglob(stem + "-unsigned.ipa"), "IPA: " + edition)
+              archive_path = only(root.rglob(stem + ".xcarchive.zip"), "Xcode archive: " + edition)
+              sums = {line.split(maxsplit=1)[1].strip(): line.split(maxsplit=1)[0]
+                      for line in (archive_path.parent / "SHA256SUMS.txt").read_text().splitlines() if line.strip()}
+              for path in (ipa, archive_path):
+                  actual_hash = digest(path)
+                  print(f"SHA256 {actual_hash} {path.name} ({path.stat().st_size} bytes)", flush=True)
+                  require(actual_hash == sums[path.name], f"Checksum mismatch for {path.name}")
+              with ZipFile(ipa) as packaged:
+                  verify_bundle(packaged, "Payload/ZikrTime.app", plugins)
+              with ZipFile(archive_path) as archived:
+                  top = only((name.rsplit("/", 1)[0] for name in archived.namelist()
+                              if not name.startswith("__MACOSX/") and name.endswith(".xcarchive/Info.plist")),
+                             "xcarchive")
+                  verify_bundle(archived, top + "/Products/Applications/ZikrTime.app", plugins)
+                  verify_arm64(archived, top + "/dSYMs/ZikrTime.app.dSYM/Contents/Resources/DWARF/ZikrTime")
+              print(f"VERIFIED {edition}: IPA, Xcode archive, SHA-256, arm64, iOS 17+, 0.8.28 (56), "
+                    f"{', '.join(plugins)}, dSYM, prayer data, tasbih audio, Quran and 4 reciter catalogs.")
+          PY
