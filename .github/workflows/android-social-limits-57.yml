@@ -1,0 +1,97 @@
+name: Android social limits 57
+on:
+  push:
+    branches: [codex/android-social-limits-57]
+    paths:
+      - 'app/**'
+      - '.github/workflows/android-social-limits-57.yml'
+      - 'tools/ci/social_limits_ui.py'
+permissions:
+  contents: read
+concurrency:
+  group: android-social-limits-57
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build and test
+        env:
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          test -n "$RELEASE_KEY_PASSWORD"
+          trap 'rm -f keystore/release.jks' EXIT
+          openssl enc -d -aes-256-cbc -pbkdf2 -iter 300000 -in keystore/release.jks.enc -out keystore/release.jks -pass env:RELEASE_KEY_PASSWORD
+          bash gradlew :app:testDebugUnitTest :app:assembleDebug :app:assembleRelease --console=plain
+          mkdir -p ci-out/install
+          cp app/build/outputs/apk/release/app-release.apk ci-out/install/ZikrTime-0.8.28-57.apk
+      - name: Verify package and original signing certificate
+        working-directory: ci-out/install
+        run: |
+          set -euo pipefail
+          apk=ZikrTime-0.8.28-57.apk
+          sdk_tools=$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -1)
+          "$sdk_tools/apksigner" verify --verbose --print-certs "$apk" > signer.txt
+          grep -F 'certificate SHA-256 digest: 7ae126783c9417f9feeb15e05498eec466f97705f8b1831b4393754108502ccf' signer.txt
+          "$sdk_tools/aapt" dump badging "$apk" > package.txt
+          grep -F "package: name='com.zikrtime.app' versionCode='57' versionName='0.8.28'" package.txt
+          "$sdk_tools/zipalign" -c -P 16 4 "$apk"
+          sha256sum "$apk" > SHA256SUMS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ZikrTime-signed-apk-57
+          path: |
+            ci-out/install/ZikrTime-0.8.28-57.apk
+            ci-out/install/SHA256SUMS.txt
+          compression-level: 0
+          if-no-files-found: error
+      - name: Prepare emulator and previous signed APK
+        run: |
+          set -euo pipefail
+          curl -fLsS --retry 3 https://github.com/ibragimvisaevv-cloud/ZikrTime/releases/download/test-0.8.28-56/ZikrTime-0.8.28-56.apk -o previous.apk
+          echo 'b33caf5c2ba351646560f539e029e57ade83a1c540cb91bfdbfc917825d9e1ad  previous.apk' | sha256sum -c -
+          bash gradlew --stop
+          python3 -c "from PIL import Image" || python3 -m pip install Pillow
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Upgrade from 56 and exercise daily-limit screens on Android 15
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_2
+          ram-size: 2048M
+          disable-animations: true
+          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
+          script: |
+            adb install previous.apk
+            adb shell dumpsys package com.zikrtime.app | grep -E 'firstInstallTime=|userId=|appId=' | sort > before.txt
+            adb install -r ci-out/install/ZikrTime-0.8.28-57.apk
+            adb shell dumpsys package com.zikrtime.app | grep 'versionCode=57'
+            adb shell dumpsys package com.zikrtime.app | grep -E 'firstInstallTime=|userId=|appId=' | sort > after.txt
+            diff -u before.txt after.txt
+            adb shell am start -W -n com.zikrtime.app/.MainActivity
+            adb shell pidof com.zikrtime.app
+            adb uninstall com.zikrtime.app
+            adb install app/build/outputs/apk/debug/app-debug.apk
+            python3 tools/ci/social_limits_ui.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ZikrTime-social-limits-screens-57
+          path: |
+            ci-out/screens/*.png
+            ci-out/*.xml
+            !ci-out/synthetic-prefs.xml
+          if-no-files-found: warn

@@ -74,10 +74,16 @@ fun OnboardingScreen(onCityChosen: (City) -> Unit) {
                         when (page) {
                             0 -> {
                                 Text(stringResource(R.string.slogan), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.secondary)
+                                ZCard(color = MaterialTheme.colorScheme.secondaryContainer, padding = PaddingValues(16.dp)) {
+                                    Text(clarityCopy(UiClarity0825.AppLimits), style = MaterialTheme.typography.titleMedium,
+                                        color = MaterialTheme.colorScheme.onSecondaryContainer)
+                                    Spacer(Modifier.height(4.dp))
+                                    Text(focusLimitExplanation(), style = MaterialTheme.typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.onSecondaryContainer)
+                                }
                                 listOf(R.drawable.ic_nav_prayer to R.string.onboarding_feature_times,
                                     R.drawable.ic_alarm to R.string.onboarding_feature_alarm,
                                     R.drawable.ic_nav_knowledge to R.string.onboarding_feature_quiz,
-                                    R.drawable.ic_nav_focus to R.string.onboarding_feature_focus,
                                     R.drawable.ic_qibla to R.string.onboarding_feature_tools).forEach { (icon, label) ->
                                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
                                         IconBadge(painterResource(icon)); Text(stringResource(label), style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
