@@ -1,0 +1,52 @@
+name: Copy two verified Android 57 screenshots
+on:
+  push:
+    branches: [ci/store-evidence-57]
+    paths: [.github/workflows/store-evidence-57.yml]
+permissions:
+  contents: read
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: read
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Retrieve exact screenshot artifact from signed build 57
+        uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          repository: ibragimvisaevv-cloud/ZikrTime
+          run-id: 44958811949
+          artifact-ids: 14729350176
+          path: ${{ runner.temp }}/screens
+      - name: Retain two genuine screenshots in this evidence branch
+        shell: bash
+        env:
+          SOURCE_DIR: ${{ runner.temp }}/screens
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os, struct
+          from pathlib import Path
+          source = Path(os.environ['SOURCE_DIR'])
+          destination = Path('evidence/android57')
+          destination.mkdir(parents=True, exist_ok=True)
+          for name in ('01-home-social-limits.png', '03-daily-limit-block.png'):
+              matches = list(source.rglob(name))
+              if len(matches) != 1:
+                  raise SystemExit(f'Expected one {name}, got {len(matches)}')
+              content = matches[0].read_bytes()
+              assert content[:8] == b'\x89PNG\r\n\x1a\n'
+              width, height = struct.unpack('>II', content[16:24])
+              assert 300 <= width < height <= 5000
+              print(name, width, height)
+              (destination / name).write_bytes(content)
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- evidence/android57/01-home-social-limits.png evidence/android57/03-daily-limit-block.png
+          git commit -m "Retain Android 57 home and daily limit screenshots from run 44958811949 [skip ci]"
+          git push origin HEAD:refs/heads/ci/store-evidence-57
