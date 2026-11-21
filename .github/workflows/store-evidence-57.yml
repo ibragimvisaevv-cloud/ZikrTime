@@ -1,52 +1,28 @@
-name: Copy two verified Android 57 screenshots
+name: Transfer retained Android proof
 on:
   push:
     branches: [ci/store-evidence-57]
     paths: [.github/workflows/store-evidence-57.yml]
 permissions:
-  contents: read
+  contents: write
 jobs:
-  extract:
+  transfer:
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    permissions:
-      actions: read
-      contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Retrieve exact screenshot artifact from signed build 57
-        uses: actions/download-artifact@v4
-        with:
-          github-token: ${{ github.token }}
-          repository: ibragimvisaevv-cloud/ZikrTime
-          run-id: 44958811949
-          artifact-ids: 14729350176
-          path: ${{ runner.temp }}/screens
-      - name: Retain two genuine screenshots in this evidence branch
-        shell: bash
+      - name: Expose verifiable transfer chunks for the original screenshot
         env:
-          SOURCE_DIR: ${{ runner.temp }}/screens
+          GH_TOKEN: ${{ github.token }}
         run: |
-          set -euo pipefail
           python3 - <<'PY'
-          import os, struct
+          import base64, hashlib, json, os, subprocess
           from pathlib import Path
-          source = Path(os.environ['SOURCE_DIR'])
-          destination = Path('evidence/android57')
-          destination.mkdir(parents=True, exist_ok=True)
-          for name in ('01-home-social-limits.png', '03-daily-limit-block.png'):
-              matches = list(source.rglob(name))
-              if len(matches) != 1:
-                  raise SystemExit(f'Expected one {name}, got {len(matches)}')
-              content = matches[0].read_bytes()
-              assert content[:8] == b'\x89PNG\r\n\x1a\n'
-              width, height = struct.unpack('>II', content[16:24])
-              assert 300 <= width < height <= 5000
-              print(name, width, height)
-              (destination / name).write_bytes(content)
+          png=Path('evidence/android57/03-daily-limit-block.png').read_bytes()
+          assert hashlib.sha1(('blob '+str(len(png))+'\0').encode()+png).hexdigest() == '1a741bdf086c80e1437e58d351315146b506dfbf'
+          for start in range(0,len(png),262144):
+              data=base64.b64encode(png[start:start+262144]).decode('ascii')
+              payload=json.dumps({'content':data,'encoding':'utf-8'}).encode()
+              result=subprocess.check_output(['gh','api','-X','POST','repos/ibragimvisaevv-cloud/ZikrTime/git/blobs','--input','-'],input=payload)
+              print(f"CHUNK {start} {json.loads(result)['sha']}",flush=True)
           PY
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- evidence/android57/01-home-social-limits.png evidence/android57/03-daily-limit-block.png
-          git commit -m "Retain Android 57 home and daily limit screenshots from run 44958811949 [skip ci]"
-          git push origin HEAD:refs/heads/ci/store-evidence-57
