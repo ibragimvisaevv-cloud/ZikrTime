@@ -61,6 +61,8 @@ import androidx.compose.material3.TextButton
 import com.zikrtime.app.prayer.OnlineTimes
 import com.zikrtime.app.prayer.Prayer
 import com.zikrtime.app.prayer.PrayerSchedule
+import com.zikrtime.app.screentime.BlockerService
+import com.zikrtime.app.screentime.GuardService
 import com.zikrtime.app.screentime.ScreenTime
 import com.zikrtime.app.ui.theme.Cream
 import com.zikrtime.app.ui.theme.Emerald
@@ -104,13 +106,21 @@ fun HomeScreen() {
         }
     }
 
-    var usedMillis by remember { mutableStateOf<Long?>(null) }
     val resume = AppEvents.resumeCount
-    LaunchedEffect(now, resume, Store.blockedPackages) {
-        usedMillis = withContext(Dispatchers.IO) { ScreenTime.usedTodayMillis(context) }
+    val hasAccess = remember(resume) {
+        ScreenTime.hasUsageAccess(context) &&
+            (ScreenTime.isAccessibilityEnabled(context) || GuardService.canDrawOverlays(context))
+    }
+    val selectedApps = Store.blockedPackages
+    val activeLimit = Store.blockingEnabled && selectedApps.isNotEmpty() && hasAccess &&
+        (BlockerService.running || GuardService.running)
+    var usedMillis by remember(today, resume, selectedApps, activeLimit) { mutableStateOf<Long?>(null) }
+    LaunchedEffect(now, resume, selectedApps, activeLimit) {
+        if (activeLimit) usedMillis = withContext(Dispatchers.IO) { ScreenTime.usedTodayMillis(context) }
     }
 
     HorizonHome(now, next.first, next.second, times) {
+        FocusSummary(hasAccess, activeLimit, usedMillis, onOpen = { nav.tab = Tab.FOCUS }, onQuiz = { nav.startQuiz(null) })
         Column(Modifier.fillMaxWidth()) {
             Text(stringResource(R.string.home_today), style = MaterialTheme.typography.headlineSmall)
             FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -188,8 +198,6 @@ fun HomeScreen() {
 
         if (today.dayOfWeek == java.time.DayOfWeek.FRIDAY) FridayCard(today)
 
-        FocusSummary(usedMillis = usedMillis, onOpen = { nav.tab = Tab.FOCUS }, onQuiz = { nav.startQuiz(null) })
-
         if (Store.personalProgressEnabled) {
             val summary = Store.personalProgressSummary(today, 30)
             if (summary.sessions > 0 || summary.reviewed > 0 || Store.totalAnswered > 0) {
@@ -247,54 +255,34 @@ private fun ActionTile(icon: Int, title: String, value: String, modifier: Modifi
 }
 
 @Composable
-private fun FocusSummary(usedMillis: Long?, onOpen: () -> Unit, onQuiz: () -> Unit) {
-    if (!Store.blockingEnabled || usedMillis == null) {
-        ZCard {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                IconBadge(painterResource(R.drawable.ic_nav_focus), container = MaterialTheme.colorScheme.secondaryContainer, tint = MaterialTheme.colorScheme.secondary)
-                Spacer(Modifier.width(14.dp))
-                Column(Modifier.weight(1f)) {
-                    Text(clarityCopy(UiClarity0825.AppLimits), style = MaterialTheme.typography.titleMedium)
-                    Text(clarityCopy(UiClarity0825.AppLimitsHint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
-            }
-            TextButton(onClick = onOpen, modifier = Modifier.testTag("home_set_limits")) {
-                Text(clarityCopy(UiClarity0825.SetLimit))
-            }
-        }
-        return
+private fun FocusSummary(hasAccess: Boolean, active: Boolean, usedMillis: Long?, onOpen: () -> Unit, onQuiz: () -> Unit) {
+    val scheme = MaterialTheme.colorScheme
+    val status = when {
+        !Store.blockingEnabled -> if (Store.appsInitialized) uiCopy(UiCopy0823.FocusOff) else null
+        Store.blockedPackages.isEmpty() -> uiCopy(UiCopy0823.NeedApps)
+        !hasAccess -> uiCopy(UiCopy0823.NeedAccess)
+        !active -> sectionCopy(SectionClarity.ProtectionInactive)
+        usedMillis == null -> null
+        else -> stringResource(R.string.focus_used_of, durationText(usedMillis / 60_000), durationText(Store.allowedMinutes().toLong()))
     }
-    val usedMin = usedMillis / 60_000
-    val allowed = Store.allowedMinutes()
-    ZCard {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            ProgressRing(
-                progress = usedMin.toFloat() / allowed.coerceAtLeast(1),
-                modifier = Modifier.size(64.dp),
-                stroke = 7.dp,
-                color = if (usedMin >= allowed) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
-            ) {
-                Text("${(usedMin * 100 / allowed.coerceAtLeast(1)).coerceAtMost(999)}%", style = MaterialTheme.typography.labelMedium)
-            }
-            Spacer(Modifier.width(16.dp))
+    ZCard(onClick = onOpen, modifier = Modifier.testTag("home_set_limits").semantics { testTagsAsResourceId = true },
+        color = scheme.secondaryContainer, padding = PaddingValues(16.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.Top) {
+            Icon(painterResource(R.drawable.ic_nav_focus), null, tint = scheme.onSecondaryContainer, modifier = Modifier.size(26.dp))
             Column(Modifier.weight(1f)) {
-                Text(stringResource(R.string.focus_today), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                Text(
-                    stringResource(R.string.focus_used_of, durationText(usedMin), durationText(allowed.toLong())),
-                    style = MaterialTheme.typography.titleMedium,
-                )
-                if (Store.bonusMinutes() < Store.MAX_BONUS_MINUTES_PER_DAY) {
-                    Text(
-                        stringResource(R.string.focus_earn_more, Store.BONUS_MINUTES_PER_ROUND),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.clickable(onClick = onQuiz).padding(top = 2.dp),
-                    )
+                Text(clarityCopy(UiClarity0825.AppLimits), style = MaterialTheme.typography.titleLarge, color = scheme.onSecondaryContainer)
+                Spacer(Modifier.height(4.dp))
+                Text(if (active && status != null) status else focusLimitExplanation(),
+                    style = MaterialTheme.typography.bodyMedium, color = scheme.onSecondaryContainer)
+                if (!active && status != null) Text(status, color = scheme.onSecondaryContainer,
+                    style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 6.dp))
+                if (active && Store.bonusMinutes() < Store.MAX_BONUS_MINUTES_PER_DAY) {
+                    TextButton(onClick = onQuiz) { Text(stringResource(R.string.focus_earn_button, Store.BONUS_MINUTES_PER_ROUND)) }
+                } else {
+                    Text(clarityCopy(UiClarity0825.SetLimit) + "  ›", style = MaterialTheme.typography.labelLarge,
+                        color = scheme.onSecondaryContainer, modifier = Modifier.padding(top = 8.dp))
                 }
             }
-        }
-        TextButton(onClick = onOpen, modifier = Modifier.testTag("home_set_limits")) {
-            Text(clarityCopy(UiClarity0825.SetLimit))
         }
     }
 }

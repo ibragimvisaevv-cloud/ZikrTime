@@ -2,6 +2,7 @@ package com.zikrtime.app.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalConfiguration
+import com.zikrtime.app.data.Store
 
 /** Task-oriented labels; stored routes and user preferences remain unchanged. */
 enum class UiClarity0825(vararg val translations: String) {
@@ -22,10 +23,24 @@ enum class UiClarity0825(vararg val translations: String) {
     FindQibla("Найти направление кыблы", "Find the qibla direction", "Qibla yo‘nalishini topish", "Ёфтани самти қибла", "Құбыла бағытын табу", "Кыбыла багытын табуу", "Qiblə istiqamətini tap", "Kıble yönünü bul"),
     QiblaHint("Поверните телефон по подсказке компаса", "Turn your phone using the compass guide", "Kompas ko‘rsatmasiga qarab telefonni aylantiring", "Телефонро аз рӯи роҳнамои қутбнамо гардонед", "Телефонды компас нұсқауымен бұрыңыз", "Телефонду компастын көрсөтмөсү менен буруңуз", "Kompasın göstərişi ilə telefonu çevir", "Pusula rehberine göre telefonunuzu çevirin"),
     AlarmOffHint("Выключен · Нажмите, чтобы настроить", "Off · Tap to set up", "O‘chirilgan · Sozlash uchun bosing", "Хомӯш · Барои танзим пахш кунед", "Өшірулі · Баптау үшін басыңыз", "Өчүк · Жөндөө үчүн басыңыз", "Sönülüdür · Qurmaq üçün toxun", "Kapalı · Ayarlamak için dokunun"),
-    AppLimits("Ограничения приложений", "App time limits", "Ilovalar vaqti cheklovlari", "Маҳдудияти вақти барномаҳо", "Қолданбалар уақытының шектеуі", "Колдонмолордун убакыт чектөөсү", "Tətbiq vaxtı məhdudiyyətləri", "Uygulama süre sınırları"),
-    AppLimitsHint("Выберите приложения и сколько времени хотите проводить в них за день.", "Choose apps and how much time to spend in them each day.", "Ilovalarni va ularda kuniga qancha vaqt o‘tkazishni tanlang.", "Барномаҳоро интихоб кунед ва вақти рӯзонаро муайян кунед.", "Қолданбаларды және оларда күніне өткізетін уақытты таңдаңыз.", "Колдонмолорду жана аларда күнүнө өткөрүүчү убакытты тандаңыз.", "Tətbiqləri və onlarda gündəlik keçirəcəyin vaxtı seç.", "Uygulamaları ve günlük kullanım sürenizi seçin."),
+    AppLimits("Блокировка соцсетей", "Social media limits", "Ijtimoiy tarmoqlar limiti", "Маҳдудияти шабакаҳои иҷтимоӣ", "Әлеуметтік желілерге шектеу", "Социалдык тармактарга чектөө", "Sosial şəbəkələr üçün limit", "Sosyal medya sınırı"),
+    AppLimitsHint(
+        "Когда дневной лимит закончится, выбранные приложения заблокируются. %d верных ответа об исламе дадут ещё %d минут.",
+        "When your daily time runs out, the apps you chose are blocked. Answer %d questions about Islam correctly to get %d more minutes.",
+        "Kunlik vaqt tugaganda tanlangan ilovalar bloklanadi. Islom haqida %d ta savolga to‘g‘ri javob berib, yana %d daqiqa oling.",
+        "Вақте ки вақти рӯзона тамом шуд, барномаҳои интихобшуда баста мешаванд. Ба %d савол дар бораи ислом дуруст ҷавоб диҳед ва боз %d дақиқа гиред.",
+        "Күндік уақыт біткенде таңдаған қолданбаларыңыз бұғатталады. Ислам туралы %d сұраққа дұрыс жауап берсеңіз, тағы %d минут аласыз.",
+        "Күнүмдүк убакыт бүткөндө тандалган колдонмолор бөгөттөлөт. Ислам жөнүндө %d суроого туура жооп берип, дагы %d мүнөт алыңыз.",
+        "Gündəlik vaxt bitəndə seçdiyiniz tətbiqlər bloklanır. İslam haqqında %d suala düzgün cavab verib daha %d dəqiqə qazanın.",
+        "Günlük süre dolduğunda seçtiğiniz uygulamalar engellenir. İslam hakkında %d soruyu doğru yanıtlayarak %d dakika daha kazanın.",
+    ),
     SetLimit("Настроить лимит", "Set up a limit", "Limitni sozlash", "Танзими маҳдудият", "Шектеуді баптау", "Чектөөнү жөндөө", "Limiti qur", "Sınır ayarla"),
 }
+
+@Composable
+fun focusLimitExplanation(): String = clarityCopy(UiClarity0825.AppLimitsHint).format(
+    LocalConfiguration.current.locales[0], Store.CORRECT_ANSWERS_PER_ROUND, Store.BONUS_MINUTES_PER_ROUND,
+)
 
 @Composable
 fun clarityCopy(key: UiClarity0825): String {
